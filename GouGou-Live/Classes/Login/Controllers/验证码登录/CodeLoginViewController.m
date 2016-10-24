@@ -1,21 +1,20 @@
 //
-//  RegisteViewController.m
-//  狗狗直播框架
+//  CodeLoginViewController.m
+//  GouGou-Live
 //
-//  Created by ma c on 16/10/23.
+//  Created by ma c on 16/10/24.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "RegisteViewController.h"
+#import "CodeLoginViewController.h"
 #import "LoginViewController.h"
 
-@interface RegisteViewController ()
-
-@property (weak, nonatomic) IBOutlet UIButton *sureBtn;
+@interface CodeLoginViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *regisePhoneNumber;
 
 @end
 
-@implementation RegisteViewController
+@implementation CodeLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,8 +28,6 @@
     self.navigationController.navigationBarHidden = NO;
 }
 - (void)initUI {
-//    self.view.backgroundColor = [UIColor whiteColor];
-    
     // 左边item
     UIButton *leftItem = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [leftItem sizeToFit];
@@ -41,44 +38,34 @@
     // 右边item
     self.navigationController.navigationBar.titleTextAttributes = @{
                                                                     NSForegroundColorAttributeName:[UIColor grayColor]
-                                               };
+                                                                    };
     
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     
-    self.title = @"账号登录";
+    self.title = @"手机号验证";
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"登录" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightLoginBtnAction)];
     
 }
 
 #pragma mark
 #pragma mark - Action
 - (void)leftBackBtnAction {
-
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)rightLoginBtnAction {
+- (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
+}
+- (IBAction)chickSureBtnAction:(UIButton *)sender {
     
-    LoginViewController *loginVC = [[LoginViewController alloc] init];
-    
-    [self.navigationController pushViewController:loginVC animated:YES];
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        
+        [self.navigationController pushViewController:loginVC animated:YES];
+    });
+
 }
 
-- (IBAction)clickGetCodeAction:(UIButton *)sender {
-}
-- (IBAction)clickSureBtnAction:(UIButton *)sender {
-}
-- (IBAction)clickReadBtnAction:(UIButton *)sender {
-    
-    sender.selected = !sender.selected;
-    
-    // 已阅读 可以确定
-    self.sureBtn.enabled = sender.selected;
-    
-}
-- (IBAction)clickProtocolAction:(UIButton *)sender {
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

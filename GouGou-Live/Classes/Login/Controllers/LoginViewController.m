@@ -8,6 +8,9 @@
 
 #import "LoginViewController.h"
 #import "RegisteViewController.h"
+#import "ForgetPsdViewController.h"
+
+#import "CodeLoginViewController.h"
 
 @interface LoginViewController ()
 
@@ -24,7 +27,11 @@
     
      self.view.backgroundColor = [UIColor orangeColor];
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // navBar隐藏
+    self.navigationController.navigationBarHidden = YES;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -43,11 +50,20 @@
 - (IBAction)clickRegisteBtnAction:(UIButton *)sender {
     
     RegisteViewController *registeVC = [[RegisteViewController alloc] init];
-    [self presentViewController:registeVC animated:YES completion:nil];
+    [self.navigationController pushViewController:registeVC animated:YES];
 }
 - (IBAction)clickCodeBtnAction:(UIButton *)sender {
+    
+    
+    CodeLoginViewController *codeVC = [[CodeLoginViewController alloc] init];
+    
+    [self.navigationController pushViewController:codeVC animated:YES];
+
 }
 - (IBAction)clickForgrtPsdBtnAction:(UIButton *)sender {
+    
+    ForgetPsdViewController *forgetVC = [[ForgetPsdViewController alloc] init];
+    [self.navigationController pushViewController:forgetVC animated:YES];
 }
 
 #pragma mark - 第三方登录
@@ -59,14 +75,6 @@
 }
 
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

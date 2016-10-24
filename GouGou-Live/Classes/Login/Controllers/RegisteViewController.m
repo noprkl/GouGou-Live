@@ -10,7 +10,7 @@
 #import "LoginViewController.h"
 
 @interface RegisteViewController ()
-@property (weak, nonatomic) IBOutlet UINavigationBar *registeNavBar;
+
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 
 @end
@@ -22,27 +22,49 @@
     
     [self initUI];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)initUI {
 //    self.view.backgroundColor = [UIColor whiteColor];
-    self.registeNavBar.titleTextAttributes = @{
-                                               NSForegroundColorAttributeName:[UIColor grayColor]
+    
+    // 左边item
+    UIButton *leftItem = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    [leftItem sizeToFit];
+    [leftItem setImage:[UIImage imageNamed:@"返回"] forState:(UIControlStateNormal)];
+    [leftItem addTarget:self action:@selector(leftBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftItem];
+    
+    // 右边item
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                                                                    NSForegroundColorAttributeName:[UIColor grayColor]
                                                };
     
+    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     
+    self.title = @"账号登录";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"登录" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightLoginBtnAction)];
     
 }
 
 #pragma mark
 #pragma mark - Action
-- (IBAction)clickLeftActionBtn:(UIBarButtonItem *)sender {
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)leftBackBtnAction {
+
+    [self.navigationController popViewControllerAnimated:YES];
 }
-- (IBAction)clickRightBtnAction:(UIBarButtonItem *)sender {
+- (void)rightLoginBtnAction {
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
-    [self presentViewController:loginVC animated:YES completion:nil];
+    
+    [self.navigationController pushViewController:loginVC animated:YES];
+    
 }
+
 - (IBAction)clickGetCodeAction:(UIButton *)sender {
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {

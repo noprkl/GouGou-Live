@@ -66,11 +66,14 @@ static NSString *cellid = @"myCellId";
     if ([cellText isEqualToString:@"登录"]) {
         LoginViewController *loginVC = [[LoginViewController alloc] init];
         
-        [self presentViewController:loginVC animated:YES completion:nil];
+        loginVC.hidesBottomBarWhenPushed = YES;
+
+        [self.navigationController pushViewController:loginVC animated:YES];
+        
     }else if ([cellText isEqualToString:@"设置"]) {
         
         SettingViewController *setVC = [[SettingViewController alloc] init];
-        [self presentViewController:setVC animated:YES completion:nil];
+        [self.navigationController pushViewController:setVC animated:YES];
         
     }
 }

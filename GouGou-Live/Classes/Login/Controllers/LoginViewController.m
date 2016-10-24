@@ -8,8 +8,12 @@
 
 #import "LoginViewController.h"
 #import "RegisteViewController.h"
+<<<<<<< HEAD
 #import "ForgetPsdViewController.h"
 
+=======
+#import "CodeLoginViewController.h"
+>>>>>>> aabd38d7de17792ba63ab44f2621e6eeead6b230
 
 @interface LoginViewController ()
 
@@ -53,6 +57,13 @@
 }
 - (IBAction)clickCodeBtnAction:(UIButton *)sender {
     
+<<<<<<< HEAD
+=======
+    CodeLoginViewController * codeVC = [[CodeLoginViewController alloc] init];
+    
+    [self presentViewController:codeVC animated:YES completion:nil];
+    
+>>>>>>> aabd38d7de17792ba63ab44f2621e6eeead6b230
 }
 - (IBAction)clickForgrtPsdBtnAction:(UIButton *)sender {
     

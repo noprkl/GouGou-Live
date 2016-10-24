@@ -33,6 +33,8 @@
 		0467AD4A1DBDF0B300562CC4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD351DBDF0B300562CC4 /* ViewController.m */; };
 		0467AD4E1DBDF15E00562CC4 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD4C1DBDF15E00562CC4 /* SettingViewController.m */; };
 		0467AD4F1DBDF15E00562CC4 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0467AD4D1DBDF15E00562CC4 /* SettingViewController.xib */; };
+		0467AD541DBDFFBA00562CC4 /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD521DBDFFBA00562CC4 /* SurePsdViewController.m */; };
+		0467AD551DBDFFBA00562CC4 /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0467AD531DBDFFBA00562CC4 /* SurePsdViewController.xib */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +81,9 @@
 		0467AD4C1DBDF15E00562CC4 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		0467AD4D1DBDF15E00562CC4 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		0467AD501DBDF6C500562CC4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		0467AD511DBDFFBA00562CC4 /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
+		0467AD521DBDFFBA00562CC4 /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
+		0467AD531DBDFFBA00562CC4 /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -212,15 +217,13 @@
 		0467AD131DBDF0B300562CC4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0467AD141DBDF0B300562CC4 /* ForgetPsdViewController.h */,
-				0467AD151DBDF0B300562CC4 /* ForgetPsdViewController.m */,
-				0467AD161DBDF0B300562CC4 /* ForgetPsdViewController.xib */,
 				0467AD171DBDF0B300562CC4 /* LoginViewController.h */,
 				0467AD181DBDF0B300562CC4 /* LoginViewController.m */,
 				0467AD191DBDF0B300562CC4 /* LoginViewController.xib */,
 				0467AD1A1DBDF0B300562CC4 /* RegisteViewController.h */,
 				0467AD1B1DBDF0B300562CC4 /* RegisteViewController.m */,
 				0467AD1C1DBDF0B300562CC4 /* RegisteViewController.xib */,
+				0467AD561DBE062E00562CC4 /* 忘记密码 */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -346,6 +349,19 @@
 			path = Others;
 			sourceTree = "<group>";
 		};
+		0467AD561DBE062E00562CC4 /* 忘记密码 */ = {
+			isa = PBXGroup;
+			children = (
+				0467AD141DBDF0B300562CC4 /* ForgetPsdViewController.h */,
+				0467AD151DBDF0B300562CC4 /* ForgetPsdViewController.m */,
+				0467AD161DBDF0B300562CC4 /* ForgetPsdViewController.xib */,
+				0467AD511DBDFFBA00562CC4 /* SurePsdViewController.h */,
+				0467AD521DBDFFBA00562CC4 /* SurePsdViewController.m */,
+				0467AD531DBDFFBA00562CC4 /* SurePsdViewController.xib */,
+			);
+			name = "忘记密码";
+			sourceTree = "<group>";
+		};
 		28209DDB76B660DE1C93619E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +442,7 @@
 				0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */,
 				0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */,
 				0467AD391DBDF0B300562CC4 /* LiveViewController.xib in Resources */,
+				0467AD551DBDFFBA00562CC4 /* SurePsdViewController.xib in Resources */,
 				0467AD3C1DBDF0B300562CC4 /* SearchViewController.xib in Resources */,
 				0467AD431DBDF0B300562CC4 /* RegisteViewController.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
@@ -499,6 +516,7 @@
 				0467AD401DBDF0B300562CC4 /* LoginViewController.m in Sources */,
 				0467AD381DBDF0B300562CC4 /* LiveViewController.m in Sources */,
 				0467AD3A1DBDF0B300562CC4 /* RecommendViewController.m in Sources */,
+				0467AD541DBDFFBA00562CC4 /* SurePsdViewController.m in Sources */,
 				0467AD441DBDF0B300562CC4 /* MyViewController.m in Sources */,
 				0467AD3B1DBDF0B300562CC4 /* SearchViewController.m in Sources */,
 				0467AD371DBDF0B300562CC4 /* HostViewController.m in Sources */,

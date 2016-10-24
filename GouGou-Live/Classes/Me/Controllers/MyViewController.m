@@ -43,7 +43,7 @@ static NSString *cellid = @"myCellId";
 - (NSArray *)dataSource {
     
     if (!_dataSource) {
-        _dataSource = @[@"登录", @"设置"];
+        _dataSource = @[@"登录", @"我的喜欢", @"观看历史", @"实名认证", @"商家认证", @"设置"];
     }
     return _dataSource;
 }
@@ -74,8 +74,13 @@ static NSString *cellid = @"myCellId";
         
         SettingViewController *setVC = [[SettingViewController alloc] init];
         [self.navigationController pushViewController:setVC animated:YES];
+    }else if ([cellText isEqualToString:@"实名认证"]) {
+        
+        
+    }else if ([cellText isEqualToString:@"商家认证"]){
         
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="手机icon" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-bl-0Ko">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="手机icon" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-bl-0Ko">
                     <rect key="frame" x="10" y="106" width="18" height="18"/>
                     <color key="backgroundColor" red="0.749502424" green="0.88934264519999995" blue="0.56617452459999995" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
@@ -35,6 +35,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="phoneTextfieldEditing:" destination="-1" eventType="editingDidEnd" id="UbA-Si-7gV"/>
+                    </connections>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="验证码蓝" translatesAutoresizingMaskIntoConstraints="NO" id="3yF-MP-fyQ">
                     <rect key="frame" x="13" y="156" width="16" height="20"/>
@@ -54,6 +57,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="codeTextFieldEditing:" destination="-1" eventType="editingDidEnd" id="EQB-vj-u3F"/>
+                    </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yhv-W8-FlL">
                     <rect key="frame" x="324" y="152" width="80" height="28"/>

@@ -53,6 +53,20 @@
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (IBAction)phoneTextfieldEditing:(UITextField *)sender {
+    UIButton *button = [sender valueForKey:@"_clearButton"];
+    [button setImage:[UIImage imageNamed:@"-单删除"] forState:UIControlStateNormal];
+    
+    sender.clearButtonMode = UITextFieldViewModeWhileEditing;
+}
+- (IBAction)codeTextFieldEditing:(UITextField *)sender {
+    UIButton *button = [sender valueForKey:@"_clearButton"];
+    [button setImage:[UIImage imageNamed:@"-单删除"] forState:UIControlStateNormal];
+    
+    sender.clearButtonMode = UITextFieldViewModeWhileEditing;
+}
+
+
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
 }
 - (IBAction)chickSureBtnAction:(UIButton *)sender {

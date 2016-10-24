@@ -119,6 +119,7 @@
                     <exclude reference="H3P-zi-Kdp"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="97.5" y="236.5"/>
         </view>
     </objects>
     <resources>

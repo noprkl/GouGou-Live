@@ -8,6 +8,8 @@
 
 #import "RegisteViewController.h"
 #import "LoginViewController.h"
+#import "SurePsdViewController.h"
+
 
 @interface RegisteViewController ()
 
@@ -68,6 +70,10 @@
 - (IBAction)clickGetCodeAction:(UIButton *)sender {
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
+    
+    SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
+    
+    [self.navigationController pushViewController:sureVC animated:YES];
 }
 - (IBAction)clickReadBtnAction:(UIButton *)sender {
     

@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "RegisteViewController.h"
+#import "CodeLoginViewController.h"
 
 @interface LoginViewController ()
 
@@ -46,6 +47,11 @@
     [self presentViewController:registeVC animated:YES completion:nil];
 }
 - (IBAction)clickCodeBtnAction:(UIButton *)sender {
+    
+    CodeLoginViewController * codeVC = [[CodeLoginViewController alloc] init];
+    
+    [self presentViewController:codeVC animated:YES completion:nil];
+    
 }
 - (IBAction)clickForgrtPsdBtnAction:(UIButton *)sender {
 }

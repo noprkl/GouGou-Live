@@ -7,6 +7,7 @@
 //
 
 #import "CodeLoginViewController.h"
+#import "LoginViewController.h"
 
 @interface CodeLoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *regisePhoneNumber;
@@ -18,30 +19,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setNav];
-    
+    [self initUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+}
+- (void)initUI {
+    // 左边item
+    UIButton *leftItem = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    [leftItem sizeToFit];
+    [leftItem setImage:[UIImage imageNamed:@"返回"] forState:(UIControlStateNormal)];
+    [leftItem addTarget:self action:@selector(leftBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftItem];
+    
+    // 右边item
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                                                                    NSForegroundColorAttributeName:[UIColor grayColor]
+                                                                    };
+    
+    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
+    
+    self.title = @"手机号验证";
+    
+    
+}
 
 #pragma mark
 #pragma mark - Action
+- (void)leftBackBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
 }
-- (IBAction)chickAffirmBtnAction:(UIButton *)sender {
+- (IBAction)chickSureBtnAction:(UIButton *)sender {
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        
+        [self.navigationController pushViewController:loginVC animated:YES];
+    });
+
 }
 
-- (void)setNav {
-
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStyleDone target:nil action:nil];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"注册" style:UIBarButtonItemStyleDone target:nil action:nil];
-}
-
-//- (void)pushToLoginContreller {
-//
-//
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

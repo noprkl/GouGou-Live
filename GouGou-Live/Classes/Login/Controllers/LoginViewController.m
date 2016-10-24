@@ -10,7 +10,7 @@
 #import "RegisteViewController.h"
 #import "ForgetPsdViewController.h"
 
-
+#import "CodeLoginViewController.h"
 
 @interface LoginViewController ()
 
@@ -54,8 +54,10 @@
 }
 - (IBAction)clickCodeBtnAction:(UIButton *)sender {
     
-
     
+    CodeLoginViewController *codeVC = [[CodeLoginViewController alloc] init];
+    
+    [self.navigationController pushViewController:codeVC animated:YES];
 
 }
 - (IBAction)clickForgrtPsdBtnAction:(UIButton *)sender {

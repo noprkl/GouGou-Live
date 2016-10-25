@@ -31,6 +31,7 @@
     [super viewWillAppear:animated];
     // navBar隐藏
     self.navigationController.navigationBarHidden = YES;
+    self.hidesBottomBarWhenPushed = YES;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

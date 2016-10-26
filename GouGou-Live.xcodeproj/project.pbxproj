@@ -16,6 +16,8 @@
 		0403DD061DBF2BB6000632CD /* RemoveCookieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0403DD041DBF2BB6000632CD /* RemoveCookieViewController.m */; };
 		0403DD071DBF2BB6000632CD /* RemoveCookieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */; };
 		0403DD0D1DBF3586000632CD /* MyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0403DD0C1DBF3586000632CD /* MyHeaderView.m */; };
+		0457B9FF1DC06B28009A0B79 /* NSString+CheckString.m in Sources */ = {isa = PBXBuildFile; fileRef = 0457B9FE1DC06B28009A0B79 /* NSString+CheckString.m */; };
+		0457BA021DC07B66009A0B79 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 0457BA011DC07B66009A0B79 /* UIColor+HexString.m */; };
 		0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF01DBDEF2200562CC4 /* Main.storyboard */; };
 		0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF31DBDEF2200562CC4 /* Assets.xcassets */; };
 		0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */; };
@@ -37,7 +39,6 @@
 		0467AD451DBDF0B300562CC4 /* MyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0467AD241DBDF0B300562CC4 /* MyViewController.xib */; };
 		0467AD461DBDF0B300562CC4 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD2B1DBDF0B300562CC4 /* MessageViewController.m */; };
 		0467AD471DBDF0B300562CC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD311DBDF0B300562CC4 /* AppDelegate.m */; };
-		0467AD481DBDF0B300562CC4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0467AD321DBDF0B300562CC4 /* Info.plist */; };
 		0467AD491DBDF0B300562CC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD331DBDF0B300562CC4 /* main.m */; };
 		0467AD4A1DBDF0B300562CC4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD351DBDF0B300562CC4 /* ViewController.m */; };
 		0467AD541DBDFFBA00562CC4 /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467AD521DBDFFBA00562CC4 /* SurePsdViewController.m */; };
@@ -85,6 +86,10 @@
 		0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemoveCookieViewController.xib; sourceTree = "<group>"; };
 		0403DD0B1DBF3586000632CD /* MyHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHeaderView.h; sourceTree = "<group>"; };
 		0403DD0C1DBF3586000632CD /* MyHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHeaderView.m; sourceTree = "<group>"; };
+		0457B9FD1DC06B28009A0B79 /* NSString+CheckString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CheckString.h"; sourceTree = "<group>"; };
+		0457B9FE1DC06B28009A0B79 /* NSString+CheckString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CheckString.m"; sourceTree = "<group>"; };
+		0457BA001DC07B66009A0B79 /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
+		0457BA011DC07B66009A0B79 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
 		0467ACE41DBDEF2200562CC4 /* GouGou-Live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GouGou-Live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0467ACF11DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0467ACF31DBDEF2200562CC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -216,6 +221,17 @@
 				0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */,
 			);
 			name = "意见清除缓存";
+			sourceTree = "<group>";
+		};
+		0457B9F91DC06266009A0B79 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0457B9FD1DC06B28009A0B79 /* NSString+CheckString.h */,
+				0457B9FE1DC06B28009A0B79 /* NSString+CheckString.m */,
+				0457BA001DC07B66009A0B79 /* UIColor+HexString.h */,
+				0457BA011DC07B66009A0B79 /* UIColor+HexString.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		0467ACDB1DBDEF2200562CC4 = {
@@ -385,7 +401,7 @@
 				0467AD221DBDF0B300562CC4 /* MyViewController.h */,
 				0467AD231DBDF0B300562CC4 /* MyViewController.m */,
 				0467AD241DBDF0B300562CC4 /* MyViewController.xib */,
-				04AE67BE1DBEEF7000F4831D /* 账户设置 */,
+				04AE67BE1DBEEF7000F4831D /* 账户订单收货 */,
 				04AE67CE1DBEF00600F4831D /* 喜欢和观看 */,
 				04AE67D91DBEF05000F4831D /* 认证 */,
 				04AE67F91DBF0DFF00F4831D /* 设置 */,
@@ -490,6 +506,7 @@
 		0469D3801DC03F8400CEF8E6 /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				0457B9F91DC06266009A0B79 /* Category */,
 				0469D3821DC03FC200CEF8E6 /* Tools */,
 				0469D3811DC03F8400CEF8E6 /* BaseViewController */,
 			);
@@ -528,7 +545,7 @@
 			path = "验证码登录";
 			sourceTree = "<group>";
 		};
-		04AE67BE1DBEEF7000F4831D /* 账户设置 */ = {
+		04AE67BE1DBEEF7000F4831D /* 账户订单收货 */ = {
 			isa = PBXGroup;
 			children = (
 				04AE67BF1DBEEFA000F4831D /* AccountViewController.h */,
@@ -541,7 +558,7 @@
 				04AE67CA1DBEEFFC00F4831D /* OrderGoodsViewController.m */,
 				04AE67CB1DBEEFFC00F4831D /* OrderGoodsViewController.xib */,
 			);
-			name = "账户设置";
+			name = "账户订单收货";
 			sourceTree = "<group>";
 		};
 		04AE67CE1DBEF00600F4831D /* 喜欢和观看 */ = {
@@ -694,7 +711,6 @@
 				04AE67D31DBEF02D00F4831D /* FavoriteViewController.xib in Resources */,
 				0467AD3F1DBDF0B300562CC4 /* ForgetPsdViewController.xib in Resources */,
 				0403DCFD1DBF2AFC000632CD /* SecurityAccountViewController.xib in Resources */,
-				0467AD481DBDF0B300562CC4 /* Info.plist in Resources */,
 				0467AD451DBDF0B300562CC4 /* MyViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,6 +786,7 @@
 				0467AD3A1DBDF0B300562CC4 /* RecommendViewController.m in Sources */,
 				0467AD541DBDFFBA00562CC4 /* SurePsdViewController.m in Sources */,
 				0467AD441DBDF0B300562CC4 /* MyViewController.m in Sources */,
+				0457BA021DC07B66009A0B79 /* UIColor+HexString.m in Sources */,
 				04AE67F21DBEF4DF00F4831D /* AboutUsViewController.m in Sources */,
 				0467AD3B1DBDF0B300562CC4 /* SearchViewController.m in Sources */,
 				04AE67CC1DBEEFFC00F4831D /* OrderGoodsViewController.m in Sources */,
@@ -779,6 +796,7 @@
 				0467AD471DBDF0B300562CC4 /* AppDelegate.m in Sources */,
 				0403DD061DBF2BB6000632CD /* RemoveCookieViewController.m in Sources */,
 				0469D3881DC0406300CEF8E6 /* BaseNavigationController.m in Sources */,
+				0457B9FF1DC06B28009A0B79 /* NSString+CheckString.m in Sources */,
 				0403DD0D1DBF3586000632CD /* MyHeaderView.m in Sources */,
 				0469D38E1DC041D000CEF8E6 /* BaseViewController.m in Sources */,
 				0403DCFC1DBF2AFC000632CD /* SecurityAccountViewController.m in Sources */,
@@ -903,7 +921,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/GouGou-Live/Classes/Others/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Myself.GouGou-Live";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -917,7 +935,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/GouGou-Live/Classes/Others/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Myself.GouGou-Live";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

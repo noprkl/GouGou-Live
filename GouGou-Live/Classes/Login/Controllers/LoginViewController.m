@@ -12,7 +12,7 @@
 
 #import "CodeLoginViewController.h"
 
-@interface LoginViewController ()
+@interface LoginViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneTestField;
 @property (weak, nonatomic) IBOutlet UITextField *psdTextField;
@@ -26,6 +26,33 @@
     [super viewDidLoad];
     
      self.view.backgroundColor = [UIColor orangeColor];
+    
+    [self initUI];
+}
+
+- (void)initUI {
+    
+    UIColor *textcolor = [UIColor colorWithHexString:@"fefefe"];
+    UIFont *textFont = [UIFont systemFontOfSize:15];
+    
+    // 
+    
+    // 设置textField的placeHolder
+    self.phoneTestField.placeholder = @"账号  请输入手机号";
+    [self.phoneTestField setValue:textcolor forKeyPath:@"_placeholderLabel.textColor"];
+    [self.phoneTestField setValue:textFont forKeyPath:@"_placeholderLabel.font"];
+    
+    
+    self.psdTextField.placeholder = @"密码  请输入6-20位数字或字母";
+    [self.psdTextField setValue:textcolor forKeyPath:@"_placeholderLabel.textColor"];
+    [self.psdTextField setValue:textFont forKeyPath:@"_placeholderLabel.font"];
+    
+    
+    self.phoneTestField.delegate = self;
+    self.psdTextField.delegate = self;
+    
+    [self.phoneTestField addTarget:self action:@selector(phoneTextFieldChanged:) forControlEvents:(UIControlEventEditingDidEnd)];
+    
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -37,6 +64,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark
 #pragma mark - Action
 - (IBAction)clickEyeBtnAction:(UIButton *)sender {
@@ -45,9 +73,38 @@
     
     sender.selected = !sender.selected;
 }
-
 - (IBAction)clickLoginBtnAction:(UIButton *)sender {
+    
+    NSString *phoneNumber = self.phoneTestField.text;
+    NSString *psdNumber = self.psdTextField.text;
+    
+    BOOL flag =  [NSString valiMobile:phoneNumber];
+    
+    if (phoneNumber.length == 0) {
+        
+        DLog(@"手机号不能为空");
+        
+    }else if(!flag){
+
+        DLog(@"所输入的不是手机号");
+
+    }else{
+        if (psdNumber.length < 6) {
+            
+            DLog(@"密码最少6位");
+
+        }else if (psdNumber.length > 20) {
+
+            DLog(@"密码最多20位");
+            
+        }else{
+            
+            DLog(@"登录成功");
+        }
+    }
+    
 }
+
 - (IBAction)clickRegisteBtnAction:(UIButton *)sender {
     
     RegisteViewController *registeVC = [[RegisteViewController alloc] init];
@@ -75,6 +132,41 @@
 - (IBAction)clickSinaLogin:(UIButton *)sender {
 }
 
+
+#pragma mark - 文本框监听
+
+- (void)phoneTextFieldChanged:(UITextField *)textField {
+    
+    // 判断正则
+    BOOL flag =  [NSString valiMobile:textField.text];
+    if (!flag) {
+        
+        DLog(@"输入不符合");
+    }
+    
+    
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == self.phoneTestField) {
+        // 判断是否是数字
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
+            return YES;
+        }
+        return NO;
+        
+    }else if (textField == self.psdTextField){
+        
+        if (range.location < 20) {
+            return YES;
+        }
+        return NO;
+    }else{
+        
+        return NO;
+    }
+}
 
 
 

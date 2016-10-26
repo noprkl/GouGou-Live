@@ -15,6 +15,8 @@
 #define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
 
+// 验证码倒计时事件
+#define LASTTIME 10
 
 #pragma mark
 #pragma mark - 第三方头文件
@@ -25,7 +27,22 @@
 #import <MJExtension.h>
 
 #pragma mark
-#pragma mark - 
+#pragma mark - 自定义文件
 // 请求网络地址文件
 #import "APIConfig.h"
-#endif 
+// 判断输入的字符串是否符合
+#import "NSString+CheckString.h"
+// 16进制颜色转RGB
+#import "UIColor+HexString.h"
+
+// NSLog 增强
+#define MYDEBUG 1
+
+#ifdef MYDEBUG
+#define DLog(s,...) NSLog(@"[在%@中第%d行] %@", [[NSString 			stringWithFormat:@"%s", __FILE__] lastPathComponent] ,__LINE__, [NSString stringWithFormat:(s),##__VA_ARGS__])
+#else
+#define MyLog(s,...)
+#endif
+
+
+#endif

@@ -13,12 +13,39 @@
 @end
 
 @implementation BaseNavigationController
++ (void)initialize {
+    
+    UINavigationBar *navBar = [UINavigationBar appearance];
 
+    navBar.titleTextAttributes = @{
+                  NSForegroundColorAttributeName:[UIColor grayColor],
+                  NSFontAttributeName:[UIFont systemFontOfSize:20]
+                  };
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{
+                                                          NSForegroundColorAttributeName:[UIColor grayColor],
+                                                          NSFontAttributeName:[UIFont systemFontOfSize:17]
+                                                          }
+                                                forState:(UIControlStateNormal)];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
 
+    
+
+}
+- (void)leftBackBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+
+    [super pushViewController:viewController animated:YES];
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

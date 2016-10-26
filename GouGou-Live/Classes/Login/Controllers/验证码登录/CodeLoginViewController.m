@@ -9,8 +9,13 @@
 #import "CodeLoginViewController.h"
 #import "LoginViewController.h"
 
-@interface CodeLoginViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *regisePhoneNumber;
+@interface CodeLoginViewController ()<UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UITextField *phoneNumber;
+@property (weak, nonatomic) IBOutlet UITextField *psdNumber;
+@property (weak, nonatomic) IBOutlet UIButton *sureBtn;
+@property (weak, nonatomic) IBOutlet UIButton *sendCode;
+
 
 @end
 
@@ -20,39 +25,33 @@
     [super viewDidLoad];
     
     [self initUI];
+    [self setNavBarItem];
 }
-
+- (void)setNavBarItem {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+    
+    self.title = @"验证码登录";
+    
+}
+- (void)leftBackBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
 }
+
 - (void)initUI {
-    // 左边item
-    UIButton *leftItem = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    [leftItem sizeToFit];
-    [leftItem setImage:[UIImage imageNamed:@"返回"] forState:(UIControlStateNormal)];
-    [leftItem addTarget:self action:@selector(leftBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftItem];
     
-    // 右边item
-    self.navigationController.navigationBar.titleTextAttributes = @{
-                                                                    NSForegroundColorAttributeName:[UIColor grayColor]
-                                                                    };
-    
-    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
-    
-    self.title = @"手机号验证";
-    
-    
+    self.phoneNumber.delegate = self;
+    self.psdNumber.delegate = self;
 }
 
 #pragma mark
 #pragma mark - Action
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 - (IBAction)phoneTextfieldEditing:(UITextField *)sender {
     UIButton *button = [sender valueForKey:@"_clearButton"];
     [button setImage:[UIImage imageNamed:@"-单删除"] forState:UIControlStateNormal];
@@ -68,32 +67,94 @@
 
 
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
+    
+#pragma mark 请求验证码
+    [self freetimeout];
+    
 }
 - (IBAction)chickSureBtnAction:(UIButton *)sender {
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        LoginViewController *loginVC = [[LoginViewController alloc] init];
-        
-        [self.navigationController pushViewController:loginVC animated:YES];
-    });
+#pragma mark 验证码登录
+
 
 }
 
+- (IBAction)clickReadBtn:(UIButton *)sender {
+    
+    sender.selected = !sender.selected;
+    
+    // 已阅读 可以确定
+    self.sureBtn.enabled = sender.selected;
+}
+- (IBAction)clickProtocolBtnAction:(UIButton *)sender {
+    
+#pragma mark 协议链接
+    
+}
 
+
+#pragma mark
+#pragma mark - 文本框监听
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == self.phoneNumber) {
+        // 判断是否是数字
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
+            return YES;
+        }
+        return NO;
+        
+    }else if (textField == self.psdNumber){
+        
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 6 && flag) {
+            
+            return YES;
+        }
+        return NO;
+    }else{
+        
+        return NO;
+    }
+}
+- (void)freetimeout {
+    __block NSInteger time = LASTTIME;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(timer, ^{
+        
+        if (time <= 1) {
+            //取消计时
+            dispatch_source_cancel(timer);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.sendCode.userInteractionEnabled = YES;
+                self.sendCode.tintColor = [UIColor colorWithHexString:@"99cc33"];
+                
+                [self.sendCode setTitle:@"重获验证码" forState:(UIControlStateNormal)];
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.sendCode.userInteractionEnabled = NO;
+                
+                self.sendCode.tintColor = [UIColor colorWithHexString:@"#99cc33"];
+                NSString *string = [NSString stringWithFormat:@"%ldS",time];
+                
+                [self.sendCode setTitle:string forState:(UIControlStateNormal)];
+            });
+            time --;
+        }
+        
+    });
+    dispatch_resume(timer);
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

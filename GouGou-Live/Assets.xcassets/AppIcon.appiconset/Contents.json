@@ -21,12 +21,19 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "图层-1@2x.png",
       "scale" : "2x"
     },
     {
+      "size" : "60x60",
       "idiom" : "iphone",
+      "filename" : "图层-1@3x.png",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "car",
       "size" : "60x60",
       "scale" : "3x"
     }

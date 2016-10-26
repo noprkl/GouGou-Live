@@ -42,8 +42,6 @@
     
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     
-    //    nav.title = title;
-    
     NSDictionary *normalDict = @{
                                  NSForegroundColorAttributeName:[UIColor redColor],
                                  NSFontAttributeName:[UIFont boldSystemFontOfSize:20]

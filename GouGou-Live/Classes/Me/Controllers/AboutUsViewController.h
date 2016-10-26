@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface AboutUsViewController : UIViewController
+@interface AboutUsViewController : BaseViewController
 
 @end

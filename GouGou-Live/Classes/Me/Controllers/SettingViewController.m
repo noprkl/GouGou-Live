@@ -2,24 +2,53 @@
 //  SettingViewController.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/10/24.
+//  Created by ma c on 16/10/25.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
 #import "SettingViewController.h"
 
-@interface SettingViewController ()
+#import "ResetLoginPsdView.h"
+
+@interface SettingViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+/** tableView*/
+@property (strong, nonatomic) UITableView *tableView;
+
+/** 数据源 */
+@property (strong, nonatomic) NSArray *dataArr;
+
+/** 控制器 */
+@property (strong, nonatomic) NSArray *controllerNames;
 
 @end
+
+static NSString *cellid = @"SetcellId";
 
 @implementation SettingViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initUI];
     
 }
-
+- (void)initUI {
+    [self.view addSubview:self.tableView];
+}
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 500) style:(UITableViewStylePlain)];
+        
+        _tableView.tableFooterView = [[UIView alloc] init];
+        _tableView.bounces = NO;
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+        
+    }
+    return _tableView;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -27,84 +56,60 @@
 
 #pragma mark - Table view data source
 
+- (NSArray *)dataArr {
+    if (!_dataArr) {
+        _dataArr = @[@[@"账号安全", @"通知消息提醒"], @[@"关于我们"], @[@"意见反馈", @"清除缓存"]];
+    }
+    return _dataArr;
+}
+- (NSArray *)controllerNames {
+    if (!_controllerNames) {
+        _controllerNames = @[@[@"SecurityAccountViewController", @"MessagePushViewController"], @[@"AboutUsViewController"], @[@"SuggestViewController", @"RemoveCookieViewController"]];
+    }
+    return _controllerNames;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 0;
+    
+    return self.dataArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return 0;
+    
+    return [self.dataArr[section] count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
+    }
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    cell.textLabel.text = self.dataArr[indexPath.section][indexPath.row];
+    cell.detailTextLabel.text = @"detailTextLabel";
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
     
-    // Pass the selected object to the new view controller.
+    NSString *cellText = self.controllerNames[indexPath.section][indexPath.row];
+    NSString *title = self.dataArr[indexPath.section][indexPath.row];
     
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    UIViewController *VC = [[NSClassFromString(cellText) alloc] init];
+    VC.title = title;
+    [self.navigationController pushViewController:VC animated:YES];
+    
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 10;
 }
-*/
+- (IBAction)clickLoginoutAction:(UIButton *)sender {
+    
+}
 
 @end

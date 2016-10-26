@@ -70,9 +70,10 @@
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
     SurePsdViewController *surePsdVC = [[SurePsdViewController alloc] init];
-    
+    surePsdVC.title = @"密码确认";
+
     [self.navigationController pushViewController:surePsdVC animated:YES];
-    
+
 }
 
 

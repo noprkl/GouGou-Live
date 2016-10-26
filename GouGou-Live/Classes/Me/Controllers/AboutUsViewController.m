@@ -8,7 +8,15 @@
 
 #import "AboutUsViewController.h"
 
-@interface AboutUsViewController ()
+@interface AboutUsViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+/** 数据源 */
+@property (strong, nonatomic) NSArray *dataArr;
+
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 
 @end
 
@@ -16,9 +24,53 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self initUI];
+}
+- (void)initUI {
+    
+    self.phoneLabel.text = @"服务热线 010-82929292";
+    self.versionLabel.text = @"版本号";
+}
+- (NSArray *)dataArr {
+    if (!_dataArr) {
+        _dataArr = @[@"用户使用协议", @"检查更新"];
+    }
+    return _dataArr;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return self.dataArr.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *cellid = @"cellid";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+    }
+    
+    cell.textLabel.text = self.dataArr[indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSString *cellText = self.dataArr[indexPath.row];
+    
+    if ([cellText isEqualToString:@"用户使用协议"]) {
+        
+        NSLog(@"%@", cellText);
+    }else if ([cellText isEqualToString:@"检查更新"]) {
+
+        NSLog(@"%@", cellText);
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

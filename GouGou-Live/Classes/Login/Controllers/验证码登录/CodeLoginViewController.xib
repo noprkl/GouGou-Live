@@ -18,7 +18,6 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="手机icon" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-bl-0Ko">
                     <rect key="frame" x="10" y="106" width="18" height="18"/>
-                    <color key="backgroundColor" red="0.749502424" green="0.88934264519999995" blue="0.56617452459999995" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x59-FO-T2a">
                     <rect key="frame" x="39" y="100" width="1" height="30"/>
@@ -63,7 +62,7 @@
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yhv-W8-FlL">
                     <rect key="frame" x="324" y="152" width="80" height="28"/>
-                    <color key="backgroundColor" red="0.1079960423" green="0.88934264519999995" blue="0.26210022449999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="获取验证码">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -94,7 +93,7 @@
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znJ-No-jcj">
                     <rect key="frame" x="50" y="258" width="314" height="40"/>
-                    <color key="backgroundColor" red="0.1079960423" green="0.88934264519999995" blue="0.26210022449999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="KMl-3K-JDI"/>
                     </constraints>
@@ -104,7 +103,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.7495024239551803" green="0.88934264519999995" blue="0.56617452459415607" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.91388260690789469" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Yhv-W8-FlL" firstAttribute="centerY" secondItem="1MZ-51-lpe" secondAttribute="centerY" id="1tU-Vj-zOb"/>
                 <constraint firstItem="znJ-No-jcj" firstAttribute="leading" secondItem="Heb-nR-3QR" secondAttribute="leading" id="2EO-dn-1sP"/>

@@ -37,8 +37,6 @@
 
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
 
-    self.title = @"密码确认";
-
 
 }
 

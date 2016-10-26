@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 typedef void(^LiveTopBlock)(NSInteger btnTag);
 
 @interface LiveTopView : UIView
@@ -14,5 +15,6 @@ typedef void(^LiveTopBlock)(NSInteger btnTag);
 /** 重写view初始化方法 */
 - (instancetype)initWithFrame:(CGRect)frame titleNames:(NSArray *)titles tapView:(LiveTopBlock)tapBlock;
 
-
+/** 滑动时btn变化 */
+- (void)scrolling:(NSInteger)btnTag;
 @end

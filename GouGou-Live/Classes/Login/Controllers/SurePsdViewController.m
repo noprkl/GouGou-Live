@@ -8,6 +8,7 @@
 
 #import "SurePsdViewController.h"
 #import "LoginViewController.h"
+#import "SurePsdSuccessViewController.h"
 
 @interface SurePsdViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *psdTextField;
@@ -80,6 +81,10 @@
     }else{
         
 #pragma mark 确定提交新密码
+        SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
+        
+        [self.navigationController pushViewController:sureSuccVC animated:YES];
+        
         DLog(@"密码已确认");
     }
 }

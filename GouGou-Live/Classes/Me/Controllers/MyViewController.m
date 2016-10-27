@@ -36,8 +36,7 @@
     self.hidesBottomBarWhenPushed = NO;
 }
 - (void)initUI {
-    self.view.backgroundColor = [UIColor greenColor];
-    
+
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.bounces = NO;

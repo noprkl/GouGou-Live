@@ -25,30 +25,41 @@
 }
 - (void)addChildViewController {
  
+    
     LiveViewController *liveVC = [[LiveViewController alloc] init];
-    //    UINavigationController *liveNav = [[UINavigationController alloc] initWithRootViewController:liveVC];
-    [self createVC:liveVC title:@"直播"];
+    [self createVC:liveVC title:@"首页" unSelectIcon:[UIImage imageNamed:@"首页（未点击）"] selectIcon:[UIImage imageNamed:@"首页"]];
     
     MessageViewController *messageVC = [[MessageViewController alloc] init];
-    //    UINavigationController *messageNav = [[UINavigationController alloc] initWithRootViewController:messageVC];
-    [self createVC:messageVC title:@"消息"];
+    [self createVC:messageVC title:@"消息" unSelectIcon:[UIImage imageNamed:@"消息（未点击）"] selectIcon:[UIImage imageNamed:@"消息"]];
     
     MyViewController *myVC = [[MyViewController alloc] init];
-    //    UINavigationController *myNav = [[UINavigationController alloc] initWithRootViewController:myVC];
-    [self createVC:myVC title:@"我的"];
+    [self createVC:myVC title:@"我的" unSelectIcon:[UIImage imageNamed:@"我的（未点击）"] selectIcon:[UIImage imageNamed:@"我的"]];
 
 }
-- (void)createVC:(UIViewController *)vc title:(NSString *)title {
+- (void)createVC:(UIViewController *)vc title:(NSString *)title unSelectIcon:(UIImage *)unSelectIcon selectIcon:(UIImage *)selectIcon {
     
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    // 文字偏移
+    vc.tabBarItem.titlePositionAdjustment = UIOffsetMake(3, 0);
     
+    vc.title = title;
+    // 文字富文本
     NSDictionary *normalDict = @{
-                                 NSForegroundColorAttributeName:[UIColor redColor],
-                                 NSFontAttributeName:[UIFont boldSystemFontOfSize:20]
-                                 };
+                                   NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"],
+                                   NSFontAttributeName:[UIFont systemFontOfSize:13]
+                                   };
     
     [vc.tabBarItem setTitleTextAttributes:normalDict forState:(UIControlStateNormal)];
-    vc.title = title;
+    NSDictionary *selectDict = @{
+                                   NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffa11a"],
+                                   NSFontAttributeName:[UIFont systemFontOfSize:13]
+                                   };
+    
+    [vc.tabBarItem setTitleTextAttributes:selectDict forState:(UIControlStateSelected)];
+    // 图片偏移
+//    [vc.tabBarItem setImageInsets:UIEdgeInsetsMake(2, 0, -2, 0)];
+    [vc.tabBarItem setImage:unSelectIcon];
+    [vc.tabBarItem setSelectedImage:selectIcon];
     
     [self addChildViewController:nav];
     
@@ -58,15 +69,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

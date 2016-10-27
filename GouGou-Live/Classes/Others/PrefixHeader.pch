@@ -18,7 +18,7 @@
 // 验证码倒计时事件
 #define LASTTIME 10
 
-#pragma mark
+
 #pragma mark - 第三方头文件
 #define MAS_SHORTHAND
 #define MAS_SHORTHAND_GLOBALS
@@ -26,7 +26,6 @@
 #import <AFNetworking.h>
 #import <MJExtension.h>
 
-#pragma mark
 #pragma mark - 自定义文件
 // 请求网络地址文件
 #import "APIConfig.h"

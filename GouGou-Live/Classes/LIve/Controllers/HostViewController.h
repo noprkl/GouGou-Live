@@ -8,6 +8,11 @@
 
 #import "BaseViewController.h"
 
+typedef void(^ClickTypeCellBlock)(NSInteger index);
+
 @interface HostViewController : BaseViewController
+
+/** 点击cell回调 */
+@property (strong,nonatomic) ClickTypeCellBlock typeBlock;
 
 @end

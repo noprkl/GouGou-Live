@@ -50,10 +50,23 @@
             // button标题
             NSString *title = titles[i];
             
-            [button setTintColor:[UIColor whiteColor]];
-            button.titleLabel.font = [UIFont systemFontOfSize:19];
-            [button setTitle:title forState:UIControlStateNormal];
+            // 正常
+            NSDictionary *normalAttributeDict = @{
+                                           NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.8],
+                                           NSFontAttributeName:[UIFont systemFontOfSize:18]
+                                           };
+            NSAttributedString *normalAttribute = [[NSAttributedString alloc] initWithString:title attributes:normalAttributeDict];
             
+            [button setAttributedTitle:normalAttribute forState:(UIControlStateNormal)];
+
+            // 选中
+            NSDictionary *selectAttributeDict = @{
+                                                  NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.8],
+                                                  NSFontAttributeName:[UIFont systemFontOfSize:18]
+                                                  };
+            NSAttributedString *selectAttribute = [[NSAttributedString alloc] initWithString:title attributes:selectAttributeDict];
+            
+            [button setAttributedTitle:selectAttribute forState:(UIControlStateSelected)];
             
             
             button.frame = CGRectMake(i * btnWid, 0, btnWid, btnHig);
@@ -68,9 +81,6 @@
                 // 下划线宽度 = 按钮文字宽度
                 // 下划线中心点x = 按钮中心点x (竖直方向)
                 
-                CGFloat h = 2;
-                CGFloat y = 36;
-                
                 // 先计算文字宽度 给label赋值
                 [button.titleLabel sizeToFit];
                 
@@ -79,16 +89,14 @@
                 
                 [lineView makeConstraints:^(MASConstraintMaker *make) {
                     make.centerX.equalTo(button.titleLabel.centerX);
-                    make.top.equalTo(y);
-                    make.size.equalTo(CGSizeMake(button.titleLabel.frame.size.width, h));
+                    make.bottom.equalTo(self.bottom);
+                    make.size.equalTo(CGSizeMake(50, 2));
                 }];
                 
                 lineView.backgroundColor = [UIColor whiteColor];
                 
                 self.lineView = lineView;
                 
-                
-         
             }
             
         }
@@ -111,8 +119,8 @@
     [UIView animateWithDuration:0.3 animations:^{
         
         [self.lineView remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(36);
-            make.size.equalTo(CGSizeMake(button.titleLabel.frame.size.width, 2));
+            make.bottom.equalTo(self.bottom);
+            make.size.equalTo(CGSizeMake(50, 2));
             make.centerX.equalTo(button.centerX);
         }];
         

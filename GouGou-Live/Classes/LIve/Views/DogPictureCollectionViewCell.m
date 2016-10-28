@@ -8,6 +8,8 @@
 
 #import "DogPictureCollectionViewCell.h"
 
+#import "DogTypeCellModel.h"
+
 @interface DogPictureCollectionViewCell ()
 
 /** 狗狗图片 */
@@ -44,7 +46,11 @@
     }
     return self;
 }
-
+- (void)setTypeModel:(DogTypeCellModel *)typeModel {
+    
+    _typeModel = typeModel;
+    
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
@@ -53,28 +59,27 @@
     __weak typeof(self) weakself = self;
     [_liveDogPicture mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.left.right.equalTo(weakself);
+        make.top.left.equalTo(weakself).offset(10);
+        make.right.equalTo(weakself.right).offset(-10);
         make.height.equalTo(92);
     }];
     
     [_hudView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.right.equalTo(weakself);
+        make.left.right.equalTo(weakself.liveDogPicture);
         make.bottom.equalTo(weakself.liveDogPicture);
         make.height.equalTo(20);
     }];
     
     [_degistLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(weakself.hudView.top);
         make.left.equalTo(weakself.hudView.left).offset(5);
         make.centerY.equalTo(weakself.hudView.centerY);
+        make.height.equalTo(weakself.hudView.height);
     }];
     
     [_salesvolumeLable mas_makeConstraints:^(MASConstraintMaker *make) {
-       
-        make.top.equalTo(weakself.hudView.top);
-        make.right.equalTo(weakself.hudView.right).offset(-5);
+        make.height.equalTo(weakself.hudView.height);
+        make.right.equalTo(weakself.hudView.right).offset(- 5);
         make.centerY.equalTo(weakself.degistLable.centerY);
         
     }];
@@ -82,25 +87,26 @@
     [_titlelable mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.liveDogPicture.bottom).offset(10);
-        make.left.equalTo(weakself.left);
-        make.bottom.equalTo(weakself.bottom);
+        make.left.equalTo(weakself.liveDogPicture.left);
+        make.bottom.equalTo(weakself.bottom).offset(-10);
 
-    }];
-    
-    [_personImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(weakself.liveDogPicture.bottom).offset(10);
-        make.left.equalTo(weakself.titlelable.right).offset(5);
-        
     }];
     
     [_personNumLable mas_makeConstraints:^(MASConstraintMaker *make) {
-    
-        make.left.equalTo(weakself.personImage.right).offset(5);
-        make.right.equalTo(weakself.right);
-        make.centerY.equalTo(weakself.personImage.centerY);
-
+        
+        make.centerY.equalTo(weakself.titlelable.centerY);
+        make.right.equalTo(weakself.liveDogPicture.right);
+        
     }];
+    
+    [_personImage mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.centerY.equalTo(weakself.personNumLable.centerY);
+        make.right.equalTo(weakself.personNumLable.left).offset(-5);
+        
+    }];
+    
+   
 }
 
 #pragma mark

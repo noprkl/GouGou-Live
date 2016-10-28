@@ -9,7 +9,8 @@
 #import "HostViewController.h"
 #import "DogPictureCollectionViewCell.h"
 #import "DogTypesView.h"
-static NSInteger kMargin = 20;
+
+#import "LivingViewController.h"
 
 static NSString * identifer = @"DogPictureCellID";
 static NSString * reuseIdentifier = @"headerID";
@@ -21,7 +22,7 @@ static NSString * reuseIdentifier = @"headerID";
 @property (strong,nonatomic) DogTypesView *typesView;
 
 /** 数据源 */
-@property (strong,nonatomic) NSArray *dataArray;
+@property (strong,nonatomic) NSMutableArray *dataArray;
 
 @end
 
@@ -29,13 +30,14 @@ static NSString * reuseIdentifier = @"headerID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.view.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1];
     
     [self initUI];
     
 }
 
 - (void)initUI {
+
+    self.view.backgroundColor = [UIColor colorWithHexString:@"e0e0e0"];
 
     self.edgesForExtendedLayout = 64;
     [self addCollectionview];
@@ -59,75 +61,80 @@ static NSString * reuseIdentifier = @"headerID";
     [_collection mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.typesView.bottom).offset(10);
-        make.left.right.bottom.equalTo(weakself.view);
+        make.left.right.equalTo(weakself.view);
+        make.bottom.equalTo(weakself.view.bottom).offset(-64);
     }];
     
 }
 - (DogTypesView *)typesView {
     
     if (!_typesView) {
+        
         _typesView = [[DogTypesView alloc] init];
+        _typesView.backgroundColor = [UIColor whiteColor];
+
         _typesView.easyBtnBlock = ^(){
             
-            NSLog(@"以驯养");
+            DLog(@"以驯养");
         };
         
         _typesView.noDropFureBlock = ^(){
         
-            NSLog(@"不掉毛");
+            DLog(@"不掉毛");
         
         };
         
         _typesView.faithBtnBlock = ^(){
             
-            NSLog(@"忠诚");
+            DLog(@"忠诚");
             
         };
         
         _typesView.lovelyBtnBlock = ^(){
             
-            NSLog(@"可爱");
-            
+            DLog(@"可爱");
         };
         
         _typesView.moreImpressBtnBlock = ^(){
             
-            NSLog(@"更多印象");
-            
+            DLog(@"更多印象");
         };
     }
     return _typesView;
 }
-
+- (NSMutableArray *)dataArray {
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
 - (UICollectionView *)collection {
 
     if (!_collection) {
         
         UICollectionViewFlowLayout * flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        NSInteger colBoardaMargin = (SCREEN_WIDTH - 10 - 2 * 172)/2;
 
-        //section的内边距
-        flowLayout.sectionInset = UIEdgeInsetsMake(kMargin, colBoardaMargin, kMargin, colBoardaMargin);
         //设置item的大小
-        flowLayout.itemSize = CGSizeMake(172, 120);
-        flowLayout.minimumLineSpacing = 10;
+        flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH / 2, 130);
+        flowLayout.minimumLineSpacing = 0;
+        flowLayout.minimumInteritemSpacing = 0;
         // 设置滚动方向
         flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        
 //        // 设置头部区域大小
 //        flowLayout.headerReferenceSize = CGSizeMake(0, 45);
         
-        _collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowLayout];
+        _collection = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         
         _collection.delegate  = self;
         _collection.dataSource = self;
-        _collection.clearsContextBeforeDrawing = YES;
+        _collection.showsHorizontalScrollIndicator = NO;
         
-        _collection.backgroundColor = [UIColor whiteColor];
+        _collection.backgroundColor = [UIColor colorWithHexString:@"e0e0e0"];
+        
         // 注册cell
         [_collection registerClass:[DogPictureCollectionViewCell class] forCellWithReuseIdentifier:identifer];
         
-//        // 注册header
-//        [_collection registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseIdentifier];
     }
     return _collection;
 }
@@ -135,28 +142,10 @@ static NSString * reuseIdentifier = @"headerID";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
+//    return self.dataArray.count;
     return 4;
 }
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-//
-//    //判断header,footer
-//    if (kind == UICollectionElementKindSectionHeader) {
-//        
-//        //从缓冲池里获取header
-//        UICollectionReusableView * reuseView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-//        
-//        reuseView.backgroundColor = [UIColor yellowColor];
-//        
-//        return reuseView;
-//    }
-//    
-//    return nil;
-//}
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     DogPictureCollectionViewCell * dogpictureCell = [collectionView dequeueReusableCellWithReuseIdentifier:identifer forIndexPath:indexPath];
@@ -167,23 +156,24 @@ static NSString * reuseIdentifier = @"headerID";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
-
+   
+    if (_typeBlock) {
+        
+        _typeBlock(indexPath.row);
+    
+    }
+    
+        LivingViewController *livingVC = [[LivingViewController alloc] init];
+        livingVC.title = [NSString stringWithFormat:@"直播-%ld", indexPath.row];
+        
+        [self.navigationController pushViewController:livingVC animated:YES];
+        
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

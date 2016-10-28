@@ -33,6 +33,7 @@
     [self createAddChildVC];
     [self setNavView];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -127,7 +128,7 @@
 
 - (NSArray *)childTitle {
     if (!_childTitle) {
-        _childTitle = @[@"关注", @"推荐", @"最新"];
+        _childTitle = @[@"关注", @"展播", @"最新"];
     }
     return _childTitle;
 }
@@ -135,7 +136,7 @@
     
     if (!_topView) {
         
-        _topView = [[LiveTopView alloc] initWithFrame:CGRectMake(0, 0, 200, 40) titleNames:self.childTitle tapView:^(NSInteger btnTag) {
+        _topView = [[LiveTopView alloc] initWithFrame:CGRectMake(0, 0, 250, 44) titleNames:self.childTitle tapView:^(NSInteger btnTag) {
             
             _topView.backgroundColor = [UIColor colorWithRed:152/255.0 green:204/255.0 blue:42/255.0 alpha:1];
             

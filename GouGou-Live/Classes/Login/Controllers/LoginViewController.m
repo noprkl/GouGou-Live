@@ -35,8 +35,6 @@
     UIColor *textcolor = [UIColor colorWithHexString:@"fefefe"];
     UIFont *textFont = [UIFont systemFontOfSize:15];
     
-    // 
-    
     // 设置textField的placeHolder
     self.phoneTestField.placeholder = @"账号  请输入手机号";
     [self.phoneTestField setValue:textcolor forKeyPath:@"_placeholderLabel.textColor"];

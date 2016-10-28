@@ -80,7 +80,7 @@
     }
     
     cell.detailTextLabel.text = @"detailTextLabel";
-   
+    
     cell.textLabel.text = self.dataSource[indexPath.section][indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     

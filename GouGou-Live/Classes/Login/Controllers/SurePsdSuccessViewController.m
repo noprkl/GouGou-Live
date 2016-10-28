@@ -73,6 +73,9 @@
         
     });
     dispatch_resume(timer);
+    
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

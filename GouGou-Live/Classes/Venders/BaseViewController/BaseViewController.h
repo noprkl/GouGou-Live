@@ -11,4 +11,5 @@
 @interface BaseViewController : UIViewController
 
 - (void)setTextFieldCleanBtnWith:(UITextField *)textField;
+
 @end

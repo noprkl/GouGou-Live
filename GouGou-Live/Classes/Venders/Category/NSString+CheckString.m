@@ -42,7 +42,7 @@
         }
     }
 }
-
+// 判断是否是数字
 + (BOOL)validateNumber:(NSString*)number {
     BOOL res =YES;
     NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];

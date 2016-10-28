@@ -86,6 +86,10 @@
 		04AE67F21DBEF4DF00F4831D /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE67F01DBEF4DF00F4831D /* AboutUsViewController.m */; };
 		04AE67F31DBEF4DF00F4831D /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE67F11DBEF4DF00F4831D /* AboutUsViewController.xib */; };
 		04AE67F61DBEFC9A00F4831D /* ResetLoginPsdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE67F51DBEFC9A00F4831D /* ResetLoginPsdView.m */; };
+		04D033151DC3037B00EBE9B7 /* DogAgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D033141DC3037B00EBE9B7 /* DogAgeFilter.m */; };
+		04D033181DC31F1A00EBE9B7 /* DogPriceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D033171DC31F1A00EBE9B7 /* DogPriceFilter.m */; };
+		04D0331C1DC3223400EBE9B7 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D0331A1DC3223400EBE9B7 /* PlayerViewController.m */; };
+		04D0331D1DC3223400EBE9B7 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D0331B1DC3223400EBE9B7 /* PlayerViewController.xib */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -223,6 +227,13 @@
 		04AE67F11DBEF4DF00F4831D /* AboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
 		04AE67F41DBEFC9A00F4831D /* ResetLoginPsdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetLoginPsdView.h; sourceTree = "<group>"; };
 		04AE67F51DBEFC9A00F4831D /* ResetLoginPsdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetLoginPsdView.m; sourceTree = "<group>"; };
+		04D033131DC3037B00EBE9B7 /* DogAgeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogAgeFilter.h; sourceTree = "<group>"; };
+		04D033141DC3037B00EBE9B7 /* DogAgeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogAgeFilter.m; sourceTree = "<group>"; };
+		04D033161DC31F1A00EBE9B7 /* DogPriceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogPriceFilter.h; sourceTree = "<group>"; };
+		04D033171DC31F1A00EBE9B7 /* DogPriceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogPriceFilter.m; sourceTree = "<group>"; };
+		04D033191DC3223400EBE9B7 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
+		04D0331A1DC3223400EBE9B7 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
+		04D0331B1DC3223400EBE9B7 /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -339,9 +350,9 @@
 			children = (
 				0469D3801DC03F8400CEF8E6 /* Venders */,
 				0467ACFF1DBDF0B300562CC4 /* LIve */,
-				0467AD121DBDF0B300562CC4 /* Login */,
-				0467AD201DBDF0B300562CC4 /* Me */,
 				0467AD281DBDF0B300562CC4 /* Messages */,
+				0467AD201DBDF0B300562CC4 /* Me */,
+				0467AD121DBDF0B300562CC4 /* Login */,
 				0467AD2F1DBDF0B300562CC4 /* Others */,
 			);
 			path = Classes;
@@ -365,7 +376,7 @@
 				0467AD061DBDF0B300562CC4 /* LiveViewController.m */,
 				0467AD071DBDF0B300562CC4 /* LiveViewController.xib */,
 				046BC2DC1DC2ED5D00B5DD52 /* 关注 */,
-				046BC2D91DC2ED2C00B5DD52 /* 展播 */,
+				046BC2D91DC2ED2C00B5DD52 /* 推荐 */,
 				046BC2DB1DC2ED5500B5DD52 /* 最新 */,
 				046BC2DD1DC2ED6B00B5DD52 /* 直播界面 */,
 				046BC2DA1DC2ED4100B5DD52 /* 搜索界面 */,
@@ -620,13 +631,13 @@
 			name = "滚动卡片";
 			sourceTree = "<group>";
 		};
-		046BC2D91DC2ED2C00B5DD52 /* 展播 */ = {
+		046BC2D91DC2ED2C00B5DD52 /* 推荐 */ = {
 			isa = PBXGroup;
 			children = (
 				0467AD081DBDF0B300562CC4 /* RecommendViewController.h */,
 				0467AD091DBDF0B300562CC4 /* RecommendViewController.m */,
 			);
-			name = "展播";
+			name = "推荐";
 			sourceTree = "<group>";
 		};
 		046BC2DA1DC2ED4100B5DD52 /* 搜索界面 */ = {
@@ -663,6 +674,9 @@
 				046BC2D01DC2E72500B5DD52 /* LivingViewController.h */,
 				046BC2D11DC2E72500B5DD52 /* LivingViewController.m */,
 				046BC2D21DC2E72500B5DD52 /* LivingViewController.xib */,
+				04D033191DC3223400EBE9B7 /* PlayerViewController.h */,
+				04D0331A1DC3223400EBE9B7 /* PlayerViewController.m */,
+				04D0331B1DC3223400EBE9B7 /* PlayerViewController.xib */,
 			);
 			name = "直播界面";
 			sourceTree = "<group>";
@@ -706,6 +720,10 @@
 			children = (
 				046BC2BA1DC2E71200B5DD52 /* DogSizeFilter.h */,
 				046BC2BB1DC2E71200B5DD52 /* DogSizeFilter.m */,
+				04D033131DC3037B00EBE9B7 /* DogAgeFilter.h */,
+				04D033141DC3037B00EBE9B7 /* DogAgeFilter.m */,
+				04D033161DC31F1A00EBE9B7 /* DogPriceFilter.h */,
+				04D033171DC31F1A00EBE9B7 /* DogPriceFilter.m */,
 			);
 			name = "筛选弹出框";
 			sourceTree = "<group>";
@@ -891,6 +909,7 @@
 				0467AD431DBDF0B300562CC4 /* RegisteViewController.xib in Resources */,
 				04AE67B81DBE21FD00F4831D /* CodeLoginViewController.xib in Resources */,
 				04AE67F31DBEF4DF00F4831D /* AboutUsViewController.xib in Resources */,
+				04D0331D1DC3223400EBE9B7 /* PlayerViewController.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
 				04AE67C31DBEEFA000F4831D /* AccountViewController.xib in Resources */,
 				0467AD411DBDF0B300562CC4 /* LoginViewController.xib in Resources */,
@@ -974,6 +993,8 @@
 				04AE67ED1DBEF4CA00F4831D /* SuggestViewController.m in Sources */,
 				0467AD461DBDF0B300562CC4 /* MessageViewController.m in Sources */,
 				04AE67C21DBEEFA000F4831D /* AccountViewController.m in Sources */,
+				04D033181DC31F1A00EBE9B7 /* DogPriceFilter.m in Sources */,
+				04D033151DC3037B00EBE9B7 /* DogAgeFilter.m in Sources */,
 				04AE67E21DBEF0DE00F4831D /* CertificateViewController.m in Sources */,
 				0467AD401DBDF0B300562CC4 /* LoginViewController.m in Sources */,
 				042F19BD1DC1CF950079E8BC /* DogTypesView.m in Sources */,
@@ -993,6 +1014,7 @@
 				046BC2CC1DC2E71200B5DD52 /* LiveTableView.m in Sources */,
 				0467AD371DBDF0B300562CC4 /* HostViewController.m in Sources */,
 				0467AD471DBDF0B300562CC4 /* AppDelegate.m in Sources */,
+				04D0331C1DC3223400EBE9B7 /* PlayerViewController.m in Sources */,
 				0403DD061DBF2BB6000632CD /* RemoveCookieViewController.m in Sources */,
 				042F19BA1DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m in Sources */,
 				046BC2D71DC2E73700B5DD52 /* LiveViewCellModel.m in Sources */,

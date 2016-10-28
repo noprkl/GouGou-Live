@@ -27,7 +27,7 @@
 #import <MJExtension.h>
 
 #pragma mark - 自定义文件
-// 请求网络地址文件
+// 网络请求URL文件
 #import "APIConfig.h"
 // 判断输入的字符串是否符合
 #import "NSString+CheckString.h"

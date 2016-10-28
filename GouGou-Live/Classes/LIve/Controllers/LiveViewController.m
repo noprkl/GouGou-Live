@@ -44,9 +44,11 @@
 - (void)setNavView{
     
     self.navigationItem.titleView = self.topView;
+   
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"01"] style:(UIBarButtonItemStylePlain) target:self action:@selector(LeftBarAction)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"搜索放大镜"] style:(UIBarButtonItemStylePlain) target:self action:@selector(LeftBarAction)];
+    
 }
 - (void)LeftBarAction {
     
@@ -128,7 +130,7 @@
 
 - (NSArray *)childTitle {
     if (!_childTitle) {
-        _childTitle = @[@"关注", @"展播", @"最新"];
+        _childTitle = @[@"关注", @"推荐", @"最新"];
     }
     return _childTitle;
 }

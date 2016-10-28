@@ -14,8 +14,8 @@
 #import "LiveFilteView.h" // 筛选view
 // 筛选弹窗
 #import "DogSizeFilter.h"
-
-
+#import "DogAgeFilter.h"
+#import "DogPriceFilter.h"
 
 #import "LivingViewController.h"
 
@@ -136,10 +136,31 @@
             
         };
         _filtView.ageBlock = ^(){
-            DLog(@"age");
+            DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
+            ageView.dataPlist = @[@"不限", @"一个月", @"二个月", @"6个月", @"一年", @"两年"];
+            [ageView show];
+            
+            //            __weak typeof(sizeView) weakView = sizeView;
+            
+            ageView.ageRangeBlock = ^(NSString *minString, NSString *maxString){
+
+                DLog(@"%@--%@", minString, maxString);
+            };
+            
         };
         _filtView.priceBlock = ^(){
-            DLog(@"price");
+            DogPriceFilter *priceView = [[DogPriceFilter alloc] init];
+            priceView.dataPlist = @[@"不限", @"50", @"100", @"300", @"500", @"1000", @"3000", @"5000"];
+            [priceView show];
+            
+            //            __weak typeof(sizeView) weakView = sizeView;
+            
+            priceView.priceRangeBlock = ^(NSString *minString, NSString *maxString){
+                
+                DLog(@"%@--%@", minString, maxString);
+            };
+            
+
         };
     }
     return _filtView;

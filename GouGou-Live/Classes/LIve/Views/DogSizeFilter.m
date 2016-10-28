@@ -38,15 +38,6 @@ static NSString *cellid = @"SizeFilterCellID";
     return _overLayer;
 }
 
-//- (instancetype)initWithFrame:(CGRect)frame
-//{
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//        
-//        self.backgroundColor = [UIColor orangeColor];
-//    }
-//    return self;
-//}
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
 {
     self = [super initWithFrame:frame style:style];
@@ -147,6 +138,7 @@ static NSString *cellid = @"SizeFilterCellID";
     return cell;
 
 }
+#pragma mark 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
 }
@@ -157,6 +149,7 @@ static NSString *cellid = @"SizeFilterCellID";
 
     return 44;
 }
+#pragma mark 头尾
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         
@@ -193,6 +186,8 @@ static NSString *cellid = @"SizeFilterCellID";
     return nil;
 
 }
+
+#pragma mark 选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
      NSString *text = self.dataPlist[indexPath.row];

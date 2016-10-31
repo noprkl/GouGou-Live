@@ -80,6 +80,7 @@
         _baseScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
         _baseScrollView.contentSize = CGSizeMake(0, 1000);
         _baseScrollView.showsHorizontalScrollIndicator = NO;
+        _baseScrollView.showsVerticalScrollIndicator = NO;
         _baseScrollView.delegate = self;
     }
     return _baseScrollView;

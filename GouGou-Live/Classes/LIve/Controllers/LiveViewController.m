@@ -68,7 +68,7 @@
         
         NSString *vcName = childVCName[i];
         UIViewController *vc = [[NSClassFromString(vcName) alloc] init];
-        vc.title = self.childTitle[i];
+//        vc.title = self.childTitle[i];
         
         // 执行addChildViewController时不会执行viewDidLoad 视图不会被加载
         [self addChildViewController:vc];

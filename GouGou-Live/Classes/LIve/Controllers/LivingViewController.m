@@ -13,7 +13,13 @@
 #import "LivingCenterView.h"
 #import "LiveTopView.h"
 
-@interface LivingViewController ()
+#import "ShareAlertView.h"
+#import "ShareBtnModel.h"
+
+// 播放器
+#import "PlayerViewController.h"
+
+@interface LivingViewController ()<UIScrollViewDelegate>
 
 /** 返回按钮 */
 @property (strong, nonatomic) UIButton *backBtn;
@@ -33,6 +39,9 @@
 /** 全屏 */
 @property (strong, nonatomic) UIButton *screenBtn;
 
+/** 播放器 */
+@property (strong, nonatomic) PlayerViewController *playerVC;
+
 /** 选择按钮 */
 @property (strong, nonatomic) LivingCenterView *centerView;
 
@@ -43,8 +52,15 @@
 /** 按钮选中图片 */
 @property (strong, nonatomic) NSArray *childSelectImages;
 
+/** 底部scrollview */
+@property (strong, nonatomic) UIScrollView *baseScrollView;
+
 /** 子控制器 */
 @property (strong, nonatomic) NSMutableArray *childVCS;
+
+/** 分享弹出框 */
+@property (strong, nonatomic) NSArray *shareAlertBtns;
+
 @end
 
 @implementation LivingViewController
@@ -83,6 +99,13 @@
 #pragma mark - UI
 - (void)initUI {
     
+//    PlayerViewController *playVC = [[PlayerViewController alloc] init];
+//    playVC.view.frame = CGRectMake(0, 30, SCREEN_WIDTH, 215);
+//    
+//    [self.view addSubview:self.playerVC.view];
+//    
+//    self.playerVC = playVC;
+    
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
 
     [window addSubview:self.backBtn];
@@ -93,9 +116,13 @@
     [window addSubview:self.watchLabel];
     [window addSubview:self.screenBtn];
     
+//    [self addChildViewController:self.playerVC];
+//    [self.view addSubview:self.playerVC.view];
     
     [self.view addSubview:self.centerView];
-
+    [self.view addSubview:self.baseScrollView];
+    
+    [self addChildViewController];
     
     [self makeConstraint];
 }
@@ -104,6 +131,12 @@
         make.top.equalTo(self.view.top).offset(245);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 45));
     }];
+    
+    [self.baseScrollView makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.centerView.bottom);
+        make.left.right.bottom.equalTo(self.view);
+    }];
+    
 }
 - (NSMutableArray *)childVCS {
     if (!_childVCS) {
@@ -122,51 +155,94 @@
         [self.childVCS addObject:vc];
     }
     
-    [self addChildView:1];
+    // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
+    self.baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childTitles.count, 0);
+    
+    // 设置contentView加载时的位置
+    self.baseScrollView.contentOffset = CGPointMake(0, 0);
+    
+    // 减速结束加载控制器视图 代理
+    self.baseScrollView.delegate = self;
+    
+    // 进入后第一次加载hot
+    [self scrollViewDidEndDecelerating:self.baseScrollView];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    // 每个子控制器的宽高
+    CGFloat width = SCREEN_WIDTH;
+    CGFloat height = SCREEN_HEIGHT;
+    
+    // 偏移量 - x
+    CGFloat offset = scrollView.contentOffset.x;
+    
+    // 获取视图的索引
+    NSInteger index = offset / width;
+    
+    //根据索引返回vc的引用
+    UIViewController *childVC = self.childViewControllers[index];
+    
+    // 判断当前vc是否加载过
+    if ([childVC isViewLoaded]) return;
+    
+    // 给没加载过的控制器设置frame
+    childVC.view.frame = CGRectMake(offset, 0, width, height);
+    
+    // 添加控制器视图到contentScrollView上
+    [scrollView addSubview:childVC.view];
+    
+}
+// 减速结束时调用 加载子控制器view的方法
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    // 传的调用这个代理方法的scrollview
+    [self scrollViewDidEndScrollingAnimation:scrollView];
 }
 
 #pragma mark
 #pragma mark - 中间view
-- (void)addChildView:(NSInteger)index {
-
-    UIViewController *vc = self.childVCS[index];
-    
-    if ([vc  isViewLoaded]) return;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        CGRect rect = vc.view.frame;
-        rect = CGRectMake(index * SCREEN_WIDTH, CGRectGetMaxY(self.centerView.frame), SCREEN_WIDTH, 1000);
-        vc.view.frame = rect;
-    }];
-
-    [self.view addSubview:vc.view];
-
+- (UIScrollView *)baseScrollView {
+    if (!_baseScrollView) {
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+        _baseScrollView.scrollEnabled = NO;
+        _baseScrollView.pagingEnabled = YES;
+        _baseScrollView.showsVerticalScrollIndicator = NO;
+    }
+    return _baseScrollView;
 }
 - (LivingCenterView *)centerView {
     
     if (!_centerView) {
         _centerView = [[LivingCenterView alloc] init];
+        
         __weak typeof(self) weakSelf = self;
         _centerView.talkBlock = ^(UIButton *btn){
             
+            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
-            
-            [weakSelf addChildView:0];
+            [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
-            [weakSelf addChildView:1];
+            
+            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            
+            [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
             return YES;
         };
         _centerView.serviceBlock = ^(UIButton *btn){
-            [weakSelf addChildView:2];
+            CGPoint center = CGPointMake(2 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            
+            [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
         };
         _centerView.sellerBlock = ^(UIButton *btn){
-            [weakSelf addChildView:3];
+            CGPoint center = CGPointMake(3 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            
+            [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
         };
     }
@@ -187,20 +263,153 @@
     
 }
 - (void)clickReportBtnAction {
+    
+    // 举报
+    
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定举报该用户" preferredStyle:(UIAlertControllerStyleAlert)];
+   
+    if ([alert valueForKey:@"attributedTitle"]) {
+       
+        [alert setValue:[self getAttributeString:@"提示"] forKey:@"attributedTitle"];
 
+    }
+     
+    if ([alert valueForKey:@"attributedMessage"]) {
+        [alert setValue:[self getAttributeString:@"确定举报该用户"] forKey:@"attributedMessage"];
+    }
+  
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    if ([action1 valueForKey:@"titleTextColor"]) {
+        
+        [action1 setValue:[UIColor colorWithHexString:@"#999999"] forKey:@"titleTextColor"];
+    }
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    if ([action2 valueForKey:@"titleTextColor"]) {
+        
+        [action2 setValue:[UIColor colorWithHexString:@"#999999"] forKey:@"titleTextColor"];
+    }
+    
+    [alert addAction:action1];
+    [alert addAction:action2];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+- (NSAttributedString *)getAttributeString:(NSString *)string {
+    NSDictionary *attributeDict = @{
+                                    NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                    };
+    NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:string attributes:attributeDict];
+
+    return attribute;
 }
 - (void)clickShareBtnAction {
-    
+    ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 150, self.view.bounds.size.width, 150) alertModels:self.shareAlertBtns tapView:^(NSInteger btnTag) {
+
+        NSInteger index = btnTag - 20;
+        switch (index) {
+            case 0:
+                DLog(@"朋友圈");
+                
+                break;
+            case 1:
+                DLog(@"微信");
+                
+                break;
+            case 2:
+                DLog(@"QQ空间");
+                
+                break;
+            case 3:
+                DLog(@"新浪微博");
+                
+                break;
+            case 4:
+                DLog(@"QQ");
+                
+                break;
+
+            default:
+                break;
+        }
+    }];
+    shareAlert.backgroundColor = [UIColor whiteColor];
+    [shareAlert show];
 }
 - (void)clickCollectBtnAction {
     
 }
-- (void)clickScreenBtnAction {
+- (void)clickScreenBtnAction:(UIButton *)btn {
+   
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     
-}
+    if (orientation == UIDeviceOrientationPortrait) {
+      
+        [self forceOrientation:(UIInterfaceOrientationLandscapeLeft)];
+        
+        self.shareBtn.hidden = YES;
+        self.collectBtn.hidden = YES;
+        self.reportBtn.hidden = YES;
+        self.centerView.hidden = YES;
+        self.baseScrollView.hidden = YES;
+        
+        CGRect rect = self.screenBtn.frame;
+        rect = CGRectMake(SCREEN_WIDTH - 20 - kWidth, 30, kWidth, kWidth);
+        self.screenBtn.frame = rect;
+        
+    }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+       [self forceOrientation:UIInterfaceOrientationPortrait];
+       
+        self.shareBtn.hidden = NO;
+        self.collectBtn.hidden = NO;
+        self.reportBtn.hidden = NO;
+        self.centerView.hidden = NO;
+        self.baseScrollView.hidden = NO;
 
+        CGRect rect = self.screenBtn.frame;
+        rect = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
+        self.screenBtn.frame = rect;
+        
+//        [self forceOrientation:UIInterfaceOrientationPortrait];
+    }
+}
+// 切换横屏
+- (void)forceOrientation: (UIInterfaceOrientation)orientation {
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget: [UIDevice currentDevice]];
+        int val = orientation;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+}
 #pragma mark
 #pragma mark - 懒加载
+
+- (NSArray *)shareAlertBtns {
+    if (!_shareAlertBtns) {
+        _shareAlertBtns = [NSArray array];
+        
+        ShareBtnModel *model1 = [[ShareBtnModel alloc] initWithTitle:@"朋友圈" image:[UIImage imageNamed:@"朋友圈selected"]];
+        
+        ShareBtnModel *model2 = [[ShareBtnModel alloc] initWithTitle:@"微信" image:[UIImage imageNamed:@"微信select"]];
+        
+        ShareBtnModel *model3 = [[ShareBtnModel alloc] initWithTitle:@"QQ空间" image:[UIImage imageNamed:@"QQ空间"]];
+        ShareBtnModel *model4 = [[ShareBtnModel alloc] initWithTitle:@"新浪微博" image:[UIImage imageNamed:@"新浪微博"]];
+        ShareBtnModel *model5 = [[ShareBtnModel alloc] initWithTitle:@"QQ" image:[UIImage imageNamed:@"QQ-(1)"]];
+        
+        _shareAlertBtns = @[model1, model2, model3, model4, model5];
+        
+    }
+    return _shareAlertBtns;
+}
 - (UIButton *)backBtn {
     if (!_backBtn) {
         _backBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
@@ -286,12 +495,14 @@
         _screenBtn.frame = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
         
         [_screenBtn setImage:[UIImage imageNamed:@"缩小"] forState:(UIControlStateNormal)];
-        [_screenBtn addTarget:self action:@selector(clickScreenBtnAction) forControlEvents:(UIControlEventTouchDown)];
+        [_screenBtn addTarget:self action:@selector(clickScreenBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         
 
     }
     return _screenBtn;
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

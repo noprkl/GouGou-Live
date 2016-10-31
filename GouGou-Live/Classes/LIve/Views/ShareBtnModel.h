@@ -1,0 +1,21 @@
+//
+//  ShareBtnModel.h
+//  GouGou-Live
+//
+//  Created by ma c on 16/10/31.
+//  Copyright © 2016年 LXq. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface ShareBtnModel : NSObject
+
+/** title */
+@property (strong, nonatomic) NSString *title;
+
+/** image */
+@property (strong, nonatomic) UIImage *icon;
+
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image;
+
+@end

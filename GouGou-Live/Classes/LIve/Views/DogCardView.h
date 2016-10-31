@@ -10,4 +10,7 @@
 
 @interface DogCardView : UIView
 
+@property(nonatomic, strong) NSArray *dogCard; /**< 狗Card */
+
+
 @end

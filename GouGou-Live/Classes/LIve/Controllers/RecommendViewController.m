@@ -137,7 +137,7 @@
         };
         _filtView.ageBlock = ^(){
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
-            ageView.dataPlist = @[@"不限", @"一个月", @"二个月", @"6个月", @"一年", @"两年"];
+            ageView.dataPlist = @[@"不限", @"1个月", @"2个月", @"3个月", @"4个月", @"5个月", @"6个月", @"1岁", @"2岁", @"3岁", @"4岁", @"5岁", @"6岁", @"7岁", @"以上"];
             [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
@@ -150,7 +150,7 @@
         };
         _filtView.priceBlock = ^(){
             DogPriceFilter *priceView = [[DogPriceFilter alloc] init];
-            priceView.dataPlist = @[@"不限", @"50", @"100", @"300", @"500", @"1000", @"3000", @"5000"];
+            priceView.dataPlist = @[@"不限", @"50", @"100", @"150", @"200", @"300", @"400", @"500", @"1000", @"2000", @"5000", @"1万", @"以上"];
             [priceView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
@@ -177,6 +177,8 @@
         _tableView.cellBlock = ^(){
             
             LivingViewController *livingVC = [[LivingViewController alloc] init];
+            
+            livingVC.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:livingVC animated:YES];
             
         };

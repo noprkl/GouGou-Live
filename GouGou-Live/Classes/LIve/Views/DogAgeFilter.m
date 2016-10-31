@@ -100,27 +100,31 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
+    self.currentminIndex = row;
+    self.currentmaxIndex = [pickerView selectedRowInComponent:1];
+    DLog(@"%ld--%ld", self.currentminIndex, self.currentmaxIndex);
     // 越界问题 最大的不能比最小的小
-    //    if (component == 0) { //滚动刷新
-    //
-    //        if (row > self.currentmaxIndex) {
-    //            row = self.currentmaxIndex;
-    //            [pickerView reloadComponent:1];
-    //        }
-    //
-    //        self.currentminIndex = row;
-    //
-    //    }else{
-    //        if (row < self.currentminIndex) {
-    //            row = self.currentminIndex;
-    //            [pickerView reloadComponent:0];
-    //        }
-    //        self.currentmaxIndex = row;
-    //    }
-    pickerView.showsSelectionIndicator = YES;
-    NSInteger index = [pickerView selectedRowInComponent:1];
-    self.minString = self.dataPlist[row];
+    if (component == 0) {
+        if (row > self.currentmaxIndex) {
+            
+            self.currentmaxIndex = row;
+            self.currentminIndex = row;
+            [pickerView selectRow:row inComponent:1 animated:YES];
+        }
+    }else {
+        NSInteger index = [pickerView selectedRowInComponent:1];
+        if (index < self.currentminIndex) {
+            
+            self.currentminIndex = index;
+            self.currentmaxIndex = index;
+            [pickerView selectRow:index inComponent:0 animated:YES];
+            
+        }
+    }
     
+    NSInteger index = [pickerView selectedRowInComponent:1];
+    
+    self.minString = self.dataPlist[row];
     self.maxString = self.dataPlist[index];
     
 }

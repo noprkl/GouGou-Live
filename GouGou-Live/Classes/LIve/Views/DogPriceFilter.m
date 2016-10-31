@@ -101,23 +101,50 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
-    // 越界问题 最大的不能比最小的小
-    //    if (component == 0) { //滚动刷新
-    //
-    //        if (row > self.currentmaxIndex) {
-    //            row = self.currentmaxIndex;
-    //            [pickerView reloadComponent:1];
-    //        }
-    //
-    //        self.currentminIndex = row;
-    //
-    //    }else{
-    //        if (row < self.currentminIndex) {
-    //            row = self.currentminIndex;
-    //            [pickerView reloadComponent:0];
-    //        }
-    //        self.currentmaxIndex = row;
-    //    }
+    self.currentminIndex = [pickerView selectedRowInComponent:0];
+    self.currentmaxIndex = [pickerView selectedRowInComponent:1];
+    DLog(@"component--%ld", component);
+    switch (component) {
+        case 0:
+            if (row > self.currentmaxIndex) {
+//                DLog(@"%ld--%ld", row, component);
+                self.currentmaxIndex = row;
+                self.currentminIndex = [pickerView selectedRowInComponent:1];
+                [pickerView selectRow:row inComponent:1 animated:YES];
+            }
+            break;
+            
+        case 1:
+            if (row < self.currentminIndex) {
+                DLog(@"%ld--%ld", row, component);
+                self.currentminIndex = [pickerView selectedRowInComponent:1];
+                self.currentmaxIndex = [pickerView selectedRowInComponent:1];;
+                
+                [pickerView selectRow:row inComponent:1 animated:YES];
+                
+            }
+            break;
+        default:
+            break;
+    }
+//    if (component == 0) {
+//        if (row > self.currentmaxIndex) {
+//            
+//            self.currentmaxIndex = row;
+//            self.currentminIndex = row;
+//            [pickerView selectRow:row inComponent:1 animated:YES];
+//        }
+//    }else {
+//        NSInteger index = [pickerView selectedRowInComponent:0];
+//        if (index < self.currentminIndex) {
+//            
+//            self.currentminIndex = index;
+//            self.currentmaxIndex = index;
+//            
+//            [pickerView selectRow:index inComponent:0 animated:YES];
+//            
+//        }
+//    }
     
     NSInteger index = [pickerView selectedRowInComponent:1];
     self.minString = self.dataPlist[row];

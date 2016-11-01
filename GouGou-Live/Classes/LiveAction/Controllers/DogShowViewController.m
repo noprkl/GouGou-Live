@@ -74,8 +74,8 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DogShowMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+   
     self.cell = cell;
-
     
     return cell;
 }

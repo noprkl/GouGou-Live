@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickeasyBtnBlock)();
-typedef void(^ClickNoDropFurBtnBlock)();
-typedef void(^ClickFaithBtnBlock)();
-typedef void(^ClickLovelyBtnBlock)();
+typedef BOOL(^ClickeasyBtnBlock)();
+typedef BOOL(^ClickNoDropFurBtnBlock)();
+typedef BOOL(^ClickFaithBtnBlock)();
+typedef BOOL(^ClickLovelyBtnBlock)();
 typedef void(^ClickMoreImpressBtnBlock)();
 
 @interface DogTypesView : UIView

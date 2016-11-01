@@ -21,6 +21,7 @@
 /** 更多印象 */
 @property (strong,nonatomic) UIButton *moreImpressBtn;
 
+@property(nonatomic, strong) UIButton *lastBtn; /**< <#注释#> */
 @end
 
 @implementation DogTypesView
@@ -95,13 +96,15 @@
 
     if (!_easyBtn) {
         
-        _easyBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _easyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _easyBtn.layer.borderColor = [UIColor colorWithRed:228 / 255.0 green:228 / 255.0 blue:228 / 255.0 alpha:1].CGColor;
         _easyBtn.layer.borderWidth = 2;
         [_easyBtn setTitle:@"易驯养" forState:UIControlStateNormal];
         [_easyBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
+        [_easyBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateSelected)];
+
         _easyBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_easyBtn addTarget:self action:@selector(clickEasyBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_easyBtn addTarget:self action:@selector(clickEasyBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _easyBtn;
 }
@@ -109,15 +112,17 @@
 - (UIButton *)noDropFurBtn {
 
     if (!_noDropFurBtn) {
-        _noDropFurBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _noDropFurBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _noDropFurBtn.layer.cornerRadius = 5;
         _noDropFurBtn.layer.masksToBounds = YES;
         _noDropFurBtn.layer.borderColor = [UIColor colorWithRed:228 / 255.0 green:228 / 255.0 blue:228 / 255.0 alpha:1].CGColor;
         _noDropFurBtn.layer.borderWidth = 2;
         [_noDropFurBtn setTitle:@"不掉毛" forState:UIControlStateNormal];
         [_noDropFurBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
+        [_noDropFurBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateSelected)];
+
         _noDropFurBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_noDropFurBtn addTarget:self action:@selector(clickNoDropFurBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_noDropFurBtn addTarget:self action:@selector(clickNoDropFurBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _noDropFurBtn;
 }
@@ -125,15 +130,17 @@
 - (UIButton *)faithBtn {
 
      if(!_faithBtn) {
-        _faithBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _faithBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _faithBtn.layer.cornerRadius = 5;
         _faithBtn.layer.masksToBounds = YES;
          _faithBtn.layer.borderColor = [UIColor colorWithRed:228 / 255.0 green:228 / 255.0 blue:228 / 255.0 alpha:1].CGColor;
          _faithBtn.layer.borderWidth = 2;
         [_faithBtn setTitle:@"忠诚" forState:UIControlStateNormal];
         [_faithBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
+         [_faithBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateSelected)];
+
         _faithBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_faithBtn addTarget:self action:@selector(clickFaithBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_faithBtn addTarget:self action:@selector(clickFaithBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _faithBtn;
 }
@@ -141,15 +148,18 @@
 - (UIButton *)lovelyBtn {
 
     if (!_lovelyBtn) {
-        _lovelyBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _lovelyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _lovelyBtn.layer.cornerRadius = 5;
         _lovelyBtn.layer.masksToBounds = YES;
+        
         _lovelyBtn.layer.borderColor = [UIColor colorWithRed:228 / 255.0 green:228 / 255.0 blue:228 / 255.0 alpha:1].CGColor;
         _lovelyBtn.layer.borderWidth = 2;
+        
         [_lovelyBtn setTitle:@"可爱" forState:UIControlStateNormal];
         [_lovelyBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
+        [_lovelyBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateSelected)];
         _lovelyBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_lovelyBtn addTarget:self action:@selector(clickLovelyBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_lovelyBtn addTarget:self action:@selector(clickLovelyBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _lovelyBtn;
 }
@@ -157,7 +167,7 @@
 - (UIButton *)moreImpressBtn {
 
     if (!_moreImpressBtn) {
-        _moreImpressBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _moreImpressBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _moreImpressBtn.layer.cornerRadius = 5;
         _moreImpressBtn.layer.masksToBounds = YES;
         _moreImpressBtn.layer.borderColor = [UIColor colorWithRed:228 / 255.0 green:228 / 255.0 blue:228 / 255.0 alpha:1].CGColor;
@@ -171,27 +181,51 @@
 }
 #pragma mark
 #pragma mark - 点击回调方法
-- (void)clickEasyBtn {
+- (void)clickEasyBtn:(UIButton *)btn {
     if (_easyBtnBlock) {
-        _easyBtnBlock();
+       BOOL flag = _easyBtnBlock();
+        self.lastBtn.selected = NO;
+        self.lastBtn.backgroundColor = [UIColor whiteColor];
+        btn.selected = flag;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        self.lastBtn = btn;
+
     }
 
 }
-- (void)clickNoDropFurBtn {
+- (void)clickNoDropFurBtn:(UIButton *)btn {
     if (_noDropFureBlock) {
-        _noDropFureBlock();
+        BOOL flag = _noDropFureBlock();
+        self.lastBtn.selected = NO;
+        self.lastBtn.backgroundColor = [UIColor whiteColor];
+        btn.selected = flag;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        self.lastBtn = btn;
+
     }
     
 }
-- (void)clickFaithBtn {
+- (void)clickFaithBtn:(UIButton *)btn {
     if (_faithBtnBlock) {
-        _faithBtnBlock();
+        BOOL flag = _faithBtnBlock();
+        self.lastBtn.selected = NO;
+        self.lastBtn.backgroundColor = [UIColor whiteColor];
+        btn.selected = flag;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        self.lastBtn = btn;
+
     }
 }
-- (void)clickLovelyBtn {
+- (void)clickLovelyBtn:(UIButton *)btn {
     
     if (_lovelyBtnBlock) {
-        _lovelyBtnBlock();
+        BOOL flag = _lovelyBtnBlock();
+        self.lastBtn.selected = NO;
+        self.lastBtn.backgroundColor = [UIColor whiteColor];
+        btn.selected = flag;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        self.lastBtn = btn;
+
     }
 }
 - (void)clickMoreImpressBtn {

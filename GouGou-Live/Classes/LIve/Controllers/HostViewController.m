@@ -12,6 +12,8 @@
 
 #import "LivingViewController.h"
 
+#import "MoreImpressViewController.h"
+
 static NSString * identifer = @"DogPictureCellID";
 static NSString * reuseIdentifier = @"headerID";
 
@@ -72,32 +74,42 @@ static NSString * reuseIdentifier = @"headerID";
         
         _typesView = [[DogTypesView alloc] init];
         _typesView.backgroundColor = [UIColor whiteColor];
-
+        
+        __weak typeof(self) weakSelf = self;
+        
         _typesView.easyBtnBlock = ^(){
             
             DLog(@"以驯养");
+            
+            return YES;
         };
         
         _typesView.noDropFureBlock = ^(){
         
             DLog(@"不掉毛");
-        
+            
+        return YES;
         };
         
         _typesView.faithBtnBlock = ^(){
             
             DLog(@"忠诚");
             
+            return YES;
         };
         
         _typesView.lovelyBtnBlock = ^(){
             
             DLog(@"可爱");
+            
+            
+            return YES;
         };
         
         _typesView.moreImpressBtnBlock = ^(){
             
-            DLog(@"更多印象");
+            MoreImpressViewController *moreVC = [[MoreImpressViewController alloc] init];
+            [weakSelf.navigationController pushViewController:moreVC animated:YES];
         };
     }
     return _typesView;

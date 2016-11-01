@@ -71,7 +71,6 @@
 		046BC2CE1DC2E71200B5DD52 /* LiveViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BC2C41DC2E71200B5DD52 /* LiveViewCell.xib */; };
 		046BC2CF1DC2E71200B5DD52 /* NoneFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2C61DC2E71200B5DD52 /* NoneFocusView.m */; };
 		046BC2D31DC2E72500B5DD52 /* LivingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2D11DC2E72500B5DD52 /* LivingViewController.m */; };
-		046BC2D41DC2E72500B5DD52 /* LivingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BC2D21DC2E72500B5DD52 /* LivingViewController.xib */; };
 		046BC2D71DC2E73700B5DD52 /* LiveViewCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2D61DC2E73700B5DD52 /* LiveViewCellModel.m */; };
 		046BC2E51DC2EEDE00B5DD52 /* DogTypeCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2E41DC2EEDE00B5DD52 /* DogTypeCellModel.m */; };
 		0498A0911DC83AB800727A6A /* MoreImpressViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0498A08F1DC83AB800727A6A /* MoreImpressViewCell.m */; };
@@ -79,6 +78,9 @@
 		0498A0991DC8632100727A6A /* DetailCountViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0498A0971DC8632100727A6A /* DetailCountViewCell.m */; };
 		0498A09A1DC8632100727A6A /* DetailCountViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0498A0981DC8632100727A6A /* DetailCountViewCell.xib */; };
 		0498A09D1DC86D8A00727A6A /* DetailCountTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0498A09C1DC86D8A00727A6A /* DetailCountTopView.m */; };
+		0498A0A21DC87EEC00727A6A /* TalkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0498A0A11DC87EEC00727A6A /* TalkingView.m */; };
+		0498A0A61DC8A52000727A6A /* SellerMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0498A0A51DC8A52000727A6A /* SellerMessageView.m */; };
+		0498A0A91DC8A83800727A6A /* StartSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0498A0A81DC8A83800727A6A /* StartSourceView.m */; };
 		04AE67B71DBE21FD00F4831D /* CodeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE67B51DBE21FD00F4831D /* CodeLoginViewController.m */; };
 		04AE67B81DBE21FD00F4831D /* CodeLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE67B61DBE21FD00F4831D /* CodeLoginViewController.xib */; };
 		04AE67C21DBEEFA000F4831D /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE67C01DBEEFA000F4831D /* AccountViewController.m */; };
@@ -102,7 +104,6 @@
 		04D033151DC3037B00EBE9B7 /* DogAgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D033141DC3037B00EBE9B7 /* DogAgeFilter.m */; };
 		04D033181DC31F1A00EBE9B7 /* DogPriceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D033171DC31F1A00EBE9B7 /* DogPriceFilter.m */; };
 		04D0331C1DC3223400EBE9B7 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D0331A1DC3223400EBE9B7 /* PlayerViewController.m */; };
-		04D0331D1DC3223400EBE9B7 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D0331B1DC3223400EBE9B7 /* PlayerViewController.xib */; };
 		04D033211DC35C7700EBE9B7 /* LivingCenterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D033201DC35C7700EBE9B7 /* LivingCenterView.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
@@ -224,7 +225,6 @@
 		046BC2C61DC2E71200B5DD52 /* NoneFocusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneFocusView.m; sourceTree = "<group>"; };
 		046BC2D01DC2E72500B5DD52 /* LivingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivingViewController.h; sourceTree = "<group>"; };
 		046BC2D11DC2E72500B5DD52 /* LivingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivingViewController.m; sourceTree = "<group>"; };
-		046BC2D21DC2E72500B5DD52 /* LivingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LivingViewController.xib; sourceTree = "<group>"; };
 		046BC2D51DC2E73700B5DD52 /* LiveViewCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewCellModel.h; sourceTree = "<group>"; };
 		046BC2D61DC2E73700B5DD52 /* LiveViewCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewCellModel.m; sourceTree = "<group>"; };
 		046BC2E31DC2EEDE00B5DD52 /* DogTypeCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogTypeCellModel.h; sourceTree = "<group>"; };
@@ -238,6 +238,12 @@
 		0498A0981DC8632100727A6A /* DetailCountViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailCountViewCell.xib; sourceTree = "<group>"; };
 		0498A09B1DC86D8A00727A6A /* DetailCountTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountTopView.h; sourceTree = "<group>"; };
 		0498A09C1DC86D8A00727A6A /* DetailCountTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountTopView.m; sourceTree = "<group>"; };
+		0498A0A01DC87EEC00727A6A /* TalkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingView.h; sourceTree = "<group>"; };
+		0498A0A11DC87EEC00727A6A /* TalkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TalkingView.m; sourceTree = "<group>"; };
+		0498A0A41DC8A52000727A6A /* SellerMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerMessageView.h; sourceTree = "<group>"; };
+		0498A0A51DC8A52000727A6A /* SellerMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerMessageView.m; sourceTree = "<group>"; };
+		0498A0A71DC8A83800727A6A /* StartSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartSourceView.h; sourceTree = "<group>"; };
+		0498A0A81DC8A83800727A6A /* StartSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartSourceView.m; sourceTree = "<group>"; };
 		04AE67B41DBE21FD00F4831D /* CodeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeLoginViewController.h; sourceTree = "<group>"; };
 		04AE67B51DBE21FD00F4831D /* CodeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeLoginViewController.m; sourceTree = "<group>"; };
 		04AE67B61DBE21FD00F4831D /* CodeLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CodeLoginViewController.xib; sourceTree = "<group>"; };
@@ -275,7 +281,6 @@
 		04D033171DC31F1A00EBE9B7 /* DogPriceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogPriceFilter.m; sourceTree = "<group>"; };
 		04D033191DC3223400EBE9B7 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		04D0331A1DC3223400EBE9B7 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
-		04D0331B1DC3223400EBE9B7 /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
 		04D0331F1DC35C7700EBE9B7 /* LivingCenterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivingCenterView.h; sourceTree = "<group>"; };
 		04D033201DC35C7700EBE9B7 /* LivingCenterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivingCenterView.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -367,9 +372,11 @@
 		044169EE1DC3BB8500B537E4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0498A09F1DC87EC000727A6A /* 聊天 */,
 				044918051DC70A2200541195 /* DogMessageVIew.h */,
 				044918061DC70A2200541195 /* DogMessageVIew.m */,
 				044918131DC74ED200541195 /* 狗狗展播 */,
+				0498A0A31DC8A4FC00727A6A /* 商家认证 */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -827,10 +834,8 @@
 			children = (
 				046BC2D01DC2E72500B5DD52 /* LivingViewController.h */,
 				046BC2D11DC2E72500B5DD52 /* LivingViewController.m */,
-				046BC2D21DC2E72500B5DD52 /* LivingViewController.xib */,
 				04D033191DC3223400EBE9B7 /* PlayerViewController.h */,
 				04D0331A1DC3223400EBE9B7 /* PlayerViewController.m */,
-				04D0331B1DC3223400EBE9B7 /* PlayerViewController.xib */,
 			);
 			name = "直播界面";
 			sourceTree = "<group>";
@@ -916,6 +921,26 @@
 				0498A09C1DC86D8A00727A6A /* DetailCountTopView.m */,
 			);
 			name = "账户";
+			sourceTree = "<group>";
+		};
+		0498A09F1DC87EC000727A6A /* 聊天 */ = {
+			isa = PBXGroup;
+			children = (
+				0498A0A01DC87EEC00727A6A /* TalkingView.h */,
+				0498A0A11DC87EEC00727A6A /* TalkingView.m */,
+			);
+			name = "聊天";
+			sourceTree = "<group>";
+		};
+		0498A0A31DC8A4FC00727A6A /* 商家认证 */ = {
+			isa = PBXGroup;
+			children = (
+				0498A0A41DC8A52000727A6A /* SellerMessageView.h */,
+				0498A0A51DC8A52000727A6A /* SellerMessageView.m */,
+				0498A0A71DC8A83800727A6A /* StartSourceView.h */,
+				0498A0A81DC8A83800727A6A /* StartSourceView.m */,
+			);
+			name = "商家认证";
 			sourceTree = "<group>";
 		};
 		04AE67B31DBE21FD00F4831D /* 验证码登录 */ = {
@@ -1096,10 +1121,8 @@
 				0467AD431DBDF0B300562CC4 /* RegisteViewController.xib in Resources */,
 				04AE67B81DBE21FD00F4831D /* CodeLoginViewController.xib in Resources */,
 				04AE67F31DBEF4DF00F4831D /* AboutUsViewController.xib in Resources */,
-				04D0331D1DC3223400EBE9B7 /* PlayerViewController.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
 				0467AD411DBDF0B300562CC4 /* LoginViewController.xib in Resources */,
-				046BC2D41DC2E72500B5DD52 /* LivingViewController.xib in Resources */,
 				04AE67C81DBEEFD000F4831D /* ShopAddressViewController.xib in Resources */,
 				04AE67D31DBEF02D00F4831D /* FavoriteViewController.xib in Resources */,
 				0467AD3F1DBDF0B300562CC4 /* ForgetPsdViewController.xib in Resources */,
@@ -1206,6 +1229,7 @@
 				0467AD471DBDF0B300562CC4 /* AppDelegate.m in Sources */,
 				04D0331C1DC3223400EBE9B7 /* PlayerViewController.m in Sources */,
 				0403DD061DBF2BB6000632CD /* RemoveCookieViewController.m in Sources */,
+				0498A0A91DC8A83800727A6A /* StartSourceView.m in Sources */,
 				0498A0911DC83AB800727A6A /* MoreImpressViewCell.m in Sources */,
 				044918031DC6ECA200541195 /* ShareBtnModel.m in Sources */,
 				042F19BA1DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m in Sources */,
@@ -1224,6 +1248,7 @@
 				044918071DC70A2200541195 /* DogMessageVIew.m in Sources */,
 				0467AD3D1DBDF0B300562CC4 /* LiveTopView.m in Sources */,
 				044918001DC6EBE000541195 /* ShareBtn.m in Sources */,
+				0498A0A61DC8A52000727A6A /* SellerMessageView.m in Sources */,
 				0449180F1DC72F6F00541195 /* DogImageView.m in Sources */,
 				0403DD011DBF2B65000632CD /* MessagePushViewController.m in Sources */,
 				0469D3851DC0404800CEF8E6 /* BaseTabBarController.m in Sources */,
@@ -1231,6 +1256,7 @@
 				046BC2C91DC2E71200B5DD52 /* DogSizeFilter.m in Sources */,
 				04AE67E71DBEF10900F4831D /* MerchantViewController.m in Sources */,
 				044169FB1DC3BC3F00B537E4 /* SellerShowViewController.m in Sources */,
+				0498A0A21DC87EEC00727A6A /* TalkingView.m in Sources */,
 				0467AD361DBDF0B300562CC4 /* FocusViewController.m in Sources */,
 				04AE67D71DBEF04500F4831D /* WatchHistoryViewController.m in Sources */,
 			);

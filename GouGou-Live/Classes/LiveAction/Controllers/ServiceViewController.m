@@ -7,8 +7,11 @@
 //
 
 #import "ServiceViewController.h"
+#import "TalkingView.h"
 
-@interface ServiceViewController ()
+@interface ServiceViewController ()<UITextFieldDelegate>
+
+@property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
 
 @end
 
@@ -16,15 +19,73 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-self.view.backgroundColor = [UIColor orangeColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     [self initUI];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationBarHidden = YES;
+    
+    [self.view addSubview:self.talkView];
+    [self.talkView makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
+        make.left.equalTo(self.view);
+        make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+    }];
+
 }
 - (void)initUI {
+    UILabel *alertLabel = [[UILabel alloc] init];
+    alertLabel.text = @"您好，您所发留言将会在主播结束后为您答复";
+    alertLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+    alertLabel.font = [UIFont systemFontOfSize:12];
+    alertLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:alertLabel];
     
+    [alertLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.top).offset(10);
+        make.centerX.equalTo(self.view.centerX);
+    }];
+}
+
+#pragma mark
+#pragma mark - 懒加载
+- (TalkingView *)talkView {
+    if (!_talkView) {
+        _talkView = [[TalkingView alloc] init];
+        _talkView.backgroundColor = [UIColor whiteColor];
+        __weak typeof(self) weakSelf = self;
+        
+        _talkView.editBlock = ^(UITextField *textField){
+            [textField addTarget:weakSelf action:@selector(touchTextField:) forControlEvents:(UIControlEventTouchDown)];
+            
+            textField.delegate = weakSelf;
+        };
+    }
+    return _talkView;
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
+            make.left.equalTo(self.view);
+            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+        }];
+    }];
+    
+    return YES;
+}
+- (void)touchTextField:(UITextField *)textField {
+    [textField becomeFirstResponder];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290- 264);
+            make.left.equalTo(self.view);
+            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+        }];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

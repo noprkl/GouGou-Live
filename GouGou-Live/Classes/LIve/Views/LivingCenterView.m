@@ -97,7 +97,8 @@
 - (UIButton *)dogBtn {
     if (!_dogBtn) {
         _dogBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-       
+        _dogBtn.backgroundColor = [UIColor whiteColor];
+
         [_dogBtn addTarget:self action:@selector(clickdogBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         
     }
@@ -109,7 +110,8 @@
     if (!_serviceBtn) {
         _serviceBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_serviceBtn sizeToFit];
-     
+        _serviceBtn.backgroundColor = [UIColor whiteColor];
+
         [_serviceBtn addTarget:self action:@selector(clickserviceBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         
     }
@@ -120,13 +122,14 @@
     if (!_sellerBtn) {
         
         _sellerBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        
+        _sellerBtn.backgroundColor = [UIColor whiteColor];
+
         [_sellerBtn addTarget:self action:@selector(clickSellerBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _sellerBtn;
 }
 - (void)setBtn:(UIButton *)button title:(NSString *)title normalImage:(UIImage *)normalImage selectImage:(UIImage *)selectImage {
-    
+
     // 正常
     NSDictionary *normalAttributeDict = @{
                                           NSForegroundColorAttributeName:[UIColor blackColor],

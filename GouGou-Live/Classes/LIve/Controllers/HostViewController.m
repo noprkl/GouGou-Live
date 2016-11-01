@@ -177,7 +177,7 @@ static NSString * reuseIdentifier = @"headerID";
     
         LivingViewController *livingVC = [[LivingViewController alloc] init];
         livingVC.title = [NSString stringWithFormat:@"直播-%ld", indexPath.row];
-        
+    livingVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:livingVC animated:YES];
         
     

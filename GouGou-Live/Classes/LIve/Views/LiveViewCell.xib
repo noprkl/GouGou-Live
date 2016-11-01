@@ -78,7 +78,7 @@
                         <rect key="frame" x="0.0" y="244" width="375" height="118"/>
                         <color key="backgroundColor" red="0.95759671233874921" green="0.9923124357744959" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </scrollView>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFE-qk-BsY">
+                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFE-qk-BsY">
                         <rect key="frame" x="0.0" y="224" width="375" height="20"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一窝狗" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaA-2j-YOu">

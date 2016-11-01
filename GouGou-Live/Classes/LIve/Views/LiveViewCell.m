@@ -75,12 +75,6 @@
     
     _liveCellModel = liveCellModel;
     
-//    self.anchorIconView.image = [UIImage imageNamed:@"头像"];
-//    self.anchorNameLabel.text = @"主播名字";
-//    self.anchorCityLabel.text = @"主播城市";
-//    self.roomImageView.image = [UIImage imageNamed:@"直播图"];
-//    self.roomMessageLabel.text = @"房间信息";
-//    self.watchCountLabel.text = @"观看人数";
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

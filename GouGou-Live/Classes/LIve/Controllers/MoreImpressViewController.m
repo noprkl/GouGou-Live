@@ -106,9 +106,8 @@ static NSString *cellid = @"cellid";
     
     cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
-    
+
     self.cell = cell;
-    
 }
 - (void)setNavBarItem {
     

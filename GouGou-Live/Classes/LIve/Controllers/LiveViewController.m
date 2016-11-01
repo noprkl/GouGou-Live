@@ -52,11 +52,12 @@
 }
 - (void)LeftBarAction {
     
-    SearchViewController *searchVC = [[SearchViewController alloc] initWithStyle:(UITableViewStylePlain)];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
     
-    UISearchController *searchC = [[UISearchController alloc] initWithSearchResultsController:searchVC];
-    
-    [self.navigationController pushViewController:searchC animated:YES];
+//    UISearchController *searchC = [[UISearchController alloc] initWithSearchResultsController:searchVC];
+    searchVC.hidesBottomBarWhenPushed = YES;
+
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 #pragma mark - 添加子控制器

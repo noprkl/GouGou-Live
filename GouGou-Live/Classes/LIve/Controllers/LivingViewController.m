@@ -16,6 +16,8 @@
 #import "ShareAlertView.h"
 #import "ShareBtnModel.h"
 
+#import "TalkingView.h"
+
 // 播放器
 #import "PlayerViewController.h"
 
@@ -77,10 +79,11 @@
     
     // navBar隐藏
     self.navigationController.navigationBarHidden = YES;
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+   
     [self.backBtn removeFromSuperview];
     [self.roomNameLabel removeFromSuperview];
     [self.reportBtn removeFromSuperview];
@@ -99,12 +102,6 @@
 #pragma mark - UI
 - (void)initUI {
     
-//    PlayerViewController *playVC = [[PlayerViewController alloc] init];
-//    playVC.view.frame = CGRectMake(0, 30, SCREEN_WIDTH, 215);
-//    
-//    [self.view addSubview:self.playerVC.view];
-//    
-//    self.playerVC = playVC;
     
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
 
@@ -116,8 +113,15 @@
     [window addSubview:self.watchLabel];
     [window addSubview:self.screenBtn];
     
-//    [self addChildViewController:self.playerVC];
-//    [self.view addSubview:self.playerVC.view];
+    PlayerViewController *playVC = [[PlayerViewController alloc] init];
+    playVC.view.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
+    [self.view addSubview:playVC.view];
+    UIImageView *imaegview = [[UIImageView alloc] initWithFrame:playVC.view.frame];
+    imaegview.image = [UIImage imageNamed:@"banner"];
+    [playVC.view addSubview:imaegview];
+  
+    self.playerVC = playVC;
+
     
     [self.view addSubview:self.centerView];
     [self.view addSubview:self.baseScrollView];
@@ -187,7 +191,7 @@
     if ([childVC isViewLoaded]) return;
     
     // 给没加载过的控制器设置frame
-    childVC.view.frame = CGRectMake(offset, 0, width, height);
+    childVC.view.frame = CGRectMake(offset, 0, width, height - 290);
     
     // 添加控制器视图到contentScrollView上
     [scrollView addSubview:childVC.view];
@@ -223,6 +227,7 @@
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
+            
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
@@ -231,18 +236,25 @@
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
+            
+            
             return YES;
         };
         _centerView.serviceBlock = ^(UIButton *btn){
             CGPoint center = CGPointMake(2 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
+            
+
+            
             return YES;
         };
         _centerView.sellerBlock = ^(UIButton *btn){
             CGPoint center = CGPointMake(3 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
+            
+            
             return YES;
         };
     }

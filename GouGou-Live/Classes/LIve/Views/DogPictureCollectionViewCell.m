@@ -115,7 +115,7 @@
     
     if (!_liveDogPicture) {
         _liveDogPicture = [[UIImageView alloc] init];
-        _liveDogPicture.image = [UIImage imageNamed:@"icon开心狗"];
+        _liveDogPicture.image = [UIImage imageNamed:@"品种02"];
 
     }
     return _liveDogPicture;
@@ -160,7 +160,7 @@
     if (!_hudView) {
         _hudView = [[UIView alloc] init];
         _hudView.backgroundColor = [UIColor blackColor];
-        _hudView.alpha = 0.5;
+        _hudView.alpha = 0.3;
     }
     return _hudView;
 }

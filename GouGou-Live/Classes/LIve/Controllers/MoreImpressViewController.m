@@ -8,6 +8,7 @@
 
 #import "MoreImpressViewController.h"
 #import "MoreImpressViewCell.h"
+#import "DogTypesViewController.h"
 
 @interface MoreImpressViewController ()<UITableViewDataSource, UITableViewDelegate>;
 
@@ -108,6 +109,15 @@ static NSString *cellid = @"cellid";
     cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
 
     self.cell = cell;
+    
+    DogTypesViewController * typeVC = [[DogTypesViewController alloc] init];
+    
+    typeVC.title = cell.textLabel.text;
+    [self.navigationController pushViewController:typeVC animated:YES];
+    
+    self.cell = cell;
+    
+
 }
 - (void)setNavBarItem {
     

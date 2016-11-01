@@ -14,6 +14,8 @@
 
 #import "MoreImpressViewController.h"
 
+#import "DogTypesViewController.h"
+
 static NSString * identifer = @"DogPictureCellID";
 static NSString * reuseIdentifier = @"headerID";
 
@@ -72,48 +74,37 @@ static NSString * reuseIdentifier = @"headerID";
     
     if (!_typesView) {
         
-        _typesView = [[DogTypesView alloc] init];
+        _typesView = [[DogTypesView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
         _typesView.backgroundColor = [UIColor whiteColor];
         
         __weak typeof(self) weakSelf = self;
         
-        _typesView.easyBtnBlock = ^(){
-            
-            DLog(@"以驯养");
-            
-            return YES;
-        };
+        _typesView.btnBlock = ^(UIButton *btn){
         
-        _typesView.noDropFureBlock = ^(){
+            if (btn.tag < 104) {
+                
+                DogTypesViewController * typeVC = [[DogTypesViewController alloc] init];
+                
+                typeVC.title = btn.titleLabel.text;
+                
+                [weakSelf.navigationController pushViewController:typeVC animated:YES];
+                
+            }
+            if (btn.tag == 104) {
         
-            DLog(@"不掉毛");
-            
-        return YES;
-        };
+                MoreImpressViewController *moreVC = [[MoreImpressViewController alloc] init];
+                
+                [weakSelf.navigationController pushViewController:moreVC animated:YES];
+            }
         
-        _typesView.faithBtnBlock = ^(){
-            
-            DLog(@"忠诚");
-            
-            return YES;
         };
-        
-        _typesView.lovelyBtnBlock = ^(){
-            
-            DLog(@"可爱");
-            
-            
-            return YES;
-        };
-        
-        _typesView.moreImpressBtnBlock = ^(){
-            
-            MoreImpressViewController *moreVC = [[MoreImpressViewController alloc] init];
-            [weakSelf.navigationController pushViewController:moreVC animated:YES];
-        };
+
     }
     return _typesView;
 }
+
+
+
 - (NSMutableArray *)dataArray {
     if (!_dataArray) {
         _dataArray = [NSMutableArray array];
@@ -136,7 +127,7 @@ static NSString * reuseIdentifier = @"headerID";
 //        // 设置头部区域大小
 //        flowLayout.headerReferenceSize = CGSizeMake(0, 45);
         
-        _collection = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+        _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 54, SCREEN_WIDTH, 500) collectionViewLayout:flowLayout];
         
         _collection.delegate  = self;
         _collection.dataSource = self;
@@ -182,6 +173,7 @@ static NSString * reuseIdentifier = @"headerID";
         
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

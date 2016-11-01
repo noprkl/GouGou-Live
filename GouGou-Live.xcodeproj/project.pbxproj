@@ -16,8 +16,13 @@
 		0403DD061DBF2BB6000632CD /* RemoveCookieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0403DD041DBF2BB6000632CD /* RemoveCookieViewController.m */; };
 		0403DD071DBF2BB6000632CD /* RemoveCookieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */; };
 		0403DD0D1DBF3586000632CD /* MyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0403DD0C1DBF3586000632CD /* MyHeaderView.m */; };
+		0418928C1DC8799400CB9443 /* DogTypesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418928B1DC8799400CB9443 /* DogTypesViewController.m */; };
+		0418928F1DC87A4C00CB9443 /* DogTypesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0418928E1DC87A4C00CB9443 /* DogTypesView.m */; };
+		041892931DC88EE400CB9443 /* PresentApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041892911DC88EE400CB9443 /* PresentApplicationViewController.m */; };
+		041892941DC88EE400CB9443 /* PresentApplicationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041892921DC88EE400CB9443 /* PresentApplicationViewController.xib */; };
+		041892991DC8950C00CB9443 /* PayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041892971DC8950C00CB9443 /* PayingViewController.m */; };
+		0418929A1DC8950C00CB9443 /* PayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041892981DC8950C00CB9443 /* PayingViewController.xib */; };
 		042F19BA1DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F19B91DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m */; };
-		042F19BD1DC1CF950079E8BC /* DogTypesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F19BC1DC1CF950079E8BC /* DogTypesView.m */; };
 		044169F11DC3BBD000B537E4 /* TalkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044169F01DC3BBD000B537E4 /* TalkingViewController.m */; };
 		044169F81DC3BC2800B537E4 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044169F71DC3BC2800B537E4 /* ServiceViewController.m */; };
 		044169FB1DC3BC3F00B537E4 /* SellerShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044169FA1DC3BC3F00B537E4 /* SellerShowViewController.m */; };
@@ -122,10 +127,18 @@
 		0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemoveCookieViewController.xib; sourceTree = "<group>"; };
 		0403DD0B1DBF3586000632CD /* MyHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHeaderView.h; sourceTree = "<group>"; };
 		0403DD0C1DBF3586000632CD /* MyHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHeaderView.m; sourceTree = "<group>"; };
+		0418928A1DC8799400CB9443 /* DogTypesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogTypesViewController.h; sourceTree = "<group>"; };
+		0418928B1DC8799400CB9443 /* DogTypesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogTypesViewController.m; sourceTree = "<group>"; };
+		0418928D1DC87A4C00CB9443 /* DogTypesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogTypesView.h; sourceTree = "<group>"; };
+		0418928E1DC87A4C00CB9443 /* DogTypesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogTypesView.m; sourceTree = "<group>"; };
+		041892901DC88EE400CB9443 /* PresentApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentApplicationViewController.h; sourceTree = "<group>"; };
+		041892911DC88EE400CB9443 /* PresentApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentApplicationViewController.m; sourceTree = "<group>"; };
+		041892921DC88EE400CB9443 /* PresentApplicationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentApplicationViewController.xib; sourceTree = "<group>"; };
+		041892961DC8950C00CB9443 /* PayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingViewController.h; sourceTree = "<group>"; };
+		041892971DC8950C00CB9443 /* PayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingViewController.m; sourceTree = "<group>"; };
+		041892981DC8950C00CB9443 /* PayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayingViewController.xib; sourceTree = "<group>"; };
 		042F19B81DC1A0FC0079E8BC /* DogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogPictureCollectionViewCell.h; sourceTree = "<group>"; };
 		042F19B91DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogPictureCollectionViewCell.m; sourceTree = "<group>"; };
-		042F19BB1DC1CF950079E8BC /* DogTypesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogTypesView.h; sourceTree = "<group>"; };
-		042F19BC1DC1CF950079E8BC /* DogTypesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogTypesView.m; sourceTree = "<group>"; };
 		044169EF1DC3BBD000B537E4 /* TalkingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingViewController.h; sourceTree = "<group>"; };
 		044169F01DC3BBD000B537E4 /* TalkingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TalkingViewController.m; sourceTree = "<group>"; };
 		044169F61DC3BC2800B537E4 /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewController.h; sourceTree = "<group>"; };
@@ -326,6 +339,35 @@
 				0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */,
 			);
 			name = "意见清除缓存";
+			sourceTree = "<group>";
+		};
+		041892891DC8794900CB9443 /* 狗详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0418928A1DC8799400CB9443 /* DogTypesViewController.h */,
+				0418928B1DC8799400CB9443 /* DogTypesViewController.m */,
+			);
+			name = "狗详情";
+			sourceTree = "<group>";
+		};
+		041892951DC88EFB00CB9443 /* PresentApplication */ = {
+			isa = PBXGroup;
+			children = (
+				041892901DC88EE400CB9443 /* PresentApplicationViewController.h */,
+				041892911DC88EE400CB9443 /* PresentApplicationViewController.m */,
+				041892921DC88EE400CB9443 /* PresentApplicationViewController.xib */,
+			);
+			name = PresentApplication;
+			sourceTree = "<group>";
+		};
+		0418929B1DC8951E00CB9443 /* PayingController */ = {
+			isa = PBXGroup;
+			children = (
+				041892961DC8950C00CB9443 /* PayingViewController.h */,
+				041892971DC8950C00CB9443 /* PayingViewController.m */,
+				041892981DC8950C00CB9443 /* PayingViewController.xib */,
+			);
+			name = PayingController;
 			sourceTree = "<group>";
 		};
 		044169EA1DC3BB8500B537E4 /* LiveAction */ = {
@@ -808,6 +850,7 @@
 			children = (
 				0467AD031DBDF0B300562CC4 /* HostViewController.h */,
 				0467AD041DBDF0B300562CC4 /* HostViewController.m */,
+				041892891DC8794900CB9443 /* 狗详情 */,
 				046BC2B11DC2322A00B5DD52 /* 更多印象 */,
 			);
 			name = "最新";
@@ -885,8 +928,8 @@
 		046BC2E21DC2EE5400B5DD52 /* 最新 */ = {
 			isa = PBXGroup;
 			children = (
-				042F19BB1DC1CF950079E8BC /* DogTypesView.h */,
-				042F19BC1DC1CF950079E8BC /* DogTypesView.m */,
+				0418928D1DC87A4C00CB9443 /* DogTypesView.h */,
+				0418928E1DC87A4C00CB9443 /* DogTypesView.m */,
 				042F19B81DC1A0FC0079E8BC /* DogPictureCollectionViewCell.h */,
 				042F19B91DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m */,
 				0498A08E1DC83AB800727A6A /* MoreImpressViewCell.h */,
@@ -900,6 +943,8 @@
 			children = (
 				04AE67BF1DBEEFA000F4831D /* AccountViewController.h */,
 				04AE67C01DBEEFA000F4831D /* AccountViewController.m */,
+				041892951DC88EFB00CB9443 /* PresentApplication */,
+				0418929B1DC8951E00CB9443 /* PayingController */,
 				0498A0931DC85FD000727A6A /* DetailCountViewController.h */,
 				0498A0941DC85FD000727A6A /* DetailCountViewController.m */,
 			);
@@ -1089,6 +1134,7 @@
 				0467AD551DBDFFBA00562CC4 /* SurePsdViewController.xib in Resources */,
 				0498A09A1DC8632100727A6A /* DetailCountViewCell.xib in Resources */,
 				0403DCF81DBF29D6000632CD /* SettingViewController.xib in Resources */,
+				0418929A1DC8950C00CB9443 /* PayingViewController.xib in Resources */,
 				04AE67EE1DBEF4CA00F4831D /* SuggestViewController.xib in Resources */,
 				0403DD071DBF2BB6000632CD /* RemoveCookieViewController.xib in Resources */,
 				04AE67CD1DBEEFFC00F4831D /* OrderGoodsViewController.xib in Resources */,
@@ -1099,6 +1145,7 @@
 				04D0331D1DC3223400EBE9B7 /* PlayerViewController.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
 				0467AD411DBDF0B300562CC4 /* LoginViewController.xib in Resources */,
+				041892941DC88EE400CB9443 /* PresentApplicationViewController.xib in Resources */,
 				046BC2D41DC2E72500B5DD52 /* LivingViewController.xib in Resources */,
 				04AE67C81DBEEFD000F4831D /* ShopAddressViewController.xib in Resources */,
 				04AE67D31DBEF02D00F4831D /* FavoriteViewController.xib in Resources */,
@@ -1171,6 +1218,8 @@
 				044917FD1DC6EB9200541195 /* ShareAlertView.m in Sources */,
 				04D033211DC35C7700EBE9B7 /* LivingCenterView.m in Sources */,
 				0467AD421DBDF0B300562CC4 /* RegisteViewController.m in Sources */,
+				0418928F1DC87A4C00CB9443 /* DogTypesView.m in Sources */,
+				0418928C1DC8799400CB9443 /* DogTypesViewController.m in Sources */,
 				0498A0991DC8632100727A6A /* DetailCountViewCell.m in Sources */,
 				046BC2B51DC24C0D00B5DD52 /* MoreImpressViewController.m in Sources */,
 				046BC2E51DC2EEDE00B5DD52 /* DogTypeCellModel.m in Sources */,
@@ -1186,7 +1235,6 @@
 				04D033151DC3037B00EBE9B7 /* DogAgeFilter.m in Sources */,
 				04AE67E21DBEF0DE00F4831D /* CertificateViewController.m in Sources */,
 				0467AD401DBDF0B300562CC4 /* LoginViewController.m in Sources */,
-				042F19BD1DC1CF950079E8BC /* DogTypesView.m in Sources */,
 				0467AD381DBDF0B300562CC4 /* LiveViewController.m in Sources */,
 				04AE67C71DBEEFD000F4831D /* ShopAddressViewController.m in Sources */,
 				046BC2CA1DC2E71200B5DD52 /* FilteButton.m in Sources */,
@@ -1207,6 +1255,7 @@
 				04D0331C1DC3223400EBE9B7 /* PlayerViewController.m in Sources */,
 				0403DD061DBF2BB6000632CD /* RemoveCookieViewController.m in Sources */,
 				0498A0911DC83AB800727A6A /* MoreImpressViewCell.m in Sources */,
+				041892931DC88EE400CB9443 /* PresentApplicationViewController.m in Sources */,
 				044918031DC6ECA200541195 /* ShareBtnModel.m in Sources */,
 				042F19BA1DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m in Sources */,
 				046BC2D71DC2E73700B5DD52 /* LiveViewCellModel.m in Sources */,
@@ -1214,6 +1263,7 @@
 				0469D3881DC0406300CEF8E6 /* BaseNavigationController.m in Sources */,
 				0457B9FF1DC06B28009A0B79 /* NSString+CheckString.m in Sources */,
 				044918121DC74CCA00541195 /* DogMarkView.m in Sources */,
+				041892991DC8950C00CB9443 /* PayingViewController.m in Sources */,
 				044169F81DC3BC2800B537E4 /* ServiceViewController.m in Sources */,
 				0449180B1DC70EF800541195 /* DogShowMessageCell.m in Sources */,
 				0403DD0D1DBF3586000632CD /* MyHeaderView.m in Sources */,

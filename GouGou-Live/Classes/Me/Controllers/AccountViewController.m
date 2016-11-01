@@ -9,11 +9,18 @@
 #import "AccountViewController.h"
 #import "DetailCountViewController.h"
 
+#import "PresentApplicationViewController.h"
+
 @interface AccountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< tableView */
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+/** 帮助与咨询按钮 */
+@property (strong,nonatomic) UIButton *helpBtn;
+/** 控制器Names */
+@property (strong,nonatomic) NSArray *controllerNames;
+
 @end
 
 @implementation AccountViewController
@@ -35,6 +42,30 @@
     }
     return _dataArr;
 }
+
+- (NSArray *)controllerNames {
+
+    if (!_controllerNames) {
+        _controllerNames = @[@"PresentApplicationViewController",@"PayingViewController"];
+    }
+    return _controllerNames;
+}
+
+
+- (UIButton *)helpBtn {
+
+    if (!_helpBtn) {
+        _helpBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _helpBtn.frame = CGRectMake(0, 546, SCREEN_WIDTH, 64);
+        [_helpBtn setTitle:@"帮助与咨询" forState:UIControlStateNormal];
+        [_helpBtn setTintColor:[UIColor whiteColor]];
+        [_helpBtn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+        _helpBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_helpBtn addTarget:self action:@selector(clickTohelp) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _helpBtn;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
 }
@@ -52,6 +83,26 @@
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == 0) {
+        return;
+    } else {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSString *cellText = self.dataArr[indexPath.row ];
+    
+    NSString *controllerName = self.controllerNames[indexPath.row - 1];
+    
+    UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
+    VC.hidesBottomBarWhenPushed = YES;
+    VC.title = cellText;
+    
+    [self.navigationController pushViewController:VC animated:YES];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -61,6 +112,7 @@
 - (void)initUI {
     
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.helpBtn];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     self.edgesForExtendedLayout = 64;
    
@@ -72,6 +124,7 @@
 
 - (void)setNavBarItem {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"明细" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBtnAction)];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
 

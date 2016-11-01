@@ -64,6 +64,7 @@
 		046BC2B51DC24C0D00B5DD52 /* MoreImpressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2B31DC24C0D00B5DD52 /* MoreImpressViewController.m */; };
 		046BC2B61DC24C0D00B5DD52 /* MoreImpressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BC2B41DC24C0D00B5DD52 /* MoreImpressViewController.xib */; };
 		046BC2C71DC2E71200B5DD52 /* DogCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2B81DC2E71200B5DD52 /* DogCardView.m */; };
+		046BC2C81DC2E71200B5DD52 /* DogCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BC2B91DC2E71200B5DD52 /* DogCardView.xib */; };
 		046BC2C91DC2E71200B5DD52 /* DogSizeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2BB1DC2E71200B5DD52 /* DogSizeFilter.m */; };
 		046BC2CA1DC2E71200B5DD52 /* FilteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2BD1DC2E71200B5DD52 /* FilteButton.m */; };
 		046BC2CB1DC2E71200B5DD52 /* LiveFilteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BC2BF1DC2E71200B5DD52 /* LiveFilteView.m */; };
@@ -207,6 +208,7 @@
 		046BC2B41DC24C0D00B5DD52 /* MoreImpressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreImpressViewController.xib; sourceTree = "<group>"; };
 		046BC2B71DC2E71200B5DD52 /* DogCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogCardView.h; sourceTree = "<group>"; };
 		046BC2B81DC2E71200B5DD52 /* DogCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogCardView.m; sourceTree = "<group>"; };
+		046BC2B91DC2E71200B5DD52 /* DogCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DogCardView.xib; sourceTree = "<group>"; };
 		046BC2BA1DC2E71200B5DD52 /* DogSizeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogSizeFilter.h; sourceTree = "<group>"; };
 		046BC2BB1DC2E71200B5DD52 /* DogSizeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogSizeFilter.m; sourceTree = "<group>"; };
 		046BC2BC1DC2E71200B5DD52 /* FilteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilteButton.h; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 			children = (
 				046BC2B71DC2E71200B5DD52 /* DogCardView.h */,
 				046BC2B81DC2E71200B5DD52 /* DogCardView.m */,
+				046BC2B91DC2E71200B5DD52 /* DogCardView.xib */,
 			);
 			name = "滚动卡片";
 			sourceTree = "<group>";
@@ -1069,6 +1072,7 @@
 				046BC2B61DC24C0D00B5DD52 /* MoreImpressViewController.xib in Resources */,
 				046BC2D41DC2E72500B5DD52 /* LivingViewController.xib in Resources */,
 				04AE67C81DBEEFD000F4831D /* ShopAddressViewController.xib in Resources */,
+				046BC2C81DC2E71200B5DD52 /* DogCardView.xib in Resources */,
 				04AE67D31DBEF02D00F4831D /* FavoriteViewController.xib in Resources */,
 				0467AD3F1DBDF0B300562CC4 /* ForgetPsdViewController.xib in Resources */,
 				0403DCFD1DBF2AFC000632CD /* SecurityAccountViewController.xib in Resources */,

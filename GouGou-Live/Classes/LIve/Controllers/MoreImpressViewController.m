@@ -41,6 +41,7 @@ static NSString *cellid = @"cellid";
 - (NSArray *)dataArr {
     if (!_dataArr) {
         _dataArr = [NSArray array];
+        _dataArr = @[@"易驯养", @"不掉毛", @"忠诚", @"可爱", @"漂亮", @"更多印象", @"好玩", @"萌"];
     }
     return _dataArr;
 }
@@ -52,16 +53,16 @@ static NSString *cellid = @"cellid";
 }
 - (UITableView *)tableView {
     if (!_tableView) {
+        
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        
     }
     return _tableView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.dataArr.count;
-    return 10;
+
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MoreImpressViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
@@ -78,7 +79,7 @@ static NSString *cellid = @"cellid";
         cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
 
-    cell.textLabel.text = @"更多印象";
+    cell.textLabel.text = self.dataArr[indexPath.row];
 
     cell.detailTextLabel.text = @"#1000";
 

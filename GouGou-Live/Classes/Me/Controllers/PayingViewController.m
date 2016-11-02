@@ -14,6 +14,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *playingTextfiled;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *pointLabel;
+
+
 @end
 
 @implementation PayingViewController
@@ -23,11 +26,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setNavBarItem];
+    [self initUI];
+}
+- (void)initUI {
     self.sureButton.layer.cornerRadius = 7.5;
     self.sureButton.layer.masksToBounds = YES;
-    
+    self.ueserNameTexfiled.delegate = self;
+    self.playingTextfiled.delegate  = self;
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -36,7 +43,20 @@
 
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
+  
+    if (textField == self.ueserNameTexfiled) {
+        
+    }else if (textField == self.playingTextfiled){
+        
+    }
     return YES;
+}
+
+- (void)setNavBarItem {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+}
+- (void)leftBackBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

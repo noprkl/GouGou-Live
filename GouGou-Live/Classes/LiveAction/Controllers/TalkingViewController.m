@@ -50,9 +50,13 @@
     [super viewWillDisappear:animated];
 }
 - (void)initUI {
-
+    
+//    [self addObserver:self.textField forKeyPath:UIKeyboardWillShowNotification options:NSKeyValueObservingOptionNew context:nil];
 }
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    DLog(@"%@", keyPath);
+    DLog(@"%@", change);
+}
 - (void)makeConstraint {
 
 }

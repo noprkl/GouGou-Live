@@ -38,7 +38,7 @@
 }
 - (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = @[@"余额", @"申请体现", @"体现支付宝"];
+        _dataArr = @[@"余额", @"结算", @"提现支付宝"];
     }
     return _dataArr;
 }
@@ -46,7 +46,7 @@
 - (NSArray *)controllerNames {
 
     if (!_controllerNames) {
-        _controllerNames = @[@"PresentApplicationViewController",@"PayingViewController"];
+        _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
     }
     return _controllerNames;
 }
@@ -61,11 +61,13 @@
         [_helpBtn setTintColor:[UIColor whiteColor]];
         [_helpBtn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
         _helpBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [_helpBtn addTarget:self action:@selector(clickTohelp) forControlEvents:UIControlEventTouchUpInside];
+        [_helpBtn addTarget:self action:@selector(clickHelpBtnAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _helpBtn;
 }
-
+- (void)clickHelpBtnAction {
+    
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
 }
@@ -86,21 +88,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == 0) {
-        return;
-    } else {
+//    if (indexPath.row == 0) {
+//        return;
+//    } else {
+//    
+//    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSString *cellText = self.dataArr[indexPath.row ];
     
-    NSString *controllerName = self.controllerNames[indexPath.row - 1];
+    NSString *controllerName = self.controllerNames[indexPath.row];
     
     UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
     VC.hidesBottomBarWhenPushed = YES;
     VC.title = cellText;
     
     [self.navigationController pushViewController:VC animated:YES];
-    }
 }
 
 - (void)viewDidLoad {

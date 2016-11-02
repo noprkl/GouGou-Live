@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PresentWaitingViewController">
+            <connections>
+                <outlet property="promptLabel" destination="gCt-hH-hDC" id="DFx-F4-OTM"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon开心狗" translatesAutoresizingMaskIntoConstraints="NO" id="wEF-3F-ttE">
+                    <rect key="frame" x="105" y="50" width="166" height="84"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您于2016-9-8提交的提现申请,将于3个工作日内为您处理" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCt-hH-hDC">
+                    <rect key="frame" x="104" y="149" width="167" height="29"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKG-SV-svT">
+                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="LTV-X7-sx5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="帮助与咨询">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="clickHelpButton:" destination="-1" eventType="touchUpInside" id="Dtp-c6-yyY"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wEF-3F-ttE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="AkB-AL-t61"/>
+                <constraint firstItem="wEF-3F-ttE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="105" id="NLv-AJ-Gmx"/>
+                <constraint firstAttribute="trailing" secondItem="wEF-3F-ttE" secondAttribute="trailing" constant="104" id="NNm-GG-7Vi"/>
+                <constraint firstItem="OKG-SV-svT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YVF-Os-giR"/>
+                <constraint firstAttribute="trailing" secondItem="OKG-SV-svT" secondAttribute="trailing" id="f8Q-Oq-u7O"/>
+                <constraint firstAttribute="bottom" secondItem="OKG-SV-svT" secondAttribute="bottom" id="jKK-cz-yjC"/>
+                <constraint firstItem="gCt-hH-hDC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="104" id="jjJ-ca-EuV"/>
+                <constraint firstAttribute="trailing" secondItem="gCt-hH-hDC" secondAttribute="trailing" constant="104" id="k1U-Bd-b0W"/>
+                <constraint firstItem="gCt-hH-hDC" firstAttribute="top" secondItem="wEF-3F-ttE" secondAttribute="bottom" constant="15" id="y9w-gU-NG9"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="269.5" y="196.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon开心狗" width="166" height="84"/>
+    </resources>
+</document>

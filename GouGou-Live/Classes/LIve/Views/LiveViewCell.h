@@ -10,9 +10,13 @@
 
 @class LiveViewCellModel;
 
+typedef void(^ClickCardBlock)(UIControl *control);
 @interface LiveViewCell : UITableViewCell
 
 /** cell数据 */
 @property (strong, nonatomic) LiveViewCellModel *liveCellModel;
+
+
+@property(nonatomic, strong) ClickCardBlock cardBlcok; /**< 点击卡片回调 */
 
 @end

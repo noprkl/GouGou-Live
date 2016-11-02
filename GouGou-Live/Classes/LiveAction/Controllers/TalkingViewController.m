@@ -16,7 +16,7 @@
 @property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入view */
 
 
-@property(nonatomic, strong) UITextField *textField; /**< 输入框 */
+
 @end
 
 
@@ -30,7 +30,6 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     
     [self initUI];
-    DLog(@"%@", NSStringFromCGRect(self.view.frame));
     
 }
 
@@ -50,52 +49,60 @@
     [super viewWillDisappear:animated];
 }
 - (void)initUI {
+    //注册键盘出现的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
     
-//    [self addObserver:self.textField forKeyPath:UIKeyboardWillShowNotification options:NSKeyValueObservingOptionNew context:nil];
+    //注册键盘消失的通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
 }
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    DLog(@"%@", keyPath);
-    DLog(@"%@", change);
-}
+
 - (void)makeConstraint {
 
 }
 
 #pragma mark
 #pragma mark - 懒加载
+
 - (TalkingView *)talkView {
     if (!_talkView) {
         _talkView = [[TalkingView alloc] init];
         _talkView.backgroundColor = [UIColor whiteColor];
         __weak typeof(self) weakSelf = self;
         
-        _talkView.editBlock = ^(UITextField *textField){
-            [textField addTarget:weakSelf action:@selector(touchTextField:) forControlEvents:(UIControlEventTouchDown)];
-           
-            weakSelf.textField = textField;
-            textField.delegate = weakSelf;
-        };
+        self.textField = _talkView.messageTextField;
     }
     return _talkView;
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+
+{
+    //键盘高度
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat h = keyBoardFrame.size.height;
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
+            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290 - h);
             make.left.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
     }];
-    
-    return YES;
 }
-- (void)touchTextField:(UITextField *)textField {
-    [textField becomeFirstResponder];
+
+
+-(void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
     [UIView animateWithDuration:0.3 animations:^{
         [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290- 264);
+            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
             make.left.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];

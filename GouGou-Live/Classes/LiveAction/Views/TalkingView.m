@@ -8,9 +8,8 @@
 
 #import "TalkingView.h"
 
-@interface TalkingView ()
+@interface TalkingView ()<UITextFieldDelegate>
 
-@property(nonatomic, strong) UITextField *messageTextField; /**< 信息输入 */
 @property(nonatomic, strong) UIButton *faceBtn; /**< 表情输入按钮 */
 
 @property(nonatomic, strong) UIButton *sendMesBtn; /**< 信息发送按钮 */
@@ -79,11 +78,7 @@
         _emojiBlock();
     }
 }
-- (void)editingEvents:(UITextField *)textField {
-    if (_editBlock) {
-        _editBlock(textField);
-    }
-}
+
 #pragma mark
 #pragma mark - 懒加载
 - (UITextField *)messageTextField {
@@ -92,7 +87,7 @@
         _messageTextField = [[UITextField alloc] init];
         
         _messageTextField.borderStyle = UITextBorderStyleNone;
-        [_messageTextField addTarget:self action:@selector(editingEvents:) forControlEvents:(UIControlEventAllEditingEvents)];
+        _messageTextField.delegate = self;
     }
     return _messageTextField;
 }
@@ -133,5 +128,13 @@
     }
     return _line;
 }
-
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+    [textField becomeFirstResponder];
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
+}
 @end

@@ -10,4 +10,5 @@
 
 @interface ServiceViewController : BaseNavigationController
 
+@property(nonatomic, strong) UITextField *textField; /**< 输入框 */
 @end

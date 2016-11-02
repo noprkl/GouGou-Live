@@ -18,6 +18,9 @@
 
 /** block */
 @property (strong, nonatomic) LiveTopBlock tapBlock;
+
+
+@property(nonatomic, strong) UIButton *lastBtn; /**< 上一个点击的btn */
 @end
 
 @implementation LiveTopView
@@ -61,19 +64,21 @@
 
             // 选中
             NSDictionary *selectAttributeDict = @{
-                                                  NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.8],
+                                                  NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],
                                                   NSFontAttributeName:[UIFont systemFontOfSize:18]
                                                   };
             NSAttributedString *selectAttribute = [[NSAttributedString alloc] initWithString:title attributes:selectAttributeDict];
             
             [button setAttributedTitle:selectAttribute forState:(UIControlStateSelected)];
             
-            
             button.frame = CGRectMake(i * btnWid, 0, btnWid, btnHig);
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
             
             [self addSubview:button];
-            
+            if (i == 1) {
+                button.selected = YES;
+                self.lastBtn = button;
+            }
             
             if (i == 1) {
                 
@@ -96,15 +101,17 @@
                 lineView.backgroundColor = [UIColor whiteColor];
                 
                 self.lineView = lineView;
-                
             }
-            
         }
     }
     return self;
 }
 
 - (void)buttonClick:(UIButton *)button {
+    button.selected = YES;
+    self.lastBtn.selected = NO;
+    self.lastBtn = button;
+    
     
     self.tapBlock(button.tag);
     
@@ -116,7 +123,7 @@
     UIButton *button = self.buttons[btnTag];
     
     //线的动画
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:2 animations:^{
         
         [self.lineView remakeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.bottom);

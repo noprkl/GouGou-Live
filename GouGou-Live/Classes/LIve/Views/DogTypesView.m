@@ -47,11 +47,12 @@
 - (void)addbuttons {
     
     NSInteger cols = 5;
-    NSInteger btnW = 63;
-    NSInteger btnH = 25;
-    NSInteger margin = 10;
-    NSInteger btnY = 10;
-    NSInteger boardMargin = (self.frame.size.width - cols * btnW - (cols- 1)* margin)/2;
+   
+    CGFloat btnW = 63;
+    CGFloat btnH = 25;
+    CGFloat margin = kDogImageWidth;
+    CGFloat btnY = kDogImageWidth;
+    CGFloat boardMargin = (SCREEN_WIDTH - cols * btnW - (cols- 1)* margin)/2;
     
     for (NSInteger i = 0; i < cols; i++) {
         
@@ -66,17 +67,24 @@
         btn.layer.masksToBounds = YES;
         btn.layer.borderWidth = 1;
         btn.layer.borderColor = [UIColor colorWithHexString:@"#e0e0e0"].CGColor;
-        btn.tag = i + 100 ;
+        btn.tag = i + 30;
+        
         [btn setTitle:self.datalist[i] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];
+
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
+      
+        [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+
+        [btn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
         [btn addTarget:self action:@selector(clickBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    
         [self.buttonsArray addObject:btn];
         [self addSubview:btn];
         
     }
 }
-
 - (NSArray *)datalist {
     
     if (!_datalist) {
@@ -84,24 +92,16 @@
     }
     return _datalist;
 }
-
 - (void)clickBtnAction:(UIButton *)button {
-   
-    if (self.btnBlock) {
-        self.btnBlock(button);
+    [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+
+    if (_btnBlock) {
+
+        _btnBlock(button);
     }
-   
-    
-        if(self.lastBtn == button) {
-            //上次点击过的按钮，不做处理
-        } else{
-            //本次点击的按钮设为设置颜色
-            [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
-            //将上次点击过的按钮设为黑色
-            [self.lastBtn setBackgroundColor:[UIColor whiteColor]];
-        }
-        _lastBtn = button;
-    
+}
+- (void)btnHighlightColor:(UIButton *)btn {
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
 }
 
 

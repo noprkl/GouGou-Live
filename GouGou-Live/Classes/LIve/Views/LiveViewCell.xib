@@ -47,7 +47,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.85230777140000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="cHv-LB-W2o" firstAttribute="leading" secondItem="0G7-Fa-fRX" secondAttribute="leading" id="0U2-64-oGo"/>
                             <constraint firstItem="iYn-9X-pW2" firstAttribute="leading" secondItem="Iif-XZ-Y5h" secondAttribute="trailing" constant="5" id="0aG-98-HDz"/>
@@ -76,7 +75,7 @@
                     </imageView>
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrR-9q-xAd">
                         <rect key="frame" x="0.0" y="244" width="375" height="118"/>
-                        <color key="backgroundColor" red="0.95759671233874921" green="0.9923124357744959" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                     </scrollView>
                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFE-qk-BsY">
                         <rect key="frame" x="0.0" y="224" width="375" height="20"/>

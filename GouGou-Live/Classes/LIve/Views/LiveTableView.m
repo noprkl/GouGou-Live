@@ -44,6 +44,10 @@ static NSString *cellid = @"RecommentCellid";
     
     LiveViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     
+    cell.cardBlcok = ^(UIControl *control){
+        DLog(@"第%ld个卡片", indexPath.row);
+    };
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

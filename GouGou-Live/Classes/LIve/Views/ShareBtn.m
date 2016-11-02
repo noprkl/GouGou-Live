@@ -39,7 +39,6 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    
     // UIimage
     CGFloat imageX = 0;
     CGFloat imageY = 0;

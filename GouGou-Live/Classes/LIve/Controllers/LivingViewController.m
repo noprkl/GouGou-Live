@@ -21,6 +21,9 @@
 // 播放器
 #import "PlayerViewController.h"
 
+#import "TalkingViewController.h"
+#import "ServiceViewController.h"
+
 @interface LivingViewController ()<UIScrollViewDelegate>
 
 /** 返回按钮 */
@@ -63,6 +66,8 @@
 /** 分享弹出框 */
 @property (strong, nonatomic) NSArray *shareAlertBtns;
 
+
+@property(nonatomic, strong) UIViewController *lastVC; /**< 上一个控制器 */
 @end
 
 @implementation LivingViewController
@@ -128,7 +133,9 @@
     
     [self addChildViewController];
     
+    
     [self makeConstraint];
+    
 }
 - (void)makeConstraint {
     [self.centerView makeConstraints:^(MASConstraintMaker *make) {
@@ -187,14 +194,36 @@
     //根据索引返回vc的引用
     UIViewController *childVC = self.childViewControllers[index];
     
+#pragma mark - 隐藏键盘
+    if ([self.lastVC isKindOfClass:NSClassFromString(@"TalkingViewController")]) {
+        
+        TalkingViewController *talkVC = (TalkingViewController *)self.lastVC;
+        
+        [talkVC.textField resignFirstResponder];
+        
+    }else if ([self.lastVC isKindOfClass:NSClassFromString(@"ServiceViewController")]){
+        
+        ServiceViewController *serviceVC = (ServiceViewController *)self.lastVC;
+        
+        [serviceVC.textField resignFirstResponder];
+    }
+    
+    self.lastVC = childVC;
+
+
     // 判断当前vc是否加载过
     if ([childVC isViewLoaded]) return;
+    
     
     // 给没加载过的控制器设置frame
     childVC.view.frame = CGRectMake(offset, 0, width, height - 290);
     
+    
+    
     // 添加控制器视图到contentScrollView上
     [scrollView addSubview:childVC.view];
+    
+    
     
 }
 // 减速结束时调用 加载子控制器view的方法

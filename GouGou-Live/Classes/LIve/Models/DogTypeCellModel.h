@@ -22,7 +22,11 @@
 /** 主播名字 */
 @property (strong, nonatomic) NSString *anchorName;
 
-/** 销量信息 */
-@property (copy,nonatomic) NSString *saleMessage;
+/** 展播 */
+@property (copy,nonatomic) NSString *showCount;
 
+/** 在售 */
+@property(nonatomic, strong) NSString *onSailCount;
+
+- (instancetype)initWithDogIcon:(NSString *)dogIcon focusCount:(NSString *)focusCount dogDesc:(NSString *)dogDesc anchorName:(NSString *)anchorName showCount:(NSString *)showCount onSailCount:(NSString *)onSailCount;
 @end

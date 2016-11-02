@@ -50,6 +50,8 @@
 
 
 @property(nonatomic, assign) CGFloat viewHeight; /**< view高度 */
+
+
 @end
 
 @implementation SellerMessageView
@@ -57,7 +59,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-       
+        
         [self addSubview:self.sellerIconView];
         [self addSubview:self.sellerNameLabel];
         [self addSubview:self.fansLabel];
@@ -115,6 +117,11 @@
         make.top.equalTo(self.fansLabel.bottom).offset(10);
         make.left.equalTo(self.sellerIconView.right).offset(10);
     }];
+    [self.startView makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.pleaseLabel.centerY);
+        make.left.equalTo(self.pleaseLabel.right).offset(10);
+        make.size.equalTo(CGSizeMake(100, 15));
+    }];
     [self.line1 makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.pleaseLabel.bottom).offset(10);
         make.left.right.equalTo(self);
@@ -156,17 +163,20 @@
         make.top.equalTo(self.briefLabel.bottom).offset(10);
         make.left.equalTo(self.left).offset(10);
     }];
-    
-    self.viewHeight = CGRectGetMaxY(self.briefContentLabel.frame) + 10;
+//    [self makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.briefContentLabel.bottom).offset(10);
+//        
+//    }];
+//    self.viewHeight =
 }
 #pragma mark
 #pragma mark - Action 
 - (CGFloat)getMessageHeight {
-    return self.viewHeight;
+    return CGRectGetMaxY(self.briefContentLabel.frame) + 10;;
 }
 - (void)clickFocusBtnAction {
-    
 
+    DLog(@"关注");
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -237,6 +247,7 @@
 - (StartSourceView *)startView {
     if (!_startView) {
         _startView = [[StartSourceView alloc] init];
+        _startView.startCount = 4;
         _startView.backgroundColor = [UIColor whiteColor];
     }
     return _startView;

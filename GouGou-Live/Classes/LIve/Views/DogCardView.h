@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DogCardView : UIView
+@interface DogCardView : UIControl
 
 @property(nonatomic, strong) NSArray *dogCard; /**< 狗Card */
 

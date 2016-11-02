@@ -14,7 +14,7 @@ typedef void(^ClickSendBtnBlock)();
 
 @interface TalkingView : UIView
 
-@property(nonatomic, strong) EditTextFieldBlock editBlock; /**< 文本框输入回调 */
+@property(nonatomic, strong) UITextField *messageTextField; /**< 信息输入 */
 @property(nonatomic, strong) ClickEmojiBtnBlock emojiBlock; /**< 点击表情回调 */
 @property(nonatomic, strong) ClickSendBtnBlock sendBlock; /**< 点击发送回调 */
 @end

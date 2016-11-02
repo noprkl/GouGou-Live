@@ -10,4 +10,6 @@
 
 @interface StartSourceView : UIView
 
+
+@property(nonatomic, assign) NSInteger startCount; /**< 黄色星星个数 */
 @end

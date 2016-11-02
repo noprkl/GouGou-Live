@@ -72,7 +72,7 @@
     }];
     
     [self.dogAgeLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dogNameLabel.bottom).offset(10);
+        make.top.equalTo(self.dogNameLabel.bottom).offset(5);
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
     [self.dogSizeLabel makeConstraints:^(MASConstraintMaker *make) {
@@ -84,7 +84,7 @@
         make.left.equalTo(self.dogSizeLabel.right).offset(10);
     }];
     [self.nowPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dogAgeLabel.bottom).offset(10);
+        make.top.equalTo(self.dogAgeLabel.bottom).offset(5);
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
     [self.oldPriceLabel makeConstraints:^(MASConstraintMaker *make) {

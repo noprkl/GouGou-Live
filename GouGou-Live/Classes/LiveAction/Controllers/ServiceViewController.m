@@ -46,6 +46,18 @@
         make.top.equalTo(self.view.top).offset(10);
         make.centerX.equalTo(self.view.centerX);
     }];
+    
+    //注册键盘出现的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    //注册键盘消失的通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark
@@ -54,34 +66,61 @@
     if (!_talkView) {
         _talkView = [[TalkingView alloc] init];
         _talkView.backgroundColor = [UIColor whiteColor];
+        
+        self.textField = _talkView.messageTextField;
         __weak typeof(self) weakSelf = self;
         
-        _talkView.editBlock = ^(UITextField *textField){
-            [textField addTarget:weakSelf action:@selector(touchTextField:) forControlEvents:(UIControlEventTouchDown)];
-            
-            textField.delegate = weakSelf;
-        };
+        
     }
     return _talkView;
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+//    [textField resignFirstResponder];
+//    
+//    [UIView animateWithDuration:0.3 animations:^{
+//        [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
+//            make.left.equalTo(self.view);
+//            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+//        }];
+//    }];
+//    
+//    return YES;
+//}
+//- (void)touchTextField:(UITextField *)textField {
+//    [textField becomeFirstResponder];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290- 264);
+//            make.left.equalTo(self.view);
+//            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+//        }];
+//    }];
+//}
+- (void)keyboardWasShown:(NSNotification*)aNotification
+
+{
+    //键盘高度
+    
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat h = keyBoardFrame.size.height;
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
+            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290 - h);
             make.left.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
     }];
     
-    return YES;
 }
-- (void)touchTextField:(UITextField *)textField {
-    [textField becomeFirstResponder];
+
+
+-(void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
     [UIView animateWithDuration:0.3 animations:^{
         [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290- 264);
+            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
             make.left.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];

@@ -64,12 +64,19 @@
         x = i * (w + 10);
         
         DogCardView *cardView = [[DogCardView alloc] init];
-        
+        cardView.backgroundColor = [UIColor whiteColor];
         cardView.frame = CGRectMake(x, y, w, h);
-                [self.dogCardScrollView addSubview:cardView];
         
+        cardView.tag = i + 50;
+        [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
+        [self.dogCardScrollView addSubview:cardView];
     }
     
+}
+- (void)clickCardViewAction:(UIControl *)control {
+    if (_cardBlcok) {
+        _cardBlcok(control);
+    }
 }
 - (void)setLiveCellModel:(LiveViewCellModel *)liveCellModel {
     

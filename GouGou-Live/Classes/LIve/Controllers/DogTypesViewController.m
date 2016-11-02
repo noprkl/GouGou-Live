@@ -58,19 +58,23 @@
     
     [_bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.filteButtonView.bottom).offset(10);
+        make.top.equalTo(weakself.filteButtonView.bottom).offset(5);
         make.left.right.bottom.equalTo(weakself.view);
     }];
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+    
 }
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
+    
+}
 - (UIScrollView *)bottomScrollView {
     
     if (!_bottomScrollView) {
@@ -152,12 +156,16 @@
 - (void)setNav {
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] landscapeImagePhone:nil style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    
+    self.navigationController.navigationBar.titleTextAttributes =  @{
+                                                                     NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],
+                                                                     NSFontAttributeName:[UIFont systemFontOfSize:18]
+                                                                     };
 }
 
 - (void)backAction {
 
     [self.navigationController popViewControllerAnimated:YES];
-
 }
 
 - (void)didReceiveMemoryWarning {

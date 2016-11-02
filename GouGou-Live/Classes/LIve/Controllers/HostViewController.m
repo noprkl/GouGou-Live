@@ -80,21 +80,31 @@ static NSString * reuseIdentifier = @"headerID";
         __weak typeof(self) weakSelf = self;
         
         _typesView.btnBlock = ^(UIButton *btn){
-        
-            if (btn.tag < 104) {
+
+            NSInteger tag = btn.tag - 30;
+            switch (tag) {
+                case 0:
+                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
+                    break;
+                case 1:
+                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
+                    break;
+                case 2:
+                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
+                    break;
+                case 3:
+                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
+                    break;
+                case 4:
+                    {
+                        MoreImpressViewController *moreVC = [[MoreImpressViewController alloc] init];
+                        
+                        [weakSelf.navigationController pushViewController:moreVC animated:YES];
                 
-                DogTypesViewController * typeVC = [[DogTypesViewController alloc] init];
-                
-                typeVC.title = btn.titleLabel.text;
-                
-                [weakSelf.navigationController pushViewController:typeVC animated:YES];
-                
-            }
-            if (btn.tag == 104) {
-        
-                MoreImpressViewController *moreVC = [[MoreImpressViewController alloc] init];
-                
-                [weakSelf.navigationController pushViewController:moreVC animated:YES];
+                    }
+                    break;
+                default:
+                    break;
             }
         
         };
@@ -103,7 +113,14 @@ static NSString * reuseIdentifier = @"headerID";
     return _typesView;
 }
 
-
+- (void)pushDogTypeVC:(NSString *)title {
+    
+    DogTypesViewController * typeVC = [[DogTypesViewController alloc] init];
+    
+    typeVC.title = title;
+    
+    [self.navigationController pushViewController:typeVC animated:YES];
+}
 
 - (NSMutableArray *)dataArray {
     if (!_dataArray) {

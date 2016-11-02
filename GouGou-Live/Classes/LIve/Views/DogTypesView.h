@@ -8,18 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-//typedef void(^ClickeasyBtnBlock)();
-//typedef void(^ClickNoDropFurBtnBlock)();
-//typedef void(^ClickFaithBtnBlock)();
-//typedef void(^ClickLovelyBtnBlock)();
-//typedef void(^ClickMoreImpressBtnBlock)();
-@class DogTypesView;
-
 typedef void(^ClickBtnBlock)(UIButton *addButton);
 
 @interface DogTypesView : UIView
-
-
 
 /** 点击Button回调方法 */
 @property (copy,nonatomic) ClickBtnBlock btnBlock;

@@ -64,11 +64,13 @@ static NSString *cellid = @"cellid";
     }
     return _dataArr;
 }
+// 一共有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    return self.dataArr.count;
     return 10;
-    
+
 }
+// 加载cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     DetailCountViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
@@ -76,6 +78,7 @@ static NSString *cellid = @"cellid";
     
     return cell;
 }
+// 头部添加内容
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         
@@ -92,6 +95,7 @@ static NSString *cellid = @"cellid";
     }
     return nil;
 }
+// 头部高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 
     return 44;
@@ -99,6 +103,7 @@ static NSString *cellid = @"cellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
+//每一行的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     return 65;

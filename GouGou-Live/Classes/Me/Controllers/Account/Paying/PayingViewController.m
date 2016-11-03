@@ -10,7 +10,7 @@
 
 @interface PayingViewController ()<UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *ueserNameTexfiled;
+@property (weak, nonatomic) IBOutlet UITextField *userNameTexfiled;
 @property (weak, nonatomic) IBOutlet UITextField *playingTextfiled;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 
@@ -21,6 +21,8 @@
 
 @implementation PayingViewController
 - (IBAction)cilckSureButton:(UIButton *)sender {
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -32,9 +34,12 @@
 - (void)initUI {
     self.sureButton.layer.cornerRadius = 7.5;
     self.sureButton.layer.masksToBounds = YES;
-    self.ueserNameTexfiled.delegate = self;
+    self.userNameTexfiled.delegate = self;
     self.playingTextfiled.delegate  = self;
 }
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -44,9 +49,22 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
-    if (textField == self.ueserNameTexfiled) {
+    if (textField == self.userNameTexfiled) {
+        
+        
         
     }else if (textField == self.playingTextfiled){
+        
+        BOOL flag = [NSString valiMobile:string];
+        
+        if (range.location < 11 && flag) {
+        
+            return YES;
+        } else {
+        
+            return NO;
+        }
+        
         
     }
     return YES;

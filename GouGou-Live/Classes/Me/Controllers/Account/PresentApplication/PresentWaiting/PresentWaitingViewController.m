@@ -32,6 +32,7 @@
 
     self.title = @"提现申请";
     
+    
 }
 
 - (void)didReceiveMemoryWarning {

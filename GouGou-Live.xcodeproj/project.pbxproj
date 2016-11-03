@@ -16,6 +16,9 @@
 		0403DD061DBF2BB6000632CD /* RemoveCookieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0403DD041DBF2BB6000632CD /* RemoveCookieViewController.m */; };
 		0403DD071DBF2BB6000632CD /* RemoveCookieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */; };
 		0403DD0D1DBF3586000632CD /* MyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0403DD0C1DBF3586000632CD /* MyHeaderView.m */; };
+		040FE9F01DC9B608001225BF /* PromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040FE9EF1DC9B608001225BF /* PromptView.m */; };
+		040FE9F41DC9DE18001225BF /* PresentWaitingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040FE9F21DC9DE18001225BF /* PresentWaitingViewController.m */; };
+		040FE9F51DC9DE18001225BF /* PresentWaitingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 040FE9F31DC9DE18001225BF /* PresentWaitingViewController.xib */; };
 		042F19BA1DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F19B91DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m */; };
 		042F19BD1DC1CF950079E8BC /* DogTypesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F19BC1DC1CF950079E8BC /* DogTypesView.m */; };
 		044169F11DC3BBD000B537E4 /* TalkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044169F01DC3BBD000B537E4 /* TalkingViewController.m */; };
@@ -130,6 +133,11 @@
 		0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemoveCookieViewController.xib; sourceTree = "<group>"; };
 		0403DD0B1DBF3586000632CD /* MyHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHeaderView.h; sourceTree = "<group>"; };
 		0403DD0C1DBF3586000632CD /* MyHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHeaderView.m; sourceTree = "<group>"; };
+		040FE9EE1DC9B608001225BF /* PromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromptView.h; sourceTree = "<group>"; };
+		040FE9EF1DC9B608001225BF /* PromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromptView.m; sourceTree = "<group>"; };
+		040FE9F11DC9DE18001225BF /* PresentWaitingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentWaitingViewController.h; sourceTree = "<group>"; };
+		040FE9F21DC9DE18001225BF /* PresentWaitingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentWaitingViewController.m; sourceTree = "<group>"; };
+		040FE9F31DC9DE18001225BF /* PresentWaitingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentWaitingViewController.xib; sourceTree = "<group>"; };
 		042F19B81DC1A0FC0079E8BC /* DogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogPictureCollectionViewCell.h; sourceTree = "<group>"; };
 		042F19B91DC1A0FC0079E8BC /* DogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogPictureCollectionViewCell.m; sourceTree = "<group>"; };
 		042F19BB1DC1CF950079E8BC /* DogTypesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogTypesView.h; sourceTree = "<group>"; };
@@ -350,6 +358,16 @@
 				0403DD051DBF2BB6000632CD /* RemoveCookieViewController.xib */,
 			);
 			name = "意见清除缓存";
+			sourceTree = "<group>";
+		};
+		040FE9F61DC9DE27001225BF /* PresentWaitingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				040FE9F11DC9DE18001225BF /* PresentWaitingViewController.h */,
+				040FE9F21DC9DE18001225BF /* PresentWaitingViewController.m */,
+				040FE9F31DC9DE18001225BF /* PresentWaitingViewController.xib */,
+			);
+			name = PresentWaitingViewController;
 			sourceTree = "<group>";
 		};
 		044169EA1DC3BB8500B537E4 /* LiveAction */ = {
@@ -939,6 +957,8 @@
 				0498A0981DC8632100727A6A /* DetailCountViewCell.xib */,
 				0498A09B1DC86D8A00727A6A /* DetailCountTopView.h */,
 				0498A09C1DC86D8A00727A6A /* DetailCountTopView.m */,
+				040FE9EE1DC9B608001225BF /* PromptView.h */,
+				040FE9EF1DC9B608001225BF /* PromptView.m */,
 			);
 			name = "账户";
 			sourceTree = "<group>";
@@ -971,6 +991,7 @@
 				0498A0C91DC8D26700727A6A /* PresentApplicationViewController.h */,
 				0498A0CA1DC8D26700727A6A /* PresentApplicationViewController.m */,
 				0498A0CB1DC8D26700727A6A /* PresentApplicationViewController.xib */,
+				040FE9F61DC9DE27001225BF /* PresentWaitingViewController */,
 			);
 			name = "提现";
 			sourceTree = "<group>";
@@ -1182,6 +1203,7 @@
 				0403DD071DBF2BB6000632CD /* RemoveCookieViewController.xib in Resources */,
 				04AE67CD1DBEEFFC00F4831D /* OrderGoodsViewController.xib in Resources */,
 				0403DD021DBF2B65000632CD /* MessagePushViewController.xib in Resources */,
+				040FE9F51DC9DE18001225BF /* PresentWaitingViewController.xib in Resources */,
 				0467AD431DBDF0B300562CC4 /* RegisteViewController.xib in Resources */,
 				04AE67B81DBE21FD00F4831D /* CodeLoginViewController.xib in Resources */,
 				04AE67F31DBEF4DF00F4831D /* AboutUsViewController.xib in Resources */,
@@ -1294,6 +1316,7 @@
 				0467AD3B1DBDF0B300562CC4 /* SearchViewController.m in Sources */,
 				04AE67CC1DBEEFFC00F4831D /* OrderGoodsViewController.m in Sources */,
 				0469D38B1DC040AA00CEF8E6 /* HTTPTool.m in Sources */,
+				040FE9F41DC9DE18001225BF /* PresentWaitingViewController.m in Sources */,
 				04AE67B71DBE21FD00F4831D /* CodeLoginViewController.m in Sources */,
 				046BC2CC1DC2E71200B5DD52 /* LiveTableView.m in Sources */,
 				0467AD371DBDF0B300562CC4 /* HostViewController.m in Sources */,
@@ -1321,6 +1344,7 @@
 				0498A0A61DC8A52000727A6A /* SellerMessageView.m in Sources */,
 				0449180F1DC72F6F00541195 /* DogImageView.m in Sources */,
 				0403DD011DBF2B65000632CD /* MessagePushViewController.m in Sources */,
+				040FE9F01DC9B608001225BF /* PromptView.m in Sources */,
 				0469D3851DC0404800CEF8E6 /* BaseTabBarController.m in Sources */,
 				044169F11DC3BBD000B537E4 /* TalkingViewController.m in Sources */,
 				046BC2C91DC2E71200B5DD52 /* DogSizeFilter.m in Sources */,

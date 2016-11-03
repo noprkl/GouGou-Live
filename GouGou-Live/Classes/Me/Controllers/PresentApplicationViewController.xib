@@ -39,7 +39,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="cilckSureBtn:" destination="-1" eventType="touchUpInside" id="trL-M1-iC4"/>
+                        <action selector="cilckPresentApplicationBtn:" destination="-1" eventType="touchUpInside" id="oKB-xB-CHY"/>
                     </connections>
                 </button>
             </subviews>

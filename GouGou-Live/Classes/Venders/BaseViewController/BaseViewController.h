@@ -10,6 +10,6 @@
 
 @interface BaseViewController : UIViewController
 
-- (void)setTextFieldCleanBtnWith:(UITextField *)textField;
+- (void)setNavBarItem;
 
 @end

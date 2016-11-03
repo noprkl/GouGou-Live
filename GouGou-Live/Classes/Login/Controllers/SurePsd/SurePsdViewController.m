@@ -25,14 +25,7 @@
     
     [self setNavBarItem];
 }
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 - (void)initUI {
  
     // 设置textField的placeHolder
@@ -65,12 +58,6 @@
 #pragma mark
 #pragma mark - Action
 
-- (IBAction)clickEyeBtnAction:(UIButton *)sender {
-    
-    self.surePsdTextField.secureTextEntry = !self.surePsdTextField.secureTextEntry;
-    
-    sender.selected = !sender.selected;
-}
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
     NSString *psdNumber = self.psdTextField.text;

@@ -17,14 +17,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
 }
 
-- (void)setTextFieldCleanBtnWith:(UITextField *)textField {
+
+- (void)setNavBarItem {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+}
+- (void)leftBackBtnAction {
     
-    UIButton *button = [textField valueForKey:@"_clearButton"];
-    [button setImage:[UIImage imageNamed:@"-单删除"] forState:UIControlStateNormal];
-    
-    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

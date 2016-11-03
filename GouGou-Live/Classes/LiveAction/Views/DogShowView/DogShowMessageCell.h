@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClidkShareBtnBlock)(UIButton *btn);
-typedef void(^ClidkLikeBtnBlock)(UIButton *btn);
-typedef void(^ClidkBookBtnBlock)(UIButton *btn);
+typedef void(^ClidkShareBtnBlock)();
+typedef void(^ClidkLikeBtnBlock)();
+typedef void(^ClidkBookBtnBlock)();
 
 @interface DogShowMessageCell : UITableViewCell
 

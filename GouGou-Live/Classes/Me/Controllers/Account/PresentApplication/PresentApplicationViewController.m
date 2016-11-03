@@ -31,7 +31,7 @@
 #pragma mark 验证支付密码
     
     
-    NSString * payPsdCode = self.textField.text;
+//    NSString * payPsdCode = self.textField.text;
     // 判断payPsdCode = 正确密码
     
     // 如果密码正确 跳转

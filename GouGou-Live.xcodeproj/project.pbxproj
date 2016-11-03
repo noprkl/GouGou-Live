@@ -116,6 +116,8 @@
 		0479B63B1DCADC7B00CB288A /* NSString+CheckString.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5CE1DCADC7B00CB288A /* NSString+CheckString.m */; };
 		0479B63C1DCADC7B00CB288A /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5D01DCADC7B00CB288A /* UIColor+HexString.m */; };
 		0479B63D1DCADC7B00CB288A /* HTTPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5D31DCADC7B00CB288A /* HTTPTool.m */; };
+		0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B63F1DCAE7F900CB288A /* DogBookViewController.m */; };
+		0479B6421DCAE7F900CB288A /* DogBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B6401DCAE7F900CB288A /* DogBookViewController.xib */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -311,6 +313,9 @@
 		0479B5D01DCADC7B00CB288A /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
 		0479B5D21DCADC7B00CB288A /* HTTPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPTool.h; sourceTree = "<group>"; };
 		0479B5D31DCADC7B00CB288A /* HTTPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPTool.m; sourceTree = "<group>"; };
+		0479B63E1DCAE7F900CB288A /* DogBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogBookViewController.h; sourceTree = "<group>"; };
+		0479B63F1DCAE7F900CB288A /* DogBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogBookViewController.m; sourceTree = "<group>"; };
+		0479B6401DCAE7F900CB288A /* DogBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DogBookViewController.xib; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -663,6 +668,9 @@
 			children = (
 				0479B51A1DCADC7B00CB288A /* DogShowViewController.h */,
 				0479B51B1DCADC7B00CB288A /* DogShowViewController.m */,
+				0479B63E1DCAE7F900CB288A /* DogBookViewController.h */,
+				0479B63F1DCAE7F900CB288A /* DogBookViewController.m */,
+				0479B6401DCAE7F900CB288A /* DogBookViewController.xib */,
 			);
 			path = DogShow;
 			sourceTree = "<group>";
@@ -1328,6 +1336,7 @@
 				0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */,
 				0479B5D91DCADC7B00CB288A /* LiveViewController.xib in Resources */,
 				0479B61A1DCADC7B00CB288A /* MyViewController.xib in Resources */,
+				0479B6421DCAE7F900CB288A /* DogBookViewController.xib in Resources */,
 				0479B62C1DCADC7B00CB288A /* WatchHistoryViewController.xib in Resources */,
 				0479B5EE1DCADC7B00CB288A /* LiveViewCell.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
@@ -1431,6 +1440,7 @@
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
+				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
 				0479B5DA1DCADC7B00CB288A /* DogTypesViewController.m in Sources */,

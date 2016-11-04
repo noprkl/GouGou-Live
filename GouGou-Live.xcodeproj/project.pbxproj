@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
+		044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */; };
+		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
+		045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30A1DCC65E5001B95B1 /* AccountViewController.m */; };
+		045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */; };
+		045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */; };
 		0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF01DBDEF2200562CC4 /* Main.storyboard */; };
 		0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF31DBDEF2200562CC4 /* Assets.xcassets */; };
 		0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */; };
@@ -65,7 +71,6 @@
 		0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */; };
 		0479B6091DCADC7B00CB288A /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5541DCADC7B00CB288A /* SurePsdViewController.m */; };
 		0479B60A1DCADC7B00CB288A /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */; };
-		0479B60B1DCADC7B00CB288A /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B55D1DCADC7B00CB288A /* AccountViewController.m */; };
 		0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5601DCADC7B00CB288A /* PayingViewController.m */; };
 		0479B60D1DCADC7B00CB288A /* PayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5611DCADC7B00CB288A /* PayingViewController.xib */; };
 		0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5641DCADC7B00CB288A /* PresentApplicationViewController.m */; };
@@ -120,10 +125,22 @@
 		0479B6451DCB046C00CB288A /* BuyRuleAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6441DCB046C00CB288A /* BuyRuleAlertView.m */; };
 		0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6581DCB44CB00CB288A /* AllCountCell.m */; };
 		0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */; };
+		0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6661DCC1EE700CB288A /* TransformStyleView.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
+		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
+		044C82EA1DCC411A00B62575 /* ChoseShopAdressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressCell.h; sourceTree = "<group>"; };
+		044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressCell.m; sourceTree = "<group>"; };
+		044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoseShopAdressCell.xib; sourceTree = "<group>"; };
+		045FE3091DCC65E5001B95B1 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		045FE30A1DCC65E5001B95B1 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		045FE30C1DCC6635001B95B1 /* ChosedAdressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChosedAdressView.h; sourceTree = "<group>"; };
+		045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChosedAdressView.m; sourceTree = "<group>"; };
+		045FE30F1DCC6C39001B95B1 /* ShopAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopAdressModel.h; sourceTree = "<group>"; };
+		045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopAdressModel.m; sourceTree = "<group>"; };
 		0467ACE41DBDEF2200562CC4 /* GouGou-Live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GouGou-Live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0467ACF11DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0467ACF31DBDEF2200562CC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -230,8 +247,6 @@
 		0479B5531DCADC7B00CB288A /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
 		0479B5541DCADC7B00CB288A /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
 		0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
-		0479B55C1DCADC7B00CB288A /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountViewController.h; path = Account/AccountViewController.h; sourceTree = "<group>"; };
-		0479B55D1DCADC7B00CB288A /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountViewController.m; path = Account/AccountViewController.m; sourceTree = "<group>"; };
 		0479B55F1DCADC7B00CB288A /* PayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingViewController.h; sourceTree = "<group>"; };
 		0479B5601DCADC7B00CB288A /* PayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingViewController.m; sourceTree = "<group>"; };
 		0479B5611DCADC7B00CB288A /* PayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayingViewController.xib; sourceTree = "<group>"; };
@@ -323,6 +338,8 @@
 		0479B6581DCB44CB00CB288A /* AllCountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllCountCell.m; sourceTree = "<group>"; };
 		0479B6621DCB4EEE00CB288A /* SellerAndDogCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAndDogCardView.h; sourceTree = "<group>"; };
 		0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAndDogCardView.m; sourceTree = "<group>"; };
+		0479B6651DCC1EE700CB288A /* TransformStyleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformStyleView.h; sourceTree = "<group>"; };
+		0479B6661DCC1EE700CB288A /* TransformStyleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformStyleView.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -677,6 +694,8 @@
 				0479B51B1DCADC7B00CB288A /* DogShowViewController.m */,
 				0479B63E1DCAE7F900CB288A /* DogBookViewController.h */,
 				0479B63F1DCAE7F900CB288A /* DogBookViewController.m */,
+				0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */,
+				0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */,
 			);
 			path = DogShow;
 			sourceTree = "<group>";
@@ -718,6 +737,8 @@
 		0479B5261DCADC7B00CB288A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				045FE30F1DCC6C39001B95B1 /* ShopAdressModel.h */,
+				045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -886,8 +907,6 @@
 			isa = PBXGroup;
 			children = (
 				0479B55B1DCADC7B00CB288A /* Account */,
-				0479B55C1DCADC7B00CB288A /* AccountViewController.h */,
-				0479B55D1DCADC7B00CB288A /* AccountViewController.m */,
 				0479B56A1DCADC7B00CB288A /* Certificate */,
 				0479B5721DCADC7B00CB288A /* DetailCount */,
 				0479B5751DCADC7B00CB288A /* Favorite */,
@@ -903,6 +922,8 @@
 		0479B55B1DCADC7B00CB288A /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				045FE3091DCC65E5001B95B1 /* AccountViewController.h */,
+				045FE30A1DCC65E5001B95B1 /* AccountViewController.m */,
 				0479B55E1DCADC7B00CB288A /* Paying */,
 				0479B5621DCADC7B00CB288A /* PresentApplication */,
 			);
@@ -1263,6 +1284,13 @@
 				0479B6581DCB44CB00CB288A /* AllCountCell.m */,
 				0479B6621DCB4EEE00CB288A /* SellerAndDogCardView.h */,
 				0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */,
+				0479B6651DCC1EE700CB288A /* TransformStyleView.h */,
+				0479B6661DCC1EE700CB288A /* TransformStyleView.m */,
+				044C82EA1DCC411A00B62575 /* ChoseShopAdressCell.h */,
+				044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */,
+				044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */,
+				045FE30C1DCC6635001B95B1 /* ChosedAdressView.h */,
+				045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */,
 			);
 			path = DogBookView;
 			sourceTree = "<group>";
@@ -1344,6 +1372,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */,
 				0479B61E1DCADC7B00CB288A /* AboutUsViewController.xib in Resources */,
 				0479B6281DCADC7B00CB288A /* SuggestViewController.xib in Resources */,
 				0479B6041DCADC7B00CB288A /* LoginViewController.xib in Resources */,
@@ -1459,14 +1488,17 @@
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
+				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
+				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
 				0479B5DA1DCADC7B00CB288A /* DogTypesViewController.m in Sources */,
 				0479B62D1DCADC7B00CB288A /* DetailCountTopView.m in Sources */,
 				0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */,
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
+				0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */,
 				0479B63D1DCADC7B00CB288A /* HTTPTool.m in Sources */,
 				0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */,
 				0479B5F71DCADC7B00CB288A /* DogMarkView.m in Sources */,
@@ -1476,6 +1508,7 @@
 				0479B6161DCADC7B00CB288A /* DetailCountViewController.m in Sources */,
 				0479B61D1DCADC7B00CB288A /* AboutUsViewController.m in Sources */,
 				0479B5E81DCADC7B00CB288A /* DogSizeFilter.m in Sources */,
+				045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */,
 				0479B63C1DCADC7B00CB288A /* UIColor+HexString.m in Sources */,
 				0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */,
 				0479B5DD1DCADC7B00CB288A /* SearchViewController.m in Sources */,
@@ -1490,6 +1523,7 @@
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
 				0479B5DC1DCADC7B00CB288A /* RecommendViewController.m in Sources */,
 				0479B6271DCADC7B00CB288A /* SuggestViewController.m in Sources */,
+				045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
 				0479B63B1DCADC7B00CB288A /* NSString+CheckString.m in Sources */,
 				0479B5F11DCADC7B00CB288A /* ShareBtnModel.m in Sources */,
@@ -1506,6 +1540,7 @@
 				0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */,
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
+				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
 				0479B5E01DCADC7B00CB288A /* NoneFocusView.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
@@ -1513,7 +1548,6 @@
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
 				0479B61B1DCADC7B00CB288A /* OrderGoodsViewController.m in Sources */,
-				0479B60B1DCADC7B00CB288A /* AccountViewController.m in Sources */,
 				0479B5E11DCADC7B00CB288A /* DogPictureCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -47,6 +47,11 @@ static NSString *cellid = @"DogShowCellid";
     [super viewWillAppear:animated];
     self.navigationBarHidden = YES;
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.navigationBarHidden = NO;
+}
 - (void)initUI {
     
     [self.view addSubview:self.tableView];
@@ -65,7 +70,8 @@ static NSString *cellid = @"DogShowCellid";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsHorizontalScrollIndicator = NO;
-        
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.decelerationRate = 0.9;
         [_tableView registerClass:[DogShowMessageCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;
@@ -76,9 +82,9 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DogShowMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-   
-    self.cell = cell;
+    cell.selected = UITableViewCellSelectionStyleNone;
     
+    self.cell = cell;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -128,7 +134,7 @@ static NSString *cellid = @"DogShowCellid";
         [shareAlert show];
 
     };
-    cell.lickBlock = ^ (){
+    cell.likeBlock = ^ (){
        
         
     };
@@ -136,17 +142,21 @@ static NSString *cellid = @"DogShowCellid";
         
         BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
         [rulesAlert show];
+        
         rulesAlert.sureBlock = ^(){
-            DogBookViewController *dogBookVC = [[DogBookViewController alloc] init];
-            dogBookVC.title = @"狗狗订购";
-            [weakSelf.navigationController pushViewController:dogBookVC animated:YES];
+            [self pushToDogBookVC];
+            
         };
     };
     return [cell getCellHeight];
 }
-- (void)shareAlertDismiss {
-    [self.shareAlert dismiss];
+- (void)pushToDogBookVC {
+   
+    DogBookViewController *dogBookVC = [[DogBookViewController alloc] init];
+    dogBookVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:dogBookVC animated:YES];
 }
+
 - (NSArray *)shareAlertBtns {
     if (!_shareAlertBtns) {
         _shareAlertBtns = [NSArray array];

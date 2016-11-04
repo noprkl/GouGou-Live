@@ -460,8 +460,8 @@
 }
 - (void)clickLikeBtnAction:(UIButton *)btn {
     
-    if (_lickBlock) {
-        _lickBlock();
+    if (_likeBlock) {
+        _likeBlock();
     }
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 }

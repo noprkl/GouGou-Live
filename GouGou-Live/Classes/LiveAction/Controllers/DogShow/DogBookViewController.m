@@ -8,8 +8,9 @@
 
 #import "DogBookViewController.h"
 #import "SellerAndDogCardView.h"
-
-
+#import "TransformStyleView.h"
+#import "ChoseShopAdressViewController.h"
+#import "ChosedAdressView.h" // 收货地址内容有值
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
 @property(nonatomic, strong) UITableView *tablevView; /**< 表格 */
@@ -21,33 +22,48 @@
 @property(nonatomic, strong) UIButton *payCount; /**< 结算按钮 */
 
 
-@property(nonatomic, strong) UITableViewCell *cell1; /**< 应付定金cell */
+@property(nonatomic, strong) UITableViewCell *bookMoneyCell4; /**< 应付定金cell */
 
-@property(nonatomic, strong) UITableViewCell *cell2; /**< 剩余金额cell */
+@property(nonatomic, strong) UITableViewCell *lastMoneyCell5; /**< 剩余金额cell */
 
-@property(nonatomic, strong) UITableViewCell *cell3; /**< 收货地址cell */
+@property(nonatomic, strong) UITableViewCell *shopAdressCell1; /**< 收货地址cell */
+
+@property(nonatomic, strong) UITableViewCell *transformCell3; /**< 支付运费方式cell */
 
 @property(nonatomic, strong) UITextView *noteTextView; /**< 备注 */
 
 @property(nonatomic, strong) UILabel *placeLabel; /**< 站位字符 */
 
+@property(nonatomic, strong) ShopAdressModel *adressModel; /**< 返回的值 */
+
 @end
 
 @implementation DogBookViewController
-
+#pragma mark
+#pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [self initUI];
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdress:) name:@"ShopAdress" object:nil];
+
+}
+- (void)getShopAdress:(ShopAdressModel *)adress {
+    self.adressModel = adress;
+    DLog(@"已传");
+}
 - (void)initUI {
+    self.title = @"订购狗狗";
     [self setNavBarItem];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tablevView];
     [self.view addSubview:self.bookMoneyLabel];
     [self.view addSubview:self.payCount];
     
-
     [self makeConstraint];
     
     
@@ -79,12 +95,14 @@
         make.left.right.equalTo(self.view);
     }];
 }
+
 #pragma mark
 #pragma mark - TableView
+
 - (NSArray *)dataArr {
     if (!_dataArr) {
         _dataArr = @[
-                     @"收货地址",@"狗狗信息", @"运费", @"订单总金额:", @"应付定金", @"剩余金额", @"备注"
+                     @"收货地址",@"狗狗信息", @"运费", @"订单总金额：", @"应付定金：", @"剩余金额：", @"备注"
                      ];
     }
     return _dataArr;
@@ -99,6 +117,7 @@
     }
     return _tablevView;
 }
+
 #pragma mark
 #pragma mark - 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -111,12 +130,15 @@
     switch (indexPath.row) {
         case 0:
         {
-//            if (cell ) { //如果默认值 添加view
+//            if (self.adressModel) { //如果默认值 添加view
 //                
 //            }
-            cell.textLabel.text = self.dataArr[indexPath.row];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            self.cell3 = cell;
+            ChosedAdressView *chosedView = [[ChosedAdressView alloc] init];
+            chosedView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 85);
+            [cell.contentView addSubview:chosedView];
+//            cell.textLabel.text = self.dataArr[indexPath.row];
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            self.shopAdressCell1 = cell;
         }
             break;
 
@@ -137,11 +159,13 @@
             break;
         case 2:
         {
-            cell.textLabel.text = self.dataArr[indexPath.row];
+            cell.textLabel.text = self.dataArr[2];
             cell.detailTextLabel.text = @"默认¥ 50";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
 
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         }
             break;
         case 3:
@@ -156,20 +180,26 @@
             [btn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];
             [btn addTarget:self action:@selector(choseBuyDogType:) forControlEvents:(UIControlEventTouchDown)];
             cell.accessoryView = btn;
-            NSLog(@"%@", cell.accessoryView);
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+            self.transformCell3 = cell;
             
         }
             break;
         case 4:
         {
             cell.textLabel.attributedText = [self getAttributeWithString1:self.dataArr[indexPath.row] string2:@"¥ 500"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
+            self.bookMoneyCell4 = cell;
         }
             break;
         case 5:
         {
             cell.textLabel.attributedText = [self getAttributeWithString1:self.dataArr[indexPath.row] string2:@"¥ 7200"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
+            self.lastMoneyCell5 = cell;
         }
             break;
         case 6:
@@ -182,7 +212,6 @@
                 make.edges.equalTo(UIEdgeInsetsMake(10, 10, 10, 10));
             }];
             
-            
         }
             break;
 
@@ -193,23 +222,43 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 1) {
+//    if (indexPath.row == 1) {
+//        return 170;
+//    }else if (indexPath.row == 6){
+//        return 163;
+//    }
+    if (indexPath.row == 0) {
+        return 85;
+    }else if (indexPath.row == 1){
         return 170;
     }else if (indexPath.row == 6){
-        return 164;
+        return 122;
     }
-    
     return 44;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
+    if (indexPath.row == 0) {
+        ChoseShopAdressViewController *choseVC = [[ChoseShopAdressViewController alloc] init];
+        choseVC.hidesBottomBarWhenPushed = YES;
+
+        [self.navigationController pushViewController:choseVC animated:YES];
+    }
 }
 - (void)choseBuyDogType:(UIButton *)btn {
-    btn.selected = !btn.selected;
-    
-    
+    TransformStyleView *transView = [[TransformStyleView alloc] init];
+    transView.detailPlist = @[@"价格 ¥80", @"按实结算"];
+    transView.transformCellBlock = ^(NSString *type){
+        DLog(@"%@", type);
+        
+        btn.selected = YES;
+        
+#pragma mark 改变字体
+        self.lastMoneyCell5.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[5] string2:@"¥ 7200"];
+        self.bookMoneyCell4.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[4] string2:@"¥ 500"];
+    };
+    [transView show];
 }
 #pragma mark
 #pragma mark - 懒加载&Action
@@ -221,6 +270,7 @@
     }
     return _bookMoneyLabel;
 }
+
 - (UIButton *)payCount {
     if (!_payCount) {
         _payCount = [UIButton buttonWithType:(UIButtonTypeSystem)];
@@ -231,9 +281,11 @@
     }
     return _payCount;
 }
+
 - (void)clickPayBtnAction:(UIButton *)btn {
     
 }
+
 - (NSAttributedString *)getAttributeWithString1:(NSString *)text1 string2:(NSString *)text2 {
     
     NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:text1 attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"], NSFontAttributeName:[UIFont systemFontOfSize:14]}];
@@ -245,9 +297,9 @@
 }
 - (NSAttributedString *)getChoseAttributeString1:(NSString *)text1 string2:(NSString *)text2 {
     
-    NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:text1 attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"], NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:text1 attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"], NSFontAttributeName:[UIFont systemFontOfSize:14]}];
     
-    NSMutableAttributedString *attribute2 = [[NSMutableAttributedString alloc] initWithString:text2 attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"], NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    NSMutableAttributedString *attribute2 = [[NSMutableAttributedString alloc] initWithString:text2 attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"], NSFontAttributeName:[UIFont systemFontOfSize:14]}];
 
     [attribute appendAttributedString:attribute2];
     return attribute;
@@ -279,6 +331,8 @@
 
         }];
     }];
+    
+    DLog(@"%@", self.noteTextView.text);
 }
 
 
@@ -303,8 +357,8 @@
     }
     return _noteTextView;
 }
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
@@ -324,6 +378,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

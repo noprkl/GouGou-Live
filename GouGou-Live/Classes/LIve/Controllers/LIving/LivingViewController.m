@@ -81,28 +81,35 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.backBtn.hidden = NO;
+    self.roomNameLabel.hidden = NO;
+    self.reportBtn.hidden = NO;
+    self.shareBtn.hidden = NO;
+    self.collectBtn.hidden = NO;
+    self.watchLabel.hidden = NO;
+    self.screenBtn.hidden = NO;
+
+    // 设置navigationBar的透明效果
+    [self.navigationController.navigationBar setAlpha:0];
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     
-    // navBar隐藏
-    self.navigationController.navigationBarHidden = YES;
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
    
-    [self.backBtn removeFromSuperview];
-    [self.roomNameLabel removeFromSuperview];
-    [self.reportBtn removeFromSuperview];
-    [self.shareBtn removeFromSuperview];
-    [self.collectBtn removeFromSuperview];
-    [self.watchLabel removeFromSuperview];
-    [self.screenBtn removeFromSuperview];
-}
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    // navBar显示
-    self.navigationController.navigationBarHidden = NO;
+    self.backBtn.hidden = YES;
+    self.roomNameLabel.hidden = YES;
+    self.reportBtn.hidden = YES;
+    self.shareBtn.hidden = YES;
+    self.collectBtn.hidden = YES;
+    self.watchLabel.hidden = YES;
+    self.screenBtn.hidden = YES;
+    
     self.hidesBottomBarWhenPushed = NO;
+    [self.navigationController.navigationBar setAlpha:1];
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
 }
+
 #pragma mark
 #pragma mark - UI
 - (void)initUI {

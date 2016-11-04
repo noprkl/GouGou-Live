@@ -30,7 +30,6 @@
 - (void)codePayPsdRequest {
 #pragma mark 验证支付密码
     
-    
 //    NSString * payPsdCode = self.textField.text;
     // 判断payPsdCode = 正确密码
     
@@ -54,13 +53,14 @@
         DLog(@"最高输入金钱数为7262");
     } else {
     
+        // 封装蒙版的View
         PromptView * prompt = [[PromptView alloc] initWithFrame:self.view.bounds];
         prompt.backgroundColor = [UIColor whiteColor];
         prompt.layer.cornerRadius = 5;
         prompt.layer.masksToBounds = YES;
         
         __weak typeof(self) weakself = self;
-
+        // 提示框textfiled设置代理
         prompt.playpsdBlock = ^(UITextField *textfiled) {
 
             weakself.textField = textfiled;
@@ -68,13 +68,13 @@
             textfiled.delegate = self;
             
         };
-        
+        // 点击提示框确认按钮请求支付密码
         prompt.clickSureBtnBlock = ^(){
             
             [weakself codePayPsdRequest];
             
-            
         };
+        // 显示蒙版
         [prompt show];
     }
 }
@@ -90,11 +90,6 @@
 - (void)initUI {
 
     self.title = @"提现申请";
-//    NSDictionary *dict = @{
-//                           NSFontAttributeName:[UIFont systemFontOfSize:16],
-//                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]};
-    
-//    [self.title setValuesForKeysWithDictionary:dict];
     
     self.sureBtn.layer.cornerRadius = 7.5;
     self.sureBtn.layer.masksToBounds = YES;
@@ -132,13 +127,14 @@
         
     
     }else if(textField == self.textField){
-        if (range.location == 0) {
+        
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
             
-            DLog(@"支付密码不能为空");
             return YES;
+        
         } else if (range.location > 20) {
             
-            DLog(@"最多输入20位数字、字母密码");
             return YES;
         }
         return YES;

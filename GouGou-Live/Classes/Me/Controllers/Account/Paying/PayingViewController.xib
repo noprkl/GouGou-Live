@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayingViewController">
             <connections>
-                <outlet property="playingTextfiled" destination="hkK-FV-1pK" id="bqQ-CP-N7V"/>
+                <outlet property="payingTextfiled" destination="hkK-FV-1pK" id="HFI-KH-wwg"/>
                 <outlet property="pointLabel" destination="v8S-jH-3mR" id="ZgF-sI-d1K"/>
                 <outlet property="sureButton" destination="Xhr-t7-FW9" id="5Qz-jU-hig"/>
                 <outlet property="userNameTexfiled" destination="KSS-ay-6W6" id="ePh-xQ-OM2"/>

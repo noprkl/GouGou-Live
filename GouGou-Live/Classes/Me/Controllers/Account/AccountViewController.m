@@ -87,12 +87,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    if (indexPath.row == 0) {
-//        return;
-//    } else {
-//    
-//    }
+ 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSString *cellText = self.dataArr[indexPath.row ];

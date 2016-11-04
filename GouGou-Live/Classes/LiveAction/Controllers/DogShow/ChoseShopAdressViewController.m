@@ -11,6 +11,8 @@
 #import "ChosedAdressView.h" // 地址选择
 #import "ShopAdressModel.h"
 
+#import "EditNewAddressViewController.h"
+
 @interface ChoseShopAdressViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *tableView; /**< tableView */
@@ -43,6 +45,10 @@ static NSString *cellid = @"ChoseShopAdressCell";
 }
 - (void)clickRightBarItemAction {
     // 跳转添加地址界面
+    EditNewAddressViewController *editAdressVC = [[EditNewAddressViewController alloc] init];
+    editAdressVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:editAdressVC animated:YES];
+    
 }
 - (void)initUI {
     [self addRightBarButtonitem];

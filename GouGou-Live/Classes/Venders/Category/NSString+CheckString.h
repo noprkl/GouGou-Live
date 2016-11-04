@@ -15,4 +15,5 @@
 
 /** 判读手机号是否是数字 */
 + (BOOL)validateNumber:(NSString*)number;
+
 @end

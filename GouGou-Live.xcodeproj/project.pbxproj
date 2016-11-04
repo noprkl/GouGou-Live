@@ -13,6 +13,13 @@
 		045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30A1DCC65E5001B95B1 /* AccountViewController.m */; };
 		045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */; };
 		045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */; };
+		045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3141DCC8BE2001B95B1 /* AddPayingSuccessViewController.m */; };
+		045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045FE3151DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib */; };
+		045FE31E1DCC8C48001B95B1 /* AddressChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE31A1DCC8C48001B95B1 /* AddressChooseView.m */; };
+		045FE31F1DCC8C48001B95B1 /* AddrsssTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE31D1DCC8C48001B95B1 /* AddrsssTableViewCell.m */; };
+		045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3221DCC8C66001B95B1 /* EditNewAddressViewController.m */; };
+		045FE3251DCC8C66001B95B1 /* EditNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045FE3231DCC8C66001B95B1 /* EditNewAddressViewController.xib */; };
+		045FE3291DCC8CA0001B95B1 /* DeletePrommtView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3281DCC8CA0001B95B1 /* DeletePrommtView.m */; };
 		0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF01DBDEF2200562CC4 /* Main.storyboard */; };
 		0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF31DBDEF2200562CC4 /* Assets.xcassets */; };
 		0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */; };
@@ -141,6 +148,18 @@
 		045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChosedAdressView.m; sourceTree = "<group>"; };
 		045FE30F1DCC6C39001B95B1 /* ShopAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopAdressModel.h; sourceTree = "<group>"; };
 		045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopAdressModel.m; sourceTree = "<group>"; };
+		045FE3131DCC8BE2001B95B1 /* AddPayingSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPayingSuccessViewController.h; sourceTree = "<group>"; };
+		045FE3141DCC8BE2001B95B1 /* AddPayingSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPayingSuccessViewController.m; sourceTree = "<group>"; };
+		045FE3151DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddPayingSuccessViewController.xib; sourceTree = "<group>"; };
+		045FE3191DCC8C48001B95B1 /* AddressChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressChooseView.h; sourceTree = "<group>"; };
+		045FE31A1DCC8C48001B95B1 /* AddressChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressChooseView.m; sourceTree = "<group>"; };
+		045FE31C1DCC8C48001B95B1 /* AddrsssTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddrsssTableViewCell.h; sourceTree = "<group>"; };
+		045FE31D1DCC8C48001B95B1 /* AddrsssTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddrsssTableViewCell.m; sourceTree = "<group>"; };
+		045FE3211DCC8C66001B95B1 /* EditNewAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNewAddressViewController.h; sourceTree = "<group>"; };
+		045FE3221DCC8C66001B95B1 /* EditNewAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNewAddressViewController.m; sourceTree = "<group>"; };
+		045FE3231DCC8C66001B95B1 /* EditNewAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditNewAddressViewController.xib; sourceTree = "<group>"; };
+		045FE3271DCC8CA0001B95B1 /* DeletePrommtView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletePrommtView.h; sourceTree = "<group>"; };
+		045FE3281DCC8CA0001B95B1 /* DeletePrommtView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletePrommtView.m; sourceTree = "<group>"; };
 		0467ACE41DBDEF2200562CC4 /* GouGou-Live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GouGou-Live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0467ACF11DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0467ACF31DBDEF2200562CC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -357,6 +376,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045FE3121DCC8BE2001B95B1 /* AddPayongSuccessViewController */ = {
+			isa = PBXGroup;
+			children = (
+				045FE3131DCC8BE2001B95B1 /* AddPayingSuccessViewController.h */,
+				045FE3141DCC8BE2001B95B1 /* AddPayingSuccessViewController.m */,
+				045FE3151DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib */,
+			);
+			path = AddPayongSuccessViewController;
+			sourceTree = "<group>";
+		};
+		045FE3181DCC8C48001B95B1 /* AreaChooseView */ = {
+			isa = PBXGroup;
+			children = (
+				045FE3191DCC8C48001B95B1 /* AddressChooseView.h */,
+				045FE31A1DCC8C48001B95B1 /* AddressChooseView.m */,
+			);
+			path = AreaChooseView;
+			sourceTree = "<group>";
+		};
+		045FE31B1DCC8C48001B95B1 /* ShopAddressCell */ = {
+			isa = PBXGroup;
+			children = (
+				045FE31C1DCC8C48001B95B1 /* AddrsssTableViewCell.h */,
+				045FE31D1DCC8C48001B95B1 /* AddrsssTableViewCell.m */,
+			);
+			path = ShopAddressCell;
+			sourceTree = "<group>";
+		};
+		045FE3201DCC8C66001B95B1 /* EditNewAddressViewController */ = {
+			isa = PBXGroup;
+			children = (
+				045FE3211DCC8C66001B95B1 /* EditNewAddressViewController.h */,
+				045FE3221DCC8C66001B95B1 /* EditNewAddressViewController.m */,
+				045FE3231DCC8C66001B95B1 /* EditNewAddressViewController.xib */,
+			);
+			path = EditNewAddressViewController;
+			sourceTree = "<group>";
+		};
+		045FE3261DCC8CA0001B95B1 /* DeleteShopAddressView */ = {
+			isa = PBXGroup;
+			children = (
+				045FE3271DCC8CA0001B95B1 /* DeletePrommtView.h */,
+				045FE3281DCC8CA0001B95B1 /* DeletePrommtView.m */,
+			);
+			path = DeleteShopAddressView;
+			sourceTree = "<group>";
+		};
 		0467ACDB1DBDEF2200562CC4 = {
 			isa = PBXGroup;
 			children = (
@@ -933,6 +999,7 @@
 		0479B55E1DCADC7B00CB288A /* Paying */ = {
 			isa = PBXGroup;
 			children = (
+				045FE3121DCC8BE2001B95B1 /* AddPayongSuccessViewController */,
 				0479B55F1DCADC7B00CB288A /* PayingViewController.h */,
 				0479B5601DCADC7B00CB288A /* PayingViewController.m */,
 				0479B5611DCADC7B00CB288A /* PayingViewController.xib */,
@@ -1097,6 +1164,7 @@
 		0479B59A1DCADC7B00CB288A /* ShopAddress */ = {
 			isa = PBXGroup;
 			children = (
+				045FE3201DCC8C66001B95B1 /* EditNewAddressViewController */,
 				0479B59B1DCADC7B00CB288A /* ShopAddressViewController.h */,
 				0479B59C1DCADC7B00CB288A /* ShopAddressViewController.m */,
 				0479B59D1DCADC7B00CB288A /* ShopAddressViewController.xib */,
@@ -1131,6 +1199,9 @@
 		0479B5A41DCADC7B00CB288A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				045FE3261DCC8CA0001B95B1 /* DeleteShopAddressView */,
+				045FE3181DCC8C48001B95B1 /* AreaChooseView */,
+				045FE31B1DCC8C48001B95B1 /* ShopAddressCell */,
 				0479B5A51DCADC7B00CB288A /* DetailCountView */,
 				0479B5AB1DCADC7B00CB288A /* MyHeaderView */,
 				0479B5AE1DCADC7B00CB288A /* PromptView */,
@@ -1384,6 +1455,7 @@
 				0479B6261DCADC7B00CB288A /* SettingViewController.xib in Resources */,
 				0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */,
 				0479B5D91DCADC7B00CB288A /* LiveViewController.xib in Resources */,
+				045FE3251DCC8C66001B95B1 /* EditNewAddressViewController.xib in Resources */,
 				0479B61A1DCADC7B00CB288A /* MyViewController.xib in Resources */,
 				0479B62C1DCADC7B00CB288A /* WatchHistoryViewController.xib in Resources */,
 				0479B5EE1DCADC7B00CB288A /* LiveViewCell.xib in Resources */,
@@ -1397,6 +1469,7 @@
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
 				0479B60A1DCADC7B00CB288A /* SurePsdViewController.xib in Resources */,
+				045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
 				0479B6241DCADC7B00CB288A /* SecurityAccountViewController.xib in Resources */,
 				0479B6201DCADC7B00CB288A /* MessagePushViewController.xib in Resources */,
@@ -1466,7 +1539,10 @@
 				0479B6331DCADC7B00CB288A /* MessageViewController.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
 				0479B6091DCADC7B00CB288A /* SurePsdViewController.m in Sources */,
+				045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
+				045FE3291DCC8CA0001B95B1 /* DeletePrommtView.m in Sources */,
+				045FE31F1DCC8C48001B95B1 /* AddrsssTableViewCell.m in Sources */,
 				0479B6141DCADC7B00CB288A /* MerchantViewController.m in Sources */,
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
 				0479B5DF1DCADC7B00CB288A /* LiveViewCellModel.m in Sources */,
@@ -1516,7 +1592,9 @@
 				0479B5D61DCADC7B00CB288A /* LivingViewController.m in Sources */,
 				0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
+				045FE31E1DCC8C48001B95B1 /* AddressChooseView.m in Sources */,
 				0479B5EC1DCADC7B00CB288A /* LiveTableView.m in Sources */,
+				045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,

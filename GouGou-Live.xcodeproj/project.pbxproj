@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
+		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
+		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
+		04486AC21DD0162500BC6D15 /* LoginHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AC11DD0162500BC6D15 /* LoginHandler.m */; };
 		044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */; };
 		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
 		045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30A1DCC65E5001B95B1 /* AccountViewController.m */; };
@@ -139,6 +142,12 @@
 /* Begin PBXFileReference section */
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
+		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		04486AB51DD012C400BC6D15 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
+		04486ABD1DD015FC00BC6D15 /* BaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseHandler.h; sourceTree = "<group>"; };
+		04486ABE1DD015FC00BC6D15 /* BaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseHandler.m; sourceTree = "<group>"; };
+		04486AC01DD0162500BC6D15 /* LoginHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginHandler.h; sourceTree = "<group>"; };
+		04486AC11DD0162500BC6D15 /* LoginHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginHandler.m; sourceTree = "<group>"; };
 		044C82EA1DCC411A00B62575 /* ChoseShopAdressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressCell.h; sourceTree = "<group>"; };
 		044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressCell.m; sourceTree = "<group>"; };
 		044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoseShopAdressCell.xib; sourceTree = "<group>"; };
@@ -376,6 +385,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04486AB71DD0159900BC6D15 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
+		04486AB81DD015A700BC6D15 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
+		04486AB91DD015B200BC6D15 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+				04486AC01DD0162500BC6D15 /* LoginHandler.h */,
+				04486AC11DD0162500BC6D15 /* LoginHandler.m */,
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
+		04486ABA1DD015BB00BC6D15 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
+		04486ABB1DD015C400BC6D15 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
+		04486ABC1DD015D800BC6D15 /* BaseHandler */ = {
+			isa = PBXGroup;
+			children = (
+				04486ABD1DD015FC00BC6D15 /* BaseHandler.h */,
+				04486ABE1DD015FC00BC6D15 /* BaseHandler.m */,
+			);
+			path = BaseHandler;
+			sourceTree = "<group>";
+		};
 		045FE3121DCC8BE2001B95B1 /* AddPayongSuccessViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,8 +532,8 @@
 		0479B4C41DCADC7B00CB288A /* LIve */ = {
 			isa = PBXGroup;
 			children = (
+				04486AB71DD0159900BC6D15 /* Handler */,
 				0479B4C51DCADC7B00CB288A /* Controllers */,
-				0479B4E01DCADC7B00CB288A /* Helper */,
 				0479B4E11DCADC7B00CB288A /* Models */,
 				0479B4E81DCADC7B00CB288A /* Views */,
 			);
@@ -565,13 +620,6 @@
 				0479B4DF1DCADC7B00CB288A /* SearchViewController.m */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		0479B4E01DCADC7B00CB288A /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helper;
 			sourceTree = "<group>";
 		};
 		0479B4E11DCADC7B00CB288A /* Models */ = {
@@ -734,8 +782,8 @@
 		0479B5171DCADC7B00CB288A /* LiveAction */ = {
 			isa = PBXGroup;
 			children = (
+				04486AB81DD015A700BC6D15 /* Handler */,
 				0479B5181DCADC7B00CB288A /* Controllers */,
-				0479B5251DCADC7B00CB288A /* Helper */,
 				0479B5261DCADC7B00CB288A /* Models */,
 				0479B5271DCADC7B00CB288A /* Views */,
 			);
@@ -791,13 +839,6 @@
 				0479B5241DCADC7B00CB288A /* TalkingViewController.m */,
 			);
 			path = Talk;
-			sourceTree = "<group>";
-		};
-		0479B5251DCADC7B00CB288A /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helper;
 			sourceTree = "<group>";
 		};
 		0479B5261DCADC7B00CB288A /* Models */ = {
@@ -864,8 +905,8 @@
 		0479B53D1DCADC7B00CB288A /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				04486AB91DD015B200BC6D15 /* Handler */,
 				0479B53E1DCADC7B00CB288A /* Controllers */,
-				0479B5561DCADC7B00CB288A /* Helper */,
 				0479B5571DCADC7B00CB288A /* Models */,
 				0479B5581DCADC7B00CB288A /* Views */,
 			);
@@ -937,13 +978,6 @@
 			path = SurePsd;
 			sourceTree = "<group>";
 		};
-		0479B5561DCADC7B00CB288A /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
 		0479B5571DCADC7B00CB288A /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -961,8 +995,8 @@
 		0479B5591DCADC7B00CB288A /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				04486ABA1DD015BB00BC6D15 /* Handler */,
 				0479B55A1DCADC7B00CB288A /* Controllers */,
-				0479B5A21DCADC7B00CB288A /* Helper */,
 				0479B5A31DCADC7B00CB288A /* Models */,
 				0479B5A41DCADC7B00CB288A /* Views */,
 			);
@@ -1182,13 +1216,6 @@
 			path = WatchHistory;
 			sourceTree = "<group>";
 		};
-		0479B5A21DCADC7B00CB288A /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
 		0479B5A31DCADC7B00CB288A /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1252,8 +1279,8 @@
 		0479B5B41DCADC7B00CB288A /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				04486ABB1DD015C400BC6D15 /* Handler */,
 				0479B5B51DCADC7B00CB288A /* Controllers */,
-				0479B5B81DCADC7B00CB288A /* Helper */,
 				0479B5B91DCADC7B00CB288A /* Models */,
 				0479B5BA1DCADC7B00CB288A /* Views */,
 			);
@@ -1267,13 +1294,6 @@
 				0479B5B71DCADC7B00CB288A /* MessageViewController.m */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		0479B5B81DCADC7B00CB288A /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helper;
 			sourceTree = "<group>";
 		};
 		0479B5B91DCADC7B00CB288A /* Models */ = {
@@ -1308,6 +1328,7 @@
 		0479B5C41DCADC7B00CB288A /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				04486ABC1DD015D800BC6D15 /* BaseHandler */,
 				0479B5C51DCADC7B00CB288A /* BaseViewController */,
 				0479B5CC1DCADC7B00CB288A /* Category */,
 				0479B5D11DCADC7B00CB288A /* Tools */,
@@ -1344,6 +1365,8 @@
 			children = (
 				0479B5D21DCADC7B00CB288A /* HTTPTool.h */,
 				0479B5D31DCADC7B00CB288A /* HTTPTool.m */,
+				04486AB41DD012C400BC6D15 /* UIView+Toast.h */,
+				04486AB51DD012C400BC6D15 /* UIView+Toast.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1566,10 +1589,12 @@
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
+				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
 				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
 				0479B5DA1DCADC7B00CB288A /* DogTypesViewController.m in Sources */,
+				04486AC21DD0162500BC6D15 /* LoginHandler.m in Sources */,
 				0479B62D1DCADC7B00CB288A /* DetailCountTopView.m in Sources */,
 				0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */,
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
@@ -1616,6 +1641,7 @@
 				0479B6451DCB046C00CB288A /* BuyRuleAlertView.m in Sources */,
 				0479B5F51DCADC7B00CB288A /* TalkingViewController.m in Sources */,
 				0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */,
+				04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */,
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
 				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,

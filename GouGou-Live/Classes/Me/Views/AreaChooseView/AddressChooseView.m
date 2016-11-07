@@ -13,7 +13,6 @@
 @property (strong,nonatomic) UIControl *areaHUD;
 
 @property(nonatomic, strong) UIView *backGroundView; /**< 背景View */
-
 /** 取消按钮 */
 @property (strong, nonatomic) UIButton *cancelBtn;
 /** title */

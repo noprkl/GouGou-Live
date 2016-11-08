@@ -68,9 +68,15 @@
 - (IBAction)clickGetCodeAction:(UIButton *)sender {
     
     [self freetimeout];
-    
-#warning 需要请求验证码
-    DLog(@"验证码已发送");
+    NSDictionary *dict = @{
+                           @"tel" : @([self.phoneTextField.text integerValue]),
+                           @"type" : @0
+                           };
+    [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
@@ -82,29 +88,25 @@
     
     if (phoneNumber.length == 0) {
         
-        DLog(@"手机号不能为空");
+        [self showAlert:@"手机号不能为空"];
         
     }else if(!flag){
-        
-        DLog(@"所输入的不是手机号");
+      
+        [self showAlert:@"所输入的不是手机号"];
         
     }else{
         if (codeNumber.length != 6) {
             
-            
-            DLog(@"验证码只能是6位");
+            [self showAlert:@"验证码只能是6位"];
             
         }else{
-            
-            
-#warning 需要验证验证码
-            
+        
             SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
             
             sureVC.title = @"密码确认";
+            sureVC.telNumber = self.phoneTextField.text;
+            sureVC.codeNumber = self.codeTextField.text;
             [self.navigationController pushViewController:sureVC animated:YES];
-            DLog(@"登录成功");
-
         }
     }
     
@@ -164,9 +166,10 @@
     }else if (textField == self.codeTextField){
         BOOL flag = [NSString validateNumber:string];
         if (range.location < 6 && flag) {
-            
+            self.sureBtn.enabled = NO;
             return YES;
         }
+        self.sureBtn.enabled = YES;
         return NO;
     }else{
         

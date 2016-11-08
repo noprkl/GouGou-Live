@@ -41,7 +41,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mAE-30-C8S">
-                    <rect key="frame" x="335" y="80" width="30" height="33"/>
+                    <rect key="frame" x="325" y="80" width="30" height="33"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="3S">
                         <color key="titleColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
@@ -51,7 +51,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="mAE-30-C8S" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="72D-R6-1M3"/>
-                <constraint firstAttribute="trailing" secondItem="mAE-30-C8S" secondAttribute="trailing" constant="10" id="GZm-GE-j7U"/>
+                <constraint firstAttribute="trailing" secondItem="mAE-30-C8S" secondAttribute="trailing" constant="20" id="GZm-GE-j7U"/>
                 <constraint firstItem="WyG-Yc-nrs" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="HKz-lQ-CfN"/>
                 <constraint firstItem="ala-17-foh" firstAttribute="top" secondItem="2uO-Wo-37j" secondAttribute="bottom" constant="20" id="IAY-Ql-o5C"/>
                 <constraint firstItem="2uO-Wo-37j" firstAttribute="top" secondItem="WyG-Yc-nrs" secondAttribute="bottom" constant="20" id="NoG-01-gVH"/>

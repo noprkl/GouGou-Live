@@ -9,6 +9,7 @@
 #import "HostViewController.h"
 #import "DogPictureCollectionViewCell.h"
 #import "DogTypesView.h"
+#import "NoneNetWorkingView.h"
 
 #import "LivingViewController.h"
 
@@ -27,6 +28,8 @@ static NSString * reuseIdentifier = @"headerID";
 
 /** 数据源 */
 @property (strong,nonatomic) NSMutableArray *dataArray;
+
+@property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
 
 @end
 
@@ -69,6 +72,12 @@ static NSString * reuseIdentifier = @"headerID";
         make.bottom.equalTo(weakself.view.bottom).offset(-64);
     }];
     
+}
+- (NoneNetWorkingView *)noneNetView {
+    if (!_noneNetView) {
+        _noneNetView = [[NoneNetWorkingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _noneNetView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];    }
+    return _noneNetView;
 }
 - (DogTypesView *)typesView {
     

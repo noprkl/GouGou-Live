@@ -176,7 +176,10 @@
 }
 - (void)clickFocusBtnAction {
 
-    DLog(@"关注");
+    if (_focusBlock) {
+        _focusBlock();
+    }
+
 }
 #pragma mark
 #pragma mark - 懒加载

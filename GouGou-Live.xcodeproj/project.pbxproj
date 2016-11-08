@@ -136,6 +136,12 @@
 		0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6581DCB44CB00CB288A /* AllCountCell.m */; };
 		0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */; };
 		0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6661DCC1EE700CB288A /* TransformStyleView.m */; };
+		049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */; };
+		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
+		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
+		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
+		049D61361DD09DF000ED3E76 /* MyMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61351DD09DF000ED3E76 /* MyMessageView.m */; };
+		049D61391DD09E1C00ED3E76 /* MyUnLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -368,6 +374,17 @@
 		0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAndDogCardView.m; sourceTree = "<group>"; };
 		0479B6651DCC1EE700CB288A /* TransformStyleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformStyleView.h; sourceTree = "<group>"; };
 		0479B6661DCC1EE700CB288A /* TransformStyleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformStyleView.m; sourceTree = "<group>"; };
+		049D61051DD06DAA00ED3E76 /* NSString+MD5Code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Code.h"; sourceTree = "<group>"; };
+		049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Code.m"; sourceTree = "<group>"; };
+		049D612B1DD07C6B00ED3E76 /* SureForgetPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureForgetPsdViewController.h; sourceTree = "<group>"; };
+		049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureForgetPsdViewController.m; sourceTree = "<group>"; };
+		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
+		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
+		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
+		049D61341DD09DF000ED3E76 /* MyMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMessageView.h; sourceTree = "<group>"; };
+		049D61351DD09DF000ED3E76 /* MyMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMessageView.m; sourceTree = "<group>"; };
+		049D61371DD09E1C00ED3E76 /* MyUnLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUnLoginView.h; sourceTree = "<group>"; };
+		049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnLoginView.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -667,6 +684,8 @@
 			children = (
 				0479B4EA1DCADC7B00CB288A /* NoneFocusView.h */,
 				0479B4EB1DCADC7B00CB288A /* NoneFocusView.m */,
+				049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */,
+				049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */,
 			);
 			path = FocusView;
 			sourceTree = "<group>";
@@ -793,10 +812,10 @@
 		0479B5181DCADC7B00CB288A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0479B5191DCADC7B00CB288A /* DogShow */,
-				0479B51C1DCADC7B00CB288A /* SellerShow */,
-				0479B51F1DCADC7B00CB288A /* Service */,
 				0479B5221DCADC7B00CB288A /* Talk */,
+				0479B5191DCADC7B00CB288A /* DogShow */,
+				0479B51F1DCADC7B00CB288A /* Service */,
+				0479B51C1DCADC7B00CB288A /* SellerShow */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -905,10 +924,10 @@
 		0479B53D1DCADC7B00CB288A /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				04486AB91DD015B200BC6D15 /* Handler */,
 				0479B53E1DCADC7B00CB288A /* Controllers */,
 				0479B5571DCADC7B00CB288A /* Models */,
 				0479B5581DCADC7B00CB288A /* Views */,
+				04486AB91DD015B200BC6D15 /* Handler */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -941,6 +960,9 @@
 				0479B5441DCADC7B00CB288A /* ForgetPsdViewController.h */,
 				0479B5451DCADC7B00CB288A /* ForgetPsdViewController.m */,
 				0479B5461DCADC7B00CB288A /* ForgetPsdViewController.xib */,
+				049D612B1DD07C6B00ED3E76 /* SureForgetPsdViewController.h */,
+				049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */,
+				049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */,
 			);
 			path = ForgetPsd;
 			sourceTree = "<group>";
@@ -968,12 +990,12 @@
 		0479B54F1DCADC7B00CB288A /* SurePsd */ = {
 			isa = PBXGroup;
 			children = (
-				0479B5501DCADC7B00CB288A /* SurePsdSuccessViewController.h */,
-				0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */,
-				0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */,
 				0479B5531DCADC7B00CB288A /* SurePsdViewController.h */,
 				0479B5541DCADC7B00CB288A /* SurePsdViewController.m */,
 				0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */,
+				0479B5501DCADC7B00CB288A /* SurePsdSuccessViewController.h */,
+				0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */,
+				0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */,
 			);
 			path = SurePsd;
 			sourceTree = "<group>";
@@ -1226,6 +1248,7 @@
 		0479B5A41DCADC7B00CB288A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				049D61331DD09D4D00ED3E76 /* MySelfView */,
 				045FE3261DCC8CA0001B95B1 /* DeleteShopAddressView */,
 				045FE3181DCC8C48001B95B1 /* AreaChooseView */,
 				045FE31B1DCC8C48001B95B1 /* ShopAddressCell */,
@@ -1314,11 +1337,11 @@
 			isa = PBXGroup;
 			children = (
 				0479B5BC1DCADC7B00CB288A /* APIConfig.h */,
+				0479B5C11DCADC7B00CB288A /* PrefixHeader.pch */,
+				0479B5BF1DCADC7B00CB288A /* Info.plist */,
 				0479B5BD1DCADC7B00CB288A /* AppDelegate.h */,
 				0479B5BE1DCADC7B00CB288A /* AppDelegate.m */,
-				0479B5BF1DCADC7B00CB288A /* Info.plist */,
 				0479B5C01DCADC7B00CB288A /* main.m */,
-				0479B5C11DCADC7B00CB288A /* PrefixHeader.pch */,
 				0479B5C21DCADC7B00CB288A /* ViewController.h */,
 				0479B5C31DCADC7B00CB288A /* ViewController.m */,
 			);
@@ -1356,6 +1379,8 @@
 				0479B5CE1DCADC7B00CB288A /* NSString+CheckString.m */,
 				0479B5CF1DCADC7B00CB288A /* UIColor+HexString.h */,
 				0479B5D01DCADC7B00CB288A /* UIColor+HexString.m */,
+				049D61051DD06DAA00ED3E76 /* NSString+MD5Code.h */,
+				049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1387,6 +1412,17 @@
 				045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */,
 			);
 			path = DogBookView;
+			sourceTree = "<group>";
+		};
+		049D61331DD09D4D00ED3E76 /* MySelfView */ = {
+			isa = PBXGroup;
+			children = (
+				049D61341DD09DF000ED3E76 /* MyMessageView.h */,
+				049D61351DD09DF000ED3E76 /* MyMessageView.m */,
+				049D61371DD09E1C00ED3E76 /* MyUnLoginView.h */,
+				049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */,
+			);
+			path = MySelfView;
 			sourceTree = "<group>";
 		};
 		28209DDB76B660DE1C93619E /* Pods */ = {
@@ -1483,6 +1519,7 @@
 				0479B62C1DCADC7B00CB288A /* WatchHistoryViewController.xib in Resources */,
 				0479B5EE1DCADC7B00CB288A /* LiveViewCell.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
+				049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */,
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
 				0479B6131DCADC7B00CB288A /* CertificateViewController.xib in Resources */,
@@ -1579,11 +1616,13 @@
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
 				0479B6311DCADC7B00CB288A /* PromptView.m in Sources */,
+				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
 				0479B5F91DCADC7B00CB288A /* PicturesView.m in Sources */,
+				049D61391DD09E1C00ED3E76 /* MyUnLoginView.m in Sources */,
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
@@ -1605,6 +1644,7 @@
 				0479B5F71DCADC7B00CB288A /* DogMarkView.m in Sources */,
 				0479B5F21DCADC7B00CB288A /* DogShowViewController.m in Sources */,
 				0479B6031DCADC7B00CB288A /* LoginViewController.m in Sources */,
+				049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */,
 				0479B5FE1DCADC7B00CB288A /* TalkingView.m in Sources */,
 				0479B6161DCADC7B00CB288A /* DetailCountViewController.m in Sources */,
 				0479B61D1DCADC7B00CB288A /* AboutUsViewController.m in Sources */,
@@ -1635,6 +1675,7 @@
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
 				0479B5FD1DCADC7B00CB288A /* StartSourceView.m in Sources */,
 				0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */,
+				049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */,
 				0479B5F31DCADC7B00CB288A /* SellerShowViewController.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
 				0479B5E51DCADC7B00CB288A /* LiveTopView.m in Sources */,
@@ -1646,6 +1687,7 @@
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
 				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
+				049D61361DD09DF000ED3E76 /* MyMessageView.m in Sources */,
 				0479B5E01DCADC7B00CB288A /* NoneFocusView.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
 				0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */,

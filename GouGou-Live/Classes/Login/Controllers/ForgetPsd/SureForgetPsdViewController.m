@@ -1,45 +1,41 @@
 //
-//  SurePsdViewController.m
+//  SureForgetPsdViewController.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/10/24.
+//  Created by ma c on 16/11/7.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "SurePsdViewController.h"
+#import "SureForgetPsdViewController.h"
 #import "LoginViewController.h"
 #import "SurePsdSuccessViewController.h"
-#import "NSString+MD5Code.h"
 
-@interface SurePsdViewController () <UITextFieldDelegate>
+@interface SureForgetPsdViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *psdTextField;
 @property (weak, nonatomic) IBOutlet UITextField *surePsdTextField;
 
 @end
 
-@implementation SurePsdViewController
+@implementation SureForgetPsdViewController
 - (void)surePsdRequest {
-    
-    NSString *pwd = [NSString md5WithString:self.psdTextField.text];
     
     NSDictionary *dict = @{
                            @"user_tel":@([self.telNumber intValue]),
-                           @"user_pwd":pwd,
+                           @"user_pwd":self.psdTextField.text,
                            @"code":@([self.codeNumber integerValue])
                            };
-    [self getRequestWithPath:API_Register params:dict success:^(id successJson) {
+    [self getRequestWithPath:API_RetrivePwd params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
-//        if (successJson) {
-//            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
-//            
-//            [self.navigationController pushViewController:sureSuccVC animated:YES];
-//        }
+        //        if (successJson) {
+        //            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
+        //
+        //            [self.navigationController pushViewController:sureSuccVC animated:YES];
+        //        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
     
-
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,21 +46,21 @@
 }
 
 - (void)initUI {
- 
+    
     // 设置textField的placeHolder
-
+    
     UIColor *textcolor1 = [UIColor colorWithHexString:@"666666"];
     UIColor *textcolor2 = [UIColor colorWithHexString:@"cccccc"];
     UIFont *textFont = [UIFont systemFontOfSize:15];
     
-    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:@"密码  请输入6-20位数字或者密码"];
+    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:@"新密码  请输入6-20位数字或者密码"];
     
     [placeholder setAttributes:@{NSForegroundColorAttributeName :textcolor1,
                                  NSFontAttributeName : textFont
                                  
-                                 } range:NSMakeRange(0, 4)];
+                                 } range:NSMakeRange(0, 5)];
     
-    [placeholder setAttributes:@{NSForegroundColorAttributeName : textcolor2} range:NSMakeRange(4, 13)];
+    [placeholder setAttributes:@{NSForegroundColorAttributeName : textcolor2} range:NSMakeRange(5, 13)];
     
     self.psdTextField.attributedPlaceholder = placeholder;
     
@@ -72,10 +68,10 @@
     self.surePsdTextField.placeholder = @"确认密码";
     [self.surePsdTextField setValue:textcolor1 forKeyPath:@"_placeholderLabel.textColor"];
     [self.surePsdTextField setValue:textFont forKeyPath:@"_placeholderLabel.font"];
-
+    
     self.psdTextField.delegate = self;
     self.surePsdTextField.delegate = self;
-
+    
 }
 
 #pragma mark
@@ -85,16 +81,15 @@
     
     NSString *psdNumber = self.psdTextField.text;
     NSString *surePsd = self.surePsdTextField.text;
-        
+    
     if (![psdNumber isEqualToString:surePsd]) {
-
+        
         [self showAlert:@"两次密码输入不一样"];
         
     }else{
         
         [self surePsdRequest];
-        SurePsdSuccessViewController *sureSuccessVC = [[SurePsdSuccessViewController alloc] init];
-        [self.navigationController pushViewController:sureSuccessVC animated:YES];
+        
     }
 }
 
@@ -122,13 +117,8 @@
         return NO;
     }
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 @end

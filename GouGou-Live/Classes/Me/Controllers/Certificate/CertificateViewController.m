@@ -7,8 +7,16 @@
 //
 
 #import "CertificateViewController.h"
+#import "IdentityIfonView.h"
+#import "IdentityPictureCell.h"
 
-@interface CertificateViewController ()
+static NSString * identityCell = @"identitiCellID";
+
+@interface CertificateViewController ()<UITableViewDelegate,UITableViewDataSource>
+/** 身份信息 */
+@property (strong,nonatomic) IdentityIfonView *identityInfoView;
+/** 身份验证tableView */
+@property (strong,nonatomic) UITableView *identityTableView;
 
 @end
 
@@ -16,14 +24,122 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [self initUI];
+    
     [self setNavBarItem];
 }
+
+- (void)initUI {
+
+    self.title = @"实名认证";
+    [self.view addSubview:self.identityInfoView];
+    [self.view addSubview:self.identityTableView];
+}
+
+-
+(IdentityIfonView *)identityInfoView {
+
+    if (!_identityInfoView) {
+        _identityInfoView = [[IdentityIfonView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
+        
+    }
+    return _identityInfoView;
+}
+
+- (UITableView *)identityTableView {
+
+    if (!_identityTableView) {
+        _identityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 130, SCREEN_WIDTH, SCREEN_HEIGHT - 130) style:UITableViewStylePlain];
+        _identityTableView.delegate = self;
+        _identityTableView.dataSource = self;
+        [_identityTableView registerClass:[IdentityPictureCell class] forCellReuseIdentifier:identityCell];
+    }
+    return _identityTableView;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    return 428;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    IdentityPictureCell * cell = [tableView dequeueReusableCellWithIdentifier:identityCell];
+    
+    if (indexPath.row == 0) {
+        [cell identityWithPromptlabel:@"请上传身份证正面标签" instanceImage:[UIImage imageNamed:@"组-12"] instanceLabe:@"(示例)清晰正面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰正面照"];
+    } else if (indexPath.row == 1) {
+        
+        [cell identityWithPromptlabel:@"请上传身份证背面标签" instanceImage:[UIImage imageNamed:@"组-11"] instanceLabe:@"(示例)清晰背面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰背面照"];
+    
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    
+    cell.addIdentityBlock = ^() {
+    
+        [self pushToAddPhoto];
+    };
+    return cell;
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    
+}
+
 - (void)setNavBarItem {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(handinCertificate)];
+  
+}
+
+- (void)pushToAddPhoto {
+
     
 }
+
+- (void)handinCertificate {
+
+    __weak typeof(self) weakself = self;
+    
+    self.identityInfoView.nameTextBlock = ^(UITextField *textfiled){
+        
+        if (textfiled.text.length == 0) {
+            [weakself showAlert:@"姓名不能为空"];
+        } else if (![textfiled.text isChinese]) {
+        
+            [weakself showAlert:@"姓名必须为中文"];
+        } else {
+        
+            
+        }
+    };
+    
+    self.identityInfoView.identiityTextBlock = ^(UITextField * textfiled) {
+    
+       BOOL flag = [[NSString alloc] judgeIdentityStringValid:textfiled.text];
+        if (!flag) {
+            
+            [weakself showAlert:@"您输入的身份证格式不正确"];
+        } else {
+        
+        
+        }
+        
+    };
+    
+    
+}
+
 - (void)leftBackBtnAction {
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -34,14 +150,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

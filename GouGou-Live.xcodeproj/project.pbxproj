@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0410DE9B1DD182C800B14189 /* IdentityIfonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE9A1DD182C800B14189 /* IdentityIfonView.m */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
@@ -146,10 +147,13 @@
 		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
 		049D61361DD09DF000ED3E76 /* MyMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61351DD09DF000ED3E76 /* MyMessageView.m */; };
 		049D61391DD09E1C00ED3E76 /* MyUnLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */; };
+		04C933CA1DD1A15700B9C5D3 /* IdentityPictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C933C91DD1A15700B9C5D3 /* IdentityPictureCell.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0410DE991DD182C800B14189 /* IdentityIfonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityIfonView.h; sourceTree = "<group>"; };
+		0410DE9A1DD182C800B14189 /* IdentityIfonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityIfonView.m; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
@@ -397,6 +401,8 @@
 		049D61351DD09DF000ED3E76 /* MyMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMessageView.m; sourceTree = "<group>"; };
 		049D61371DD09E1C00ED3E76 /* MyUnLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUnLoginView.h; sourceTree = "<group>"; };
 		049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnLoginView.m; sourceTree = "<group>"; };
+		04C933C81DD1A15700B9C5D3 /* IdentityPictureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityPictureCell.h; sourceTree = "<group>"; };
+		04C933C91DD1A15700B9C5D3 /* IdentityPictureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityPictureCell.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -414,6 +420,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0410DE981DD1827000B14189 /* CertificateView */ = {
+			isa = PBXGroup;
+			children = (
+				0410DE991DD182C800B14189 /* IdentityIfonView.h */,
+				0410DE9A1DD182C800B14189 /* IdentityIfonView.m */,
+				04C933C81DD1A15700B9C5D3 /* IdentityPictureCell.h */,
+				04C933C91DD1A15700B9C5D3 /* IdentityPictureCell.m */,
+			);
+			path = CertificateView;
+			sourceTree = "<group>";
+		};
 		04486AB71DD0159900BC6D15 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
@@ -1296,6 +1313,7 @@
 		0479B5A41DCADC7B00CB288A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0410DE981DD1827000B14189 /* CertificateView */,
 				047323E31DD16602006CCC71 /* DogInfoCardView */,
 				047323D71DD165EF006CCC71 /* FavoriteTowButtonView */,
 				047323DA1DD165EF006CCC71 /* MyFavoriteTableView */,
@@ -1659,6 +1677,7 @@
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
 				0479B5DF1DCADC7B00CB288A /* LiveViewCellModel.m in Sources */,
 				0479B6121DCADC7B00CB288A /* CertificateViewController.m in Sources */,
+				04C933CA1DD1A15700B9C5D3 /* IdentityPictureCell.m in Sources */,
 				0479B62E1DCADC7B00CB288A /* DetailCountViewCell.m in Sources */,
 				0479B6301DCADC7B00CB288A /* MyHeaderView.m in Sources */,
 				0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */,
@@ -1723,6 +1742,7 @@
 				047323E11DD165EF006CCC71 /* MyFavoriteTableView.m in Sources */,
 				0479B6271DCADC7B00CB288A /* SuggestViewController.m in Sources */,
 				045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */,
+				0410DE9B1DD182C800B14189 /* IdentityIfonView.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
 				0479B63B1DCADC7B00CB288A /* NSString+CheckString.m in Sources */,
 				0479B5F11DCADC7B00CB288A /* ShareBtnModel.m in Sources */,

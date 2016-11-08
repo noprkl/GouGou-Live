@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0410DE821DD01ECF00B14189 /* WatchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE811DD01ECF00B14189 /* WatchHistoryCell.m */; };
+		0410DE861DD05BF900B14189 /* DogDetailInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE851DD05BF900B14189 /* DogDetailInfoCell.m */; };
+		0410DE8E1DD063EB00B14189 /* TowButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE8D1DD063EB00B14189 /* TowButtonView.m */; };
+		0410DE971DD069DC00B14189 /* MyFavoriteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE961DD069DC00B14189 /* MyFavoriteTableView.m */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
@@ -140,6 +144,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0410DE801DD01ECF00B14189 /* WatchHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchHistoryCell.h; sourceTree = "<group>"; };
+		0410DE811DD01ECF00B14189 /* WatchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchHistoryCell.m; sourceTree = "<group>"; };
+		0410DE841DD05BF900B14189 /* DogDetailInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailInfoCell.h; sourceTree = "<group>"; };
+		0410DE851DD05BF900B14189 /* DogDetailInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailInfoCell.m; sourceTree = "<group>"; };
+		0410DE8C1DD063EB00B14189 /* TowButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowButtonView.h; sourceTree = "<group>"; };
+		0410DE8D1DD063EB00B14189 /* TowButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TowButtonView.m; sourceTree = "<group>"; };
+		0410DE951DD069DC00B14189 /* MyFavoriteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFavoriteTableView.h; sourceTree = "<group>"; };
+		0410DE961DD069DC00B14189 /* MyFavoriteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFavoriteTableView.m; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
@@ -385,6 +397,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0410DE7F1DD01ECF00B14189 /* WatchHistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				0410DE801DD01ECF00B14189 /* WatchHistoryCell.h */,
+				0410DE811DD01ECF00B14189 /* WatchHistoryCell.m */,
+			);
+			path = WatchHistoryView;
+			sourceTree = "<group>";
+		};
+		0410DE831DD05BC400B14189 /* DogInfoCardView */ = {
+			isa = PBXGroup;
+			children = (
+				0410DE841DD05BF900B14189 /* DogDetailInfoCell.h */,
+				0410DE851DD05BF900B14189 /* DogDetailInfoCell.m */,
+			);
+			path = DogInfoCardView;
+			sourceTree = "<group>";
+		};
+		0410DE8B1DD063D100B14189 /* FavoriteTowButtonView */ = {
+			isa = PBXGroup;
+			children = (
+				0410DE8C1DD063EB00B14189 /* TowButtonView.h */,
+				0410DE8D1DD063EB00B14189 /* TowButtonView.m */,
+			);
+			path = FavoriteTowButtonView;
+			sourceTree = "<group>";
+		};
+		0410DE941DD069B700B14189 /* MyFavoriteTableView */ = {
+			isa = PBXGroup;
+			children = (
+				0410DE951DD069DC00B14189 /* MyFavoriteTableView.h */,
+				0410DE961DD069DC00B14189 /* MyFavoriteTableView.m */,
+			);
+			path = MyFavoriteTableView;
+			sourceTree = "<group>";
+		};
 		04486AB71DD0159900BC6D15 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
@@ -1226,6 +1274,10 @@
 		0479B5A41DCADC7B00CB288A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0410DE941DD069B700B14189 /* MyFavoriteTableView */,
+				0410DE8B1DD063D100B14189 /* FavoriteTowButtonView */,
+				0410DE831DD05BC400B14189 /* DogInfoCardView */,
+				0410DE7F1DD01ECF00B14189 /* WatchHistoryView */,
 				045FE3261DCC8CA0001B95B1 /* DeleteShopAddressView */,
 				045FE3181DCC8C48001B95B1 /* AreaChooseView */,
 				045FE31B1DCC8C48001B95B1 /* ShopAddressCell */,
@@ -1580,9 +1632,11 @@
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
 				0479B6311DCADC7B00CB288A /* PromptView.m in Sources */,
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
+				0410DE821DD01ECF00B14189 /* WatchHistoryCell.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
+				0410DE971DD069DC00B14189 /* MyFavoriteTableView.m in Sources */,
 				0479B5F91DCADC7B00CB288A /* PicturesView.m in Sources */,
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
@@ -1590,6 +1644,7 @@
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
+				0410DE8E1DD063EB00B14189 /* TowButtonView.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
 				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
@@ -1618,6 +1673,7 @@
 				0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
 				045FE31E1DCC8C48001B95B1 /* AddressChooseView.m in Sources */,
+				0410DE861DD05BF900B14189 /* DogDetailInfoCell.m in Sources */,
 				0479B5EC1DCADC7B00CB288A /* LiveTableView.m in Sources */,
 				045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,

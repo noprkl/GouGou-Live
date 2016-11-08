@@ -9,7 +9,7 @@
 #import "ShopAddressViewController.h"
 #import "AddrsssTableViewCell.h"
 #import "EditNewAddressViewController.h"
-
+#import "DeletePrommtView.h"
 
 static NSString * indenifer = @"addressCellID";
 
@@ -99,12 +99,12 @@ static NSString * indenifer = @"addressCellID";
     
     cell.acquiesceBlock = ^(UIButton *btn){
         
-        
-
         self.lastBtn.selected = NO;
         btn.selected = YES;
         self.lastBtn = btn;
     };
+    
+    
     
     return cell;
 }
@@ -132,6 +132,11 @@ static NSString * indenifer = @"addressCellID";
 
 - (void)addAddress {
 
+    DeletePrommtView * deleteAddress = [[DeletePrommtView alloc] init];
+    deleteAddress.sureDeleteBtnBlock = ^(UIButton *btn){
+        
+        [self.view removeFromSuperview];
+    };
 
 }
 

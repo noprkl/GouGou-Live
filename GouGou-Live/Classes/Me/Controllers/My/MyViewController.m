@@ -34,6 +34,8 @@
     [super viewWillAppear:animated];
     
     self.hidesBottomBarWhenPushed = NO;
+    
+    
 }
 - (void)initUI {
 
@@ -101,6 +103,8 @@
     [self.navigationController pushViewController:VC animated:YES];
     
 }
+
+
 
 - (void)clickMyButtonAction {
     

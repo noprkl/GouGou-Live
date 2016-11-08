@@ -7,18 +7,73 @@
 //
 
 #import "WatchHistoryViewController.h"
+#import "WatchHistoryCell.h"
+#import "LivingViewController.h"
 
-@interface WatchHistoryViewController ()
+static NSString * watchCell = @"watchCellID";
+@interface WatchHistoryViewController ()<UITableViewDelegate,UITableViewDataSource>
+/** tableview */
+@property (strong,nonatomic) UITableView *tableview;
 
 @end
 
 @implementation WatchHistoryViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [self initUI];
+    
     [self setNavBarItem];
 }
+
+- (void)initUI {
+
+    [self.view addSubview:self.tableview];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    self.title = @"观看历史";
+
+}
+
+- (UITableView *)tableview {
+
+    if (!_tableview) {
+        _tableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableview.delegate = self;
+        _tableview.dataSource = self;
+        _tableview.backgroundColor = [UIColor whiteColor];
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        [_tableview registerClass:[WatchHistoryCell class] forCellReuseIdentifier:watchCell];
+    }
+    return _tableview;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    return 273;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    WatchHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:watchCell];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    LivingViewController * livingVC = [[LivingViewController alloc] init];
+    
+    [self.navigationController pushViewController:livingVC animated:YES];
+    
+}
+
 - (void)setNavBarItem {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
     

@@ -144,6 +144,9 @@
     if (!_messageView) {
         _messageView = [[SellerMessageView alloc] init];
         _messageView.backgroundColor = [UIColor whiteColor];
+        _messageView.focusBlock = ^(){
+            DLog(@"关注");
+        };
     }
     return _messageView;
 }

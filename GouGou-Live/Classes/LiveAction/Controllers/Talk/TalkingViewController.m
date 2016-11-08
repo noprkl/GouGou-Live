@@ -9,17 +9,15 @@
 #import "TalkingViewController.h"
 
 #import "TalkingView.h"
+#import "NoneNetWorkingView.h"
 
 @interface TalkingViewController ()<UITextFieldDelegate>
 
-
 @property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入view */
 
-
+@property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
 
 @end
-
-
 
 @implementation TalkingViewController
 
@@ -36,7 +34,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    
+    //    [self.view addSubview:self.noneNetView];
+
     self.navigationBarHidden = YES;
     [self.view addSubview:self.talkView];
     [self.talkView makeConstraints:^(MASConstraintMaker *make) {
@@ -45,6 +44,7 @@
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
     }];
 }
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
@@ -69,7 +69,12 @@
 
 #pragma mark
 #pragma mark - 懒加载
-
+- (NoneNetWorkingView *)noneNetView {
+    if (!_noneNetView) {
+        _noneNetView = [[NoneNetWorkingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _noneNetView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];    }
+    return _noneNetView;
+}
 - (TalkingView *)talkView {
     if (!_talkView) {
         _talkView = [[TalkingView alloc] init];

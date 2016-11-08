@@ -126,7 +126,7 @@
                 <constraint firstItem="oKS-PQ-zGd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="20" id="zUM-pv-ilM"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="241.5" y="232.5"/>
+            <point key="canvasLocation" x="239.5" y="158.5"/>
         </view>
     </objects>
     <resources>

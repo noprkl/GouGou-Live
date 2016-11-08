@@ -8,6 +8,7 @@
 
 #import "RecommendViewController.h"
 #import <SDCycleScrollView.h>
+#import "NoneNetWorkingView.h"
 
 #import "LiveTableView.h"
 #import "LiveViewCell.h" // 自定义cell
@@ -23,6 +24,8 @@
 
 /** 底部scrollview */
 @property (strong, nonatomic) UIScrollView *baseScrollView;
+
+@property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
 
 /** 轮播视图 */
 @property (strong, nonatomic) SDCycleScrollView *cycleScrollView;
@@ -50,12 +53,14 @@
     [super viewDidLoad];
     [self initUI];
 }
+
 - (void)initUI {
     
     self.urlArray = @[@"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg", @"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg", @"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg"];
-    
-    [self.view addSubview:self.baseScrollView];
+    //    [self.view addSubview:self.noneNetView];
 
+    [self.view addSubview:self.baseScrollView];
+    
     [self.baseScrollView addSubview:self.cycleScrollView];
     [self.baseScrollView addSubview:self.tableView];
    
@@ -111,6 +116,12 @@
         
     }
     return _cycleScrollView;
+}
+- (NoneNetWorkingView *)noneNetView {
+    if (!_noneNetView) {
+        _noneNetView = [[NoneNetWorkingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _noneNetView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];    }
+    return _noneNetView;
 }
 - (NSArray *)urlArray {
     if (!_urlArray) {

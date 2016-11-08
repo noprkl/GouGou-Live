@@ -56,7 +56,6 @@
     [super viewWillAppear:animated];
     // navBar隐藏
     self.navigationController.navigationBarHidden = YES;
-    self.hidesBottomBarWhenPushed = YES;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -80,24 +79,33 @@
     
     if (phoneNumber.length == 0) {
         
-        DLog(@"手机号不能为空");
+        [self showAlert:@"手机号不能为空"];
         
     }else if(!flag){
 
-        DLog(@"所输入的不是手机号");
+        [self showAlert:@"所输入的不是手机号"];
 
     }else{
         if (psdNumber.length < 6) {
-            
-            DLog(@"密码最少6位");
+        
+            [self showAlert:@"密码最少6位"];
 
         }else if (psdNumber.length > 20) {
-
-            DLog(@"密码最多20位");
+            
+            [self showAlert:@"密码最多20位"];
             
         }else{
+            NSDictionary *dict = @{
+                                   @"user_tel":@([self.phoneTestField.text intValue]),
+                                   @"user_pwd":self.psdTextField.text
+                                   };
             
-            DLog(@"登录成功");
+            [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
+                [self showAlert:successJson[@"message"]];
+//                DLog(@"%@", successJson);
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
         }
     }
     

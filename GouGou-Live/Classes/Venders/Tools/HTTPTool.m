@@ -8,7 +8,7 @@
 
 #import "HTTPTool.h"
 
-static NSString *baseURL = BaseAPI;
+static NSString *baseURL = SERVER_HOST;
 
 @implementation HTTPTool
 
@@ -32,16 +32,15 @@ static NSString *baseURL = BaseAPI;
 {
     HTTPTool *manager = [HTTPTool shareAFNManager];
     
-    [manager POST:path parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        returnSuccess(responseObject);
-        
+    [manager GET:path parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (returnSuccess) {
+            returnSuccess(responseObject);
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        returnError(error);
-        
-        
+        if (returnError) {
+            returnError(error);
+        }
     }];
-    
     
 }
 + (void)postRequestWithPath:(NSString *)path

@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0410DE821DD01ECF00B14189 /* WatchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE811DD01ECF00B14189 /* WatchHistoryCell.m */; };
-		0410DE861DD05BF900B14189 /* DogDetailInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE851DD05BF900B14189 /* DogDetailInfoCell.m */; };
-		0410DE8E1DD063EB00B14189 /* TowButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE8D1DD063EB00B14189 /* TowButtonView.m */; };
-		0410DE971DD069DC00B14189 /* MyFavoriteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0410DE961DD069DC00B14189 /* MyFavoriteTableView.m */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
@@ -30,6 +26,12 @@
 		0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF01DBDEF2200562CC4 /* Main.storyboard */; };
 		0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF31DBDEF2200562CC4 /* Assets.xcassets */; };
 		0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */; };
+		047323E01DD165EF006CCC71 /* TowButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323D91DD165EF006CCC71 /* TowButtonView.m */; };
+		047323E11DD165EF006CCC71 /* MyFavoriteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323DC1DD165EF006CCC71 /* MyFavoriteTableView.m */; };
+		047323E21DD165EF006CCC71 /* WatchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323DF1DD165EF006CCC71 /* WatchHistoryCell.m */; };
+		047323E61DD16602006CCC71 /* DogDetailInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323E51DD16602006CCC71 /* DogDetailInfoCell.m */; };
+		047323EA1DD17144006CCC71 /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323E81DD17144006CCC71 /* SurePsdViewController.m */; };
+		047323EB1DD17144006CCC71 /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047323E91DD17144006CCC71 /* SurePsdViewController.xib */; };
 		0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4C81DCADC7B00CB288A /* FocusViewController.m */; };
 		0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4CB1DCADC7B00CB288A /* HostViewController.m */; };
 		0479B5D61DCADC7B00CB288A /* LivingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4CE1DCADC7B00CB288A /* LivingViewController.m */; };
@@ -83,8 +85,6 @@
 		0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B54E1DCADC7B00CB288A /* RegisteViewController.xib */; };
 		0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */; };
 		0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */; };
-		0479B6091DCADC7B00CB288A /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5541DCADC7B00CB288A /* SurePsdViewController.m */; };
-		0479B60A1DCADC7B00CB288A /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */; };
 		0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5601DCADC7B00CB288A /* PayingViewController.m */; };
 		0479B60D1DCADC7B00CB288A /* PayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5611DCADC7B00CB288A /* PayingViewController.xib */; };
 		0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5641DCADC7B00CB288A /* PresentApplicationViewController.m */; };
@@ -140,18 +140,16 @@
 		0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6581DCB44CB00CB288A /* AllCountCell.m */; };
 		0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */; };
 		0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6661DCC1EE700CB288A /* TransformStyleView.m */; };
+		049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */; };
+		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
+		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
+		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
+		049D61361DD09DF000ED3E76 /* MyMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61351DD09DF000ED3E76 /* MyMessageView.m */; };
+		049D61391DD09E1C00ED3E76 /* MyUnLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0410DE801DD01ECF00B14189 /* WatchHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchHistoryCell.h; sourceTree = "<group>"; };
-		0410DE811DD01ECF00B14189 /* WatchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchHistoryCell.m; sourceTree = "<group>"; };
-		0410DE841DD05BF900B14189 /* DogDetailInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailInfoCell.h; sourceTree = "<group>"; };
-		0410DE851DD05BF900B14189 /* DogDetailInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailInfoCell.m; sourceTree = "<group>"; };
-		0410DE8C1DD063EB00B14189 /* TowButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowButtonView.h; sourceTree = "<group>"; };
-		0410DE8D1DD063EB00B14189 /* TowButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TowButtonView.m; sourceTree = "<group>"; };
-		0410DE951DD069DC00B14189 /* MyFavoriteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFavoriteTableView.h; sourceTree = "<group>"; };
-		0410DE961DD069DC00B14189 /* MyFavoriteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFavoriteTableView.m; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
@@ -185,6 +183,17 @@
 		0467ACF11DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0467ACF31DBDEF2200562CC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0467ACF61DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		047323D81DD165EF006CCC71 /* TowButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TowButtonView.h; sourceTree = "<group>"; };
+		047323D91DD165EF006CCC71 /* TowButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TowButtonView.m; sourceTree = "<group>"; };
+		047323DB1DD165EF006CCC71 /* MyFavoriteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFavoriteTableView.h; sourceTree = "<group>"; };
+		047323DC1DD165EF006CCC71 /* MyFavoriteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFavoriteTableView.m; sourceTree = "<group>"; };
+		047323DE1DD165EF006CCC71 /* WatchHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchHistoryCell.h; sourceTree = "<group>"; };
+		047323DF1DD165EF006CCC71 /* WatchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchHistoryCell.m; sourceTree = "<group>"; };
+		047323E41DD16602006CCC71 /* DogDetailInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailInfoCell.h; sourceTree = "<group>"; };
+		047323E51DD16602006CCC71 /* DogDetailInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailInfoCell.m; sourceTree = "<group>"; };
+		047323E71DD17144006CCC71 /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
+		047323E81DD17144006CCC71 /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
+		047323E91DD17144006CCC71 /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
 		0479B4C71DCADC7B00CB288A /* FocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusViewController.h; sourceTree = "<group>"; };
 		0479B4C81DCADC7B00CB288A /* FocusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusViewController.m; sourceTree = "<group>"; };
 		0479B4CA1DCADC7B00CB288A /* HostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostViewController.h; sourceTree = "<group>"; };
@@ -284,9 +293,6 @@
 		0479B5501DCADC7B00CB288A /* SurePsdSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdSuccessViewController.h; sourceTree = "<group>"; };
 		0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdSuccessViewController.m; sourceTree = "<group>"; };
 		0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdSuccessViewController.xib; sourceTree = "<group>"; };
-		0479B5531DCADC7B00CB288A /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
-		0479B5541DCADC7B00CB288A /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
-		0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
 		0479B55F1DCADC7B00CB288A /* PayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingViewController.h; sourceTree = "<group>"; };
 		0479B5601DCADC7B00CB288A /* PayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingViewController.m; sourceTree = "<group>"; };
 		0479B5611DCADC7B00CB288A /* PayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayingViewController.xib; sourceTree = "<group>"; };
@@ -380,6 +386,17 @@
 		0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAndDogCardView.m; sourceTree = "<group>"; };
 		0479B6651DCC1EE700CB288A /* TransformStyleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformStyleView.h; sourceTree = "<group>"; };
 		0479B6661DCC1EE700CB288A /* TransformStyleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformStyleView.m; sourceTree = "<group>"; };
+		049D61051DD06DAA00ED3E76 /* NSString+MD5Code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Code.h"; sourceTree = "<group>"; };
+		049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Code.m"; sourceTree = "<group>"; };
+		049D612B1DD07C6B00ED3E76 /* SureForgetPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureForgetPsdViewController.h; sourceTree = "<group>"; };
+		049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureForgetPsdViewController.m; sourceTree = "<group>"; };
+		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
+		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
+		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
+		049D61341DD09DF000ED3E76 /* MyMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMessageView.h; sourceTree = "<group>"; };
+		049D61351DD09DF000ED3E76 /* MyMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMessageView.m; sourceTree = "<group>"; };
+		049D61371DD09E1C00ED3E76 /* MyUnLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUnLoginView.h; sourceTree = "<group>"; };
+		049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnLoginView.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -397,42 +414,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0410DE7F1DD01ECF00B14189 /* WatchHistoryView */ = {
-			isa = PBXGroup;
-			children = (
-				0410DE801DD01ECF00B14189 /* WatchHistoryCell.h */,
-				0410DE811DD01ECF00B14189 /* WatchHistoryCell.m */,
-			);
-			path = WatchHistoryView;
-			sourceTree = "<group>";
-		};
-		0410DE831DD05BC400B14189 /* DogInfoCardView */ = {
-			isa = PBXGroup;
-			children = (
-				0410DE841DD05BF900B14189 /* DogDetailInfoCell.h */,
-				0410DE851DD05BF900B14189 /* DogDetailInfoCell.m */,
-			);
-			path = DogInfoCardView;
-			sourceTree = "<group>";
-		};
-		0410DE8B1DD063D100B14189 /* FavoriteTowButtonView */ = {
-			isa = PBXGroup;
-			children = (
-				0410DE8C1DD063EB00B14189 /* TowButtonView.h */,
-				0410DE8D1DD063EB00B14189 /* TowButtonView.m */,
-			);
-			path = FavoriteTowButtonView;
-			sourceTree = "<group>";
-		};
-		0410DE941DD069B700B14189 /* MyFavoriteTableView */ = {
-			isa = PBXGroup;
-			children = (
-				0410DE951DD069DC00B14189 /* MyFavoriteTableView.h */,
-				0410DE961DD069DC00B14189 /* MyFavoriteTableView.m */,
-			);
-			path = MyFavoriteTableView;
-			sourceTree = "<group>";
-		};
 		04486AB71DD0159900BC6D15 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,6 +542,42 @@
 				0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		047323D71DD165EF006CCC71 /* FavoriteTowButtonView */ = {
+			isa = PBXGroup;
+			children = (
+				047323D81DD165EF006CCC71 /* TowButtonView.h */,
+				047323D91DD165EF006CCC71 /* TowButtonView.m */,
+			);
+			path = FavoriteTowButtonView;
+			sourceTree = "<group>";
+		};
+		047323DA1DD165EF006CCC71 /* MyFavoriteTableView */ = {
+			isa = PBXGroup;
+			children = (
+				047323DB1DD165EF006CCC71 /* MyFavoriteTableView.h */,
+				047323DC1DD165EF006CCC71 /* MyFavoriteTableView.m */,
+			);
+			path = MyFavoriteTableView;
+			sourceTree = "<group>";
+		};
+		047323DD1DD165EF006CCC71 /* WatchHistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				047323DE1DD165EF006CCC71 /* WatchHistoryCell.h */,
+				047323DF1DD165EF006CCC71 /* WatchHistoryCell.m */,
+			);
+			path = WatchHistoryView;
+			sourceTree = "<group>";
+		};
+		047323E31DD16602006CCC71 /* DogInfoCardView */ = {
+			isa = PBXGroup;
+			children = (
+				047323E41DD16602006CCC71 /* DogDetailInfoCell.h */,
+				047323E51DD16602006CCC71 /* DogDetailInfoCell.m */,
+			);
+			path = DogInfoCardView;
 			sourceTree = "<group>";
 		};
 		0479B4C31DCADC7B00CB288A /* Classes */ = {
@@ -715,6 +732,8 @@
 			children = (
 				0479B4EA1DCADC7B00CB288A /* NoneFocusView.h */,
 				0479B4EB1DCADC7B00CB288A /* NoneFocusView.m */,
+				049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */,
+				049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */,
 			);
 			path = FocusView;
 			sourceTree = "<group>";
@@ -841,10 +860,10 @@
 		0479B5181DCADC7B00CB288A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0479B5191DCADC7B00CB288A /* DogShow */,
-				0479B51C1DCADC7B00CB288A /* SellerShow */,
-				0479B51F1DCADC7B00CB288A /* Service */,
 				0479B5221DCADC7B00CB288A /* Talk */,
+				0479B5191DCADC7B00CB288A /* DogShow */,
+				0479B51F1DCADC7B00CB288A /* Service */,
+				0479B51C1DCADC7B00CB288A /* SellerShow */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -953,10 +972,10 @@
 		0479B53D1DCADC7B00CB288A /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				04486AB91DD015B200BC6D15 /* Handler */,
 				0479B53E1DCADC7B00CB288A /* Controllers */,
 				0479B5571DCADC7B00CB288A /* Models */,
 				0479B5581DCADC7B00CB288A /* Views */,
+				04486AB91DD015B200BC6D15 /* Handler */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -989,6 +1008,9 @@
 				0479B5441DCADC7B00CB288A /* ForgetPsdViewController.h */,
 				0479B5451DCADC7B00CB288A /* ForgetPsdViewController.m */,
 				0479B5461DCADC7B00CB288A /* ForgetPsdViewController.xib */,
+				049D612B1DD07C6B00ED3E76 /* SureForgetPsdViewController.h */,
+				049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */,
+				049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */,
 			);
 			path = ForgetPsd;
 			sourceTree = "<group>";
@@ -1006,6 +1028,9 @@
 		0479B54B1DCADC7B00CB288A /* Registe */ = {
 			isa = PBXGroup;
 			children = (
+				047323E71DD17144006CCC71 /* SurePsdViewController.h */,
+				047323E81DD17144006CCC71 /* SurePsdViewController.m */,
+				047323E91DD17144006CCC71 /* SurePsdViewController.xib */,
 				0479B54C1DCADC7B00CB288A /* RegisteViewController.h */,
 				0479B54D1DCADC7B00CB288A /* RegisteViewController.m */,
 				0479B54E1DCADC7B00CB288A /* RegisteViewController.xib */,
@@ -1019,9 +1044,6 @@
 				0479B5501DCADC7B00CB288A /* SurePsdSuccessViewController.h */,
 				0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */,
 				0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */,
-				0479B5531DCADC7B00CB288A /* SurePsdViewController.h */,
-				0479B5541DCADC7B00CB288A /* SurePsdViewController.m */,
-				0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */,
 			);
 			path = SurePsd;
 			sourceTree = "<group>";
@@ -1274,10 +1296,11 @@
 		0479B5A41DCADC7B00CB288A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0410DE941DD069B700B14189 /* MyFavoriteTableView */,
-				0410DE8B1DD063D100B14189 /* FavoriteTowButtonView */,
-				0410DE831DD05BC400B14189 /* DogInfoCardView */,
-				0410DE7F1DD01ECF00B14189 /* WatchHistoryView */,
+				047323E31DD16602006CCC71 /* DogInfoCardView */,
+				047323D71DD165EF006CCC71 /* FavoriteTowButtonView */,
+				047323DA1DD165EF006CCC71 /* MyFavoriteTableView */,
+				047323DD1DD165EF006CCC71 /* WatchHistoryView */,
+				049D61331DD09D4D00ED3E76 /* MySelfView */,
 				045FE3261DCC8CA0001B95B1 /* DeleteShopAddressView */,
 				045FE3181DCC8C48001B95B1 /* AreaChooseView */,
 				045FE31B1DCC8C48001B95B1 /* ShopAddressCell */,
@@ -1366,11 +1389,11 @@
 			isa = PBXGroup;
 			children = (
 				0479B5BC1DCADC7B00CB288A /* APIConfig.h */,
+				0479B5C11DCADC7B00CB288A /* PrefixHeader.pch */,
+				0479B5BF1DCADC7B00CB288A /* Info.plist */,
 				0479B5BD1DCADC7B00CB288A /* AppDelegate.h */,
 				0479B5BE1DCADC7B00CB288A /* AppDelegate.m */,
-				0479B5BF1DCADC7B00CB288A /* Info.plist */,
 				0479B5C01DCADC7B00CB288A /* main.m */,
-				0479B5C11DCADC7B00CB288A /* PrefixHeader.pch */,
 				0479B5C21DCADC7B00CB288A /* ViewController.h */,
 				0479B5C31DCADC7B00CB288A /* ViewController.m */,
 			);
@@ -1408,6 +1431,8 @@
 				0479B5CE1DCADC7B00CB288A /* NSString+CheckString.m */,
 				0479B5CF1DCADC7B00CB288A /* UIColor+HexString.h */,
 				0479B5D01DCADC7B00CB288A /* UIColor+HexString.m */,
+				049D61051DD06DAA00ED3E76 /* NSString+MD5Code.h */,
+				049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1439,6 +1464,17 @@
 				045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */,
 			);
 			path = DogBookView;
+			sourceTree = "<group>";
+		};
+		049D61331DD09D4D00ED3E76 /* MySelfView */ = {
+			isa = PBXGroup;
+			children = (
+				049D61341DD09DF000ED3E76 /* MyMessageView.h */,
+				049D61351DD09DF000ED3E76 /* MyMessageView.m */,
+				049D61371DD09E1C00ED3E76 /* MyUnLoginView.h */,
+				049D61381DD09E1C00ED3E76 /* MyUnLoginView.m */,
+			);
+			path = MySelfView;
 			sourceTree = "<group>";
 		};
 		28209DDB76B660DE1C93619E /* Pods */ = {
@@ -1535,15 +1571,16 @@
 				0479B62C1DCADC7B00CB288A /* WatchHistoryViewController.xib in Resources */,
 				0479B5EE1DCADC7B00CB288A /* LiveViewCell.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
+				049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */,
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
 				0479B6131DCADC7B00CB288A /* CertificateViewController.xib in Resources */,
+				047323EB1DD17144006CCC71 /* SurePsdViewController.xib in Resources */,
 				0479B6221DCADC7B00CB288A /* RemoveCookieViewController.xib in Resources */,
 				0479B6151DCADC7B00CB288A /* MerchantViewController.xib in Resources */,
 				0479B62F1DCADC7B00CB288A /* DetailCountViewCell.xib in Resources */,
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
-				0479B60A1DCADC7B00CB288A /* SurePsdViewController.xib in Resources */,
 				045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
 				0479B6241DCADC7B00CB288A /* SecurityAccountViewController.xib in Resources */,
@@ -1611,9 +1648,9 @@
 				0479B5F61DCADC7B00CB288A /* DogImageView.m in Sources */,
 				0479B5D81DCADC7B00CB288A /* LiveViewController.m in Sources */,
 				0479B5E21DCADC7B00CB288A /* DogTypesView.m in Sources */,
+				047323E21DD165EF006CCC71 /* WatchHistoryCell.m in Sources */,
 				0479B6331DCADC7B00CB288A /* MessageViewController.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
-				0479B6091DCADC7B00CB288A /* SurePsdViewController.m in Sources */,
 				045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				045FE3291DCC8CA0001B95B1 /* DeletePrommtView.m in Sources */,
@@ -1625,26 +1662,26 @@
 				0479B62E1DCADC7B00CB288A /* DetailCountViewCell.m in Sources */,
 				0479B6301DCADC7B00CB288A /* MyHeaderView.m in Sources */,
 				0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */,
+				047323E01DD165EF006CCC71 /* TowButtonView.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
 				0479B6321DCADC7B00CB288A /* ResetLoginPsdView.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
 				0479B6311DCADC7B00CB288A /* PromptView.m in Sources */,
+				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
-				0410DE821DD01ECF00B14189 /* WatchHistoryCell.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
-				0410DE971DD069DC00B14189 /* MyFavoriteTableView.m in Sources */,
 				0479B5F91DCADC7B00CB288A /* PicturesView.m in Sources */,
+				049D61391DD09E1C00ED3E76 /* MyUnLoginView.m in Sources */,
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
-				0410DE8E1DD063EB00B14189 /* TowButtonView.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
 				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
@@ -1655,14 +1692,17 @@
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
 				0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */,
+				047323EA1DD17144006CCC71 /* SurePsdViewController.m in Sources */,
 				0479B63D1DCADC7B00CB288A /* HTTPTool.m in Sources */,
 				0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */,
 				0479B5F71DCADC7B00CB288A /* DogMarkView.m in Sources */,
 				0479B5F21DCADC7B00CB288A /* DogShowViewController.m in Sources */,
 				0479B6031DCADC7B00CB288A /* LoginViewController.m in Sources */,
+				049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */,
 				0479B5FE1DCADC7B00CB288A /* TalkingView.m in Sources */,
 				0479B6161DCADC7B00CB288A /* DetailCountViewController.m in Sources */,
 				0479B61D1DCADC7B00CB288A /* AboutUsViewController.m in Sources */,
+				047323E61DD16602006CCC71 /* DogDetailInfoCell.m in Sources */,
 				0479B5E81DCADC7B00CB288A /* DogSizeFilter.m in Sources */,
 				045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */,
 				0479B63C1DCADC7B00CB288A /* UIColor+HexString.m in Sources */,
@@ -1673,7 +1713,6 @@
 				0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
 				045FE31E1DCC8C48001B95B1 /* AddressChooseView.m in Sources */,
-				0410DE861DD05BF900B14189 /* DogDetailInfoCell.m in Sources */,
 				0479B5EC1DCADC7B00CB288A /* LiveTableView.m in Sources */,
 				045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
@@ -1681,6 +1720,7 @@
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
 				0479B5DC1DCADC7B00CB288A /* RecommendViewController.m in Sources */,
+				047323E11DD165EF006CCC71 /* MyFavoriteTableView.m in Sources */,
 				0479B6271DCADC7B00CB288A /* SuggestViewController.m in Sources */,
 				045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
@@ -1691,6 +1731,7 @@
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
 				0479B5FD1DCADC7B00CB288A /* StartSourceView.m in Sources */,
 				0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */,
+				049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */,
 				0479B5F31DCADC7B00CB288A /* SellerShowViewController.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
 				0479B5E51DCADC7B00CB288A /* LiveTopView.m in Sources */,
@@ -1702,6 +1743,7 @@
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
 				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
+				049D61361DD09DF000ED3E76 /* MyMessageView.m in Sources */,
 				0479B5E01DCADC7B00CB288A /* NoneFocusView.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
 				0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */,

@@ -32,7 +32,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    self.edgesForExtendedLayout = 64;
     self.navigationController.navigationBarHidden = NO;
 }
 

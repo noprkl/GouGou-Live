@@ -30,6 +30,8 @@
 		047323E11DD165EF006CCC71 /* MyFavoriteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323DC1DD165EF006CCC71 /* MyFavoriteTableView.m */; };
 		047323E21DD165EF006CCC71 /* WatchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323DF1DD165EF006CCC71 /* WatchHistoryCell.m */; };
 		047323E61DD16602006CCC71 /* DogDetailInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323E51DD16602006CCC71 /* DogDetailInfoCell.m */; };
+		047323EA1DD17144006CCC71 /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323E81DD17144006CCC71 /* SurePsdViewController.m */; };
+		047323EB1DD17144006CCC71 /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047323E91DD17144006CCC71 /* SurePsdViewController.xib */; };
 		0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4C81DCADC7B00CB288A /* FocusViewController.m */; };
 		0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4CB1DCADC7B00CB288A /* HostViewController.m */; };
 		0479B5D61DCADC7B00CB288A /* LivingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4CE1DCADC7B00CB288A /* LivingViewController.m */; };
@@ -83,8 +85,6 @@
 		0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B54E1DCADC7B00CB288A /* RegisteViewController.xib */; };
 		0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */; };
 		0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */; };
-		0479B6091DCADC7B00CB288A /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5541DCADC7B00CB288A /* SurePsdViewController.m */; };
-		0479B60A1DCADC7B00CB288A /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */; };
 		0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5601DCADC7B00CB288A /* PayingViewController.m */; };
 		0479B60D1DCADC7B00CB288A /* PayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5611DCADC7B00CB288A /* PayingViewController.xib */; };
 		0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5641DCADC7B00CB288A /* PresentApplicationViewController.m */; };
@@ -191,6 +191,9 @@
 		047323DF1DD165EF006CCC71 /* WatchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchHistoryCell.m; sourceTree = "<group>"; };
 		047323E41DD16602006CCC71 /* DogDetailInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailInfoCell.h; sourceTree = "<group>"; };
 		047323E51DD16602006CCC71 /* DogDetailInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailInfoCell.m; sourceTree = "<group>"; };
+		047323E71DD17144006CCC71 /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
+		047323E81DD17144006CCC71 /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
+		047323E91DD17144006CCC71 /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
 		0479B4C71DCADC7B00CB288A /* FocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusViewController.h; sourceTree = "<group>"; };
 		0479B4C81DCADC7B00CB288A /* FocusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusViewController.m; sourceTree = "<group>"; };
 		0479B4CA1DCADC7B00CB288A /* HostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostViewController.h; sourceTree = "<group>"; };
@@ -290,9 +293,6 @@
 		0479B5501DCADC7B00CB288A /* SurePsdSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdSuccessViewController.h; sourceTree = "<group>"; };
 		0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdSuccessViewController.m; sourceTree = "<group>"; };
 		0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdSuccessViewController.xib; sourceTree = "<group>"; };
-		0479B5531DCADC7B00CB288A /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
-		0479B5541DCADC7B00CB288A /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
-		0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
 		0479B55F1DCADC7B00CB288A /* PayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingViewController.h; sourceTree = "<group>"; };
 		0479B5601DCADC7B00CB288A /* PayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingViewController.m; sourceTree = "<group>"; };
 		0479B5611DCADC7B00CB288A /* PayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayingViewController.xib; sourceTree = "<group>"; };
@@ -1028,6 +1028,9 @@
 		0479B54B1DCADC7B00CB288A /* Registe */ = {
 			isa = PBXGroup;
 			children = (
+				047323E71DD17144006CCC71 /* SurePsdViewController.h */,
+				047323E81DD17144006CCC71 /* SurePsdViewController.m */,
+				047323E91DD17144006CCC71 /* SurePsdViewController.xib */,
 				0479B54C1DCADC7B00CB288A /* RegisteViewController.h */,
 				0479B54D1DCADC7B00CB288A /* RegisteViewController.m */,
 				0479B54E1DCADC7B00CB288A /* RegisteViewController.xib */,
@@ -1038,9 +1041,6 @@
 		0479B54F1DCADC7B00CB288A /* SurePsd */ = {
 			isa = PBXGroup;
 			children = (
-				0479B5531DCADC7B00CB288A /* SurePsdViewController.h */,
-				0479B5541DCADC7B00CB288A /* SurePsdViewController.m */,
-				0479B5551DCADC7B00CB288A /* SurePsdViewController.xib */,
 				0479B5501DCADC7B00CB288A /* SurePsdSuccessViewController.h */,
 				0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */,
 				0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */,
@@ -1575,12 +1575,12 @@
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
 				0479B6131DCADC7B00CB288A /* CertificateViewController.xib in Resources */,
+				047323EB1DD17144006CCC71 /* SurePsdViewController.xib in Resources */,
 				0479B6221DCADC7B00CB288A /* RemoveCookieViewController.xib in Resources */,
 				0479B6151DCADC7B00CB288A /* MerchantViewController.xib in Resources */,
 				0479B62F1DCADC7B00CB288A /* DetailCountViewCell.xib in Resources */,
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
-				0479B60A1DCADC7B00CB288A /* SurePsdViewController.xib in Resources */,
 				045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
 				0479B6241DCADC7B00CB288A /* SecurityAccountViewController.xib in Resources */,
@@ -1651,7 +1651,6 @@
 				047323E21DD165EF006CCC71 /* WatchHistoryCell.m in Sources */,
 				0479B6331DCADC7B00CB288A /* MessageViewController.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
-				0479B6091DCADC7B00CB288A /* SurePsdViewController.m in Sources */,
 				045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				045FE3291DCC8CA0001B95B1 /* DeletePrommtView.m in Sources */,
@@ -1693,6 +1692,7 @@
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
 				0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */,
+				047323EA1DD17144006CCC71 /* SurePsdViewController.m in Sources */,
 				0479B63D1DCADC7B00CB288A /* HTTPTool.m in Sources */,
 				0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */,
 				0479B5F71DCADC7B00CB288A /* DogMarkView.m in Sources */,

@@ -89,6 +89,7 @@ static NSString * indenifer = @"addressCellID";
     AddrsssTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:indenifer];
     cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.tag = [indexPath row];
     
     cell.editBtnBlock = ^(){
     
@@ -104,6 +105,11 @@ static NSString * indenifer = @"addressCellID";
         self.lastBtn = btn;
     };
     
+    cell.deleteBlock = ^(UIButton * btn) {
+    
+        btn.tag = [indexPath row];
+        
+    };
     
     
     return cell;
@@ -130,15 +136,6 @@ static NSString * indenifer = @"addressCellID";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)addAddress {
-
-    DeletePrommtView * deleteAddress = [[DeletePrommtView alloc] init];
-    deleteAddress.sureDeleteBtnBlock = ^(UIButton *btn){
-        
-        [self.view removeFromSuperview];
-    };
-
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

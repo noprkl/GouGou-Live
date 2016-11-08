@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IdentityIfonView : UIView
+typedef void(^NameTextfiledChangeBlock)(UITextField *textfiled);
 
+typedef void(^IdentityTextfiledChangeBlock)(UITextField *textfiled);
+
+@interface IdentityIfonView : UIView
+/** 监听姓名输入 */
+@property (strong,nonatomic) NameTextfiledChangeBlock nameTextBlock;
+/** 监听身份证号输入 */
+@property (strong,nonatomic) IdentityTextfiledChangeBlock identiityTextBlock;
 @end

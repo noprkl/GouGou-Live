@@ -10,12 +10,15 @@
 
 typedef void(^ClickEditBtnBlock)();
 typedef void(^ClickAcquiesceBtnBlock)(UIButton *btn);
+typedef void(^ClickDeleteBteBlock)(UIButton * btn);
 
 @interface AddrsssTableViewCell : UITableViewCell
 
 /** 点击编辑回调 */
 @property (strong,nonatomic) ClickEditBtnBlock editBtnBlock;
-
-@property(nonatomic, strong) ClickAcquiesceBtnBlock acquiesceBlock; /**< 默认按钮回调 */
+/**< 默认按钮回调 */
+@property(nonatomic, strong) ClickAcquiesceBtnBlock acquiesceBlock;
+/** 点击删除按钮回调 */
+@property (strong,nonatomic) ClickDeleteBteBlock deleteBlock;
 
 @end

@@ -304,14 +304,17 @@
 }
 
 - (void)cilckDeleteButton {
+    if (_deleteBlock) {
+        _deleteBlock(self.deleteBtn);
+    }
     
     DeletePrommtView * deletePrommpt = [[DeletePrommtView alloc] init];
     deletePrommpt.backgroundColor = [UIColor whiteColor];
     deletePrommpt.layer.cornerRadius = 15;
     deletePrommpt.layer.masksToBounds = YES;
-
+    
     [deletePrommpt show];
-
+    
 }
 
 - (void)cilckDuihaoImageBtn:(UIButton *)button {

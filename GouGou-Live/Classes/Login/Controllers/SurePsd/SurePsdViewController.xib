@@ -36,7 +36,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="zbi-aQ-XwF">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="zbi-aQ-XwF">
                     <rect key="frame" x="10" y="96" width="16" height="18"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crJ-AE-w5f">
@@ -54,7 +54,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="AM5-0C-QTw">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="AM5-0C-QTw">
                     <rect key="frame" x="10" y="152" width="16" height="18"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IcC-ea-UVk">
@@ -126,7 +126,7 @@
                 <constraint firstItem="oKS-PQ-zGd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="20" id="zUM-pv-ilM"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="241.5" y="232.5"/>
+            <point key="canvasLocation" x="239.5" y="158.5"/>
         </view>
     </objects>
     <resources>

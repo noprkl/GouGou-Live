@@ -7,7 +7,7 @@
 //
 
 #import "ForgetPsdViewController.h"
-#import "SurePsdViewController.h"
+#import "SureForgetPsdViewController.h"
 
 
 @interface ForgetPsdViewController ()<UITextFieldDelegate>
@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton *sendCode;
+@property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 
 @end
 
@@ -34,21 +35,13 @@
     
     self.navigationController.navigationBarHidden = NO;
 }
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    self.title = @"忘记密码";
 
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (void)initUI {
+    self.title = @"忘记密码";
 
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;
-   }
+}
 
 #pragma mark
 #pragma mark - Action
@@ -56,9 +49,16 @@
 
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
     
-#pragma mark 请求验证码
-    
     [self freetimeout];
+    NSDictionary *dict = @{
+                           @"tel" : @([self.phoneTextField.text integerValue]),
+                           @"type" : @1
+                           };
+    [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
 
 - (IBAction)codeTextFieldExiding:(UITextField *)sender {
@@ -70,7 +70,12 @@
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
+    SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
+    sureVC.title = @"新密码设置";
+    sureVC.telNumber = self.phoneTextField.text;
+    sureVC.codeNumber = self.codeTextField.text;
     
+    [self.navigationController pushViewController:sureVC animated:YES];
 }
 
 #pragma mark
@@ -91,8 +96,10 @@
     }else if (textField == self.codeTextField){
         
         if (range.location < 6) {
+            self.sureBtn.enabled = NO;
             return YES;
         }
+        self.sureBtn.enabled = YES;
         return NO;
     }else{
         

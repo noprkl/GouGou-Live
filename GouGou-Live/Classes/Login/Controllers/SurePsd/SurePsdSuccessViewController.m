@@ -35,13 +35,13 @@
 
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
-    
+    [self pushLoginVC];
+}
+- (void)pushLoginVC {
     LoginViewController * loginVC = [[LoginViewController alloc] init];
     
-    [self presentViewController:loginVC animated:YES completion:nil];
-    
+    [self.navigationController pushViewController:loginVC animated:YES];
 }
-
 - (void)freetimeout {
     __block NSInteger time = 3;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -55,9 +55,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                LoginViewController * loginVC = [[LoginViewController alloc] init];
-                
-                [self presentViewController:loginVC animated:YES completion:nil];
+                [self pushLoginVC];
             });
         }else{
             

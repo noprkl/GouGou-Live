@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ClickFocusBtnBlock)();
 @interface SellerMessageView : UIView
 
+
+@property(nonatomic, strong) ClickFocusBtnBlock focusBlock; /**< 关注回调 */
+
 - (CGFloat)getMessageHeight;
+
 @end

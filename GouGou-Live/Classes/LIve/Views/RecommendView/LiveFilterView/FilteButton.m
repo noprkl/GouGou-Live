@@ -44,7 +44,7 @@
     UIImage *image = [UIImage imageNamed:@"矩形-33"];
     
     CGFloat imageX = self.bounds.size.width / 2 + 5;
-    CGFloat imageY = self.bounds.size.height / 2;
+    CGFloat imageY = self.bounds.size.height / 2 - image.size.height / 2;
     CGFloat imageW = image.size.width;
     CGFloat imageH = image.size.height;
     

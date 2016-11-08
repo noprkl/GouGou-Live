@@ -7,16 +7,57 @@
 //
 
 #import "BaseViewController.h"
+#import "HTTPTool.h"
+#import "UIView+Toast.h"
 
 @interface BaseViewController ()
 
 @end
 
 @implementation BaseViewController
+#pragma mark
+#pragma mark - 网络请求
+/** get请求 */
+- (void)getRequestWithPath:(NSString *)path
+                    params:(NSDictionary *)params
+                   success:(HttpRequestSuccessBlock)Success
+                     error:(HttpRequestErrorBlock)Error {
+    [HTTPTool getRequestWithPath:path
+                          params:params
+                         success:^(id successJson) {
+                             Success(successJson);
+                         } error:^(NSError *error) {
+                             Error(error);
+    }];
+}
+/** post请求 */
+- (void)postRequestWithPath:(NSString *)path
+                     params:(NSDictionary *)params
+                    success:(HttpRequestSuccessBlock)Success
+                      error:(HttpRequestErrorBlock)Error {
+    [HTTPTool postRequestWithPath:path
+                           params:params
+                          success:^(id successJson) {
+                              Success(successJson);
+                          }
+                            error:^(NSError *error) {
+                                Error(error);
+    }];
+}
+- (void)showAlert:(NSString *)string{
+    [self.view makeToast:string duration:2 position:@"center"];
+}
+
+#pragma mark
+#pragma mark - 第三方登录
+- (void)QQLogin {}
+- (void)WXLogin {}
+- (void)SinaLogin {}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
 
 }
 

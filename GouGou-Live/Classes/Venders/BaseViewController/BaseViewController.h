@@ -8,8 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^HttpRequestSuccessBlock)(id successJson);
+typedef void(^HttpRequestErrorBlock)(NSError *error);
+
 @interface BaseViewController : UIViewController
 
+- (void)QQLogin;
+- (void)WXLogin;
+- (void)SinaLogin;
+
+/** get请求 */
+- (void)getRequestWithPath:(NSString *)path
+                    params:(NSDictionary *)params
+                   success:(HttpRequestSuccessBlock)Success
+                     error:(HttpRequestErrorBlock)Error;
+/** post请求 */
+- (void)postRequestWithPath:(NSString *)path
+                     params:(NSDictionary *)params
+                    success:(HttpRequestSuccessBlock)Success
+                      error:(HttpRequestErrorBlock)Error;
+
+// 提示字符
+- (void)showAlert:(NSString *)string;
 - (void)setNavBarItem;
 
 @end

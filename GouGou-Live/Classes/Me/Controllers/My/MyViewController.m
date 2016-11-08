@@ -7,6 +7,8 @@
 //
 
 #import "MyViewController.h"
+#import "MyUnLoginView.h"
+#import "LoginViewController.h"
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -34,6 +36,8 @@
     [super viewWillAppear:animated];
     
     self.hidesBottomBarWhenPushed = NO;
+    
+    
 }
 - (void)initUI {
 
@@ -47,14 +51,14 @@
 - (NSArray *)dataSource {
     
     if (!_dataSource) {
-        _dataSource = @[@[@"登录"], @[@"账号", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
+        _dataSource = @[@[@"账号", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
     }
     return _dataSource;
 }
 - (NSArray *)controllerNames {
 
     if (!_controllerNames) {
-        _controllerNames = @[@[@"LoginViewController"],@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+        _controllerNames = @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
     }
     return _controllerNames;
 }
@@ -67,6 +71,9 @@
     return [self.dataSource[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 140;
+    }
     return 10;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,10 +108,26 @@
     [self.navigationController pushViewController:VC animated:YES];
     
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        //判断登录与否
+        MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 140)];
+        unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        __weak typeof(self) weakSelf = self;
+        unLoginView.loginBlcok = ^(){
+            LoginViewController *VC = [[LoginViewController alloc] init];
+            
+            VC.hidesBottomBarWhenPushed = YES;
+            
+            [weakSelf.navigationController pushViewController:VC animated:YES];
+        };
 
-- (void)clickMyButtonAction {
-    
+        return unLoginView;
+    }
+    return nil;
+
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

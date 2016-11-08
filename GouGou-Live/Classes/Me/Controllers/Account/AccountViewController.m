@@ -109,6 +109,8 @@
 }
 - (void)initUI {
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"明细" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBtnAction)];
+
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.helpBtn];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
@@ -120,21 +122,10 @@
     }];
 }
 
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"明细" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBtnAction)];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
-
-}
 - (void)clickRightBtnAction {
     DetailCountViewController *detailVC = [[DetailCountViewController alloc] init];
     [self.navigationController pushViewController:detailVC animated:YES];
     
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

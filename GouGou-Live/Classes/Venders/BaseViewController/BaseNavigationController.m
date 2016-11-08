@@ -18,20 +18,21 @@
     UINavigationBar *navBar = [UINavigationBar appearance];
 
     navBar.titleTextAttributes = @{
-                  NSForegroundColorAttributeName:[UIColor grayColor],
-                  NSFontAttributeName:[UIFont systemFontOfSize:20]
+                  NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
+                  NSFontAttributeName:[UIFont systemFontOfSize:18]
                   };
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{
-                                                          NSForegroundColorAttributeName:[UIColor grayColor],
-                                                          NSFontAttributeName:[UIFont systemFontOfSize:17]
+                                                          NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
+                                                          NSFontAttributeName:[UIFont systemFontOfSize:16]
                                                           }
                                                 forState:(UIControlStateNormal)];
+    
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     
 }
 

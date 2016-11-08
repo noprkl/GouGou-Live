@@ -8,6 +8,7 @@
 
 #import "MyViewController.h"
 #import "MyUnLoginView.h"
+#import "LoginViewController.h"
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -35,6 +36,8 @@
     [super viewWillAppear:animated];
     
     self.hidesBottomBarWhenPushed = NO;
+    
+    
 }
 - (void)initUI {
 
@@ -110,10 +113,19 @@
         //判断登录与否
         MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 140)];
         unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        __weak typeof(self) weakSelf = self;
+        unLoginView.loginBlcok = ^(){
+            LoginViewController *VC = [[LoginViewController alloc] init];
+            
+            VC.hidesBottomBarWhenPushed = YES;
+            
+            [weakSelf.navigationController pushViewController:VC animated:YES];
+        };
 
         return unLoginView;
     }
     return nil;
+
 }
 
 - (void)didReceiveMemoryWarning {

@@ -22,10 +22,12 @@
                     params:(NSDictionary *)params
                    success:(HttpRequestSuccessBlock)Success
                      error:(HttpRequestErrorBlock)Error {
-    [HTTPTool getRequestWithPath:path params:params success:^(id successJson) {
-        Success(successJson);
-    } error:^(NSError *error) {
-        Error(error);
+    [HTTPTool getRequestWithPath:path
+                          params:params
+                         success:^(id successJson) {
+                             Success(successJson);
+                         } error:^(NSError *error) {
+                             Error(error);
     }];
 }
 /** post请求 */
@@ -33,10 +35,13 @@
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)Success
                       error:(HttpRequestErrorBlock)Error {
-    [HTTPTool postRequestWithPath:path params:params success:^(id successJson) {
-        Success(successJson);
-    } error:^(NSError *error) {
-        Error(error);
+    [HTTPTool postRequestWithPath:path
+                           params:params
+                          success:^(id successJson) {
+                              Success(successJson);
+                          }
+                            error:^(NSError *error) {
+                                Error(error);
     }];
 }
 - (void)showAlert:(NSString *)string{
@@ -51,7 +56,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
 
 }
 

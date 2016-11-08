@@ -8,6 +8,7 @@
 
 #import "FocusViewController.h"
 #import "NoneFocusView.h"
+#import "NoneNetWorkingView.h"
 
 #import "LiveTableView.h"
 #import "LiveViewCell.h" // 自定义cell
@@ -18,8 +19,12 @@
 /** 无关注人 */
 @property (strong, nonatomic) NoneFocusView *noneView;
 
+
+@property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
+
 /** 有人列表 */
 @property (strong, nonatomic) LiveTableView *tableView;
+
 /** 数据源 */
 @property (strong, nonatomic) NSMutableArray *dataSource;
 
@@ -38,7 +43,9 @@
     [self loadFocusView];
 }
 - (void)loadFocusView {
-    // 请求数据 如果没有添加无主播 否则添加 有主播
+    
+    // 先判断是否有网，然后请求数据 如果没有添加无主播 否则添加 有主播
+//    [self.view addSubview:self.noneNetView];
     
 //    [self.view addSubview:self.noneView];
     
@@ -53,6 +60,12 @@
         _noneView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
     }
     return _noneView;
+}
+- (NoneNetWorkingView *)noneNetView {
+    if (!_noneNetView) {
+        _noneNetView = [[NoneNetWorkingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _noneNetView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];    }
+    return _noneNetView;
 }
 - (LiveTableView *)tableView {
     if (!_tableView) {

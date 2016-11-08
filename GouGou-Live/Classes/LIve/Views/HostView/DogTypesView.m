@@ -78,6 +78,7 @@
         [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 
         [btn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
+        
         [btn addTarget:self action:@selector(clickBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     
         [self.buttonsArray addObject:btn];

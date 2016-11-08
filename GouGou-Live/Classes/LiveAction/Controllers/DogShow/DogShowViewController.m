@@ -10,6 +10,8 @@
 #import "DogShowMessageCell.h"
 #import "ShareAlertView.h"
 #import "ShareBtnModel.h"
+#import "DogBookViewController.h"
+#import "BuyRuleAlertView.h"
 
 @interface DogShowViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -45,6 +47,11 @@ static NSString *cellid = @"DogShowCellid";
     [super viewWillAppear:animated];
     self.navigationBarHidden = YES;
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.navigationBarHidden = NO;
+}
 - (void)initUI {
     
     [self.view addSubview:self.tableView];
@@ -63,7 +70,8 @@ static NSString *cellid = @"DogShowCellid";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsHorizontalScrollIndicator = NO;
-        
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.decelerationRate = 0.9;
         [_tableView registerClass:[DogShowMessageCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;
@@ -74,9 +82,9 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DogShowMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-   
-    self.cell = cell;
+    cell.selected = UITableViewCellSelectionStyleNone;
     
+    self.cell = cell;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,9 +93,10 @@ static NSString *cellid = @"DogShowCellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
    
     DogShowMessageCell *cell = (DogShowMessageCell *)self.cell;
-    cell.shareBlock = ^ (UIButton *btn){
+    __weak typeof(self) weakSelf = self;
+    
+    cell.shareBlock = ^ (){
        
-        __weak typeof(self) weakSelf = self;
         ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 150, self.view.bounds.size.width, 150) alertModels:self.shareAlertBtns tapView:^(NSInteger btnTag) {
             
             NSInteger index = btnTag - 20;
@@ -118,7 +127,6 @@ static NSString *cellid = @"DogShowCellid";
                     break;
             }
             
-             btn.selected = !btn.selected;
 
         }];
         self.shareAlert = shareAlert;
@@ -126,18 +134,29 @@ static NSString *cellid = @"DogShowCellid";
         [shareAlert show];
 
     };
-    cell.lickBlock = ^ (UIButton *btn){
-        btn.selected = !btn.selected;
+    cell.likeBlock = ^ (){
+       
         
     };
-    cell.bookBlock = ^ (UIButton *btn){
-        btn.selected = !btn.selected;
+    cell.bookBlock = ^ (){
+        
+        BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
+        [rulesAlert show];
+        
+        rulesAlert.sureBlock = ^(){
+            [self pushToDogBookVC];
+            
+        };
     };
     return [cell getCellHeight];
 }
-- (void)shareAlertDismiss {
-    [self.shareAlert dismiss];
+- (void)pushToDogBookVC {
+   
+    DogBookViewController *dogBookVC = [[DogBookViewController alloc] init];
+    dogBookVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:dogBookVC animated:YES];
 }
+
 - (NSArray *)shareAlertBtns {
     if (!_shareAlertBtns) {
         _shareAlertBtns = [NSArray array];

@@ -7,7 +7,9 @@
 //
 
 #import "BaseViewController.h"
+@class ShopAdressModel;
 
 @interface DogBookViewController : BaseViewController
+
 
 @end

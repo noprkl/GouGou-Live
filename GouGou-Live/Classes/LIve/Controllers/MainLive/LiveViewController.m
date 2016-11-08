@@ -38,14 +38,20 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
+
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+
 }
 #pragma mark
 #pragma mark - 设置导航栏
 - (void)setNavView{
     
     self.navigationItem.titleView = self.topView;
-   
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"搜索放大镜"] style:(UIBarButtonItemStylePlain) target:self action:@selector(LeftBarAction)];
     

@@ -9,6 +9,7 @@
 #import "SurePsdViewController.h"
 #import "LoginViewController.h"
 #import "SurePsdSuccessViewController.h"
+#import "NSString+MD5Code.h"
 
 @interface SurePsdViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *psdTextField;
@@ -17,7 +18,29 @@
 @end
 
 @implementation SurePsdViewController
+- (void)surePsdRequest {
+    
+    NSString *pwd = [NSString md5WithString:self.psdTextField.text];
+    
+    NSDictionary *dict = @{
+                           @"user_tel":@([self.telNumber intValue]),
+                           @"user_pwd":pwd,
+                           @"code":@([self.codeNumber integerValue])
+                           };
+    [self getRequestWithPath:API_Register params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+//        if (successJson) {
+//            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
+//            
+//            [self.navigationController pushViewController:sureSuccVC animated:YES];
+//        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -25,14 +48,7 @@
     
     [self setNavBarItem];
 }
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 - (void)initUI {
  
     // 设置textField的placeHolder
@@ -41,14 +57,14 @@
     UIColor *textcolor2 = [UIColor colorWithHexString:@"cccccc"];
     UIFont *textFont = [UIFont systemFontOfSize:15];
     
-    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:@"新密码  请输入6-20位数字或者密码"];
+    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:@"密码  请输入6-20位数字或者密码"];
     
     [placeholder setAttributes:@{NSForegroundColorAttributeName :textcolor1,
                                  NSFontAttributeName : textFont
                                  
-                                 } range:NSMakeRange(0, 5)];
+                                 } range:NSMakeRange(0, 4)];
     
-    [placeholder setAttributes:@{NSForegroundColorAttributeName : textcolor2} range:NSMakeRange(5, 13)];
+    [placeholder setAttributes:@{NSForegroundColorAttributeName : textcolor2} range:NSMakeRange(4, 13)];
     
     self.psdTextField.attributedPlaceholder = placeholder;
     
@@ -65,27 +81,20 @@
 #pragma mark
 #pragma mark - Action
 
-- (IBAction)clickEyeBtnAction:(UIButton *)sender {
-    
-    self.surePsdTextField.secureTextEntry = !self.surePsdTextField.secureTextEntry;
-    
-    sender.selected = !sender.selected;
-}
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
     NSString *psdNumber = self.psdTextField.text;
     NSString *surePsd = self.surePsdTextField.text;
         
     if (![psdNumber isEqualToString:surePsd]) {
-        DLog(@"两次密码输入不一样");
+
+        [self showAlert:@"两次密码输入不一样"];
+        
     }else{
         
-#pragma mark 确定提交新密码
-        SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
-        
-        [self.navigationController pushViewController:sureSuccVC animated:YES];
-        
-        DLog(@"密码已确认");
+        [self surePsdRequest];
+        SurePsdSuccessViewController *sureSuccessVC = [[SurePsdSuccessViewController alloc] init];
+        [self.navigationController pushViewController:sureSuccessVC animated:YES];
     }
 }
 

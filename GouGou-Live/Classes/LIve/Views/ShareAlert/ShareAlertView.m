@@ -82,8 +82,11 @@
     return _btnArr;
 }
 - (void)clickBtn:(UIButton *)btn{
-    
-    self.tapBlock(btn.tag);
+  
+    if (_tapBlock) {
+        _tapBlock(btn.tag);
+        [self dismiss];
+    }
 }
 #pragma mark
 #pragma mark - 蒙版弹出效果

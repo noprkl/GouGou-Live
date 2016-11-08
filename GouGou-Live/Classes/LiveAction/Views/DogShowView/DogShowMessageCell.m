@@ -384,21 +384,27 @@
 - (UIButton *)shareBtn {
     if (!_shareBtn) {
         _shareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_shareBtn addTarget:self action:@selector(clickShareBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+        [_shareBtn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
+        [_shareBtn addTarget:self action:@selector(clickShareBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+
     }
     return _shareBtn;
 }
 - (UIButton *)likeBtn {
     if (!_likeBtn) {
         _likeBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_likeBtn addTarget:self action:@selector(clickLikeBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+        [_likeBtn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
+        [_likeBtn addTarget:self action:@selector(clickLikeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+
     }
     return _likeBtn;
 }
 - (UIButton *)bookBtn {
     if (!_bookBtn) {
         _bookBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_bookBtn addTarget:self action:@selector(clickBookBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+        [_bookBtn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
+        [_bookBtn addTarget:self action:@selector(clickBookBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+
     }
     return _bookBtn;
 }
@@ -421,55 +427,50 @@
     [button setAttributedTitle:normalAttribute forState:(UIControlStateNormal)];
     [button setImage:normalImage forState:(UIControlStateNormal)];
     
+    [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+    [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];
+    [button setImage:selectImage forState:(UIControlStateHighlighted)];
+
     // 选中
-    NSDictionary *selectAttributeDict = @{
-                                          NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],
-                                          NSFontAttributeName:[UIFont systemFontOfSize:16]
-                                          };
-    NSAttributedString *selectAttribute = [[NSAttributedString alloc] initWithString:title attributes:selectAttributeDict];
-    [button setImage:selectImage forState:(UIControlStateSelected)];
-    
-    [button setAttributedTitle:selectAttribute forState:(UIControlStateSelected)];
+//    NSDictionary *selectAttributeDict = @{
+//                                          NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],
+//                                          NSFontAttributeName:[UIFont systemFontOfSize:16]
+//                                          };
+//    NSAttributedString *selectAttribute = [[NSAttributedString alloc] initWithString:title attributes:selectAttributeDict];
+//    [button setImage:selectImage forState:(UIControlStateSelected)];
+//    
+//    [button setAttributedTitle:selectAttribute forState:(UIControlStateSelected)];
     
     [button setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     [self.contentView addSubview:button];
 }
 
+- (void)btnHighlightColor:(UIButton *)btn {
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+}
 #pragma mark
 #pragma mark - Action 
 
 - (void)clickShareBtnAction:(UIButton *)btn {
     
     if (_shareBlock) {
-        _shareBlock(btn);
+        _shareBlock();
     }
-    if (btn.selected) {
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-    }else{
-        btn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 }
 - (void)clickLikeBtnAction:(UIButton *)btn {
     
-    if (_lickBlock) {
-        _lickBlock(btn);
+    if (_likeBlock) {
+        _likeBlock();
     }
-    if (btn.selected) {
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-    }else{
-        btn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 }
 - (void)clickBookBtnAction:(UIButton *)btn {
-
+    
     if (_bookBlock) {
-        _bookBlock(btn);
+        _bookBlock();
     }
-    if (btn.selected) {
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-    }else{
-        btn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 }
 - (void)awakeFromNib {
     // Initialization code

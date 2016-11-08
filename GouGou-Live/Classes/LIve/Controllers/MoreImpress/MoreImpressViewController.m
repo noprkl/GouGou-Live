@@ -124,12 +124,12 @@ static NSString *cellid = @"cellid";
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
     
-    self.title = @"更多印象";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+    self.title = @"更多印象";
 
 }
 - (void)viewWillDisappear:(BOOL)animated {

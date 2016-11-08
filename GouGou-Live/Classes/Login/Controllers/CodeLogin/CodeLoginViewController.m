@@ -71,11 +71,36 @@
 #pragma mark 请求验证码
     [self freetimeout];
     
+//    [[AFHTTPSessionManager manager] GET:@"http://gougou.itnuc.com/api/UserService/sms" parameters:@{@"tel":@18401703756, @"type":@2} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        DLog(@"%@", responseObject);
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        DLog(@"%@", error);
+//    }];
+
+    
+    NSDictionary *dict = @{
+                           @"tel" : @([self.phoneNumber.text intValue]),
+                           @"type" : @2
+                           };
+    [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
 - (IBAction)chickSureBtnAction:(UIButton *)sender {
     
-#pragma mark 验证码登录
-
+    NSDictionary *dict = @{
+                           @"user_tel":@([self.phoneNumber.text intValue]),
+                           @"code":self.psdNumber.text
+                           };
+    
+    [self getRequestWithPath:API_LoginQuick params:dict success:^(id successJson) {
+        [self showAlert:successJson[@"message"]];
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 
 }
 
@@ -88,7 +113,6 @@
 }
 - (IBAction)clickProtocolBtnAction:(UIButton *)sender {
     
-#pragma mark 协议链接
     
 }
 
@@ -101,6 +125,7 @@
         // 判断是否是数字
         BOOL flag = [NSString validateNumber:string];
         if (range.location < 11 && flag) {
+           
             return YES;
         }
         return NO;
@@ -109,9 +134,10 @@
         
         BOOL flag = [NSString validateNumber:string];
         if (range.location < 6 && flag) {
-            
+            self.sureBtn.enabled = NO;
             return YES;
         }
+        self.sureBtn.enabled = YES;
         return NO;
     }else{
         

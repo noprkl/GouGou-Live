@@ -12,22 +12,15 @@
 @implementation NSString (MD5Code)
 + (NSString *)md5WithString:(NSString *)input
 {
-    // 需要MD5加密的字符
-    const char *cStr = [input UTF8String];
-    // 设置字符加密后存储的空间
-    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    const char* str = [input UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, (int)strlen(str), result);
+    NSMutableString *ret = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH*2];//
     
-    // 参数三：编码的加密机制
-    CC_MD5(cStr, (UInt32)strlen(cStr), digest);
-    
-    NSMutableString *result = [[NSMutableString alloc] initWithCapacity:16];
-    
-    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i ++) {
-        
-        [result appendFormat:@"%2s",digest];
-        
+    for(int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
+        [ret appendFormat:@"%02x",result[i]];
     }
-    
-    return result;
+    return ret;
 }
+
 @end

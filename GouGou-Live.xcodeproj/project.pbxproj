@@ -32,6 +32,12 @@
 		047323E61DD16602006CCC71 /* DogDetailInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323E51DD16602006CCC71 /* DogDetailInfoCell.m */; };
 		047323EA1DD17144006CCC71 /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323E81DD17144006CCC71 /* SurePsdViewController.m */; };
 		047323EB1DD17144006CCC71 /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047323E91DD17144006CCC71 /* SurePsdViewController.xib */; };
+		047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323ED1DD1B31A006CCC71 /* UserInfos.m */; };
+		047323FA1DD1DBEE006CCC71 /* MyFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323F91DD1DBEE006CCC71 /* MyFocusViewController.m */; };
+		047323FD1DD1DBFF006CCC71 /* MyPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323FC1DD1DBFF006CCC71 /* MyPageViewController.m */; };
+		047324001DD1DC18006CCC71 /* MyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323FF1DD1DC18006CCC71 /* MyFansViewController.m */; };
+		047324051DD1E694006CCC71 /* MyFocusTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047324031DD1E694006CCC71 /* MyFocusTableCell.m */; };
+		047324061DD1E694006CCC71 /* MyFocusTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047324041DD1E694006CCC71 /* MyFocusTableCell.xib */; };
 		0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4C81DCADC7B00CB288A /* FocusViewController.m */; };
 		0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4CB1DCADC7B00CB288A /* HostViewController.m */; };
 		0479B5D61DCADC7B00CB288A /* LivingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B4CE1DCADC7B00CB288A /* LivingViewController.m */; };
@@ -194,6 +200,17 @@
 		047323E71DD17144006CCC71 /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
 		047323E81DD17144006CCC71 /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
 		047323E91DD17144006CCC71 /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
+		047323EC1DD1B31A006CCC71 /* UserInfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfos.h; sourceTree = "<group>"; };
+		047323ED1DD1B31A006CCC71 /* UserInfos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfos.m; sourceTree = "<group>"; };
+		047323F81DD1DBEE006CCC71 /* MyFocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFocusViewController.h; sourceTree = "<group>"; };
+		047323F91DD1DBEE006CCC71 /* MyFocusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFocusViewController.m; sourceTree = "<group>"; };
+		047323FB1DD1DBFF006CCC71 /* MyPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageViewController.h; sourceTree = "<group>"; };
+		047323FC1DD1DBFF006CCC71 /* MyPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageViewController.m; sourceTree = "<group>"; };
+		047323FE1DD1DC18006CCC71 /* MyFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFansViewController.h; sourceTree = "<group>"; };
+		047323FF1DD1DC18006CCC71 /* MyFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFansViewController.m; sourceTree = "<group>"; };
+		047324021DD1E694006CCC71 /* MyFocusTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFocusTableCell.h; sourceTree = "<group>"; };
+		047324031DD1E694006CCC71 /* MyFocusTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFocusTableCell.m; sourceTree = "<group>"; };
+		047324041DD1E694006CCC71 /* MyFocusTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyFocusTableCell.xib; sourceTree = "<group>"; };
 		0479B4C71DCADC7B00CB288A /* FocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusViewController.h; sourceTree = "<group>"; };
 		0479B4C81DCADC7B00CB288A /* FocusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusViewController.m; sourceTree = "<group>"; };
 		0479B4CA1DCADC7B00CB288A /* HostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostViewController.h; sourceTree = "<group>"; };
@@ -578,6 +595,43 @@
 				047323E51DD16602006CCC71 /* DogDetailInfoCell.m */,
 			);
 			path = DogInfoCardView;
+			sourceTree = "<group>";
+		};
+		047323EF1DD1DB6F006CCC71 /* FansVC */ = {
+			isa = PBXGroup;
+			children = (
+				047323FE1DD1DC18006CCC71 /* MyFansViewController.h */,
+				047323FF1DD1DC18006CCC71 /* MyFansViewController.m */,
+			);
+			path = FansVC;
+			sourceTree = "<group>";
+		};
+		047323F01DD1DB6F006CCC71 /* FocusVC */ = {
+			isa = PBXGroup;
+			children = (
+				047323F81DD1DBEE006CCC71 /* MyFocusViewController.h */,
+				047323F91DD1DBEE006CCC71 /* MyFocusViewController.m */,
+			);
+			path = FocusVC;
+			sourceTree = "<group>";
+		};
+		047323F11DD1DB6F006CCC71 /* MyPageVC */ = {
+			isa = PBXGroup;
+			children = (
+				047323FB1DD1DBFF006CCC71 /* MyPageViewController.h */,
+				047323FC1DD1DBFF006CCC71 /* MyPageViewController.m */,
+			);
+			path = MyPageVC;
+			sourceTree = "<group>";
+		};
+		047324011DD1E644006CCC71 /* MyMessage */ = {
+			isa = PBXGroup;
+			children = (
+				047324021DD1E694006CCC71 /* MyFocusTableCell.h */,
+				047324031DD1E694006CCC71 /* MyFocusTableCell.m */,
+				047324041DD1E694006CCC71 /* MyFocusTableCell.xib */,
+			);
+			path = MyMessage;
 			sourceTree = "<group>";
 		};
 		0479B4C31DCADC7B00CB288A /* Classes */ = {
@@ -1028,12 +1082,12 @@
 		0479B54B1DCADC7B00CB288A /* Registe */ = {
 			isa = PBXGroup;
 			children = (
-				047323E71DD17144006CCC71 /* SurePsdViewController.h */,
-				047323E81DD17144006CCC71 /* SurePsdViewController.m */,
-				047323E91DD17144006CCC71 /* SurePsdViewController.xib */,
 				0479B54C1DCADC7B00CB288A /* RegisteViewController.h */,
 				0479B54D1DCADC7B00CB288A /* RegisteViewController.m */,
 				0479B54E1DCADC7B00CB288A /* RegisteViewController.xib */,
+				047323E71DD17144006CCC71 /* SurePsdViewController.h */,
+				047323E81DD17144006CCC71 /* SurePsdViewController.m */,
+				047323E91DD17144006CCC71 /* SurePsdViewController.xib */,
 			);
 			path = Registe;
 			sourceTree = "<group>";
@@ -1178,6 +1232,9 @@
 				0479B57A1DCADC7B00CB288A /* MyViewController.h */,
 				0479B57B1DCADC7B00CB288A /* MyViewController.m */,
 				0479B57C1DCADC7B00CB288A /* MyViewController.xib */,
+				047323EF1DD1DB6F006CCC71 /* FansVC */,
+				047323F01DD1DB6F006CCC71 /* FocusVC */,
+				047323F11DD1DB6F006CCC71 /* MyPageVC */,
 				0479B57D1DCADC7B00CB288A /* PersonMessage */,
 			);
 			path = My;
@@ -1396,6 +1453,8 @@
 				0479B5C01DCADC7B00CB288A /* main.m */,
 				0479B5C21DCADC7B00CB288A /* ViewController.h */,
 				0479B5C31DCADC7B00CB288A /* ViewController.m */,
+				047323EC1DD1B31A006CCC71 /* UserInfos.h */,
+				047323ED1DD1B31A006CCC71 /* UserInfos.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -1469,6 +1528,7 @@
 		049D61331DD09D4D00ED3E76 /* MySelfView */ = {
 			isa = PBXGroup;
 			children = (
+				047324011DD1E644006CCC71 /* MyMessage */,
 				049D61341DD09DF000ED3E76 /* MyMessageView.h */,
 				049D61351DD09DF000ED3E76 /* MyMessageView.m */,
 				049D61371DD09E1C00ED3E76 /* MyUnLoginView.h */,
@@ -1555,6 +1615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */,
+				047324061DD1E694006CCC71 /* MyFocusTableCell.xib in Resources */,
 				0479B61E1DCADC7B00CB288A /* AboutUsViewController.xib in Resources */,
 				0479B6281DCADC7B00CB288A /* SuggestViewController.xib in Resources */,
 				0479B6041DCADC7B00CB288A /* LoginViewController.xib in Resources */,
@@ -1667,11 +1728,13 @@
 				0479B6321DCADC7B00CB288A /* ResetLoginPsdView.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
+				047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
 				0479B6311DCADC7B00CB288A /* PromptView.m in Sources */,
 				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
+				047324001DD1DC18006CCC71 /* MyFansViewController.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
 				0479B5F91DCADC7B00CB288A /* PicturesView.m in Sources */,
@@ -1680,6 +1743,7 @@
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
+				047324051DD1E694006CCC71 /* MyFocusTableCell.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
@@ -1688,6 +1752,7 @@
 				0479B5DA1DCADC7B00CB288A /* DogTypesViewController.m in Sources */,
 				04486AC21DD0162500BC6D15 /* LoginHandler.m in Sources */,
 				0479B62D1DCADC7B00CB288A /* DetailCountTopView.m in Sources */,
+				047323FD1DD1DBFF006CCC71 /* MyPageViewController.m in Sources */,
 				0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */,
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
@@ -1750,6 +1815,7 @@
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
 				0479B61B1DCADC7B00CB288A /* OrderGoodsViewController.m in Sources */,
+				047323FA1DD1DBEE006CCC71 /* MyFocusViewController.m in Sources */,
 				0479B5E11DCADC7B00CB288A /* DogPictureCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

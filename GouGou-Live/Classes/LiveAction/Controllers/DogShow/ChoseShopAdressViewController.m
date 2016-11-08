@@ -82,7 +82,6 @@ static NSString *cellid = @"ChoseShopAdressCell";
     NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:@"test"];
 
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-    DLog(@"test");
     [self.navigationController popViewControllerAnimated:YES];
 
 }

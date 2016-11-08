@@ -22,7 +22,7 @@
 #define API_Login @"UserService/login"
 
 /** 快速登录 get */
-#define API_LoginQuick @"UserService/loginQuick/"
+#define API_LoginQuick @"UserService/loginQuick"
 
 /** 注册接口 get */
 #define API_Register @"UserService/register"

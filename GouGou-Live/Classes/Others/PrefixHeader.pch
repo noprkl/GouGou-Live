@@ -16,7 +16,7 @@
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
 
 // 验证码倒计时事件
-#define LASTTIME 10
+#define LASTTIME 60
 
 
 #pragma mark - 第三方头文件

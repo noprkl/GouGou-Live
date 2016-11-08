@@ -9,6 +9,7 @@
 #import "SureForgetPsdViewController.h"
 #import "LoginViewController.h"
 #import "SurePsdSuccessViewController.h"
+#import "NSString+MD5Code.h"
 
 @interface SureForgetPsdViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *psdTextField;
@@ -18,28 +19,41 @@
 
 @implementation SureForgetPsdViewController
 - (void)surePsdRequest {
+    NSString *psdNumber = self.psdTextField.text;
+    if (psdNumber.length < 6) {
+        
+        [self showAlert:@"密码最少6位"];
+        
+    }else if (psdNumber.length > 20) {
+        
+        [self showAlert:@"密码最多20位"];
+        
+    }else{
+        
+        NSString *pwd = [NSString md5WithString:self.psdTextField.text];
+        DLog(@"%@", pwd);
+        NSDictionary *dict = @{
+                               @"user_tel":@([self.telNumber integerValue]),
+                               @"code":self.codeNumber,
+                               @"user_pwd":pwd
+                               };
+        
+        [self getRequestWithPath:API_RetrivePwd params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
     
-    NSDictionary *dict = @{
-                           @"user_tel":@([self.telNumber intValue]),
-                           @"user_pwd":self.psdTextField.text,
-                           @"code":@([self.codeNumber integerValue])
-                           };
-    [self getRequestWithPath:API_RetrivePwd params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
-        //        if (successJson) {
-        //            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
-        //
-        //            [self.navigationController pushViewController:sureSuccVC animated:YES];
-        //        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
     [self initUI];
     
     [self setNavBarItem];
@@ -63,7 +77,6 @@
     [placeholder setAttributes:@{NSForegroundColorAttributeName : textcolor2} range:NSMakeRange(5, 13)];
     
     self.psdTextField.attributedPlaceholder = placeholder;
-    
     
     self.surePsdTextField.placeholder = @"确认密码";
     [self.surePsdTextField setValue:textcolor1 forKeyPath:@"_placeholderLabel.textColor"];
@@ -89,7 +102,6 @@
     }else{
         
         [self surePsdRequest];
-        
     }
 }
 

@@ -8,7 +8,13 @@
 
 #import "MyViewController.h"
 #import "MyUnLoginView.h"
+#import "MyMessageView.h"
+
 #import "LoginViewController.h"
+
+#import "MyFansViewController.h"
+#import "MyFocusViewController.h"
+#import "MyPageViewController.h"
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -26,6 +32,29 @@
 @end
 
 @implementation MyViewController
+
+#pragma mark
+#pragma mark - 网络请求
+// 用户账单
+- (void)postGetUserAsset:(NSDictionary *)data {
+
+    DLog(@"%@",data[@"id"]);
+    
+//    NSDictionary *dict = @{
+//                           @"uid":@([data[@"id"] integerValue]),
+//                           @"page":@0
+//                           };
+//    
+//    [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
+//        DLog(@"%@",successJson);
+//   
+//    } error:^(NSError *error) {
+//       
+//        DLog(@"%@", error);
+//    }];
+}
+#pragma mark
+#pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -36,16 +65,37 @@
     [super viewWillAppear:animated];
     
     self.hidesBottomBarWhenPushed = NO;
-    
-    
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
+
+    self.navigationController.navigationBarHidden = NO;
+  
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLoginSuccessData:) name:@"LoginSuccess" object:nil];
+   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLoginSuccessData:) name:@"CodeLoginSuccess" object:nil];
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar setAlpha:1];
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+}
+
 - (void)initUI {
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.bounces = NO;
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 }
 
+- (void)getLoginSuccessData:(NSNotification *)notification {
+
+    DLog(@"%@",notification.userInfo);
+    
+    [self postGetUserAsset:notification.userInfo];
+}
 #pragma mark
 #pragma mark - 代理
 - (NSArray *)dataSource {
@@ -72,7 +122,8 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return 140;
+//        return 150;
+        return 250;
     }
     return 10;
 }
@@ -85,9 +136,12 @@
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
     
-    cell.detailTextLabel.text = @"detailTextLabel";
-    
-    cell.textLabel.text = self.dataSource[indexPath.section][indexPath.row];
+    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataSource[indexPath.section][indexPath.row] attributes:@{
+                                                                                                                                                   NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
+                                                                                                                                                   NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    cell.textLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataSource[indexPath.section][indexPath.row] attributes:@{
+                                                                                                                                              NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
+                                                                                                                                              NSFontAttributeName:[UIFont systemFontOfSize:16]}];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -111,18 +165,47 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         //判断登录与否
-        MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 140)];
-        unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        __weak typeof(self) weakSelf = self;
-        unLoginView.loginBlcok = ^(){
-            LoginViewController *VC = [[LoginViewController alloc] init];
-            
-            VC.hidesBottomBarWhenPushed = YES;
-            
-            [weakSelf.navigationController pushViewController:VC animated:YES];
-        };
+//        MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
+//        unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//        __weak typeof(self) weakSelf = self;
+//        unLoginView.loginBlcok = ^(){
+//            LoginViewController *VC = [[LoginViewController alloc] init];
+//            
+//            VC.hidesBottomBarWhenPushed = YES;
+//            
+//            [weakSelf.navigationController pushViewController:VC animated:YES];
+//        };
 
-        return unLoginView;
+//        return unLoginView;
+        MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 250)];
+        messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
+        __weak typeof(self) weakSelf = self;
+
+        // 实名认证
+        messageView.liveBlcok = ^(UIButton *btn){
+            
+        };
+        
+        // 关注
+        messageView.focusBlcok = ^(){
+            MyFocusViewController *myfocus = [[MyFocusViewController alloc] init];
+            weakSelf.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:myfocus animated:YES];
+        };
+        // 粉丝
+        messageView.fansBlcok = ^(){
+            MyFansViewController *myFansVC = [[MyFansViewController alloc] init];
+            weakSelf.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:myFansVC animated:YES];
+        };
+        // 我的主页
+        messageView.myPageBlcok = ^(){
+            MyPageViewController *myPage = [[MyPageViewController alloc] init];
+            weakSelf.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:myPage animated:YES];
+        };
+        
+        return messageView;
     }
     return nil;
 

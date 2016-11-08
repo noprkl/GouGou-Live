@@ -57,11 +57,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+    
 
 }
-
 
 - (void)setNavBarItem {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];

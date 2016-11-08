@@ -69,11 +69,12 @@
     
     [self freetimeout];
     NSDictionary *dict = @{
-                           @"tel" : @([self.phoneTextField.text integerValue]),
+                           @"tel" : @([self.phoneTextField.text intValue]),
                            @"type" : @0
                            };
     [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -109,7 +110,6 @@
             [self.navigationController pushViewController:sureVC animated:YES];
         }
     }
-    
 }
 - (IBAction)clickReadBtnAction:(UIButton *)sender {
     
@@ -165,11 +165,10 @@
         
     }else if (textField == self.codeTextField){
         BOOL flag = [NSString validateNumber:string];
-        if (range.location < 6 && flag) {
-            self.sureBtn.enabled = NO;
+        if (range.location <= 5 && flag) {
             return YES;
         }
-        self.sureBtn.enabled = YES;
+
         return NO;
     }else{
         

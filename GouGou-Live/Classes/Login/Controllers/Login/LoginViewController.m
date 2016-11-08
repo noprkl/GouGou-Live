@@ -12,6 +12,8 @@
 
 #import "CodeLoginViewController.h"
 
+#import "NSString+MD5Code.h"
+
 @interface LoginViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneTestField;
@@ -95,20 +97,32 @@
             [self showAlert:@"密码最多20位"];
             
         }else{
+            NSString *pwd = [NSString md5WithString:self.psdTextField.text];
+            DLog(@"%@",pwd);
             NSDictionary *dict = @{
-                                   @"user_tel":@([self.phoneTestField.text intValue]),
-                                   @"user_pwd":self.psdTextField.text
+                                   @"user_tel":@([self.phoneTestField.text integerValue]),
+                                   @"user_pwd":pwd
                                    };
             
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
+               
                 [self showAlert:successJson[@"message"]];
-//                DLog(@"%@", successJson);
+                DLog(@"%@", successJson);
+                if ([successJson[@"message"] isEqualToString:@"成功"]) {
+                   
+                    // 通知给所有人 已经登录
+                    NSNotification* notification = [NSNotification notificationWithName:@"LoginSuccess" object:successJson[@"data"]];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
+                    [self.navigationController popViewControllerAnimated:YES];
+
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
         }
     }
-    
 }
 
 - (IBAction)clickRegisteBtnAction:(UIButton *)sender {
@@ -117,7 +131,6 @@
     [self.navigationController pushViewController:registeVC animated:YES];
 }
 - (IBAction)clickCodeBtnAction:(UIButton *)sender {
-    
     
     CodeLoginViewController *codeVC = [[CodeLoginViewController alloc] init];
     
@@ -146,8 +159,8 @@
     // 判断正则
     BOOL flag =  [NSString valiMobile:textField.text];
     if (!flag) {
-        
-        DLog(@"输入不符合");
+        [self showAlert:@"请输入手机号"];
+//        DLog(@"输入不符合");
     }
     
     

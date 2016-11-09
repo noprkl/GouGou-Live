@@ -56,8 +56,9 @@
 - (IBAction)clickGetCodeAction:(UIButton *)sender {
     
     [self freetimeout];
+
     NSDictionary *dict = @{
-                           @"tel" : @([self.phoneTextField.text intValue]),
+                           @"tel" : @([self.phoneTextField.text integerValue]),
                            @"type" : @0
                            };
     [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
@@ -66,7 +67,6 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     

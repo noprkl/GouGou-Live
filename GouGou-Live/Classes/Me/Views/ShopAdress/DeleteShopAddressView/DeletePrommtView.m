@@ -33,6 +33,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         
         [self addSubview:self.titlelabel];
         [self addSubview:self.sureDeleteLabel];
@@ -49,23 +50,21 @@
     [super layoutSubviews];
     
     __weak typeof(self) weakself = self;
+    
     [_titlelabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(weakself.top).offset(10);
         make.centerX.equalTo(weakself.centerX);
-        
+        make.top.equalTo(weakself.top).offset(10);
     }];
     
     [_sureDeleteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(weakself.titlelabel.bottom).offset(20);
         make.centerX.equalTo(weakself.centerX);
+        make.top.equalTo(weakself.titlelabel.bottom).offset(5);
         
     }];
 
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.sureDeleteLabel.bottom).offset(25);
+        make.top.equalTo(weakself.sureDeleteLabel.bottom).offset(10);
         make.left.right.equalTo(weakself);
         make.height.equalTo(1);
 
@@ -75,29 +74,35 @@
         
         make.centerX.equalTo(weakself.centerX);
         make.top.equalTo(weakself.lineView.bottom);
-        make.size.equalTo(CGSizeMake(1, 44));
+        make.width.equalTo(1);
+        make.bottom.equalTo(weakself.bottom);
         
     }];
 
-    
     [_cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+
+        make.bottom.equalTo(weakself.bottom);
         make.left.equalTo(weakself.left);
         make.right.equalTo(weakself.verticalView.left);
         make.top.equalTo(weakself.lineView.bottom);
-        make.bottom.equalTo(weakself.bottom);
+        make.height.equalTo(44);
     }];
-
 
     [_sureDeleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+        make.top.equalTo(weakself.lineView.bottom);
         make.left.equalTo(weakself.verticalView.right);
         make.right.bottom.equalTo(weakself);
-        make.top.equalTo(weakself.lineView.bottom);
-        
+        make.height.equalTo(44);
     }];
+    
+    self.layer.cornerRadius = 15;
+    self.layer.masksToBounds = YES;
 }
 
+- (void)setMessage:(NSString *)message {
+    _message = message;
+    self.sureDeleteLabel.text = message;
+}
 - (UIView *)boomHUD {
 
     if (!_boomHUD) {
@@ -112,7 +117,7 @@
     if (!_titlelabel) {
         _titlelabel = [[UILabel alloc] init];
         _titlelabel.text = @"提示";
-        _titlelabel.font = [UIFont systemFontOfSize:18];
+        _titlelabel.font = [UIFont systemFontOfSize:16];
         _titlelabel.textColor = [UIColor colorWithHexString:@"#666666"];
     }
     return _titlelabel;
@@ -123,7 +128,7 @@
     if (!_sureDeleteLabel) {
         _sureDeleteLabel = [[UILabel alloc] init];
         _sureDeleteLabel.text = @"确认删除此商家地址吗?";
-        _sureDeleteLabel.font = [UIFont systemFontOfSize:18];
+        _sureDeleteLabel.font = [UIFont systemFontOfSize:14];
         _sureDeleteLabel.textColor = [UIColor colorWithHexString:@"#666666"];
     }
     return _sureDeleteLabel;
@@ -141,10 +146,11 @@
 - (UIButton *)cancelBtn {
 
     if (!_cancelBtn) {
-        _cancelBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
         [_cancelBtn setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
-        _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        
+        _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [_cancelBtn addTarget:self action:@selector(clickCnacleButton) forControlEvents:UIControlEventTouchUpInside];
     }
     return _cancelBtn;
@@ -162,10 +168,10 @@
 - (UIButton *)sureDeleteBtn {
 
     if (!_sureDeleteBtn) {
-        _sureDeleteBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _sureDeleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sureDeleteBtn setTitle:@"确定" forState:UIControlStateNormal];
         [_sureDeleteBtn setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
-        _sureDeleteBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        _sureDeleteBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [_sureDeleteBtn addTarget:self action:@selector(cilckSureDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sureDeleteBtn;
@@ -182,8 +188,11 @@
 }
 // 点击取消按钮
 - (void)clickCnacleButton {
-
+  
     [self fadeOut];
+    if (_cancelBlock) {
+        _cancelBlock();
+    }
 }
 
 - (void)show
@@ -198,7 +207,9 @@
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(60, SCREEN_HEIGHT / 2 - 65, SCREEN_WIDTH - 120, 135);
+    CGFloat W = SCREEN_WIDTH - 120;
+    CGFloat H = 130;
+    rect = CGRectMake((SCREEN_WIDTH - W) / 2, (SCREEN_HEIGHT - H) / 2, W, H);
     self.frame = rect;
     //渐入动画
     [self fadeIn];

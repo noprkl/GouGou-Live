@@ -158,7 +158,7 @@
 
     if (!_spaceView) {
         _spaceView = [[UIView alloc] init];
-        _spaceView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
+        _spaceView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     }
     return _spaceView;
 }
@@ -309,10 +309,6 @@
     }
     
     DeletePrommtView * deletePrommpt = [[DeletePrommtView alloc] init];
-    deletePrommpt.backgroundColor = [UIColor whiteColor];
-    deletePrommpt.layer.cornerRadius = 15;
-    deletePrommpt.layer.masksToBounds = YES;
-    
     [deletePrommpt show];
     
 }

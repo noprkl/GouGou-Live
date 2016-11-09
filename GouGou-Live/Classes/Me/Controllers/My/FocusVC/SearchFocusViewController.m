@@ -1,15 +1,15 @@
 //
-//  MyFansViewController.m
+//  SearchFocusViewController.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/8.
+//  Created by ma c on 16/11/9.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "MyFansViewController.h"
+#import "SearchFocusViewController.h"
 #import "MyFocusTableCell.h"
 
-@interface MyFansViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SearchFocusViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
@@ -19,26 +19,16 @@
 
 static NSString *cellid = @"MyFocusCell";
 
-@implementation MyFansViewController
+@implementation SearchFocusViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initUI];
+    [self setNavBarItem];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.hidesBottomBarWhenPushed = NO;
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
-}
 
-- (void)initUI {
-    [self setNavBarItem];
-    self.title = @"我的粉丝";
-    [self.view addSubview:self.tableView];
 }
-#pragma mark
-#pragma mark - 懒加载
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
         _dataArr = [NSMutableArray array];
@@ -78,10 +68,20 @@ static NSString *cellid = @"MyFocusCell";
     
     return 75;
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
+    // Dispose of any resources that can be recreated.
 }
 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

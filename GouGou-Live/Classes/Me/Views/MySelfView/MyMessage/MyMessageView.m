@@ -12,6 +12,9 @@
 
 @interface MyMessageView ()
 
+
+@property(nonatomic, strong) UIControl *backControl; /**< 背景点击 */
+
 @property(nonatomic, strong) UIImageView *iconView; /**< 用户头像 */
 
 @property(nonatomic, strong) UILabel *userNameLabel; /**< 用户名 */
@@ -48,11 +51,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self addSubview:self.iconView];
-        [self addSubview:self.userNameLabel];
-        [self addSubview:self.userNameAuthen];
-        [self addSubview:self.sellerAuthen];
-        [self addSubview:self.userSign];
+        [self addSubview:self.backControl];
+        [self.backControl addSubview:self.iconView];
+        [self.backControl addSubview:self.userNameLabel];
+        [self.backControl addSubview:self.userNameAuthen];
+        [self.backControl addSubview:self.sellerAuthen];
+        [self.backControl addSubview:self.userSign];
         
         [self addSubview:self.foucusBtn];
         [self.foucusBtn addSubview:self.focusCount];
@@ -76,7 +80,13 @@
 #pragma mark - 约束
 - (void)layoutSubviews {
     [super layoutSubviews];
-
+    
+    [self.backControl makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(self);
+        make.height.equalTo(140);
+        make.width.equalTo(SCREEN_WIDTH);
+    }];
+    
     [self.iconView makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.centerX);
         make.top.equalTo(self.top).offset(10);
@@ -165,6 +175,14 @@
 }
 #pragma mark
 #pragma mark - 懒加载
+- (UIControl *)backControl {
+    if (!_backControl) {
+        _backControl = [[UIControl alloc] init];
+        _backControl.backgroundColor = [UIColor whiteColor];
+        [_backControl addTarget:self action:@selector(clickEditingMyMessageAction) forControlEvents:(UIControlEventTouchDown)];
+    }
+    return _backControl;
+}
 - (UIImageView *)iconView {
     if (!_iconView) {
         _iconView = [[UIImageView alloc] init];
@@ -319,6 +337,11 @@
 }
 #pragma mark
 #pragma mark - Action
+- (void)clickEditingMyMessageAction {
+    if (_editBlock) {
+        _editBlock();
+    }
+}
 - (void)ClickLiveBtnAction:(UIButton *)btn {
 
     if (_liveBlcok) {

@@ -153,6 +153,10 @@
 		04DAC99A1DD21A9A0089236D /* DeletePrommtView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9841DD21A9A0089236D /* DeletePrommtView.m */; };
 		04DAC99B1DD21A9A0089236D /* AddrsssTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9871DD21A9A0089236D /* AddrsssTableViewCell.m */; };
 		04DAC99C1DD21A9A0089236D /* WatchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC98A1DD21A9A0089236D /* WatchHistoryCell.m */; };
+		04DAC9A01DD2C4E20089236D /* EditMyMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC99F1DD2C4E20089236D /* EditMyMessageViewController.m */; };
+		04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9A71DD2D1250089236D /* SearchFocusViewController.m */; };
+		04DAC9AA1DD2D1250089236D /* SearchFocusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9A81DD2D1250089236D /* SearchFocusViewController.xib */; };
+		04DAC9B41DD317700089236D /* EditNikeNameAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9B31DD317700089236D /* EditNikeNameAlert.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -417,6 +421,13 @@
 		04DAC9871DD21A9A0089236D /* AddrsssTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddrsssTableViewCell.m; sourceTree = "<group>"; };
 		04DAC9891DD21A9A0089236D /* WatchHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchHistoryCell.h; sourceTree = "<group>"; };
 		04DAC98A1DD21A9A0089236D /* WatchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchHistoryCell.m; sourceTree = "<group>"; };
+		04DAC99E1DD2C4E20089236D /* EditMyMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMyMessageViewController.h; sourceTree = "<group>"; };
+		04DAC99F1DD2C4E20089236D /* EditMyMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMyMessageViewController.m; sourceTree = "<group>"; };
+		04DAC9A61DD2D1250089236D /* SearchFocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFocusViewController.h; sourceTree = "<group>"; };
+		04DAC9A71DD2D1250089236D /* SearchFocusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFocusViewController.m; sourceTree = "<group>"; };
+		04DAC9A81DD2D1250089236D /* SearchFocusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchFocusViewController.xib; sourceTree = "<group>"; };
+		04DAC9B21DD317700089236D /* EditNikeNameAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNikeNameAlert.h; sourceTree = "<group>"; };
+		04DAC9B31DD317700089236D /* EditNikeNameAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNikeNameAlert.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -551,6 +562,9 @@
 			children = (
 				047323F81DD1DBEE006CCC71 /* MyFocusViewController.h */,
 				047323F91DD1DBEE006CCC71 /* MyFocusViewController.m */,
+				04DAC9A61DD2D1250089236D /* SearchFocusViewController.h */,
+				04DAC9A71DD2D1250089236D /* SearchFocusViewController.m */,
+				04DAC9A81DD2D1250089236D /* SearchFocusViewController.xib */,
 			);
 			path = FocusVC;
 			sourceTree = "<group>";
@@ -1060,11 +1074,11 @@
 		0479B55A1DCADC7B00CB288A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0479B5791DCADC7B00CB288A /* My */,
 				0479B55B1DCADC7B00CB288A /* Account */,
 				0479B56A1DCADC7B00CB288A /* Certificate */,
 				0479B5721DCADC7B00CB288A /* DetailCount */,
 				0479B5751DCADC7B00CB288A /* Favorite */,
-				0479B5791DCADC7B00CB288A /* My */,
 				0479B57E1DCADC7B00CB288A /* OrderGoods */,
 				0479B5821DCADC7B00CB288A /* Setting */,
 				0479B59A1DCADC7B00CB288A /* ShopAddress */,
@@ -1165,6 +1179,7 @@
 				047323EF1DD1DB6F006CCC71 /* FansVC */,
 				047323F01DD1DB6F006CCC71 /* FocusVC */,
 				047323F11DD1DB6F006CCC71 /* MyPageVC */,
+				04DAC99D1DD2C4C40089236D /* EditMyMessage */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -1473,6 +1488,7 @@
 				04DAC9721DD21A9A0089236D /* MyFocusTableCell.xib */,
 				04DAC9731DD21A9A0089236D /* MyMessageView.h */,
 				04DAC9741DD21A9A0089236D /* MyMessageView.m */,
+				04DAC9AE1DD3169E0089236D /* EditAlert */,
 			);
 			path = MyMessage;
 			sourceTree = "<group>";
@@ -1548,6 +1564,24 @@
 				04DAC98A1DD21A9A0089236D /* WatchHistoryCell.m */,
 			);
 			path = WatchHistoryView;
+			sourceTree = "<group>";
+		};
+		04DAC99D1DD2C4C40089236D /* EditMyMessage */ = {
+			isa = PBXGroup;
+			children = (
+				04DAC99E1DD2C4E20089236D /* EditMyMessageViewController.h */,
+				04DAC99F1DD2C4E20089236D /* EditMyMessageViewController.m */,
+			);
+			path = EditMyMessage;
+			sourceTree = "<group>";
+		};
+		04DAC9AE1DD3169E0089236D /* EditAlert */ = {
+			isa = PBXGroup;
+			children = (
+				04DAC9B21DD317700089236D /* EditNikeNameAlert.h */,
+				04DAC9B31DD317700089236D /* EditNikeNameAlert.m */,
+			);
+			path = EditAlert;
 			sourceTree = "<group>";
 		};
 		28209DDB76B660DE1C93619E /* Pods */ = {
@@ -1635,6 +1669,7 @@
 				0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */,
 				0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */,
 				04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */,
+				04DAC9AA1DD2D1250089236D /* SearchFocusViewController.xib in Resources */,
 				0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */,
 				0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */,
 				0479B60D1DCADC7B00CB288A /* PayingViewController.xib in Resources */,
@@ -1732,6 +1767,7 @@
 				0479B5DF1DCADC7B00CB288A /* LiveViewCellModel.m in Sources */,
 				0479B6121DCADC7B00CB288A /* CertificateViewController.m in Sources */,
 				0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */,
+				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
@@ -1750,6 +1786,7 @@
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
+				04DAC9B41DD317700089236D /* EditNikeNameAlert.m in Sources */,
 				04DAC9921DD21A9A0089236D /* MyFavoriteTableView.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
@@ -1790,6 +1827,7 @@
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
 				0479B5EC1DCADC7B00CB288A /* LiveTableView.m in Sources */,
 				045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */,
+				04DAC9A01DD2C4E20089236D /* EditMyMessageViewController.m in Sources */,
 				04DAC98B1DD21A9A0089236D /* IdentityIfonView.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,

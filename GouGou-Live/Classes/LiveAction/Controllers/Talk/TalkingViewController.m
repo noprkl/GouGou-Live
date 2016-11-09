@@ -86,9 +86,7 @@
     return _talkView;
 }
 
-- (void)keyboardWasShown:(NSNotification*)aNotification
-
-{
+- (void)keyboardWasShown:(NSNotification*)aNotification {
     //键盘高度
     CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat h = keyBoardFrame.size.height;
@@ -102,9 +100,7 @@
     }];
 }
 
-
--(void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
+-(void)keyboardWillBeHidden:(NSNotification*)aNotification {
     [UIView animateWithDuration:0.3 animations:^{
         [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);

@@ -45,9 +45,9 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLB-vp-TlO">
+                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLB-vp-TlO">
                         <rect key="frame" x="338" y="22" width="22" height="22"/>
-                        <state key="normal" image="椭圆-1"/>
+                        <state key="normal" image="添加关注"/>
                         <state key="selected" image="圆角-对勾"/>
                         <connections>
                             <action selector="clickSelectBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IXQ-rT-mn4"/>
@@ -80,6 +80,6 @@
     <resources>
         <image name="圆角-对勾" width="22" height="22"/>
         <image name="头像" width="60" height="60"/>
-        <image name="椭圆-1" width="22" height="22"/>
+        <image name="添加关注" width="22" height="22"/>
     </resources>
 </document>

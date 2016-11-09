@@ -8,6 +8,7 @@
 
 #import "MyFocusViewController.h"
 #import "MyFocusTableCell.h"
+#import "SearchFocusViewController.h"
 
 @interface MyFocusViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -30,7 +31,9 @@ static NSString *cellid = @"MyFocusCell";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
+    self.hidesBottomBarWhenPushed = NO;
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
     
 }
@@ -44,7 +47,8 @@ static NSString *cellid = @"MyFocusCell";
     [self.view addSubview:self.tableView];
 }
 - (void)clickAddBtnAction {
-    
+    SearchFocusViewController *seachFocusVC = [[SearchFocusViewController alloc] init];
+    [self.navigationController pushViewController:seachFocusVC animated:YES];
 }
 #pragma mark
 #pragma mark - TableView
@@ -69,6 +73,14 @@ static NSString *cellid = @"MyFocusCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectBlock = ^(BOOL isSelect){
+        if (isSelect) {
+            DLog(@"关注");
+        }else {
+            DLog(@"取消关注");
+        }
+    };
     
     return cell;
 }

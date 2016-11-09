@@ -23,6 +23,11 @@
     // Initialization code
 }
 - (IBAction)clickSelectBtn:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    
+    if (_selectBlock) {
+        _selectBlock(sender.selected);
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

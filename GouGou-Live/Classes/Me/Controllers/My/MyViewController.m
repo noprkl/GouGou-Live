@@ -12,6 +12,7 @@
 
 #import "LoginViewController.h"
 
+#import "EditMyMessageViewController.h"
 #import "MyFansViewController.h"
 #import "MyFocusViewController.h"
 #import "MyPageViewController.h"
@@ -123,10 +124,14 @@
     
     return [self.dataSource[section] count];
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    return 35;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-//        return 150;
-        return 250;
+        return 150;
+//        return 240;
     }
     return 10;
 }
@@ -167,48 +172,54 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         //判断登录与否
-//        MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
-//        unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-//        __weak typeof(self) weakSelf = self;
-//        unLoginView.loginBlcok = ^(){
-//            LoginViewController *VC = [[LoginViewController alloc] init];
-//            
-//            VC.hidesBottomBarWhenPushed = YES;
-//            
-//            [weakSelf.navigationController pushViewController:VC animated:YES];
-//        };
-
-//        return unLoginView;
-        MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 250)];
-        messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
+        MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
+        unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         __weak typeof(self) weakSelf = self;
+        unLoginView.loginBlcok = ^(){
+            LoginViewController *VC = [[LoginViewController alloc] init];
+            
+            VC.hidesBottomBarWhenPushed = YES;
+            
+            [weakSelf.navigationController pushViewController:VC animated:YES];
+        };
 
-        // 实名认证
-        messageView.liveBlcok = ^(UIButton *btn){
-            
-        };
-        
-        // 关注
-        messageView.focusBlcok = ^(){
-            MyFocusViewController *myfocus = [[MyFocusViewController alloc] init];
-            myfocus.hidesBottomBarWhenPushed = YES;
-            
-            [weakSelf.navigationController pushViewController:myfocus animated:YES];
-        };
-        // 粉丝
-        messageView.fansBlcok = ^(){
-            MyFansViewController *myFansVC = [[MyFansViewController alloc] init];
-            myFansVC.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:myFansVC animated:YES];
-        };
-        // 我的主页
-        messageView.myPageBlcok = ^(){
-            MyPageViewController *myPage = [[MyPageViewController alloc] init];
-            myPage.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:myPage animated:YES];
-        };
-        
-        return messageView;
+        return unLoginView;
+//        MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
+//        messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
+//        __weak typeof(self) weakSelf = self;
+//        
+//        messageView.editBlock = ^(){
+//            EditMyMessageViewController *editVC = [[EditMyMessageViewController alloc] init];
+//            editVC.hidesBottomBarWhenPushed = YES;
+//
+//            [weakSelf.navigationController pushViewController:editVC animated:YES];
+//        };
+//        // 实名认证
+//        messageView.liveBlcok = ^(UIButton *btn){
+//            
+//        };
+//        
+//        // 关注
+//        messageView.focusBlcok = ^(){
+//            MyFocusViewController *myfocus = [[MyFocusViewController alloc] init];
+//            myfocus.hidesBottomBarWhenPushed = YES;
+//            
+//            [weakSelf.navigationController pushViewController:myfocus animated:YES];
+//        };
+//        // 粉丝
+//        messageView.fansBlcok = ^(){
+//            MyFansViewController *myFansVC = [[MyFansViewController alloc] init];
+//            myFansVC.hidesBottomBarWhenPushed = YES;
+//            [weakSelf.navigationController pushViewController:myFansVC animated:YES];
+//        };
+//        // 我的主页
+//        messageView.myPageBlcok = ^(){
+//            MyPageViewController *myPage = [[MyPageViewController alloc] init];
+//            myPage.hidesBottomBarWhenPushed = YES;
+//            [weakSelf.navigationController pushViewController:myPage animated:YES];
+//        };
+//        
+//        return messageView;
     }
     return nil;
 

@@ -9,11 +9,15 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^CilckSureDeleteBtnBlock)(UIButton *button);
-
+typedef void(^CilckCancelBtnBlock)();
 @interface DeletePrommtView : UIView
 
 /** 点击确定按钮回调 */
 @property (strong,nonatomic) CilckSureDeleteBtnBlock sureDeleteBtnBlock;
+
+@property(nonatomic, strong) CilckCancelBtnBlock cancelBlock; /**< 取消回调 */
+
+@property(nonatomic, strong) NSString *message; /**< 提示信息 */
 
 - (void)show;
 - (void)dismiss;

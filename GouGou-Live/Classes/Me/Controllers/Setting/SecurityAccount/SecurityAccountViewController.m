@@ -27,14 +27,6 @@
     
     [self setNavBarItem];
 }
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (NSArray *)dataArr {
     if (!_dataArr) {
         _dataArr = @[@"重置登录密码", @"重置支付密码"];

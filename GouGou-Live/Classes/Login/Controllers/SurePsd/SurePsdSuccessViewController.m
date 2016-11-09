@@ -32,7 +32,6 @@
     [self freetimeout];
 }
 
-
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
     [self pushLoginVC];

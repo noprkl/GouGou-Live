@@ -25,6 +25,28 @@
 
 @implementation AccountViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    [self setNavBarItem];
+    [self initUI];
+}
+- (void)initUI {
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"明细" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBtnAction)];
+    
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.helpBtn];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    self.edgesForExtendedLayout = 64;
+    
+    [self.tableView makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self.view);
+        make.height.equalTo(self.dataArr.count * 44);
+    }];
+}
+#pragma mark
+#pragma mark - 懒加载
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
@@ -51,7 +73,6 @@
     return _controllerNames;
 }
 
-
 - (UIButton *)helpBtn {
 
     if (!_helpBtn) {
@@ -65,9 +86,9 @@
     }
     return _helpBtn;
 }
-- (void)clickHelpBtnAction {
-    
-}
+
+#pragma mark
+#pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
 }
@@ -85,7 +106,6 @@
     
     return cell;
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
  
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -100,34 +120,16 @@
     
     [self.navigationController pushViewController:VC animated:YES];
 }
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    [self setNavBarItem];
-    [self initUI];
-}
-- (void)initUI {
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"明细" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBtnAction)];
-
-    [self.view addSubview:self.tableView];
-    [self.view addSubview:self.helpBtn];
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    self.edgesForExtendedLayout = 64;
-   
-    [self.tableView makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.view);
-        make.height.equalTo(self.dataArr.count * 44);
-    }];
-}
-
+#pragma mark
+#pragma mark - Action
 - (void)clickRightBtnAction {
     DetailCountViewController *detailVC = [[DetailCountViewController alloc] init];
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }
-
+- (void)clickHelpBtnAction {
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -96,6 +96,7 @@
     
     [self postGetUserAsset:notification.userInfo];
 }
+
 #pragma mark
 #pragma mark - 代理
 - (NSArray *)dataSource {
@@ -105,6 +106,7 @@
     }
     return _dataSource;
 }
+
 - (NSArray *)controllerNames {
 
     if (!_controllerNames) {
@@ -146,7 +148,6 @@
     
     return cell;
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
  
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -73,6 +73,8 @@ static NSString * reuseIdentifier = @"headerID";
     }];
     
 }
+#pragma mark
+#pragma mark - 懒加载
 - (NoneNetWorkingView *)noneNetView {
     if (!_noneNetView) {
         _noneNetView = [[NoneNetWorkingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -168,7 +170,8 @@ static NSString * reuseIdentifier = @"headerID";
     return _collection;
 }
 
-
+#pragma mark
+#pragma mark - collection代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
 //    return self.dataArray.count;

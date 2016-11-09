@@ -67,6 +67,7 @@ static NSString *cellid = @"ChoseShopAdressCell";
     }
     return _tableView;
 }
+
 #pragma mark
 #pragma mark - 代理
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

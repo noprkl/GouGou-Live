@@ -17,36 +17,36 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="头像" translatesAutoresizingMaskIntoConstraints="NO" id="E15-3H-6sU">
-                        <rect key="frame" x="18" y="21" width="43" height="43"/>
+                        <rect key="frame" x="18" y="11" width="43" height="43"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="43" id="EDf-AF-cZE"/>
                             <constraint firstAttribute="width" constant="43" id="RHL-M1-5jd"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYJ-rB-HpQ">
-                        <rect key="frame" x="0.0" y="0.0" width="370" height="10"/>
+                        <rect key="frame" x="0.0" y="64" width="370" height="10"/>
                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="10" id="XKb-by-c0r"/>
+                            <constraint firstAttribute="height" constant="10" id="4Co-GW-DXn"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ihp-5A-qcB">
-                        <rect key="frame" x="71" y="21" width="42" height="17"/>
+                        <rect key="frame" x="71" y="11" width="42" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="1" green="0.63137254901960782" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个性签名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YaT-JS-1QB">
-                        <rect key="frame" x="71" y="48" width="56" height="17"/>
+                        <rect key="frame" x="71" y="38" width="56" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLB-vp-TlO">
-                        <rect key="frame" x="338" y="32" width="22" height="22"/>
+                        <rect key="frame" x="338" y="22" width="22" height="22"/>
                         <state key="normal" image="椭圆-1"/>
                         <state key="selected" image="圆角-对勾"/>
                         <connections>
@@ -57,13 +57,13 @@
                 <constraints>
                     <constraint firstItem="Ihp-5A-qcB" firstAttribute="leading" secondItem="E15-3H-6sU" secondAttribute="trailing" constant="10" id="1uO-CW-lAZ"/>
                     <constraint firstItem="E15-3H-6sU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="47m-3h-dZT"/>
-                    <constraint firstItem="lYJ-rB-HpQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="IMN-B3-5XA"/>
                     <constraint firstAttribute="trailing" secondItem="zLB-vp-TlO" secondAttribute="trailing" constant="10" id="LkR-Fv-n5E"/>
-                    <constraint firstAttribute="trailing" secondItem="lYJ-rB-HpQ" secondAttribute="trailing" id="RvT-4K-086"/>
+                    <constraint firstAttribute="trailing" secondItem="lYJ-rB-HpQ" secondAttribute="trailing" id="Nnc-fv-hRQ"/>
+                    <constraint firstAttribute="bottom" secondItem="lYJ-rB-HpQ" secondAttribute="bottom" id="Vyg-Xd-ozt"/>
+                    <constraint firstItem="lYJ-rB-HpQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="YAs-KJ-UFl"/>
                     <constraint firstItem="YaT-JS-1QB" firstAttribute="leading" secondItem="E15-3H-6sU" secondAttribute="trailing" constant="10" id="agI-K8-Xvj"/>
-                    <constraint firstItem="lYJ-rB-HpQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="auG-yJ-oOg"/>
                     <constraint firstItem="zLB-vp-TlO" firstAttribute="centerY" secondItem="E15-3H-6sU" secondAttribute="centerY" id="bcD-W4-a97"/>
-                    <constraint firstItem="E15-3H-6sU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="5" id="bdc-5g-b0G"/>
+                    <constraint firstItem="E15-3H-6sU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-5" id="bdc-5g-b0G"/>
                     <constraint firstItem="YaT-JS-1QB" firstAttribute="top" secondItem="E15-3H-6sU" secondAttribute="centerY" constant="5" id="cF6-6v-YvQ"/>
                     <constraint firstItem="Ihp-5A-qcB" firstAttribute="bottom" secondItem="E15-3H-6sU" secondAttribute="centerY" constant="-5" id="xIN-nB-hib"/>
                 </constraints>
@@ -74,7 +74,7 @@
                 <outlet property="userNameLabel" destination="Ihp-5A-qcB" id="YiG-Qd-JO7"/>
                 <outlet property="userSignLabel" destination="YaT-JS-1QB" id="c4E-dA-ID8"/>
             </connections>
-            <point key="canvasLocation" x="311" y="210.5"/>
+            <point key="canvasLocation" x="348" y="194.5"/>
         </tableViewCell>
     </objects>
     <resources>

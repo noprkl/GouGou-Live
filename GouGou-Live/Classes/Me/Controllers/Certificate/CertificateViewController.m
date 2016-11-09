@@ -33,12 +33,13 @@ static NSString * identityCell = @"identitiCellID";
 - (void)initUI {
 
     self.title = @"实名认证";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(handinCertificate)];
+
     [self.view addSubview:self.identityInfoView];
     [self.view addSubview:self.identityTableView];
 }
 
--
-(IdentityIfonView *)identityInfoView {
+- (IdentityIfonView *)identityInfoView {
 
     if (!_identityInfoView) {
         _identityInfoView = [[IdentityIfonView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
@@ -95,13 +96,6 @@ static NSString * identityCell = @"identitiCellID";
     
 }
 
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(handinCertificate)];
-  
-}
-
 - (void)pushToAddPhoto {
 
     
@@ -140,10 +134,7 @@ static NSString * identityCell = @"identitiCellID";
     
 }
 
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

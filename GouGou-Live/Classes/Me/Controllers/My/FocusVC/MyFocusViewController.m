@@ -40,9 +40,10 @@ static NSString *cellid = @"MyFocusCell";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self.navigationController.navigationBar setAlpha:1];
+//    [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+    
     self.hidesBottomBarWhenPushed = NO;
 }
 

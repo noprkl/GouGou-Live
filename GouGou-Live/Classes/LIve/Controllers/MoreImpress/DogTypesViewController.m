@@ -35,17 +35,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initUI];
     
+}
+- (void)initUI {
+
+    [self setNavBarItem];
+
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     [self.view addSubview:self.filteButtonView];
     [self.view addSubview:self.bottomScrollView];
     [self.bottomScrollView addSubview:self.liveTableView];
     [self addViews];
-    [self setNav];
-
-
+    
 }
-
 - (void)addViews {
 
     __weak typeof(self) weakself = self;
@@ -68,11 +71,15 @@
     
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
+    self.navigationController.navigationBar.titleTextAttributes =  @{
+                                                                     NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],                         NSFontAttributeName:[UIFont systemFontOfSize:18]                              };
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+    self.navigationController.navigationBar.titleTextAttributes =  @{
+                                                                     NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],                         NSFontAttributeName:[UIFont systemFontOfSize:18]                              };
     
 }
 
@@ -152,21 +159,6 @@
         };
     }
     return _liveTableView;
-}
-
-- (void)setNav {
-
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] landscapeImagePhone:nil style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
-    
-    self.navigationController.navigationBar.titleTextAttributes =  @{
-                                                                     NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],
-                                                                     NSFontAttributeName:[UIFont systemFontOfSize:18]
-                                                                     };
-}
-
-- (void)backAction {
-
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

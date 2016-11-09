@@ -64,18 +64,6 @@ static NSString * detailCellid = @"detailCellid";
     return YES;
 }
 
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(clickSaveBtn)];
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithHexString:@"#000000"];
-    
-}
-
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)clickSaveBtn {
 

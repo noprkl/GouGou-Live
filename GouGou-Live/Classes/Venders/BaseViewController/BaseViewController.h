@@ -27,9 +27,24 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)Success
                       error:(HttpRequestErrorBlock)Error;
+- (void)postJsonRequestWithPath:(NSString *)path
+                         params:(NSString *)params
+                        success:(HttpRequestSuccessBlock)returnSuccess
+                          error:(HttpRequestErrorBlock)returnError;
+#pragma mark
+#pragma mark - 图片
+/** get请求 */
+- (void)getImageRequestWithPath:(NSString *)path
+                    params:(NSDictionary *)params
+                   success:(HttpRequestSuccessBlock)Success
+                     error:(HttpRequestErrorBlock)Error;
+/** post请求 */
+- (void)postImageRequestWithPath:(NSString *)path
+                     params:(NSDictionary *)params
+                    success:(HttpRequestSuccessBlock)Success
+                      error:(HttpRequestErrorBlock)Error;
 
 // 提示字符
 - (void)showAlert:(NSString *)string;
 - (void)setNavBarItem;
-
 @end

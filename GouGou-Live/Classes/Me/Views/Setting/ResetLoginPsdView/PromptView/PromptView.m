@@ -7,6 +7,8 @@
 //
 
 #import "PromptView.h"
+#import "UIView+Toast.h"
+
 
 @interface PromptView ()<UITextFieldDelegate>
 /** 蒙版 */
@@ -174,13 +176,33 @@
     }
     return _cancleButton;
 }
-
+- (void)showMessage:(NSString *)string {
+    [self makeToast:string duration:1.5 position:nil];
+}
 - (void)cilckSureButton {
 
+    NSString *editString = self.editngtextfiled.text;
+    NSString *pullString;
+    
     if (_clickSureBtnBlock) {
-        [self fadeOut];
-
-        _clickSureBtnBlock();
+        if ([editString isEqualToString:@""]) {
+            pullString = @"密码不能为空";
+            [self showMessage:pullString];
+            
+        }else if (editString.length < 6){
+            pullString = @"密码不能少于6位";
+            [self showMessage:pullString];
+            
+        }else if (pullString.length > 20){
+            pullString = @"密码最多20位";
+            [self showMessage:pullString];
+            
+        }else{
+            
+            [self fadeOut];
+            NSString *noteString = _clickSureBtnBlock();
+            self.psdLabel.text = noteString;
+        }
     }
 }
 
@@ -257,8 +279,8 @@
     
     if (textField == self.editngtextfiled) {
         // 判断是否是数字
-        BOOL flag = [NSString validateNumber:string];
-        if (range.location < 20 && flag) {
+        
+        if (range.location < 20) {
             return YES;
         }
         return NO;

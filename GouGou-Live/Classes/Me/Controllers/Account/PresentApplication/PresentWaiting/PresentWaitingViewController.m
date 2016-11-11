@@ -30,6 +30,7 @@
 
 - (void)initUI {
 
+    [self setNavBarItem];
     self.title = @"提现申请";
     
     

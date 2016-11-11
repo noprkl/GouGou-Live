@@ -42,4 +42,15 @@
 /** 钱包接口 */
 #define API_UserAsset @"UserService/getUserAsset"
 
+/** 个人昵称 */
+#define API_Nickname @"UserService/nickname"
+/** 个人签名 */
+#define API_Signature @"UserService/signature"
+
+/** 个人头像 */
+#define API_Portrait @"UserService/portrait"
+
+/** 更多印象 */
+#define API_Impression @"ProductService/Impression"
+
 @end

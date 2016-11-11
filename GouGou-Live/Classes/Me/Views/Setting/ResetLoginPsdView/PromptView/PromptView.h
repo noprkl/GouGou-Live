@@ -10,11 +10,12 @@
 
 typedef void(^PlayingPasswardBlock)(UITextField *textfiled);
 
-typedef void(^ClickSureButtonBlock)();
+typedef NSString*(^ClickSureButtonBlock)();
 @interface PromptView : UIView
 
 /** 监听密码输入block */
 @property (strong, nonatomic) PlayingPasswardBlock playpsdBlock;
+
 /** 监听确定按钮block */
 @property (strong,nonatomic) ClickSureButtonBlock clickSureBtnBlock;
 

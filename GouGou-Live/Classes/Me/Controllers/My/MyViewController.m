@@ -37,22 +37,19 @@
 #pragma mark
 #pragma mark - 网络请求
 // 用户账单
-- (void)postGetUserAsset:(NSDictionary *)data {
-
-    DLog(@"%@",data[@"id"]);
+- (void)postGetUserAsset {
     
 //    NSDictionary *dict = @{
-//                           @"uid":@([data[@"id"] integerValue]),
-//                           @"page":@0
+//                           @"uid":@([[UserInfos sharedUser].ID integerValue]),
+//                           @"page":@1
 //                           };
 //    
-//    [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
-//        DLog(@"%@",successJson);
-//   
-//    } error:^(NSError *error) {
-//       
-//        DLog(@"%@", error);
-//    }];
+//  [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//  } error:^(NSError *error) {
+//
+//      DLog(@"%@", error);
+//  }];
 }
 #pragma mark
 #pragma mark - 生命周期
@@ -70,14 +67,14 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
 
 //    self.navigationController.navigationBarHidden = NO;
-  
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLoginSuccessData:) name:@"LoginSuccess" object:nil];
-   
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLoginSuccessData:) name:@"CodeLoginSuccess" object:nil];
+    [self postGetUserAsset];
+    [self.tableView reloadData];
+
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+   
+    self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     
@@ -90,13 +87,6 @@
     self.tableView.delegate = self;
     self.tableView.bounces = NO;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-}
-
-- (void)getLoginSuccessData:(NSNotification *)notification {
-
-    DLog(@"%@",notification.userInfo);
-    
-    [self postGetUserAsset:notification.userInfo];
 }
 
 #pragma mark
@@ -130,8 +120,13 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
+        //判断登录与否
+        
+        if ([UserInfos sharedUser].isLogin) {
+          return 240;
+        }else{
         return 150;
-//        return 240;
+        }
     }
     return 10;
 }
@@ -172,54 +167,65 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         //判断登录与否
-        MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
-        unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        __weak typeof(self) weakSelf = self;
-        unLoginView.loginBlcok = ^(){
-            LoginViewController *VC = [[LoginViewController alloc] init];
+        
+        if ([UserInfos sharedUser].isLogin) {
+            MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
+            messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
+                    __weak typeof(self) weakSelf = self;
+            messageView.editBlock = ^(){
+                EditMyMessageViewController *editVC = [[EditMyMessageViewController alloc] init];
+                editVC.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:editVC animated:YES];
+                
+            };
             
-            VC.hidesBottomBarWhenPushed = YES;
+            // 实名认证
             
-            [weakSelf.navigationController pushViewController:VC animated:YES];
-        };
+            messageView.liveBlcok = ^(UIButton *btn){
 
-        return unLoginView;
-//        MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
-//        messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
-//        __weak typeof(self) weakSelf = self;
-//        
-//        messageView.editBlock = ^(){
-//            EditMyMessageViewController *editVC = [[EditMyMessageViewController alloc] init];
-//            editVC.hidesBottomBarWhenPushed = YES;
-//
-//            [weakSelf.navigationController pushViewController:editVC animated:YES];
-//        };
-//        // 实名认证
-//        messageView.liveBlcok = ^(UIButton *btn){
-//            
-//        };
-//        
-//        // 关注
-//        messageView.focusBlcok = ^(){
-//            MyFocusViewController *myfocus = [[MyFocusViewController alloc] init];
-//            myfocus.hidesBottomBarWhenPushed = YES;
-//            
-//            [weakSelf.navigationController pushViewController:myfocus animated:YES];
-//        };
-//        // 粉丝
-//        messageView.fansBlcok = ^(){
-//            MyFansViewController *myFansVC = [[MyFansViewController alloc] init];
-//            myFansVC.hidesBottomBarWhenPushed = YES;
-//            [weakSelf.navigationController pushViewController:myFansVC animated:YES];
-//        };
-//        // 我的主页
-//        messageView.myPageBlcok = ^(){
-//            MyPageViewController *myPage = [[MyPageViewController alloc] init];
-//            myPage.hidesBottomBarWhenPushed = YES;
-//            [weakSelf.navigationController pushViewController:myPage animated:YES];
-//        };
-//        
-//        return messageView;
+                [btn setTitle:@"可以认证" forState:(UIControlStateNormal)];
+                
+            };
+        
+            // 关注
+            messageView.focusBlcok = ^(){
+                MyFocusViewController *myfocus =
+                [[MyFocusViewController alloc] init];
+                myfocus.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:myfocus animated:YES];
+            };
+            
+            // 粉丝
+            messageView.fansBlcok = ^(){
+                MyFansViewController *myFansVC =
+                [[MyFansViewController alloc] init];
+                myFansVC.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:myFansVC animated:YES];
+            };
+            
+            // 我的主页
+            messageView.myPageBlcok = ^(){
+                MyPageViewController *myPage =
+                [[MyPageViewController alloc] init];
+                myPage.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:myPage animated:YES];
+            };
+            return messageView;
+        }else{
+            MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
+            unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+            __weak typeof(self) weakSelf = self;
+            unLoginView.loginBlcok = ^(){
+                LoginViewController *VC = [[LoginViewController alloc] init];
+                
+                VC.hidesBottomBarWhenPushed = YES;
+                
+                [weakSelf.navigationController pushViewController:VC animated:YES];
+            };
+            
+            return unLoginView;
+        }
+        
     }
     return nil;
 

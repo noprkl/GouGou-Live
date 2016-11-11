@@ -73,8 +73,11 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
     if (textField == self.userNameTexfiled) {
-        
-        
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
+            return YES;
+        }
+        return NO;
         
     }else if (textField == self.payingTextfiled){
         
@@ -84,6 +87,6 @@
         }
         return NO;
     }
-    return YES;
+    return NO;
 }
 @end

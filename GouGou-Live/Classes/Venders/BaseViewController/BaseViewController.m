@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "HTTPTool.h"
+#import "HttpImageTool.h"
 #import "UIView+Toast.h"
 
 @interface BaseViewController ()
@@ -17,7 +18,7 @@
 @implementation BaseViewController
 #pragma mark
 #pragma mark - 网络请求
-/** get请求 */
+/** get信息请求 */
 - (void)getRequestWithPath:(NSString *)path
                     params:(NSDictionary *)params
                    success:(HttpRequestSuccessBlock)Success
@@ -31,7 +32,7 @@
     }];
 }
 
-/** post请求 */
+/** post信息请求 */
 - (void)postRequestWithPath:(NSString *)path
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)Success
@@ -45,6 +46,48 @@
                                 Error(error);
     }];
 }
+- (void)postJsonRequestWithPath:(NSString *)path
+                         params:(NSString *)params
+                        success:(HttpRequestSuccessBlock)returnSuccess
+                          error:(HttpRequestErrorBlock)returnError{
+    [HTTPTool postJsonRequestWithPath:path params:params success:^(id   successJson) {
+        returnSuccess(successJson);
+    } error:^(NSError *error) {
+        returnError(error);
+    }];
+}
+
+/** get图片请求 */
+- (void)getImageRequestWithPath:(NSString *)path
+                         params:(NSDictionary *)params
+                        success:(HttpRequestSuccessBlock)Success
+                          error:(HttpRequestErrorBlock)Error {
+    [HttpImageTool getRequestWithPath:path
+                          params:params
+                         success:^(id successJson) {
+                             Success(successJson);
+                         } error:^(NSError *error) {
+                             Error(error);
+                         }];
+}
+
+#pragma mark - 图片
+/** post图片请求 */
+- (void)postImageRequestWithPath:(NSString *)path
+                          params:(NSDictionary *)params
+                         success:(HttpRequestSuccessBlock)Success
+                           error:(HttpRequestErrorBlock)Error {
+    [HttpImageTool postRequestWithPath:path
+                           params:params
+                          success:^(id successJson) {
+                              Success(successJson);
+                          }
+                            error:^(NSError *error) {
+                                Error(error);
+                            }];
+
+}
+
 - (void)showAlert:(NSString *)string{
     [self.view makeToast:string duration:2 position:@"center"];
 }

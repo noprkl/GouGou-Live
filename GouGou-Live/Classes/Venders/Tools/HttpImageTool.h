@@ -1,17 +1,18 @@
 //
-//  HTTPTool.h
+//  HttpImageTool.h
 //  GouGou-Live
 //
-//  Created by ma c on 16/10/26.
+//  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import <AFNetworking/AFNetworking.h>
+#import <Foundation/Foundation.h>
 
 typedef void(^HttpRequestSuccessBlock)(id successJson);
 typedef void(^HttpRequestErrorBlock)(NSError *error);
 
-@interface HTTPTool : AFHTTPSessionManager
+@interface HttpImageTool : AFHTTPSessionManager
+
 /**
  *  get请求
  *
@@ -36,8 +37,5 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)returnSuccess
                       error:(HttpRequestErrorBlock)returnError;
-+ (void)postJsonRequestWithPath:(NSString *)path
-                     params:(NSString *)params
-                    success:(HttpRequestSuccessBlock)returnSuccess
-                      error:(HttpRequestErrorBlock)returnError;
+
 @end

@@ -64,6 +64,19 @@
                         <constraint firstAttribute="height" constant="2" id="TnM-Cf-JoY"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gax-NX-86p">
+                    <rect key="frame" x="39" y="76" width="1" height="30"/>
+                    <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="IhF-kM-Zrc"/>
+                        <constraint firstAttribute="width" constant="1" id="PUJ-WD-cHp"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="1" id="UVB-i5-m8i"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="VMk-3o-AF7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QpK-Yb-nyq">
                     <rect key="frame" x="27" y="158" width="321" height="40"/>
                     <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -84,19 +97,6 @@
                         <action selector="clickSureBtnAction:" destination="-1" eventType="touchUpInside" id="6Rb-Y2-Fcq"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gax-NX-86p">
-                    <rect key="frame" x="39" y="76" width="1" height="30"/>
-                    <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="IhF-kM-Zrc"/>
-                        <constraint firstAttribute="width" constant="1" id="PUJ-WD-cHp"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="1" id="UVB-i5-m8i"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="VMk-3o-AF7"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.99481139520202022" green="0.99481139520202022" blue="0.99481139520202022" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -126,7 +126,7 @@
                 <constraint firstItem="oKS-PQ-zGd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="20" id="zUM-pv-ilM"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="239.5" y="158.5"/>
+            <point key="canvasLocation" x="220.5" y="59.5"/>
         </view>
     </objects>
     <resources>

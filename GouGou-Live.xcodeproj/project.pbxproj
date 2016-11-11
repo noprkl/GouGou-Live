@@ -131,6 +131,7 @@
 		0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6581DCB44CB00CB288A /* AllCountCell.m */; };
 		0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */; };
 		0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6661DCC1EE700CB288A /* TransformStyleView.m */; };
+		047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5E11DD564F80025290E /* HttpImageTool.m */; };
 		049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */; };
 		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
 		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
@@ -148,7 +149,6 @@
 		04DAC9951DD21A9A0089236D /* MyMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9741DD21A9A0089236D /* MyMessageView.m */; };
 		04DAC9961DD21A9A0089236D /* MyUnLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9761DD21A9A0089236D /* MyUnLoginView.m */; };
 		04DAC9971DD21A9A0089236D /* PromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC97B1DD21A9A0089236D /* PromptView.m */; };
-		04DAC9981DD21A9A0089236D /* ResetLoginPsdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC97D1DD21A9A0089236D /* ResetLoginPsdView.m */; };
 		04DAC9991DD21A9A0089236D /* AddressChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9811DD21A9A0089236D /* AddressChooseView.m */; };
 		04DAC99A1DD21A9A0089236D /* DeletePrommtView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9841DD21A9A0089236D /* DeletePrommtView.m */; };
 		04DAC99B1DD21A9A0089236D /* AddrsssTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9871DD21A9A0089236D /* AddrsssTableViewCell.m */; };
@@ -157,6 +157,9 @@
 		04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9A71DD2D1250089236D /* SearchFocusViewController.m */; };
 		04DAC9AA1DD2D1250089236D /* SearchFocusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9A81DD2D1250089236D /* SearchFocusViewController.xib */; };
 		04DAC9B41DD317700089236D /* EditNikeNameAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9B31DD317700089236D /* EditNikeNameAlert.m */; };
+		04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9B91DD40D610089236D /* ResetPsdViewController.m */; };
+		04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */; };
+		04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -380,6 +383,8 @@
 		0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAndDogCardView.m; sourceTree = "<group>"; };
 		0479B6651DCC1EE700CB288A /* TransformStyleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformStyleView.h; sourceTree = "<group>"; };
 		0479B6661DCC1EE700CB288A /* TransformStyleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformStyleView.m; sourceTree = "<group>"; };
+		047AD5E01DD564F80025290E /* HttpImageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpImageTool.h; sourceTree = "<group>"; };
+		047AD5E11DD564F80025290E /* HttpImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpImageTool.m; sourceTree = "<group>"; };
 		049D61051DD06DAA00ED3E76 /* NSString+MD5Code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Code.h"; sourceTree = "<group>"; };
 		049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Code.m"; sourceTree = "<group>"; };
 		049D612B1DD07C6B00ED3E76 /* SureForgetPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureForgetPsdViewController.h; sourceTree = "<group>"; };
@@ -411,8 +416,6 @@
 		04DAC9761DD21A9A0089236D /* MyUnLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUnLoginView.m; sourceTree = "<group>"; };
 		04DAC97A1DD21A9A0089236D /* PromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromptView.h; sourceTree = "<group>"; };
 		04DAC97B1DD21A9A0089236D /* PromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromptView.m; sourceTree = "<group>"; };
-		04DAC97C1DD21A9A0089236D /* ResetLoginPsdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetLoginPsdView.h; sourceTree = "<group>"; };
-		04DAC97D1DD21A9A0089236D /* ResetLoginPsdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetLoginPsdView.m; sourceTree = "<group>"; };
 		04DAC9801DD21A9A0089236D /* AddressChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressChooseView.h; sourceTree = "<group>"; };
 		04DAC9811DD21A9A0089236D /* AddressChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressChooseView.m; sourceTree = "<group>"; };
 		04DAC9831DD21A9A0089236D /* DeletePrommtView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletePrommtView.h; sourceTree = "<group>"; };
@@ -428,6 +431,11 @@
 		04DAC9A81DD2D1250089236D /* SearchFocusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchFocusViewController.xib; sourceTree = "<group>"; };
 		04DAC9B21DD317700089236D /* EditNikeNameAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNikeNameAlert.h; sourceTree = "<group>"; };
 		04DAC9B31DD317700089236D /* EditNikeNameAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNikeNameAlert.m; sourceTree = "<group>"; };
+		04DAC9B81DD40D610089236D /* ResetPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPsdViewController.h; sourceTree = "<group>"; };
+		04DAC9B91DD40D610089236D /* ResetPsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPsdViewController.m; sourceTree = "<group>"; };
+		04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPsdViewController.xib; sourceTree = "<group>"; };
+		04DAC9BD1DD420610089236D /* ResetPsdAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPsdAlertView.h; sourceTree = "<group>"; };
+		04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPsdAlertView.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -1076,13 +1084,13 @@
 			children = (
 				0479B5791DCADC7B00CB288A /* My */,
 				0479B55B1DCADC7B00CB288A /* Account */,
+				0479B57E1DCADC7B00CB288A /* OrderGoods */,
+				0479B59A1DCADC7B00CB288A /* ShopAddress */,
+				0479B5751DCADC7B00CB288A /* Favorite */,
+				0479B59E1DCADC7B00CB288A /* WatchHistory */,
 				0479B56A1DCADC7B00CB288A /* Certificate */,
 				0479B5721DCADC7B00CB288A /* DetailCount */,
-				0479B5751DCADC7B00CB288A /* Favorite */,
-				0479B57E1DCADC7B00CB288A /* OrderGoods */,
 				0479B5821DCADC7B00CB288A /* Setting */,
-				0479B59A1DCADC7B00CB288A /* ShopAddress */,
-				0479B59E1DCADC7B00CB288A /* WatchHistory */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1245,6 +1253,9 @@
 				0479B5901DCADC7B00CB288A /* SecurityAccountViewController.h */,
 				0479B5911DCADC7B00CB288A /* SecurityAccountViewController.m */,
 				0479B5921DCADC7B00CB288A /* SecurityAccountViewController.xib */,
+				04DAC9B81DD40D610089236D /* ResetPsdViewController.h */,
+				04DAC9B91DD40D610089236D /* ResetPsdViewController.m */,
+				04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */,
 			);
 			path = SecurityAccount;
 			sourceTree = "<group>";
@@ -1380,6 +1391,8 @@
 			children = (
 				0479B5D21DCADC7B00CB288A /* HTTPTool.h */,
 				0479B5D31DCADC7B00CB288A /* HTTPTool.m */,
+				047AD5E01DD564F80025290E /* HttpImageTool.h */,
+				047AD5E11DD564F80025290E /* HttpImageTool.m */,
 				04486AB41DD012C400BC6D15 /* UIView+Toast.h */,
 				04486AB51DD012C400BC6D15 /* UIView+Toast.m */,
 			);
@@ -1407,13 +1420,13 @@
 		04DAC9591DD21A9A0089236D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				04DAC95A1DD21A9A0089236D /* CertificateView */,
+				04DAC96E1DD21A9A0089236D /* MySelfView */,
 				04DAC95F1DD21A9A0089236D /* DetailCountView */,
 				04DAC9651DD21A9A0089236D /* MyFavoriteTableView */,
-				04DAC96E1DD21A9A0089236D /* MySelfView */,
-				04DAC9771DD21A9A0089236D /* Setting */,
 				04DAC97E1DD21A9A0089236D /* ShopAdress */,
 				04DAC9881DD21A9A0089236D /* WatchHistoryView */,
+				04DAC95A1DD21A9A0089236D /* CertificateView */,
+				04DAC9771DD21A9A0089236D /* Setting */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1504,9 +1517,9 @@
 		04DAC9781DD21A9A0089236D /* ResetLoginPsdView */ = {
 			isa = PBXGroup;
 			children = (
+				04DAC9BD1DD420610089236D /* ResetPsdAlertView.h */,
+				04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */,
 				04DAC9791DD21A9A0089236D /* PromptView */,
-				04DAC97C1DD21A9A0089236D /* ResetLoginPsdView.h */,
-				04DAC97D1DD21A9A0089236D /* ResetLoginPsdView.m */,
 			);
 			path = ResetLoginPsdView;
 			sourceTree = "<group>";
@@ -1681,6 +1694,7 @@
 				0479B62C1DCADC7B00CB288A /* WatchHistoryViewController.xib in Resources */,
 				0479B5EE1DCADC7B00CB288A /* LiveViewCell.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
+				04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */,
 				049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */,
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
@@ -1754,7 +1768,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04DAC9981DD21A9A0089236D /* ResetLoginPsdView.m in Sources */,
 				0479B5F61DCADC7B00CB288A /* DogImageView.m in Sources */,
 				0479B5D81DCADC7B00CB288A /* LiveViewController.m in Sources */,
 				0479B5E21DCADC7B00CB288A /* DogTypesView.m in Sources */,
@@ -1762,6 +1775,7 @@
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
 				045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
+				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
 				0479B6141DCADC7B00CB288A /* MerchantViewController.m in Sources */,
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
 				0479B5DF1DCADC7B00CB288A /* LiveViewCellModel.m in Sources */,
@@ -1778,6 +1792,7 @@
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
 				047324001DD1DC18006CCC71 /* MyFansViewController.m in Sources */,
+				04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
 				04DAC98D1DD21A9A0089236D /* DetailCountTopView.m in Sources */,
@@ -1846,6 +1861,7 @@
 				04DAC9961DD21A9A0089236D /* MyUnLoginView.m in Sources */,
 				0479B5FD1DCADC7B00CB288A /* StartSourceView.m in Sources */,
 				0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */,
+				04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */,
 				049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */,
 				0479B5F31DCADC7B00CB288A /* SellerShowViewController.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,

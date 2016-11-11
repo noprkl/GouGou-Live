@@ -103,19 +103,26 @@
                                    @"user_tel":@([phoneNumber integerValue]),
                                    @"code":self.psdNumber.text
                                    };
+        // 请求之前删掉上一次的信息
         
         [self getRequestWithPath:API_LoginQuick params:dict success:^(id successJson) {
             
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"成功"]) {
-
+                
+                [self saveUserWithID:successJson[@"data"][@"id"]
+                        user_img_url:successJson[@"data"][@"user_img_url"]
+                           user_name:successJson[@"data"][@"user_name"]
+                      user_nick_name:successJson[@"data"][@"user_nick_name"]
+                            user_tel:successJson[@"data"][@"user_tel"]
+                         is_merchant:successJson[@"data"][@"is_merchant"]
+                             is_real:successJson[@"data"][@"is_real"]
+                             isLogin:@(YES)];
                 // 通知给所有人 已经登录
                 NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
                 
-                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                [self.navigationController popViewControllerAnimated:YES];
-                
+                [[NSNotificationCenter defaultCenter] postNotification:notification];                
 
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -137,8 +144,23 @@
     
     
 }
-
-
+- (void)saveUserWithID:(NSString *)ID
+          user_img_url:(NSString *)user_img_url
+             user_name:(NSString *)user_name
+        user_nick_name:(NSString *)user_nick_name
+              user_tel:(NSString *)user_tel
+           is_merchant:(NSString *)is_merchant
+               is_real:(NSString *)is_real
+               isLogin:(BOOL)isLogin{
+    [UserInfos sharedUser].ID = ID;
+    [UserInfos sharedUser].usernickname = user_nick_name;
+    [UserInfos sharedUser].usertel = user_tel;
+    [UserInfos sharedUser].ismerchant = is_merchant;
+    [UserInfos sharedUser].isreal = is_real;
+    [UserInfos sharedUser].isLogin = YES;
+    
+    [UserInfos setUser];
+}
 #pragma mark
 #pragma mark - 文本框监听
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {

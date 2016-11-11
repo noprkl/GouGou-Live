@@ -26,7 +26,11 @@ static NSString * detailCellid = @"detailCellid";
     [super viewDidLoad];
     
     [self initUI];
+    self.userNameTextfiled.delegate = self;
     self.areaChooseTextfiled.delegate = self;
+    self.postalcodeTextfiled.delegate = self;
+    self.detailAddressTextfiled.delegate = self;
+
     [self setNavBarItem];
 }
 
@@ -36,6 +40,7 @@ static NSString * detailCellid = @"detailCellid";
 
     [self.areaChooseTextfiled addTarget:self action:@selector(areaChooseTextfiled:) forControlEvents:UIControlEventEditingDidBegin];
 }
+#pragma mark - textfiled内容编辑
 - (void)userNameTextfiled:(UITextField *)sender {
     
     
@@ -51,32 +56,57 @@ static NSString * detailCellid = @"detailCellid";
 - (void)postalcodeTextfiled:(UITextField *)sender {
     
     
+    
 }
 
 - (void)detailAddressTextFiled:(UITextField *)sender {
     
     
 }
+#pragma mark - 点击保存按钮
+- (void)clickSaveBtn {
+    
+    
+}
 
+#pragma mark
+#pragma mark - TextFiled代理
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    return YES;
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == self.userNameTextfiled) {
+        
+        
+    } else if (textField == self.areaChooseTextfiled) {
+    
+    
+    } else if (textField == self.postalcodeTextfiled) {
+    
+        BOOL flag = [NSString validateNumber:textField.text];
+        
+        if (range.location < 6 && flag) {
+            
+            return YES;
+        }
+        return NO;
+    
+    } else if (textField == self.detailAddressTextfiled) {
+    
+    
+    }
 
     return YES;
 }
 
 
-- (void)clickSaveBtn {
-
-
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-
-        
-}
 @end

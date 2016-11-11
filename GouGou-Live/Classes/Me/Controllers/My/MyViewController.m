@@ -17,6 +17,8 @@
 #import "MyFocusViewController.h"
 #import "MyPageViewController.h"
 
+
+
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -29,6 +31,8 @@
 
 /** headBtn */
 @property (strong, nonatomic) UIButton *myButton;
+
+
 
 @end
 
@@ -160,6 +164,7 @@
     UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
     VC.hidesBottomBarWhenPushed = YES;
     VC.title = cellText;
+    
     
     [self.navigationController pushViewController:VC animated:YES];
     

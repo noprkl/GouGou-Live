@@ -7,8 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MerchantViewController">
             <connections>
-                <outlet property="countDownBtn" destination="nwX-F2-A8O" id="Qce-th-DCx"/>
-                <outlet property="nameCertificateBtn" destination="S8A-1I-4ah" id="4b2-Dy-pwj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,55 +14,9 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon开心狗" translatesAutoresizingMaskIntoConstraints="NO" id="QNi-4y-dYy">
-                    <rect key="frame" x="105" y="50" width="166" height="84"/>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwX-F2-A8O">
-                    <rect key="frame" x="293" y="10" width="72" height="29"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="2s自动跳转">
-                        <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="只有完成实名认证后才可商家认证" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ooc-Yd-5nn">
-                    <rect key="frame" x="83" y="154" width="210" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8A-1I-4ah">
-                    <rect key="frame" x="10" y="191" width="355" height="44"/>
-                    <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="QHJ-4w-ozM"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="实名认证">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="clickNameCertificateBtn:" destination="-1" eventType="touchUpInside" id="k4q-KR-SEO"/>
-                    </connections>
-                </button>
-            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="ooc-Yd-5nn" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="1kj-vh-j7Z"/>
-                <constraint firstItem="S8A-1I-4ah" firstAttribute="top" secondItem="ooc-Yd-5nn" secondAttribute="bottom" constant="20" id="Dbh-Mh-VxJ"/>
-                <constraint firstItem="nwX-F2-A8O" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="GIX-nc-rAa"/>
-                <constraint firstAttribute="trailing" secondItem="nwX-F2-A8O" secondAttribute="trailing" constant="10" id="IM2-zM-ov4"/>
-                <constraint firstItem="S8A-1I-4ah" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="OU3-Nn-hwI"/>
-                <constraint firstItem="ooc-Yd-5nn" firstAttribute="top" secondItem="QNi-4y-dYy" secondAttribute="bottom" constant="20" id="Sol-3k-Haa"/>
-                <constraint firstAttribute="trailing" secondItem="S8A-1I-4ah" secondAttribute="trailing" constant="10" id="nF2-09-LY4"/>
-                <constraint firstItem="QNi-4y-dYy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="nOp-aB-7Dp"/>
-                <constraint firstItem="QNi-4y-dYy" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="pXl-xq-bh6"/>
-            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="760.5" y="10.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="icon开心狗" width="166" height="84"/>
-    </resources>
 </document>

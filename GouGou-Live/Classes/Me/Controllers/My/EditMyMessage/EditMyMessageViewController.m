@@ -84,7 +84,7 @@ static NSString *cellid = @"cellid";
         if ([UserInfos sharedUser].usernickname) {
             userNike = [UserInfos sharedUser].usernickname;
         }
-        _detailArr = [[NSMutableArray alloc] initWithObjects:userImage, userMotto, userNike, tel, nil];
+        _detailArr = [[NSMutableArray alloc] initWithObjects:userImage, userNike, userMotto, tel, nil];
         DLog(@"%@", _detailArr);
     }
     return _detailArr;
@@ -270,6 +270,7 @@ static NSString *cellid = @"cellid";
                             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                                 // 修改TableView的显示
                                 [self.detailArr replaceObjectAtIndex:1 withObject:nickname];
+                                [self.topTableView reloadData];
 
                                 // 修改本地存储
                                 [UserInfos sharedUser].usernickname = nickname;
@@ -280,7 +281,6 @@ static NSString *cellid = @"cellid";
                         }];
                         
                     }
-                    [self.topTableView reloadData];
 
                 };
                 self.editAlert = editNikeAlert;
@@ -307,7 +307,8 @@ static NSString *cellid = @"cellid";
                             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                                 // 修改TableView的显示
                                 [self.detailArr replaceObjectAtIndex:1 withObject:signaue];
-                                
+                                [self.topTableView reloadData];
+
                                 // 修改本地存储
                                 [UserInfos sharedUser].usermotto = signaue;
                                 [UserInfos setUser];
@@ -316,7 +317,6 @@ static NSString *cellid = @"cellid";
                             DLog(@"%@", error);
                         }];
                     }
-                    [self.topTableView reloadData];
                 };
                 editSignAlert.title = @"请输入个性签名";
                 editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
@@ -462,19 +462,20 @@ static NSString *cellid = @"cellid";
 }
 // 相册得到的图片
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary<NSString *,id> *)editingInfo {
-    self.userIconView.image = image;
 
     NSData *data = UIImagePNGRepresentation(image);
     NSString *string = [data base64EncodedStringWithOptions:0];
+    NSString *base64 = [self imageBase64WithDataURL:image];
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                           @"user_img":@{
-                                   @"data":@"image/png",
-                                   @"base64":string
-                                   }
+                           @"user_img":base64
                            };
     
-    [self postImageRequestWithPath:API_Portrait params:dict success:^(id successJson) {
+    [self postRequestWithPath:API_Portrait params:dict success:^(id successJson) {
+        if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+           
+        }
+
         DLog(@"%@", successJson);
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -482,6 +483,22 @@ static NSString *cellid = @"cellid";
     
     //退出相册界面
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+- (NSString *)imageBase64WithDataURL:(UIImage *)image
+{
+    NSData *imageData =nil;
+    NSString *mimeType =nil;
+    
+    //图片要压缩的比例，此处100根据需求，自行设置
+    CGFloat x =100 / image.size.height;
+    if (x >1)
+    {
+        x = 1.0;
+    }
+    imageData = UIImageJPEGRepresentation(image, x);
+    mimeType = @"image/jpeg";
+    return [NSString stringWithFormat:@"data:%@;base64,%@", mimeType,
+            [imageData base64EncodedStringWithOptions:0]];
 }
 
 //点击Cancel按钮后执行方法

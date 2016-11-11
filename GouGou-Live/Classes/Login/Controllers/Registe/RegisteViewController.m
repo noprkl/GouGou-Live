@@ -189,6 +189,7 @@
                 self.sendCodeBtn.userInteractionEnabled = NO;
                 
                 self.sendCodeBtn.tintColor = [UIColor colorWithHexString:@"#99cc33"];
+               
                 NSString *string = [NSString stringWithFormat:@"%ldS",time];
                 
                 [self.sendCodeBtn setTitle:string forState:(UIControlStateNormal)];

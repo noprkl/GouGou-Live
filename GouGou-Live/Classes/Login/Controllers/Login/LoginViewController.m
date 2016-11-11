@@ -145,22 +145,14 @@
             user_motto:(NSString *)user_motto
                isLogin:(BOOL)isLogin
 {
-    if (user_img_url) {
-        [UserInfos sharedUser].userimgurl = user_img_url;
-    }
-    if (user_name) {
-        [UserInfos sharedUser].username = user_name;
-    }
-    if (user_nick_name) {
-        [UserInfos sharedUser].usernickname = user_nick_name;
-    }
-    if (user_motto) {
-        [UserInfos sharedUser].usermotto = user_motto;
-    }
-    
+    [UserInfos sharedUser].userimgurl = ![user_img_url isEqual:[NSNull null]] ?user_img_url:@"";
+    [UserInfos sharedUser].username = ![user_name isEqual:[NSNull null]] ?user_name:@"";
+    [UserInfos sharedUser].usernickname = ![user_nick_name isEqual:[NSNull null]] ?user_nick_name:@"";
+    [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
     [UserInfos sharedUser].ID = ID;
     [UserInfos sharedUser].usertel = user_tel;
     [UserInfos sharedUser].isLogin = YES;
+    
     [UserInfos setUser];
 }
 

@@ -71,18 +71,19 @@ static NSString *cellid = @"cellid";
 - (NSMutableArray *)detailArr {
     if (!_detailArr) {
         NSString *tel = [UserInfos sharedUser].usertel;
-        NSString *userImage = @"nil";
+        NSString *userImage = @"暂无";
         NSString *userMotto = @"暂无";
         NSString *userNike = @"暂无";
-        
-        if ([UserInfos sharedUser].userimgurl) {
+        DLog(@"%@", [UserInfos sharedUser].usernickname);
+        if ([UserInfos sharedUser].userimgurl != NULL) {
             userImage = [UserInfos sharedUser].userimgurl;
         }
-        if ([UserInfos sharedUser].usermotto) {
-            userMotto = [UserInfos sharedUser].usermotto;
-        }
-        if ([UserInfos sharedUser].usernickname) {
+        if ([UserInfos sharedUser].usernickname != NULL) {
             userNike = [UserInfos sharedUser].usernickname;
+            DLog(@"%@", [UserInfos sharedUser].usernickname);
+        }
+        if ([UserInfos sharedUser].usermotto != NULL) {
+            userMotto = [UserInfos sharedUser].usermotto;
         }
         _detailArr = [[NSMutableArray alloc] initWithObjects:userImage, userNike, userMotto, tel, nil];
         DLog(@"%@", _detailArr);
@@ -162,42 +163,48 @@ static NSString *cellid = @"cellid";
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0) { // 第1行设置
             cell.textLabel.text = self.topDataArr[indexPath.row];
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            // 头像
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 90, (88 - 60) / 2, 60, 60)];
             imageView.layer.cornerRadius = 30;
             imageView.layer.masksToBounds = YES;
-            
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[UserInfos sharedUser].userimgurl] placeholderImage:[UIImage imageNamed:@"头像"]];
+          
+            // 头像url拼接
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.detailArr[indexPath.row]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
 
             self.userIconView = imageView;
             [cell.contentView addSubview:imageView];
             
-        }else if (indexPath.row == 1) {
+        }else if (indexPath.row == 1) { // 第2行设置
             cell.textLabel.text = self.topDataArr[indexPath.row];
             cell.detailTextLabel.text = self.detailArr[indexPath.row];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-        }else if (indexPath.row == 3) {
-            cell.textLabel.text = self.topDataArr[indexPath.row];
-            cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
-        }else {
+        }else if(indexPath.row == 2){ // 第3行设置
             cell.textLabel.text = self.topDataArr[indexPath.row];
             
             cell.detailTextLabel.text = self.detailArr[indexPath.row];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else if (indexPath.row == 3) { // 第4行设置
+            cell.textLabel.text = self.topDataArr[indexPath.row];
+            cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
         }
         cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         
         return cell;
 
-    }else if (tableView == self.bottomTableView){
+    }else if (tableView == self.bottomTableView){ // 底部tableVIew
+        
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
         cell.textLabel.text = self.botttomDataArr[indexPath.row];
         cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+
+        // 添加开关
         UISwitch *switchBtn = [[UISwitch alloc] init];
         switchBtn.tag = 50 + indexPath.row;
         [switchBtn addTarget:self action:@selector(clickSwitchAction:) forControlEvents:(UIControlEventValueChanged)];
@@ -240,15 +247,15 @@ static NSString *cellid = @"cellid";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.topTableView) {
         switch (indexPath.row) {
-            case 0:
+            case 0: // 设置头像
             {
                 [self presentCmear];
             }
                 break;
             
-            case 1:
+            case 1: // 个人昵称编辑
             {
-                // 个人昵称编辑弹出框
+                // 弹出框
                 EditNikeNameAlert *editNikeAlert = [[EditNikeNameAlert alloc] init];
                 [editNikeAlert show];
                 
@@ -261,11 +268,10 @@ static NSString *cellid = @"cellid";
                                                @"user_id":@17,
                                                @"nickname":nickname
                                                };
-                        DLog(@"%@", dict);
                         
                         // 请求
                         [self postRequestWithPath:API_Nickname params:dict success:^(id successJson) {
-                            DLog(@"%@", successJson);
+
                             [self showAlert:successJson[@"message"]];
                             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                                 // 修改TableView的显示
@@ -300,13 +306,13 @@ static NSString *cellid = @"cellid";
                                                @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                @"user_motto":signaue
                                                };
-                        [self.detailArr replaceObjectAtIndex:2 withObject:signaue];
                         [self postRequestWithPath:API_Signature params:dict success:^(id successJson) {
                             [self showAlert:successJson[@"message"]];
                             DLog(@"%@", successJson);
                             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                             
                                 // 修改TableView的显示
-                                [self.detailArr replaceObjectAtIndex:1 withObject:signaue];
+                                [self.detailArr replaceObjectAtIndex:2 withObject:signaue];
                                 [self.topTableView reloadData];
 
                                 // 修改本地存储
@@ -346,6 +352,7 @@ static NSString *cellid = @"cellid";
 }
 #pragma mark
 #pragma mark - Action
+// 开关时间
 - (void)clickSwitchAction:(UISwitch *)swit {
 
     NSInteger index = swit.tag - 50;
@@ -473,7 +480,12 @@ static NSString *cellid = @"cellid";
     
     [self postRequestWithPath:API_Portrait params:dict success:^(id successJson) {
         if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
-           
+            // 修改TableView的显示
+            self.userIconView.image = image;
+            
+            // 修改本地存储
+            [UserInfos sharedUser].userimgurl = successJson[@"data"];
+            [UserInfos setUser];
         }
 
         DLog(@"%@", successJson);
@@ -484,6 +496,7 @@ static NSString *cellid = @"cellid";
     //退出相册界面
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+// 图片转化字符串
 - (NSString *)imageBase64WithDataURL:(UIImage *)image
 {
     NSData *imageData =nil;

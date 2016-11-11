@@ -165,15 +165,13 @@
     VC.hidesBottomBarWhenPushed = YES;
     VC.title = cellText;
     
-    
     [self.navigationController pushViewController:VC animated:YES];
-    
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        //判断登录与否
-        
-        if ([UserInfos sharedUser].isLogin) {
+        DLog(@"%d", [UserInfos sharedUser].isLogin);
+        if ([UserInfos sharedUser].isLogin == YES) {//判断登录与否
+            
             MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
             messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
                     __weak typeof(self) weakSelf = self;

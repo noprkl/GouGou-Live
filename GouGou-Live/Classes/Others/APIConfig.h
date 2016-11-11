@@ -14,7 +14,7 @@
 #define SERVER_HOST @"http://gougou.itnuc.com/api/"
 
 /** 图片服务器 */
-#define IMAGE_HOST @"http://images.itnuc.com"
+#define IMAGE_HOST @"http://images.itnuc.com/"
 
 
 

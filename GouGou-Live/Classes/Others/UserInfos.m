@@ -48,18 +48,21 @@ static NSString *usermottoKey = @"usermotto";
     
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].ID forKey:IDKey];
 //    if ([UserInfos sharedUser].userimgurl != NULL) {
-//        
+//        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
 //    }
+    
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
 //    if ([UserInfos sharedUser].username != NULL) {
 //        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].username forKey:usernameKey];
 //    }
-    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].username forKey:usernameKey];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].username  forKey:usernameKey];
 //    if ([UserInfos sharedUser].usermotto != NULL) {
 //        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usermotto forKey:usermottoKey];
 //    }
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usermotto forKey:usermottoKey];
-    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usernickname forKey:usernameKey];
+   
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usernickname forKey:usernicknameKey];
 
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usertel forKey:usertelKey];
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].isreal forKey:isrealKey];
@@ -71,7 +74,7 @@ static NSString *usermottoKey = @"usermotto";
 
 + (BOOL)getUser {
     
-    if ([UserInfos sharedUser].isLogin) {
+    if ([UserInfos sharedUser].isLogin == YES) {
         
         return YES;
     }

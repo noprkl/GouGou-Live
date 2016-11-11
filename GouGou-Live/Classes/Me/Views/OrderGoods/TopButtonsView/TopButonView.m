@@ -67,7 +67,7 @@
     for (NSInteger i = 0; i < btnNum; i++) {
         
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.tag = 200 + i;
+        button.tag = 80 + i;
         button.frame = CGRectMake(i * btnW, 0, btnW, btnH);
         // 正常状态
         
@@ -87,6 +87,11 @@
         
         [button addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         
+        if (i == 0) {
+            button.selected = YES;
+            self.lastButton = button;
+        }
+        
         [self addSubview:button];
     }
 }
@@ -100,12 +105,16 @@
     
     if (self.lastButton == btn) {
         
+        return;
     } else {
         
         [btn setTitleColor:[UIColor colorWithHexString:@"#ffa11a"] forState:UIControlStateNormal];
         
         [self.lastButton setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
+        btn.selected = YES;
     }
+    
+    self.lastButton.selected = NO;
     
     self.lastButton = btn;
 

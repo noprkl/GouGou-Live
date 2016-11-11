@@ -69,19 +69,26 @@
         __weak typeof(self) weakself = self;
 
         _topView.difStateBlock = ^(NSInteger tag) {
-        
-            NSInteger flag = tag - 200 ;
-            if (flag == 1) {
+            DLog(@"%ld", tag);
+            NSInteger flag = tag - 80;
+
+            if (flag == 0) {
                 
-                CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
+                CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
                 
                 [weakself.boomScrollView setContentOffset:center animated:YES];
+            } else if (flag == 1) {
+            
+                CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
+                
+                [weakself.boomScrollView setContentOffset:center animated:YES];
+            
             } else if (flag == 2) {
-            
-                CGPoint center = CGPointMake(2 * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
+                
+                CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
                 
                 [weakself.boomScrollView setContentOffset:center animated:YES];
-            
+                
             } else if (flag == 3) {
                 
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
@@ -95,12 +102,6 @@
                 [weakself.boomScrollView setContentOffset:center animated:YES];
                 
             } else if (flag == 5) {
-                
-                CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
-                
-                [weakself.boomScrollView setContentOffset:center animated:YES];
-                
-            } else if (flag == 6) {
                 
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
                 

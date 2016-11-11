@@ -52,16 +52,6 @@
     [self.cancelBtn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
 }
 
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-}
-
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)btnHighlightColor:(UIButton *)btn {
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
 }

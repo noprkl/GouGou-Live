@@ -97,8 +97,6 @@
 
 #pragma mark
 #pragma mark - 文本框监听
-#pragma mark
-#pragma mark - 文本监听
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     

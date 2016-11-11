@@ -16,6 +16,8 @@
 #import "MyFocusViewController.h"
 #import "MyPageViewController.h"
 
+
+
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -28,6 +30,8 @@
 
 /** headBtn */
 @property (strong, nonatomic) UIButton *myButton;
+
+
 
 @end
 
@@ -68,7 +72,7 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
 
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
   
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLoginSuccessData:) name:@"LoginSuccess" object:nil];
    
@@ -79,6 +83,7 @@
     
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
 }
 
@@ -96,6 +101,7 @@
     
     [self postGetUserAsset:notification.userInfo];
 }
+
 #pragma mark
 #pragma mark - 代理
 - (NSArray *)dataSource {
@@ -105,6 +111,7 @@
     }
     return _dataSource;
 }
+
 - (NSArray *)controllerNames {
 
     if (!_controllerNames) {
@@ -146,7 +153,6 @@
     
     return cell;
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
  
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -158,6 +164,7 @@
     UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
     VC.hidesBottomBarWhenPushed = YES;
     VC.title = cellText;
+    
     
     [self.navigationController pushViewController:VC animated:YES];
     
@@ -189,19 +196,20 @@
         // 关注
         messageView.focusBlcok = ^(){
             MyFocusViewController *myfocus = [[MyFocusViewController alloc] init];
-            weakSelf.hidesBottomBarWhenPushed = YES;
+            myfocus.hidesBottomBarWhenPushed = YES;
+            
             [weakSelf.navigationController pushViewController:myfocus animated:YES];
         };
         // 粉丝
         messageView.fansBlcok = ^(){
             MyFansViewController *myFansVC = [[MyFansViewController alloc] init];
-            weakSelf.hidesBottomBarWhenPushed = YES;
+            myFansVC.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:myFansVC animated:YES];
         };
         // 我的主页
         messageView.myPageBlcok = ^(){
             MyPageViewController *myPage = [[MyPageViewController alloc] init];
-            weakSelf.hidesBottomBarWhenPushed = YES;
+            myPage.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:myPage animated:YES];
         };
         

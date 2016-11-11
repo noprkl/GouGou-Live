@@ -17,6 +17,10 @@ static NSString * identityCell = @"identitiCellID";
 @property (strong,nonatomic) IdentityIfonView *identityInfoView;
 /** 身份验证tableView */
 @property (strong,nonatomic) UITableView *identityTableView;
+/** 接收姓名 */
+@property (strong,nonatomic) UITextField *acceptName;
+/** 接收身份证号 */
+@property (strong,nonatomic) UITextField *acceptIdebtity;
 
 @end
 
@@ -27,18 +31,31 @@ static NSString * identityCell = @"identitiCellID";
     
     [self initUI];
     
-    [self setNavBarItem];
+    [self setNavBarItemLeft];
 }
-
+- (void)setNavBarItemLeft {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+}
+- (void)leftBackBtnAction {
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 - (void)initUI {
 
     self.title = @"实名认证";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(handinCertificate)];
+
     [self.view addSubview:self.identityInfoView];
     [self.view addSubview:self.identityTableView];
 }
 
--
-(IdentityIfonView *)identityInfoView {
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    
+}
+
+- (IdentityIfonView *)identityInfoView {
 
     if (!_identityInfoView) {
         _identityInfoView = [[IdentityIfonView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
@@ -95,54 +112,63 @@ static NSString * identityCell = @"identitiCellID";
     
 }
 
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(handinCertificate)];
-  
-}
-
-- (void)pushToAddPhoto {
-
-    
-}
-
 - (void)handinCertificate {
 
     __weak typeof(self) weakself = self;
     
     self.identityInfoView.nameTextBlock = ^(UITextField *textfiled){
         
-        if (textfiled.text.length == 0) {
-            [weakself showAlert:@"姓名不能为空"];
-        } else if (![textfiled.text isChinese]) {
+        weakself.acceptName = textfiled;
         
-            [weakself showAlert:@"姓名必须为中文"];
-        } else {
-        
-            
-        }
     };
-    
+
     self.identityInfoView.identiityTextBlock = ^(UITextField * textfiled) {
     
-       BOOL flag = [[NSString alloc] judgeIdentityStringValid:textfiled.text];
-        if (!flag) {
-            
-            [weakself showAlert:@"您输入的身份证格式不正确"];
-        } else {
-        
-        
-        }
+        weakself.acceptIdebtity = textfiled;
         
     };
     
+    if (self.acceptName.text.length == 0) {
+        
+        [self showAlert:@"姓名不能为空"];
+        
+    } else if (![self.acceptName.text isChinese]) {
+        
+        [self showAlert:@"姓名必须为中文"];
+        
+    } else if (self.acceptName.text.length > 4){
+        
+        [self showAlert:@"姓名最多四个汉字"];
+    } else {
+    
+        BOOL flag = [[NSString alloc] judgeIdentityStringValid:self.acceptIdebtity.text];
+        
+        if (!flag) {
+            
+            [self showAlert:@"您输入的身份证格式不正确"];
+        } else {
+            
+            [self requestNameAndIdentiry];
+        }
+    }
     
 }
 
-- (void)leftBackBtnAction {
+
+
+#pragma 网络请求
+- (void)requestNameAndIdentiry {
+
+#warning 验证身份
     
-    [self.navigationController popViewControllerAnimated:YES];
+}
+#pragma 提交认证跳转
+- (void)pushToAddPhoto {
+    
+    //    UIImagePickerController * pickVC = [[UIImagePickerController alloc] init];
+    //
+    //    [self.navigationController pushViewController:pickVC animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

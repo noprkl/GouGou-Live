@@ -1,13 +1,13 @@
 //
-//  MyHeaderView.h
+//  AllOrderGoodsCell.h
 //  GouGou-Live
 //
-//  Created by ma c on 16/10/25.
+//  Created by ma c on 16/11/10.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface MyHeaderView : UIView
+@interface AllOrderGoodsCell : UITableViewCell
 
 @end

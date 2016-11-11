@@ -35,24 +35,32 @@ static NSString * indenifer = @"addressCellID";
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
     
 }
 - (void)initUI {
 
     self.title = @"商家地址";
     self.edgesForExtendedLayout = 0;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStyleDone) target:self action:@selector(ClickAddBtnBlock)];
+    
     [self.view addSubview:self.tableview];
     [self.tableview makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
 }
+- (void)ClickAddBtnBlock {
 
+
+}
+#pragma mark
+#pragma mark - 懒加载
 - (NSArray *)dataArray {
 
     if (!_dataArray) {
@@ -73,7 +81,8 @@ static NSString * indenifer = @"addressCellID";
     }
     return  _tableview;
 }
-
+#pragma mark
+#pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    return self.dataArray.count;
     return 3;
@@ -111,7 +120,6 @@ static NSString * indenifer = @"addressCellID";
         
     };
     
-    
     return cell;
 }
 
@@ -119,23 +127,6 @@ static NSString * indenifer = @"addressCellID";
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-
-    UIBarButtonItem * rightBar = [[UIBarButtonItem alloc] init];
-    
-    [rightBar setImage:[UIImage imageNamed:@"添加"]];
-    self.navigationItem.rightBarButtonItem = rightBar;
-    
-}
-
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

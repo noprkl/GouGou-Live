@@ -66,6 +66,14 @@
     return [predicate evaluateWithObject:self];
 }
 
++ (BOOL)validateCharacter:(NSString *)string {
+    const char *cStr = [string UTF8String];
+    if (strlen(cStr) == 1) {
+        return YES;
+    }
+    return NO;
+}
+
 // 判断身份证号是否正确
 - (BOOL)judgeIdentityStringValid:(NSString *)identityString {
     

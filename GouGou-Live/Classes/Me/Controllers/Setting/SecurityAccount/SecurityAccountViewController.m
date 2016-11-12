@@ -7,7 +7,9 @@
 //
 
 #import "SecurityAccountViewController.h"
-#import "SurePsdViewController.h"
+#import "ResetPsdViewController.h"
+#import "ResetPsdAlertView.h"
+
 
 @interface SecurityAccountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -27,14 +29,6 @@
     
     [self setNavBarItem];
 }
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (NSArray *)dataArr {
     if (!_dataArr) {
         _dataArr = @[@"重置登录密码", @"重置支付密码"];
@@ -43,8 +37,8 @@
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 500) style:(UITableViewStylePlain)];
-        
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
+        _tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.bounces = NO;
         _tableView.delegate = self;
@@ -82,12 +76,43 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    __weak typeof(self) weakSelf = self;
+    DLog(@"%ld", indexPath.row);
+    if (indexPath.row == 0) {
+        ResetPsdAlertView *resetLoginAlert = [[ResetPsdAlertView alloc] init];
+        [resetLoginAlert show];
+        resetLoginAlert.title = @"登录密码重置";
+        resetLoginAlert.placeHolder = @"请输入原登录密码";
+        resetLoginAlert.noteString = @"原密码不能为空";
+        resetLoginAlert.sureBlock = ^(){
+
+            [weakSelf pushResetPsdVC];
+            
+            return @"输入有误";
+        };
+    }else if (indexPath.row == 1){
+        
+        ResetPsdAlertView *resetPayAlert = [[ResetPsdAlertView alloc] init];
+        [resetPayAlert show];
+        resetPayAlert.title = @"支付密码重置";
+        resetPayAlert.placeHolder = @"请输入原支付密码";
+        resetPayAlert.noteString = @"原密码不能为空";
+        resetPayAlert.sureBlock = ^(){
+            
+            [self pushResetPsdVC];
+            
+            return @"输入有误";
+        };
+    }
+    
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (void)pushResetPsdVC {
+        ResetPsdViewController *surePsdVC = [[ResetPsdViewController alloc] init];
+        surePsdVC.title = @"新密码确认";
     
-    SurePsdViewController *surePsdVC = [[SurePsdViewController alloc] init];
-    surePsdVC.title = @"密码确认";
-    
-    [self.navigationController pushViewController:surePsdVC animated:YES];
+        [self.navigationController pushViewController:surePsdVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

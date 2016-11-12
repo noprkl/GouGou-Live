@@ -32,6 +32,8 @@
 @property (strong,nonatomic) UIButton *deleteButton;
 /** 间隔 */
 @property (strong,nonatomic) UIView *spaceView;
+/** 随后选中状态 */
+@property (strong,nonatomic) UIButton *lastChooseBtn;
 
 @end
 
@@ -57,7 +59,8 @@
     }
     return self;
 }
-
+#pragma mark
+#pragma mark - 约束
 - (void)layoutSubviews {
 
     [super layoutSubviews];
@@ -148,7 +151,8 @@
     
 }
 
-
+#pragma mark
+#pragma mark - 懒加载
 - (UIImageView *)photoImage {
 
     if (!_photoImage) {
@@ -261,8 +265,9 @@
         [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
         [_deleteButton setTitle:@"删除" forState:UIControlStateSelected];
         [_deleteButton setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
+        [_deleteButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateSelected];
         _deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_deleteButton addTarget:self action:@selector(_deleteButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_deleteButton addTarget:self action:@selector(deleteButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _deleteButton;
 }
@@ -276,14 +281,14 @@
     return _spaceView;
 }
 
-- (void)_deleteButton:(UIButton *)btn {
+- (void)deleteButton:(UIButton *)btn {
     
     btn.selected = !btn.selected;
-    
-    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-//    btn.titleLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-   
-    
+    if (btn.selected) {
+         btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+    } else {
+        btn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
 }
 
 - (void)awakeFromNib {

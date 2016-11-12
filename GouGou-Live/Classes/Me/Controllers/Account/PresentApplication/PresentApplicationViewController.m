@@ -12,15 +12,8 @@
 
 @interface PresentApplicationViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *moneyTextfiled;
+
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
-/** 蒙版 */
-@property (strong,nonatomic) UIView *hud;
-/** 提示框View */
-@property (strong,nonatomic) PromptView *promptView;
-
-/** 文本框 */
-@property (strong,nonatomic) UITextField *textField;
-
 
 @end
 
@@ -28,6 +21,7 @@
 #pragma mark
 #pragma mark - 网络请求
 - (void)codePayPsdRequest {
+    
 #pragma mark 验证支付密码
     
 //    NSString * payPsdCode = self.textField.text;
@@ -37,7 +31,6 @@
     PresentWaitingViewController * presentWatiVC = [[PresentWaitingViewController alloc] init];
     
     [self.navigationController pushViewController:presentWatiVC animated:YES];
-    
 
 }
 
@@ -62,17 +55,13 @@
         __weak typeof(self) weakself = self;
         // 提示框textfiled设置代理
         prompt.playpsdBlock = ^(UITextField *textfiled) {
-
-            weakself.textField = textfiled;
-            
-            textfiled.delegate = self;
             
         };
         // 点击提示框确认按钮请求支付密码
         prompt.clickSureBtnBlock = ^(){
-            
             [weakself codePayPsdRequest];
-            
+
+            return @"输入错误";
         };
         // 显示蒙版
         [prompt show];
@@ -124,32 +113,22 @@
         }else{
             return NO;
         }
-        
-    
-    }else if(textField == self.textField){
-        
-        BOOL flag = [NSString validateNumber:string];
-        if (range.location < 11 && flag) {
-            
-            return YES;
-        
-        } else if (range.location > 20) {
-            
-            return YES;
-        }
-        return YES;
     }
+//    else if(textField == self.textField){
+//        
+//        BOOL flag = [NSString validateNumber:string];
+//        if (range.location < 11 && flag) {
+//            
+//            return YES;
+//        
+//        } else if (range.location > 20) {
+//            
+//            return YES;
+//        }
+//        return YES;
+//    }
     
     return NO;
-}
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

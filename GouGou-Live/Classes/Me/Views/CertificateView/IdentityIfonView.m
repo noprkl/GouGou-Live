@@ -201,13 +201,21 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
     if (textField == self.nameTextfiled) {
+        
         if ([string isChinese]) {
+            
+            return YES;
+        }
+        
+        if (range.location < 4) {
+           
             return YES;
         }
         return NO;
+    
+    
     }else if (textField == self.identitiNumTextfiled) {
        
-//        BOOL flag = [[NSString alloc] judgeIdentityStringValid:string];
         if (range.location < 18) {
             return YES;
         }

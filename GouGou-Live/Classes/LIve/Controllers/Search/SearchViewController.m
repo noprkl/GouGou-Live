@@ -19,28 +19,26 @@
 static NSString *cellid = @"cellid";
 
 @implementation SearchViewController
-
+#pragma mark
+#pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initUI];
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
+}
+
 - (void)initUI {
     [self.view addSubview:self.tableView];
     [self setNavBarItem];
-}
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -52,7 +50,8 @@ static NSString *cellid = @"cellid";
     }
     return _tableView;
 }
-#pragma mark - Table view data source
+
+#pragma mark - Tableview 代理
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
@@ -75,14 +74,8 @@ static NSString *cellid = @"cellid";
     return cell;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
-    
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
-}
-
 @end

@@ -9,5 +9,11 @@
 #import "BaseViewController.h"
 
 @interface MyViewController : BaseViewController
+/** 是否认证 */
+@property (assign,nonatomic) BOOL isCertitycate;
+/** 接收未认证 */
+@property (strong,nonatomic) UIViewController *promptVC;
+/** 接收认证 */
+@property (strong,nonatomic) UIViewController *certityVC;
 
 @end

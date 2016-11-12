@@ -42,7 +42,7 @@
    
     [self.iconView makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(10);
-        make.right.equalTo(self.centerX).offset(-2);
+        make.right.equalTo(self.centerX).offset(-10);
     }];
     
     [self.loginBtn makeConstraints:^(MASConstraintMaker *make) {
@@ -89,7 +89,7 @@
     if (!_loginBtn) {
         _loginBtn = [FilteButton buttonWithType:(UIButtonTypeSystem)];
         [_loginBtn setTitle:@"登录" forState:(UIControlStateNormal)];
-        _loginBtn.titleLabel.font = [UIFont systemFontOfSize:20];
+        _loginBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [_loginBtn setImage:[UIImage imageNamed:@"返回-（小）"] forState:(UIControlStateNormal)];
         [_loginBtn addTarget:self action:@selector(ClickLoginBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -113,6 +113,7 @@
     if (!_liveBtn) {
         _liveBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [_liveBtn setTintColor:[UIColor colorWithHexString:@"#333333"]];
+        _liveBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [_liveBtn setTitle:@"商家认证后才能直播" forState:(UIControlStateNormal)];
         [_liveBtn addTarget:self action:@selector(ClickLiveBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }

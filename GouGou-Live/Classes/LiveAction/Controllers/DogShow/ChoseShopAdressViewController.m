@@ -67,6 +67,7 @@ static NSString *cellid = @"ChoseShopAdressCell";
     }
     return _tableView;
 }
+
 #pragma mark
 #pragma mark - 代理
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,7 +83,6 @@ static NSString *cellid = @"ChoseShopAdressCell";
     NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:@"test"];
 
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-    DLog(@"test");
     [self.navigationController popViewControllerAnimated:YES];
 
 }

@@ -28,22 +28,6 @@
     [self initUI];
     [self setNavBarItem];
 }
-- (void)setNavBarItem {
-    
-    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-        
-    self.title = @"账号注册";
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"登录" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightLoginBtnAction)];
-
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -51,6 +35,10 @@
     self.navigationController.navigationBarHidden = NO;
 }
 - (void)initUI {
+    self.title = @"账号注册";
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"登录" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightLoginBtnAction)];
     
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;
@@ -62,22 +50,23 @@
 #pragma mark - Action
 - (void)rightLoginBtnAction {
     
-    [self leftBackBtnAction];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)clickGetCodeAction:(UIButton *)sender {
     
     [self freetimeout];
+
     NSDictionary *dict = @{
                            @"tel" : @([self.phoneTextField.text integerValue]),
                            @"type" : @0
                            };
     [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
@@ -109,7 +98,6 @@
             [self.navigationController pushViewController:sureVC animated:YES];
         }
     }
-    
 }
 - (IBAction)clickReadBtnAction:(UIButton *)sender {
     
@@ -165,11 +153,10 @@
         
     }else if (textField == self.codeTextField){
         BOOL flag = [NSString validateNumber:string];
-        if (range.location < 6 && flag) {
-            self.sureBtn.enabled = NO;
+        if (range.location <= 5 && flag) {
             return YES;
         }
-        self.sureBtn.enabled = YES;
+
         return NO;
     }else{
         
@@ -177,6 +164,8 @@
     }
 
 }
+#pragma mark
+#pragma mark - 倒计时
 - (void)freetimeout {
     __block NSInteger time = LASTTIME;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -200,6 +189,7 @@
                 self.sendCodeBtn.userInteractionEnabled = NO;
                 
                 self.sendCodeBtn.tintColor = [UIColor colorWithHexString:@"#99cc33"];
+               
                 NSString *string = [NSString stringWithFormat:@"%ldS",time];
                 
                 [self.sendCodeBtn setTitle:string forState:(UIControlStateNormal)];

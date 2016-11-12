@@ -56,6 +56,7 @@
                            };
     [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -69,25 +70,41 @@
 
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
+    NSString *phoneNumber = self.phoneTextField.text;
     
-    SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
-    sureVC.title = @"新密码设置";
-    sureVC.telNumber = self.phoneTextField.text;
-    sureVC.codeNumber = self.codeTextField.text;
+    BOOL flag =  [NSString valiMobile:phoneNumber];
     
-    [self.navigationController pushViewController:sureVC animated:YES];
+    if (phoneNumber.length == 0) {
+        
+        [self showAlert:@"手机号不能为空"];
+        
+    }else if(!flag){
+        
+        [self showAlert:@"所输入的不是手机号"];
+        
+    }else{
+        
+        SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
+        sureVC.title = @"新密码设置";
+        sureVC.telNumber = self.phoneTextField.text;
+        sureVC.codeNumber = self.codeTextField.text;
+        
+        [self.navigationController pushViewController:sureVC animated:YES];
+    }
+
+   
 }
 
 #pragma mark
 #pragma mark - 文本框监听
-#pragma mark
-#pragma mark - 文本监听
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if (textField == self.phoneTextField) {
-        
-        if (range.location < 11 ) {
+
+        BOOL flag = [NSString validateNumber:string];
+
+        if (range.location < 11 && flag) {
             
             return YES;
         }
@@ -95,11 +112,12 @@
         
     }else if (textField == self.codeTextField){
         
-        if (range.location < 6) {
-            self.sureBtn.enabled = NO;
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location <= 5 && flag) {
+            
             return YES;
         }
-        self.sureBtn.enabled = YES;
+
         return NO;
     }else{
         

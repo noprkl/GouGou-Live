@@ -68,7 +68,7 @@ static NSString *cellid = @"SizeFilterCellID";
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 264, SCREEN_WIDTH, 264);
+    rect = CGRectMake(0, SCREEN_HEIGHT - 44 * self.dataArr.count, SCREEN_WIDTH, 44 * self.dataArr.count);
     self.frame = rect;
     //渐入动画
     [self fadeIn];
@@ -109,13 +109,17 @@ static NSString *cellid = @"SizeFilterCellID";
 - (NSArray *)dataPlist {
     if (!_dataPlist) {
         
-        _dataPlist = @[@"大型犬", @"中型犬", @"小型犬", @"不限"];
+        _dataPlist = [NSArray array];
     }
     return _dataPlist;
 }
+- (void)setDataArr:(NSArray *)dataArr {
+    _dataArr = dataArr;
+    _dataPlist = dataArr;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.dataPlist.count;
+    return self.dataPlist.count - 2;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -126,7 +130,7 @@ static NSString *cellid = @"SizeFilterCellID";
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
     }
     
-    NSString *text = self.dataPlist[indexPath.row];
+    NSString *text = self.dataPlist[indexPath.row + 1];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     label.textColor = [UIColor blackColor];
@@ -155,7 +159,7 @@ static NSString *cellid = @"SizeFilterCellID";
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
         
-        label.text = @"体型";
+        label.text = [self.dataPlist firstObject];
         label.textAlignment = NSTextAlignmentCenter;
        
         // 线
@@ -174,11 +178,11 @@ static NSString *cellid = @"SizeFilterCellID";
         
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
-        [button setTitle:@"确认" forState:(UIControlStateNormal)];
+        [button setTitle:[self.dataPlist lastObject] forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:(UIControlStateNormal)];
         
         [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
-        [button addTarget:self action:@selector(dismiss) forControlEvents:(UIControlEventTouchDown)];
+        [button addTarget:self action:@selector(clickFooterBtnAction) forControlEvents:(UIControlEventTouchDown)];
 
         return button;
     }
@@ -186,12 +190,21 @@ static NSString *cellid = @"SizeFilterCellID";
     return nil;
 
 }
+- (void)clickFooterBtnAction {
+    [self dismiss];
+
+    if (_bottomBlock) {
+        _bottomBlock(self.lastString);
+    }
+}
 
 #pragma mark 选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-     NSString *text = self.dataPlist[indexPath.row];
+     NSString *text = self.dataPlist[indexPath.row + 1];
+    self.lastString = text;
     if (_sizeCellBlock) {
+//        [self dismiss];
         _sizeCellBlock(text);
     }
 }

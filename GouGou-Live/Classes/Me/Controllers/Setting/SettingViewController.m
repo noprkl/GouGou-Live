@@ -7,8 +7,7 @@
 //
 
 #import "SettingViewController.h"
-
-#import "ResetLoginPsdView.h"
+#import "MyViewController.h"
 
 @interface SettingViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -34,29 +33,20 @@ static NSString *cellid = @"SetcellId";
     
     [self setNavBarItem];
 }
-- (void)setNavBarItem {
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
 
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (void)initUI {
     [self.view addSubview:self.tableView];
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 500) style:(UITableViewStylePlain)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50 - 64) style:(UITableViewStylePlain)];
+        _tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.bounces = NO;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
-        
     }
     return _tableView;
 }
@@ -89,7 +79,6 @@ static NSString *cellid = @"SetcellId";
     return [self.dataArr[section] count];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
@@ -97,12 +86,18 @@ static NSString *cellid = @"SetcellId";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
-    
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     cell.textLabel.text = self.dataArr[indexPath.section][indexPath.row];
-    cell.detailTextLabel.text = @"detailTextLabel";
-    
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            cell.detailTextLabel.text = self.dataArr[indexPath.section][indexPath.row];
+        }
+    }else if (indexPath.section == 2){
+        if (indexPath.row == 1) {
+            cell.detailTextLabel.text = self.dataArr[indexPath.section][indexPath.row];
+        }
+    }
     return cell;
 }
 
@@ -114,13 +109,20 @@ static NSString *cellid = @"SetcellId";
     UIViewController *VC = [[NSClassFromString(cellText) alloc] init];
     VC.title = title;
     [self.navigationController pushViewController:VC animated:YES];
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 10;
 }
 - (IBAction)clickLoginoutAction:(UIButton *)sender {
+
+    [UserInfos sharedUser].isLogin = NO;
+    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].isLogin) forKey:@"isLogin"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [UserInfos removeUser];
+
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

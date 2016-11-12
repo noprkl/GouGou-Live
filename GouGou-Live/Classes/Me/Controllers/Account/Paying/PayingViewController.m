@@ -73,8 +73,11 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
     if (textField == self.userNameTexfiled) {
-        
-        
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
+            return YES;
+        }
+        return NO;
         
     }else if (textField == self.payingTextfiled){
         
@@ -84,14 +87,6 @@
         }
         return NO;
     }
-    return YES;
-}
-
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    return NO;
 }
 @end

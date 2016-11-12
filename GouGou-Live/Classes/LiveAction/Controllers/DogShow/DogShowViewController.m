@@ -37,7 +37,8 @@
 static NSString *cellid = @"DogShowCellid";
 
 @implementation DogShowViewController
-
+#pragma mark
+#pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blueColor];
@@ -57,6 +58,8 @@ static NSString *cellid = @"DogShowCellid";
     [self.view addSubview:self.tableView];
     
 }
+#pragma mark
+#pragma mark - 懒加载
 - (NSArray *)dataArr {
 
     if (!_dataArr) {
@@ -76,6 +79,25 @@ static NSString *cellid = @"DogShowCellid";
     }
     return _tableView;
 }
+- (NSArray *)shareAlertBtns {
+    if (!_shareAlertBtns) {
+        _shareAlertBtns = [NSArray array];
+        
+        ShareBtnModel *model1 = [[ShareBtnModel alloc] initWithTitle:@"朋友圈" image:[UIImage imageNamed:@"朋友圈selected"]];
+        
+        ShareBtnModel *model2 = [[ShareBtnModel alloc] initWithTitle:@"微信" image:[UIImage imageNamed:@"微信select"]];
+        
+        ShareBtnModel *model3 = [[ShareBtnModel alloc] initWithTitle:@"QQ空间" image:[UIImage imageNamed:@"QQ空间"]];
+        ShareBtnModel *model4 = [[ShareBtnModel alloc] initWithTitle:@"新浪微博" image:[UIImage imageNamed:@"新浪微博"]];
+        ShareBtnModel *model5 = [[ShareBtnModel alloc] initWithTitle:@"QQ" image:[UIImage imageNamed:@"QQ-(1)"]];
+        
+        _shareAlertBtns = @[model1, model2, model3, model4, model5];
+        
+    }
+    return _shareAlertBtns;
+}
+#pragma mark
+#pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    return self.dataArr.count;
     return 4;
@@ -157,25 +179,8 @@ static NSString *cellid = @"DogShowCellid";
     [self.navigationController pushViewController:dogBookVC animated:YES];
 }
 
-- (NSArray *)shareAlertBtns {
-    if (!_shareAlertBtns) {
-        _shareAlertBtns = [NSArray array];
-        
-        ShareBtnModel *model1 = [[ShareBtnModel alloc] initWithTitle:@"朋友圈" image:[UIImage imageNamed:@"朋友圈selected"]];
-        
-        ShareBtnModel *model2 = [[ShareBtnModel alloc] initWithTitle:@"微信" image:[UIImage imageNamed:@"微信select"]];
-        
-        ShareBtnModel *model3 = [[ShareBtnModel alloc] initWithTitle:@"QQ空间" image:[UIImage imageNamed:@"QQ空间"]];
-        ShareBtnModel *model4 = [[ShareBtnModel alloc] initWithTitle:@"新浪微博" image:[UIImage imageNamed:@"新浪微博"]];
-        ShareBtnModel *model5 = [[ShareBtnModel alloc] initWithTitle:@"QQ" image:[UIImage imageNamed:@"QQ-(1)"]];
-        
-        _shareAlertBtns = @[model1, model2, model3, model4, model5];
-        
-    }
-    return _shareAlertBtns;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     return 500;
 }
 - (void)didReceiveMemoryWarning {

@@ -14,7 +14,7 @@
 #define SERVER_HOST @"http://gougou.itnuc.com/api/"
 
 /** 图片服务器 */
-#define IMAGE_HOST @"http://images.itnuc.com"
+#define IMAGE_HOST @"http://images.itnuc.com/"
 
 
 
@@ -22,7 +22,7 @@
 #define API_Login @"UserService/login"
 
 /** 快速登录 get */
-#define API_LoginQuick @"UserService/loginQuick/"
+#define API_LoginQuick @"UserService/loginQuick"
 
 /** 注册接口 get */
 #define API_Register @"UserService/register"
@@ -41,5 +41,16 @@
 
 /** 钱包接口 */
 #define API_UserAsset @"UserService/getUserAsset"
+
+/** 个人昵称 */
+#define API_Nickname @"UserService/nickname"
+/** 个人签名 */
+#define API_Signature @"UserService/signature"
+
+/** 个人头像 */
+#define API_Portrait @"UserService/portrait"
+
+/** 更多印象 */
+#define API_Impression @"ProductService/Impression"
 
 @end

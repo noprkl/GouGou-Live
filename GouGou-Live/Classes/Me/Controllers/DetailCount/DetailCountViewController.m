@@ -19,6 +19,9 @@
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) NSString *allCount; /**< 总收入 */
+
+@property(nonatomic, strong) UILabel *headerLabel; /**< 头部内容 */
+
 @end
 
 static NSString *cellid = @"cellid";
@@ -89,6 +92,7 @@ static NSString *cellid = @"cellid";
         label.font = [UIFont systemFontOfSize:16];
 //        label.text = self.allCount;
         label.text = @"总收入：10000";
+        self.headerLabel = label;
         [view addSubview:label];
         
         return view;
@@ -118,38 +122,30 @@ static NSString *cellid = @"cellid";
         _centerView.talkBlock = ^(UIButton *btn){
             
             DLog(@"全部");
-            
+            weakSelf.headerLabel.text = @"总收入：10000";
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
             
-                        DLog(@"收入");
-            
+            DLog(@"收入");
+            weakSelf.headerLabel.text = @"总收入：10000";
             return YES;
         };
         _centerView.serviceBlock = ^(UIButton *btn){
             DLog(@"支出");
-        
+        weakSelf.headerLabel.text = @"总支出：10000";
             return YES;
         };
         _centerView.sellerBlock = ^(UIButton *btn){
 
             DLog(@"交易中");
-            
+            weakSelf.headerLabel.text = @"交易中：10000";
             return YES;
         };
     }
     return _centerView;
 }
 
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

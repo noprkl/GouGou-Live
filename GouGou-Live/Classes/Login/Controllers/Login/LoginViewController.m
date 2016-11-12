@@ -12,6 +12,8 @@
 
 #import "CodeLoginViewController.h"
 
+#import "NSString+MD5Code.h"
+
 @interface LoginViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneTestField;
@@ -40,11 +42,9 @@
     [self.phoneTestField setValue:textcolor forKeyPath:@"_placeholderLabel.textColor"];
     [self.phoneTestField setValue:textFont forKeyPath:@"_placeholderLabel.font"];
     
-    
     self.psdTextField.placeholder = @"密码  请输入6-20位数字或字母";
     [self.psdTextField setValue:textcolor forKeyPath:@"_placeholderLabel.textColor"];
     [self.psdTextField setValue:textFont forKeyPath:@"_placeholderLabel.font"];
-    
     
     self.phoneTestField.delegate = self;
     self.psdTextField.delegate = self;
@@ -56,6 +56,9 @@
     [super viewWillAppear:animated];
     // navBar隐藏
     self.navigationController.navigationBarHidden = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = NO;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -95,20 +98,62 @@
             [self showAlert:@"密码最多20位"];
             
         }else{
+            NSString *pwd = [NSString md5WithString:self.psdTextField.text];
+
             NSDictionary *dict = @{
-                                   @"user_tel":@([self.phoneTestField.text intValue]),
-                                   @"user_pwd":self.psdTextField.text
+                                   @"user_tel":@([self.phoneTestField.text integerValue]),
+                                   @"user_pwd":pwd
                                    };
-            
+            // 请求之前删掉上一次的信息
+
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
+               
                 [self showAlert:successJson[@"message"]];
-//                DLog(@"%@", successJson);
+                
+                if ([successJson[@"message"] isEqualToString:@"成功"]) {
+                    DLog(@"%@", successJson);
+                    
+                    [self saveUserWithID:successJson[@"data"][@"id"]
+                            user_img_url:successJson[@"data"][@"user_img_url"]
+                               user_name:successJson[@"data"][@"user_name"]
+                          user_nick_name:successJson[@"data"][@"user_nick_name"]
+                                user_tel:successJson[@"data"][@"user_tel"]
+                             is_merchant:successJson[@"data"][@"is_merchant"]
+                                 is_real:successJson[@"data"][@"is_real"]
+                                 user_motto:successJson[@"data"][@"user_motto"]
+                                 isLogin:@(YES)];
+                    // 通知给所有人 已经登录
+                    NSNotification* notification = [NSNotification notificationWithName:@"LoginSuccess" object:successJson[@"data"]];
+
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
+
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
         }
     }
+}
+- (void)saveUserWithID:(NSString *)ID
+          user_img_url:(NSString *)user_img_url
+             user_name:(NSString *)user_name
+        user_nick_name:(NSString *)user_nick_name
+              user_tel:(NSString *)user_tel
+           is_merchant:(NSString *)is_merchant
+               is_real:(NSString *)is_real
+            user_motto:(NSString *)user_motto
+               isLogin:(BOOL)isLogin
+{
+    [UserInfos sharedUser].userimgurl = ![user_img_url isEqual:[NSNull null]] ?user_img_url:@"";
+    [UserInfos sharedUser].username = ![user_name isEqual:[NSNull null]] ?user_name:@"";
+    [UserInfos sharedUser].usernickname = ![user_nick_name isEqual:[NSNull null]] ?user_nick_name:@"";
+    [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
+    [UserInfos sharedUser].ID = ID;
+    [UserInfos sharedUser].usertel = user_tel;
+    [UserInfos sharedUser].isLogin = YES;
     
+    [UserInfos setUser];
 }
 
 - (IBAction)clickRegisteBtnAction:(UIButton *)sender {
@@ -117,7 +162,6 @@
     [self.navigationController pushViewController:registeVC animated:YES];
 }
 - (IBAction)clickCodeBtnAction:(UIButton *)sender {
-    
     
     CodeLoginViewController *codeVC = [[CodeLoginViewController alloc] init];
     
@@ -146,8 +190,8 @@
     // 判断正则
     BOOL flag =  [NSString valiMobile:textField.text];
     if (!flag) {
-        
-        DLog(@"输入不符合");
+        [self showAlert:@"请输入手机号"];
+//        DLog(@"输入不符合");
     }
     
     

@@ -16,8 +16,7 @@
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
 
 // 验证码倒计时事件
-#define LASTTIME 10
-
+#define LASTTIME 60
 
 #pragma mark - 第三方头文件
 #define MAS_SHORTHAND
@@ -25,6 +24,7 @@
 #import <Masonry.h>
 #import <AFNetworking.h>
 #import <MJExtension.h>
+#import <UIImageView+WebCache.h>
 
 #pragma mark - 自定义文件
 // 网络请求URL文件
@@ -33,7 +33,8 @@
 #import "NSString+CheckString.h"
 // 16进制颜色转RGB
 #import "UIColor+HexString.h"
-
+// 个人信息
+#import "UserInfos.h"
 
 // 展示狗狗图片的边距
 #define kDogImageWidth 10

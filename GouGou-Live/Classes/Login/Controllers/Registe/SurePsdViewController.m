@@ -21,24 +21,24 @@
 - (void)surePsdRequest {
     
     NSString *pwd = [NSString md5WithString:self.psdTextField.text];
-    
+    DLog(@"%@", pwd);
     NSDictionary *dict = @{
-                           @"user_tel":@([self.telNumber intValue]),
+                           @"user_tel":@([self.telNumber integerValue]),
                            @"user_pwd":pwd,
                            @"code":@([self.codeNumber integerValue])
                            };
     [self getRequestWithPath:API_Register params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
-//        if (successJson) {
+        if ([successJson[@"message"] isEqualToString:@"注册成功"]) {
+            
 //            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
 //            
 //            [self.navigationController pushViewController:sureSuccVC animated:YES];
-//        }
+        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-    
 
 }
 - (void)viewDidLoad {
@@ -93,8 +93,6 @@
     }else{
         
         [self surePsdRequest];
-        SurePsdSuccessViewController *sureSuccessVC = [[SurePsdSuccessViewController alloc] init];
-        [self.navigationController pushViewController:sureSuccessVC animated:YES];
     }
 }
 

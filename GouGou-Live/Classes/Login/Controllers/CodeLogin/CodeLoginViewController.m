@@ -71,36 +71,65 @@
 #pragma mark 请求验证码
     [self freetimeout];
     
-//    [[AFHTTPSessionManager manager] GET:@"http://gougou.itnuc.com/api/UserService/sms" parameters:@{@"tel":@18401703756, @"type":@2} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        DLog(@"%@", responseObject);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        DLog(@"%@", error);
-//    }];
-
-    
     NSDictionary *dict = @{
-                           @"tel" : @([self.phoneNumber.text intValue]),
+                           @"tel" : @([self.phoneNumber.text integerValue]),
                            @"type" : @2
                            };
+    
     [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
+        DLog(@"%@", successJson[@"message"]);
+        [self showAlert:successJson[@"message"]];
+        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
 - (IBAction)chickSureBtnAction:(UIButton *)sender {
+    NSString *phoneNumber = self.phoneNumber.text;
     
-    NSDictionary *dict = @{
-                           @"user_tel":@([self.phoneNumber.text intValue]),
-                           @"code":self.psdNumber.text
-                           };
+    BOOL flag =  [NSString valiMobile:phoneNumber];
     
-    [self getRequestWithPath:API_LoginQuick params:dict success:^(id successJson) {
-        [self showAlert:successJson[@"message"]];
-        DLog(@"%@", successJson);
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+    if (phoneNumber.length == 0) {
+        
+        [self showAlert:@"手机号不能为空"];
+        
+    }else if(!flag){
+        
+        [self showAlert:@"所输入的不是手机号"];
+        
+    }else{
+        
+            NSDictionary *dict = @{
+                                   @"user_tel":@([phoneNumber integerValue]),
+                                   @"code":self.psdNumber.text
+                                   };
+        // 请求之前删掉上一次的信息
+        
+        [self getRequestWithPath:API_LoginQuick params:dict success:^(id successJson) {
+            
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"成功"]) {
+                
+                [self saveUserWithID:successJson[@"data"][@"id"]
+                        user_img_url:successJson[@"data"][@"user_img_url"]
+                           user_name:successJson[@"data"][@"user_name"]
+                      user_nick_name:successJson[@"data"][@"user_nick_name"]
+                            user_tel:successJson[@"data"][@"user_tel"]
+                         is_merchant:successJson[@"data"][@"is_merchant"]
+                             is_real:successJson[@"data"][@"is_real"]
+                             isLogin:@(YES)];
+                // 通知给所有人 已经登录
+                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
+                
+                [[NSNotificationCenter defaultCenter] postNotification:notification];                
+
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 
 }
 
@@ -115,8 +144,23 @@
     
     
 }
-
-
+- (void)saveUserWithID:(NSString *)ID
+          user_img_url:(NSString *)user_img_url
+             user_name:(NSString *)user_name
+        user_nick_name:(NSString *)user_nick_name
+              user_tel:(NSString *)user_tel
+           is_merchant:(NSString *)is_merchant
+               is_real:(NSString *)is_real
+               isLogin:(BOOL)isLogin{
+    [UserInfos sharedUser].ID = ID;
+    [UserInfos sharedUser].usernickname = user_nick_name;
+    [UserInfos sharedUser].usertel = user_tel;
+    [UserInfos sharedUser].ismerchant = is_merchant;
+    [UserInfos sharedUser].isreal = is_real;
+    [UserInfos sharedUser].isLogin = YES;
+    
+    [UserInfos setUser];
+}
 #pragma mark
 #pragma mark - 文本框监听
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -133,11 +177,11 @@
     }else if (textField == self.psdNumber){
         
         BOOL flag = [NSString validateNumber:string];
-        if (range.location < 6 && flag) {
-            self.sureBtn.enabled = NO;
+        if (range.location <= 5 && flag) {
+           
             return YES;
         }
-        self.sureBtn.enabled = YES;
+
         return NO;
     }else{
         

@@ -138,11 +138,11 @@
         _filtView.sizeBlock = ^(){
             
             DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
+            sizeView.dataArr = @[@"体型",@"大型犬", @"中型犬", @"小型犬", @"不限", @"确定"];
             [sizeView show];
             
 //            __weak typeof(sizeView) weakView = sizeView;
-
-            sizeView.sizeCellBlock = ^(NSString *size){
+            sizeView.bottomBlock = ^(NSString *size){
                 DLog(@"%@", size);
             };
             

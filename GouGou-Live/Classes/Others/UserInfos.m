@@ -50,7 +50,7 @@ static NSString *usermottoKey = @"usermotto";
 //    if ([UserInfos sharedUser].userimgurl != NULL) {
 //        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
 //    }
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
 //    if ([UserInfos sharedUser].username != NULL) {
 //        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].username forKey:usernameKey];

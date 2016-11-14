@@ -68,8 +68,8 @@
 
     if (_difFuncBlock) {
         _difFuncBlock(btn);
+
     }
-    
     self.lastButton.selected = NO;
     self.lastButton.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.lastButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

@@ -73,6 +73,7 @@
     
     sender.selected = !sender.selected;
 }
+
 - (IBAction)clickLoginBtnAction:(UIButton *)sender {
     
     NSString *phoneNumber = self.phoneTestField.text;
@@ -96,7 +97,6 @@
         }else if (psdNumber.length > 20) {
             
             [self showAlert:@"密码最多20位"];
-            
         }else{
             NSString *pwd = [NSString md5WithString:self.psdTextField.text];
 

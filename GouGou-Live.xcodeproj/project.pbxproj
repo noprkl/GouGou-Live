@@ -558,7 +558,6 @@
 			children = (
 				045D50F91DD94F75001854A8 /* AllOrderGoodsViewController.h */,
 				045D50FA1DD94F75001854A8 /* AllOrderGoodsViewController.m */,
-				045D50FB1DD94F75001854A8 /* OrderOption */,
 				045D50FE1DD94F75001854A8 /* ProtectPowerViewController.h */,
 				045D50FF1DD94F75001854A8 /* ProtectPowerViewController.m */,
 				045D51001DD94F75001854A8 /* WaitAssessViewController.h */,
@@ -569,6 +568,7 @@
 				045D51051DD94F75001854A8 /* WaitPayingViewController.m */,
 				045D51061DD94F75001854A8 /* WatiConsigneeViewController.h */,
 				045D51071DD94F75001854A8 /* WatiConsigneeViewController.m */,
+				045D50FB1DD94F75001854A8 /* OrderOption */,
 			);
 			path = DiffenfStateOrder;
 			sourceTree = "<group>";
@@ -1279,10 +1279,10 @@
 		0479B57E1DCADC7B00CB288A /* OrderGoods */ = {
 			isa = PBXGroup;
 			children = (
-				045D50F81DD94F75001854A8 /* DiffenfStateOrder */,
 				0479B57F1DCADC7B00CB288A /* OrderGoodsViewController.h */,
 				0479B5801DCADC7B00CB288A /* OrderGoodsViewController.m */,
 				0479B5811DCADC7B00CB288A /* OrderGoodsViewController.xib */,
+				045D50F81DD94F75001854A8 /* DiffenfStateOrder */,
 			);
 			path = OrderGoods;
 			sourceTree = "<group>";

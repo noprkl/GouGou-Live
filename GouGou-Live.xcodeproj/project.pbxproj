@@ -165,7 +165,6 @@
 		047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5E11DD564F80025290E /* HttpImageTool.m */; };
 		047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */; };
 		047AD6071DD5CE970025290E /* AllOrderGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F91DD5CE970025290E /* AllOrderGoodsCell.m */; };
-		047AD60C1DD5CE970025290E /* ResonsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD6041DD5CE970025290E /* ResonsTableView.m */; };
 		047AD60D1DD5CE970025290E /* TopButonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD6061DD5CE970025290E /* TopButonView.m */; };
 		047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047AD6271DD5E2090025290E /* SurePsdViewController.xib */; };
 		049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */; };
@@ -487,8 +486,6 @@
 		047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
 		047AD5F81DD5CE970025290E /* AllOrderGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsCell.h; sourceTree = "<group>"; };
 		047AD5F91DD5CE970025290E /* AllOrderGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderGoodsCell.m; sourceTree = "<group>"; };
-		047AD6031DD5CE970025290E /* ResonsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResonsTableView.h; sourceTree = "<group>"; };
-		047AD6041DD5CE970025290E /* ResonsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResonsTableView.m; sourceTree = "<group>"; };
 		047AD6051DD5CE970025290E /* TopButonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopButonView.h; sourceTree = "<group>"; };
 		047AD6061DD5CE970025290E /* TopButonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopButonView.m; sourceTree = "<group>"; };
 		047AD6271DD5E2090025290E /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
@@ -1718,8 +1715,6 @@
 		047AD6021DD5CE970025290E /* TopButtonsView */ = {
 			isa = PBXGroup;
 			children = (
-				047AD6031DD5CE970025290E /* ResonsTableView.h */,
-				047AD6041DD5CE970025290E /* ResonsTableView.m */,
 				047AD6051DD5CE970025290E /* TopButonView.h */,
 				047AD6061DD5CE970025290E /* TopButonView.m */,
 			);
@@ -2144,7 +2139,6 @@
 				0479B6031DCADC7B00CB288A /* LoginViewController.m in Sources */,
 				049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */,
 				045D510D1DD94F75001854A8 /* WaitPayingViewController.m in Sources */,
-				047AD60C1DD5CE970025290E /* ResonsTableView.m in Sources */,
 				0479B5FE1DCADC7B00CB288A /* TalkingView.m in Sources */,
 				0479B61D1DCADC7B00CB288A /* AboutUsViewController.m in Sources */,
 				045D51841DD9D88A001854A8 /* CostView.m in Sources */,

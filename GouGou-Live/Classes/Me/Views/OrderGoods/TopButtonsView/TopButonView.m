@@ -11,40 +11,52 @@
 @interface TopButonView  ()
 
 /** 按钮title数组 */
-@property (strong,nonatomic) NSArray *titleArray;
+@property (strong,nonatomic) NSArray *titles;
 /** 未选中图片名数组 */
-@property (strong,nonatomic) NSArray *unSelectedArray;
+@property (strong,nonatomic) NSArray *unSelecteds;
 /** 选中状态 */
-@property (strong,nonatomic) NSArray *selecedtArray;
+@property (strong,nonatomic) NSArray *selecteds;
+
 /** 最后选中的按钮 */
 @property (strong,nonatomic) UIButton *lastButton;
 
 @end
 
 @implementation TopButonView
+- (void)setTitleArray:(NSArray *)titleArray {
+    _titleArray = titleArray;
+    self.titles = titleArray;
+}
+- (void)setSelecedtArray:(NSArray *)selecedtArray {
+    _selecedtArray = selecedtArray;
+    self.selecteds = selecedtArray;
+}
+- (void)setUnSelectedArray:(NSArray *)unSelectedArray {
+    _unSelectedArray = unSelectedArray;
+    self.unSelecteds = unSelectedArray;
+}
+- (NSArray *)titles {
 
-- (NSArray *)titleArray {
-
-    if (!_titleArray) {
-        _titleArray = @[@"全部",@"待支付",@"代发货",@"待收货",@"待评价",@"维权"];
+    if (!_titles) {
+        _titles = [NSArray array];
     }
-    return _titleArray;
+    return _titles;
 }
 
-- (NSArray *)unSelectedArray {
+- (NSArray *)unSelecteds {
 
-    if (!_unSelectedArray) {
-        _unSelectedArray = @[@"全部",@"待付款",@"待发货",@"收货",@"待评价",@"维权"];;
+    if (!_unSelecteds) {
+        _unSelecteds = [NSArray array];
     }
-    return _unSelectedArray;
+    return _unSelecteds;
 }
 
-- (NSArray *)selecedtArray {
+- (NSArray *)selecteds {
 
-    if (!_selecedtArray) {
-        _selecedtArray = @[@"全部（点击）",@"待付款（点击）",@"待发货（点击）",@"收货（点击）",@"待评价（点击）",@"维权（点击）"];
+    if (!_selecteds) {
+        _selecteds = [NSArray array];
     }
-    return _selecedtArray;
+    return _selecteds;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -52,14 +64,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        [self addButtons];
     }
     return self;
 }
-
-- (void)addButtons {
-
-    NSInteger btnNum = 6;
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    NSInteger btnNum = self.titleArray.count;
     
     CGFloat btnW = SCREEN_WIDTH / btnNum;
     CGFloat btnH = 88;
@@ -67,15 +78,19 @@
     for (NSInteger i = 0; i < btnNum; i++) {
         
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
         button.tag = 80 + i;
         button.frame = CGRectMake(i * btnW, 0, btnW, btnH);
+        
         // 正常状态
         
-        [button setImage:[UIImage imageNamed:self.unSelectedArray[i]] forState:UIControlStateNormal];
-        [button setTitle:self.titleArray[i] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:self.unSelecteds[i]] forState:UIControlStateNormal];
+        [button setTitle:self.titles[i] forState:UIControlStateNormal];
+        
+        [button setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
         // 选中状态
-        [button setImage:[UIImage imageNamed:self.selecedtArray[i]] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:self.selecteds[i]] forState:UIControlStateSelected];
+        [button setTitleColor:[UIColor colorWithHexString:@"#ffa11a"] forState:UIControlStateSelected];
         
         // 字体设置
         button.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -96,6 +111,7 @@
     }
 }
 
+
 - (void)clickBtn:(UIButton *)btn {
     
     
@@ -108,9 +124,7 @@
         return;
     } else {
         
-        [btn setTitleColor:[UIColor colorWithHexString:@"#ffa11a"] forState:UIControlStateNormal];
-        
-        [self.lastButton setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
+
         btn.selected = YES;
     }
     

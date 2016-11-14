@@ -9,8 +9,10 @@
 #import "WaitPayingViewController.h"
 #import "AllOrderGoodsCell.h"
 #import "FunctionButtonView.h"
-#import "ResonsTableView.h"
+
 #import "PayingAllMoneyViewController.h"
+
+#import "DogSizeFilter.h"
 
 static NSString * allGoodsCell = @"allGoodsCellID";
 @interface WaitPayingViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -82,9 +84,16 @@ static NSString * allGoodsCell = @"allGoodsCellID";
     
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"取消订单"]) {
+
+            DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
+            sizeView.dataArr =  @[@"请选择原因", @"喜欢其他狗狗",@"不喜欢这只了",@"条件不允许养了",@"运费太贵", @"确定"];
+            [sizeView show];
             
-            ResonsTableView * reson = [[ResonsTableView alloc] init];
-            [reson show];
+            //            __weak typeof(sizeView) weakView = sizeView;
+            sizeView.bottomBlock = ^(NSString *size){
+                DLog(@"%@", size);
+            };
+
             
         } else if ([button.titleLabel.text  isEqual:@"支付全款"]){
             

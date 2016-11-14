@@ -67,6 +67,11 @@
 
     if (!_topView) {
         _topView  = [[TopButonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
+       
+        _topView.unSelectedArray = @[@"全部",@"待付款",@"待发货",@"收货",@"待评价",@"维权"];
+        _topView.titleArray = @[@"全部",@"待支付",@"代发货",@"待收货",@"待评价",@"维权"];
+        _topView.selecedtArray = @[@"全部（点击）",@"待付款（点击）",@"待发货（点击）",@"收货（点击）",@"待评价（点击）",@"维权（点击）"];
+        
         __weak typeof(self) weakself = self;
 
         _topView.difStateBlock = ^(UIButton *btn) {

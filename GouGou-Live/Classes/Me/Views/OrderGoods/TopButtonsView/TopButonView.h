@@ -15,4 +15,13 @@ typedef void(^ClickDifStateBlock)(UIButton * btn);
 
 /** 点击按钮回调 */
 @property (strong,nonatomic) ClickDifStateBlock difStateBlock;
+
+/** 按钮title数组 */
+@property (strong,nonatomic) NSArray *titleArray;
+
+/** 未选中图片名数组 */
+@property (strong,nonatomic) NSArray *unSelectedArray;
+
+/** 选中状态 */
+@property (strong,nonatomic) NSArray *selecedtArray;
 @end

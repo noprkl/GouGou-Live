@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-typedef void(^ClickDifStateBlock)(NSInteger tag);
+typedef void(^ClickDifStateBlock)(UIButton * btn);
 
 @interface TopButonView : UIView
 

@@ -31,7 +31,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         [self addSubview:self.nameLabel];
         [self addSubview:self.nameTextfiled];
         [self addSubview:self.arrowsImage1];

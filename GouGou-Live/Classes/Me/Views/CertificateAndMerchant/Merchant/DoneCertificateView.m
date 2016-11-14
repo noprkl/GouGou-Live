@@ -1,48 +1,35 @@
 //
-//  MerchantCertitycateViewController.m
+//  DoneCertificateView.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/9.
+//  Created by ma c on 16/11/14.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "MerchantCertitycateViewController.h"
+#import "DoneCertificateView.h"
 #import "AddressChooseView.h" // 城市选择
-#import "PhotoView.h"
+#import "UIView+Toast.h"
 
 static NSString * MedrchantCell = @"MedrchantCell";
 
-@interface MerchantCertitycateViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface DoneCertificateView ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 /** tableView */
 @property (strong,nonatomic) UITableView *MedrCertiInfoTable;
 /** 数据 */
 @property (strong,nonatomic) NSArray *dataArray;
-/** 接受商品名称 */
-@property (strong,nonatomic) UITextField *infoTextfiled;
-/** 接受邀请码 */
-@property (strong,nonatomic) UITextField *phoneNumTextfiled;
-/** 照片 */
-@property (strong,nonatomic) PhotoView *photoView;
 
 @end
 
-@implementation MerchantCertitycateViewController
+@implementation DoneCertificateView
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self initUI];
-    
-    [self setNav];
-    
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-}
-
-- (void)initUI {
-    
-    [self.view addSubview:self.MedrCertiInfoTable];
-    [self.view addSubview:self.photoView];
-    self.title = @"商家认证";
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [self addSubview:self.MedrCertiInfoTable];
+    }
+    return self;
 }
 
 - (NSArray *)dataArray {
@@ -51,15 +38,6 @@ static NSString * MedrchantCell = @"MedrchantCell";
         _dataArray = @[@[@"商品名称"], @[@"省、市、区",@"详细地址"], @[@"邀请码(填写邀请人电话号码会加快审核速度)"]];
     }
     return _dataArray;
-}
-
-- (PhotoView *)photoView {
-
-    if (!_photoView) {
-        _photoView = [[PhotoView alloc] initWithFrame:CGRectMake(0, 260, SCREEN_WIDTH, 197)];
-        _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
-    return _photoView;
 }
 
 - (UITableView *)MedrCertiInfoTable {
@@ -140,13 +118,13 @@ static NSString * MedrchantCell = @"MedrchantCell";
     
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
     textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
-    textField.delegate = self;
     
     
     if (indexPath.section == 0 ) {
         // 接受商品名称
         self.infoTextfiled = textField;
-        
+        textField.delegate = self;
+
         textField.font = [UIFont systemFontOfSize:16];
         
     } else if (indexPath.section == 1) {
@@ -155,31 +133,48 @@ static NSString * MedrchantCell = @"MedrchantCell";
         if (indexPath.row == 0) {
             
             // 添加弹出城市选择
-            [textField addTarget:self action:@selector(chooseArea:) forControlEvents:UIControlEventTouchDown];
-            
+            textField.enabled = NO;
+            self.aresTextField = textField;
+            textField.delegate = self;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else  {
-            // 取消第一响应
-            [textField canResignFirstResponder];
+       
+        } else if (indexPath.row == 1){
+          
+            self.aresTextField = textField;
+            textField.delegate = self;
         }
+        
     } else {
         // 接受邀请码
         self.phoneNumTextfiled = textField;
+        textField.delegate = self;
+
         textField.font = [UIFont systemFontOfSize:14];
     }
     
     [cell.contentView addSubview:textField];
     
-    
     return cell;
 }
-// 城市选择
-- (void)chooseArea:(UITextField *)textfile {
-    
-    AddressChooseView * choose = [[AddressChooseView alloc] init];
-    
-    [choose show];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            [self.aresTextField resignFirstResponder];
+            [self.adressTextField resignFirstResponder];
+            [self.phoneNumTextfiled resignFirstResponder];
+            [self.infoTextfiled resignFirstResponder];
+            
+            // 城市选择
+            AddressChooseView * choose = [[AddressChooseView alloc] init];
+            choose.areaBlock = ^(NSString *province,NSString *city,NSString *area){
+                DLog(@"省市区");
+            };
+            [choose show];
+        }
+    }
 }
+
 #pragma mark
 #pragma mark - textfiled代理
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -197,7 +192,8 @@ static NSString * MedrchantCell = @"MedrchantCell";
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-
+    
+    [textField resignFirstResponder];
     return YES;
 }
 
@@ -207,35 +203,16 @@ static NSString * MedrchantCell = @"MedrchantCell";
     BOOL flag =  [NSString valiMobile:self.phoneNumTextfiled.text];
     if (!flag) {
         
-        [self showAlert:@"输入的不是电话号码"];
+        [self showMessage:@"输入的不是电话号码"];
     } else {
-    
-    
+        
+        
     }
     
 }
 
-#pragma mark
-#pragma mark - 导航栏设置
-- (void)setNav {
-
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(clickHandinCertitycate)];
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-}
-
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
+- (void)showMessage:(NSString *)string {
+    [self makeToast:string duration:2 position:nil];
 }
 
 @end

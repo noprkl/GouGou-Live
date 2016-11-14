@@ -36,6 +36,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+       
         [self addSubview:self.dogImageView];
         [self addSubview:self.watchCount];
         

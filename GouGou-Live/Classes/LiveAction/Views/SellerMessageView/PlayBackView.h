@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickPlayBackBtnBlcok)(NSInteger btnTag);
+typedef void(^ClickPlayBackBtnBlcok)(UIControl *control);
 
 @interface PlayBackView : UIView
 

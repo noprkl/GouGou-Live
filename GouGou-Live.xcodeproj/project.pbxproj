@@ -21,6 +21,18 @@
 		045D510D1DD94F75001854A8 /* WaitPayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51051DD94F75001854A8 /* WaitPayingViewController.m */; };
 		045D510E1DD94F75001854A8 /* WatiConsigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51071DD94F75001854A8 /* WatiConsigneeViewController.m */; };
 		045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51111DD94F9B001854A8 /* DetailCountViewController.m */; };
+		045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51141DD9539E001854A8 /* MyPageHeaderView.m */; };
+		045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51181DD960F7001854A8 /* MyPageDescView.m */; };
+		045D511C1DD96E58001854A8 /* MyPageMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D511B1DD96E58001854A8 /* MyPageMerchant.m */; };
+		045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D511E1DD98601001854A8 /* MyPagePictureView.m */; };
+		045D51221DD9946F001854A8 /* ManagePictureaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51211DD9946F001854A8 /* ManagePictureaViewController.m */; };
+		045D514D1DD99BEF001854A8 /* IdentityIfonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51411DD99BEF001854A8 /* IdentityIfonView.m */; };
+		045D514E1DD99BEF001854A8 /* IdentityPictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51431DD99BEF001854A8 /* IdentityPictureCell.m */; };
+		045D51501DD99BEF001854A8 /* DoneCertificateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51481DD99BEF001854A8 /* DoneCertificateView.m */; };
+		045D51511DD99BEF001854A8 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D514A1DD99BEF001854A8 /* PhotoView.m */; };
+		045D51521DD99BEF001854A8 /* UnCertificateVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D514C1DD99BEF001854A8 /* UnCertificateVIew.m */; };
+		045D515E1DD9CAD5001854A8 /* SellerCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D515C1DD9CAD5001854A8 /* SellerCenterViewController.m */; };
+		045D515F1DD9CAD5001854A8 /* SellerCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045D515D1DD9CAD5001854A8 /* SellerCenterViewController.xib */; };
 		045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30A1DCC65E5001B95B1 /* AccountViewController.m */; };
 		045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */; };
 		045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */; };
@@ -95,9 +107,7 @@
 		0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5681DCADC7B00CB288A /* PresentWaitingViewController.m */; };
 		0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5691DCADC7B00CB288A /* PresentWaitingViewController.xib */; };
 		0479B6121DCADC7B00CB288A /* CertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B56C1DCADC7B00CB288A /* CertificateViewController.m */; };
-		0479B6131DCADC7B00CB288A /* CertificateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B56D1DCADC7B00CB288A /* CertificateViewController.xib */; };
 		0479B6141DCADC7B00CB288A /* MerchantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5701DCADC7B00CB288A /* MerchantViewController.m */; };
-		0479B6151DCADC7B00CB288A /* MerchantViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5711DCADC7B00CB288A /* MerchantViewController.xib */; };
 		0479B6171DCADC7B00CB288A /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5771DCADC7B00CB288A /* FavoriteViewController.m */; };
 		0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5781DCADC7B00CB288A /* FavoriteViewController.xib */; };
 		0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B57B1DCADC7B00CB288A /* MyViewController.m */; };
@@ -137,10 +147,6 @@
 		0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6631DCB4EEE00CB288A /* SellerAndDogCardView.m */; };
 		0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6661DCC1EE700CB288A /* TransformStyleView.m */; };
 		047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5E11DD564F80025290E /* HttpImageTool.m */; };
-		047AD5E81DD5CD250025290E /* MerchantCertitycateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5E51DD5CD250025290E /* MerchantCertitycateViewController.m */; };
-		047AD5E91DD5CD250025290E /* PromptMerchantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5E71DD5CD250025290E /* PromptMerchantViewController.m */; };
-		047AD5EF1DD5CD5B0025290E /* CertificatePromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5EC1DD5CD5B0025290E /* CertificatePromptView.m */; };
-		047AD5F01DD5CD5B0025290E /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5EE1DD5CD5B0025290E /* PhotoView.m */; };
 		047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */; };
 		047AD6071DD5CE970025290E /* AllOrderGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F91DD5CE970025290E /* AllOrderGoodsCell.m */; };
 		047AD6081DD5CE970025290E /* costView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5FB1DD5CE970025290E /* costView.m */; };
@@ -154,8 +160,6 @@
 		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
 		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
 		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
-		04DAC98B1DD21A9A0089236D /* IdentityIfonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC95C1DD21A9A0089236D /* IdentityIfonView.m */; };
-		04DAC98C1DD21A9A0089236D /* IdentityPictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC95E1DD21A9A0089236D /* IdentityPictureCell.m */; };
 		04DAC98D1DD21A9A0089236D /* DetailCountTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9611DD21A9A0089236D /* DetailCountTopView.m */; };
 		04DAC98E1DD21A9A0089236D /* DetailCountViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9631DD21A9A0089236D /* DetailCountViewCell.m */; };
 		04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9641DD21A9A0089236D /* DetailCountViewCell.xib */; };
@@ -209,6 +213,29 @@
 		045D51071DD94F75001854A8 /* WatiConsigneeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatiConsigneeViewController.m; sourceTree = "<group>"; };
 		045D51101DD94F9B001854A8 /* DetailCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewController.h; sourceTree = "<group>"; };
 		045D51111DD94F9B001854A8 /* DetailCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountViewController.m; sourceTree = "<group>"; };
+		045D51131DD9539E001854A8 /* MyPageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageHeaderView.h; sourceTree = "<group>"; };
+		045D51141DD9539E001854A8 /* MyPageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageHeaderView.m; sourceTree = "<group>"; };
+		045D51171DD960F7001854A8 /* MyPageDescView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageDescView.h; sourceTree = "<group>"; };
+		045D51181DD960F7001854A8 /* MyPageDescView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageDescView.m; sourceTree = "<group>"; };
+		045D511A1DD96E58001854A8 /* MyPageMerchant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageMerchant.h; sourceTree = "<group>"; };
+		045D511B1DD96E58001854A8 /* MyPageMerchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageMerchant.m; sourceTree = "<group>"; };
+		045D511D1DD98601001854A8 /* MyPagePictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPagePictureView.h; sourceTree = "<group>"; };
+		045D511E1DD98601001854A8 /* MyPagePictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPagePictureView.m; sourceTree = "<group>"; };
+		045D51201DD9946F001854A8 /* ManagePictureaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagePictureaViewController.h; sourceTree = "<group>"; };
+		045D51211DD9946F001854A8 /* ManagePictureaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagePictureaViewController.m; sourceTree = "<group>"; };
+		045D51401DD99BEF001854A8 /* IdentityIfonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityIfonView.h; sourceTree = "<group>"; };
+		045D51411DD99BEF001854A8 /* IdentityIfonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityIfonView.m; sourceTree = "<group>"; };
+		045D51421DD99BEF001854A8 /* IdentityPictureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityPictureCell.h; sourceTree = "<group>"; };
+		045D51431DD99BEF001854A8 /* IdentityPictureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityPictureCell.m; sourceTree = "<group>"; };
+		045D51471DD99BEF001854A8 /* DoneCertificateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoneCertificateView.h; sourceTree = "<group>"; };
+		045D51481DD99BEF001854A8 /* DoneCertificateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoneCertificateView.m; sourceTree = "<group>"; };
+		045D51491DD99BEF001854A8 /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
+		045D514A1DD99BEF001854A8 /* PhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoView.m; sourceTree = "<group>"; };
+		045D514B1DD99BEF001854A8 /* UnCertificateVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnCertificateVIew.h; sourceTree = "<group>"; };
+		045D514C1DD99BEF001854A8 /* UnCertificateVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnCertificateVIew.m; sourceTree = "<group>"; };
+		045D515B1DD9CAD5001854A8 /* SellerCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerCenterViewController.h; sourceTree = "<group>"; };
+		045D515C1DD9CAD5001854A8 /* SellerCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerCenterViewController.m; sourceTree = "<group>"; };
+		045D515D1DD9CAD5001854A8 /* SellerCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerCenterViewController.xib; sourceTree = "<group>"; };
 		045FE3091DCC65E5001B95B1 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		045FE30A1DCC65E5001B95B1 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		045FE30C1DCC6635001B95B1 /* ChosedAdressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChosedAdressView.h; sourceTree = "<group>"; };
@@ -343,10 +370,8 @@
 		0479B5691DCADC7B00CB288A /* PresentWaitingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentWaitingViewController.xib; sourceTree = "<group>"; };
 		0479B56B1DCADC7B00CB288A /* CertificateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateViewController.h; sourceTree = "<group>"; };
 		0479B56C1DCADC7B00CB288A /* CertificateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateViewController.m; sourceTree = "<group>"; };
-		0479B56D1DCADC7B00CB288A /* CertificateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CertificateViewController.xib; sourceTree = "<group>"; };
 		0479B56F1DCADC7B00CB288A /* MerchantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantViewController.h; sourceTree = "<group>"; };
 		0479B5701DCADC7B00CB288A /* MerchantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantViewController.m; sourceTree = "<group>"; };
-		0479B5711DCADC7B00CB288A /* MerchantViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MerchantViewController.xib; sourceTree = "<group>"; };
 		0479B5761DCADC7B00CB288A /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
 		0479B5771DCADC7B00CB288A /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
 		0479B5781DCADC7B00CB288A /* FavoriteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteViewController.xib; sourceTree = "<group>"; };
@@ -414,14 +439,6 @@
 		0479B6661DCC1EE700CB288A /* TransformStyleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformStyleView.m; sourceTree = "<group>"; };
 		047AD5E01DD564F80025290E /* HttpImageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpImageTool.h; sourceTree = "<group>"; };
 		047AD5E11DD564F80025290E /* HttpImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpImageTool.m; sourceTree = "<group>"; };
-		047AD5E41DD5CD250025290E /* MerchantCertitycateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantCertitycateViewController.h; sourceTree = "<group>"; };
-		047AD5E51DD5CD250025290E /* MerchantCertitycateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantCertitycateViewController.m; sourceTree = "<group>"; };
-		047AD5E61DD5CD250025290E /* PromptMerchantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromptMerchantViewController.h; sourceTree = "<group>"; };
-		047AD5E71DD5CD250025290E /* PromptMerchantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromptMerchantViewController.m; sourceTree = "<group>"; };
-		047AD5EB1DD5CD5B0025290E /* CertificatePromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificatePromptView.h; sourceTree = "<group>"; };
-		047AD5EC1DD5CD5B0025290E /* CertificatePromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificatePromptView.m; sourceTree = "<group>"; };
-		047AD5ED1DD5CD5B0025290E /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
-		047AD5EE1DD5CD5B0025290E /* PhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoView.m; sourceTree = "<group>"; };
 		047AD5F11DD5CDDD0025290E /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
 		047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
 		047AD5F81DD5CE970025290E /* AllOrderGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsCell.h; sourceTree = "<group>"; };
@@ -446,10 +463,6 @@
 		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
 		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
 		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
-		04DAC95B1DD21A9A0089236D /* IdentityIfonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityIfonView.h; sourceTree = "<group>"; };
-		04DAC95C1DD21A9A0089236D /* IdentityIfonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityIfonView.m; sourceTree = "<group>"; };
-		04DAC95D1DD21A9A0089236D /* IdentityPictureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityPictureCell.h; sourceTree = "<group>"; };
-		04DAC95E1DD21A9A0089236D /* IdentityPictureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityPictureCell.m; sourceTree = "<group>"; };
 		04DAC9601DD21A9A0089236D /* DetailCountTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountTopView.h; sourceTree = "<group>"; };
 		04DAC9611DD21A9A0089236D /* DetailCountTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountTopView.m; sourceTree = "<group>"; };
 		04DAC9621DD21A9A0089236D /* DetailCountViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewCell.h; sourceTree = "<group>"; };
@@ -591,6 +604,96 @@
 			path = DetailCount;
 			sourceTree = "<group>";
 		};
+		045D51161DD953A5001854A8 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				045D51131DD9539E001854A8 /* MyPageHeaderView.h */,
+				045D51141DD9539E001854A8 /* MyPageHeaderView.m */,
+				045D51171DD960F7001854A8 /* MyPageDescView.h */,
+				045D51181DD960F7001854A8 /* MyPageDescView.m */,
+				045D511A1DD96E58001854A8 /* MyPageMerchant.h */,
+				045D511B1DD96E58001854A8 /* MyPageMerchant.m */,
+				045D511D1DD98601001854A8 /* MyPagePictureView.h */,
+				045D511E1DD98601001854A8 /* MyPagePictureView.m */,
+			);
+			name = MyPage;
+			sourceTree = "<group>";
+		};
+		045D513E1DD99BEF001854A8 /* CertificateAndMerchant */ = {
+			isa = PBXGroup;
+			children = (
+				045D513F1DD99BEF001854A8 /* Certificate */,
+				045D51441DD99BEF001854A8 /* Merchant */,
+			);
+			path = CertificateAndMerchant;
+			sourceTree = "<group>";
+		};
+		045D513F1DD99BEF001854A8 /* Certificate */ = {
+			isa = PBXGroup;
+			children = (
+				045D51401DD99BEF001854A8 /* IdentityIfonView.h */,
+				045D51411DD99BEF001854A8 /* IdentityIfonView.m */,
+				045D51421DD99BEF001854A8 /* IdentityPictureCell.h */,
+				045D51431DD99BEF001854A8 /* IdentityPictureCell.m */,
+			);
+			path = Certificate;
+			sourceTree = "<group>";
+		};
+		045D51441DD99BEF001854A8 /* Merchant */ = {
+			isa = PBXGroup;
+			children = (
+				045D514B1DD99BEF001854A8 /* UnCertificateVIew.h */,
+				045D514C1DD99BEF001854A8 /* UnCertificateVIew.m */,
+				045D51471DD99BEF001854A8 /* DoneCertificateView.h */,
+				045D51481DD99BEF001854A8 /* DoneCertificateView.m */,
+				045D51491DD99BEF001854A8 /* PhotoView.h */,
+				045D514A1DD99BEF001854A8 /* PhotoView.m */,
+			);
+			path = Merchant;
+			sourceTree = "<group>";
+		};
+		045D51561DD9CAB5001854A8 /* SellerCenter */ = {
+			isa = PBXGroup;
+			children = (
+				045D51571DD9CAB5001854A8 /* Controllers */,
+				045D51581DD9CAB5001854A8 /* Handler */,
+				045D51591DD9CAB5001854A8 /* Models */,
+				045D515A1DD9CAB5001854A8 /* Views */,
+			);
+			path = SellerCenter;
+			sourceTree = "<group>";
+		};
+		045D51571DD9CAB5001854A8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				045D515B1DD9CAD5001854A8 /* SellerCenterViewController.h */,
+				045D515C1DD9CAD5001854A8 /* SellerCenterViewController.m */,
+				045D515D1DD9CAD5001854A8 /* SellerCenterViewController.xib */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		045D51581DD9CAB5001854A8 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
+		045D51591DD9CAB5001854A8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		045D515A1DD9CAB5001854A8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		045FE3121DCC8BE2001B95B1 /* AddPayongSuccessViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -674,6 +777,8 @@
 			children = (
 				047323FB1DD1DBFF006CCC71 /* MyPageViewController.h */,
 				047323FC1DD1DBFF006CCC71 /* MyPageViewController.m */,
+				045D51201DD9946F001854A8 /* ManagePictureaViewController.h */,
+				045D51211DD9946F001854A8 /* ManagePictureaViewController.m */,
 			);
 			path = MyPageVC;
 			sourceTree = "<group>";
@@ -681,6 +786,7 @@
 		0479B4C31DCADC7B00CB288A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				045D51561DD9CAB5001854A8 /* SellerCenter */,
 				0479B4C41DCADC7B00CB288A /* LIve */,
 				0479B5171DCADC7B00CB288A /* LiveAction */,
 				0479B53D1DCADC7B00CB288A /* Login */,
@@ -1235,7 +1341,6 @@
 			children = (
 				0479B56B1DCADC7B00CB288A /* CertificateViewController.h */,
 				0479B56C1DCADC7B00CB288A /* CertificateViewController.m */,
-				0479B56D1DCADC7B00CB288A /* CertificateViewController.xib */,
 				0479B56E1DCADC7B00CB288A /* Merchant */,
 			);
 			path = Certificate;
@@ -1244,10 +1349,8 @@
 		0479B56E1DCADC7B00CB288A /* Merchant */ = {
 			isa = PBXGroup;
 			children = (
-				047AD5E31DD5CD250025290E /* MerchantCertitycate */,
 				0479B56F1DCADC7B00CB288A /* MerchantViewController.h */,
 				0479B5701DCADC7B00CB288A /* MerchantViewController.m */,
-				0479B5711DCADC7B00CB288A /* MerchantViewController.xib */,
 			);
 			path = Merchant;
 			sourceTree = "<group>";
@@ -1502,28 +1605,6 @@
 			path = DogBookView;
 			sourceTree = "<group>";
 		};
-		047AD5E31DD5CD250025290E /* MerchantCertitycate */ = {
-			isa = PBXGroup;
-			children = (
-				047AD5E41DD5CD250025290E /* MerchantCertitycateViewController.h */,
-				047AD5E51DD5CD250025290E /* MerchantCertitycateViewController.m */,
-				047AD5E61DD5CD250025290E /* PromptMerchantViewController.h */,
-				047AD5E71DD5CD250025290E /* PromptMerchantViewController.m */,
-			);
-			path = MerchantCertitycate;
-			sourceTree = "<group>";
-		};
-		047AD5EA1DD5CD5B0025290E /* MerchantView */ = {
-			isa = PBXGroup;
-			children = (
-				047AD5EB1DD5CD5B0025290E /* CertificatePromptView.h */,
-				047AD5EC1DD5CD5B0025290E /* CertificatePromptView.m */,
-				047AD5ED1DD5CD5B0025290E /* PhotoView.h */,
-				047AD5EE1DD5CD5B0025290E /* PhotoView.m */,
-			);
-			path = MerchantView;
-			sourceTree = "<group>";
-		};
 		047AD5F61DD5CE970025290E /* OrderGoods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1569,23 +1650,11 @@
 				04DAC95F1DD21A9A0089236D /* DetailCountView */,
 				04DAC9651DD21A9A0089236D /* MyFavoriteTableView */,
 				04DAC97E1DD21A9A0089236D /* ShopAdress */,
+				045D513E1DD99BEF001854A8 /* CertificateAndMerchant */,
 				04DAC9881DD21A9A0089236D /* WatchHistoryView */,
-				04DAC95A1DD21A9A0089236D /* CertificateView */,
 				04DAC9771DD21A9A0089236D /* Setting */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		04DAC95A1DD21A9A0089236D /* CertificateView */ = {
-			isa = PBXGroup;
-			children = (
-				047AD5EA1DD5CD5B0025290E /* MerchantView */,
-				04DAC95B1DD21A9A0089236D /* IdentityIfonView.h */,
-				04DAC95C1DD21A9A0089236D /* IdentityIfonView.m */,
-				04DAC95D1DD21A9A0089236D /* IdentityPictureCell.h */,
-				04DAC95E1DD21A9A0089236D /* IdentityPictureCell.m */,
-			);
-			path = CertificateView;
 			sourceTree = "<group>";
 		};
 		04DAC95F1DD21A9A0089236D /* DetailCountView */ = {
@@ -1642,12 +1711,13 @@
 		04DAC96F1DD21A9A0089236D /* MyMessage */ = {
 			isa = PBXGroup;
 			children = (
+				04DAC9AE1DD3169E0089236D /* EditAlert */,
+				045D51161DD953A5001854A8 /* MyPage */,
 				04DAC9701DD21A9A0089236D /* MyFocusTableCell.h */,
 				04DAC9711DD21A9A0089236D /* MyFocusTableCell.m */,
 				04DAC9721DD21A9A0089236D /* MyFocusTableCell.xib */,
 				04DAC9731DD21A9A0089236D /* MyMessageView.h */,
 				04DAC9741DD21A9A0089236D /* MyMessageView.m */,
-				04DAC9AE1DD3169E0089236D /* EditAlert */,
 			);
 			path = MyMessage;
 			sourceTree = "<group>";
@@ -1843,10 +1913,9 @@
 				04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */,
 				049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */,
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
+				045D515F1DD9CAD5001854A8 /* SellerCenterViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
-				0479B6131DCADC7B00CB288A /* CertificateViewController.xib in Resources */,
 				0479B6221DCADC7B00CB288A /* RemoveCookieViewController.xib in Resources */,
-				0479B6151DCADC7B00CB288A /* MerchantViewController.xib in Resources */,
 				047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */,
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
@@ -1922,6 +1991,7 @@
 				045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
+				045D51501DD99BEF001854A8 /* DoneCertificateView.m in Sources */,
 				045D51081DD94F75001854A8 /* AllOrderGoodsViewController.m in Sources */,
 				0479B6141DCADC7B00CB288A /* MerchantViewController.m in Sources */,
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
@@ -1934,6 +2004,7 @@
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
+				045D514E1DD99BEF001854A8 /* IdentityPictureCell.m in Sources */,
 				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
 				04DAC99B1DD21A9A0089236D /* AddrsssTableViewCell.m in Sources */,
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
@@ -1946,10 +2017,12 @@
 				0479B5F91DCADC7B00CB288A /* PicturesView.m in Sources */,
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
+				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				04DAC9B41DD317700089236D /* EditNikeNameAlert.m in Sources */,
 				04DAC9921DD21A9A0089236D /* MyFavoriteTableView.m in Sources */,
+				045D51511DD99BEF001854A8 /* PhotoView.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
@@ -1964,7 +2037,6 @@
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
 				047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */,
-				047AD5F01DD5CD5B0025290E /* PhotoView.m in Sources */,
 				045D510B1DD94F75001854A8 /* WaitAssessViewController.m in Sources */,
 				0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */,
 				04DAC99A1DD21A9A0089236D /* DeletePrommtView.m in Sources */,
@@ -1976,13 +2048,11 @@
 				04DAC9911DD21A9A0089236D /* TowButtonView.m in Sources */,
 				04DAC9991DD21A9A0089236D /* AddressChooseView.m in Sources */,
 				0479B6031DCADC7B00CB288A /* LoginViewController.m in Sources */,
-				047AD5E91DD5CD250025290E /* PromptMerchantViewController.m in Sources */,
 				049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */,
 				045D510D1DD94F75001854A8 /* WaitPayingViewController.m in Sources */,
 				047AD60C1DD5CE970025290E /* ResonsTableView.m in Sources */,
 				0479B5FE1DCADC7B00CB288A /* TalkingView.m in Sources */,
 				0479B61D1DCADC7B00CB288A /* AboutUsViewController.m in Sources */,
-				04DAC98C1DD21A9A0089236D /* IdentityPictureCell.m in Sources */,
 				047AD6071DD5CE970025290E /* AllOrderGoodsCell.m in Sources */,
 				045D51091DD94F75001854A8 /* PayingAllMoneyViewController.m in Sources */,
 				045D510A1DD94F75001854A8 /* ProtectPowerViewController.m in Sources */,
@@ -1990,6 +2060,7 @@
 				0479B5E81DCADC7B00CB288A /* DogSizeFilter.m in Sources */,
 				045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */,
 				047AD60A1DD5CE970025290E /* LogisticsInfoView.m in Sources */,
+				045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */,
 				0479B63C1DCADC7B00CB288A /* UIColor+HexString.m in Sources */,
 				0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */,
 				0479B5DD1DCADC7B00CB288A /* SearchViewController.m in Sources */,
@@ -1998,11 +2069,12 @@
 				045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */,
 				045D510C1DD94F75001854A8 /* WaitConsignmentViewController.m in Sources */,
 				0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */,
+				045D51221DD9946F001854A8 /* ManagePictureaViewController.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
+				045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */,
 				0479B5EC1DCADC7B00CB288A /* LiveTableView.m in Sources */,
 				045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */,
 				04DAC9A01DD2C4E20089236D /* EditMyMessageViewController.m in Sources */,
-				04DAC98B1DD21A9A0089236D /* IdentityIfonView.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
@@ -2014,17 +2086,18 @@
 				04DAC9931DD21A9A0089236D /* MyFocusTableCell.m in Sources */,
 				0479B63B1DCADC7B00CB288A /* NSString+CheckString.m in Sources */,
 				0479B5F11DCADC7B00CB288A /* ShareBtnModel.m in Sources */,
+				045D51521DD99BEF001854A8 /* UnCertificateVIew.m in Sources */,
 				0479B6391DCADC7B00CB288A /* BaseTabBarController.m in Sources */,
 				0479B5FF1DCADC7B00CB288A /* CodeLoginViewController.m in Sources */,
+				045D515E1DD9CAD5001854A8 /* SellerCenterViewController.m in Sources */,
 				047AD6091DD5CE970025290E /* FunctionButtonView.m in Sources */,
-				047AD5EF1DD5CD5B0025290E /* CertificatePromptView.m in Sources */,
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
-				047AD5E81DD5CD250025290E /* MerchantCertitycateViewController.m in Sources */,
 				04DAC9961DD21A9A0089236D /* MyUnLoginView.m in Sources */,
 				0479B5FD1DCADC7B00CB288A /* StartSourceView.m in Sources */,
 				0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */,
 				04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */,
 				049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */,
+				045D514D1DD99BEF001854A8 /* IdentityIfonView.m in Sources */,
 				0479B5F31DCADC7B00CB288A /* SellerShowViewController.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
 				0479B5E51DCADC7B00CB288A /* LiveTopView.m in Sources */,
@@ -2048,6 +2121,7 @@
 				047323FA1DD1DBEE006CCC71 /* MyFocusViewController.m in Sources */,
 				0479B5E11DCADC7B00CB288A /* DogPictureCollectionViewCell.m in Sources */,
 				04DAC98E1DD21A9A0089236D /* DetailCountViewCell.m in Sources */,
+				045D511C1DD96E58001854A8 /* MyPageMerchant.m in Sources */,
 				047AD60D1DD5CE970025290E /* TopButonView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

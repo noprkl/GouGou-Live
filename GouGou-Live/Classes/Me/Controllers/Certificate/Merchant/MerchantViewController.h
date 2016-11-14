@@ -9,6 +9,5 @@
 #import "BaseViewController.h"
 
 @interface MerchantViewController : BaseViewController
-///** 是否认证 */
-//@property (assign,nonatomic) BOOL isCertitycate;
+
 @end

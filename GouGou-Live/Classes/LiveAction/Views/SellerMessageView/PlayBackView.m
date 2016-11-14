@@ -58,10 +58,10 @@
     }
     return self;
 }
-- (void)clickPlayBackCardAction:(UIButton *)btn {
+- (void)clickPlayBackCardAction:(UIControl *)btn {
 
     if (_playBackBlock) {
-        _playBackBlock(btn.tag - 40);
+        _playBackBlock(btn);
     }
 }
 - (void)layoutSubviews {
@@ -71,7 +71,6 @@
         make.left.equalTo(self.left).offset(10);
         make.top.equalTo(self.top).offset(10);
     }];
-    
 }
 #pragma mark
 #pragma mark - 懒加载

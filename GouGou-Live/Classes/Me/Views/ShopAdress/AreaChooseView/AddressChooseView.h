@@ -17,6 +17,9 @@ typedef void(^selectedAreaBlock)(NSString *province,NSString *city,NSString *are
 @property (strong,nonatomic) NSArray *cityData;
 /** 区数据 */
 @property (strong,nonatomic) NSArray *areaData;
+
+@property(nonatomic, strong) selectedAreaBlock areaBlock; /**< 选中回调 */
+
 - (void)show;
 - (void)dismiss;
 @end

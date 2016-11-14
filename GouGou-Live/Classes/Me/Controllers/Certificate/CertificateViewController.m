@@ -31,20 +31,16 @@ static NSString * identityCell = @"identitiCellID";
     
     [self initUI];
     
-    [self setNavBarItemLeft];
-}
-- (void)setNavBarItemLeft {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-}
-- (void)leftBackBtnAction {
+    [self setNavBarItem];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
 - (void)initUI {
 
     self.title = @"实名认证";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(handinCertificate)];
-
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self.view addSubview:self.identityInfoView];
     [self.view addSubview:self.identityTableView];
 }
@@ -59,7 +55,7 @@ static NSString * identityCell = @"identitiCellID";
 
     if (!_identityInfoView) {
         _identityInfoView = [[IdentityIfonView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
-        
+
     }
     return _identityInfoView;
 }
@@ -67,7 +63,8 @@ static NSString * identityCell = @"identitiCellID";
 - (UITableView *)identityTableView {
 
     if (!_identityTableView) {
-        _identityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 130, SCREEN_WIDTH, SCREEN_HEIGHT - 130) style:UITableViewStylePlain];
+        _identityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 130, SCREEN_WIDTH, SCREEN_HEIGHT - 130 - 64) style:UITableViewStylePlain];
+
         _identityTableView.delegate = self;
         _identityTableView.dataSource = self;
         [_identityTableView registerClass:[IdentityPictureCell class] forCellReuseIdentifier:identityCell];

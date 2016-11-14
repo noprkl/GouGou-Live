@@ -23,7 +23,6 @@
 /** 接受删除按钮 */
 @property (strong,nonatomic) UIButton *acceptDeleBtn;
 
-
 @end
 
 @implementation PhotoView
@@ -187,9 +186,9 @@
 
 - (void)deleteImage:(UIButton *)btn {
 
-//    [self.acceptView removeFromSuperview];
-//    self.addImageBtn.hidden = NO;
-
+    if (_deleteBlock) {
+        _deleteBlock();
+    }
 }
 
 @end

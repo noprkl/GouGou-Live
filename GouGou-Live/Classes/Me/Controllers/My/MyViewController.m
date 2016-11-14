@@ -33,6 +33,10 @@
 @property (strong, nonatomic) UIButton *myButton;
 
 
+@property(nonatomic, strong) NSArray *doneMetchDataSource; /**< 已经商家认证的数据源 */
+
+@property(nonatomic, strong) NSArray *doneMetchcontrollerNames; /**< 已经商家认证的控制器名字 */
+
 
 @end
 
@@ -110,17 +114,33 @@
     }
     return _controllerNames;
 }
-
+- (NSArray *)doneMetchDataSource {
+    if (!_doneMetchDataSource) {
+        _doneMetchDataSource =  @[@[@"账号", @"我的订单", @"收货地址", @"卖家中心"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
+    }
+    return _doneMetchDataSource;
+}
+- (NSArray *)doneMetchcontrollerNames {
+    if (!_doneMetchcontrollerNames) {
+        _doneMetchcontrollerNames = @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+    }
+    return _doneMetchcontrollerNames;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.dataSource.count;
+    
+    //return self.dataSource.count;
+    // 如果已经进行商家认证 就选择已商家认证的数据源
+    return self.doneMetchDataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [self.dataSource[section] count];
+//    return [self.dataSource[section] count];
+        // 如果已经进行商家认证 就选择已商家认证的数据源
+    return [self.doneMetchDataSource[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    return 35;
+    return 31;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
@@ -143,10 +163,19 @@
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
     
-    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataSource[indexPath.section][indexPath.row] attributes:@{
+//    NSString *textString = self.dataSource[indexPath.section]
+//    [indexPath.row];
+//    NSString *detailString = self.dataSource[indexPath.section][indexPath.row];
+    // 如果已经商家认证
+    NSString *textString = self.doneMetchDataSource[indexPath.section]
+    [indexPath.row];
+    NSString *detailString = self.doneMetchDataSource[indexPath.section][indexPath.row];
+    
+    
+    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:textString attributes:@{
                                                                                                                                                    NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
                                                                                                                                                    NSFontAttributeName:[UIFont systemFontOfSize:14]}];
-    cell.textLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataSource[indexPath.section][indexPath.row] attributes:@{
+    cell.textLabel.attributedText = [[NSAttributedString alloc] initWithString:detailString attributes:@{
                                                                                                                                               NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
                                                                                                                                               NSFontAttributeName:[UIFont systemFontOfSize:16]}];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -157,9 +186,14 @@
  
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
+//    NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
+//    
+//    NSString *controllerName = self.controllerNames[indexPath.section][indexPath.row];
+  
+    // 如果已经进行商家认证 就选择已商家认证的数据源
+    NSString *cellText = self.doneMetchDataSource[indexPath.section][indexPath.row];
     
-    NSString *controllerName = self.controllerNames[indexPath.section][indexPath.row];
+    NSString *controllerName = self.doneMetchcontrollerNames[indexPath.section][indexPath.row];
     
     UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
     VC.hidesBottomBarWhenPushed = YES;

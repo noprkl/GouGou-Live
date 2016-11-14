@@ -21,37 +21,10 @@
 @property (strong, nonatomic) UIButton *sureBtn;
 /** pickerView */
 @property (strong, nonatomic) UIPickerView *areaPicker;
-/** 省数据源 */
-
-//@property (strong, nonatomic) NSArray *provinceList;
-///** 市数据 */
-//@property (strong,nonatomic) NSArray *cityList;
-///** 区数据 */
-//@property (strong,nonatomic) NSArray *areaList;
 
 @end
 
 @implementation AddressChooseView
-
-//-(void)setProvinceData:(NSArray *)provinceData {
-//
-//    _provinceData = provinceData;
-//    
-//    self.provinceList = provinceData;
-//}
-//
-//- (void)setCityData:(NSArray *)cityData {
-//
-//    _cityData = cityData;
-//    self.cityList = cityData;
-//}
-//
-//- (void)setAreaData:(NSArray *)areaData {
-//
-//    _areaData = areaData;
-//    
-//    self.areaList = areaData;
-//}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -145,7 +118,9 @@
     return _cancelBtn;
 }
 - (void)clickSureBtnAction {
-
+    if (_areaBlock) {
+        _areaBlock(@"省", @"市", @"区");
+    }
 
 }
 

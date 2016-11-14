@@ -44,7 +44,6 @@
     [self.baseScrollView addSubview:self.messageView];
     [self.baseScrollView addSubview:self.playbackView];
     
-    
     [self.messageView makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.baseScrollView.top).offset(1);
         make.left.equalTo(self.view.left);
@@ -63,28 +62,41 @@
         make.left.right.equalTo(self.view);
         make.height.equalTo(playbackViewHeight);
     }];
-    CGFloat picturesHeight = 0;
+    
+//    CGFloat pictureHeight = 0;
+//    
+//    if (self.picturesArr.count != 0) {
+//        pictureHeight += 200;
+//        
+//        CGFloat y = CGRectGetMaxY(self.playbackView.frame) + 10;
+//        PicturesView *picture = [[PicturesView alloc] initWithFrame:CGRectMake(0, y, SCREEN_WIDTH, 200)];
+//        picture.pictures = self.picturesArr;
+//        picture.backgroundColor = [UIColor whiteColor];
+//        [self.baseScrollView addSubview:picture];
+//        
+////        [self.picturesView makeConstraints:^(MASConstraintMaker *make) {
+////            make.top.equalTo(self.playbackView.bottom).offset(10);
+////            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 200));
+////            make.left.equalTo(self.view.left);
+////        }];
+//    }
+   
+    CGFloat pictureHeight = 0;
    
     if (self.picturesArr.count != 0) {
         [self.view addSubview:self.picturesView];
+        
         [self.picturesView makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.playbackView.bottom).offset(10);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 200));
             make.left.equalTo(self.view.left);
         }];
-        picturesHeight = 10 + 200;
-    }
-    _baseScrollView.contentSize = CGSizeMake(0, 220 + kDogImageWidth + playbackViewHeight + 10 + picturesHeight);
-    
-    
-    NSArray *arr = self.picturesView.subviews;
-    for (NSInteger i = 0; i < arr.count; i ++) {
-        if ([arr[i] isKindOfClass:[UIButton class]]) {
-            UIButton *btn = arr[i];
-            btn.hidden = NO;
-        }
+        pictureHeight = 10 + 200;
+        DLog(@"%@", self.picturesView);
     }
     
+    _baseScrollView.contentSize = CGSizeMake(0, 220 + kDogImageWidth + playbackViewHeight + 10 + pictureHeight);
+
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -108,21 +120,30 @@
 }
 - (PlayBackView *)playbackView {
     if (!_playbackView) {
-        _playbackView = [[PlayBackView alloc] initWithFrame:CGRectZero withPlayBackMessage:self.dogCardArr clickPlaybackBtn:^(NSInteger btnTag){
+        _playbackView = [[PlayBackView alloc] initWithFrame:CGRectZero withPlayBackMessage:self.dogCardArr clickPlaybackBtn:^(UIControl *control){
             
             if (self.dogCardArr.count == 0) {
                 
             }else{
-                switch (btnTag) {
-                    case 0:
-                        DLog(@"第一个回放");
-                        break;
-                    case 1:
-                        DLog(@"第二个回放");
-                        break;
-
-                    default:
-                        break;
+                if (self.dogCardArr.count == 1) {
+                    switch (control.tag - 40) {
+                        case 0:
+                            DLog(@"第一个回放");
+                            break;
+                        default:
+                            break;
+                    }
+                }else if (self.dogCardArr.count == 2){
+                    switch (control.tag - 40) {
+                        case 0:
+                            DLog(@"第一个回放");
+                            break;
+                        case 1:
+                            DLog(@"第二个回放");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             
@@ -135,7 +156,8 @@
 }
 - (PicturesView *)picturesView {
     if (!_picturesView) {
-        _picturesView = [[PicturesView alloc] initWithFrame:CGRectZero withpictures:self.picturesArr];
+        _picturesView = [[PicturesView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+        _picturesView.pictures = self.picturesArr;
         _picturesView.backgroundColor = [UIColor whiteColor];
     }
     return _picturesView;

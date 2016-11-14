@@ -80,6 +80,8 @@ static NSString *cellid = @"ChoseShopAdressCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 //    NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:self.dataArr[indexPath.row]];
+   
+    // 注册
     NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:@"test"];
 
     [[NSNotificationCenter defaultCenter] postNotification:notification];

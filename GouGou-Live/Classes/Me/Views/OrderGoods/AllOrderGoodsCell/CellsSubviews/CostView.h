@@ -1,5 +1,5 @@
 //
-//  NicknameView.h
+//  costView.h
 //  GouGou-Live
 //
 //  Created by ma c on 16/11/10.
@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NicknameView : UIView
+
+@interface CostView : UIView
+/** 交易金额 */
+@property (strong,nonatomic) NSString *moneyMessage;
 
 @end

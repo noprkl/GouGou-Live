@@ -100,7 +100,7 @@
     
     
     if (_difStateBlock) {
-        _difStateBlock(btn.tag);
+        _difStateBlock(btn);
     }
     
     if (self.lastButton == btn) {

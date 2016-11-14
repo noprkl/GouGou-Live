@@ -22,6 +22,12 @@
 
 @implementation NicknameView
 
+- (void)setStateMessage:(NSString *)stateMessage {
+
+    _stateMessage = stateMessage;
+    self.stateLabe.text = stateMessage;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

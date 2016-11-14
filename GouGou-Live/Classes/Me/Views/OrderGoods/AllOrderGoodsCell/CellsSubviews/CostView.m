@@ -29,6 +29,12 @@
 
 @implementation CostView
 
+-(void)setMoneyMessage:(NSString *)moneyMessage {
+    
+    _moneyMessage = moneyMessage;
+    self.totalMoney.text = moneyMessage;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

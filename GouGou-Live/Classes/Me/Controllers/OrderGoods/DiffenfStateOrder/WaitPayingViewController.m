@@ -10,6 +10,8 @@
 #import "AllOrderGoodsCell.h"
 #import "FunctionButtonView.h"
 #import "ResonsTableView.h"
+#import "PayingAllMoneyViewController.h"
+
 static NSString * allGoodsCell = @"allGoodsCellID";
 @interface WaitPayingViewController ()<UITableViewDelegate,UITableViewDataSource>
 /** tableView */
@@ -76,18 +78,20 @@ static NSString * allGoodsCell = @"allGoodsCellID";
     
     FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 289, SCREEN_WIDTH, 45) title:@[@"取消订单",@"联系买家",@"支付全款"] buttonNum:3];
     
-//    __weak typeof(self) weakself = self;
-
+    //    __weak typeof(self) weakself = self;
+    
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"取消订单"]) {
             
             ResonsTableView * reson = [[ResonsTableView alloc] init];
             [reson show];
             
-        } else {
-        
+        } else if ([button.titleLabel.text  isEqual:@"支付全款"]){
             
-        
+            PayingAllMoneyViewController * payAllVC = [[PayingAllMoneyViewController alloc] init];
+            
+            [self.navigationController pushViewController:payAllVC animated:YES];
+            
         }
         
     };

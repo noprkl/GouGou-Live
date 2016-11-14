@@ -65,13 +65,13 @@
         
     }];
     
-//    [_addImageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.top.equalTo(weakself.lineView.top).offset(10);
-//        make.right.equalTo(weakself.right).offset(-10);
-//        make.size.equalTo(CGSizeMake(111, 111));
-//        
-//    }];
+    [_addImageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(weakself.lineView.top).offset(10);
+        make.right.equalTo(weakself.right).offset(-10);
+        make.size.equalTo(CGSizeMake(111, 111));
+        
+    }];
     
     [_numberLabel makeConstraints:^(MASConstraintMaker *make) {
         

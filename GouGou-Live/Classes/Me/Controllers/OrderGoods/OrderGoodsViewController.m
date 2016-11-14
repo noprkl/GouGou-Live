@@ -8,6 +8,7 @@
 
 #import "OrderGoodsViewController.h"
 #import "TopButonView.h"
+#import "NicknameView.h"
 
 //static NSString * allGoodsCell = @"allGoodsCellID";
 
@@ -68,8 +69,18 @@
         _topView  = [[TopButonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
         __weak typeof(self) weakself = self;
 
-        _topView.difStateBlock = ^(NSInteger tag) {
+        _topView.difStateBlock = ^(UIButton *btn) {
+            
+            // 设置订单状态
+            NicknameView *nickView = [[NicknameView alloc] init];
+            
+            nickView.stateMessage = @"134576";
+
+            
+            NSUInteger tag = btn.tag;
+            
             DLog(@"%ld", tag);
+            
             NSInteger flag = tag - 80;
 
             if (flag == 0) {
@@ -108,6 +119,7 @@
                 [weakself.boomScrollView setContentOffset:center animated:YES];
                 
             }
+           
         };
     }
     return _topView;

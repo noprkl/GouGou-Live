@@ -1,17 +1,17 @@
 //
-//  DogSizeFilter.m
+//  PayMoneyPrompt.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/10/27.
+//  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "DogSizeFilter.h"
+#import "PayMoneyPrompt.h"
 
-@interface DogSizeFilter ()<UITableViewDataSource, UITableViewDelegate>
+@interface PayMoneyPrompt ()<UITableViewDataSource, UITableViewDelegate>
 
 /** 蒙版 */
-@property (strong, nonatomic) UIControl *overLayer;
+@property (strong, nonatomic) UIControl *hudView;
 
 /** 数据 */
 @property (strong, nonatomic) NSArray *dataPlist;
@@ -23,19 +23,19 @@
 
 static NSString *cellid = @"SizeFilterCellID";
 
-@implementation DogSizeFilter
+@implementation PayMoneyPrompt
 
-- (UIControl *)overLayer
+- (UIControl *)hudView
 {
     // 懒加载 蒙版
-    if (!_overLayer) {
-        _overLayer = [[UIControl alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    if (!_hudView) {
+        _hudView = [[UIControl alloc] initWithFrame:[UIScreen mainScreen].bounds];
         
-        _overLayer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-//        [_overLayer addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        _hudView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    
     }
     
-    return _overLayer;
+    return _hudView;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
@@ -61,10 +61,10 @@ static NSString *cellid = @"SizeFilterCellID";
     //获取主window
     UIWindow * keyWindow = [[UIApplication sharedApplication] keyWindow];
     //载入蒙版
-    [keyWindow addSubview:self.overLayer];
+    [keyWindow addSubview:self.hudView];
     //载入alertView
     [keyWindow addSubview:self];
-
+    
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
@@ -82,24 +82,24 @@ static NSString *cellid = @"SizeFilterCellID";
 - (void)fadeIn
 {
     self.transform = CGAffineTransformMakeScale(0.3, 0.3);
-   
-    self.overLayer.alpha = 0;
+    
+    self.hudView.alpha = 0;
     
     [UIView animateWithDuration:0.3 animations:^{
-        self.overLayer.alpha = 1;
+        self.hudView.alpha = 1;
         self.transform = CGAffineTransformIdentity;
     }];
 }
 - (void)fadeOut
 {
     [UIView animateWithDuration:0.3 animations:^{
-        self.overLayer.alpha = 0;
+        self.hudView.alpha = 0;
         self.transform = CGAffineTransformMakeScale(0.3, 0.3);
-    
+        
     } completion:^(BOOL finished) {
         
         [self removeFromSuperview];
-        [self.overLayer removeFromSuperview];
+        [self.hudView removeFromSuperview];
     }];
 }
 
@@ -123,23 +123,37 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
     
-    NSString *text = self.dataPlist[indexPath.row + 1];
+    cell.textLabel.text = self.dataPlist[indexPath.row + 1];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-    label.textColor = [UIColor blackColor];
-    cell.backgroundColor = [UIColor whiteColor];
-    label.text = text;
-    label.textColor = [UIColor colorWithHexString:@"666666"];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentCenter;
-    [cell.contentView addSubview:label];
+    if (indexPath.row == 0) {
+        
+        cell.detailTextLabel.text = @"￥950";
+        
+    } else if (indexPath.row == 1) {
+        
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
+    } else if (indexPath.row == 2) {
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"可用余额: %.2f",7360.00];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+    } else {
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+
     
     return cell;
     
@@ -152,7 +166,7 @@ static NSString *cellid = @"SizeFilterCellID";
     return 44;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-
+    
     return 44;
 }
 #pragma mark 头尾
@@ -163,13 +177,13 @@ static NSString *cellid = @"SizeFilterCellID";
         
         label.text = [self.dataPlist firstObject];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorWithHexString:@"#666666"];
-        label.font = [UIFont systemFontOfSize:16];
+        
         // 线
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
         line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        label.textColor = [UIColor colorWithHexString:@"#333333"];
         [label addSubview:line];
-       
+        
         return label;
     }
     
@@ -186,16 +200,16 @@ static NSString *cellid = @"SizeFilterCellID";
         
         [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
         [button addTarget:self action:@selector(clickFooterBtnAction) forControlEvents:(UIControlEventTouchDown)];
-
+        
         return button;
     }
     
     return nil;
-
+    
 }
 - (void)clickFooterBtnAction {
     [self dismiss];
-
+    
     if (_bottomBlock) {
         _bottomBlock(self.lastString);
     }
@@ -204,11 +218,11 @@ static NSString *cellid = @"SizeFilterCellID";
 #pragma mark 选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-     NSString *text = self.dataPlist[indexPath.row + 1];
+    NSString *text = self.dataPlist[indexPath.row + 1];
     self.lastString = text;
-    if (_sizeCellBlock) {
-//        [self dismiss];
-        _sizeCellBlock(text);
+    if (_payCellBlock) {
+        //        [self dismiss];
+        _payCellBlock(text);
     }
 }
 @end

@@ -75,13 +75,7 @@
         __weak typeof(self) weakself = self;
 
         _topView.difStateBlock = ^(UIButton *btn) {
-            
-            // 设置订单状态
-            NicknameView *nickView = [[NicknameView alloc] init];
-            
-            nickView.stateMessage = @"134576";
 
-            
             NSUInteger tag = btn.tag;
             
             DLog(@"%ld", tag);

@@ -111,7 +111,7 @@
 - (UIButton *)copyButton {
 
     if (!_copyButton) {
-        _copyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _copyButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_copyButton setTitle:@"复制" forState:UIControlStateNormal];
         [_copyButton setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
         [_copyButton setBackgroundColor:[UIColor colorWithHexString:@"#e0e0e0"]];

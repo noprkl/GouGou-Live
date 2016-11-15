@@ -1,33 +1,29 @@
 //
-//  NicknameView.m
+//  WaitPayAllNickView.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/10.
+//  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "NicknameView.h"
+#import "WaitPayAllNickView.h"
 
-@interface NicknameView ()
+@interface WaitPayAllNickView ()
 /** 间隔 */
 @property (strong,nonatomic) UIView *spaceView;
 /** 买家 */
 @property (strong,nonatomic) UILabel *buyLabel;
 /** 昵称 */
 @property (strong,nonatomic) UILabel *nickName;
-/** 剩余时间 */
-@property (strong,nonatomic) UILabel *remainTimeLabel;
 /** 状态 */
 @property (strong,nonatomic) UILabel *stateLabe;
-
 @end
 
-@implementation NicknameView
+@implementation WaitPayAllNickView
+- (void)setOrderState:(NSString *)orderState {
 
-- (void)setStateMessage:(NSString *)stateMessage {
-
-    _stateMessage = stateMessage;
-    self.stateLabe.text = stateMessage;
+    _orderState = orderState;
+    self.stateLabe.text = orderState;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -35,12 +31,11 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-
+        
         [self addSubview:self.spaceView];
         [self addSubview:self.buyLabel];
         [self addSubview:self.nickName];
         [self addSubview:self.stateLabe];
-        [self addSubview:self.remainTimeLabel];
         
     }
     return self;
@@ -48,7 +43,7 @@
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
-
+    
     __weak typeof(self) weakself = self;
     
     [_spaceView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -80,17 +75,12 @@
         
     }];
     
-    [_remainTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.right.equalTo(weakself.stateLabe.left).offset(-10);
-        make.centerY.equalTo(weakself.stateLabe.centerY);
-        
-    }];
+
 }
 #pragma mark
 #pragma mark - 懒加载
 - (UIView *)spaceView {
-
+    
     if (!_spaceView) {
         _spaceView = [[UIView alloc] init];
         _spaceView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
@@ -99,7 +89,7 @@
 }
 
 - (UILabel *)buyLabel {
-
+    
     if (!_buyLabel) {
         _buyLabel = [[UILabel alloc] init];
         _buyLabel.text = @"买家:";
@@ -120,22 +110,10 @@
     return _nickName;
 }
 
-- (UILabel *)remainTimeLabel {
-
-    if (!_remainTimeLabel) {
-        _remainTimeLabel = [[UILabel alloc] init];
-        _remainTimeLabel.text = @"剩余1天1小时";
-        _remainTimeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-        _remainTimeLabel.font = [UIFont systemFontOfSize:14];
-    }
-    return _remainTimeLabel;
-}
-
 - (UILabel *)stateLabe {
     
     if (!_stateLabe) {
         _stateLabe = [[UILabel alloc] init];
-        _stateLabe.text = @"已完成";
         _stateLabe.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _stateLabe.font = [UIFont systemFontOfSize:14];
         _stateLabe.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];
@@ -145,4 +123,6 @@
     }
     return _stateLabe;
 }
+
+
 @end

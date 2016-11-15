@@ -1,14 +1,15 @@
 //
-//  DogDetailInfoCell.m
+//  SellerDogCardView.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/7.
+//  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "DogDetailInfoCell.h"
+#import "SellerDogCardView.h"
 
-@interface DogDetailInfoCell ()
+@interface SellerDogCardView ()
+
 /** 狗狗图片*/
 @property (strong, nonatomic)  UIImageView *dogImageView;
 /** 狗狗名字 */
@@ -33,35 +34,32 @@
 @end
 
 
-@implementation DogDetailInfoCell
+@implementation SellerDogCardView
 
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
     if (self) {
-        
-        [self.contentView addSubview:self.dogImageView];
-        [self.contentView addSubview:self.dogNameLabel];
-        [self.contentView addSubview:self.kindLabel];
-        [self.contentView addSubview:self.dogKindLabel];
-        [self.contentView addSubview:self.dogAgeLabel];
-        [self.contentView addSubview:self.dogSizeLabel];
-        [self.contentView addSubview:self.dogColorLabel];
-        [self.contentView addSubview:self.nowPriceLabel];
-        [self.contentView addSubview:self.oldPriceLabel];
-        [self.contentView addSubview:self.spaceView];
+        [self addSubview:self.dogImageView];
+        [self addSubview:self.dogNameLabel];
+        [self addSubview:self.kindLabel];
+        [self addSubview:self.dogKindLabel];
+        [self addSubview:self.dogAgeLabel];
+        [self addSubview:self.dogSizeLabel];
+        [self addSubview:self.dogColorLabel];
+        [self addSubview:self.nowPriceLabel];
+        [self addSubview:self.oldPriceLabel];
+        [self addSubview:self.spaceView];
     }
     return self;
 }
-
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     __weak typeof(self) weakself = self;
     
     [_dogImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weakself.centerY).offset(-5);
+        make.centerY.equalTo(weakself.centerY);
         make.left.equalTo(weakself.left).offset(10);
     }];
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
@@ -90,20 +88,21 @@
         make.centerY.equalTo(weakself.dogAgeLabel.centerY);
         make.left.equalTo(weakself.dogSizeLabel.right).offset(10);
     }];
+    
     [_nowPriceLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.dogAgeLabel.bottom).offset(5);
         make.left.equalTo(weakself.dogImageView.right).offset(10);
     }];
+    
     [_oldPriceLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.nowPriceLabel.bottom).offset(5);
         make.left.equalTo(weakself.dogImageView.right).offset(10);
     }];
     
     [_spaceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(weakself.dogImageView.bottom).offset(10);
+        make.bottom.equalTo(weakself.bottom);
         make.left.right.equalTo(weakself);
-        make.height.equalTo(10);
+        make.height.equalTo(1);
     }];
 }
 
@@ -193,31 +192,26 @@
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
         
-        _oldPriceLabel.text = @"¥ 2400";
-        _oldPriceLabel.textColor = [UIColor colorWithHexString:@"#999999"];
-        _oldPriceLabel.font = [UIFont systemFontOfSize:12];
-        
+        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
     }
     return _oldPriceLabel;
 }
 
 - (UIView *)spaceView {
-
+    
     if (!_spaceView) {
         _spaceView = [[UIView alloc] init];
         _spaceView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     }
     return _spaceView;
 }
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-   }
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
+     NSDictionary *attribtDic = @{
+                                  NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                  NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                  NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                  };
+    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+    return attribut;
 }
-
 @end

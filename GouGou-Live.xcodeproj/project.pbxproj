@@ -13,13 +13,6 @@
 		04486AC21DD0162500BC6D15 /* LoginHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AC11DD0162500BC6D15 /* LoginHandler.m */; };
 		044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */; };
 		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
-		045D51081DD94F75001854A8 /* AllOrderGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D50FA1DD94F75001854A8 /* AllOrderGoodsViewController.m */; };
-		045D51091DD94F75001854A8 /* PayingAllMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D50FD1DD94F75001854A8 /* PayingAllMoneyViewController.m */; };
-		045D510A1DD94F75001854A8 /* ProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D50FF1DD94F75001854A8 /* ProtectPowerViewController.m */; };
-		045D510B1DD94F75001854A8 /* WaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51011DD94F75001854A8 /* WaitAssessViewController.m */; };
-		045D510C1DD94F75001854A8 /* WaitConsignmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51031DD94F75001854A8 /* WaitConsignmentViewController.m */; };
-		045D510D1DD94F75001854A8 /* WaitPayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51051DD94F75001854A8 /* WaitPayingViewController.m */; };
-		045D510E1DD94F75001854A8 /* WatiConsigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51071DD94F75001854A8 /* WatiConsigneeViewController.m */; };
 		045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51111DD94F9B001854A8 /* DetailCountViewController.m */; };
 		045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51141DD9539E001854A8 /* MyPageHeaderView.m */; };
 		045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51181DD960F7001854A8 /* MyPageDescView.m */; };
@@ -32,23 +25,6 @@
 		045D51511DD99BEF001854A8 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D514A1DD99BEF001854A8 /* PhotoView.m */; };
 		045D51521DD99BEF001854A8 /* UnCertificateVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D514C1DD99BEF001854A8 /* UnCertificateVIew.m */; };
 		045D515E1DD9CAD5001854A8 /* SellerCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D515C1DD9CAD5001854A8 /* SellerCenterViewController.m */; };
-		045D515F1DD9CAD5001854A8 /* SellerCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045D515D1DD9CAD5001854A8 /* SellerCenterViewController.xib */; };
-		045D51811DD9D88A001854A8 /* PowerOrderStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51621DD9D88A001854A8 /* PowerOrderStateView.m */; };
-		045D51821DD9D88A001854A8 /* SureApplyRefundview.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51641DD9D88A001854A8 /* SureApplyRefundview.m */; };
-		045D51831DD9D88A001854A8 /* UpLoadPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51661DD9D88A001854A8 /* UpLoadPictureView.m */; };
-		045D51841DD9D88A001854A8 /* CostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51691DD9D88A001854A8 /* CostView.m */; };
-		045D51851DD9D88A001854A8 /* FunctionButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D516B1DD9D88A001854A8 /* FunctionButtonView.m */; };
-		045D51861DD9D88A001854A8 /* LogisticsInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D516D1DD9D88A001854A8 /* LogisticsInfoView.m */; };
-		045D51871DD9D88A001854A8 /* NicknameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D516F1DD9D88A001854A8 /* NicknameView.m */; };
-		045D51881DD9D88A001854A8 /* ConsigneeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51721DD9D88A001854A8 /* ConsigneeView.m */; };
-		045D51891DD9D88A001854A8 /* DogDetailCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51741DD9D88A001854A8 /* DogDetailCardView.m */; };
-		045D518A1DD9D88A001854A8 /* GoodsPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51761DD9D88A001854A8 /* GoodsPriceView.m */; };
-		045D518B1DD9D88A001854A8 /* OrderNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51781DD9D88A001854A8 /* OrderNumberView.m */; };
-		045D518C1DD9D88A001854A8 /* PayingMoney.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D517A1DD9D88A001854A8 /* PayingMoney.m */; };
-		045D518D1DD9D88A001854A8 /* SellinfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D517C1DD9D88A001854A8 /* SellinfoView.m */; };
-		045D518E1DD9D88A001854A8 /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D517E1DD9D88A001854A8 /* StateView.m */; };
-		045D518F1DD9D88A001854A8 /* ProtecePowerPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51801DD9D88A001854A8 /* ProtecePowerPromptView.m */; };
-		045D51921DD9D8C9001854A8 /* ApplyProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51911DD9D8C9001854A8 /* ApplyProtectPowerViewController.m */; };
 		045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30A1DCC65E5001B95B1 /* AccountViewController.m */; };
 		045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */; };
 		045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */; };
@@ -164,13 +140,81 @@
 		0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B6661DCC1EE700CB288A /* TransformStyleView.m */; };
 		047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5E11DD564F80025290E /* HttpImageTool.m */; };
 		047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */; };
-		047AD6071DD5CE970025290E /* AllOrderGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F91DD5CE970025290E /* AllOrderGoodsCell.m */; };
 		047AD60D1DD5CE970025290E /* TopButonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD6061DD5CE970025290E /* TopButonView.m */; };
 		047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047AD6271DD5E2090025290E /* SurePsdViewController.xib */; };
 		049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */; };
 		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
 		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
 		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
+		04D360511DDAA6A0009F35A0 /* SellerProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360301DDAA6A0009F35A0 /* SellerProtectPowerViewController.m */; };
+		04D360531DDAA6A0009F35A0 /* SellerWaitAcceptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360331DDAA6A0009F35A0 /* SellerWaitAcceptViewController.m */; };
+		04D360551DDAA6A0009F35A0 /* SellerWaitPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360361DDAA6A0009F35A0 /* SellerWaitPayViewController.m */; };
+		04D360571DDAA6A0009F35A0 /* SellerWaitRateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360391DDAA6A0009F35A0 /* SellerWaitRateViewController.m */; };
+		04D360591DDAA6A0009F35A0 /* SellerWaitSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3603C1DDAA6A0009F35A0 /* SellerWaitSendViewController.m */; };
+		04D3605B1DDAA6A0009F35A0 /* SellerAcceptedRateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360401DDAA6A0009F35A0 /* SellerAcceptedRateViewController.m */; };
+		04D3605C1DDAA6A0009F35A0 /* SellerAcceptedRateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D360411DDAA6A0009F35A0 /* SellerAcceptedRateViewController.xib */; };
+		04D3605D1DDAA6A0009F35A0 /* SellerAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360431DDAA6A0009F35A0 /* SellerAdressViewController.m */; };
+		04D3605E1DDAA6A0009F35A0 /* SellerAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D360441DDAA6A0009F35A0 /* SellerAdressViewController.xib */; };
+		04D3605F1DDAA6A0009F35A0 /* SellerMyGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360461DDAA6A0009F35A0 /* SellerMyGoodsViewController.m */; };
+		04D360601DDAA6A0009F35A0 /* SellerMyGoodsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D360471DDAA6A0009F35A0 /* SellerMyGoodsViewController.xib */; };
+		04D360611DDAA6A0009F35A0 /* SellerMyLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360491DDAA6A0009F35A0 /* SellerMyLiveViewController.m */; };
+		04D360631DDAA6A0009F35A0 /* SellerShipTemplateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3604C1DDAA6A0009F35A0 /* SellerShipTemplateViewController.m */; };
+		04D360641DDAA6A0009F35A0 /* SellerShipTemplateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D3604D1DDAA6A0009F35A0 /* SellerShipTemplateViewController.xib */; };
+		04D360651DDAA6A0009F35A0 /* SellerSoldGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3604F1DDAA6A0009F35A0 /* SellerSoldGoodsViewController.m */; };
+		04D360661DDAA6A0009F35A0 /* SellerSoldGoodsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D360501DDAA6A0009F35A0 /* SellerSoldGoodsViewController.xib */; };
+		04D360701DDAB971009F35A0 /* SellerMyLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3606E1DDAB971009F35A0 /* SellerMyLiveCell.m */; };
+		04D360751DDAD70C009F35A0 /* SellerWaitSendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360731DDAD70C009F35A0 /* SellerWaitSendCell.m */; };
+		04D3607C1DDAD8FF009F35A0 /* SellerWaitPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3607B1DDAD8FF009F35A0 /* SellerWaitPayCell.m */; };
+		04D360801DDADB33009F35A0 /* SellerNickNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3607F1DDADB33009F35A0 /* SellerNickNameView.m */; };
+		04D360861DDADB78009F35A0 /* SellerFunctionButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360851DDADB78009F35A0 /* SellerFunctionButtonView.m */; };
+		04D360891DDADB8C009F35A0 /* SellerCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360881DDADB8C009F35A0 /* SellerCostView.m */; };
+		04D3608C1DDADBAB009F35A0 /* SellerLogisticsInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3608B1DDADBAB009F35A0 /* SellerLogisticsInfoView.m */; };
+		04D3608F1DDAE85D009F35A0 /* SellerDogCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3608E1DDAE85D009F35A0 /* SellerDogCardView.m */; };
+		04D360921DDAEE3F009F35A0 /* SellerBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360911DDAEE3F009F35A0 /* SellerBaseCell.m */; };
+		04D360951DDB1427009F35A0 /* SellerWaitRateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360941DDB1427009F35A0 /* SellerWaitRateCell.m */; };
+		04D3609B1DDB187A009F35A0 /* SellerProtectPowerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3609A1DDB187A009F35A0 /* SellerProtectPowerCell.m */; };
+		04D3609E1DDB1AAA009F35A0 /* SellerWaitAcceptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3609D1DDB1AAA009F35A0 /* SellerWaitAcceptCell.m */; };
+		04D360A11DDB2236009F35A0 /* SellerCloseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360A01DDB2236009F35A0 /* SellerCloseCell.m */; };
+		04D361531DDB343F009F35A0 /* AllOrderGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360FB1DDB343F009F35A0 /* AllOrderGoodsViewController.m */; };
+		04D361541DDB343F009F35A0 /* ApplyProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D360FE1DDB343F009F35A0 /* ApplyProtectPowerViewController.m */; };
+		04D361551DDB343F009F35A0 /* GotoAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361001DDB343F009F35A0 /* GotoAssessViewController.m */; };
+		04D361561DDB343F009F35A0 /* OnlineCustomerServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361021DDB343F009F35A0 /* OnlineCustomerServiceViewController.m */; };
+		04D361571DDB343F009F35A0 /* PayBackMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361041DDB343F009F35A0 /* PayBackMoneyViewController.m */; };
+		04D361581DDB343F009F35A0 /* PayFontMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361061DDB343F009F35A0 /* PayFontMoneyViewController.m */; };
+		04D361591DDB343F009F35A0 /* PayingAllMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361081DDB343F009F35A0 /* PayingAllMoneyViewController.m */; };
+		04D3615A1DDB343F009F35A0 /* RelationSellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3610A1DDB343F009F35A0 /* RelationSellViewController.m */; };
+		04D3615B1DDB343F009F35A0 /* ProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3610C1DDB343F009F35A0 /* ProtectPowerViewController.m */; };
+		04D3615C1DDB343F009F35A0 /* WaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3610E1DDB343F009F35A0 /* WaitAssessViewController.m */; };
+		04D3615D1DDB343F009F35A0 /* WaitConsignmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361101DDB343F009F35A0 /* WaitConsignmentViewController.m */; };
+		04D3615E1DDB343F009F35A0 /* WaitPayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361121DDB343F009F35A0 /* WaitPayingViewController.m */; };
+		04D3615F1DDB343F009F35A0 /* WatiConsigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361141DDB343F009F35A0 /* WatiConsigneeViewController.m */; };
+		04D361601DDB343F009F35A0 /* PowerOrderStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3611B1DDB343F009F35A0 /* PowerOrderStateView.m */; };
+		04D361611DDB343F009F35A0 /* SureApplyRefundview.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3611D1DDB343F009F35A0 /* SureApplyRefundview.m */; };
+		04D361621DDB343F009F35A0 /* UpLoadPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3611F1DDB343F009F35A0 /* UpLoadPictureView.m */; };
+		04D361631DDB343F009F35A0 /* CostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361221DDB343F009F35A0 /* CostView.m */; };
+		04D361641DDB343F009F35A0 /* FunctionButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361241DDB343F009F35A0 /* FunctionButtonView.m */; };
+		04D361651DDB343F009F35A0 /* LogisticsInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361261DDB343F009F35A0 /* LogisticsInfoView.m */; };
+		04D361661DDB343F009F35A0 /* NicknameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361281DDB343F009F35A0 /* NicknameView.m */; };
+		04D361671DDB343F009F35A0 /* WaitPayAllNickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3612A1DDB343F009F35A0 /* WaitPayAllNickView.m */; };
+		04D361681DDB343F009F35A0 /* CloseBusinessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3612C1DDB343F009F35A0 /* CloseBusinessCell.m */; };
+		04D361691DDB343F009F35A0 /* ConsigneeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3612F1DDB343F009F35A0 /* ConsigneeView.m */; };
+		04D3616A1DDB343F009F35A0 /* DogDetailCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361311DDB343F009F35A0 /* DogDetailCardView.m */; };
+		04D3616B1DDB343F009F35A0 /* GoodsPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361331DDB343F009F35A0 /* GoodsPriceView.m */; };
+		04D3616C1DDB343F009F35A0 /* OrderNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361351DDB343F009F35A0 /* OrderNumberView.m */; };
+		04D3616D1DDB343F009F35A0 /* PayingMoney.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361371DDB343F009F35A0 /* PayingMoney.m */; };
+		04D3616E1DDB343F009F35A0 /* SellinfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361391DDB343F009F35A0 /* SellinfoView.m */; };
+		04D3616F1DDB343F009F35A0 /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3613B1DDB343F009F35A0 /* StateView.m */; };
+		04D361701DDB343F009F35A0 /* ProtecePowerPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3613D1DDB343F009F35A0 /* ProtecePowerPromptView.m */; };
+		04D361711DDB343F009F35A0 /* ProtectFaliedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3613F1DDB343F009F35A0 /* ProtectFaliedCell.m */; };
+		04D361721DDB343F009F35A0 /* ProtectingPowerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361411DDB343F009F35A0 /* ProtectingPowerCell.m */; };
+		04D361731DDB343F009F35A0 /* ProtectSuccessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361431DDB343F009F35A0 /* ProtectSuccessCell.m */; };
+		04D361741DDB343F009F35A0 /* WaitAllMoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361451DDB343F009F35A0 /* WaitAllMoneyCell.m */; };
+		04D361751DDB343F009F35A0 /* WaitAssessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361471DDB343F009F35A0 /* WaitAssessCell.m */; };
+		04D361761DDB343F009F35A0 /* WaitBackMoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361491DDB343F009F35A0 /* WaitBackMoneyCell.m */; };
+		04D361771DDB343F009F35A0 /* WaitConsignessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3614B1DDB343F009F35A0 /* WaitConsignessCell.m */; };
+		04D361781DDB343F009F35A0 /* WaitConsignmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3614D1DDB343F009F35A0 /* WaitConsignmentCell.m */; };
+		04D361791DDB343F009F35A0 /* WaitFontMoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D3614F1DDB343F009F35A0 /* WaitFontMoneyCell.m */; };
+		04D3617A1DDB343F009F35A0 /* PayMoneyPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D361521DDB343F009F35A0 /* PayMoneyPrompt.m */; };
 		04DAC98D1DD21A9A0089236D /* DetailCountTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9611DD21A9A0089236D /* DetailCountTopView.m */; };
 		04DAC98E1DD21A9A0089236D /* DetailCountViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9631DD21A9A0089236D /* DetailCountViewCell.m */; };
 		04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9641DD21A9A0089236D /* DetailCountViewCell.xib */; };
@@ -208,20 +252,6 @@
 		044C82EA1DCC411A00B62575 /* ChoseShopAdressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressCell.h; sourceTree = "<group>"; };
 		044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressCell.m; sourceTree = "<group>"; };
 		044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoseShopAdressCell.xib; sourceTree = "<group>"; };
-		045D50F91DD94F75001854A8 /* AllOrderGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsViewController.h; sourceTree = "<group>"; };
-		045D50FA1DD94F75001854A8 /* AllOrderGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderGoodsViewController.m; sourceTree = "<group>"; };
-		045D50FC1DD94F75001854A8 /* PayingAllMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingAllMoneyViewController.h; sourceTree = "<group>"; };
-		045D50FD1DD94F75001854A8 /* PayingAllMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingAllMoneyViewController.m; sourceTree = "<group>"; };
-		045D50FE1DD94F75001854A8 /* ProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerViewController.h; sourceTree = "<group>"; };
-		045D50FF1DD94F75001854A8 /* ProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerViewController.m; sourceTree = "<group>"; };
-		045D51001DD94F75001854A8 /* WaitAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAssessViewController.h; sourceTree = "<group>"; };
-		045D51011DD94F75001854A8 /* WaitAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAssessViewController.m; sourceTree = "<group>"; };
-		045D51021DD94F75001854A8 /* WaitConsignmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitConsignmentViewController.h; sourceTree = "<group>"; };
-		045D51031DD94F75001854A8 /* WaitConsignmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitConsignmentViewController.m; sourceTree = "<group>"; };
-		045D51041DD94F75001854A8 /* WaitPayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitPayingViewController.h; sourceTree = "<group>"; };
-		045D51051DD94F75001854A8 /* WaitPayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitPayingViewController.m; sourceTree = "<group>"; };
-		045D51061DD94F75001854A8 /* WatiConsigneeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatiConsigneeViewController.h; sourceTree = "<group>"; };
-		045D51071DD94F75001854A8 /* WatiConsigneeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatiConsigneeViewController.m; sourceTree = "<group>"; };
 		045D51101DD94F9B001854A8 /* DetailCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewController.h; sourceTree = "<group>"; };
 		045D51111DD94F9B001854A8 /* DetailCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountViewController.m; sourceTree = "<group>"; };
 		045D51131DD9539E001854A8 /* MyPageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageHeaderView.h; sourceTree = "<group>"; };
@@ -246,39 +276,6 @@
 		045D514C1DD99BEF001854A8 /* UnCertificateVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnCertificateVIew.m; sourceTree = "<group>"; };
 		045D515B1DD9CAD5001854A8 /* SellerCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerCenterViewController.h; sourceTree = "<group>"; };
 		045D515C1DD9CAD5001854A8 /* SellerCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerCenterViewController.m; sourceTree = "<group>"; };
-		045D515D1DD9CAD5001854A8 /* SellerCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerCenterViewController.xib; sourceTree = "<group>"; };
-		045D51611DD9D88A001854A8 /* PowerOrderStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerOrderStateView.h; sourceTree = "<group>"; };
-		045D51621DD9D88A001854A8 /* PowerOrderStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerOrderStateView.m; sourceTree = "<group>"; };
-		045D51631DD9D88A001854A8 /* SureApplyRefundview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureApplyRefundview.h; sourceTree = "<group>"; };
-		045D51641DD9D88A001854A8 /* SureApplyRefundview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureApplyRefundview.m; sourceTree = "<group>"; };
-		045D51651DD9D88A001854A8 /* UpLoadPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpLoadPictureView.h; sourceTree = "<group>"; };
-		045D51661DD9D88A001854A8 /* UpLoadPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpLoadPictureView.m; sourceTree = "<group>"; };
-		045D51681DD9D88A001854A8 /* CostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostView.h; sourceTree = "<group>"; };
-		045D51691DD9D88A001854A8 /* CostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CostView.m; sourceTree = "<group>"; };
-		045D516A1DD9D88A001854A8 /* FunctionButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunctionButtonView.h; sourceTree = "<group>"; };
-		045D516B1DD9D88A001854A8 /* FunctionButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FunctionButtonView.m; sourceTree = "<group>"; };
-		045D516C1DD9D88A001854A8 /* LogisticsInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsInfoView.h; sourceTree = "<group>"; };
-		045D516D1DD9D88A001854A8 /* LogisticsInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsInfoView.m; sourceTree = "<group>"; };
-		045D516E1DD9D88A001854A8 /* NicknameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NicknameView.h; sourceTree = "<group>"; };
-		045D516F1DD9D88A001854A8 /* NicknameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NicknameView.m; sourceTree = "<group>"; };
-		045D51711DD9D88A001854A8 /* ConsigneeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsigneeView.h; sourceTree = "<group>"; };
-		045D51721DD9D88A001854A8 /* ConsigneeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsigneeView.m; sourceTree = "<group>"; };
-		045D51731DD9D88A001854A8 /* DogDetailCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailCardView.h; sourceTree = "<group>"; };
-		045D51741DD9D88A001854A8 /* DogDetailCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailCardView.m; sourceTree = "<group>"; };
-		045D51751DD9D88A001854A8 /* GoodsPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsPriceView.h; sourceTree = "<group>"; };
-		045D51761DD9D88A001854A8 /* GoodsPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsPriceView.m; sourceTree = "<group>"; };
-		045D51771DD9D88A001854A8 /* OrderNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderNumberView.h; sourceTree = "<group>"; };
-		045D51781DD9D88A001854A8 /* OrderNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderNumberView.m; sourceTree = "<group>"; };
-		045D51791DD9D88A001854A8 /* PayingMoney.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingMoney.h; sourceTree = "<group>"; };
-		045D517A1DD9D88A001854A8 /* PayingMoney.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingMoney.m; sourceTree = "<group>"; };
-		045D517B1DD9D88A001854A8 /* SellinfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellinfoView.h; sourceTree = "<group>"; };
-		045D517C1DD9D88A001854A8 /* SellinfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellinfoView.m; sourceTree = "<group>"; };
-		045D517D1DD9D88A001854A8 /* StateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateView.h; sourceTree = "<group>"; };
-		045D517E1DD9D88A001854A8 /* StateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateView.m; sourceTree = "<group>"; };
-		045D517F1DD9D88A001854A8 /* ProtecePowerPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtecePowerPromptView.h; sourceTree = "<group>"; };
-		045D51801DD9D88A001854A8 /* ProtecePowerPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtecePowerPromptView.m; sourceTree = "<group>"; };
-		045D51901DD9D8C9001854A8 /* ApplyProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyProtectPowerViewController.h; sourceTree = "<group>"; };
-		045D51911DD9D8C9001854A8 /* ApplyProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyProtectPowerViewController.m; sourceTree = "<group>"; };
 		045FE3091DCC65E5001B95B1 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		045FE30A1DCC65E5001B95B1 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		045FE30C1DCC6635001B95B1 /* ChosedAdressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChosedAdressView.h; sourceTree = "<group>"; };
@@ -484,8 +481,6 @@
 		047AD5E11DD564F80025290E /* HttpImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpImageTool.m; sourceTree = "<group>"; };
 		047AD5F11DD5CDDD0025290E /* SurePsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdViewController.h; sourceTree = "<group>"; };
 		047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdViewController.m; sourceTree = "<group>"; };
-		047AD5F81DD5CE970025290E /* AllOrderGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsCell.h; sourceTree = "<group>"; };
-		047AD5F91DD5CE970025290E /* AllOrderGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderGoodsCell.m; sourceTree = "<group>"; };
 		047AD6051DD5CE970025290E /* TopButonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopButonView.h; sourceTree = "<group>"; };
 		047AD6061DD5CE970025290E /* TopButonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopButonView.m; sourceTree = "<group>"; };
 		047AD6271DD5E2090025290E /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
@@ -496,6 +491,139 @@
 		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
 		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
 		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
+		04D3602F1DDAA6A0009F35A0 /* SellerProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerProtectPowerViewController.h; sourceTree = "<group>"; };
+		04D360301DDAA6A0009F35A0 /* SellerProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerProtectPowerViewController.m; sourceTree = "<group>"; };
+		04D360321DDAA6A0009F35A0 /* SellerWaitAcceptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitAcceptViewController.h; sourceTree = "<group>"; };
+		04D360331DDAA6A0009F35A0 /* SellerWaitAcceptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitAcceptViewController.m; sourceTree = "<group>"; };
+		04D360351DDAA6A0009F35A0 /* SellerWaitPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitPayViewController.h; sourceTree = "<group>"; };
+		04D360361DDAA6A0009F35A0 /* SellerWaitPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitPayViewController.m; sourceTree = "<group>"; };
+		04D360381DDAA6A0009F35A0 /* SellerWaitRateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitRateViewController.h; sourceTree = "<group>"; };
+		04D360391DDAA6A0009F35A0 /* SellerWaitRateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitRateViewController.m; sourceTree = "<group>"; };
+		04D3603B1DDAA6A0009F35A0 /* SellerWaitSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitSendViewController.h; sourceTree = "<group>"; };
+		04D3603C1DDAA6A0009F35A0 /* SellerWaitSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitSendViewController.m; sourceTree = "<group>"; };
+		04D3603F1DDAA6A0009F35A0 /* SellerAcceptedRateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAcceptedRateViewController.h; sourceTree = "<group>"; };
+		04D360401DDAA6A0009F35A0 /* SellerAcceptedRateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAcceptedRateViewController.m; sourceTree = "<group>"; };
+		04D360411DDAA6A0009F35A0 /* SellerAcceptedRateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerAcceptedRateViewController.xib; sourceTree = "<group>"; };
+		04D360421DDAA6A0009F35A0 /* SellerAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAdressViewController.h; sourceTree = "<group>"; };
+		04D360431DDAA6A0009F35A0 /* SellerAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAdressViewController.m; sourceTree = "<group>"; };
+		04D360441DDAA6A0009F35A0 /* SellerAdressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerAdressViewController.xib; sourceTree = "<group>"; };
+		04D360451DDAA6A0009F35A0 /* SellerMyGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerMyGoodsViewController.h; sourceTree = "<group>"; };
+		04D360461DDAA6A0009F35A0 /* SellerMyGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerMyGoodsViewController.m; sourceTree = "<group>"; };
+		04D360471DDAA6A0009F35A0 /* SellerMyGoodsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerMyGoodsViewController.xib; sourceTree = "<group>"; };
+		04D360481DDAA6A0009F35A0 /* SellerMyLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerMyLiveViewController.h; sourceTree = "<group>"; };
+		04D360491DDAA6A0009F35A0 /* SellerMyLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerMyLiveViewController.m; sourceTree = "<group>"; };
+		04D3604B1DDAA6A0009F35A0 /* SellerShipTemplateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerShipTemplateViewController.h; sourceTree = "<group>"; };
+		04D3604C1DDAA6A0009F35A0 /* SellerShipTemplateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerShipTemplateViewController.m; sourceTree = "<group>"; };
+		04D3604D1DDAA6A0009F35A0 /* SellerShipTemplateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerShipTemplateViewController.xib; sourceTree = "<group>"; };
+		04D3604E1DDAA6A0009F35A0 /* SellerSoldGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSoldGoodsViewController.h; sourceTree = "<group>"; };
+		04D3604F1DDAA6A0009F35A0 /* SellerSoldGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerSoldGoodsViewController.m; sourceTree = "<group>"; };
+		04D360501DDAA6A0009F35A0 /* SellerSoldGoodsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerSoldGoodsViewController.xib; sourceTree = "<group>"; };
+		04D3606D1DDAB971009F35A0 /* SellerMyLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerMyLiveCell.h; sourceTree = "<group>"; };
+		04D3606E1DDAB971009F35A0 /* SellerMyLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerMyLiveCell.m; sourceTree = "<group>"; };
+		04D360721DDAD70C009F35A0 /* SellerWaitSendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitSendCell.h; sourceTree = "<group>"; };
+		04D360731DDAD70C009F35A0 /* SellerWaitSendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitSendCell.m; sourceTree = "<group>"; };
+		04D3607A1DDAD8FF009F35A0 /* SellerWaitPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitPayCell.h; sourceTree = "<group>"; };
+		04D3607B1DDAD8FF009F35A0 /* SellerWaitPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitPayCell.m; sourceTree = "<group>"; };
+		04D3607E1DDADB33009F35A0 /* SellerNickNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerNickNameView.h; sourceTree = "<group>"; };
+		04D3607F1DDADB33009F35A0 /* SellerNickNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerNickNameView.m; sourceTree = "<group>"; };
+		04D360841DDADB78009F35A0 /* SellerFunctionButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerFunctionButtonView.h; sourceTree = "<group>"; };
+		04D360851DDADB78009F35A0 /* SellerFunctionButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerFunctionButtonView.m; sourceTree = "<group>"; };
+		04D360871DDADB8C009F35A0 /* SellerCostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerCostView.h; sourceTree = "<group>"; };
+		04D360881DDADB8C009F35A0 /* SellerCostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerCostView.m; sourceTree = "<group>"; };
+		04D3608A1DDADBAB009F35A0 /* SellerLogisticsInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerLogisticsInfoView.h; sourceTree = "<group>"; };
+		04D3608B1DDADBAB009F35A0 /* SellerLogisticsInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerLogisticsInfoView.m; sourceTree = "<group>"; };
+		04D3608D1DDAE85D009F35A0 /* SellerDogCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDogCardView.h; sourceTree = "<group>"; };
+		04D3608E1DDAE85D009F35A0 /* SellerDogCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDogCardView.m; sourceTree = "<group>"; };
+		04D360901DDAEE3F009F35A0 /* SellerBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerBaseCell.h; sourceTree = "<group>"; };
+		04D360911DDAEE3F009F35A0 /* SellerBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerBaseCell.m; sourceTree = "<group>"; };
+		04D360931DDB1426009F35A0 /* SellerWaitRateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitRateCell.h; sourceTree = "<group>"; };
+		04D360941DDB1427009F35A0 /* SellerWaitRateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitRateCell.m; sourceTree = "<group>"; };
+		04D360991DDB187A009F35A0 /* SellerProtectPowerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerProtectPowerCell.h; sourceTree = "<group>"; };
+		04D3609A1DDB187A009F35A0 /* SellerProtectPowerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerProtectPowerCell.m; sourceTree = "<group>"; };
+		04D3609C1DDB1AAA009F35A0 /* SellerWaitAcceptCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerWaitAcceptCell.h; sourceTree = "<group>"; };
+		04D3609D1DDB1AAA009F35A0 /* SellerWaitAcceptCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerWaitAcceptCell.m; sourceTree = "<group>"; };
+		04D3609F1DDB2236009F35A0 /* SellerCloseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerCloseCell.h; sourceTree = "<group>"; };
+		04D360A01DDB2236009F35A0 /* SellerCloseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerCloseCell.m; sourceTree = "<group>"; };
+		04D360FA1DDB343F009F35A0 /* AllOrderGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsViewController.h; sourceTree = "<group>"; };
+		04D360FB1DDB343F009F35A0 /* AllOrderGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderGoodsViewController.m; sourceTree = "<group>"; };
+		04D360FD1DDB343F009F35A0 /* ApplyProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyProtectPowerViewController.h; sourceTree = "<group>"; };
+		04D360FE1DDB343F009F35A0 /* ApplyProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyProtectPowerViewController.m; sourceTree = "<group>"; };
+		04D360FF1DDB343F009F35A0 /* GotoAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoAssessViewController.h; sourceTree = "<group>"; };
+		04D361001DDB343F009F35A0 /* GotoAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoAssessViewController.m; sourceTree = "<group>"; };
+		04D361011DDB343F009F35A0 /* OnlineCustomerServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineCustomerServiceViewController.h; sourceTree = "<group>"; };
+		04D361021DDB343F009F35A0 /* OnlineCustomerServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlineCustomerServiceViewController.m; sourceTree = "<group>"; };
+		04D361031DDB343F009F35A0 /* PayBackMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayBackMoneyViewController.h; sourceTree = "<group>"; };
+		04D361041DDB343F009F35A0 /* PayBackMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayBackMoneyViewController.m; sourceTree = "<group>"; };
+		04D361051DDB343F009F35A0 /* PayFontMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayFontMoneyViewController.h; sourceTree = "<group>"; };
+		04D361061DDB343F009F35A0 /* PayFontMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayFontMoneyViewController.m; sourceTree = "<group>"; };
+		04D361071DDB343F009F35A0 /* PayingAllMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingAllMoneyViewController.h; sourceTree = "<group>"; };
+		04D361081DDB343F009F35A0 /* PayingAllMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingAllMoneyViewController.m; sourceTree = "<group>"; };
+		04D361091DDB343F009F35A0 /* RelationSellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelationSellViewController.h; sourceTree = "<group>"; };
+		04D3610A1DDB343F009F35A0 /* RelationSellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelationSellViewController.m; sourceTree = "<group>"; };
+		04D3610B1DDB343F009F35A0 /* ProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerViewController.h; sourceTree = "<group>"; };
+		04D3610C1DDB343F009F35A0 /* ProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerViewController.m; sourceTree = "<group>"; };
+		04D3610D1DDB343F009F35A0 /* WaitAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAssessViewController.h; sourceTree = "<group>"; };
+		04D3610E1DDB343F009F35A0 /* WaitAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAssessViewController.m; sourceTree = "<group>"; };
+		04D3610F1DDB343F009F35A0 /* WaitConsignmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitConsignmentViewController.h; sourceTree = "<group>"; };
+		04D361101DDB343F009F35A0 /* WaitConsignmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitConsignmentViewController.m; sourceTree = "<group>"; };
+		04D361111DDB343F009F35A0 /* WaitPayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitPayingViewController.h; sourceTree = "<group>"; };
+		04D361121DDB343F009F35A0 /* WaitPayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitPayingViewController.m; sourceTree = "<group>"; };
+		04D361131DDB343F009F35A0 /* WatiConsigneeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatiConsigneeViewController.h; sourceTree = "<group>"; };
+		04D361141DDB343F009F35A0 /* WatiConsigneeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatiConsigneeViewController.m; sourceTree = "<group>"; };
+		04D3611A1DDB343F009F35A0 /* PowerOrderStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerOrderStateView.h; sourceTree = "<group>"; };
+		04D3611B1DDB343F009F35A0 /* PowerOrderStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerOrderStateView.m; sourceTree = "<group>"; };
+		04D3611C1DDB343F009F35A0 /* SureApplyRefundview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureApplyRefundview.h; sourceTree = "<group>"; };
+		04D3611D1DDB343F009F35A0 /* SureApplyRefundview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureApplyRefundview.m; sourceTree = "<group>"; };
+		04D3611E1DDB343F009F35A0 /* UpLoadPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpLoadPictureView.h; sourceTree = "<group>"; };
+		04D3611F1DDB343F009F35A0 /* UpLoadPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpLoadPictureView.m; sourceTree = "<group>"; };
+		04D361211DDB343F009F35A0 /* CostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostView.h; sourceTree = "<group>"; };
+		04D361221DDB343F009F35A0 /* CostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CostView.m; sourceTree = "<group>"; };
+		04D361231DDB343F009F35A0 /* FunctionButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunctionButtonView.h; sourceTree = "<group>"; };
+		04D361241DDB343F009F35A0 /* FunctionButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FunctionButtonView.m; sourceTree = "<group>"; };
+		04D361251DDB343F009F35A0 /* LogisticsInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsInfoView.h; sourceTree = "<group>"; };
+		04D361261DDB343F009F35A0 /* LogisticsInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsInfoView.m; sourceTree = "<group>"; };
+		04D361271DDB343F009F35A0 /* NicknameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NicknameView.h; sourceTree = "<group>"; };
+		04D361281DDB343F009F35A0 /* NicknameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NicknameView.m; sourceTree = "<group>"; };
+		04D361291DDB343F009F35A0 /* WaitPayAllNickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitPayAllNickView.h; sourceTree = "<group>"; };
+		04D3612A1DDB343F009F35A0 /* WaitPayAllNickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitPayAllNickView.m; sourceTree = "<group>"; };
+		04D3612B1DDB343F009F35A0 /* CloseBusinessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloseBusinessCell.h; sourceTree = "<group>"; };
+		04D3612C1DDB343F009F35A0 /* CloseBusinessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloseBusinessCell.m; sourceTree = "<group>"; };
+		04D3612E1DDB343F009F35A0 /* ConsigneeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsigneeView.h; sourceTree = "<group>"; };
+		04D3612F1DDB343F009F35A0 /* ConsigneeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsigneeView.m; sourceTree = "<group>"; };
+		04D361301DDB343F009F35A0 /* DogDetailCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailCardView.h; sourceTree = "<group>"; };
+		04D361311DDB343F009F35A0 /* DogDetailCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailCardView.m; sourceTree = "<group>"; };
+		04D361321DDB343F009F35A0 /* GoodsPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsPriceView.h; sourceTree = "<group>"; };
+		04D361331DDB343F009F35A0 /* GoodsPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsPriceView.m; sourceTree = "<group>"; };
+		04D361341DDB343F009F35A0 /* OrderNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderNumberView.h; sourceTree = "<group>"; };
+		04D361351DDB343F009F35A0 /* OrderNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderNumberView.m; sourceTree = "<group>"; };
+		04D361361DDB343F009F35A0 /* PayingMoney.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingMoney.h; sourceTree = "<group>"; };
+		04D361371DDB343F009F35A0 /* PayingMoney.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingMoney.m; sourceTree = "<group>"; };
+		04D361381DDB343F009F35A0 /* SellinfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellinfoView.h; sourceTree = "<group>"; };
+		04D361391DDB343F009F35A0 /* SellinfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellinfoView.m; sourceTree = "<group>"; };
+		04D3613A1DDB343F009F35A0 /* StateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateView.h; sourceTree = "<group>"; };
+		04D3613B1DDB343F009F35A0 /* StateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateView.m; sourceTree = "<group>"; };
+		04D3613C1DDB343F009F35A0 /* ProtecePowerPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtecePowerPromptView.h; sourceTree = "<group>"; };
+		04D3613D1DDB343F009F35A0 /* ProtecePowerPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtecePowerPromptView.m; sourceTree = "<group>"; };
+		04D3613E1DDB343F009F35A0 /* ProtectFaliedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectFaliedCell.h; sourceTree = "<group>"; };
+		04D3613F1DDB343F009F35A0 /* ProtectFaliedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectFaliedCell.m; sourceTree = "<group>"; };
+		04D361401DDB343F009F35A0 /* ProtectingPowerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectingPowerCell.h; sourceTree = "<group>"; };
+		04D361411DDB343F009F35A0 /* ProtectingPowerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectingPowerCell.m; sourceTree = "<group>"; };
+		04D361421DDB343F009F35A0 /* ProtectSuccessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectSuccessCell.h; sourceTree = "<group>"; };
+		04D361431DDB343F009F35A0 /* ProtectSuccessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectSuccessCell.m; sourceTree = "<group>"; };
+		04D361441DDB343F009F35A0 /* WaitAllMoneyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAllMoneyCell.h; sourceTree = "<group>"; };
+		04D361451DDB343F009F35A0 /* WaitAllMoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAllMoneyCell.m; sourceTree = "<group>"; };
+		04D361461DDB343F009F35A0 /* WaitAssessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAssessCell.h; sourceTree = "<group>"; };
+		04D361471DDB343F009F35A0 /* WaitAssessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAssessCell.m; sourceTree = "<group>"; };
+		04D361481DDB343F009F35A0 /* WaitBackMoneyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitBackMoneyCell.h; sourceTree = "<group>"; };
+		04D361491DDB343F009F35A0 /* WaitBackMoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitBackMoneyCell.m; sourceTree = "<group>"; };
+		04D3614A1DDB343F009F35A0 /* WaitConsignessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitConsignessCell.h; sourceTree = "<group>"; };
+		04D3614B1DDB343F009F35A0 /* WaitConsignessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitConsignessCell.m; sourceTree = "<group>"; };
+		04D3614C1DDB343F009F35A0 /* WaitConsignmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitConsignmentCell.h; sourceTree = "<group>"; };
+		04D3614D1DDB343F009F35A0 /* WaitConsignmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitConsignmentCell.m; sourceTree = "<group>"; };
+		04D3614E1DDB343F009F35A0 /* WaitFontMoneyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitFontMoneyCell.h; sourceTree = "<group>"; };
+		04D3614F1DDB343F009F35A0 /* WaitFontMoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitFontMoneyCell.m; sourceTree = "<group>"; };
+		04D361511DDB343F009F35A0 /* PayMoneyPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayMoneyPrompt.h; sourceTree = "<group>"; };
+		04D361521DDB343F009F35A0 /* PayMoneyPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMoneyPrompt.m; sourceTree = "<group>"; };
 		04DAC9601DD21A9A0089236D /* DetailCountTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountTopView.h; sourceTree = "<group>"; };
 		04DAC9611DD21A9A0089236D /* DetailCountTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountTopView.m; sourceTree = "<group>"; };
 		04DAC9621DD21A9A0089236D /* DetailCountViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewCell.h; sourceTree = "<group>"; };
@@ -599,37 +727,6 @@
 			path = BaseHandler;
 			sourceTree = "<group>";
 		};
-		045D50F81DD94F75001854A8 /* DiffenfStateOrder */ = {
-			isa = PBXGroup;
-			children = (
-				045D50F91DD94F75001854A8 /* AllOrderGoodsViewController.h */,
-				045D50FA1DD94F75001854A8 /* AllOrderGoodsViewController.m */,
-				045D50FB1DD94F75001854A8 /* OrderOption */,
-				045D50FE1DD94F75001854A8 /* ProtectPowerViewController.h */,
-				045D50FF1DD94F75001854A8 /* ProtectPowerViewController.m */,
-				045D51001DD94F75001854A8 /* WaitAssessViewController.h */,
-				045D51011DD94F75001854A8 /* WaitAssessViewController.m */,
-				045D51021DD94F75001854A8 /* WaitConsignmentViewController.h */,
-				045D51031DD94F75001854A8 /* WaitConsignmentViewController.m */,
-				045D51041DD94F75001854A8 /* WaitPayingViewController.h */,
-				045D51051DD94F75001854A8 /* WaitPayingViewController.m */,
-				045D51061DD94F75001854A8 /* WatiConsigneeViewController.h */,
-				045D51071DD94F75001854A8 /* WatiConsigneeViewController.m */,
-			);
-			path = DiffenfStateOrder;
-			sourceTree = "<group>";
-		};
-		045D50FB1DD94F75001854A8 /* OrderOption */ = {
-			isa = PBXGroup;
-			children = (
-				045D51901DD9D8C9001854A8 /* ApplyProtectPowerViewController.h */,
-				045D51911DD9D8C9001854A8 /* ApplyProtectPowerViewController.m */,
-				045D50FD1DD94F75001854A8 /* PayingAllMoneyViewController.m */,
-				045D50FC1DD94F75001854A8 /* PayingAllMoneyViewController.h */,
-			);
-			path = OrderOption;
-			sourceTree = "<group>";
-		};
 		045D510F1DD94F9B001854A8 /* DetailCount */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,9 +798,9 @@
 		045D51571DD9CAB5001854A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				04D3602D1DDAA6A0009F35A0 /* SellerOrder */,
 				045D515B1DD9CAD5001854A8 /* SellerCenterViewController.h */,
 				045D515C1DD9CAD5001854A8 /* SellerCenterViewController.m */,
-				045D515D1DD9CAD5001854A8 /* SellerCenterViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -725,57 +822,11 @@
 		045D515A1DD9CAB5001854A8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04D3607D1DDADB1B009F35A0 /* SellerCell */,
+				04D3606B1DDAB948009F35A0 /* CenterHeader */,
+				04D3606C1DDAB948009F35A0 /* CenterTable */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		045D51601DD9D88A001854A8 /* ApplyProtectPowerSubviews */ = {
-			isa = PBXGroup;
-			children = (
-				045D51611DD9D88A001854A8 /* PowerOrderStateView.h */,
-				045D51621DD9D88A001854A8 /* PowerOrderStateView.m */,
-				045D51631DD9D88A001854A8 /* SureApplyRefundview.h */,
-				045D51641DD9D88A001854A8 /* SureApplyRefundview.m */,
-				045D51651DD9D88A001854A8 /* UpLoadPictureView.h */,
-				045D51661DD9D88A001854A8 /* UpLoadPictureView.m */,
-			);
-			path = ApplyProtectPowerSubviews;
-			sourceTree = "<group>";
-		};
-		045D51671DD9D88A001854A8 /* CellsSubviews */ = {
-			isa = PBXGroup;
-			children = (
-				045D51681DD9D88A001854A8 /* CostView.h */,
-				045D51691DD9D88A001854A8 /* CostView.m */,
-				045D516A1DD9D88A001854A8 /* FunctionButtonView.h */,
-				045D516B1DD9D88A001854A8 /* FunctionButtonView.m */,
-				045D516C1DD9D88A001854A8 /* LogisticsInfoView.h */,
-				045D516D1DD9D88A001854A8 /* LogisticsInfoView.m */,
-				045D516E1DD9D88A001854A8 /* NicknameView.h */,
-				045D516F1DD9D88A001854A8 /* NicknameView.m */,
-			);
-			path = CellsSubviews;
-			sourceTree = "<group>";
-		};
-		045D51701DD9D88A001854A8 /* OrderDetailSubview */ = {
-			isa = PBXGroup;
-			children = (
-				045D51711DD9D88A001854A8 /* ConsigneeView.h */,
-				045D51721DD9D88A001854A8 /* ConsigneeView.m */,
-				045D51731DD9D88A001854A8 /* DogDetailCardView.h */,
-				045D51741DD9D88A001854A8 /* DogDetailCardView.m */,
-				045D51751DD9D88A001854A8 /* GoodsPriceView.h */,
-				045D51761DD9D88A001854A8 /* GoodsPriceView.m */,
-				045D51771DD9D88A001854A8 /* OrderNumberView.h */,
-				045D51781DD9D88A001854A8 /* OrderNumberView.m */,
-				045D51791DD9D88A001854A8 /* PayingMoney.h */,
-				045D517A1DD9D88A001854A8 /* PayingMoney.m */,
-				045D517B1DD9D88A001854A8 /* SellinfoView.h */,
-				045D517C1DD9D88A001854A8 /* SellinfoView.m */,
-				045D517D1DD9D88A001854A8 /* StateView.h */,
-				045D517E1DD9D88A001854A8 /* StateView.m */,
-			);
-			path = OrderDetailSubview;
 			sourceTree = "<group>";
 		};
 		045FE3121DCC8BE2001B95B1 /* AddPayongSuccessViewController */ = {
@@ -870,6 +921,7 @@
 		0479B4C31DCADC7B00CB288A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				04D360F81DDB343F009F35A0 /* BuyCenter */,
 				045D51561DD9CAB5001854A8 /* SellerCenter */,
 				0479B4C41DCADC7B00CB288A /* LIve */,
 				0479B5171DCADC7B00CB288A /* LiveAction */,
@@ -1466,7 +1518,6 @@
 		0479B57E1DCADC7B00CB288A /* OrderGoods */ = {
 			isa = PBXGroup;
 			children = (
-				045D50F81DD94F75001854A8 /* DiffenfStateOrder */,
 				0479B57F1DCADC7B00CB288A /* OrderGoodsViewController.h */,
 				0479B5801DCADC7B00CB288A /* OrderGoodsViewController.m */,
 				0479B5811DCADC7B00CB288A /* OrderGoodsViewController.xib */,
@@ -1692,24 +1743,9 @@
 		047AD5F61DD5CE970025290E /* OrderGoods */ = {
 			isa = PBXGroup;
 			children = (
-				047AD5F71DD5CE970025290E /* AllOrderGoodsCell */,
 				047AD6021DD5CE970025290E /* TopButtonsView */,
 			);
 			path = OrderGoods;
-			sourceTree = "<group>";
-		};
-		047AD5F71DD5CE970025290E /* AllOrderGoodsCell */ = {
-			isa = PBXGroup;
-			children = (
-				047AD5F81DD5CE970025290E /* AllOrderGoodsCell.h */,
-				047AD5F91DD5CE970025290E /* AllOrderGoodsCell.m */,
-				045D51601DD9D88A001854A8 /* ApplyProtectPowerSubviews */,
-				045D51671DD9D88A001854A8 /* CellsSubviews */,
-				045D51701DD9D88A001854A8 /* OrderDetailSubview */,
-				045D517F1DD9D88A001854A8 /* ProtecePowerPromptView.h */,
-				045D51801DD9D88A001854A8 /* ProtecePowerPromptView.m */,
-			);
-			path = AllOrderGoodsCell;
 			sourceTree = "<group>";
 		};
 		047AD6021DD5CE970025290E /* TopButtonsView */ = {
@@ -1719,6 +1755,270 @@
 				047AD6061DD5CE970025290E /* TopButonView.m */,
 			);
 			path = TopButtonsView;
+			sourceTree = "<group>";
+		};
+		04D3602D1DDAA6A0009F35A0 /* SellerOrder */ = {
+			isa = PBXGroup;
+			children = (
+				04D3602E1DDAA6A0009F35A0 /* CenterHeader */,
+				04D3603E1DDAA6A0009F35A0 /* CenterTable */,
+			);
+			path = SellerOrder;
+			sourceTree = "<group>";
+		};
+		04D3602E1DDAA6A0009F35A0 /* CenterHeader */ = {
+			isa = PBXGroup;
+			children = (
+				04D360351DDAA6A0009F35A0 /* SellerWaitPayViewController.h */,
+				04D360361DDAA6A0009F35A0 /* SellerWaitPayViewController.m */,
+				04D3603B1DDAA6A0009F35A0 /* SellerWaitSendViewController.h */,
+				04D3603C1DDAA6A0009F35A0 /* SellerWaitSendViewController.m */,
+				04D360321DDAA6A0009F35A0 /* SellerWaitAcceptViewController.h */,
+				04D360331DDAA6A0009F35A0 /* SellerWaitAcceptViewController.m */,
+				04D360381DDAA6A0009F35A0 /* SellerWaitRateViewController.h */,
+				04D360391DDAA6A0009F35A0 /* SellerWaitRateViewController.m */,
+				04D3602F1DDAA6A0009F35A0 /* SellerProtectPowerViewController.h */,
+				04D360301DDAA6A0009F35A0 /* SellerProtectPowerViewController.m */,
+			);
+			path = CenterHeader;
+			sourceTree = "<group>";
+		};
+		04D3603E1DDAA6A0009F35A0 /* CenterTable */ = {
+			isa = PBXGroup;
+			children = (
+				04D3604E1DDAA6A0009F35A0 /* SellerSoldGoodsViewController.h */,
+				04D3604F1DDAA6A0009F35A0 /* SellerSoldGoodsViewController.m */,
+				04D360501DDAA6A0009F35A0 /* SellerSoldGoodsViewController.xib */,
+				04D3603F1DDAA6A0009F35A0 /* SellerAcceptedRateViewController.h */,
+				04D360401DDAA6A0009F35A0 /* SellerAcceptedRateViewController.m */,
+				04D360411DDAA6A0009F35A0 /* SellerAcceptedRateViewController.xib */,
+				04D3604B1DDAA6A0009F35A0 /* SellerShipTemplateViewController.h */,
+				04D3604C1DDAA6A0009F35A0 /* SellerShipTemplateViewController.m */,
+				04D3604D1DDAA6A0009F35A0 /* SellerShipTemplateViewController.xib */,
+				04D360421DDAA6A0009F35A0 /* SellerAdressViewController.h */,
+				04D360431DDAA6A0009F35A0 /* SellerAdressViewController.m */,
+				04D360441DDAA6A0009F35A0 /* SellerAdressViewController.xib */,
+				04D360451DDAA6A0009F35A0 /* SellerMyGoodsViewController.h */,
+				04D360461DDAA6A0009F35A0 /* SellerMyGoodsViewController.m */,
+				04D360471DDAA6A0009F35A0 /* SellerMyGoodsViewController.xib */,
+				04D360481DDAA6A0009F35A0 /* SellerMyLiveViewController.h */,
+				04D360491DDAA6A0009F35A0 /* SellerMyLiveViewController.m */,
+			);
+			path = CenterTable;
+			sourceTree = "<group>";
+		};
+		04D3606B1DDAB948009F35A0 /* CenterHeader */ = {
+			isa = PBXGroup;
+			children = (
+				04D3607A1DDAD8FF009F35A0 /* SellerWaitPayCell.h */,
+				04D3607B1DDAD8FF009F35A0 /* SellerWaitPayCell.m */,
+				04D360721DDAD70C009F35A0 /* SellerWaitSendCell.h */,
+				04D360731DDAD70C009F35A0 /* SellerWaitSendCell.m */,
+				04D3609C1DDB1AAA009F35A0 /* SellerWaitAcceptCell.h */,
+				04D3609D1DDB1AAA009F35A0 /* SellerWaitAcceptCell.m */,
+				04D360931DDB1426009F35A0 /* SellerWaitRateCell.h */,
+				04D360941DDB1427009F35A0 /* SellerWaitRateCell.m */,
+				04D360991DDB187A009F35A0 /* SellerProtectPowerCell.h */,
+				04D3609A1DDB187A009F35A0 /* SellerProtectPowerCell.m */,
+				04D3609F1DDB2236009F35A0 /* SellerCloseCell.h */,
+				04D360A01DDB2236009F35A0 /* SellerCloseCell.m */,
+			);
+			path = CenterHeader;
+			sourceTree = "<group>";
+		};
+		04D3606C1DDAB948009F35A0 /* CenterTable */ = {
+			isa = PBXGroup;
+			children = (
+				04D3606D1DDAB971009F35A0 /* SellerMyLiveCell.h */,
+				04D3606E1DDAB971009F35A0 /* SellerMyLiveCell.m */,
+			);
+			path = CenterTable;
+			sourceTree = "<group>";
+		};
+		04D3607D1DDADB1B009F35A0 /* SellerCell */ = {
+			isa = PBXGroup;
+			children = (
+				04D3607E1DDADB33009F35A0 /* SellerNickNameView.h */,
+				04D3607F1DDADB33009F35A0 /* SellerNickNameView.m */,
+				04D3608D1DDAE85D009F35A0 /* SellerDogCardView.h */,
+				04D3608E1DDAE85D009F35A0 /* SellerDogCardView.m */,
+				04D360871DDADB8C009F35A0 /* SellerCostView.h */,
+				04D360881DDADB8C009F35A0 /* SellerCostView.m */,
+				04D3608A1DDADBAB009F35A0 /* SellerLogisticsInfoView.h */,
+				04D3608B1DDADBAB009F35A0 /* SellerLogisticsInfoView.m */,
+				04D360841DDADB78009F35A0 /* SellerFunctionButtonView.h */,
+				04D360851DDADB78009F35A0 /* SellerFunctionButtonView.m */,
+				04D360901DDAEE3F009F35A0 /* SellerBaseCell.h */,
+				04D360911DDAEE3F009F35A0 /* SellerBaseCell.m */,
+			);
+			path = SellerCell;
+			sourceTree = "<group>";
+		};
+		04D360F81DDB343F009F35A0 /* BuyCenter */ = {
+			isa = PBXGroup;
+			children = (
+				04D360F91DDB343F009F35A0 /* Controllers */,
+				04D361151DDB343F009F35A0 /* Handler */,
+				04D361161DDB343F009F35A0 /* Models */,
+				04D361171DDB343F009F35A0 /* Views */,
+			);
+			path = BuyCenter;
+			sourceTree = "<group>";
+		};
+		04D360F91DDB343F009F35A0 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				04D360FA1DDB343F009F35A0 /* AllOrderGoodsViewController.h */,
+				04D360FB1DDB343F009F35A0 /* AllOrderGoodsViewController.m */,
+				04D360FC1DDB343F009F35A0 /* OrderOption */,
+				04D3610B1DDB343F009F35A0 /* ProtectPowerViewController.h */,
+				04D3610C1DDB343F009F35A0 /* ProtectPowerViewController.m */,
+				04D3610D1DDB343F009F35A0 /* WaitAssessViewController.h */,
+				04D3610E1DDB343F009F35A0 /* WaitAssessViewController.m */,
+				04D3610F1DDB343F009F35A0 /* WaitConsignmentViewController.h */,
+				04D361101DDB343F009F35A0 /* WaitConsignmentViewController.m */,
+				04D361111DDB343F009F35A0 /* WaitPayingViewController.h */,
+				04D361121DDB343F009F35A0 /* WaitPayingViewController.m */,
+				04D361131DDB343F009F35A0 /* WatiConsigneeViewController.h */,
+				04D361141DDB343F009F35A0 /* WatiConsigneeViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		04D360FC1DDB343F009F35A0 /* OrderOption */ = {
+			isa = PBXGroup;
+			children = (
+				04D360FD1DDB343F009F35A0 /* ApplyProtectPowerViewController.h */,
+				04D360FE1DDB343F009F35A0 /* ApplyProtectPowerViewController.m */,
+				04D360FF1DDB343F009F35A0 /* GotoAssessViewController.h */,
+				04D361001DDB343F009F35A0 /* GotoAssessViewController.m */,
+				04D361011DDB343F009F35A0 /* OnlineCustomerServiceViewController.h */,
+				04D361021DDB343F009F35A0 /* OnlineCustomerServiceViewController.m */,
+				04D361031DDB343F009F35A0 /* PayBackMoneyViewController.h */,
+				04D361041DDB343F009F35A0 /* PayBackMoneyViewController.m */,
+				04D361051DDB343F009F35A0 /* PayFontMoneyViewController.h */,
+				04D361061DDB343F009F35A0 /* PayFontMoneyViewController.m */,
+				04D361071DDB343F009F35A0 /* PayingAllMoneyViewController.h */,
+				04D361081DDB343F009F35A0 /* PayingAllMoneyViewController.m */,
+				04D361091DDB343F009F35A0 /* RelationSellViewController.h */,
+				04D3610A1DDB343F009F35A0 /* RelationSellViewController.m */,
+			);
+			path = OrderOption;
+			sourceTree = "<group>";
+		};
+		04D361151DDB343F009F35A0 /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Handler;
+			sourceTree = "<group>";
+		};
+		04D361161DDB343F009F35A0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		04D361171DDB343F009F35A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				04D361181DDB343F009F35A0 /* AllOrderGoodsCell */,
+				04D361501DDB343F009F35A0 /* OrderOption */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		04D361181DDB343F009F35A0 /* AllOrderGoodsCell */ = {
+			isa = PBXGroup;
+			children = (
+				04D361191DDB343F009F35A0 /* ApplyProtectPowerSubviews */,
+				04D361201DDB343F009F35A0 /* CellsSubviews */,
+				04D3612B1DDB343F009F35A0 /* CloseBusinessCell.h */,
+				04D3612C1DDB343F009F35A0 /* CloseBusinessCell.m */,
+				04D3612D1DDB343F009F35A0 /* OrderDetailSubview */,
+				04D3613C1DDB343F009F35A0 /* ProtecePowerPromptView.h */,
+				04D3613D1DDB343F009F35A0 /* ProtecePowerPromptView.m */,
+				04D3613E1DDB343F009F35A0 /* ProtectFaliedCell.h */,
+				04D3613F1DDB343F009F35A0 /* ProtectFaliedCell.m */,
+				04D361401DDB343F009F35A0 /* ProtectingPowerCell.h */,
+				04D361411DDB343F009F35A0 /* ProtectingPowerCell.m */,
+				04D361421DDB343F009F35A0 /* ProtectSuccessCell.h */,
+				04D361431DDB343F009F35A0 /* ProtectSuccessCell.m */,
+				04D361441DDB343F009F35A0 /* WaitAllMoneyCell.h */,
+				04D361451DDB343F009F35A0 /* WaitAllMoneyCell.m */,
+				04D361461DDB343F009F35A0 /* WaitAssessCell.h */,
+				04D361471DDB343F009F35A0 /* WaitAssessCell.m */,
+				04D361481DDB343F009F35A0 /* WaitBackMoneyCell.h */,
+				04D361491DDB343F009F35A0 /* WaitBackMoneyCell.m */,
+				04D3614A1DDB343F009F35A0 /* WaitConsignessCell.h */,
+				04D3614B1DDB343F009F35A0 /* WaitConsignessCell.m */,
+				04D3614C1DDB343F009F35A0 /* WaitConsignmentCell.h */,
+				04D3614D1DDB343F009F35A0 /* WaitConsignmentCell.m */,
+				04D3614E1DDB343F009F35A0 /* WaitFontMoneyCell.h */,
+				04D3614F1DDB343F009F35A0 /* WaitFontMoneyCell.m */,
+			);
+			path = AllOrderGoodsCell;
+			sourceTree = "<group>";
+		};
+		04D361191DDB343F009F35A0 /* ApplyProtectPowerSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				04D3611A1DDB343F009F35A0 /* PowerOrderStateView.h */,
+				04D3611B1DDB343F009F35A0 /* PowerOrderStateView.m */,
+				04D3611C1DDB343F009F35A0 /* SureApplyRefundview.h */,
+				04D3611D1DDB343F009F35A0 /* SureApplyRefundview.m */,
+				04D3611E1DDB343F009F35A0 /* UpLoadPictureView.h */,
+				04D3611F1DDB343F009F35A0 /* UpLoadPictureView.m */,
+			);
+			path = ApplyProtectPowerSubviews;
+			sourceTree = "<group>";
+		};
+		04D361201DDB343F009F35A0 /* CellsSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				04D361211DDB343F009F35A0 /* CostView.h */,
+				04D361221DDB343F009F35A0 /* CostView.m */,
+				04D361231DDB343F009F35A0 /* FunctionButtonView.h */,
+				04D361241DDB343F009F35A0 /* FunctionButtonView.m */,
+				04D361251DDB343F009F35A0 /* LogisticsInfoView.h */,
+				04D361261DDB343F009F35A0 /* LogisticsInfoView.m */,
+				04D361271DDB343F009F35A0 /* NicknameView.h */,
+				04D361281DDB343F009F35A0 /* NicknameView.m */,
+				04D361291DDB343F009F35A0 /* WaitPayAllNickView.h */,
+				04D3612A1DDB343F009F35A0 /* WaitPayAllNickView.m */,
+			);
+			path = CellsSubviews;
+			sourceTree = "<group>";
+		};
+		04D3612D1DDB343F009F35A0 /* OrderDetailSubview */ = {
+			isa = PBXGroup;
+			children = (
+				04D3612E1DDB343F009F35A0 /* ConsigneeView.h */,
+				04D3612F1DDB343F009F35A0 /* ConsigneeView.m */,
+				04D361301DDB343F009F35A0 /* DogDetailCardView.h */,
+				04D361311DDB343F009F35A0 /* DogDetailCardView.m */,
+				04D361321DDB343F009F35A0 /* GoodsPriceView.h */,
+				04D361331DDB343F009F35A0 /* GoodsPriceView.m */,
+				04D361341DDB343F009F35A0 /* OrderNumberView.h */,
+				04D361351DDB343F009F35A0 /* OrderNumberView.m */,
+				04D361361DDB343F009F35A0 /* PayingMoney.h */,
+				04D361371DDB343F009F35A0 /* PayingMoney.m */,
+				04D361381DDB343F009F35A0 /* SellinfoView.h */,
+				04D361391DDB343F009F35A0 /* SellinfoView.m */,
+				04D3613A1DDB343F009F35A0 /* StateView.h */,
+				04D3613B1DDB343F009F35A0 /* StateView.m */,
+			);
+			path = OrderDetailSubview;
+			sourceTree = "<group>";
+		};
+		04D361501DDB343F009F35A0 /* OrderOption */ = {
+			isa = PBXGroup;
+			children = (
+				04D361511DDB343F009F35A0 /* PayMoneyPrompt.h */,
+				04D361521DDB343F009F35A0 /* PayMoneyPrompt.m */,
+			);
+			path = OrderOption;
 			sourceTree = "<group>";
 		};
 		04DAC9591DD21A9A0089236D /* Views */ = {
@@ -1977,7 +2277,9 @@
 				0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */,
 				0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */,
 				04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */,
+				04D3605E1DDAA6A0009F35A0 /* SellerAdressViewController.xib in Resources */,
 				04DAC9AA1DD2D1250089236D /* SearchFocusViewController.xib in Resources */,
+				04D3605C1DDAA6A0009F35A0 /* SellerAcceptedRateViewController.xib in Resources */,
 				0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */,
 				0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */,
 				0479B60D1DCADC7B00CB288A /* PayingViewController.xib in Resources */,
@@ -1992,14 +2294,16 @@
 				04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */,
 				049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */,
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
-				045D515F1DD9CAD5001854A8 /* SellerCenterViewController.xib in Resources */,
+				04D360601DDAA6A0009F35A0 /* SellerMyGoodsViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
 				0479B6221DCADC7B00CB288A /* RemoveCookieViewController.xib in Resources */,
+				04D360641DDAA6A0009F35A0 /* SellerShipTemplateViewController.xib in Resources */,
 				047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */,
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
 				045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
+				04D360661DDAA6A0009F35A0 /* SellerSoldGoodsViewController.xib in Resources */,
 				0479B6241DCADC7B00CB288A /* SecurityAccountViewController.xib in Resources */,
 				0479B6201DCADC7B00CB288A /* MessagePushViewController.xib in Resources */,
 				0479B61C1DCADC7B00CB288A /* OrderGoodsViewController.xib in Resources */,
@@ -2062,24 +2366,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				045D518C1DD9D88A001854A8 /* PayingMoney.m in Sources */,
 				0479B5F61DCADC7B00CB288A /* DogImageView.m in Sources */,
 				0479B5D81DCADC7B00CB288A /* LiveViewController.m in Sources */,
+				04D361751DDB343F009F35A0 /* WaitAssessCell.m in Sources */,
 				0479B5E21DCADC7B00CB288A /* DogTypesView.m in Sources */,
 				0479B6331DCADC7B00CB288A /* MessageViewController.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
 				045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */,
-				045D51861DD9D88A001854A8 /* LogisticsInfoView.m in Sources */,
-				045D518F1DD9D88A001854A8 /* ProtecePowerPromptView.m in Sources */,
-				045D51821DD9D88A001854A8 /* SureApplyRefundview.m in Sources */,
+				04D360861DDADB78009F35A0 /* SellerFunctionButtonView.m in Sources */,
+				04D3605F1DDAA6A0009F35A0 /* SellerMyGoodsViewController.m in Sources */,
+				04D361641DDB343F009F35A0 /* FunctionButtonView.m in Sources */,
+				04D360631DDAA6A0009F35A0 /* SellerShipTemplateViewController.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
+				04D361711DDB343F009F35A0 /* ProtectFaliedCell.m in Sources */,
 				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
+				04D3605B1DDAA6A0009F35A0 /* SellerAcceptedRateViewController.m in Sources */,
 				045D51501DD99BEF001854A8 /* DoneCertificateView.m in Sources */,
-				045D51081DD94F75001854A8 /* AllOrderGoodsViewController.m in Sources */,
 				0479B6141DCADC7B00CB288A /* MerchantViewController.m in Sources */,
-				045D518B1DD9D88A001854A8 /* OrderNumberView.m in Sources */,
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
 				0479B5DF1DCADC7B00CB288A /* LiveViewCellModel.m in Sources */,
+				04D361791DDB343F009F35A0 /* WaitFontMoneyCell.m in Sources */,
 				0479B6121DCADC7B00CB288A /* CertificateViewController.m in Sources */,
 				0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */,
 				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
@@ -2092,11 +2398,14 @@
 				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
 				04DAC99B1DD21A9A0089236D /* AddrsssTableViewCell.m in Sources */,
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
+				04D360701DDAB971009F35A0 /* SellerMyLiveCell.m in Sources */,
+				04D361571DDB343F009F35A0 /* PayBackMoneyViewController.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
 				047324001DD1DC18006CCC71 /* MyFansViewController.m in Sources */,
-				045D51891DD9D88A001854A8 /* DogDetailCardView.m in Sources */,
+				04D361781DDB343F009F35A0 /* WaitConsignmentCell.m in Sources */,
+				04D360751DDAD70C009F35A0 /* SellerWaitSendCell.m in Sources */,
 				04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */,
-				045D51811DD9D88A001854A8 /* PowerOrderStateView.m in Sources */,
+				04D360801DDADB33009F35A0 /* SellerNickNameView.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
 				04DAC98D1DD21A9A0089236D /* DetailCountTopView.m in Sources */,
@@ -2105,78 +2414,101 @@
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
+				04D360551DDAA6A0009F35A0 /* SellerWaitPayViewController.m in Sources */,
+				04D3615C1DDB343F009F35A0 /* WaitAssessViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				04DAC9B41DD317700089236D /* EditNikeNameAlert.m in Sources */,
-				045D51831DD9D88A001854A8 /* UpLoadPictureView.m in Sources */,
+				04D3605D1DDAA6A0009F35A0 /* SellerAdressViewController.m in Sources */,
+				04D361591DDB343F009F35A0 /* PayingAllMoneyViewController.m in Sources */,
 				04DAC9921DD21A9A0089236D /* MyFavoriteTableView.m in Sources */,
 				045D51511DD99BEF001854A8 /* PhotoView.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
-				045D51851DD9D88A001854A8 /* FunctionButtonView.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
+				04D361551DDB343F009F35A0 /* GotoAssessViewController.m in Sources */,
 				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
 				0479B5DA1DCADC7B00CB288A /* DogTypesViewController.m in Sources */,
 				04DAC99C1DD21A9A0089236D /* WatchHistoryCell.m in Sources */,
 				04486AC21DD0162500BC6D15 /* LoginHandler.m in Sources */,
+				04D3616D1DDB343F009F35A0 /* PayingMoney.m in Sources */,
 				047323FD1DD1DBFF006CCC71 /* MyPageViewController.m in Sources */,
-				045D510E1DD94F75001854A8 /* WatiConsigneeViewController.m in Sources */,
 				0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */,
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
 				047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */,
-				045D510B1DD94F75001854A8 /* WaitAssessViewController.m in Sources */,
+				04D361541DDB343F009F35A0 /* ApplyProtectPowerViewController.m in Sources */,
 				0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */,
 				04DAC99A1DD21A9A0089236D /* DeletePrommtView.m in Sources */,
 				0479B63D1DCADC7B00CB288A /* HTTPTool.m in Sources */,
 				04DAC9901DD21A9A0089236D /* DogDetailInfoCell.m in Sources */,
 				0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */,
-				045D51921DD9D8C9001854A8 /* ApplyProtectPowerViewController.m in Sources */,
 				0479B5F71DCADC7B00CB288A /* DogMarkView.m in Sources */,
 				0479B5F21DCADC7B00CB288A /* DogShowViewController.m in Sources */,
 				04DAC9911DD21A9A0089236D /* TowButtonView.m in Sources */,
 				04DAC9991DD21A9A0089236D /* AddressChooseView.m in Sources */,
 				0479B6031DCADC7B00CB288A /* LoginViewController.m in Sources */,
+				04D361761DDB343F009F35A0 /* WaitBackMoneyCell.m in Sources */,
+				04D361741DDB343F009F35A0 /* WaitAllMoneyCell.m in Sources */,
 				049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */,
-				045D510D1DD94F75001854A8 /* WaitPayingViewController.m in Sources */,
 				0479B5FE1DCADC7B00CB288A /* TalkingView.m in Sources */,
 				0479B61D1DCADC7B00CB288A /* AboutUsViewController.m in Sources */,
-				045D51841DD9D88A001854A8 /* CostView.m in Sources */,
-				047AD6071DD5CE970025290E /* AllOrderGoodsCell.m in Sources */,
-				045D51091DD94F75001854A8 /* PayingAllMoneyViewController.m in Sources */,
-				045D510A1DD94F75001854A8 /* ProtectPowerViewController.m in Sources */,
+				04D361631DDB343F009F35A0 /* CostView.m in Sources */,
 				0479B5E81DCADC7B00CB288A /* DogSizeFilter.m in Sources */,
 				045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */,
 				045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */,
+				04D361601DDB343F009F35A0 /* PowerOrderStateView.m in Sources */,
+				04D3615F1DDB343F009F35A0 /* WatiConsigneeViewController.m in Sources */,
 				0479B63C1DCADC7B00CB288A /* UIColor+HexString.m in Sources */,
+				04D3607C1DDAD8FF009F35A0 /* SellerWaitPayCell.m in Sources */,
 				0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */,
 				0479B5DD1DCADC7B00CB288A /* SearchViewController.m in Sources */,
+				04D361701DDB343F009F35A0 /* ProtecePowerPromptView.m in Sources */,
+				04D361691DDB343F009F35A0 /* ConsigneeView.m in Sources */,
+				04D360531DDAA6A0009F35A0 /* SellerWaitAcceptViewController.m in Sources */,
 				0479B6171DCADC7B00CB288A /* FavoriteViewController.m in Sources */,
-				045D518D1DD9D88A001854A8 /* SellinfoView.m in Sources */,
+				04D361681DDB343F009F35A0 /* CloseBusinessCell.m in Sources */,
+				04D3616B1DDB343F009F35A0 /* GoodsPriceView.m in Sources */,
+				04D3616A1DDB343F009F35A0 /* DogDetailCardView.m in Sources */,
+				04D360A11DDB2236009F35A0 /* SellerCloseCell.m in Sources */,
 				0479B5D61DCADC7B00CB288A /* LivingViewController.m in Sources */,
 				045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */,
-				045D518A1DD9D88A001854A8 /* GoodsPriceView.m in Sources */,
-				045D510C1DD94F75001854A8 /* WaitConsignmentViewController.m in Sources */,
+				04D360511DDAA6A0009F35A0 /* SellerProtectPowerViewController.m in Sources */,
+				04D3615A1DDB343F009F35A0 /* RelationSellViewController.m in Sources */,
+				04D3609B1DDB187A009F35A0 /* SellerProtectPowerCell.m in Sources */,
+				04D3616C1DDB343F009F35A0 /* OrderNumberView.m in Sources */,
+				04D360591DDAA6A0009F35A0 /* SellerWaitSendViewController.m in Sources */,
+				04D361671DDB343F009F35A0 /* WaitPayAllNickView.m in Sources */,
+				04D3616F1DDB343F009F35A0 /* StateView.m in Sources */,
 				0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */,
+				04D3608C1DDADBAB009F35A0 /* SellerLogisticsInfoView.m in Sources */,
 				045D51221DD9946F001854A8 /* ManagePictureaViewController.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
+				04D361731DDB343F009F35A0 /* ProtectSuccessCell.m in Sources */,
+				04D361531DDB343F009F35A0 /* AllOrderGoodsViewController.m in Sources */,
 				045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */,
 				0479B5EC1DCADC7B00CB288A /* LiveTableView.m in Sources */,
 				045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */,
+				04D360951DDB1427009F35A0 /* SellerWaitRateCell.m in Sources */,
+				04D360921DDAEE3F009F35A0 /* SellerBaseCell.m in Sources */,
 				04DAC9A01DD2C4E20089236D /* EditMyMessageViewController.m in Sources */,
+				04D3615B1DDB343F009F35A0 /* ProtectPowerViewController.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
+				04D3615E1DDB343F009F35A0 /* WaitPayingViewController.m in Sources */,
 				0479B5DC1DCADC7B00CB288A /* RecommendViewController.m in Sources */,
 				0479B6271DCADC7B00CB288A /* SuggestViewController.m in Sources */,
+				04D360611DDAA6A0009F35A0 /* SellerMyLiveViewController.m in Sources */,
 				045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */,
-				045D51871DD9D88A001854A8 /* NicknameView.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
 				04DAC9931DD21A9A0089236D /* MyFocusTableCell.m in Sources */,
 				0479B63B1DCADC7B00CB288A /* NSString+CheckString.m in Sources */,
 				0479B5F11DCADC7B00CB288A /* ShareBtnModel.m in Sources */,
 				045D51521DD99BEF001854A8 /* UnCertificateVIew.m in Sources */,
+				04D3615D1DDB343F009F35A0 /* WaitConsignmentViewController.m in Sources */,
+				04D360571DDAA6A0009F35A0 /* SellerWaitRateViewController.m in Sources */,
 				0479B6391DCADC7B00CB288A /* BaseTabBarController.m in Sources */,
 				0479B5FF1DCADC7B00CB288A /* CodeLoginViewController.m in Sources */,
 				045D515E1DD9CAD5001854A8 /* SellerCenterViewController.m in Sources */,
@@ -2185,34 +2517,46 @@
 				0479B5FD1DCADC7B00CB288A /* StartSourceView.m in Sources */,
 				0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */,
 				04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */,
+				04D361561DDB343F009F35A0 /* OnlineCustomerServiceViewController.m in Sources */,
+				04D360891DDADB8C009F35A0 /* SellerCostView.m in Sources */,
 				049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */,
 				045D514D1DD99BEF001854A8 /* IdentityIfonView.m in Sources */,
 				0479B5F31DCADC7B00CB288A /* SellerShowViewController.m in Sources */,
+				04D361651DDB343F009F35A0 /* LogisticsInfoView.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
 				0479B5E51DCADC7B00CB288A /* LiveTopView.m in Sources */,
+				04D360651DDAA6A0009F35A0 /* SellerSoldGoodsViewController.m in Sources */,
 				0479B6451DCB046C00CB288A /* BuyRuleAlertView.m in Sources */,
 				04DAC9971DD21A9A0089236D /* PromptView.m in Sources */,
 				0479B5F51DCADC7B00CB288A /* TalkingViewController.m in Sources */,
 				0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */,
 				04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */,
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
-				045D51881DD9D88A001854A8 /* ConsigneeView.m in Sources */,
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
+				04D361721DDB343F009F35A0 /* ProtectingPowerCell.m in Sources */,
+				04D361661DDB343F009F35A0 /* NicknameView.m in Sources */,
 				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,
+				04D361621DDB343F009F35A0 /* UpLoadPictureView.m in Sources */,
+				04D361771DDB343F009F35A0 /* WaitConsignessCell.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
+				04D361611DDB343F009F35A0 /* SureApplyRefundview.m in Sources */,
+				04D3609E1DDB1AAA009F35A0 /* SellerWaitAcceptCell.m in Sources */,
 				04DAC9951DD21A9A0089236D /* MyMessageView.m in Sources */,
 				0479B5E01DCADC7B00CB288A /* NoneFocusView.m in Sources */,
+				04D3616E1DDB343F009F35A0 /* SellinfoView.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
-				045D518E1DD9D88A001854A8 /* StateView.m in Sources */,
 				0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */,
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
+				04D3608F1DDAE85D009F35A0 /* SellerDogCardView.m in Sources */,
+				04D3617A1DDB343F009F35A0 /* PayMoneyPrompt.m in Sources */,
 				0479B61B1DCADC7B00CB288A /* OrderGoodsViewController.m in Sources */,
 				047323FA1DD1DBEE006CCC71 /* MyFocusViewController.m in Sources */,
 				0479B5E11DCADC7B00CB288A /* DogPictureCollectionViewCell.m in Sources */,
 				04DAC98E1DD21A9A0089236D /* DetailCountViewCell.m in Sources */,
 				045D511C1DD96E58001854A8 /* MyPageMerchant.m in Sources */,
 				047AD60D1DD5CE970025290E /* TopButonView.m in Sources */,
+				04D361581DDB343F009F35A0 /* PayFontMoneyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

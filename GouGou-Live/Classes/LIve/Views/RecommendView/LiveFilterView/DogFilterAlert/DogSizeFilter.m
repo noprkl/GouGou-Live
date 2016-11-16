@@ -136,11 +136,13 @@ static NSString *cellid = @"SizeFilterCellID";
     label.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor whiteColor];
     label.text = text;
+    label.textColor = [UIColor colorWithHexString:@"666666"];
+    label.font = [UIFont systemFontOfSize:14];
     label.textAlignment = NSTextAlignmentCenter;
     [cell.contentView addSubview:label];
     
     return cell;
-
+    
 }
 #pragma mark 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -161,7 +163,8 @@ static NSString *cellid = @"SizeFilterCellID";
         
         label.text = [self.dataPlist firstObject];
         label.textAlignment = NSTextAlignmentCenter;
-       
+        label.textColor = [UIColor colorWithHexString:@"#666666"];
+        label.font = [UIFont systemFontOfSize:16];
         // 线
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
         line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
@@ -179,7 +182,7 @@ static NSString *cellid = @"SizeFilterCellID";
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
         [button setTitle:[self.dataPlist lastObject] forState:(UIControlStateNormal)];
-        [button setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:(UIControlStateNormal)];
+        [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         
         [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
         [button addTarget:self action:@selector(clickFooterBtnAction) forControlEvents:(UIControlEventTouchDown)];

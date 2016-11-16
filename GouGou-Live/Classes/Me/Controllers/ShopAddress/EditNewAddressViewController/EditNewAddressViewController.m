@@ -38,7 +38,13 @@ static NSString * detailCellid = @"detailCellid";
 
     self.title = @"新增收货地址";
 
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSaveBtnAction)];
+    
     [self.areaChooseTextfiled addTarget:self action:@selector(areaChooseTextfiled:) forControlEvents:UIControlEventEditingDidBegin];
+}
+- (void)clickSaveBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - textfiled内容编辑
 - (void)userNameTextfiled:(UITextField *)sender {

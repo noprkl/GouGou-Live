@@ -57,7 +57,9 @@ static NSString * indenifer = @"addressCellID";
 }
 - (void)ClickAddBtnBlock {
 
-
+    EditNewAddressViewController *editVC = [[EditNewAddressViewController alloc] init];
+   
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 #pragma mark
 #pragma mark - 懒加载

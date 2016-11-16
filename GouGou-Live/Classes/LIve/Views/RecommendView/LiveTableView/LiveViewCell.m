@@ -64,6 +64,7 @@
         x = i * (w + 10);
         
         DogCardView *cardView = [[DogCardView alloc] init];
+        cardView.message = [NSString stringWithFormat:@"%ld/5", i + 1];
         cardView.backgroundColor = [UIColor whiteColor];
         cardView.frame = CGRectMake(x, y, w, h);
         

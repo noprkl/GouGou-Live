@@ -113,18 +113,17 @@
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
     cell.textLabel.text = self.dataArr[indexPath.section][indexPath.row];
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
-    cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.detailTextLabel.text = @"查看全部卖出";
-            cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-            cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+            cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         }
     }
-    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

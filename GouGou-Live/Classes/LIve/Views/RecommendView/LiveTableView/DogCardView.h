@@ -13,4 +13,6 @@
 @property(nonatomic, strong) NSArray *dogCard; /**< 狗Card */
 
 
+@property(nonatomic, strong) NSString *message; /**< 右下的信息 */
+
 @end

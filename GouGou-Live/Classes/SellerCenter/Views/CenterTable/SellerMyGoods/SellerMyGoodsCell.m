@@ -1,14 +1,17 @@
 //
-//  DogCardView.m
+//  SellerMyGoodsCell.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/10/27.
+//  Created by ma c on 16/11/16.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "DogCardView.h"
+#import "SellerMyGoodsCell.h"
 
-@interface DogCardView ()
+@interface SellerMyGoodsCell ()
+
+@property(nonatomic, strong) UIView *line; /**< 线 */
+
 @property (strong, nonatomic)  UIImageView *dogImageView;/**< 狗狗图片*/
 @property (strong, nonatomic)  UILabel *dogNameLabel;/**< 狗狗名字 */
 @property(nonatomic, strong) UILabel *kindLabel; /**< 品种 */
@@ -22,43 +25,43 @@
 @property (strong, nonatomic)  UILabel *nowPriceLabel;/**< 狗狗价格*/
 @property (strong, nonatomic)  UILabel *oldPriceLabel;/**< 狗狗老价格*/
 
-@property (strong, nonatomic)  UILabel *currentIndexLabel;/**< 狗狗当前个数*/
-
-
+@property (strong, nonatomic)  UILabel *stateLabel;/**< 狗狗当前个数*/
 @end
 
-@implementation DogCardView
+@implementation SellerMyGoodsCell
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
-        [self addSubview:self.dogImageView];
-        [self addSubview:self.dogNameLabel];
-        [self addSubview:self.kindLabel];
-        [self addSubview:self.dogKindLabel];
-        [self addSubview:self.dogAgeLabel];
-        [self addSubview:self.dogSizeLabel];
-        [self addSubview:self.dogColorLabel];
-        [self addSubview:self.nowPriceLabel];
-        [self addSubview:self.oldPriceLabel];
-        [self addSubview:self.currentIndexLabel];
-        
+        [self.contentView addSubview:self.line];
+        [self.contentView addSubview:self.dogImageView];
+        [self.contentView addSubview:self.dogNameLabel];
+        [self.contentView addSubview:self.kindLabel];
+        [self.contentView addSubview:self.dogKindLabel];
+        [self.contentView addSubview:self.dogAgeLabel];
+        [self.contentView addSubview:self.dogSizeLabel];
+        [self.contentView addSubview:self.dogColorLabel];
+        [self.contentView addSubview:self.nowPriceLabel];
+        [self.contentView addSubview:self.oldPriceLabel];
+        [self.contentView addSubview:self.stateLabel];
     }
     return self;
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
-        make.left.equalTo(self.left);
+    [self.line makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top);
-        make.width.equalTo(self.dogImageView.width);
+        make.left.top.equalTo(self);
+        make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 10));
+    }];
+    [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left).offset(10);
+        make.top.equalTo(self.line.bottom).offset(10);
+        make.size.equalTo(CGSizeMake(78, 78));
     }];
     [self.dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.top).offset(5);
+        make.top.equalTo(self.dogImageView.top).offset(5);
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
     [self.kindLabel makeConstraints:^(MASConstraintMaker *make) {
@@ -72,7 +75,7 @@
     }];
     
     [self.dogAgeLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dogNameLabel.bottom).offset(5);
+        make.top.equalTo(self.dogNameLabel.bottom).offset(7);
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
     [self.dogSizeLabel makeConstraints:^(MASConstraintMaker *make) {
@@ -84,24 +87,34 @@
         make.left.equalTo(self.dogSizeLabel.right).offset(10);
     }];
     [self.nowPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dogAgeLabel.bottom).offset(5);
+        make.top.equalTo(self.dogAgeLabel.bottom).offset(0);
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
     [self.oldPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.nowPriceLabel.bottom).offset(5);
+        make.top.equalTo(self.nowPriceLabel.bottom);
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
-    [self.currentIndexLabel makeConstraints:^(MASConstraintMaker *make) {
+    [self.stateLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.oldPriceLabel.centerY);
         make.right.equalTo(self.right).offset(-10);
     }];
 }
 #pragma mark
 #pragma mark - 懒加载
+- (UIView *)line {
+    if (!_line) {
+        _line = [[UIView alloc] init];
+        _line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _line;
+}
 - (UIImageView *)dogImageView {
     if (!_dogImageView) {
         _dogImageView = [[UIImageView alloc] init];
-        _dogImageView.image = [UIImage imageNamed:@"品种02"];
+        _dogImageView.image = [UIImage imageNamed:@"组-7"];
+        
+        _dogImageView.layer.cornerRadius = 5;
+        _dogImageView.layer.masksToBounds = YES;
     }
     return _dogImageView;
 }
@@ -111,8 +124,8 @@
         
         _dogNameLabel.text = @"豆豆";
         _dogNameLabel.textColor = [UIColor colorWithHexString:@"#000000"];
-        _dogNameLabel.font = [UIFont systemFontOfSize:16];
-
+        _dogNameLabel.font = [UIFont boldSystemFontOfSize:16];
+        
     }
     return _dogNameLabel;
 }
@@ -133,7 +146,7 @@
         _dogKindLabel.text = @"拉布拉多";
         _dogKindLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _dogKindLabel.font = [UIFont systemFontOfSize:12];
-
+        
     }
     return _dogKindLabel;
 }
@@ -181,30 +194,37 @@
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
         
-        _oldPriceLabel.text = @"¥ 2400";
-        _oldPriceLabel.textColor = [UIColor colorWithHexString:@"#999999"];
-        _oldPriceLabel.font = [UIFont systemFontOfSize:12];
-
+        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
     }
     return _oldPriceLabel;
 }
-- (UILabel *)currentIndexLabel {
-
-    if (!_currentIndexLabel) {
-        _currentIndexLabel = [[UILabel alloc] init];
+- (UILabel *)stateLabel {
+    
+    if (!_stateLabel) {
+        _stateLabel = [[UILabel alloc] init];
         
-        _currentIndexLabel.text = @"1/5";
-        _currentIndexLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-        _currentIndexLabel.font = [UIFont systemFontOfSize:12];
+        _stateLabel.text = @"等待中";
+        _stateLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+        _stateLabel.font = [UIFont systemFontOfSize:12];
     }
-    return _currentIndexLabel;
+    return _stateLabel;
 }
 - (void)setDogCard:(NSArray *)dogCard {
     _dogCard = dogCard;
     
 }
-- (void)setMessage:(NSString *)message {
-    _message = message;
-    self.currentIndexLabel.text = message;
+- (void)setCellState:(NSString *)cellState {
+    _cellState = cellState;
+    self.stateLabel.text = cellState;
+}
+
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
+    NSDictionary *attribtDic = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                 };
+    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+    return attribut;
 }
 @end

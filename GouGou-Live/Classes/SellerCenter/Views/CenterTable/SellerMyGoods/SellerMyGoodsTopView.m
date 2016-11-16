@@ -1,14 +1,15 @@
 //
-//  DetailCountTopView.m
+//  SellerMyGoodsTopView.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/1.
+//  Created by ma c on 16/11/16.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "DetailCountTopView.h"
+#import "SellerMyGoodsTopView.h"
 
-@interface DetailCountTopView ()
+
+@interface SellerMyGoodsTopView ()
 
 /** 全部 */
 @property (strong, nonatomic) UIButton *allCountBtn;
@@ -27,7 +28,7 @@
 
 @end
 
-@implementation DetailCountTopView
+@implementation SellerMyGoodsTopView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -36,11 +37,11 @@
         
         [self setBtn:self.allCountBtn title:@"全部"];
         
-        [self setBtn:self.incomeBtn title:@"收入"];
+        [self setBtn:self.incomeBtn title:@"待售"];
         
-        [self setBtn:self.outcomeBtn title:@"支出"];
+        [self setBtn:self.outcomeBtn title:@"已售"];
         
-        [self setBtn:self.detailingBtn title:@"交易中"];
+        [self setBtn:self.detailingBtn title:@"审核"];
         
     }
     return self;
@@ -104,8 +105,8 @@
 - (UIButton *)outcomeBtn {
     if (!_outcomeBtn) {
         _outcomeBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-                _outcomeBtn.backgroundColor = [UIColor whiteColor];
-//        [_outcomeBtn sizeToFit];
+        _outcomeBtn.backgroundColor = [UIColor whiteColor];
+        //        [_outcomeBtn sizeToFit];
         
         [_outcomeBtn addTarget:self action:@selector(clickoutcomeBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         
@@ -147,48 +148,55 @@
 #pragma mark
 #pragma mark - Action
 - (void)clickallCountBtnAction:(UIButton *)btn {
-    if (_talkBlock) {
-        BOOL flag = _talkBlock(btn);
+    if (_allBlock) {
+        _allBlock();
+        
+        btn.selected = YES;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         
         self.lastBtn.selected = NO;
         self.lastBtn.backgroundColor = [UIColor whiteColor];
-        
-        btn.selected = flag;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         self.lastBtn = btn;
     }
 }
 - (void)clickincomeBtnAction:(UIButton *)btn {
-    if (_dogBlock) {
-        BOOL flag = _dogBlock(btn);
+    if (_waitSellBlock) {
+        _waitSellBlock();
+        btn.selected = YES;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        
         self.lastBtn.selected = NO;
         self.lastBtn.backgroundColor = [UIColor whiteColor];
-        btn.selected = flag;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         self.lastBtn = btn;
     }
 }
 - (void)clickoutcomeBtnAction:(UIButton *)btn {
-    if (_serviceBlock) {
-        BOOL flag = _serviceBlock(btn);
+    if (_soldBlock) {
+        _soldBlock();
+        
+        btn.selected = YES;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        
         self.lastBtn.selected = NO;
         self.lastBtn.backgroundColor = [UIColor whiteColor];
-        btn.selected = flag;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         self.lastBtn = btn;
     }
     
 }
 - (void)clickdetailingBtnAction:(UIButton *)btn {
-    if (_sellerBlock) {
-        BOOL flag = _sellerBlock(btn);
+    if (_reviewBlock) {
+        _reviewBlock();
+       
+        btn.selected = YES;
+        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        
         self.lastBtn.selected = NO;
         self.lastBtn.backgroundColor = [UIColor whiteColor];
-        btn.selected = flag;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         self.lastBtn = btn;
     }
     
 }
+
+
 
 @end

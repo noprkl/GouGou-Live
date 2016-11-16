@@ -76,6 +76,5 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, _maxY);
 }
 @end

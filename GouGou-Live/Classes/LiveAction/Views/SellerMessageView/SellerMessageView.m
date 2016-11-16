@@ -163,11 +163,6 @@
         make.top.equalTo(self.briefLabel.bottom).offset(10);
         make.left.equalTo(self.left).offset(10);
     }];
-//    [self makeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.equalTo(self.briefContentLabel.bottom).offset(10);
-//        
-//    }];
-//    self.viewHeight =
 }
 #pragma mark
 #pragma mark - Action 

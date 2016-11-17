@@ -16,26 +16,20 @@
 @property (strong,nonatomic) UILabel *totalMoney;
 /** 运费 */
 @property (strong,nonatomic) UILabel *freightLabel;
-/** 已付定金 */
-@property (strong,nonatomic) UILabel *fontMoneyLabel;
-/** 定金 */
-@property (strong,nonatomic) UILabel *fontMoney;
-/** 已付尾款 */
-@property (strong,nonatomic) UILabel *remainderMoneylabel;
-/** 尾款 */
-@property (strong,nonatomic) UILabel *remainderMoeny;
+///** 已付定金 */
+//@property (strong,nonatomic) UILabel *fontMoneyLabel;
+///** 定金 */
+//@property (strong,nonatomic) UILabel *fontMoney;
+///** 已付尾款 */
+//@property (strong,nonatomic) UILabel *remainderMoneylabel;
+///** 尾款 */
+//@property (strong,nonatomic) UILabel *remainderMoeny;
 
 @property(nonatomic, strong) UIView *line; /**< 线 */
 
 @end
 
 @implementation SellerCostView
-
--(void)setMoneyMessage:(NSString *)moneyMessage {
-    
-    _moneyMessage = moneyMessage;
-    self.totalMoney.text = moneyMessage;
-}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -45,13 +39,22 @@
         [self addSubview:self.totalLabel];
         [self addSubview:self.totalMoney];
         [self addSubview:self.freightLabel];
-        [self addSubview:self.fontMoneyLabel];
-        [self addSubview:self.fontMoney];
-        [self addSubview:self.remainderMoneylabel];
-        [self addSubview:self.remainderMoeny];
+//        [self addSubview:self.fontMoneyLabel];
+//        [self addSubview:self.fontMoney];
+//        [self addSubview:self.remainderMoneylabel];
+//        [self addSubview:self.remainderMoeny];
         [self addSubview:self.line];
     }
     return self;
+}
+-(void)setMoneyMessage:(NSString *)moneyMessage {
+    
+    _moneyMessage = moneyMessage;
+    self.totalMoney.text = moneyMessage;
+}
+- (void)setMessages:(NSArray *)messages {
+    _messages = messages;
+    
 }
 #pragma mark
 #pragma mark - 约束
@@ -81,32 +84,59 @@
         
     }];
     
-    [_fontMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(weakself.totalMoney.right).offset(20);
-        make.centerY.equalTo(weakself.centerY);
-        
-    }];
     
-    [_fontMoney mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(weakself.fontMoneyLabel.right).offset(5);
-        make.centerY.equalTo(weakself.centerY);
-        
-    }];
+    CGFloat W = 0;
+    CGFloat H = 44;
+    CGFloat y = 0;
     
-    [_remainderMoneylabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(weakself.fontMoney.right).offset(10);
-        make.centerY.equalTo(weakself.centerY);
-        
-    }];
+    // 间隔
+    CGFloat offset = kDogImageWidth / 2;
     
-    [_remainderMoeny mas_makeConstraints:^(MASConstraintMaker *make) {
+    for (NSInteger i = 0; i < self.messages.count; i++) {
         
-        make.left.equalTo(weakself.remainderMoneylabel.right).offset(5);
-        make.centerY.equalTo(weakself.centerY);
-    }];
+        NSString *labelStr = self.messages[self.messages.count - 1 - i];
+        
+        UILabel * label = [[UILabel alloc] init];
+        NSDictionary *dict = @{
+                               NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],
+                               NSFontAttributeName:[UIFont systemFontOfSize:14]
+                               };
+        label.attributedText = [[NSAttributedString alloc] initWithString:labelStr attributes:dict];
+
+        CGFloat labelW = [labelStr boundingRectWithSize:CGSizeMake(MAXFLOAT, H) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dict context:nil].size.width;
+
+        W += labelW + offset;
+        
+        label.frame  = CGRectMake(SCREEN_WIDTH - W , y, labelW, H);
+        [self addSubview:label];
+    }
+
+//    [_fontMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.equalTo(weakself.totalMoney.right).offset(20);
+//        make.centerY.equalTo(weakself.centerY);
+//        
+//    }];
+//    
+//    [_fontMoney mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.equalTo(weakself.fontMoneyLabel.right).offset(5);
+//        make.centerY.equalTo(weakself.centerY);
+//        
+//    }];
+//    
+//    [_remainderMoneylabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.equalTo(weakself.fontMoney.right).offset(10);
+//        make.centerY.equalTo(weakself.centerY);
+//        
+//    }];
+//    
+//    [_remainderMoeny mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.equalTo(weakself.remainderMoneylabel.right).offset(5);
+//        make.centerY.equalTo(weakself.centerY);
+//    }];
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(weakself.bottom);
         make.left.right.equalTo(weakself);
@@ -149,49 +179,49 @@
     return _freightLabel;
 }
 
--(UILabel *)fontMoneyLabel {
-    
-    if (!_fontMoneyLabel) {
-        _fontMoneyLabel = [[UILabel alloc] init];
-        _fontMoneyLabel.text = @"已付定金:";
-        _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        _fontMoneyLabel.font = [UIFont systemFontOfSize:14];
-    }
-    return _fontMoneyLabel;
-}
-
--(UILabel *)fontMoney {
-    
-    if (!_fontMoney) {
-        _fontMoney = [[UILabel alloc] init];
-        _fontMoney.text = @"￥500";
-        _fontMoney.textColor = [UIColor colorWithHexString:@"#000000"];
-        _fontMoney.font = [UIFont systemFontOfSize:16];
-    }
-    return _fontMoney;
-}
-
--(UILabel *)remainderMoneylabel {
-    
-    if (!_remainderMoneylabel) {
-        _remainderMoneylabel = [[UILabel alloc] init];
-        _remainderMoneylabel.text = @"已付尾款:";
-        _remainderMoneylabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        _remainderMoneylabel.font = [UIFont systemFontOfSize:14];
-    }
-    return _remainderMoneylabel;
-}
-
--(UILabel *)remainderMoeny {
-    
-    if (!_remainderMoeny) {
-        _remainderMoeny = [[UILabel alloc] init];
-        _remainderMoeny.text = @"￥950";
-        _remainderMoeny.textColor = [UIColor colorWithHexString:@"#000000"];
-        _remainderMoeny.font = [UIFont systemFontOfSize:16];
-    }
-    return _remainderMoeny;
-}
+//-(UILabel *)fontMoneyLabel {
+//    
+//    if (!_fontMoneyLabel) {
+//        _fontMoneyLabel = [[UILabel alloc] init];
+//        _fontMoneyLabel.text = @"已付定金:";
+//        _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+//        _fontMoneyLabel.font = [UIFont systemFontOfSize:14];
+//    }
+//    return _fontMoneyLabel;
+//}
+//
+//-(UILabel *)fontMoney {
+//    
+//    if (!_fontMoney) {
+//        _fontMoney = [[UILabel alloc] init];
+//        _fontMoney.text = @"￥500";
+//        _fontMoney.textColor = [UIColor colorWithHexString:@"#000000"];
+//        _fontMoney.font = [UIFont systemFontOfSize:16];
+//    }
+//    return _fontMoney;
+//}
+//
+//-(UILabel *)remainderMoneylabel {
+//    
+//    if (!_remainderMoneylabel) {
+//        _remainderMoneylabel = [[UILabel alloc] init];
+//        _remainderMoneylabel.text = @"已付尾款:";
+//        _remainderMoneylabel.textColor = [UIColor colorWithHexString:@"#333333"];
+//        _remainderMoneylabel.font = [UIFont systemFontOfSize:14];
+//    }
+//    return _remainderMoneylabel;
+//}
+//
+//-(UILabel *)remainderMoeny {
+//    
+//    if (!_remainderMoeny) {
+//        _remainderMoeny = [[UILabel alloc] init];
+//        _remainderMoeny.text = @"￥950";
+//        _remainderMoeny.textColor = [UIColor colorWithHexString:@"#000000"];
+//        _remainderMoeny.font = [UIFont systemFontOfSize:16];
+//    }
+//    return _remainderMoeny;
+//}
 - (UIView *)line {
     if (!_line) {
         _line = [[UIView alloc] init];

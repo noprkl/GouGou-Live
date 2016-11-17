@@ -40,6 +40,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.dogImageView];
         [self addSubview:self.dogNameLabel];
         [self addSubview:self.kindLabel];
@@ -61,6 +62,7 @@
     [_dogImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.centerY);
         make.left.equalTo(weakself.left).offset(10);
+        make.size.equalTo(CGSizeMake(78, 78));
     }];
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.top).offset(15);
@@ -90,12 +92,12 @@
     }];
     
     [_nowPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.dogAgeLabel.bottom).offset(5);
+        make.top.equalTo(weakself.dogAgeLabel.bottom);
         make.left.equalTo(weakself.dogImageView.right).offset(10);
     }];
     
     [_oldPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.nowPriceLabel.bottom).offset(5);
+        make.top.equalTo(weakself.nowPriceLabel.bottom);
         make.left.equalTo(weakself.dogImageView.right).offset(10);
     }];
     

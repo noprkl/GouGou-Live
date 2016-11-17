@@ -62,10 +62,15 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     //        cell.orderState = @"待付定金";
     //        cell.btnTitles = @[@"联系买家"];
     //    }
+    cell.btnTitles = @[@"联系买家"];
+    cell.costMessage = @[@"已付全款：1450"];
+    __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
-        DLog(@"%@", btnText);
+        [weakSelf clickBtnActionWithBtnTitle:btnText];
     };
-    
+    cell.editBlock = ^(){
+        DLog(@"编辑");
+    };
     
     return cell;
 }
@@ -75,8 +80,15 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     return 330;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
+    logisticsInfoVC.orderState = @"已完成";
+    logisticsInfoVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:logisticsInfoVC animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
+
 }
+
+
 @end

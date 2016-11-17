@@ -53,6 +53,7 @@ static NSString *cellid = @"SellerWaitRateCell";
     SellerWaitRateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.orderState = @"待评价";
     cell.btnTitles = @[@"联系买家"];
+    cell.costMessage = @[@"已付定金：500"];
     //    if (indexPath.row == 0) {
 //        cell.orderState = @"待付尾款";
 //        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
@@ -63,10 +64,14 @@ static NSString *cellid = @"SellerWaitRateCell";
 //        cell.orderState = @"待付定金";
 //        cell.btnTitles = @[@"联系买家"];
 //    }
+    __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
-        DLog(@"%@", btnText);
+        [weakSelf clickBtnActionWithBtnTitle:btnText];
     };
     
+    cell.editBlock = ^(){
+        DLog(@"编辑");
+    };
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -75,7 +80,14 @@ static NSString *cellid = @"SellerWaitRateCell";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
+    logisticsInfoVC.orderState = @"待评价";
+    
+    logisticsInfoVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:logisticsInfoVC animated:YES];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
 }
+
+
 @end

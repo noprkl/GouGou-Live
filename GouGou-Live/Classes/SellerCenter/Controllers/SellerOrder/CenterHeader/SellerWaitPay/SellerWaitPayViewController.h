@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //  卖家中心-待支付
 
-#import "BaseViewController.h"
+#import "SellerBaseViewController.h"
 
-@interface SellerWaitPayViewController : BaseViewController
+@interface SellerWaitPayViewController : SellerBaseViewController
 
 @end

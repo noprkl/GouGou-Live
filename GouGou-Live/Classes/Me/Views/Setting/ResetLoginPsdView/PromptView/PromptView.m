@@ -25,6 +25,9 @@
 @property (strong,nonatomic) UIButton *sureButton;
 /** 取消按钮 */
 @property (strong,nonatomic) UIButton *cancleButton;
+
+@property(nonatomic, strong) UIView *backView; /**< 背景 */
+
 @end
 
 @implementation PromptView
@@ -33,15 +36,22 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-    
+        self.backgroundColor = [UIColor whiteColor];
+
         [self addSubview:self.titlelabel];
-        [self addSubview:self.editngtextfiled];
+        [self addSubview:self.backView];
+        [self.backView addSubview:self.editngtextfiled];
         [self addSubview:self.psdLabel];
         [self addSubview:self.sureButton];
-        [self addSubview:self.cancleButton];    }
+        [self addSubview:self.cancleButton];
+        
+    }
     return self;
 }
-
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    self.titlelabel.text = title;
+}
 - (void)layoutSubviews {
     
     [super layoutSubviews];
@@ -53,12 +63,16 @@
         make.top.equalTo(weakself.top).offset(15);
         make.centerX.equalTo(weakself.centerX);
     }];
-    
-    [_editngtextfiled mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+    [self.backView makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.titlelabel.bottom).equalTo(15);
         make.left.equalTo(weakself.left).offset(10);
         make.right.equalTo(weakself.right).offset(-10);
+        make.height.equalTo(44);
+    }];
+    [_editngtextfiled mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakself.backView.top);
+        make.left.equalTo(weakself.backView.left).offset(10);
+        make.right.equalTo(weakself.backView.right);
         make.height.equalTo(44);
     }];
     
@@ -89,17 +103,11 @@
         make.width.equalTo(weakself.cancleButton.width);
         make.height.equalTo(weakself.sureButton.height);
     }];
+    
+    self.layer.cornerRadius = 5;
+    self.layer.masksToBounds = YES;
 }
 
-- (UIControl *)hud {
-
-    if (!_hud) {
-        _hud = [[UIControl alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _hud.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        
-    }
-    return _hud;
-}
 
 - (UILabel *)titlelabel {
     
@@ -111,15 +119,24 @@
     }
     return _titlelabel;
 }
-
+- (UIView *)backView {
+    if (!_backView) {
+        _backView = [[UIView alloc] init];
+        _backView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+        _backView.layer.cornerRadius = 5;
+        _backView.layer.masksToBounds = YES;
+    }
+    return _backView;
+}
 - (UITextField *)editngtextfiled {
     
     if (!_editngtextfiled) {
         _editngtextfiled = [[UITextField alloc] init];
         _editngtextfiled.placeholder = @"请输入6-20位数字、字母密码";
-        _editngtextfiled.font = [UIFont systemFontOfSize:16];
-        _editngtextfiled.textColor = [UIColor colorWithHexString:@"#666666"];
+        _editngtextfiled.font = [UIFont systemFontOfSize:14];
+        _editngtextfiled.textColor = [UIColor colorWithHexString:@"#999999"];
         _editngtextfiled.delegate = self;
+
         //        _editngtextfiled.keyboardAppearance =
         [_editngtextfiled addTarget:self action:@selector(begingEditing:) forControlEvents:UIControlEventEditingDidEnd];
     }
@@ -144,7 +161,7 @@
         [_forgetPsd setTitle:@"忘记密码" forState:UIControlStateNormal];
         _forgetPsd.titleLabel.font = [UIFont systemFontOfSize:16];
         [_forgetPsd setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
-        
+        [_forgetPsd addTarget:self action:@selector(clickForgrtBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _forgetPsd;
 }
@@ -208,8 +225,11 @@
 
 
 - (void)clickCancleBtnFedOutHud {
-
     [self fadeOut];
+    
+    if (_cancelBlock) {
+        _cancelBlock();
+    }
     
 }
 
@@ -219,7 +239,22 @@
         _playpsdBlock(textfiled);
     }
 }
-
+- (void)clickForgrtBtnAction {
+    if (_forgetBlock) {
+        _forgetBlock();
+    }
+}
+#pragma mark
+#pragma mark - 蒙版
+- (UIControl *)hud {
+    
+    if (!_hud) {
+        _hud = [[UIControl alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _hud.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        
+    }
+    return _hud;
+}
 - (void)show
 {
     //获取主window

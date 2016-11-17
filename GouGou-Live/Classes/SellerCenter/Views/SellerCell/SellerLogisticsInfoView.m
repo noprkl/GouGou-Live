@@ -16,6 +16,8 @@
 /** 快递编号 */
 @property (strong,nonatomic) UILabel *numLabel;
 
+@property(nonatomic, strong) UIButton *editBtn; /**< 编辑按钮 */
+
 @property(nonatomic, strong) UIView *line; /**< 线 */
 
 @end
@@ -25,10 +27,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.logisticInfoLabel];
         [self addSubview:self.expressNameLabe];
         [self addSubview:self.numLabel];
+        [self addSubview:self.editBtn];
         [self addSubview:self.line];
     }
     return self;
@@ -59,7 +62,10 @@
         make.centerY.equalTo(weakself.expressNameLabe.centerY);
         
     }];
-    
+    [_editBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakself.right).offset(-10);
+        make.bottom.equalTo(weakself.bottom).offset(-10);
+    }];
     [_line makeConstraints:^(MASConstraintMaker *make) {
         make.left.width.equalTo(weakself);
         make.bottom.equalTo(weakself.bottom);
@@ -103,7 +109,19 @@
     }
     return _numLabel;
 }
-
+- (UIButton *)editBtn {
+    if (!_editBtn) {
+        _editBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [_editBtn setImage:[UIImage imageNamed:@"编辑"] forState:(UIControlStateNormal)];
+        _editBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_editBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+        [_editBtn setTitle:@"编辑" forState:(UIControlStateNormal)];
+        [_editBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -5)];
+        
+        [_editBtn addTarget:self action:@selector(clickEditBtnAction) forControlEvents:(UIControlEventTouchDown)];
+    }
+    return _editBtn;
+}
 - (UIView *)line {
     if (!_line) {
         _line = [[UIView alloc] init];
@@ -113,5 +131,14 @@
 }
 
 
-
+#pragma mark - Action 
+- (void)clickEditBtnAction {
+    if (_editBlock) {
+        _editBlock();
+    }
+}
+- (void)setHidEdit:(BOOL)hidEdit {
+    _hidEdit = hidEdit;
+    self.editBtn.hidden = hidEdit;
+}
 @end

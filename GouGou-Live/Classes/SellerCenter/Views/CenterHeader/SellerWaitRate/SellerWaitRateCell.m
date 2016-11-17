@@ -46,6 +46,10 @@
     _orderState = orderState;
     self.nickView.stateMessage = orderState;
 }
+- (void)setCostMessage:(NSArray *)costMessage {
+    _costMessage = costMessage;
+    self.costView.messages = costMessage;
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
@@ -111,6 +115,12 @@
 - (SellerLogisticsInfoView *)logisticsView {
     if (!_logisticsView) {
         _logisticsView = [[SellerLogisticsInfoView alloc] init];
+        __weak typeof(self) weakSelf = self;
+        _logisticsView.editBlock = ^(){
+            if (weakSelf.editBlock) {
+                weakSelf.editBlock();
+            }
+        };
     }
     return _logisticsView;
 }

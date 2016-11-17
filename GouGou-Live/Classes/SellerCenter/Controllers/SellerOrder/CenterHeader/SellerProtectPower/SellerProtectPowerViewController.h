@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //  卖家中心-维权
 
-#import "BaseViewController.h"
+#import "SellerBaseViewController.h"
 
-@interface SellerProtectPowerViewController : BaseViewController
+@interface SellerProtectPowerViewController : SellerBaseViewController
 
 @end

@@ -57,7 +57,6 @@
 
         // 偏移量
         [_allSelectBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -20)];
-//        [_allSelectBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
         
         [_allSelectBtn addTarget:self action:@selector(clickAllSelectBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }

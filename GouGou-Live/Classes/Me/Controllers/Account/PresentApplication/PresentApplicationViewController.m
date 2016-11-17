@@ -48,9 +48,6 @@
     
         // 封装蒙版的View
         PromptView * prompt = [[PromptView alloc] initWithFrame:self.view.bounds];
-        prompt.backgroundColor = [UIColor whiteColor];
-        prompt.layer.cornerRadius = 5;
-        prompt.layer.masksToBounds = YES;
         
         __weak typeof(self) weakself = self;
         // 提示框textfiled设置代理

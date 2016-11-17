@@ -53,7 +53,8 @@
         [button setTitle:self.titleArray[i] forState:UIControlStateNormal];
         
         [button setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
-        
+        [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateSelected];
+
         [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
         
         button.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -72,7 +73,6 @@
 
 - (void)clickButton:(UIButton *)btn {
 
-    DLog(@"%@", btn.titleLabel.text);
     if (_clickBtnBlock) {
         _clickBtnBlock(self.titleArray[btn.tag - 100]);
 

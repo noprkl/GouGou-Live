@@ -42,6 +42,10 @@
     _orderState = orderState;
     self.nickView.stateMessage = orderState;
 }
+- (void)setCostMessage:(NSArray *)costMessage {
+    _costMessage = costMessage;
+    self.costView.messages = costMessage;
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {

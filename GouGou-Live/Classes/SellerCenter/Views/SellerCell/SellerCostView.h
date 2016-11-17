@@ -13,4 +13,6 @@
 /** 交易金额 */
 @property (strong,nonatomic) NSString *moneyMessage;
 
+@property(nonatomic, strong) NSArray *messages; /**< 花费信息 */
+
 @end

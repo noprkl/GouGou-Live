@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //  卖家中心-待评价
 
-#import "BaseViewController.h"
+#import "SellerBaseViewController.h"
 
-@interface SellerWaitRateViewController : BaseViewController
+@interface SellerWaitRateViewController : SellerBaseViewController
 
 @end

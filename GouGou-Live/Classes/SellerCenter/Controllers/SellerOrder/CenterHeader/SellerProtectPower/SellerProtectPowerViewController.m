@@ -8,6 +8,8 @@
 
 #import "SellerProtectPowerViewController.h"
 #import "SellerProtectPowerCell.h"
+#import "TalkingToOneViewController.h"
+#import "SellerOrderDetailProtectPowerViewController.h" // 维权详情
 
 @interface SellerProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -54,13 +56,20 @@ static NSString *cellid = @"SellerProtectPowerCell";
 
         if (indexPath.row == 0) {
             cell.orderState = @"维权成功";
+
         }else if (indexPath.row == 1){
             cell.orderState = @"维权中";
         }else if (indexPath.row == 2){
             cell.orderState = @"维权失败";
         }
+    cell.costMessage = @[@"已付全款：¥ 950"];
+
+    __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
-        DLog(@"%@", btnText);
+        [weakSelf clickBtnActionWithBtnTitle:btnText];
+    };
+    cell.editBlock = ^(){
+        DLog(@"编辑");
     };
     
     return cell;
@@ -74,5 +83,17 @@ static NSString *cellid = @"SellerProtectPowerCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     DLog(@"%ld", indexPath.row);
 }
+- (void)clickBtnActionWithBtnTitle:(NSString *)title {
 
+    if ([title isEqualToString:@"联系买家"]) {
+        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
+        talkVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:talkVC animated:YES];
+        
+    }else if ([title isEqualToString:@"查看详情"]){
+        SellerOrderDetailProtectPowerViewController *orderPPVC = [[SellerOrderDetailProtectPowerViewController alloc] init];
+        orderPPVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:orderPPVC animated:YES];
+    }
+}
 @end

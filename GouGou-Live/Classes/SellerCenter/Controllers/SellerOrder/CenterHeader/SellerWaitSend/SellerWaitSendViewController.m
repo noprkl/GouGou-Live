@@ -14,6 +14,9 @@
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
+@property(nonatomic, strong) NSArray *btnTitles; /**< 按钮数组 */
+
+@property(nonatomic, strong) NSMutableArray *states; /**< 状态数组 */
 
 @end
 
@@ -34,6 +37,18 @@ static NSString *cellid = @"SellerWaitSendCell";
     }
     return _dataArr;
 }
+- (NSArray *)btnTitles {
+    if (!_btnTitles) {
+        _btnTitles = [NSArray array];
+    }
+    return _btnTitles;
+}
+- (NSMutableArray *)states {
+    if (!_states) {
+        _states = [NSMutableArray array];
+    }
+    return _states;
+}
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:(UITableViewStylePlain)];
@@ -53,6 +68,8 @@ static NSString *cellid = @"SellerWaitSendCell";
     SellerWaitSendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.orderState = @"待发货";
     cell.btnTitles = @[@"联系买家", @"发货"];
+    cell.costMessage = @[@"已付全款：950"];
+
 //    if (indexPath.row == 0) {
 //        cell.orderState = @"待发货";
 //        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
@@ -63,8 +80,10 @@ static NSString *cellid = @"SellerWaitSendCell";
 //        cell.orderState = @"待付定金";
 //        cell.btnTitles = @[@"联系买家"];
 //    }
+    
+    __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
-        DLog(@"%@", btnText);
+        [weakSelf clickBtnActionWithBtnTitle:btnText];
     };
     
 
@@ -77,6 +96,11 @@ static NSString *cellid = @"SellerWaitSendCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
+    SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
+    adressVC.hidesBottomBarWhenPushed = YES;
+    adressVC.bottomBtns = self.btnTitles;
+    adressVC.orderState = @"待发货";
+    [self.navigationController pushViewController:adressVC animated:YES];
 }
+
 @end

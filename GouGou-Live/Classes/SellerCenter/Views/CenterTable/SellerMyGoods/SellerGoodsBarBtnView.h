@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickEditBtnBlock)(BOOL flag);
-typedef void(^ClickAddBtnBlock)();
+typedef void(^ClickSellerAddBtnBlock)();
+typedef void(^ClickSellerEditBtnBlock)(BOOL flag);
 
 @interface SellerGoodsBarBtnView : UIView
 
-@property(nonatomic, strong) ClickAddBtnBlock addBlock; /**< 添加回调 */
-@property(nonatomic, strong) ClickEditBtnBlock editBlock; /**< 编辑回调 */
+@property(nonatomic, strong) ClickSellerAddBtnBlock addBlock; /**< 添加回调 */
+@property(nonatomic, strong) ClickSellerEditBtnBlock editBlock; /**< 编辑回调 */
 
 @end

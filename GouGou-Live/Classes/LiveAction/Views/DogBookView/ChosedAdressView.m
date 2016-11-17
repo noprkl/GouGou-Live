@@ -32,7 +32,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-//        self.bounds = CGRectMake(0, 0, SCREEN_WIDTH, 85);
+        self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.markImageView];
         [self addSubview:self.ownerLabel];
         [self addSubview:self.ownerNameLaben];

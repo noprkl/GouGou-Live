@@ -11,6 +11,7 @@
 #import "TransformStyleView.h"
 #import "ChoseShopAdressViewController.h"
 #import "ChosedAdressView.h" // 收货地址内容有值
+
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
 @property(nonatomic, strong) UITableView *tablevView; /**< 表格 */
@@ -45,12 +46,13 @@
     [super viewDidLoad];
 
     [self initUI];
+    [self setNavBarItem];
 }
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
-
 }
 
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
@@ -59,7 +61,6 @@
 }
 - (void)initUI {
     self.title = @"订购狗狗";
-    [self setNavBarItem];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tablevView];
     [self.view addSubview:self.bookMoneyLabel];

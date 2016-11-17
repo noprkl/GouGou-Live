@@ -15,6 +15,8 @@
 #import "SellerProtectPowerCell.h"
 #import "SellerCloseCell.h"
 
+#import "TalkingToOneViewController.h"
+
 @interface SellerSoldGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
@@ -80,65 +82,77 @@ static NSString *closeCell = @"SellerCloseCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
         NSString  *cellid = @"";
-        if (indexPath.row == 0) {
-            SellerWaitAcceptCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAcceptCell];
+    __weak typeof(self) weakSelf = self;
+
+    if (indexPath.row == 0) {
+        
+        SellerWaitAcceptCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAcceptCell];
             cellid = waitAcceptCell;
-            cell.orderState = @"待发货";
-            cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-            cell.clickBtnBlock = ^(NSString *btnText){
-                DLog(@"%@", btnText);
-            };
 
-            return cell;
-        }else if (indexPath.row == 1){
-            SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
+        cell.orderState = @"待发货";
+        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.clickBtnBlock = ^(NSString *btnText){
+            [weakSelf clickBtnActionWithBtnTitle:btnText];
+        };
+        cell.costMessage = @[@"全款：¥ 950"];
+
+        return cell;
+       
+    }else if (indexPath.row == 1){
+
+        SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
             cellid = waitPayCell;
-            cell.orderState = @"待支付";
-            cell.btnTitles = @[@"联系买家", @"发货"];
-            cell.clickBtnBlock = ^(NSString *btnText){
-                DLog(@"%@", btnText);
-            };
-           
-            return cell;
-        }else if (indexPath.row == 2){
-            SellerWaitRateCell *cell = [tableView dequeueReusableCellWithIdentifier:waitRateCell];
-            cellid = waitRateCell;
+        cell.orderState = @"待支付";
+        cell.btnTitles = @[@"联系买家", @"发货"];
+        cell.clickBtnBlock = ^(NSString *btnText){
+            [weakSelf clickBtnActionWithBtnTitle:btnText];
+        };
+        cell.costMessage = @[@"定金：¥ 500", @"尾款：¥ 950"];
 
-            cell.orderState = @"待付定金";
-            cell.btnTitles = @[@"联系买家"];
-            cell.clickBtnBlock = ^(NSString *btnText){
-                DLog(@"%@", btnText);
-            };
-           
-            return cell;
-        }else if (indexPath.row == 3){
-            SellerWaitSendCell *cell = [tableView dequeueReusableCellWithIdentifier:waitSendCell];
-            cellid = waitSendCell;
+        return cell;
+    }else if (indexPath.row == 2){
+       
+        SellerWaitRateCell *cell = [tableView dequeueReusableCellWithIdentifier:waitRateCell];
+        cellid = waitRateCell;
 
-            cell.orderState = @"待付定金";
-            cell.btnTitles = @[@"联系买家"];
-            cell.clickBtnBlock = ^(NSString *btnText){
-                DLog(@"%@", btnText);
-            };
-          
-            return cell;
-        }else if (indexPath.row == 4){
-            SellerProtectPowerCell *cell = [tableView dequeueReusableCellWithIdentifier:protectPowerCell];
-            cellid = protectPowerCell;
+        cell.orderState = @"待付定金";
+        cell.btnTitles = @[@"联系买家"];
+        cell.clickBtnBlock = ^(NSString *btnText){
+            [weakSelf clickBtnActionWithBtnTitle:btnText];
+        };
+        cell.costMessage = @[@"已付全款：¥ 950"];
 
-            cell.orderState = @"维权成功";
-            cell.clickBtnBlock = ^(NSString *btnText){
-                DLog(@"%@", btnText);
-            };
+        return cell;
+    }else if (indexPath.row == 3){
+        SellerWaitSendCell *cell = [tableView dequeueReusableCellWithIdentifier:waitSendCell];
+        cellid = waitSendCell;
 
-            return cell;
-        }else if (indexPath.row == 5){
-            SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
-            cellid = closeCell;
+        cell.orderState = @"待付定金";
+        cell.btnTitles = @[@"联系买家"];
+        cell.clickBtnBlock = ^(NSString *btnText){
+            [weakSelf clickBtnActionWithBtnTitle:btnText];
+        };
+        cell.costMessage = @[@"已付全款：¥ 1450"];
+  
+        return cell;
+    }else if (indexPath.row == 4){
+        SellerProtectPowerCell *cell = [tableView dequeueReusableCellWithIdentifier:protectPowerCell];
+        cellid = protectPowerCell;
 
-            cell.orderState = @"交易关闭";
-            return cell;
-        }
+        cell.orderState = @"维权成功";
+        cell.clickBtnBlock = ^(NSString *btnText){
+            [weakSelf clickBtnActionWithBtnTitle:btnText];
+        };
+        cell.costMessage = @[@"已付全款：¥ 950"];
+        return cell;
+    }else if (indexPath.row == 5){
+    
+        SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
+        cellid = closeCell;
+        cell.orderState = @"交易关闭";
+        return cell;
+    }
+    
     [self.cellStates addObject:cellid];
     return nil;
 }
@@ -162,11 +176,11 @@ static NSString *closeCell = @"SellerCloseCell";
     if (indexPath.row == 0) {
         return 330;
     }else if (indexPath.row == 1) {
-        return 230;
+        return 245;
     }else if (indexPath.row == 2) {
         return 330;
     }else if (indexPath.row == 3) {
-        return 230;
+        return 245;
     }else if (indexPath.row == 4) {
         return 330;
     }else if (indexPath.row == 5) {
@@ -179,7 +193,6 @@ static NSString *closeCell = @"SellerCloseCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
 }
 
 @end

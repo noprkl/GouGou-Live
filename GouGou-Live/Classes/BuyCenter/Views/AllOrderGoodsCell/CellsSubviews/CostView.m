@@ -16,6 +16,8 @@
 @property (strong,nonatomic) UILabel *totalMoney;
 /** 运费 */
 @property (strong,nonatomic) UILabel *freightLabel;
+/** 运费数 */
+@property (strong,nonatomic) UILabel *freightMoney;
 /** 已付定金 */
 @property (strong,nonatomic) UILabel *fontMoneyLabel;
 /** 定金 */
@@ -28,6 +30,16 @@
 @end
 
 @implementation CostView
+
+- (void)costWithFreightPrice:(NSString *)freghtPrice fontMoneyLabel:(NSString *)fontLabel fontMoney:(NSString *)fontMoney backMoneyLable:(NSString *)backLabel backMoney:(NSString *)backMoney {
+
+    self.freightMoney.text = freghtPrice;
+    self.fontMoneyLabel.text = fontLabel;
+    self.fontMoney.text = fontMoney;
+    self.remainderMoneylabel.text = backLabel;
+    self.remainderMoeny.text = backMoney;
+
+}
 
 -(void)setMoneyMessage:(NSString *)moneyMessage {
     
@@ -43,6 +55,7 @@
         [self addSubview:self.totalLabel];
         [self addSubview:self.totalMoney];
         [self addSubview:self.freightLabel];
+        [self addSubview:self.freightMoney];
         [self addSubview:self.fontMoneyLabel];
         [self addSubview:self.fontMoney];
         [self addSubview:self.remainderMoneylabel];
@@ -78,33 +91,45 @@
         
     }];
     
-    [_fontMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_freightMoney mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.totalMoney.right).offset(20);
-        make.centerY.equalTo(weakself.centerY);
-        
-    }];
-    
-    [_fontMoney mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(weakself.fontMoneyLabel.right).offset(5);
-        make.centerY.equalTo(weakself.centerY);
-        
-    }];
-    
-    [_remainderMoneylabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(weakself.fontMoney.right).offset(10);
-        make.centerY.equalTo(weakself.centerY);
+        make.left.equalTo(weakself.freightLabel.right);
+        make.centerY.equalTo(weakself.freightLabel.centerY);
         
     }];
     
     [_remainderMoeny mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.remainderMoneylabel.right).offset(5);
+        make.right.equalTo(weakself.right).offset(-10);
+        make.centerY.equalTo(weakself.centerY);
+
+        
+    }];
+    
+    [_remainderMoneylabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(weakself.remainderMoeny.left);
+        make.centerY.equalTo(weakself.centerY);
+
+    }];
+    
+    [_fontMoney mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(weakself.remainderMoneylabel.left).offset(-5);
         make.centerY.equalTo(weakself.centerY);
         
     }];
+
+    
+    [_fontMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(weakself.fontMoney.left);
+        make.centerY.equalTo(weakself.centerY);
+        
+    }];
+    
+    
+    
     
 }
 
@@ -115,7 +140,7 @@
     if (!_totalLabel) {
         _totalLabel = [[UILabel alloc] init];
         _totalLabel.text = @"合计:";
-        _totalLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        _totalLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _totalLabel.font = [UIFont systemFontOfSize:14];
     }
     return _totalLabel;
@@ -126,7 +151,7 @@
     if (!_totalMoney) {
         _totalMoney = [[UILabel alloc] init];
         _totalMoney.text = @"￥1450";
-        _totalMoney.textColor = [UIColor colorWithHexString:@"#000000"];
+        _totalMoney.textColor = [UIColor colorWithHexString:@"#333333"];
         _totalMoney.font = [UIFont systemFontOfSize:16];
     }
     return _totalMoney;
@@ -136,19 +161,28 @@
     
     if (!_freightLabel) {
         _freightLabel = [[UILabel alloc] init];
-        _freightLabel.text = @"(含运费:￥50)";
-        _freightLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+        _freightLabel.text = @"(含运费:";
+        _freightLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         _freightLabel.font = [UIFont systemFontOfSize:12];
     }
     return _freightLabel;
 }
-
+-(UILabel *)freightMoney {
+    
+    if (!_freightMoney) {
+        _freightMoney = [[UILabel alloc] init];
+//        _freightMoney.text = @"￥50)";
+        _freightMoney.textColor = [UIColor colorWithHexString:@"#999999"];
+        _freightMoney.font = [UIFont systemFontOfSize:12];
+    }
+    return _freightMoney;
+}
 -(UILabel *)fontMoneyLabel {
     
     if (!_fontMoneyLabel) {
         _fontMoneyLabel = [[UILabel alloc] init];
-        _fontMoneyLabel.text = @"已付定金:";
-        _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+//        _fontMoneyLabel.text = @"已付定金:";
+        _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _fontMoneyLabel.font = [UIFont systemFontOfSize:14];
     }
     return _fontMoneyLabel;
@@ -158,8 +192,8 @@
     
     if (!_fontMoney) {
         _fontMoney = [[UILabel alloc] init];
-        _fontMoney.text = @"￥500";
-        _fontMoney.textColor = [UIColor colorWithHexString:@"#000000"];
+//        _fontMoney.text = @"￥500";
+        _fontMoney.textColor = [UIColor colorWithHexString:@"#333333"];
         _fontMoney.font = [UIFont systemFontOfSize:16];
     }
     return _fontMoney;
@@ -169,8 +203,8 @@
     
     if (!_remainderMoneylabel) {
         _remainderMoneylabel = [[UILabel alloc] init];
-        _remainderMoneylabel.text = @"已付尾款:";
-        _remainderMoneylabel.textColor = [UIColor colorWithHexString:@"#333333"];
+//        _remainderMoneylabel.text = @"已付尾款:";
+        _remainderMoneylabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _remainderMoneylabel.font = [UIFont systemFontOfSize:14];
     }
     return _remainderMoneylabel;
@@ -180,8 +214,8 @@
     
     if (!_remainderMoeny) {
         _remainderMoeny = [[UILabel alloc] init];
-        _remainderMoeny.text = @"￥950";
-        _remainderMoeny.textColor = [UIColor colorWithHexString:@"#000000"];
+//        _remainderMoeny.text = @"￥950";
+        _remainderMoeny.textColor = [UIColor colorWithHexString:@"#333333"];
         _remainderMoeny.font = [UIFont systemFontOfSize:16];
     }
     return _remainderMoeny;

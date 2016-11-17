@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BuyCenterViewController.h"
 
-@interface PayingAllMoneyViewController : BaseViewController
+@interface PayingAllMoneyViewController : BuyCenterViewController
 
 @end

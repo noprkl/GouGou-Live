@@ -8,7 +8,7 @@
 
 #import "SureApplyRefundview.h"
 
-@interface SureApplyRefundview ()<UITextFieldDelegate>
+@interface SureApplyRefundview ()<UITextViewDelegate,UITextFieldDelegate>
 /** 是否申请退款 */
 @property (strong,nonatomic) UILabel *whetherApplyRefund;
 /** switch */
@@ -18,7 +18,7 @@
 /** 描述详情 */
 @property (strong,nonatomic) UILabel *detailLabel;
 /** 具体情况 */
-@property (strong,nonatomic) UITextField *detailTextfiled;
+@property (strong,nonatomic) UITextView *detailTextView;
 @end
 
 @implementation SureApplyRefundview
@@ -31,7 +31,7 @@
         [self addSubview:self.swich];
         [self addSubview:self.refundTextfiled];
         [self addSubview:self.detailLabel];
-        [self addSubview:self.detailTextfiled];
+        [self addSubview:self.detailTextView];
     }
     return self;
 }
@@ -74,7 +74,7 @@
         
     }];
     
-    [_detailTextfiled mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_detailTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.detailLabel.bottom).offset(10);
         make.centerX.equalTo(weakself.centerX);
@@ -130,17 +130,17 @@
     return _detailLabel;
 }
 
-- (UITextField *)detailTextfiled {
+- (UITextView *)detailTextView {
 
-    if (!_detailTextfiled) {
-        _detailTextfiled = [[UITextField alloc] init];
-        _detailTextfiled.delegate = self;
-        _detailTextfiled.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-        _detailTextfiled.font = [UIFont systemFontOfSize:14];
-        _detailTextfiled.layer.cornerRadius = 10;
-        _detailTextfiled.layer.masksToBounds = YES;
+    if (!_detailTextView) {
+        _detailTextView = [[UITextView alloc] init];
+        _detailTextView.delegate = self;
+        _detailTextView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        _detailTextView.font = [UIFont systemFontOfSize:14];
+        _detailTextView.layer.cornerRadius = 10;
+        _detailTextView.layer.masksToBounds = YES;
     }
-    return _detailTextfiled;
+    return _detailTextView;
 }
 #pragma mark - textfiled点击事件
 - (void)inputRefundMoney:(UITextField *)textfiled {
@@ -168,15 +168,22 @@
             return YES;
         }
         return NO;
-    } else if (textField == _detailTextfiled) {
-    
-        if ([textField.text isChinese]) {
+    }
+    return YES;
+}
+
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+     if (textView == _detailTextView) {
+        
+        if ([textView.text isChinese]) {
             
             return YES;
         }
         return NO;
     }
+
     return YES;
 }
-
 @end

@@ -32,6 +32,7 @@
 @property (strong,nonatomic) UpLoadPictureView *upLoadPictureView;
 /** 提交申请 */
 @property (strong,nonatomic) UIButton * handinApplicationBtn;
+
 @end
 
 @implementation ApplyProtectPowerViewController
@@ -41,6 +42,9 @@
     [super viewDidLoad];
  
     [self initUI];
+    
+    [self setNavBarItem];
+    
 }
 
 - (void)initUI {

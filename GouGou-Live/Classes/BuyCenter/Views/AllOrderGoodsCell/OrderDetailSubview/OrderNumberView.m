@@ -179,11 +179,12 @@
         [_copysButton setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
         [_copysButton setBackgroundColor:[UIColor colorWithHexString:@"#e0e0e0"]];
         _copysButton.titleLabel.font = [UIFont systemFontOfSize:12];
-        _copysButton.layer.cornerRadius = 5;
+        _copysButton.layer.cornerRadius = 10;
         _copysButton.layer.masksToBounds = YES;
         
         _copysButton.layer.borderWidth = 1;
         _copysButton.layer.borderColor = [UIColor colorWithHexString:@"#b4b4b4"].CGColor;
+        [_copysButton addTarget:self action:@selector(clickTheCopyButton) forControlEvents:UIControlEventTouchUpInside];
     }
     return _copysButton;
 }
@@ -274,6 +275,24 @@
         _consignmentTime.font = [UIFont systemFontOfSize:12];
     }
     return _consignmentTime;
+}
+
+- (void)clickTheCopyButton {
+
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    
+    NSString *string = self.orderNumber.text;
+    
+    [pab setString:string];
+    
+    if (pab == nil) {
+        DLog(@"%@",pab.string);
+        
+    }else
+    {
+        DLog(@"%@",pab.string);
+        
+    }
 }
 
 @end

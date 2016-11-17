@@ -1,21 +1,21 @@
 //
-//  FunctionButtonView.m
+//  BottomButtonView.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/11.
+//  Created by ma c on 16/11/17.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "FunctionButtonView.h"
+#import "BottomButtonView.h"
 
-@interface FunctionButtonView ()
+@interface BottomButtonView ()
 /** 最后选中的按钮 */
 @property (strong,nonatomic) UIButton *lastButton;
 
 @property (nonatomic, strong) NSMutableArray * buttons;
 @end
 
-@implementation FunctionButtonView
+@implementation BottomButtonView
 - (NSMutableArray *)buttons {
     
     if (!_buttons) {
@@ -24,39 +24,40 @@
     return _buttons;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame title:(NSArray *)titleArray buttonNum:(NSInteger)buttonNum {
+- (instancetype)initWithFrame:(CGRect)frame title:(NSArray *)titleArray {
     
     self = [super initWithFrame:frame];
     if (self) {
         
-        CGFloat btnW = 75;
-        CGFloat btnH = 35;
         
-        CGFloat offset =  btnW + kDogImageWidth;
         
-        for (NSInteger i = 1; i <= buttonNum; i++) {
+        CGFloat btnW = SCREEN_WIDTH / titleArray.count;
+        CGFloat btnH = 44;
+        
+        for (NSInteger i = 0; i < titleArray.count; i++) {
             
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
             
+            //            button.tag = i + 100;
+            
             [self.buttons addObject:button];
             
-            button.layer.cornerRadius = 5;
-            button.layer.masksToBounds = YES;
-            button.layer.borderWidth = 0.5;
-            button.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
+//            button.layer.cornerRadius = 5;
+//            button.layer.masksToBounds = YES;
+//            button.layer.borderWidth = 0.5;
+//            button.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
             
-            button.tag = i + 199;
             
-            button.frame  = CGRectMake(SCREEN_WIDTH - i * offset, 5, btnW, btnH);
+            button.frame  = CGRectMake(i * btnW, 0, btnW, btnH);
             
-            [button setTitle:titleArray[i-1] forState:UIControlStateNormal];
+            [button setTitle:titleArray[i] forState:UIControlStateNormal];
             
             [button setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
             
             [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
             
             button.titleLabel.font = [UIFont systemFontOfSize:14];
-            if (i == buttonNum) {
+            if (i == 0) {
                 button.selected = YES;
                 [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
                 button.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
@@ -71,14 +72,14 @@
     }
     return self;
 }
-// 按钮点击方法（选中状态设置）
-- (void)clickButton:(UIButton *)btn {
 
+- (void)clickButton:(UIButton *)btn {
+    
     btn.selected = YES;
     
     if (_difFuncBlock) {
         _difFuncBlock(btn);
-
+        
     }
     self.lastButton.selected = NO;
     self.lastButton.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
@@ -88,7 +89,6 @@
     btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
     self.lastButton = btn;
 }
-
 
 
 @end

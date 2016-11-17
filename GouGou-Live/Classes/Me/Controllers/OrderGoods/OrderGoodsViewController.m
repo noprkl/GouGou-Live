@@ -135,7 +135,7 @@
         [self.childVC addObject:vc];
     }
     
-    // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
+    // 将子控制器的view 加载到ScrollView上  这里用的是加载时的屏幕宽
     self.boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * self.titleName.count, 0);
     
     // 设置contentView加载时的位置
@@ -144,7 +144,7 @@
     // 减速结束加载控制器视图 代理
     self.boomScrollView.delegate = self;
     
-    // 进入后第一次加载hot
+    // 进入后第一次加载第一个
     [self scrollViewDidEndDecelerating:self.boomScrollView];
 }
 

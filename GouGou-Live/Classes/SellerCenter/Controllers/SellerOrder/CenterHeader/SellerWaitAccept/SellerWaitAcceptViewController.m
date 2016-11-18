@@ -14,6 +14,9 @@
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
+@property(nonatomic, strong) NSMutableArray *btnTitles; /**< 按钮数组 */
+
+@property(nonatomic, strong) NSMutableArray *states; /**< 状态数组 */
 
 @end
 
@@ -33,6 +36,18 @@ static NSString *cellid = @"SellerWaitAcceptCell";
         _dataArr = [NSArray array];
     }
     return _dataArr;
+}
+- (NSMutableArray *)btnTitles {
+    if (!_btnTitles) {
+        _btnTitles = [NSMutableArray array];
+    }
+    return _btnTitles;
+}
+- (NSMutableArray *)states {
+    if (!_states) {
+        _states = [NSMutableArray array];
+    }
+    return _states;
 }
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -64,6 +79,9 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     //    }
     cell.btnTitles = @[@"联系买家"];
     cell.costMessage = @[@"已付全款：1450"];
+    
+    [self.btnTitles addObject:cell.btnTitles];
+
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
         [weakSelf clickBtnActionWithBtnTitle:btnText];
@@ -83,6 +101,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 
     SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
     logisticsInfoVC.orderState = @"已完成";
+
     logisticsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:logisticsInfoVC animated:YES];
     

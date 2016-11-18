@@ -102,19 +102,38 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     switch (indexPath.row) {
         case 0:
         {
+            static NSString *cellid = @"cellid0";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPowerStateView *stateView = [[SellerProtectPowerStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
             [cell.contentView addSubview:stateView];
         }
             break;
         case 1:
         {
+            static NSString *cellid = @"cellid1";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPLogisticsInfoView *logisticsInfoView = [[SellerProtectPLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
             [cell.contentView addSubview:logisticsInfoView];
+            return cell;
+
         }
             break;
         case 2:
         {
-           
+            static NSString *cellid = @"cellid2";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
             backView.backgroundColor = [UIColor whiteColor];
             
@@ -124,32 +143,58 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
            
             [backView addSubview:label];
             [cell.contentView addSubview:backView];
+            return cell;
 
         }
             break;
         case 3:
         {
+            static NSString *cellid = @"cellid3";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
             [cell.contentView addSubview:dogCardView];
+            return cell;
+
         }
             break;
         case 4:
         {
+            static NSString *cellid = @"cellid4";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerOrderDetailMorePriceView *morePriceView = [[SellerOrderDetailMorePriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
             [cell.contentView addSubview:morePriceView];
+            return cell;
+
         }
             break;
         case 5:
         {
+            static NSString *cellid = @"cellid5";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+            
             SellerProtectApplyRefundView *applyRefundView = [[SellerProtectApplyRefundView alloc] initWithFrame:CGRectMake(kDogImageWidth, 0, 356 , 200)];
             [cell.contentView addSubview:applyRefundView];
+            return cell;
+
         }
             break;
             
         default:
             break;
     }
-    return cell;
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {

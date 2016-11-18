@@ -129,7 +129,7 @@ static NSString * reuseIdentifier = @"headerID";
     DogTypesViewController * typeVC = [[DogTypesViewController alloc] init];
     
     typeVC.title = title;
-    
+    typeVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:typeVC animated:YES];
 }
 

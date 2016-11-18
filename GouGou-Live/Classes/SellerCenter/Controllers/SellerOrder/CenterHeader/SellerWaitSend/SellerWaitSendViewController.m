@@ -14,7 +14,8 @@
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
-@property(nonatomic, strong) NSArray *btnTitles; /**< 按钮数组 */
+
+@property(nonatomic, strong) NSMutableArray *btnTitles; /**< 按钮数组 */
 
 @property(nonatomic, strong) NSMutableArray *states; /**< 状态数组 */
 
@@ -37,9 +38,9 @@ static NSString *cellid = @"SellerWaitSendCell";
     }
     return _dataArr;
 }
-- (NSArray *)btnTitles {
+- (NSMutableArray *)btnTitles {
     if (!_btnTitles) {
-        _btnTitles = [NSArray array];
+        _btnTitles = [NSMutableArray array];
     }
     return _btnTitles;
 }
@@ -80,7 +81,7 @@ static NSString *cellid = @"SellerWaitSendCell";
 //        cell.orderState = @"待付定金";
 //        cell.btnTitles = @[@"联系买家"];
 //    }
-    
+    [self.btnTitles addObject:cell.btnTitles];
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
         [weakSelf clickBtnActionWithBtnTitle:btnText];
@@ -98,7 +99,7 @@ static NSString *cellid = @"SellerWaitSendCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
     adressVC.hidesBottomBarWhenPushed = YES;
-    adressVC.bottomBtns = self.btnTitles;
+    adressVC.bottomBtns = self.btnTitles[indexPath.row];
     adressVC.orderState = @"待发货";
     [self.navigationController pushViewController:adressVC animated:YES];
 }

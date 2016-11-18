@@ -113,48 +113,90 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    cell.backgroundView = [[UIView alloc] init];
-    cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     
     switch (indexPath.row) {
         case 0:
         {
+            static NSString *cellid = @"cellid1";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+
             SellerOrderDetailStateView *stateView = [[SellerOrderDetailStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
             // 订单信息
             stateView.stateMessage = self.orderState;
             [cell.contentView addSubview:stateView];
+            return cell;
+
         }
             break;
         case 1:
         {
+            static NSString *cellid = @"cellid2";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+
             SellerLogisticsInfoView *logisticsView = [[SellerLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
             [cell.contentView addSubview:logisticsView];
+            return cell;
+
         }
             break;
         case 2:
         {
+            static NSString *cellid = @"cellid3";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+
             SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
             [cell.contentView addSubview:dogCardView];
+            return cell;
+
         }
             break;
         case 3:
         {
+            static NSString *cellid = @"cellid4";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+
             SellerOrderDetailMorePriceView *morePriceView = [[SellerOrderDetailMorePriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
             [cell.contentView addSubview:morePriceView];
+            return cell;
+
         }
             break;
         case 4:
         {
+            static NSString *cellid = @"cellid5";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+            }            cell.backgroundView = [[UIView alloc] init];
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+
             SellerOrderDetailInfoView *orderInfoView = [[SellerOrderDetailInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 127)];
             [cell.contentView addSubview:orderInfoView];
+            return cell;
+
         }
             break;
             
         default:
             break;
     }
-    return cell;
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {

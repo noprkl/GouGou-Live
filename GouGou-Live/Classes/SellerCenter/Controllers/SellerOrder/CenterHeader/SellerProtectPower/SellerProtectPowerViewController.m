@@ -53,6 +53,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerProtectPowerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         if (indexPath.row == 0) {
             cell.orderState = @"维权成功";

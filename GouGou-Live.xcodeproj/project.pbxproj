@@ -1818,10 +1818,10 @@
 		04CE13701DDC488100EB8777 /* CenterHeader */ = {
 			isa = PBXGroup;
 			children = (
-				04CE13741DDC488100EB8777 /* SellerWaitAccept */,
 				04CE13771DDC488100EB8777 /* SellerWaitPay */,
-				04CE137A1DDC488100EB8777 /* SellerWaitRate */,
 				04CE137D1DDC488100EB8777 /* SellerWaitSend */,
+				04CE13741DDC488100EB8777 /* SellerWaitAccept */,
+				04CE137A1DDC488100EB8777 /* SellerWaitRate */,
 				04CE13711DDC488100EB8777 /* SellerProtectPower */,
 			);
 			path = CenterHeader;

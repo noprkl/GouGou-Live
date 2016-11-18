@@ -17,8 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavBarItem];
+    [self initUI];
 }
-
+- (void)initUI {
+    self.title = @"联系买家";
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

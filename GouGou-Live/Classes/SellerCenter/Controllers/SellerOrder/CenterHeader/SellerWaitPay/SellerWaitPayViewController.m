@@ -74,28 +74,30 @@ static NSString *cellid = @"SellerWaitPayCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
 
-    
     if (indexPath.row == 0) {
         cell.orderState = @"待付尾款";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
         cell.costMessage = @[@"尾款：950"];
-        [self.btnTitles addObject:cell.btnTitles];
-        [self.states addObject:cell.orderState];
+       
+//        [self.btnTitles addObject:cell.btnTitles];
+//        [self.states addObject:cell.orderState];
     }else if (indexPath.row == 1){
         cell.orderState = @"待付全款";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
         cell.costMessage = @[@"已付定金：500", @"尾款：950"];
 
-        [self.btnTitles addObject:cell.btnTitles];
-        [self.states addObject:cell.orderState];
+//        [self.btnTitles addObject:cell.btnTitles];
+//        [self.states addObject:cell.orderState];
     }else if (indexPath.row == 2){
         cell.orderState = @"待付定金";
         cell.btnTitles = @[@"联系买家"];
         cell.costMessage = @[@"定金：500", @"尾款：950"];
 
-        [self.btnTitles addObject:cell.btnTitles];
-        [self.states addObject:cell.orderState];
+//        [self.btnTitles addObject:cell.btnTitles];
+//        [self.states addObject:cell.orderState];
     }
+    [self.btnTitles addObject:cell.btnTitles];
+    [self.states addObject:cell.orderState];
     __weak typeof(self) weakSelf = self;
 
     cell.clickBtnBlock = ^(NSString *btnText){

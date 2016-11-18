@@ -31,8 +31,6 @@
 
 @end
 
-static NSString *cellid = @"SellerOrderDetailAdress";
-
 @implementation SellerOrderDetailAdressViewController
 #pragma mark
 #pragma mark - 生命周期
@@ -58,12 +56,10 @@ static NSString *cellid = @"SellerOrderDetailAdress";
 - (void)setOrderState:(NSString *)orderState {
     _orderState = orderState;
     self.stateView.stateMessage = orderState;
-    [self.tableView reloadData];
 }
 - (void)setBottomBtns:(NSArray *)bottomBtns {
     _bottomBtns = bottomBtns;
     self.bottomView.btnTitles = bottomBtns;
-    [self.tableView reloadData];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -82,7 +78,6 @@ static NSString *cellid = @"SellerOrderDetailAdress";
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.showsVerticalScrollIndicator = NO;
         
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;
 }
@@ -90,6 +85,7 @@ static NSString *cellid = @"SellerOrderDetailAdress";
     if (!_bottomView) {
         _bottomView = [[SellerOrderDetailBottomView alloc] init];
         _bottomView.backgroundColor = [UIColor whiteColor];
+      
         __weak typeof(self) weakSelf = self;
         _bottomView.clickBlock = ^(NSString *btnTitle){
             
@@ -105,42 +101,95 @@ static NSString *cellid = @"SellerOrderDetailAdress";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    cell.backgroundView = [[UIView alloc] init];
-    cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    
     if (indexPath.row == 0) {
+       static NSString *cellid = @"cellid1";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
+        cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         
         SellerOrderDetailStateView *stateView = [[SellerOrderDetailStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
         self.stateView = stateView;
         stateView.stateMessage = self.orderState;
         // 订单信息
         [cell.contentView addSubview:stateView];
+        return cell;
     }else if (indexPath.row == 1){
-      
+        static NSString *cellid = @"cellid2";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.backgroundView = [[UIView alloc] init];
+        cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         ChosedAdressView *adressView = [[ChosedAdressView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
         [cell.contentView addSubview:adressView];
+        return cell;
+
     }else if (indexPath.row == 2){
-       
+        static NSString *cellid = @"cellid3";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.backgroundView = [[UIView alloc] init];
+        cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
         [cell.contentView addSubview:dogCardView];
+        return cell;
+
     }else if (indexPath.row == 3){
-       
+        static NSString *cellid = @"cellid4";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.backgroundView = [[UIView alloc] init];
+        cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerOrderDetailPriceView *priceView = [[SellerOrderDetailPriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
         [cell.contentView addSubview:priceView];
+        return cell;
+
     }else if (indexPath.row == 4){
-      
+        static NSString *cellid = @"cellid5";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.backgroundView = [[UIView alloc] init];
+        cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerOrderDetailInfoView *orderInfoView = [[SellerOrderDetailInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 127)];
         [cell.contentView addSubview:orderInfoView];
+        return cell;
+
     }else if (indexPath.row == 5){
-      
+        static NSString *cellid = @"cellid6";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.backgroundView = [[UIView alloc] init];
+        cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+
         SellerOrderDetailNoteView *noteView = [[SellerOrderDetailNoteView alloc] initWithFrame:CGRectMake(kDogImageWidth, 0, 356 , 80)];
         [cell.contentView addSubview:noteView];
+        return cell;
     }
     
-    return cell;
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -184,7 +233,7 @@ static NSString *cellid = @"SellerOrderDetailAdress";
     }else if ([title isEqualToString:@"修改运费"]){
         
     }else if ([title isEqualToString:@"修改价格"]){
-        DLog(@"%@", title);
+
     }else if ([title isEqualToString:@"发货"]){
         
     }else if ([title isEqualToString:@"查看评价"]){

@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //  发货
 
-#import "SellerBaseViewController.h"
+#import "BaseViewController.h"
 
-@interface SellerSendViewController : SellerBaseViewController
+@interface SellerSendViewController : BaseViewController
 
 @end

@@ -35,7 +35,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         [self addSubview:self.totalLabel];
         [self addSubview:self.totalMoney];
         [self addSubview:self.freightLabel];

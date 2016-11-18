@@ -39,7 +39,7 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        
+        self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.buyLabel];
         [self addSubview:self.nickName];
         [self addSubview:self.dateLabel];

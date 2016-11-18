@@ -12,24 +12,28 @@
 
 @property(nonatomic, strong) UIButton *lastButton; /**< 上一个按钮 */
 
+@property(nonatomic, assign) NSInteger count; /**< 个数 */
+
 @end
 @implementation SellerOrderDetailBottomView
 
 - (void)setBtnTitles:(NSArray *)btnTitles {
     _btnTitles = btnTitles;
+    self.count = btnTitles.count;
+
+    DLog(@"%@", btnTitles);
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    NSInteger count = self.btnTitles.count;
     
-    CGFloat W = SCREEN_WIDTH / count;
+    CGFloat W = SCREEN_WIDTH / _count;
     CGFloat H = 49;
     CGFloat x = 0;
     CGFloat y = 0;
     
-    for (NSInteger i = 0; i < count; i ++) {
-        x +=  W * i;
+    for (NSInteger i = 0; i < _count; i ++) {
+        x =  SCREEN_WIDTH - W * (_count - i);
         
         UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [btn setTitle:self.btnTitles[i] forState:(UIControlStateNormal)];
@@ -43,7 +47,7 @@
         btn.titleLabel.font = [UIFont systemFontOfSize:16];
         
         btn.tag = 110 + i;
-        if (i == count - 1) {
+        if (i == _count - 1) {
             btn.selected = YES;
             self.lastButton = btn;
             [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];

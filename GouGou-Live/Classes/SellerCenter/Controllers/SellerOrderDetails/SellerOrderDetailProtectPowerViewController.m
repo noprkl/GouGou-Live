@@ -19,7 +19,8 @@
 
 #import "TalkingToOneViewController.h"
 #import "SellerAcceptedRateViewController.h"
-
+#import "SellerChangeViewController.h"
+#import "SellerSendViewController.h"
 
 @interface SellerOrderDetailProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -42,6 +43,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     [self setNavBarItem];
 }
 - (void)initUI{
+    self.title = @"维权详情";
     self.edgesForExtendedLayout = 0;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.bottomView];
@@ -94,10 +96,6 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     return 6;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    cell.backgroundView = [[UIView alloc] init];
-    cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    cell.selected = UITableViewCellSelectionStyleNone;
     
     switch (indexPath.row) {
         case 0:
@@ -238,10 +236,20 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         [self.navigationController pushViewController:talkVC animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
-        
+        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+        changeVC.title = title;
+        changeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
-        DLog(@"%@", title);
+        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+        changeVC.title = title;
+        changeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
+        
+        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
+        sendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:sendVC animated:YES];
         
     }else if ([title isEqualToString:@"查看评价"]){
         
@@ -252,13 +260,10 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         DLog(@"%@", title);
     }else if ([title isEqualToString:@"查看详情"]){
         
-        
     }else if ([title isEqualToString:@"在线客服"]){
         TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
         talkVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:talkVC animated:YES];
     }
-    
 }
-
 @end

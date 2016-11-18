@@ -6,8 +6,11 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "SellerBaseViewController.h"
+#import "BaseViewController.h"
 
-@interface SellerChangeViewController : SellerBaseViewController
+@interface SellerChangeViewController : BaseViewController
+
+
+@property(nonatomic, strong) NSString *changeStyle; /**< 修改方式 */
 
 @end

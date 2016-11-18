@@ -13,6 +13,10 @@
 		04486AC21DD0162500BC6D15 /* LoginHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AC11DD0162500BC6D15 /* LoginHandler.m */; };
 		044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */; };
 		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
+		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
+		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
+		0452A1C51DDEA27E007C1E4F /* SellerChangePriceAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C41DDEA27E007C1E4F /* SellerChangePriceAlertView.m */; };
+		0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1CA1DDF374B007C1E4F /* SellerChangePayView.m */; };
 		045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51111DD94F9B001854A8 /* DetailCountViewController.m */; };
 		045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51141DD9539E001854A8 /* MyPageHeaderView.m */; };
 		045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51181DD960F7001854A8 /* MyPageDescView.m */; };
@@ -273,6 +277,14 @@
 		044C82EA1DCC411A00B62575 /* ChoseShopAdressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressCell.h; sourceTree = "<group>"; };
 		044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressCell.m; sourceTree = "<group>"; };
 		044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoseShopAdressCell.xib; sourceTree = "<group>"; };
+		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
+		0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerSendAlertView.m; sourceTree = "<group>"; };
+		0452A1C01DDEA260007C1E4F /* SellerChangeShipCostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangeShipCostView.h; sourceTree = "<group>"; };
+		0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChangeShipCostView.m; sourceTree = "<group>"; };
+		0452A1C31DDEA27E007C1E4F /* SellerChangePriceAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangePriceAlertView.h; sourceTree = "<group>"; };
+		0452A1C41DDEA27E007C1E4F /* SellerChangePriceAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChangePriceAlertView.m; sourceTree = "<group>"; };
+		0452A1C91DDF374B007C1E4F /* SellerChangePayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangePayView.h; sourceTree = "<group>"; };
+		0452A1CA1DDF374B007C1E4F /* SellerChangePayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChangePayView.m; sourceTree = "<group>"; };
 		045D51101DD94F9B001854A8 /* DetailCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewController.h; sourceTree = "<group>"; };
 		045D51111DD94F9B001854A8 /* DetailCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountViewController.m; sourceTree = "<group>"; };
 		045D51131DD9539E001854A8 /* MyPageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageHeaderView.h; sourceTree = "<group>"; };
@@ -2014,6 +2026,8 @@
 			children = (
 				04CE13A21DDC488100EB8777 /* SellerWaitPayCell.h */,
 				04CE13A31DDC488100EB8777 /* SellerWaitPayCell.m */,
+				0452A1C91DDF374B007C1E4F /* SellerChangePayView.h */,
+				0452A1CA1DDF374B007C1E4F /* SellerChangePayView.m */,
 			);
 			path = SellerWaitPay;
 			sourceTree = "<group>";
@@ -2559,6 +2573,12 @@
 		04EA2AEF1DDDDC0B0023D9A8 /* SellerAlertView */ = {
 			isa = PBXGroup;
 			children = (
+				0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */,
+				0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */,
+				0452A1C01DDEA260007C1E4F /* SellerChangeShipCostView.h */,
+				0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */,
+				0452A1C31DDEA27E007C1E4F /* SellerChangePriceAlertView.h */,
+				0452A1C41DDEA27E007C1E4F /* SellerChangePriceAlertView.m */,
 			);
 			path = SellerAlertView;
 			sourceTree = "<group>";
@@ -2788,6 +2808,7 @@
 				04EA2ACE1DDDAFE80023D9A8 /* SellerOrderDetailMorePriceView.m in Sources */,
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
+				0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */,
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
 				04D3615C1DDB343F009F35A0 /* WaitAssessViewController.m in Sources */,
@@ -2810,6 +2831,7 @@
 				04486AC21DD0162500BC6D15 /* LoginHandler.m in Sources */,
 				04D3616D1DDB343F009F35A0 /* PayingMoney.m in Sources */,
 				047323FD1DD1DBFF006CCC71 /* MyPageViewController.m in Sources */,
+				0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */,
 				0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */,
 				04CE13E11DDC488100EB8777 /* AcceptRateBuyerView.m in Sources */,
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
@@ -2865,6 +2887,7 @@
 				045D51221DD9946F001854A8 /* ManagePictureaViewController.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
 				04D361731DDB343F009F35A0 /* ProtectSuccessCell.m in Sources */,
+				0452A1C51DDEA27E007C1E4F /* SellerChangePriceAlertView.m in Sources */,
 				04D361531DDB343F009F35A0 /* AllOrderGoodsViewController.m in Sources */,
 				045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */,
 				0479B5EC1DCADC7B00CB288A /* LiveTableView.m in Sources */,
@@ -2884,6 +2907,7 @@
 				0479B6271DCADC7B00CB288A /* SuggestViewController.m in Sources */,
 				045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */,
 				04EA2ACD1DDDAFE80023D9A8 /* SellerOrderDetailNoteView.m in Sources */,
+				0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
 				04CE13D21DDC488100EB8777 /* SellerWaitRateViewController.m in Sources */,
 				04DAC9931DD21A9A0089236D /* MyFocusTableCell.m in Sources */,

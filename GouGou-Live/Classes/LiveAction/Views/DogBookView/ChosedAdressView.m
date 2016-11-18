@@ -46,6 +46,10 @@
 - (void)setShopAdress:(ShopAdressModel *)shopAdress {
     _shopAdress = shopAdress;
 }
+- (void)setIsHid:(BOOL)isHid {
+    _isHid = isHid;
+    self.smallImageView.hidden = isHid;
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {

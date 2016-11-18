@@ -8,8 +8,7 @@
 
 #import "SellerProtectPowerViewController.h"
 #import "SellerProtectPowerCell.h"
-#import "TalkingToOneViewController.h"
-#import "SellerOrderDetailProtectPowerViewController.h" // 维权详情
+
 
 @interface SellerProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
 

@@ -18,7 +18,8 @@
 
 #import "TalkingToOneViewController.h"
 #import "SellerAcceptedRateViewController.h"
-
+#import "SellerChangeViewController.h"
+#import "SellerSendViewController.h"
 @interface SellerOrderDetailAdressViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
@@ -40,6 +41,7 @@
     [self setNavBarItem];
 }
 - (void)initUI{
+    self.title = @"订单详情";
     self.edgesForExtendedLayout = 0;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.bottomView];
@@ -59,7 +61,6 @@
 }
 - (void)setBottomBtns:(NSArray *)bottomBtns {
     _bottomBtns = bottomBtns;
-    self.bottomView.btnTitles = bottomBtns;
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -85,7 +86,8 @@
     if (!_bottomView) {
         _bottomView = [[SellerOrderDetailBottomView alloc] init];
         _bottomView.backgroundColor = [UIColor whiteColor];
-      
+        _bottomView.btnTitles = self.bottomBtns;
+
         __weak typeof(self) weakSelf = self;
         _bottomView.clickBlock = ^(NSString *btnTitle){
             
@@ -128,6 +130,7 @@
         cell.backgroundView = [[UIView alloc] init];
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         ChosedAdressView *adressView = [[ChosedAdressView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
+        adressView.isHid = YES;
         [cell.contentView addSubview:adressView];
         return cell;
 
@@ -231,10 +234,20 @@
         [self.navigationController pushViewController:talkVC animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
-        
+        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+        changeVC.title = title;
+        changeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
-
+        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+        changeVC.title = title;
+        changeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
+        
+        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
+        sendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:sendVC animated:YES];
         
     }else if ([title isEqualToString:@"查看评价"]){
         
@@ -245,12 +258,10 @@
         DLog(@"%@", title);
     }else if ([title isEqualToString:@"查看详情"]){
         
-        
     }else if ([title isEqualToString:@"在线客服"]){
         TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
         talkVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:talkVC animated:YES];
     }
-    
 }
 @end

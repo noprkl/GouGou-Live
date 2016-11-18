@@ -42,6 +42,7 @@
         [self addSubview:self.backView];
         [self.backView addSubview:self.editngtextfiled];
         [self addSubview:self.psdLabel];
+        [self addSubview:self.forgetPsd];
         [self addSubview:self.sureButton];
         [self addSubview:self.cancleButton];
         
@@ -94,6 +95,7 @@
         make.left.equalTo(weakself.left);
         make.top.equalTo(weakself.psdLabel.bottom).offset(10);
         make.bottom.equalTo(weakself.bottom);
+        make.height.equalTo(44);
     }];
     
     [_sureButton makeConstraints:^(MASConstraintMaker *make) {
@@ -101,7 +103,7 @@
         make.left.equalTo(weakself.cancleButton.right);
         make.right.bottom.equalTo(weakself);
         make.width.equalTo(weakself.cancleButton.width);
-        make.height.equalTo(weakself.sureButton.height);
+        make.height.equalTo(weakself.cancleButton.height);
     }];
     
     self.layer.cornerRadius = 5;
@@ -171,9 +173,11 @@
     if (!_sureButton) {
         _sureButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_sureButton setTitle:@"确认" forState:UIControlStateNormal];
-        [_sureButton setTitle:@"确认" forState:UIControlStateSelected];
-        [_sureButton setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
-        [_sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        
+        [_sureButton setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+        
+        [_sureButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+        
         _sureButton.titleLabel.font = [UIFont systemFontOfSize:16];
         
         [_sureButton addTarget:self action:@selector(cilckSureButton) forControlEvents:UIControlEventTouchUpInside];

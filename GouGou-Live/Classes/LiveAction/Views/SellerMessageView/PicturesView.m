@@ -91,7 +91,7 @@
         
         [_factorySceneBtn setAttributedTitle:normalAttribute forState:(UIControlStateNormal)];
         
-        [_factorySceneBtn setImage:[UIImage imageNamed:@"品种02"] forState:(UIControlStateNormal)];
+        [_factorySceneBtn setBackgroundImage:[UIImage imageNamed:@"品种02"] forState:(UIControlStateNormal)];
         [_factorySceneBtn addTarget:self action:@selector(clickFactoryBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _factorySceneBtn;
@@ -108,7 +108,7 @@
         
         [_DogPictureBtn setAttributedTitle:normalAttribute forState:(UIControlStateNormal)];
         
-        [_DogPictureBtn setImage:[UIImage imageNamed:@"品种"] forState:(UIControlStateNormal)];
+        [_DogPictureBtn setBackgroundImage:[UIImage imageNamed:@"品种"] forState:(UIControlStateNormal)];
 
         [_DogPictureBtn addTarget:self action:@selector(clickDogViewBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }

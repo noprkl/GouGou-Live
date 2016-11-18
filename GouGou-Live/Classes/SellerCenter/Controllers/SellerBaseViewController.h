@@ -9,10 +9,12 @@
 #import "BaseViewController.h"
 #import "SellerOrderDetailAdressViewController.h"
 #import "SellerOrderDetailLogisticsInfoViewController.h"
+#import "TalkingToOneViewController.h" // 联系买家
+#import "SellerAcceptedRateViewController.h" // 查看评价
+#import "SellerChangeViewController.h" // 改变运费
+#import "SellerSendViewController.h" // 发货
+#import "SellerOrderDetailProtectPowerViewController.h" // 维权详情
 
 @interface SellerBaseViewController : BaseViewController
-
-/** cell上按钮点击方法 */
-- (void)clickBtnActionWithBtnTitle:(NSString *)title;
 
 @end

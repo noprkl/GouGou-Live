@@ -15,7 +15,9 @@
 
 /** 判读手机号是否是数字 */
 + (BOOL)validateNumber:(NSString*)number;
+
 + (BOOL)validateCharacter:(NSString *)string;
+
 /** 判断是否为中文 */
 - (BOOL)isChinese;
 

@@ -16,7 +16,8 @@
 
 #import "TalkingToOneViewController.h"
 #import "SellerAcceptedRateViewController.h"
-
+#import "SellerChangeViewController.h"
+#import "SellerSendViewController.h"
 
 @interface SellerOrderDetailLogisticsInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -40,6 +41,8 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     [self setNavBarItem];
 }
 - (void)initUI{
+    
+    self.title = @"订单详情";
     self.edgesForExtendedLayout = 0;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.bottomView];
@@ -237,10 +240,20 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         [self.navigationController pushViewController:talkVC animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
-        
+        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+        changeVC.title = title;
+        changeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
-        DLog(@"%@", title);
+        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+        changeVC.title = title;
+        changeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
+        
+        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
+        sendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:sendVC animated:YES];
         
     }else if ([title isEqualToString:@"查看评价"]){
         
@@ -251,12 +264,10 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         DLog(@"%@", title);
     }else if ([title isEqualToString:@"查看详情"]){
         
-        
     }else if ([title isEqualToString:@"在线客服"]){
         TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
         talkVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:talkVC animated:YES];
     }
-    
 }
 @end

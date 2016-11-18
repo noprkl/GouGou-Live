@@ -15,4 +15,7 @@
 
 @property(nonatomic, strong) ShopAdressModel *shopAdress; /**< 收货地址 */
 
+
+@property(nonatomic, assign) BOOL isHid; /**< 箭头是否隐藏 */
+
 @end

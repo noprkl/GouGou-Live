@@ -7,10 +7,11 @@
 //
 
 #import "AddPhotosView.h"
+#import "UpLoadPictureView.h"
 
 int counts = 0;
 
-@interface AddPhotosView ()
+@interface AddPhotosView ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 /** 晒晒宝贝 */
 @property (strong,nonatomic) UILabel *textLabel;
 /** 添加图片 */
@@ -19,10 +20,22 @@ int counts = 0;
 @property (strong,nonatomic) UIView *acceptView;
 /** 计数 */
 @property (strong,nonatomic) UILabel *countLabel;
+/** 接收图片 */
+@property (strong,nonatomic) UIImageView *acceptImageView;
+/** 系统相册 */
+@property (strong,nonatomic) UIImagePickerController *picker;
 
 @end
 
+
 @implementation AddPhotosView
+
+- (void)setPickers:(UIImagePickerController *)pickers {
+
+    _pickers = pickers;
+    self.picker = pickers;
+}
+
 #pragma mark
 #pragma mark - 约束
 - (instancetype)initWithFrame:(CGRect)frame
@@ -88,7 +101,35 @@ int counts = 0;
     }
     return _addImageBtn;
 }
+
+- (UIImagePickerController *)picker {
+
+    if (!_picker) {
+        _picker = [[UIImagePickerController alloc] init];
+        self.picker.delegate = self;
+        self.picker.allowsEditing = YES;
+    }
+    return _picker;
+}
+
 - (void)clickAddPhoto:(UIButton *)button {
+    
+    if (_addPhotoBlock) {
+     
+//        UIImagePickerController  * picker = [[UIImagePickerController alloc] init];
+//        
+//        self.picker = picker;
+//        self.picker.delegate = self;
+//        self.picker.allowsEditing = YES;
+       
+//        [self.picker dismissViewControllerAnimated:YES completion:^{
+//      
+//        }];
+    
+        
+        _addPhotoBlock(button);
+        
+    }
     
     counts++;
     
@@ -96,8 +137,8 @@ int counts = 0;
     // 列数
     NSInteger margin = 5;
     
-//    // 图片数量
-//    NSInteger cols = 3;
+    //    // 图片数量
+    //    NSInteger cols = 3;
     
     // 距离两侧距离
     NSInteger distance = 2 * kDogImageWidth;
@@ -125,9 +166,11 @@ int counts = 0;
     // 图片
     UIImageView * imageView = [[UIImageView alloc] init];
     imageView.frame = CGRectMake(0, 0, btnW, btnH);
-    imageView.image = [UIImage imageNamed:@"品种02"];
+    //        imageView.image = [UIImage imageNamed:@"品种02"];
     
-    [self.acceptView addSubview:imageView];
+    self.acceptImageView = imageView;
+    //        [self.acceptView addSubview:imageView];
+    [view addSubview:imageView];
     
     if (button.frame.origin.y == y) {
         if (x < rightX) {
@@ -151,7 +194,7 @@ int counts = 0;
             
             view.frame = CGRectMake(distance + 3 * rightX , y, btnW, btnH);
             button.frame = CGRectMake(distance + 4 * rightX , y, btnW, btnH);
-//            self.textLabel.frame = CGRectMake(distance + 5 * rightX + kDogImageWidth, labY, labelW, labelH);
+            
             self.textLabel.frame = CGRectMake(distance, labY2, labelW, labelH);
             
         } else if (x < 5 * rightX) {
@@ -159,9 +202,9 @@ int counts = 0;
             view.frame = CGRectMake(distance + 4 * rightX , y, btnW, btnH);
             button.frame = CGRectMake(distance , boomtomY, btnW, btnH);
             self.textLabel.frame = CGRectMake(distance + btnW , labY2, labelW, labelH);
-
+            
         }
-
+        
     } else if (button.frame.origin.y == boomtomY){
         if (x < rightX) {
             
@@ -175,11 +218,27 @@ int counts = 0;
             view.frame = CGRectMake(distance +  rightX , boomtomY, btnW, btnH);
             button.frame = CGRectMake(distance + 2 * rightX , boomtomY, btnW, btnH);
             self.textLabel.frame = CGRectMake(distance + 3 * rightX , labY2, labelW, labelH);
-           
+            
             button.enabled = NO;
-
+            
         }
     }
-    [self addSubview:self.acceptView];
+    [self addSubview:view];
 }
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+       
+    }];
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    self.acceptImageView.image = image;
+    
+    DLog(@"%@",image);
+   
+}
+
 @end

@@ -14,7 +14,7 @@
 #import "AnonymityAssessView.h"
 
 
-@interface GotoAssessViewController ()<UITextFieldDelegate>
+@interface GotoAssessViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 /** 商家名称 */
 @property (strong,nonatomic) SellNameView *nickNameView;
 /** 狗狗详情 */
@@ -179,6 +179,33 @@
     if (!_addPhotoView) {
         _addPhotoView = [[AddPhotosView alloc] init];
         _addPhotoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
+        __weak typeof(self) weakself = self;
+        __weak typeof(_addPhotoView) addPhotoView = _addPhotoView;
+    
+        _addPhotoView.addPhotoBlock = ^(UIButton *button) {
+        
+            UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+            
+            addPhotoView.pickers = picker;
+            
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+               
+                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                // 设置代理
+                picker.delegate = weakself;
+                
+                 picker.allowsEditing = YES;
+                //模态显示界面
+                
+                [weakself presentViewController:picker animated:YES completion:^{
+                
+                
+                
+                }];
+            }
+//
+        };
         
     }
     return _addPhotoView;

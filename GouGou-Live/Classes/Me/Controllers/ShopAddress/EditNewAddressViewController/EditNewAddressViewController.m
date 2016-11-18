@@ -40,8 +40,9 @@ static NSString * detailCellid = @"detailCellid";
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSaveBtnAction)];
     
-    [self.areaChooseTextfiled addTarget:self action:@selector(areaChooseTextfiled:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.areaChooseTextfiled addTarget:self action:@selector(areaChooseTextfiled:) forControlEvents:UIControlEventAllEvents];
 }
+// 点击保存按钮
 - (void)clickSaveBtnAction {
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -54,9 +55,13 @@ static NSString * detailCellid = @"detailCellid";
 
 - (void)areaChooseTextfiled:(UITextField *)sender {
     
+    [sender resignFirstResponder];
+    
+    // 省市区级联
     AddressChooseView * choose = [[AddressChooseView alloc] init];
     
     [choose show];
+    
 }
 
 - (void)postalcodeTextfiled:(UITextField *)sender {
@@ -89,7 +94,9 @@ static NSString * detailCellid = @"detailCellid";
         
     } else if (textField == self.areaChooseTextfiled) {
     
-    
+
+       
+        
     } else if (textField == self.postalcodeTextfiled) {
     
         BOOL flag = [NSString validateNumber:textField.text];

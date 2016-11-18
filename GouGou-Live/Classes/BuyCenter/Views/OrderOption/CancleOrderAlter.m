@@ -1,16 +1,15 @@
 //
-//  PayMoneyPrompt.m
+//  CancleOrderAlter.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/15.
+//  Created by ma c on 16/11/18.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "PayMoneyPrompt.h"
+#import "CancleOrderAlter.h"
 #import "PromptView.h"
-#import "PaySuccessViewController.h"
 
-@interface PayMoneyPrompt ()<UITableViewDataSource, UITableViewDelegate>
+@interface CancleOrderAlter ()<UITableViewDataSource, UITableViewDelegate>
 
 /** 蒙版 */
 @property (strong, nonatomic) UIControl *hudView;
@@ -25,7 +24,7 @@
 
 static NSString *cellid = @"SizeFilterCellID";
 
-@implementation PayMoneyPrompt
+@implementation CancleOrderAlter
 
 - (UIControl *)hudView
 {
@@ -34,7 +33,7 @@ static NSString *cellid = @"SizeFilterCellID";
         _hudView = [[UIControl alloc] initWithFrame:[UIScreen mainScreen].bounds];
         
         _hudView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-    
+        //        [_overLayer addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _hudView;
@@ -125,37 +124,23 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
     }
     
-    cell.textLabel.text = self.dataPlist[indexPath.row + 1];
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.textLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    NSString *text = self.dataPlist[indexPath.row + 1];
     
-    if (indexPath.row == 0) {
-        
-        cell.detailTextLabel.text = @"￥950";
-        
-    } else if (indexPath.row == 1) {
-        
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        cell.textLabel.font = [UIFont systemFontOfSize:16];
-    } else if (indexPath.row == 2) {
-        
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"可用余额: %.2f",7360.00];
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-    } else {
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
-
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    label.textColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor whiteColor];
+    label.text = text;
+    label.textColor = [UIColor colorWithHexString:@"666666"];
+    label.font = [UIFont systemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentCenter;
+    [cell.contentView addSubview:label];
     
     return cell;
     
@@ -179,11 +164,11 @@ static NSString *cellid = @"SizeFilterCellID";
         
         label.text = [self.dataPlist firstObject];
         label.textAlignment = NSTextAlignmentCenter;
-        
+        label.textColor = [UIColor colorWithHexString:@"#666666"];
+        label.font = [UIFont systemFontOfSize:16];
         // 线
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
         line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-        label.textColor = [UIColor colorWithHexString:@"#333333"];
         [label addSubview:line];
         
         return label;
@@ -222,43 +207,14 @@ static NSString *cellid = @"SizeFilterCellID";
     
     NSString *text = self.dataPlist[indexPath.row + 1];
     self.lastString = text;
-    if (_payCellBlock) {
-        _payCellBlock(text);
-    }
-    if (indexPath.row < 2) {
-        
+    
+    if (indexPath.row < 1) {
         return;
     } else {
-    
-        // 支付密码提示框
-        PromptView * prompt = [[PromptView alloc] init];
-        prompt.backgroundColor = [UIColor whiteColor];
-       
-        prompt.clickSureBtnBlock = ^() {
-        
-//        // 判断支付状态（成功，失败，余额不足）
-//            
-//            PaySuccessViewController * paySuccessVC = [[PaySuccessViewController alloc] init];
-//            
-//            [[self viewController].navigationController pushViewController:paySuccessVC animated:YES];
-            return @"";
-        };
-        
-        
-        [prompt show];
-        
-        [self dismiss];
+        // 删除订单，然后返回
+        if (_sizeCellBlock) {
+            _sizeCellBlock(text);
+        }
     }
 }
-
-//- (BaseViewController *)viewController {
-//    for (UIView* next = [self superview]; next; next = next.superview) {
-//        UIResponder *nextResponder = [next nextResponder];
-//        if ([nextResponder isKindOfClass:[BaseViewController class]]) {
-//            return (BaseViewController *)nextResponder;
-//        }
-//    }
-//    return nil;
-//}
-
 @end

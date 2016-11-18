@@ -38,7 +38,12 @@
         [self addSubview:self.editngtextfiled];
         [self addSubview:self.psdLabel];
         [self addSubview:self.sureButton];
-        [self addSubview:self.cancleButton];    }
+        [self addSubview:self.cancleButton];
+        
+        self.layer.cornerRadius = 10;
+        self.layer.masksToBounds = YES;
+        self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
     return self;
 }
 

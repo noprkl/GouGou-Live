@@ -13,7 +13,7 @@
 #import "PayMoneyPrompt.h"
 #import "ProtecePowerPromptView.h"
 #import "ApplyProtectPowerViewController.h"
-
+#import "CancleOrderAlter.h"
 @interface BuyCenterViewController ()
 
 @end
@@ -56,8 +56,8 @@
     payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
     [payMonery show];
     
-    payMonery.bottomBlock = ^(NSString *size){
-        DLog(@"%@", size);
+    payMonery.bottomBlock = ^(NSString *payAway){
+        DLog(@"%@", payAway);
     };
     
 }
@@ -77,6 +77,7 @@
 }
 // 点击取消订单
 - (void)clickCancleOrder {
+    // 点击取消订单出现的弹框
     DeletePrommtView * promptView = [[DeletePrommtView alloc] init];
     __weak typeof(promptView) weakself = promptView;
     
@@ -85,13 +86,15 @@
     promptView.sureDeleteBtnBlock = ^(UIButton *btn) {
         
         [weakself dismiss];
-        
-        DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
-        sizeView.dataArr =  @[@"请选择原因", @"喜欢其他狗狗",@"不喜欢这只了",@"条件不允许养了",@"运费太贵", @"确定"];
-        [sizeView show];
-        
-        sizeView.bottomBlock = ^(NSString *size){
-            DLog(@"%@", size);
+        // 点击确定按钮出现的弹框（原因选择）
+       CancleOrderAlter  *cancleOrder = [[CancleOrderAlter alloc] init];
+        cancleOrder.dataArr =  @[@"请选择原因", @"喜欢其他狗狗",@"不喜欢这只了",@"条件不允许养了",@"运费太贵", @"取消"];
+        [cancleOrder show];
+#pragma mark - 有问题
+        cancleOrder.bottomBlock = ^(NSString *reson){
+           // 此处删除订单，并返回
+            
+            DLog(@"%@", reson);
         };
         
     };
@@ -112,7 +115,7 @@
         PromptView * prompt = [[PromptView alloc] init];
         prompt.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
-        __weak typeof(prompt) weakself = prompt;
+//        __weak typeof(prompt) weakself = prompt;
         
         prompt.clickSureBtnBlock = ^() {
             
@@ -188,24 +191,6 @@
         [consignmentPrompt show];
     }
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -283,7 +283,7 @@
         self.shipStyleNote.hidden = self.shipStyleTextField.text.length > 0 ? YES:NO;
 
         BOOL flag = _commitBlock(self.shipStyleTextField.text, self.shipOrderTextField.text);
-        self.successNote.hidden = flag;
+        self.successNote.hidden = !flag;
     }
 }
 

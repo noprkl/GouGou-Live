@@ -12,6 +12,8 @@
 #import "SellerGoodsBarBtnView.h"
 #import "SellerGoodsBottomView.h"
 
+#import "DogDetailViewController.h" // 狗狗详情
+
 @interface SellerMyGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
@@ -62,6 +64,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
+        _tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         _tableView.showsVerticalScrollIndicator = NO;
         
         [_tableView registerClass:[SellerMyGoodsCell class] forCellReuseIdentifier:cellid];
@@ -76,6 +79,8 @@ static NSString *cellid = @"SellerMyGoodsCell";
         _barBtnView.editBlock = ^(BOOL flag){
             weakSelf.tableView.editing = flag;
             weakSelf.bottomView.hidden = !flag;
+            
+
         };
         _barBtnView.addBlock = ^(){
             
@@ -97,6 +102,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
     }
     return _bottomView;
 }
+
 #pragma mark - 删除编辑
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
@@ -135,7 +141,10 @@ static NSString *cellid = @"SellerMyGoodsCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
+
+    DogDetailViewController *dogDetailVC = [[DogDetailViewController alloc] init];
+    
+    [self.navigationController pushViewController:dogDetailVC animated:YES];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {

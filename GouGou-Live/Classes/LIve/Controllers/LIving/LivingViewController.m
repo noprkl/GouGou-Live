@@ -15,7 +15,7 @@
 
 #import "ShareAlertView.h"
 #import "ShareBtnModel.h"
-
+#import "DeletePrommtView.h" // 举报提示
 #import "TalkingView.h"
 
 // 播放器
@@ -313,40 +313,12 @@
 - (void)clickReportBtnAction {
     
     // 举报
-    
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定举报该用户" preferredStyle:(UIAlertControllerStyleAlert)];
-   
-    if ([alert valueForKey:@"attributedTitle"]) {
-       
-        [alert setValue:[self getAttributeString:@"提示"] forKey:@"attributedTitle"];
-
-    }
-     
-    if ([alert valueForKey:@"attributedMessage"]) {
-        [alert setValue:[self getAttributeString:@"确定举报该用户"] forKey:@"attributedMessage"];
-    }
-  
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    if ([action1 valueForKey:@"titleTextColor"]) {
-        
-        [action1 setValue:[UIColor colorWithHexString:@"#999999"] forKey:@"titleTextColor"];
-    }
-    
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    if ([action2 valueForKey:@"titleTextColor"]) {
-        
-        [action2 setValue:[UIColor colorWithHexString:@"#999999"] forKey:@"titleTextColor"];
-    }
-    
-    [alert addAction:action1];
-    [alert addAction:action2];
-    
-    [self presentViewController:alert animated:YES completion:nil];
+    DeletePrommtView *report = [[DeletePrommtView alloc] init];
+    report.message = @"确定举报该用户";
+    report.sureBlock = ^(UIButton *btn){
+        DLog(@"举报");
+    };
+    [report show];
 }
 - (NSAttributedString *)getAttributeString:(NSString *)string {
     NSDictionary *attributeDict = @{

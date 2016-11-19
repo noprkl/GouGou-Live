@@ -107,57 +107,49 @@ static NSString *cellid = @"DogShowCellid";
     cell.selected = UITableViewCellSelectionStyleNone;
     
     self.cell = cell;
-    return cell;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-   
-    DogShowMessageCell *cell = (DogShowMessageCell *)self.cell;
     __weak typeof(self) weakSelf = self;
     
     cell.shareBlock = ^ (){
-       
+        
         ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 150, self.view.bounds.size.width, 150) alertModels:self.shareAlertBtns tapView:^(NSInteger btnTag) {
             
             NSInteger index = btnTag - 20;
             switch (index) {
                 case 0:
                     DLog(@"朋友圈");
-//                    [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
                     
                     break;
                 case 1:
                     DLog(@"微信");
-//                    [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
                     break;
                 case 2:
                     DLog(@"QQ空间");
-//                   [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    //                   [weakSelf performSelector:@selector(shareAlertDismiss)];
                     break;
                 case 3:
                     DLog(@"新浪微博");
-//                    [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
                     break;
                 case 4:
                     DLog(@"QQ");
-//                    [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
                     break;
                     
                 default:
                     break;
             }
             
-
+            
         }];
         self.shareAlert = shareAlert;
         shareAlert.backgroundColor = [UIColor whiteColor];
         [shareAlert show];
-
+        
     };
     cell.likeBlock = ^ (){
-       
+        
         
     };
     cell.bookBlock = ^ (){
@@ -170,6 +162,15 @@ static NSString *cellid = @"DogShowCellid";
             
         };
     };
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    DogShowMessageCell *cell = (DogShowMessageCell *)self.cell;
+   
     return [cell getCellHeight];
 }
 - (void)pushToDogBookVC {

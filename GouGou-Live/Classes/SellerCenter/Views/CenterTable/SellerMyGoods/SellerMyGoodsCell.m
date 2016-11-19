@@ -10,6 +10,9 @@
 
 @interface SellerMyGoodsCell ()
 
+
+@property(nonatomic, strong) UIButton *selectBtn; /**< 选中按钮 */
+
 @property(nonatomic, strong) UIView *line; /**< 线 */
 
 @property (strong, nonatomic)  UIImageView *dogImageView;/**< 狗狗图片*/
@@ -33,6 +36,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        [self.contentView addSubview:self.selectBtn];
         [self.contentView addSubview:self.line];
         [self.contentView addSubview:self.dogImageView];
         [self.contentView addSubview:self.dogNameLabel];

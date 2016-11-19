@@ -125,7 +125,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
     prompt.message = @"删除订单后将不能找回";
     
-    prompt.sureDeleteBtnBlock = ^(UIButton * btn) {
+    prompt.sureBlock = ^(UIButton * btn) {
         
         // 点击确定按钮，删除订单
         
@@ -144,7 +144,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     
     __weak typeof(allpyPrompt) weakself = allpyPrompt;
     
-    allpyPrompt.sureDeleteBtnBlock = ^(UIButton *btn) {
+    allpyPrompt.sureBlock = ^(UIButton *btn) {
         
         // 点击弹框内确认按钮出现的弹框
         ProtecePowerPromptView * pppView = [[ProtecePowerPromptView alloc] init];

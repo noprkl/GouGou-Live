@@ -61,6 +61,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerAcceptRateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.images = @[@"组-7", @"组-7", @"组-7"];
 
     return cell;

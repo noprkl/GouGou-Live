@@ -124,7 +124,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
     
     __weak typeof(allpyPrompt) weakself = allpyPrompt;
     
-    allpyPrompt.sureDeleteBtnBlock = ^(UIButton *btn) {
+    allpyPrompt.sureBlock = ^(UIButton *btn) {
         
         // 点击弹框内确认按钮出现的弹框
         ProtecePowerPromptView * pppView = [[ProtecePowerPromptView alloc] init];

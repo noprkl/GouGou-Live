@@ -238,7 +238,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
     allpyPrompt.message = @"放弃定金后，定金将全部打给卖家";
     __weak typeof(allpyPrompt) weakself = allpyPrompt;
     
-    allpyPrompt.sureDeleteBtnBlock = ^(UIButton * btn) {
+    allpyPrompt.sureBlock = ^(UIButton * btn) {
         
         [weakself dismiss];
         
@@ -269,7 +269,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
     
     promptView.message = @"取消订单后,有可能被别人买走";
     
-    promptView.sureDeleteBtnBlock = ^(UIButton *btn) {
+    promptView.sureBlock = ^(UIButton *btn) {
         
         [weakself dismiss];
         
@@ -295,7 +295,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
     
     __weak typeof(allpyPrompt) weakself = allpyPrompt;
     
-    allpyPrompt.sureDeleteBtnBlock = ^(UIButton *btn) {
+    allpyPrompt.sureBlock = ^(UIButton *btn) {
         
         // 点击弹框内确认按钮出现的弹框
         ProtecePowerPromptView * pppView = [[ProtecePowerPromptView alloc] init];

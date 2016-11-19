@@ -17,6 +17,8 @@
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
 		0452A1C51DDEA27E007C1E4F /* SellerChangePriceAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C41DDEA27E007C1E4F /* SellerChangePriceAlertView.m */; };
 		0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1CA1DDF374B007C1E4F /* SellerChangePayView.m */; };
+		0452A1CE1DE0336B007C1E4F /* DogDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */; };
+		0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1D31DE03674007C1E4F /* SellerDogDetailView.m */; };
 		045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51111DD94F9B001854A8 /* DetailCountViewController.m */; };
 		045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51141DD9539E001854A8 /* MyPageHeaderView.m */; };
 		045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51181DD960F7001854A8 /* MyPageDescView.m */; };
@@ -285,6 +287,10 @@
 		0452A1C41DDEA27E007C1E4F /* SellerChangePriceAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChangePriceAlertView.m; sourceTree = "<group>"; };
 		0452A1C91DDF374B007C1E4F /* SellerChangePayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangePayView.h; sourceTree = "<group>"; };
 		0452A1CA1DDF374B007C1E4F /* SellerChangePayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChangePayView.m; sourceTree = "<group>"; };
+		0452A1CC1DE0336B007C1E4F /* DogDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailViewController.h; sourceTree = "<group>"; };
+		0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailViewController.m; sourceTree = "<group>"; };
+		0452A1D21DE03674007C1E4F /* SellerDogDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDogDetailView.h; sourceTree = "<group>"; };
+		0452A1D31DE03674007C1E4F /* SellerDogDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDogDetailView.m; sourceTree = "<group>"; };
 		045D51101DD94F9B001854A8 /* DetailCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewController.h; sourceTree = "<group>"; };
 		045D51111DD94F9B001854A8 /* DetailCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountViewController.m; sourceTree = "<group>"; };
 		045D51131DD9539E001854A8 /* MyPageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageHeaderView.h; sourceTree = "<group>"; };
@@ -1924,6 +1930,8 @@
 			children = (
 				04CE13881DDC488100EB8777 /* SellerMyGoodsViewController.h */,
 				04CE13891DDC488100EB8777 /* SellerMyGoodsViewController.m */,
+				0452A1CC1DE0336B007C1E4F /* DogDetailViewController.h */,
+				0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */,
 			);
 			path = SellerMyGoods;
 			sourceTree = "<group>";
@@ -2087,6 +2095,8 @@
 				04CE13F11DDC6BF400EB8777 /* SellerGoodsBarBtnView.m */,
 				04CE13F31DDC736B00EB8777 /* SellerGoodsBottomView.h */,
 				04CE13F41DDC736B00EB8777 /* SellerGoodsBottomView.m */,
+				0452A1D21DE03674007C1E4F /* SellerDogDetailView.h */,
+				0452A1D31DE03674007C1E4F /* SellerDogDetailView.m */,
 			);
 			path = SellerMyGoods;
 			sourceTree = "<group>";
@@ -2783,6 +2793,7 @@
 				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
+				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
@@ -2808,6 +2819,7 @@
 				04EA2ACE1DDDAFE80023D9A8 /* SellerOrderDetailMorePriceView.m in Sources */,
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
+				0452A1CE1DE0336B007C1E4F /* DogDetailViewController.m in Sources */,
 				0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */,
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,

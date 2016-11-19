@@ -367,7 +367,7 @@ static NSString *cellid = @"cellid";
             DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
             WXprommt.message = @"你确定解绑微信？";
             [WXprommt show];
-            WXprommt.sureDeleteBtnBlock = ^(UIButton *btn){
+            WXprommt.sureBlock = ^(UIButton *btn){
                 DLog(@"微信解绑");
             };
             WXprommt.cancelBlock = ^(){
@@ -384,7 +384,7 @@ static NSString *cellid = @"cellid";
             DeletePrommtView *Tencetprommt = [[DeletePrommtView alloc] init];
             Tencetprommt.message = @"你确定解绑腾讯？";
             [Tencetprommt show];
-            Tencetprommt.sureDeleteBtnBlock = ^(UIButton *btn){
+            Tencetprommt.sureBlock = ^(UIButton *btn){
                 DLog(@"腾讯解绑");
             };
             Tencetprommt.cancelBlock = ^(){
@@ -401,7 +401,7 @@ static NSString *cellid = @"cellid";
             DeletePrommtView *Sinaprommt = [[DeletePrommtView alloc] init];
             Sinaprommt.message = @"你确定解绑新浪？";
             [Sinaprommt show];
-            Sinaprommt.sureDeleteBtnBlock = ^(UIButton *btn){
+            Sinaprommt.sureBlock = ^(UIButton *btn){
                 DLog(@"新浪解绑");
             };
             Sinaprommt.cancelBlock = ^(){

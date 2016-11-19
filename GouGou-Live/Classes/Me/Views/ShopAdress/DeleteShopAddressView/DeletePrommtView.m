@@ -185,8 +185,9 @@
 // 点击确定按钮
 - (void)cilckSureDeleteButton:(UIButton *)button {
 
-    if (_sureDeleteBtnBlock) {
-        _sureDeleteBtnBlock(button);
+    if (_sureBlock) {
+        [self dismiss];
+        _sureBlock(button);
     }
 
 }

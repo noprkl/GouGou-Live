@@ -13,7 +13,7 @@ typedef void(^CilckCancelBtnBlock)();
 @interface DeletePrommtView : UIView
 
 /** 点击确定按钮回调 */
-@property (strong,nonatomic) CilckSureDeleteBtnBlock sureDeleteBtnBlock;
+@property (strong,nonatomic) CilckSureDeleteBtnBlock sureBlock;
 
 @property(nonatomic, strong) CilckCancelBtnBlock cancelBlock; /**< 取消回调 */
 

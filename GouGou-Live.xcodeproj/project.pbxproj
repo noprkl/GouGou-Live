@@ -19,6 +19,10 @@
 		0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1CA1DDF374B007C1E4F /* SellerChangePayView.m */; };
 		0452A1CE1DE0336B007C1E4F /* DogDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */; };
 		0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1D31DE03674007C1E4F /* SellerDogDetailView.m */; };
+		0452A1DA1DE0B23A007C1E4F /* SellerAddDogImpressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1D91DE0B23A007C1E4F /* SellerAddDogImpressViewController.m */; };
+		0452A1DF1DE0B2E3007C1E4F /* SellerDeleDDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1DE1DE0B2E3007C1E4F /* SellerDeleDDetailView.m */; };
+		0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1E11DE0B30A007C1E4F /* AddDogPictures.m */; };
+		0452A1E51DE0B89C007C1E4F /* AddDogColorAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1E41DE0B89C007C1E4F /* AddDogColorAlertView.m */; };
 		045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51111DD94F9B001854A8 /* DetailCountViewController.m */; };
 		045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51141DD9539E001854A8 /* MyPageHeaderView.m */; };
 		045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51181DD960F7001854A8 /* MyPageDescView.m */; };
@@ -291,6 +295,14 @@
 		0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailViewController.m; sourceTree = "<group>"; };
 		0452A1D21DE03674007C1E4F /* SellerDogDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDogDetailView.h; sourceTree = "<group>"; };
 		0452A1D31DE03674007C1E4F /* SellerDogDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDogDetailView.m; sourceTree = "<group>"; };
+		0452A1D81DE0B23A007C1E4F /* SellerAddDogImpressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAddDogImpressViewController.h; sourceTree = "<group>"; };
+		0452A1D91DE0B23A007C1E4F /* SellerAddDogImpressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAddDogImpressViewController.m; sourceTree = "<group>"; };
+		0452A1DD1DE0B2E3007C1E4F /* SellerDeleDDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDeleDDetailView.h; sourceTree = "<group>"; };
+		0452A1DE1DE0B2E3007C1E4F /* SellerDeleDDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDeleDDetailView.m; sourceTree = "<group>"; };
+		0452A1E01DE0B30A007C1E4F /* AddDogPictures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDogPictures.h; sourceTree = "<group>"; };
+		0452A1E11DE0B30A007C1E4F /* AddDogPictures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDogPictures.m; sourceTree = "<group>"; };
+		0452A1E31DE0B89C007C1E4F /* AddDogColorAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDogColorAlertView.h; sourceTree = "<group>"; };
+		0452A1E41DE0B89C007C1E4F /* AddDogColorAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDogColorAlertView.m; sourceTree = "<group>"; };
 		045D51101DD94F9B001854A8 /* DetailCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewController.h; sourceTree = "<group>"; };
 		045D51111DD94F9B001854A8 /* DetailCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountViewController.m; sourceTree = "<group>"; };
 		045D51131DD9539E001854A8 /* MyPageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageHeaderView.h; sourceTree = "<group>"; };
@@ -811,6 +823,26 @@
 				04486ABE1DD015FC00BC6D15 /* BaseHandler.m */,
 			);
 			path = BaseHandler;
+			sourceTree = "<group>";
+		};
+		0452A1DB1DE0B2E3007C1E4F /* SellerAddDog */ = {
+			isa = PBXGroup;
+			children = (
+				0452A1E01DE0B30A007C1E4F /* AddDogPictures.h */,
+				0452A1E11DE0B30A007C1E4F /* AddDogPictures.m */,
+			);
+			path = SellerAddDog;
+			sourceTree = "<group>";
+		};
+		0452A1DC1DE0B2E3007C1E4F /* SellerMyGoodsAlert */ = {
+			isa = PBXGroup;
+			children = (
+				0452A1DD1DE0B2E3007C1E4F /* SellerDeleDDetailView.h */,
+				0452A1DE1DE0B2E3007C1E4F /* SellerDeleDDetailView.m */,
+				0452A1E31DE0B89C007C1E4F /* AddDogColorAlertView.h */,
+				0452A1E41DE0B89C007C1E4F /* AddDogColorAlertView.m */,
+			);
+			path = SellerMyGoodsAlert;
 			sourceTree = "<group>";
 		};
 		045D510F1DD94F9B001854A8 /* DetailCount */ = {
@@ -1932,6 +1964,8 @@
 				04CE13891DDC488100EB8777 /* SellerMyGoodsViewController.m */,
 				0452A1CC1DE0336B007C1E4F /* DogDetailViewController.h */,
 				0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */,
+				0452A1D81DE0B23A007C1E4F /* SellerAddDogImpressViewController.h */,
+				0452A1D91DE0B23A007C1E4F /* SellerAddDogImpressViewController.m */,
 			);
 			path = SellerMyGoods;
 			sourceTree = "<group>";
@@ -2087,6 +2121,8 @@
 		04CE13B41DDC488100EB8777 /* SellerMyGoods */ = {
 			isa = PBXGroup;
 			children = (
+				0452A1DB1DE0B2E3007C1E4F /* SellerAddDog */,
+				0452A1DC1DE0B2E3007C1E4F /* SellerMyGoodsAlert */,
 				04CE13B51DDC488100EB8777 /* SellerMyGoodsCell.h */,
 				04CE13B61DDC488100EB8777 /* SellerMyGoodsCell.m */,
 				04CE13B71DDC488100EB8777 /* SellerMyGoodsTopView.h */,
@@ -2770,6 +2806,7 @@
 				04CE13D51DDC488100EB8777 /* SellerAdressViewController.m in Sources */,
 				0479B5E21DCADC7B00CB288A /* DogTypesView.m in Sources */,
 				04CE13CE1DDC488100EB8777 /* SellerCenterViewController.m in Sources */,
+				0452A1DA1DE0B23A007C1E4F /* SellerAddDogImpressViewController.m in Sources */,
 				04CE13DA1DDC488100EB8777 /* SellerSoldGoodsViewController.m in Sources */,
 				0479B6331DCADC7B00CB288A /* MessageViewController.m in Sources */,
 				04EA2AEE1DDDDA6C0023D9A8 /* SellerChangeViewController.m in Sources */,
@@ -2820,6 +2857,7 @@
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
 				0452A1CE1DE0336B007C1E4F /* DogDetailViewController.m in Sources */,
+				0452A1E51DE0B89C007C1E4F /* AddDogColorAlertView.m in Sources */,
 				0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */,
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
@@ -2932,6 +2970,7 @@
 				04D3615D1DDB343F009F35A0 /* WaitConsignmentViewController.m in Sources */,
 				0479B6391DCADC7B00CB288A /* BaseTabBarController.m in Sources */,
 				0479B5FF1DCADC7B00CB288A /* CodeLoginViewController.m in Sources */,
+				0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */,
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
 				04DAC9961DD21A9A0089236D /* MyUnLoginView.m in Sources */,
 				0479B5FD1DCADC7B00CB288A /* StartSourceView.m in Sources */,
@@ -2969,6 +3008,7 @@
 				0479B5E01DCADC7B00CB288A /* NoneFocusView.m in Sources */,
 				04CE13D61DDC488100EB8777 /* SellerMyGoodsViewController.m in Sources */,
 				04D3616E1DDB343F009F35A0 /* SellinfoView.m in Sources */,
+				0452A1DF1DE0B2E3007C1E4F /* SellerDeleDDetailView.m in Sources */,
 				04EA2AD61DDDB0510023D9A8 /* SellerProtectPLogisticsInfoView.m in Sources */,
 				04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,

@@ -32,7 +32,6 @@
 /** headBtn */
 @property (strong, nonatomic) UIButton *myButton;
 
-
 @property(nonatomic, strong) NSArray *doneMetchDataSource; /**< 已经商家认证的数据源 */
 
 @property(nonatomic, strong) NSArray *doneMetchcontrollerNames; /**< 已经商家认证的控制器名字 */

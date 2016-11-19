@@ -12,16 +12,16 @@
 @interface SellerMyGoodsTopView ()
 
 /** 全部 */
-@property (strong, nonatomic) UIButton *allCountBtn;
+@property (strong, nonatomic) UIButton *allMessageBtn;
 
 /** 收入 */
-@property (strong, nonatomic) UIButton *incomeBtn;
+@property (strong, nonatomic) UIButton *waitSellBtn;
 
 /** 支出 */
-@property (strong, nonatomic) UIButton *outcomeBtn;
+@property (strong, nonatomic) UIButton *soldBtn;
 
 /** 交易中 */
-@property (strong, nonatomic) UIButton *detailingBtn;
+@property (strong, nonatomic) UIButton *reviewBtn;
 
 /** 上一个按钮 */
 @property (strong, nonatomic) UIButton *lastBtn;
@@ -35,93 +35,102 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        [self setBtn:self.allCountBtn title:@"全部"];
+        [self setBtn:self.allMessageBtn title:@"全部"];
         
-        [self setBtn:self.incomeBtn title:@"待售"];
+        [self setBtn:self.waitSellBtn title:@"待售"];
         
-        [self setBtn:self.outcomeBtn title:@"已售"];
+        [self setBtn:self.soldBtn title:@"已售"];
         
-        [self setBtn:self.detailingBtn title:@"审核"];
+        [self setBtn:self.reviewBtn title:@"审核"];
         
     }
     return self;
 }
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    [self.allCountBtn makeConstraints:^(MASConstraintMaker *make) {
+    [self.allMessageBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
         make.left.equalTo(self.left);
         make.width.equalTo(SCREEN_WIDTH / 4);
     }];
     
-    [self.incomeBtn makeConstraints:^(MASConstraintMaker *make) {
+    [self.waitSellBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
-        make.right.equalTo(self.centerX);
+        make.left.equalTo(self.allMessageBtn.right);
         make.width.equalTo(SCREEN_WIDTH / 4);
     }];
-    [self.outcomeBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
-        make.top.equalTo(self.top);
-        make.left.equalTo(self.centerX);
-        make.width.equalTo(SCREEN_WIDTH / 4);
-    }];
-    
-    [self.detailingBtn makeConstraints:^(MASConstraintMaker *make) {
+
+    [self.reviewBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
         make.right.equalTo(self.right);
         make.width.equalTo(SCREEN_WIDTH / 4);
     }];
+    [self.soldBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.centerY);
+        make.top.equalTo(self.top);
+        make.right.equalTo(self.reviewBtn.left);
+        make.width.equalTo(SCREEN_WIDTH / 4);
+    }];
+    
+}
+- (void)setCanClick:(BOOL)canClick {
+    _canClick = canClick;
+    self.allMessageBtn.enabled = canClick;
+    self.waitSellBtn.enabled = canClick;
+    self.soldBtn.enabled = canClick;
+    self.reviewBtn.enabled = canClick;
 }
 #pragma mark
 #pragma mark - 懒加载
 
-- (UIButton *)allCountBtn {
-    if (!_allCountBtn) {
-        _allCountBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+- (UIButton *)allMessageBtn {
+    if (!_allMessageBtn) {
+        _allMessageBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         
-        _allCountBtn.selected = YES;
-        _allCountBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        _allMessageBtn.selected = YES;
+        _allMessageBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         
-        self.lastBtn = _allCountBtn;
+        self.lastBtn = _allMessageBtn;
         
-        [_allCountBtn addTarget:self action:@selector(clickallCountBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+        [_allMessageBtn addTarget:self action:@selector(clickallMessageBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
-    return _allCountBtn;
+    return _allMessageBtn;
 }
 
-- (UIButton *)incomeBtn {
-    if (!_incomeBtn) {
-        _incomeBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        _incomeBtn.backgroundColor = [UIColor whiteColor];
-        [_incomeBtn addTarget:self action:@selector(clickincomeBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+- (UIButton *)waitSellBtn {
+    if (!_waitSellBtn) {
+        _waitSellBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _waitSellBtn.backgroundColor = [UIColor whiteColor];
+        [_waitSellBtn addTarget:self action:@selector(clickwaitSellBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         
     }
-    return _incomeBtn;
+    return _waitSellBtn;
 }
-- (UIButton *)outcomeBtn {
-    if (!_outcomeBtn) {
-        _outcomeBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        _outcomeBtn.backgroundColor = [UIColor whiteColor];
-        //        [_outcomeBtn sizeToFit];
+- (UIButton *)soldBtn {
+    if (!_soldBtn) {
+        _soldBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _soldBtn.backgroundColor = [UIColor whiteColor];
+        //        [_soldBtn sizeToFit];
         
-        [_outcomeBtn addTarget:self action:@selector(clickoutcomeBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+        [_soldBtn addTarget:self action:@selector(clicksoldBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         
     }
-    return _outcomeBtn;
+    return _soldBtn;
 }
 
-- (UIButton *)detailingBtn {
-    if (!_detailingBtn) {
+- (UIButton *)reviewBtn {
+    if (!_reviewBtn) {
         
-        _detailingBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        _detailingBtn.backgroundColor = [UIColor whiteColor];
-        [_detailingBtn addTarget:self action:@selector(clickdetailingBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+        _reviewBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _reviewBtn.backgroundColor = [UIColor whiteColor];
+        [_reviewBtn addTarget:self action:@selector(clickreviewBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
-    return _detailingBtn;
+    return _reviewBtn;
 }
 - (void)setBtn:(UIButton *)button title:(NSString *)title {
     
@@ -147,56 +156,46 @@
 }
 #pragma mark
 #pragma mark - Action
-- (void)clickallCountBtnAction:(UIButton *)btn {
+- (void)clickallMessageBtnAction:(UIButton *)btn {
+
+//    [self ClickBtnWith:btn];
     if (_allBlock) {
+        [self ClickBtnWith:btn];
         _allBlock();
-        
-        btn.selected = YES;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        
-        self.lastBtn.selected = NO;
-        self.lastBtn.backgroundColor = [UIColor whiteColor];
-        self.lastBtn = btn;
     }
 }
-- (void)clickincomeBtnAction:(UIButton *)btn {
+- (void)clickwaitSellBtnAction:(UIButton *)btn {
+
     if (_waitSellBlock) {
+        [self ClickBtnWith:btn];
         _waitSellBlock();
-        btn.selected = YES;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        
-        self.lastBtn.selected = NO;
-        self.lastBtn.backgroundColor = [UIColor whiteColor];
-        self.lastBtn = btn;
     }
+   
 }
-- (void)clickoutcomeBtnAction:(UIButton *)btn {
+- (void)clicksoldBtnAction:(UIButton *)btn {
+   
     if (_soldBlock) {
+        [self ClickBtnWith:btn];
         _soldBlock();
         
-        btn.selected = YES;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        
-        self.lastBtn.selected = NO;
-        self.lastBtn.backgroundColor = [UIColor whiteColor];
-        self.lastBtn = btn;
     }
-    
+//        [self ClickBtnWith:btn];
 }
-- (void)clickdetailingBtnAction:(UIButton *)btn {
+- (void)clickreviewBtnAction:(UIButton *)btn {
     if (_reviewBlock) {
+      [self ClickBtnWith:btn];
         _reviewBlock();
-       
-        btn.selected = YES;
-        btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        
-        self.lastBtn.selected = NO;
-        self.lastBtn.backgroundColor = [UIColor whiteColor];
-        self.lastBtn = btn;
     }
-    
+//    [self ClickBtnWith:btn];
 }
 
-
+- (void)ClickBtnWith:(UIButton *)btn{
+    self.lastBtn.selected = NO;
+    self.lastBtn.backgroundColor = [UIColor whiteColor];
+    self.lastBtn = btn;
+    
+    btn.selected = YES;
+    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+}
 
 @end

@@ -15,5 +15,4 @@ typedef void(^ClickDeleteBtnBlock)();
 
 @property(nonatomic, strong) ClickAllSelectBtnBlock allSelectBlock; /**< 全选回调 */
 @property(nonatomic, strong) ClickDeleteBtnBlock deleteBlock; /**< 删除回调 */
-
 @end

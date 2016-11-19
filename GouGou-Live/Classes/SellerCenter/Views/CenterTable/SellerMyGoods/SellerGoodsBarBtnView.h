@@ -16,4 +16,6 @@ typedef void(^ClickSellerEditBtnBlock)(BOOL flag);
 @property(nonatomic, strong) ClickSellerAddBtnBlock addBlock; /**< 添加回调 */
 @property(nonatomic, strong) ClickSellerEditBtnBlock editBlock; /**< 编辑回调 */
 
+
+
 @end

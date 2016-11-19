@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickAllSelectBtnBlock)();
+typedef void(^ClickAllSelectBtnBlock)(UIButton *btn);
 typedef void(^ClickDeleteBtnBlock)();
 
 @interface SellerGoodsBottomView : UIView

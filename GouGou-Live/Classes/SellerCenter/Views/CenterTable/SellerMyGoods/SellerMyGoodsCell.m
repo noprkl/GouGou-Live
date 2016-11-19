@@ -36,9 +36,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self.contentView addSubview:self.selectBtn];
         [self.contentView addSubview:self.line];
         [self.contentView addSubview:self.dogImageView];
+        [self.contentView addSubview:self.selectBtn];
         [self.contentView addSubview:self.dogNameLabel];
         [self.contentView addSubview:self.kindLabel];
         [self.contentView addSubview:self.dogKindLabel];
@@ -53,17 +53,28 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+   
     [self.line makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top);
         make.left.top.equalTo(self);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 10));
     }];
-    [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.left).offset(10);
+
+    //判断 重新约束
+    CGFloat width = 10;
+    if (_isMove) {
+        width = 45;
+    }
+    [self.dogImageView remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left).offset(width);
         make.top.equalTo(self.line.bottom).offset(10);
         make.size.equalTo(CGSizeMake(78, 78));
     }];
+    [self.selectBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.dogImageView.left).offset(-11);
+        make.centerY.equalTo(self.dogImageView.centerY);
+    }];
+    
     [self.dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.dogImageView.top).offset(5);
         make.left.equalTo(self.dogImageView.right).offset(10);
@@ -102,9 +113,47 @@
         make.centerY.equalTo(self.oldPriceLabel.centerY);
         make.right.equalTo(self.right).offset(-10);
     }];
+    
+}
+
+#pragma mark
+#pragma mark - Action
+- (void)clickSelectBtnAction:(UIButton *)btn {
+
+    if (_selectBlock) {
+        _selectBlock(btn);
+    }
+}
+// 通过判断多选按钮是否隐藏来设置图片的位置的
+- (void)setIsMove:(BOOL)isMove {
+    _isMove = isMove;
+}
+
+- (void)setIsBtnSelect:(BOOL)isBtnSelect {
+    _isBtnSelect = isBtnSelect;
+    self.selectBtn.selected = isBtnSelect;
+}
+- (void)setDogCard:(NSArray *)dogCard {
+    _dogCard = dogCard;
+    
+}
+- (void)setCellState:(NSString *)cellState {
+    _cellState = cellState;
+    self.stateLabel.text = cellState;
 }
 #pragma mark
 #pragma mark - 懒加载
+- (UIButton *)selectBtn {
+    if (!_selectBtn) {
+        _selectBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        // 设置tag 方便取出来
+        _selectBtn.tag = 1000;
+        [_selectBtn setImage:[UIImage imageNamed:@"椭圆-1"] forState:(UIControlStateNormal)];
+        [_selectBtn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];
+        [_selectBtn addTarget:self action:@selector(clickSelectBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+    }
+    return _selectBtn;
+}
 - (UIView *)line {
     if (!_line) {
         _line = [[UIView alloc] init];
@@ -212,14 +261,6 @@
         _stateLabel.font = [UIFont systemFontOfSize:12];
     }
     return _stateLabel;
-}
-- (void)setDogCard:(NSArray *)dogCard {
-    _dogCard = dogCard;
-    
-}
-- (void)setCellState:(NSString *)cellState {
-    _cellState = cellState;
-    self.stateLabel.text = cellState;
 }
 
 - (NSAttributedString *)getCenterLineWithString:(NSString *)text {

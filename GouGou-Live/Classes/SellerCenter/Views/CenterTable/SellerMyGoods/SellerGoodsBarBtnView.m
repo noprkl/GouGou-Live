@@ -66,9 +66,8 @@
 - (void)editGoods:(UIButton *)btn {
     
     if (_editBlock) {
-        
-        _editBlock(!btn.selected);
         btn.selected = !btn.selected;
+        _editBlock(btn.selected);
         self.addBtn.hidden = btn.selected;
     }
 }

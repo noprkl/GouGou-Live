@@ -25,6 +25,15 @@
 
 @property(nonatomic, strong) SellerGoodsBottomView *bottomView; /**< 底部按钮 */
 
+#pragma mark - 选中信息
+//@property(nonatomic, strong) NSMutableArray *cells; /**< cell数组 */
+
+@property(nonatomic, strong) NSMutableArray *selectedData; /**< 选中的数据 */
+
+@property(nonatomic, assign) BOOL isMove; /**< 是否移动cell */
+
+@property(nonatomic, assign) BOOL isSelect; /**< 是否选中 */
+
 @end
 
 static NSString *cellid = @"SellerMyGoodsCell";
@@ -37,7 +46,10 @@ static NSString *cellid = @"SellerMyGoodsCell";
     [self initUI];
 }
 - (void)initUI{
+    _isMove = NO;
+    _isSelect = NO;
     [self.view addSubview:self.tableView];
+
     // 添加两个按钮
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.barBtnView];
     self.navigationItem.rightBarButtonItem = item;
@@ -47,6 +59,9 @@ static NSString *cellid = @"SellerMyGoodsCell";
         make.left.right.bottom.equalTo(self.view);
         make.height.equalTo(50);
     }];
+    
+    [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
+
 }
 
 #pragma mark
@@ -57,6 +72,19 @@ static NSString *cellid = @"SellerMyGoodsCell";
     }
     return _dataArr;
 }
+- (NSMutableArray *)selectedData {
+    if (!_selectedData) {
+        _selectedData = [NSMutableArray array];
+    }
+    return _selectedData;
+}
+
+//- (NSMutableArray *)cells {
+//    if (!_cells) {
+//        _cells = [NSMutableArray array];
+//    }
+//    return _cells;
+//}
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:(UITableViewStylePlain)];
@@ -77,13 +105,20 @@ static NSString *cellid = @"SellerMyGoodsCell";
         _barBtnView.bounds = CGRectMake(0, 0, 100, 44);
         __weak typeof(self) weakSelf = self;
         _barBtnView.editBlock = ^(BOOL flag){
-            weakSelf.tableView.editing = flag;
+#pragma mark - 编辑
+            // 设置cell移动
+            _isMove = flag;
+//            for (NSInteger i = 0; i < self.cells.count; i ++) {
+//                SellerMyGoodsCell *cell = weakSelf.cells[i];
+//                // 可以编辑时移动 否则还原
+//                cell.isMove = flag;
+//            }
+            [weakSelf.tableView reloadData];
+            // 编辑时不允许跳转 底部按钮不隐藏
             weakSelf.bottomView.hidden = !flag;
-            
-
         };
         _barBtnView.addBlock = ^(){
-            
+            // 添加狗狗
         };
     }
     return _barBtnView;
@@ -93,32 +128,83 @@ static NSString *cellid = @"SellerMyGoodsCell";
         _bottomView = [[SellerGoodsBottomView alloc] init];
         _bottomView.hidden = YES;
         _bottomView.backgroundColor = [UIColor whiteColor];
-        _bottomView.allSelectBlock = ^(){
-            
+    
+        __weak typeof(self) weakSelf = self;
+        _bottomView.allSelectBlock = ^(UIButton *btn){
+            btn.selected = !btn.selected;
+            // 全选按钮
+            _isSelect = btn.selected;
+//            for (NSInteger i = 0; i < self.cells.count; i ++) {
+//                
+//#pragma mark - 全选
+//                SellerMyGoodsCell *cell = weakSelf.cells[i];
+//                // 每个cell按钮的选中状态
+//                cell.isBtnSelect = btn.selected;
+//            }
+            // 如果全选 把数据全添加进去
+            if (btn.selected) {
+                weakSelf.selectedData = weakSelf.dataArr;
+                
+            }else{ // 否则 把数据全清除
+                [weakSelf.selectedData removeAllObjects];
+            }
+            [weakSelf.tableView reloadData];
         };
+        
         _bottomView.deleteBlock = ^(){
+            // 删除数据 刷新表格
+//            for (NSInteger i = 0; i < weakSelf.selectedData.count; i ++) {
+//                
+//                [weakSelf.dataArr removeObject:weakSelf.selectedData[i]];
+//            }
+            [weakSelf.dataArr removeObject:weakSelf.selectedData];
+            _isMove = YES;
+            [weakSelf.tableView reloadData];
+            // 设置cell移动
+//            for (NSInteger i = 0; i < self.cells.count; i ++) {
+//                SellerMyGoodsCell *cell = weakSelf.cells[i];
+//                // 可以编辑时移动 否则还原
+//                cell.isMove = YES;
+//            }
+            // 清空数据
+            [weakSelf.selectedData removeLastObject];
             
         };
     }
     return _bottomView;
 }
 
-#pragma mark - 删除编辑
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete |UITableViewCellEditingStyleInsert;
-}
-
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+  return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SellerMyGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+  
+    __block  SellerMyGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.isMove = _isMove;
+
+    
+#pragma mark - 添加选中数据
+    __weak typeof(self) weakSelf = self;
+
+    // 判断当前数据是否在数组中
+    NSString *index = self.dataArr[indexPath.row];
+    BOOL flag = [self.selectedData containsObject:index];
+    
+    cell.selectBlock = ^(UIButton *btn){
+
+        btn.selected = !flag;
+        if (flag) {
+            // 如果存在 删掉
+            [weakSelf.selectedData removeObject:index];
+            
+        }else{
+            [weakSelf.selectedData addObject:index];
+        }
+        DLog(@"%@",weakSelf.selectedData);
+    };
     
     if (indexPath.row == 0) {
         cell.cellState = @"待售";
@@ -140,11 +226,11 @@ static NSString *cellid = @"SellerMyGoodsCell";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-    DogDetailViewController *dogDetailVC = [[DogDetailViewController alloc] init];
-    
-    [self.navigationController pushViewController:dogDetailVC animated:YES];
+    if (!_isMove) {
+        DogDetailViewController *dogDetailVC = [[DogDetailViewController alloc] init];
+        [self.navigationController pushViewController:dogDetailVC animated:YES];
+    }
+  
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {

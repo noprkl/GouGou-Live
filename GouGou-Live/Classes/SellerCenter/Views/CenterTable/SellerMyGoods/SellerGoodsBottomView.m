@@ -73,15 +73,14 @@
     return _deleteBtn;
 }
 - (void)clickDeleteBtnAction {
-    if (_allSelectBlock) {
-        _allSelectBlock();
+    if (_deleteBlock) {
+        _deleteBlock();
     }
 }
 - (void)clickAllSelectBtnAction:(UIButton *)btn {
     
-    if (_deleteBlock) {
-        btn.selected = !btn.selected;
-        _deleteBlock();
+    if (_allSelectBlock) {
+        _allSelectBlock(btn);
     }
 }
 

@@ -17,6 +17,19 @@
 @end
 
 @implementation StateView
+
+- (void)setStateMessage:(NSString *)stateMessage {
+
+    _stateMessage = stateMessage;
+    self.orderState.text = stateMessage;
+}
+
+- (void)setTimeMessage:(NSString *)timeMessage {
+
+    _timeMessage = timeMessage;
+    self.remianTime.text = timeMessage;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -60,9 +73,9 @@
 
     if (!_orderState) {
         _orderState = [[UILabel alloc] init];
-        _orderState.text = @"代付全款";
+
         _orderState.font = [UIFont systemFontOfSize:16];
-        _orderState.textColor = [UIColor colorWithHexString:@"#000000"];
+        _orderState.textColor = [UIColor colorWithHexString:@"#333333"];
     }
     return _orderState;
 }
@@ -73,7 +86,7 @@
         _remianTime = [[UILabel alloc] init];
         _remianTime.text = @"还剩1天1小时自动放弃定金";
         _remianTime.font = [UIFont systemFontOfSize:12];
-        _remianTime.textColor = [UIColor colorWithHexString:@"#333333"];
+        _remianTime.textColor = [UIColor colorWithHexString:@"#666666"];
     }
     return _remianTime;
 

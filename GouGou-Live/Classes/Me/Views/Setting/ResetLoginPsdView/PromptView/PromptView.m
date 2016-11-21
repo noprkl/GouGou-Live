@@ -46,6 +46,10 @@
         [self addSubview:self.sureButton];
         [self addSubview:self.cancleButton];
         
+        self.layer.cornerRadius = 10;
+        self.layer.masksToBounds = YES;
+        self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+
     }
     return self;
 }
@@ -141,6 +145,9 @@
 
         //        _editngtextfiled.keyboardAppearance =
         [_editngtextfiled addTarget:self action:@selector(begingEditing:) forControlEvents:UIControlEventEditingDidEnd];
+        _editngtextfiled.returnKeyType = UIReturnKeyDefault;
+        
+        _editngtextfiled  .keyboardType = UIKeyboardTypeDefault;
     }
     return _editngtextfiled;
 }
@@ -273,6 +280,9 @@
     CGRect rect = self.frame;
     rect = CGRectMake(10, SCREEN_HEIGHT - 264 - 180, SCREEN_WIDTH - 20, 170);
     self.frame = rect;
+    
+    [self.editngtextfiled becomeFirstResponder];
+    
     //渐入动画
     [self fadeIn];
     
@@ -303,6 +313,8 @@
         
         [self removeFromSuperview];
         [self.hud removeFromSuperview];
+        [self.editngtextfiled resignFirstResponder];
+
     }];
 }
 

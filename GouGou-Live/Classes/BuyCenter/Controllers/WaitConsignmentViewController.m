@@ -7,12 +7,8 @@
 //
 
 #import "WaitConsignmentViewController.h"
-
 #import "FunctionButtonView.h"  // cell下边的按钮
-#import "ApplyProtectPowerViewController.h" // 申请维权控制器
-
 #import "WaitConsignmentCell.h" // 待发货cell
-#import "DeletePrommtView.h" // 提示框（此处为不想买了复用）
 #import "ProtecePowerPromptView.h"
 
 static NSString * waitConsignmentCell = @"waitConsignmentCell";
@@ -69,7 +65,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 245;
+    return 255;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,14 +74,15 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, 45) title:@[@"申请维权",@"联系买家",@"提醒发货"] buttonNum:3];
+    FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"申请维权",@"联系买家",@"提醒发货"] buttonNum:3];
     
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"提醒发货"]) {
             
             // 跳转至提醒发货
-            
-            DLog(@"%@--%@",self,button.titleLabel.text);
+#warning 不同提示框
+            [self clickConsignment];
+            DLog(@"%@",button.titleLabel.text);
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
             // 跳转至联系卖家
@@ -101,50 +98,10 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
         }
         
     };
-
+    
     [cell addSubview:funcBtn];
     
     return cell;
-}
-#pragma mark
-#pragma mark - 弹框显示
-// 点击提醒发货
-- (void)clickConsignment {
-    DeletePrommtView * consignmentPrompt = [[DeletePrommtView alloc] init];
-    consignmentPrompt.message = @"已提醒卖家发货，请耐心等待";
-
-    [consignmentPrompt show];
-}
-// 点击申请维权调用
-- (void)clickApplyProtectPower {
-    
-    // 点击申请维权按钮出现的弹框
-    DeletePrommtView * allpyPrompt = [[DeletePrommtView alloc] init];
-    allpyPrompt.message = @"我们会再次调查您的实际情况，并根据《用户使用协议》维护您的权益";
-    
-    __weak typeof(allpyPrompt) weakself = allpyPrompt;
-    
-    allpyPrompt.sureBlock = ^(UIButton *btn) {
-        
-        // 点击弹框内确认按钮出现的弹框
-        ProtecePowerPromptView * pppView = [[ProtecePowerPromptView alloc] init];
-        pppView.message = @"请保持电话通畅，\n如有疑问请拨打热线电话010-0928928";
-        [weakself dismiss];
-        
-        pppView.sureApplyBtnBlock = ^(UIButton * btn) {
-            
-            // 跳转至申请维权
-            ApplyProtectPowerViewController * allpyProVC = [[ApplyProtectPowerViewController alloc] init];
-            [self.navigationController pushViewController:allpyProVC animated:YES];
-            
-        };
-        // 弹框显示
-        [pppView show];
-        
-    };
-    // 弹框显示
-    [allpyPrompt show];
-    
 }
 
 @end

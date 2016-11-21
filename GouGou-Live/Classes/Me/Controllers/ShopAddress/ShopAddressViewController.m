@@ -45,7 +45,7 @@ static NSString * indenifer = @"addressCellID";
 }
 - (void)initUI {
 
-    self.title = @"商家地址";
+    self.title = @"收货地址";
     self.edgesForExtendedLayout = 0;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStyleDone) target:self action:@selector(ClickAddBtnBlock)];

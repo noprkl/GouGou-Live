@@ -13,7 +13,7 @@
 #import "SellerGoodsBottomView.h"
 
 #import "DogDetailViewController.h" // 狗狗详情
-#import "SellerAddDogImpressViewController.h" // 添加狗狗
+#import "SellerCreateDogMessageViewController.h" // 新建狗狗
 
 #import "SellerDeleDDetailView.h" //删除弹窗
 
@@ -157,8 +157,8 @@ static NSString *cellid = @"SellerMyGoodsCell";
         };
         _barBtnView.addBlock = ^(){
             // 添加狗狗
-            SellerAddDogImpressViewController *addDogVC = [[SellerAddDogImpressViewController alloc] init];
-            [weakSelf.navigationController pushViewController:addDogVC animated:YES];
+            SellerCreateDogMessageViewController *createDogVC = [[SellerCreateDogMessageViewController alloc] init];
+            [weakSelf.navigationController pushViewController:createDogVC animated:YES];
         };
     }
     return _barBtnView;

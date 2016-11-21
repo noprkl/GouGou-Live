@@ -1,5 +1,5 @@
 //
-//  SellerAddDogImpressViewController.h
+//  SellerAddImpressViewController.h
 //  GouGou-Live
 //
 //  Created by ma c on 16/11/20.
@@ -8,6 +8,6 @@
 
 #import "SellerBaseViewController.h"
 
-@interface SellerAddDogImpressViewController : SellerBaseViewController
+@interface SellerAddImpressViewController : SellerBaseViewController
 
 @end

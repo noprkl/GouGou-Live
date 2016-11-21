@@ -17,7 +17,8 @@
 #import "MyFocusViewController.h"
 #import "MyPageViewController.h"
 
-
+#import "MerchantViewController.h" //商家认证
+#import "CreateLiveViewController.h" // 创建直播
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -126,15 +127,22 @@
     return _doneMetchcontrollerNames;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    //return self.dataSource.count;
+
     // 如果已经进行商家认证 就选择已商家认证的数据源
+//    if ([UserInfos sharedUser].ismerchant) {
+//        return self.doneMetchDataSource.count;
+//    }else{
+//        return self.dataSource.count;
+//    }
     return self.doneMetchDataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-//    return [self.dataSource[section] count];
-        // 如果已经进行商家认证 就选择已商家认证的数据源
+    // 如果已经进行商家认证 就选择已商家认证的数据源
+//    if ([UserInfos sharedUser].ismerchant) {
+//        return [self.doneMetchDataSource[section] count];
+//    }else{
+//        return [self.dataSource[section] count];
+//    }
     return [self.doneMetchDataSource[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -212,7 +220,6 @@
                 EditMyMessageViewController *editVC = [[EditMyMessageViewController alloc] init];
                 editVC.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:editVC animated:YES];
-                
             };
             
             // 实名认证
@@ -245,6 +252,17 @@
                 [[MyPageViewController alloc] init];
                 myPage.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:myPage animated:YES];
+            };
+            messageView.liveBlcok = ^(UIButton *btn){
+//                if ([UserInfos sharedUser].ismerchant) {
+//                    MerchantViewController *merchahtVC = [[MerchantViewController alloc] init];
+//                    merchahtVC.hidesBottomBarWhenPushed = YES;
+//                    [weakSelf.navigationController pushViewController:merchahtVC animated:YES];
+//                }else{
+                    CreateLiveViewController *createLiveVC = [[CreateLiveViewController alloc] init];
+                    createLiveVC.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:createLiveVC animated:YES];
+//                }
             };
             return messageView;
         }else{

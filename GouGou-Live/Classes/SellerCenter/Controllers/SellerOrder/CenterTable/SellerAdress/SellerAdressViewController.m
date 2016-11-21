@@ -7,31 +7,128 @@
 //  卖家中心-商家地址
 
 #import "SellerAdressViewController.h"
+#import "AddrsssTableViewCell.h"
+#import "EditNewAddressViewController.h"
+#import "DeletePrommtView.h"
 
-@interface SellerAdressViewController ()
+@interface SellerAdressViewController ()<UITableViewDelegate,UITableViewDataSource>
+/** tableView */
+@property (strong,nonatomic) UITableView *tableview;
+/** 数据源 */
+@property (strong,nonatomic) NSArray *dataArray;
+
+@property(nonatomic, strong) UIButton *lastBtn; /**< 上一个按钮 */
 
 @end
+static NSString * indenifer = @"addressCellID";
 
 @implementation SellerAdressViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [self initUI];
+    [self setNavBarItem];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+}
+- (void)initUI {
+    
+    self.title = @"商家地址";
+    self.edgesForExtendedLayout = 0;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStyleDone) target:self action:@selector(ClickAddBtnBlock)];
+    
+    [self.view addSubview:self.tableview];
+    [self.tableview makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+}
+- (void)ClickAddBtnBlock {
+    
+    EditNewAddressViewController *editVC = [[EditNewAddressViewController alloc] init];
+    
+    [self.navigationController pushViewController:editVC animated:YES];
+}
+#pragma mark
+#pragma mark - 懒加载
+- (NSArray *)dataArray {
+    
+    if (!_dataArray) {
+        _dataArray = [NSArray array];
+    }
+    return _dataArray;
+}
+
+- (UITableView *)tableview {
+    
+    if (!_tableview) {
+        _tableview = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableview.dataSource = self;
+        _tableview.delegate = self;
+        _tableview.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        [_tableview registerClass:[AddrsssTableViewCell class] forCellReuseIdentifier:indenifer];
+    }
+    return  _tableview;
+}
+#pragma mark
+#pragma mark - TableView代理
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //    return self.dataArray.count;
+    return 3;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 113;
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    AddrsssTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:indenifer];
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.tag = [indexPath row];
+    
+    cell.editBtnBlock = ^(){
+        
+        EditNewAddressViewController * editVC = [[EditNewAddressViewController alloc] init];
+        
+        [self.navigationController pushViewController:editVC animated:YES];
+    };
+    
+    cell.acquiesceBlock = ^(UIButton *btn){
+        
+        self.lastBtn.selected = NO;
+        btn.selected = YES;
+        self.lastBtn = btn;
+    };
+    
+    cell.deleteBlock = ^(UIButton * btn) {
+        
+        btn.tag = [indexPath row];
+        
+    };
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

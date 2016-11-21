@@ -19,10 +19,21 @@
 		0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1CA1DDF374B007C1E4F /* SellerChangePayView.m */; };
 		0452A1CE1DE0336B007C1E4F /* DogDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */; };
 		0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1D31DE03674007C1E4F /* SellerDogDetailView.m */; };
-		0452A1DA1DE0B23A007C1E4F /* SellerAddDogImpressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1D91DE0B23A007C1E4F /* SellerAddDogImpressViewController.m */; };
 		0452A1DF1DE0B2E3007C1E4F /* SellerDeleDDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1DE1DE0B2E3007C1E4F /* SellerDeleDDetailView.m */; };
 		0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1E11DE0B30A007C1E4F /* AddDogPictures.m */; };
 		0452A1E51DE0B89C007C1E4F /* AddDogColorAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1E41DE0B89C007C1E4F /* AddDogColorAlertView.m */; };
+		0452A1E81DE173A5007C1E4F /* SellerCreateDogMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1E71DE173A5007C1E4F /* SellerCreateDogMessageViewController.m */; };
+		0452A1EB1DE173E0007C1E4F /* SellerAddImpressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1EA1DE173E0007C1E4F /* SellerAddImpressViewController.m */; };
+		0452A1EE1DE17E71007C1E4F /* SellerShipTemplateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1ED1DE17E71007C1E4F /* SellerShipTemplateView.m */; };
+		0452A1F61DE1A730007C1E4F /* SellerSearchDogtypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1F51DE1A730007C1E4F /* SellerSearchDogtypeViewController.m */; };
+		0452A1FA1DE1A86D007C1E4F /* SellerNoInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1F91DE1A86D007C1E4F /* SellerNoInputTableView.m */; };
+		0452A1FD1DE1A88B007C1E4F /* SellerDoInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1FC1DE1A88B007C1E4F /* SellerDoInputTableView.m */; };
+		0452A2011DE1A8BB007C1E4F /* SellerDoInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1FF1DE1A8BB007C1E4F /* SellerDoInputCell.m */; };
+		0452A2021DE1A8BB007C1E4F /* SellerDoInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0452A2001DE1A8BB007C1E4F /* SellerDoInputCell.xib */; };
+		0452A2081DE1B14B007C1E4F /* SellerNoInputHotBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A2071DE1B14B007C1E4F /* SellerNoInputHotBtnView.m */; };
+		0452A20B1DE1C176007C1E4F /* SellerNoneDogTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A20A1DE1C176007C1E4F /* SellerNoneDogTypeView.m */; };
+		0452A20F1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A20D1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m */; };
+		0452A2131DE1E782007C1E4F /* SellerChoseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */; };
 		045D51121DD94F9B001854A8 /* DetailCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51111DD94F9B001854A8 /* DetailCountViewController.m */; };
 		045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51141DD9539E001854A8 /* MyPageHeaderView.m */; };
 		045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51181DD960F7001854A8 /* MyPageDescView.m */; };
@@ -44,6 +55,8 @@
 		0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF01DBDEF2200562CC4 /* Main.storyboard */; };
 		0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF31DBDEF2200562CC4 /* Assets.xcassets */; };
 		0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */; };
+		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
+		046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */; };
 		047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323ED1DD1B31A006CCC71 /* UserInfos.m */; };
 		047323FA1DD1DBEE006CCC71 /* MyFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323F91DD1DBEE006CCC71 /* MyFocusViewController.m */; };
 		047323FD1DD1DBFF006CCC71 /* MyPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323FC1DD1DBFF006CCC71 /* MyPageViewController.m */; };
@@ -128,7 +141,6 @@
 		0479B6271DCADC7B00CB288A /* SuggestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5981DCADC7B00CB288A /* SuggestViewController.m */; };
 		0479B6281DCADC7B00CB288A /* SuggestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5991DCADC7B00CB288A /* SuggestViewController.xib */; };
 		0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B59C1DCADC7B00CB288A /* ShopAddressViewController.m */; };
-		0479B62A1DCADC7B00CB288A /* ShopAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B59D1DCADC7B00CB288A /* ShopAddressViewController.xib */; };
 		0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5A01DCADC7B00CB288A /* WatchHistoryViewController.m */; };
 		0479B62C1DCADC7B00CB288A /* WatchHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5A11DCADC7B00CB288A /* WatchHistoryViewController.xib */; };
 		0479B6331DCADC7B00CB288A /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5B71DCADC7B00CB288A /* MessageViewController.m */; };
@@ -295,14 +307,35 @@
 		0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailViewController.m; sourceTree = "<group>"; };
 		0452A1D21DE03674007C1E4F /* SellerDogDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDogDetailView.h; sourceTree = "<group>"; };
 		0452A1D31DE03674007C1E4F /* SellerDogDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDogDetailView.m; sourceTree = "<group>"; };
-		0452A1D81DE0B23A007C1E4F /* SellerAddDogImpressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAddDogImpressViewController.h; sourceTree = "<group>"; };
-		0452A1D91DE0B23A007C1E4F /* SellerAddDogImpressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAddDogImpressViewController.m; sourceTree = "<group>"; };
 		0452A1DD1DE0B2E3007C1E4F /* SellerDeleDDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDeleDDetailView.h; sourceTree = "<group>"; };
 		0452A1DE1DE0B2E3007C1E4F /* SellerDeleDDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDeleDDetailView.m; sourceTree = "<group>"; };
 		0452A1E01DE0B30A007C1E4F /* AddDogPictures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDogPictures.h; sourceTree = "<group>"; };
 		0452A1E11DE0B30A007C1E4F /* AddDogPictures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDogPictures.m; sourceTree = "<group>"; };
 		0452A1E31DE0B89C007C1E4F /* AddDogColorAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDogColorAlertView.h; sourceTree = "<group>"; };
 		0452A1E41DE0B89C007C1E4F /* AddDogColorAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDogColorAlertView.m; sourceTree = "<group>"; };
+		0452A1E61DE173A4007C1E4F /* SellerCreateDogMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerCreateDogMessageViewController.h; sourceTree = "<group>"; };
+		0452A1E71DE173A5007C1E4F /* SellerCreateDogMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerCreateDogMessageViewController.m; sourceTree = "<group>"; };
+		0452A1E91DE173E0007C1E4F /* SellerAddImpressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAddImpressViewController.h; sourceTree = "<group>"; };
+		0452A1EA1DE173E0007C1E4F /* SellerAddImpressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAddImpressViewController.m; sourceTree = "<group>"; };
+		0452A1EC1DE17E71007C1E4F /* SellerShipTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerShipTemplateView.h; sourceTree = "<group>"; };
+		0452A1ED1DE17E71007C1E4F /* SellerShipTemplateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerShipTemplateView.m; sourceTree = "<group>"; };
+		0452A1F41DE1A730007C1E4F /* SellerSearchDogtypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSearchDogtypeViewController.h; sourceTree = "<group>"; };
+		0452A1F51DE1A730007C1E4F /* SellerSearchDogtypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerSearchDogtypeViewController.m; sourceTree = "<group>"; };
+		0452A1F81DE1A86D007C1E4F /* SellerNoInputTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerNoInputTableView.h; sourceTree = "<group>"; };
+		0452A1F91DE1A86D007C1E4F /* SellerNoInputTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerNoInputTableView.m; sourceTree = "<group>"; };
+		0452A1FB1DE1A88B007C1E4F /* SellerDoInputTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDoInputTableView.h; sourceTree = "<group>"; };
+		0452A1FC1DE1A88B007C1E4F /* SellerDoInputTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDoInputTableView.m; sourceTree = "<group>"; };
+		0452A1FE1DE1A8BB007C1E4F /* SellerDoInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDoInputCell.h; sourceTree = "<group>"; };
+		0452A1FF1DE1A8BB007C1E4F /* SellerDoInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDoInputCell.m; sourceTree = "<group>"; };
+		0452A2001DE1A8BB007C1E4F /* SellerDoInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerDoInputCell.xib; sourceTree = "<group>"; };
+		0452A2061DE1B14B007C1E4F /* SellerNoInputHotBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerNoInputHotBtnView.h; sourceTree = "<group>"; };
+		0452A2071DE1B14B007C1E4F /* SellerNoInputHotBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerNoInputHotBtnView.m; sourceTree = "<group>"; };
+		0452A2091DE1C176007C1E4F /* SellerNoneDogTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerNoneDogTypeView.h; sourceTree = "<group>"; };
+		0452A20A1DE1C176007C1E4F /* SellerNoneDogTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerNoneDogTypeView.m; sourceTree = "<group>"; };
+		0452A20C1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAddShipTemplateViewController.h; sourceTree = "<group>"; };
+		0452A20D1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAddShipTemplateViewController.m; sourceTree = "<group>"; };
+		0452A2111DE1E782007C1E4F /* SellerChoseAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChoseAdressViewController.h; sourceTree = "<group>"; };
+		0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChoseAdressViewController.m; sourceTree = "<group>"; };
 		045D51101DD94F9B001854A8 /* DetailCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountViewController.h; sourceTree = "<group>"; };
 		045D51111DD94F9B001854A8 /* DetailCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountViewController.m; sourceTree = "<group>"; };
 		045D51131DD9539E001854A8 /* MyPageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageHeaderView.h; sourceTree = "<group>"; };
@@ -341,6 +374,9 @@
 		0467ACF11DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0467ACF31DBDEF2200562CC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0467ACF61DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLiveViewController.h; sourceTree = "<group>"; };
+		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
+		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
 		047323EC1DD1B31A006CCC71 /* UserInfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfos.h; sourceTree = "<group>"; };
 		047323ED1DD1B31A006CCC71 /* UserInfos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfos.m; sourceTree = "<group>"; };
 		047323F81DD1DBEE006CCC71 /* MyFocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFocusViewController.h; sourceTree = "<group>"; };
@@ -490,7 +526,6 @@
 		0479B5991DCADC7B00CB288A /* SuggestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestViewController.xib; sourceTree = "<group>"; };
 		0479B59B1DCADC7B00CB288A /* ShopAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopAddressViewController.h; sourceTree = "<group>"; };
 		0479B59C1DCADC7B00CB288A /* ShopAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopAddressViewController.m; sourceTree = "<group>"; };
-		0479B59D1DCADC7B00CB288A /* ShopAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopAddressViewController.xib; sourceTree = "<group>"; };
 		0479B59F1DCADC7B00CB288A /* WatchHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchHistoryViewController.h; sourceTree = "<group>"; };
 		0479B5A01DCADC7B00CB288A /* WatchHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchHistoryViewController.m; sourceTree = "<group>"; };
 		0479B5A11DCADC7B00CB288A /* WatchHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WatchHistoryViewController.xib; sourceTree = "<group>"; };
@@ -841,8 +876,28 @@
 				0452A1DE1DE0B2E3007C1E4F /* SellerDeleDDetailView.m */,
 				0452A1E31DE0B89C007C1E4F /* AddDogColorAlertView.h */,
 				0452A1E41DE0B89C007C1E4F /* AddDogColorAlertView.m */,
+				0452A1EC1DE17E71007C1E4F /* SellerShipTemplateView.h */,
+				0452A1ED1DE17E71007C1E4F /* SellerShipTemplateView.m */,
 			);
 			path = SellerMyGoodsAlert;
+			sourceTree = "<group>";
+		};
+		0452A1F71DE1A843007C1E4F /* SellerAddDogType */ = {
+			isa = PBXGroup;
+			children = (
+				0452A1F81DE1A86D007C1E4F /* SellerNoInputTableView.h */,
+				0452A1F91DE1A86D007C1E4F /* SellerNoInputTableView.m */,
+				0452A2061DE1B14B007C1E4F /* SellerNoInputHotBtnView.h */,
+				0452A2071DE1B14B007C1E4F /* SellerNoInputHotBtnView.m */,
+				0452A1FB1DE1A88B007C1E4F /* SellerDoInputTableView.h */,
+				0452A1FC1DE1A88B007C1E4F /* SellerDoInputTableView.m */,
+				0452A1FE1DE1A8BB007C1E4F /* SellerDoInputCell.h */,
+				0452A1FF1DE1A8BB007C1E4F /* SellerDoInputCell.m */,
+				0452A2001DE1A8BB007C1E4F /* SellerDoInputCell.xib */,
+				0452A2091DE1C176007C1E4F /* SellerNoneDogTypeView.h */,
+				0452A20A1DE1C176007C1E4F /* SellerNoneDogTypeView.m */,
+			);
+			path = SellerAddDogType;
 			sourceTree = "<group>";
 		};
 		045D510F1DD94F9B001854A8 /* DetailCount */ = {
@@ -957,6 +1012,16 @@
 				0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		046F0B0E1DE28B0D00D50D5C /* CreatLive */ = {
+			isa = PBXGroup;
+			children = (
+				046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */,
+				046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */,
+				046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */,
+			);
+			path = CreatLive;
 			sourceTree = "<group>";
 		};
 		047323EF1DD1DB6F006CCC71 /* FansVC */ = {
@@ -1273,6 +1338,7 @@
 		0479B5181DCADC7B00CB288A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				046F0B0E1DE28B0D00D50D5C /* CreatLive */,
 				0479B5221DCADC7B00CB288A /* Talk */,
 				0479B5191DCADC7B00CB288A /* DogShow */,
 				0479B51F1DCADC7B00CB288A /* Service */,
@@ -1672,7 +1738,6 @@
 				045FE3201DCC8C66001B95B1 /* EditNewAddressViewController */,
 				0479B59B1DCADC7B00CB288A /* ShopAddressViewController.h */,
 				0479B59C1DCADC7B00CB288A /* ShopAddressViewController.m */,
-				0479B59D1DCADC7B00CB288A /* ShopAddressViewController.xib */,
 			);
 			path = ShopAddress;
 			sourceTree = "<group>";
@@ -1964,8 +2029,12 @@
 				04CE13891DDC488100EB8777 /* SellerMyGoodsViewController.m */,
 				0452A1CC1DE0336B007C1E4F /* DogDetailViewController.h */,
 				0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */,
-				0452A1D81DE0B23A007C1E4F /* SellerAddDogImpressViewController.h */,
-				0452A1D91DE0B23A007C1E4F /* SellerAddDogImpressViewController.m */,
+				0452A1E61DE173A4007C1E4F /* SellerCreateDogMessageViewController.h */,
+				0452A1E71DE173A5007C1E4F /* SellerCreateDogMessageViewController.m */,
+				0452A1E91DE173E0007C1E4F /* SellerAddImpressViewController.h */,
+				0452A1EA1DE173E0007C1E4F /* SellerAddImpressViewController.m */,
+				0452A1F41DE1A730007C1E4F /* SellerSearchDogtypeViewController.h */,
+				0452A1F51DE1A730007C1E4F /* SellerSearchDogtypeViewController.m */,
 			);
 			path = SellerMyGoods;
 			sourceTree = "<group>";
@@ -1984,6 +2053,10 @@
 			children = (
 				04CE138F1DDC488100EB8777 /* SellerShipTemplateViewController.h */,
 				04CE13901DDC488100EB8777 /* SellerShipTemplateViewController.m */,
+				0452A20C1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.h */,
+				0452A20D1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m */,
+				0452A2111DE1E782007C1E4F /* SellerChoseAdressViewController.h */,
+				0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */,
 			);
 			path = SellerShipTemplate;
 			sourceTree = "<group>";
@@ -2121,6 +2194,7 @@
 		04CE13B41DDC488100EB8777 /* SellerMyGoods */ = {
 			isa = PBXGroup;
 			children = (
+				0452A1F71DE1A843007C1E4F /* SellerAddDogType */,
 				0452A1DB1DE0B2E3007C1E4F /* SellerAddDog */,
 				0452A1DC1DE0B2E3007C1E4F /* SellerMyGoodsAlert */,
 				04CE13B51DDC488100EB8777 /* SellerMyGoodsCell.h */,
@@ -2713,6 +2787,7 @@
 				0479B6041DCADC7B00CB288A /* LoginViewController.xib in Resources */,
 				0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */,
 				0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */,
+				046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */,
 				04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */,
 				04DAC9AA1DD2D1250089236D /* SearchFocusViewController.xib in Resources */,
 				0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */,
@@ -2735,11 +2810,11 @@
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
 				045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */,
+				0452A2021DE1A8BB007C1E4F /* SellerDoInputCell.xib in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
 				0479B6241DCADC7B00CB288A /* SecurityAccountViewController.xib in Resources */,
 				0479B6201DCADC7B00CB288A /* MessagePushViewController.xib in Resources */,
 				0479B61C1DCADC7B00CB288A /* OrderGoodsViewController.xib in Resources */,
-				0479B62A1DCADC7B00CB288A /* ShopAddressViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2798,6 +2873,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0452A1FA1DE1A86D007C1E4F /* SellerNoInputTableView.m in Sources */,
 				0479B5F61DCADC7B00CB288A /* DogImageView.m in Sources */,
 				0479B5D81DCADC7B00CB288A /* LiveViewController.m in Sources */,
 				04D361751DDB343F009F35A0 /* WaitAssessCell.m in Sources */,
@@ -2806,7 +2882,6 @@
 				04CE13D51DDC488100EB8777 /* SellerAdressViewController.m in Sources */,
 				0479B5E21DCADC7B00CB288A /* DogTypesView.m in Sources */,
 				04CE13CE1DDC488100EB8777 /* SellerCenterViewController.m in Sources */,
-				0452A1DA1DE0B23A007C1E4F /* SellerAddDogImpressViewController.m in Sources */,
 				04CE13DA1DDC488100EB8777 /* SellerSoldGoodsViewController.m in Sources */,
 				0479B6331DCADC7B00CB288A /* MessageViewController.m in Sources */,
 				04EA2AEE1DDDDA6C0023D9A8 /* SellerChangeViewController.m in Sources */,
@@ -2901,6 +2976,7 @@
 				04DAC9911DD21A9A0089236D /* TowButtonView.m in Sources */,
 				04DAC9991DD21A9A0089236D /* AddressChooseView.m in Sources */,
 				0479B6031DCADC7B00CB288A /* LoginViewController.m in Sources */,
+				0452A20F1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m in Sources */,
 				04D361761DDB343F009F35A0 /* WaitBackMoneyCell.m in Sources */,
 				04D361741DDB343F009F35A0 /* WaitAllMoneyCell.m in Sources */,
 				049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */,
@@ -2935,6 +3011,7 @@
 				04D3616F1DDB343F009F35A0 /* StateView.m in Sources */,
 				0479B6641DCB4EEE00CB288A /* SellerAndDogCardView.m in Sources */,
 				045D51221DD9946F001854A8 /* ManagePictureaViewController.m in Sources */,
+				046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
 				04D361731DDB343F009F35A0 /* ProtectSuccessCell.m in Sources */,
 				0452A1C51DDEA27E007C1E4F /* SellerChangePriceAlertView.m in Sources */,
@@ -2950,6 +3027,7 @@
 				04CE13E71DDC488100EB8777 /* SellerMyLiveCell.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,
+				0452A1EB1DE173E0007C1E4F /* SellerAddImpressViewController.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
 				04D3615E1DDB343F009F35A0 /* WaitPayingViewController.m in Sources */,
@@ -2972,15 +3050,18 @@
 				0479B5FF1DCADC7B00CB288A /* CodeLoginViewController.m in Sources */,
 				0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */,
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
+				0452A2011DE1A8BB007C1E4F /* SellerDoInputCell.m in Sources */,
 				04DAC9961DD21A9A0089236D /* MyUnLoginView.m in Sources */,
 				0479B5FD1DCADC7B00CB288A /* StartSourceView.m in Sources */,
 				0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */,
 				04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */,
 				04D361561DDB343F009F35A0 /* OnlineCustomerServiceViewController.m in Sources */,
 				049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */,
+				0452A1F61DE1A730007C1E4F /* SellerSearchDogtypeViewController.m in Sources */,
 				045D514D1DD99BEF001854A8 /* IdentityIfonView.m in Sources */,
 				04CE13ED1DDC488100EB8777 /* SellerFunctionButtonView.m in Sources */,
 				04CE13F21DDC6BF400EB8777 /* SellerGoodsBarBtnView.m in Sources */,
+				0452A1EE1DE17E71007C1E4F /* SellerShipTemplateView.m in Sources */,
 				0479B5F31DCADC7B00CB288A /* SellerShowViewController.m in Sources */,
 				04D361651DDB343F009F35A0 /* LogisticsInfoView.m in Sources */,
 				04CE13D01DDC488100EB8777 /* SellerWaitAcceptViewController.m in Sources */,
@@ -2997,6 +3078,7 @@
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				04CE13E61DDC488100EB8777 /* SellerMyGoodsTopView.m in Sources */,
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
+				0452A2131DE1E782007C1E4F /* SellerChoseAdressViewController.m in Sources */,
 				04D361721DDB343F009F35A0 /* ProtectingPowerCell.m in Sources */,
 				04D361661DDB343F009F35A0 /* NicknameView.m in Sources */,
 				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,
@@ -3012,12 +3094,14 @@
 				04EA2AD61DDDB0510023D9A8 /* SellerProtectPLogisticsInfoView.m in Sources */,
 				04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
+				0452A1E81DE173A5007C1E4F /* SellerCreateDogMessageViewController.m in Sources */,
 				0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */,
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
 				04D3617A1DDB343F009F35A0 /* PayMoneyPrompt.m in Sources */,
 				04CE13EE1DDC488100EB8777 /* SellerLogisticsInfoView.m in Sources */,
 				0479B61B1DCADC7B00CB288A /* OrderGoodsViewController.m in Sources */,
+				0452A1FD1DE1A88B007C1E4F /* SellerDoInputTableView.m in Sources */,
 				047323FA1DD1DBEE006CCC71 /* MyFocusViewController.m in Sources */,
 				0479B5E11DCADC7B00CB288A /* DogPictureCollectionViewCell.m in Sources */,
 				04DAC98E1DD21A9A0089236D /* DetailCountViewCell.m in Sources */,
@@ -3025,6 +3109,8 @@
 				04CE13E01DDC488100EB8777 /* SellerWaitSendCell.m in Sources */,
 				047AD60D1DD5CE970025290E /* TopButonView.m in Sources */,
 				04D361581DDB343F009F35A0 /* PayFontMoneyViewController.m in Sources */,
+				0452A20B1DE1C176007C1E4F /* SellerNoneDogTypeView.m in Sources */,
+				0452A2081DE1B14B007C1E4F /* SellerNoInputHotBtnView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

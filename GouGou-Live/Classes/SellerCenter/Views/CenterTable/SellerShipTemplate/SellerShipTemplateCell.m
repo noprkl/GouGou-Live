@@ -11,6 +11,7 @@
 @interface SellerShipTemplateCell ()
 
 /** 间隔view */
+- (IBAction)clickBtnAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (strong,nonatomic) UIView *spaceView;
 
 @property(nonatomic, strong) UILabel *templateName; /**< 模板名字 */
@@ -153,6 +154,9 @@
 }
 #pragma mark
 #pragma mark - 懒加载
+- (IBAction)clickBtnAction:(UIButton *)sender forEvent:(UIEvent *)event {
+}
+
 -  (UIView *)spaceView {
     
     if (!_spaceView) {

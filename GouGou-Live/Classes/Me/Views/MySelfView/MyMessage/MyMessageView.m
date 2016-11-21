@@ -323,7 +323,11 @@
         _liveBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [_liveBtn setTintColor:[UIColor colorWithHexString:@"#333333"]];
         _liveBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [_liveBtn setTitle:@"我要认证商家" forState:(UIControlStateNormal)];
+        NSString *btnTitle = @"商家认证后才能直播";
+        if ([UserInfos sharedUser].ismerchant) {
+            btnTitle = @"我要直播";
+        }
+        [_liveBtn setTitle:btnTitle forState:(UIControlStateNormal)];
         [_liveBtn addTarget:self action:@selector(ClickLiveBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _liveBtn;

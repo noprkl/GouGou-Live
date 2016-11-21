@@ -11,6 +11,8 @@
 #import "SellerShipTemplateCell.h"
 #import "DeletePrommtView.h"
 
+#import "SellerAddShipTemplateViewController.h" // 模板管理
+
 @interface SellerShipTemplateViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
@@ -46,7 +48,9 @@ static NSString *cellid = @"SellerShipTemplateCell";
     
 }
 - (void)addShipTemplate {
-    DLog(@"添加模板");
+    SellerAddShipTemplateViewController *addTemplateVC = [[SellerAddShipTemplateViewController alloc] init];
+    addTemplateVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:addTemplateVC animated:YES];
 }
 #pragma mark
 #pragma mark - 懒加载

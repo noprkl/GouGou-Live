@@ -47,7 +47,7 @@
 }
 - (NSArray *)tableArr {
     if (!_tableArr) {
-        _tableArr = @[@[@"SellerSoldGoodsViewController", @"SellerAcceptedRateViewController"], @[@"SellerShipTemplateViewController", @"ShopAddressViewController"], @[@"SellerMyGoodsViewController", @"SellerMyLiveViewController"]];
+        _tableArr = @[@[@"SellerSoldGoodsViewController", @"SellerAcceptedRateViewController"], @[@"SellerShipTemplateViewController", @"SellerAdressViewController"], @[@"SellerMyGoodsViewController", @"SellerMyLiveViewController"]];
     }
     return _tableArr;
 }

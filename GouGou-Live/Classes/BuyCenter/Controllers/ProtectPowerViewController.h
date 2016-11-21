@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BuyCenterViewController.h"
 
-@interface ProtectPowerViewController : BaseViewController
+@interface ProtectPowerViewController : BuyCenterViewController
 
 @end

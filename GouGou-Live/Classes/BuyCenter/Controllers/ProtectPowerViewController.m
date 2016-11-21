@@ -74,7 +74,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 330;
+    return 345;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,7 +83,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
         ProtectingPowerCell * cell = [tableView dequeueReusableCellWithIdentifier:protectingCell];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 289, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
@@ -101,7 +101,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
         ProtectSuccessCell * cell = [tableView dequeueReusableCellWithIdentifier:protectSuccessCell];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 289, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
@@ -119,20 +119,21 @@ static NSString * protectFailedCell = @"protectFailedCell";
         ProtectFaliedCell * cell = [tableView dequeueReusableCellWithIdentifier:protectFailedCell];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 289, SCREEN_WIDTH, 45) title:@[@"再次申请",@"在线客服"] buttonNum:2];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"再次申请",@"在线客服"] buttonNum:2];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
                 
                 // 跳转至在线客服
                 
-                DLog(@"%@--%@",self,button.titleLabel.text);
+                DLog(@"%@",button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"再次申请"]) {
                 // 跳转至再次申请
                 
-                DLog(@"%@--%@",self,button.titleLabel.text);
+                DLog(@"%@",button.titleLabel.text);
                 
+                [self clickApplyProtectPower];
             }
             
         };
@@ -144,19 +145,6 @@ static NSString * protectFailedCell = @"protectFailedCell";
     }
     return nil;
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

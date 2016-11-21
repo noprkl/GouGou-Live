@@ -7,6 +7,8 @@
 //
 
 #import "PayMoneyPrompt.h"
+#import "PromptView.h"
+#import "PaySuccessViewController.h"
 
 @interface PayMoneyPrompt ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -221,8 +223,42 @@ static NSString *cellid = @"SizeFilterCellID";
     NSString *text = self.dataPlist[indexPath.row + 1];
     self.lastString = text;
     if (_payCellBlock) {
-        //        [self dismiss];
         _payCellBlock(text);
     }
+    if (indexPath.row < 2) {
+        
+        return;
+    } else {
+    
+        // 支付密码提示框
+        PromptView * prompt = [[PromptView alloc] init];
+        prompt.backgroundColor = [UIColor whiteColor];
+       
+        prompt.clickSureBtnBlock = ^() {
+        
+//        // 判断支付状态（成功，失败，余额不足）
+//            
+//            PaySuccessViewController * paySuccessVC = [[PaySuccessViewController alloc] init];
+//            
+//            [[self viewController].navigationController pushViewController:paySuccessVC animated:YES];
+            return @"";
+        };
+        
+        
+        [prompt show];
+        
+        [self dismiss];
+    }
 }
+
+//- (BaseViewController *)viewController {
+//    for (UIView* next = [self superview]; next; next = next.superview) {
+//        UIResponder *nextResponder = [next nextResponder];
+//        if ([nextResponder isKindOfClass:[BaseViewController class]]) {
+//            return (BaseViewController *)nextResponder;
+//        }
+//    }
+//    return nil;
+//}
+
 @end

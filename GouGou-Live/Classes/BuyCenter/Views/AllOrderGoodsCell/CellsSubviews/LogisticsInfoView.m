@@ -78,7 +78,7 @@
     if (!_logisticInfoLabel) {
         _logisticInfoLabel = [[UILabel alloc] init];
         _logisticInfoLabel.text = @"物流信息";
-        _logisticInfoLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+        _logisticInfoLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _logisticInfoLabel.font = [UIFont systemFontOfSize:16];
         
     }
@@ -90,7 +90,7 @@
     if (!_expressNameLabe) {
         _expressNameLabe = [[UILabel alloc] init];
         _expressNameLabe.text = @"狗狗快递";
-        _expressNameLabe.textColor = [UIColor colorWithHexString:@"#000000"];
+        _expressNameLabe.textColor = [UIColor colorWithHexString:@"#666666"];
         _expressNameLabe.font = [UIFont systemFontOfSize:14];
         
     }
@@ -101,7 +101,7 @@
     if (!_numLabel) {
         _numLabel = [[UILabel alloc] init];
         _numLabel.text = @"7281737272627";
-        _numLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+        _numLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _numLabel.font = [UIFont systemFontOfSize:14];
         
     }
@@ -113,11 +113,13 @@
     if (!_copyButton) {
         _copyButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_copyButton setTitle:@"复制" forState:UIControlStateNormal];
-        [_copyButton setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+        [_copyButton setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         [_copyButton setBackgroundColor:[UIColor colorWithHexString:@"#e0e0e0"]];
         
-        _copyButton.layer.cornerRadius = 5;
+        _copyButton.layer.cornerRadius = 10;
         _copyButton.layer.masksToBounds = YES;
+        _copyButton.layer.borderWidth = 1;
+        _copyButton.layer.borderColor = [UIColor colorWithHexString:@"#b4b4b4"].CGColor;
         
         _copyButton.titleLabel.font = [UIFont systemFontOfSize:14];
         
@@ -130,7 +132,20 @@
 }
 
 - (void)clickCopyBtn {
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    
+    NSString *string = self.numLabel.text;
+    
+    [pab setString:string];
+    
+    if (pab == nil) {
+        DLog(@"%@",pab.string);
+        
+    }else
+    {
+        DLog(@"%@",pab.string);
 
+    }
 
 }
 

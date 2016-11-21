@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ClickUploadImageBlock)(UIButton *button);
+
 @interface UpLoadPictureView : UIView
+/** 上传照片回调 */
+@property (strong,nonatomic) ClickUploadImageBlock upLoadImageBlock;
+//@property (strong,nonatomic) UIImageView *imageview;
 
 @end

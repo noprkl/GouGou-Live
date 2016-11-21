@@ -103,7 +103,7 @@
     if (!_buyLabel) {
         _buyLabel = [[UILabel alloc] init];
         _buyLabel.text = @"买家:";
-        _buyLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+        _buyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _buyLabel.font = [UIFont systemFontOfSize:16];
     }
     return _buyLabel;

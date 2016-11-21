@@ -1,40 +1,38 @@
 //
-//  WaitAssessCell.m
+//  WaitConsignessCell.m
 //  GouGou-Live
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "WaitAssessCell.h"
+#import "WaitConsignessCell.h"
 
 #import "WaitPayAllNickView.h"
-#import "DogCardView.h"
+#import "SellerDogCardView.h"
 #import "LogisticsInfoView.h"
 #import "CostView.h"
-#import "FunctionButtonView.h"
 
-@interface WaitAssessCell ()
+
+@interface WaitConsignessCell ()
 /** 昵称View */
 @property (strong,nonatomic) WaitPayAllNickView *nickView;
 /** 横线 */
 @property (strong,nonatomic) UIView *lineview1;
 /** 狗狗卡片 */
-@property (strong,nonatomic) DogCardView *dogCardView;
-/** 横线 */
-@property (strong,nonatomic) UIView *lineview2;
+@property (strong,nonatomic) SellerDogCardView *dogCardView;
 /** 物流信息 */
 @property (strong,nonatomic) LogisticsInfoView *logisticView;
 /** 横线 */
-@property (strong,nonatomic) UIView *lineview3;
+@property (strong,nonatomic) UIView *lineview2;
 /** 花费 */
 @property (strong,nonatomic) CostView *costView;
 /** 横线 */
-@property (strong,nonatomic) UIView *lineview4;
+@property (strong,nonatomic) UIView *lineview3;
 
 @end
 
-@implementation WaitAssessCell
+@implementation WaitConsignessCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -44,12 +42,11 @@
         [self.contentView addSubview:self.nickView];
         [self.contentView addSubview:self.lineview1];
         [self.contentView addSubview:self.dogCardView];
-        [self.contentView addSubview:self.lineview2];
         [self.contentView addSubview:self.logisticView];
-        [self.contentView addSubview:self.lineview3];
+        [self.contentView addSubview:self.lineview2];
         [self.contentView addSubview:self.costView];
-        [self.contentView addSubview:self.lineview4];
-        //        [self.contentView addSubview:self.functionBtn];
+        [self.contentView addSubview:self.lineview3];
+        
     }
     return self;
 }
@@ -82,27 +79,19 @@
         
         make.top.equalTo(weakself.lineview1.bottom);
         make.left.right.equalTo(weakself);
-        make.height.equalTo(100);
+        make.height.equalTo(110);
         
     }];
-    
-    [_lineview2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(weakself.dogCardView.bottom);
-        make.left.right.equalTo(weakself);
-        make.height.equalTo(1);
-        
-    }];
-    
+
     [_logisticView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.lineview2.bottom);
+        make.top.equalTo(weakself.dogCardView.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(88);
         
     }];
     
-    [_lineview3 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_lineview2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.logisticView.bottom);
         make.left.right.equalTo(weakself);
@@ -112,12 +101,12 @@
     
     [_costView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.lineview3.bottom);
+        make.top.equalTo(weakself.lineview2.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(44);
     }];
     
-    [_lineview4 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_lineview3 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.costView.bottom);
         make.left.right.equalTo(weakself);
@@ -134,7 +123,7 @@
     
     if (!_nickView) {
         _nickView = [[WaitPayAllNickView alloc] init];
-        [_nickView setOrderState:@"已完成"];
+        [_nickView setOrderState:@"待收货"];
     }
     return _nickView;
 }
@@ -148,10 +137,10 @@
     return _lineview1;
 }
 
-- (DogCardView *)dogCardView {
+- (SellerDogCardView *)dogCardView {
     
     if (!_dogCardView) {
-        _dogCardView = [[DogCardView alloc] init];
+        _dogCardView = [[SellerDogCardView alloc] init];
     }
     return _dogCardView;
 }
@@ -186,18 +175,12 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
+        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"已付尾款:" backMoney:@"￥950"];
     }
     return _costView;
 }
 
-- (UIView *)lineview4 {
-    
-    if (!_lineview4) {
-        _lineview4 = [[UIView alloc] init];
-        _lineview4.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    }
-    return _lineview4;
-}
+
 
 
 - (void)awakeFromNib {

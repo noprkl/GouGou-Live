@@ -63,6 +63,7 @@
         make.centerY.equalTo(weakself.centerY);
         make.left.equalTo(weakself.left).offset(10);
         make.size.equalTo(CGSizeMake(78, 78));
+
     }];
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.top).offset(15);

@@ -8,16 +8,24 @@
 
 #import "UpLoadPictureView.h"
 
-@interface UpLoadPictureView ()
+@interface UpLoadPictureView () <UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 /** 上传照片 */
 @property (strong,nonatomic) UILabel *upLoadPicture;
 /** 添加图片 */
 @property (strong,nonatomic) UIButton *addImageBtn;
 /** 接收view */
-@property (strong,nonatomic) UIView *acceptView;
+//@property (strong,nonatomic) UIImageView *acceptImageView;
 @end
 
 @implementation UpLoadPictureView
+
+//- (void)setImageview:(UIImageView *)imageview {
+//    
+//    _imageview = imageview;
+//    self.acceptImageView = imageview;
+//
+//}
+
 #pragma mark
 #pragma mark - 约束
 - (instancetype)initWithFrame:(CGRect)frame
@@ -73,47 +81,72 @@
 }
 - (void)clickAddPhoto:(UIButton *)button {
     
-    // 图片数量
-    NSInteger cols = 3;
-    
-    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth) / cols;
-    
-    CGFloat btnH = btnW;
-    
-    CGFloat y = 30;
-    
-    CGFloat x = button.frame.origin.x;
-    
-    CGFloat rightX = kDogImageWidth + btnW;
-    
-    UIView * view = [[UIView alloc] init];
-    view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
-    self.acceptView = view;
-    
-    UIImageView * imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(0, 0, btnW, btnH);
-    imageView.image = [UIImage imageNamed:@"品种02"];
-    
-    [self.acceptView addSubview:imageView];
-    
-    if (x < rightX) {
-        
-        view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
-        button.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
-        
-    } else if (x < 2 * rightX) {
-        
-        view.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
-        button.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
-        
-    } else if (x < 3 * rightX) {
-        
-        view.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
-        
-        button.hidden = YES;
+    if (_upLoadImageBlock) {
+        _upLoadImageBlock(button);
     }
-    
-    [self addSubview:self.acceptView];
+
+
+
+//    UIImagePickerController  * picker = [[UIImagePickerController alloc] init];
+//
+//    [picker dismissViewControllerAnimated:YES completion:^{
+//        
+//    }];
+
+//    // 图片数量
+//    NSInteger cols = 3;
+//    
+//    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth) / cols;
+//    
+//    CGFloat btnH = btnW;
+//    
+//    CGFloat y = 30;
+//    
+//    CGFloat x = button.frame.origin.x;
+//    
+//    CGFloat rightX = kDogImageWidth + btnW;
+//    
+//    UIView * view = [[UIView alloc] init];
+//    view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
+////    self.acceptView = view;
+//    
+//    UIImageView * imageView = [[UIImageView alloc] init];
+//    imageView.frame = CGRectMake(0, 0, btnW, btnH);
+//
+//    [view addSubview:imageView];
+//    
+//    if (x < rightX) {
+//        
+//        view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
+//        button.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
+//        
+//    } else if (x < 2 * rightX) {
+//        
+//        view.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
+//        button.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
+//        
+//    } else if (x < 3 * rightX) {
+//        
+//        view.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
+//        
+//        button.hidden = YES;
+//    }
+//    
+//    [self addSubview:view];
 }
+
+//-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+//    
+//    
+//    [picker dismissViewControllerAnimated:YES completion:^{
+//        
+//    }];
+//    
+//    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+//    
+//    self.acceptImageView.image = image;
+//    
+//    DLog(@"%@",image);
+//}
 
 @end

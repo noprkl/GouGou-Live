@@ -8,6 +8,10 @@
 
 #import "BaseViewController.h"
 
+typedef void(^ChosedAdressBlock)(BOOL flag);
 @interface SellerChoseAdressViewController : BaseViewController
+
+
+@property(nonatomic, strong) ChosedAdressBlock adressBlock; /**< 选择了地址 */
 
 @end

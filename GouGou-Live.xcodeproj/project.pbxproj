@@ -92,7 +92,6 @@
 		046F0BB51DE2AB8B00D50D5C /* CancleOrderAlter.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B8E1DE2AB8B00D50D5C /* CancleOrderAlter.m */; };
 		046F0BB61DE2AB8B00D50D5C /* PayMoneyPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B901DE2AB8B00D50D5C /* PayMoneyPrompt.m */; };
 		046F0BB71DE2AB8B00D50D5C /* SatisfiedAssessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B921DE2AB8B00D50D5C /* SatisfiedAssessView.m */; };
-		046F0BB81DE2AB8B00D50D5C /* PaySuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B951DE2AB8B00D50D5C /* PaySuccessView.m */; };
 		046F0BE21DE2AB9E00D50D5C /* AllOrderGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BBB1DE2AB9E00D50D5C /* AllOrderGoodsViewController.m */; };
 		046F0BE31DE2AB9E00D50D5C /* OrderCompleteAssess.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BBE1DE2AB9E00D50D5C /* OrderCompleteAssess.m */; };
 		046F0BE41DE2AB9E00D50D5C /* OrderCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BC01DE2AB9E00D50D5C /* OrderCompleteViewController.m */; };
@@ -112,6 +111,7 @@
 		046F0BF21DE2AB9E00D50D5C /* WaitConsignmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BDD1DE2AB9E00D50D5C /* WaitConsignmentViewController.m */; };
 		046F0BF31DE2AB9E00D50D5C /* WaitPayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BDF1DE2AB9E00D50D5C /* WaitPayingViewController.m */; };
 		046F0BF41DE2AB9E00D50D5C /* WatiConsigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BE11DE2AB9E00D50D5C /* WatiConsigneeViewController.m */; };
+		046F0BF71DE2C0AF00D50D5C /* PaySuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BF61DE2C0AF00D50D5C /* PaySuccessView.m */; };
 		047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323ED1DD1B31A006CCC71 /* UserInfos.m */; };
 		047323FA1DD1DBEE006CCC71 /* MyFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323F91DD1DBEE006CCC71 /* MyFocusViewController.m */; };
 		047323FD1DD1DBFF006CCC71 /* MyPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047323FC1DD1DBFF006CCC71 /* MyPageViewController.m */; };
@@ -462,8 +462,6 @@
 		046F0B901DE2AB8B00D50D5C /* PayMoneyPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMoneyPrompt.m; sourceTree = "<group>"; };
 		046F0B911DE2AB8B00D50D5C /* SatisfiedAssessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatisfiedAssessView.h; sourceTree = "<group>"; };
 		046F0B921DE2AB8B00D50D5C /* SatisfiedAssessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatisfiedAssessView.m; sourceTree = "<group>"; };
-		046F0B941DE2AB8B00D50D5C /* PaySuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySuccessView.h; sourceTree = "<group>"; };
-		046F0B951DE2AB8B00D50D5C /* PaySuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessView.m; sourceTree = "<group>"; };
 		046F0BBA1DE2AB9E00D50D5C /* AllOrderGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsViewController.h; sourceTree = "<group>"; };
 		046F0BBB1DE2AB9E00D50D5C /* AllOrderGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderGoodsViewController.m; sourceTree = "<group>"; };
 		046F0BBD1DE2AB9E00D50D5C /* OrderCompleteAssess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCompleteAssess.h; sourceTree = "<group>"; };
@@ -502,6 +500,8 @@
 		046F0BDF1DE2AB9E00D50D5C /* WaitPayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitPayingViewController.m; sourceTree = "<group>"; };
 		046F0BE01DE2AB9E00D50D5C /* WatiConsigneeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatiConsigneeViewController.h; sourceTree = "<group>"; };
 		046F0BE11DE2AB9E00D50D5C /* WatiConsigneeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatiConsigneeViewController.m; sourceTree = "<group>"; };
+		046F0BF51DE2C0AF00D50D5C /* PaySuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySuccessView.h; sourceTree = "<group>"; };
+		046F0BF61DE2C0AF00D50D5C /* PaySuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessView.m; sourceTree = "<group>"; };
 		047323EC1DD1B31A006CCC71 /* UserInfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfos.h; sourceTree = "<group>"; };
 		047323ED1DD1B31A006CCC71 /* UserInfos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfos.m; sourceTree = "<group>"; };
 		047323F81DD1DBEE006CCC71 /* MyFocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFocusViewController.h; sourceTree = "<group>"; };
@@ -1196,8 +1196,8 @@
 		046F0B931DE2AB8B00D50D5C /* PayStateView */ = {
 			isa = PBXGroup;
 			children = (
-				046F0B941DE2AB8B00D50D5C /* PaySuccessView.h */,
-				046F0B951DE2AB8B00D50D5C /* PaySuccessView.m */,
+				046F0BF51DE2C0AF00D50D5C /* PaySuccessView.h */,
+				046F0BF61DE2C0AF00D50D5C /* PaySuccessView.m */,
 			);
 			path = PayStateView;
 			sourceTree = "<group>";
@@ -2153,11 +2153,11 @@
 			isa = PBXGroup;
 			children = (
 				04CE136F1DDC488100EB8777 /* SellerOrder */,
+				04CE13FC1DDD62C000EB8777 /* SellerOrderDetails */,
 				04CE136D1DDC488100EB8777 /* SellerCenterViewController.h */,
 				04CE136E1DDC488100EB8777 /* SellerCenterViewController.m */,
 				04CE13F91DDD4D8B00EB8777 /* SellerBaseViewController.h */,
 				04CE13FA1DDD4D8B00EB8777 /* SellerBaseViewController.m */,
-				04CE13FC1DDD62C000EB8777 /* SellerOrderDetails */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3023,7 +3023,6 @@
 				04EA2ACB1DDDAFE80023D9A8 /* SellerOrderDetailBottomView.m in Sources */,
 				04CE13DF1DDC488100EB8777 /* SellerWaitRateCell.m in Sources */,
 				046F0BF31DE2AB9E00D50D5C /* WaitPayingViewController.m in Sources */,
-				046F0BB81DE2AB8B00D50D5C /* PaySuccessView.m in Sources */,
 				04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
@@ -3145,6 +3144,7 @@
 				0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
 				04CE13D21DDC488100EB8777 /* SellerWaitRateViewController.m in Sources */,
+				046F0BF71DE2C0AF00D50D5C /* PaySuccessView.m in Sources */,
 				046F0BAB1DE2AB8B00D50D5C /* ProtectSuccessCell.m in Sources */,
 				04DAC9931DD21A9A0089236D /* MyFocusTableCell.m in Sources */,
 				04CE13F81DDD4A2B00EB8777 /* TalkingToOneViewController.m in Sources */,

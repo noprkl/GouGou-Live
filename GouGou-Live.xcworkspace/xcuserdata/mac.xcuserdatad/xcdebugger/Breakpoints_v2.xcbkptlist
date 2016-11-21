@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GouGou-Live/Classes/SellerCenter/Controllers/SellerOrder/CenterTable/SellerShipTemplate/SellerAddShipTemplateViewController.m"
-            timestampString = "501353704.366479"
+            timestampString = "501404328.827186"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "-shipCost"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GouGou-Live/Classes/SellerCenter/Controllers/SellerOrder/CenterTable/SellerShipTemplate/SellerAddShipTemplateViewController.m"
-            timestampString = "501353704.366479"
+            timestampString = "501404328.827186"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "-freeCost"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

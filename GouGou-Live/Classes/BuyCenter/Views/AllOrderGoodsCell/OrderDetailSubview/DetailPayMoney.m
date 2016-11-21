@@ -99,7 +99,7 @@
     
     [_needBackLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.right.equalTo(weakself.needBackMoney.left);
+        make.right.equalTo(weakself.needBackMoney.left).offset(-10);
         make.centerY.equalTo(weakself.needBackMoney.centerY);
         
     }];

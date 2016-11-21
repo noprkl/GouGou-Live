@@ -23,6 +23,8 @@
 
 @property(nonatomic, strong) ShopAdressModel *adressModel; /**< 收货地址 */
 
+@property(nonatomic, assign) BOOL isAdress; /**< 是否选择了地址 */
+
 @end
 
 static NSString *cellid = @"ChoseShopAdressCell";
@@ -33,12 +35,23 @@ static NSString *cellid = @"ChoseShopAdressCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavBarItem];
+    [self setNavBarItemAction];
     [self initUI];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     //    self.hidesBottomBarWhenPushed = YES;
+    // 注册
+    NSNotification* notification = [NSNotification notificationWithName:@"SellerShopAderss" object:@"test"userInfo:@{@"ISAdress":@(_isAdress)}];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+- (void)setNavBarItemAction {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+}
+- (void)leftBackBtnAction {
+    _isAdress = NO;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)addRightBarButtonitem {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBarItemAction)];
@@ -81,10 +94,11 @@ static NSString *cellid = @"ChoseShopAdressCell";
     
     //    NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:self.dataArr[indexPath.row]];
     
-    // 注册
-    NSNotification* notification = [NSNotification notificationWithName:@"SellerShopAderss" object:@"test"];
-    
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
+   
+//    if (_adressBlock) {
+//        _adressBlock(YES);
+//    }
+    _isAdress = YES;
     [self.navigationController popViewControllerAnimated:YES];
     
 }

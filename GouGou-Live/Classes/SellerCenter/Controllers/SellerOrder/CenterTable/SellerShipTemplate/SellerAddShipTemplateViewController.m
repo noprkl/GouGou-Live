@@ -33,6 +33,7 @@
 @end
 
 static NSString *cellid = @"SellerAddShipTemplate";
+static NSString *templateNameStr = @"templateNameStr";
 
 @implementation SellerAddShipTemplateViewController
 #pragma mark
@@ -45,25 +46,24 @@ static NSString *cellid = @"SellerAddShipTemplate";
 - (void)initUI{
     self.title = @"运费管理";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
-    [self.view addSubview:self.tableView];
+    if (!_isAdress) {
+        [self.view addSubview:self.tableView];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+//
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"SellerShopAderss" object:nil];
 }
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-}
+
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
-//    self.adressModel = adress.userInfo[@"ShopAdress"];
     
-//    self.isAdress = adress.userInfo[@"SellerChoseAdress"];
-    self.isAdress = YES;
-//    [self.tableView reloadData];
-    DLog(@"已传");
+    self.isAdress = adress.userInfo[@"ISAdress"];
+    if (_isAdress) {
+        [self.view addSubview:self.tableView];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark
@@ -72,25 +72,26 @@ static NSString *cellid = @"SellerAddShipTemplate";
     // 保存
 }
 - (void)priceSwitchBtnAction:(UISwitch *)switchBtn {
-    if (!switchBtn.isOn) {
-        [self.dataArr removeAllObjects];
-        
-        [_dataArr addObject:self.templateName.text];
-        [_dataArr addObject:@"发货地址(必填)"];
-        [_dataArr addObject:@"免运费"];
-        [_dataArr addObject:@"默认运费价格"];
-        [_dataArr addObject:@"按实结算"];
-        [self.tableView reloadData];
-    }
+    [self.dataArr removeAllObjects];
     
-    self.shipCost.on = NO;
-    self.realCost.on = NO;
+    [_dataArr addObject:templateNameStr];
+    [_dataArr addObject:@"发货地址(必填)"];
+    [_dataArr addObject:@"免运费"];
+    [_dataArr addObject:@"默认运费价格"];
+    [_dataArr addObject:@"按实结算"];
+    [self.tableView reloadData];
+    
+    if (switchBtn.isOn) {
+        self.shipCost.on = NO;
+        self.realCost.on = NO;
+    }
 }
 - (void)shipCostSwitchBtnAction:(UISwitch *)switchBtn {
     if (switchBtn.isOn) {
         [self.dataArr removeAllObjects];
-        
-        [_dataArr addObject:self.templateName.text];
+       
+        NSString *name = [[NSUserDefaults standardUserDefaults] valueForKey:templateNameStr];
+        [_dataArr addObject:name];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
         [_dataArr addObject:@"默认运费价格"];
@@ -98,10 +99,12 @@ static NSString *cellid = @"SellerAddShipTemplate";
         [_dataArr addObject:@"按实结算"];
         [self.tableView reloadData];
         self.realCost.on = NO;
+        self.freeCost.on = NO;
     }else{
         [self.dataArr removeAllObjects];
-        
-        [_dataArr addObject:self.templateName.text];
+
+        NSString *name = [[NSUserDefaults standardUserDefaults] valueForKey:templateNameStr];
+        [_dataArr addObject:name];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
         [_dataArr addObject:@"默认运费价格"];
@@ -112,15 +115,21 @@ static NSString *cellid = @"SellerAddShipTemplate";
 }
 - (void)realCostSwitchBtnAction:(UISwitch *)switchBtn {
    
-    self.shipCost.on = NO;
     
+    self.shipCost.on = NO;
+    self.freeCost.on = NO;
     [self.dataArr removeAllObjects];
-    [_dataArr addObject:self.templateName.text];
+    NSString *name = [[NSUserDefaults standardUserDefaults] valueForKey:templateNameStr];
+    [_dataArr addObject:name];
     [_dataArr addObject:@"发货地址(必填)"];
     [_dataArr addObject:@"免运费"];
     [_dataArr addObject:@"默认运费价格"];
     [_dataArr addObject:@"按实结算"];
     [self.tableView reloadData];
+}
+- (void)editShipTemplateAction:(UITextField *)textField {
+    templateNameStr = textField.text;
+    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:templateNameStr];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -184,13 +193,14 @@ static NSString *cellid = @"SellerAddShipTemplate";
     
     NSString *cellText = self.dataArr[indexPath.row];
    
-    if ([cellText isEqualToString:@"运费模板一(自定义输入名称)"]) {
+    if (indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"templateName"];
 
         UITextField *templateName = [[UITextField alloc] initWithFrame:CGRectMake(13, (44 - 25) / 2, SCREEN_WIDTH, 25)];
         templateName.text = self.dataArr[indexPath.row];
         templateName.font = [UIFont systemFontOfSize:14];
         templateName.textColor = [UIColor colorWithHexString:@"#333333"];
+        [templateName addTarget:self action:@selector(editShipTemplateAction:) forControlEvents:(UIControlEventEditingChanged)];
         templateName.delegate = self;
         self.templateName = templateName;
         [cell.contentView addSubview:templateName];
@@ -207,19 +217,36 @@ static NSString *cellid = @"SellerAddShipTemplate";
         }
     }
     if ([cellText isEqualToString:@"已有发货地址"]) {
-           }
+        
+    }
     if ([cellText isEqualToString:@"免运费"]) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"freeCost"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        
         cell.textLabel.text = self.dataArr[indexPath.row];
         
         cell.accessoryView = self.freeCost;
+        return cell;
     }
     if ([cellText isEqualToString:@"默认运费价格"]) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"shipCost"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        
         cell.textLabel.text = self.dataArr[indexPath.row];
         
         cell.accessoryView = self.shipCost;
+
+        return cell;
     }
     if ([cellText isEqualToString:@""]) {
        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"shipCostCount"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         
         UITextField *shipCostCount = [[UITextField alloc] initWithFrame:CGRectMake(13, 0, SCREEN_WIDTH, 44)];
         shipCostCount.placeholder = @"输入运费";
@@ -232,10 +259,15 @@ static NSString *cellid = @"SellerAddShipTemplate";
     }
     if ([cellText isEqualToString:@"按实结算"]) {
 
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"realCost"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        
         cell.textLabel.text = self.dataArr[indexPath.row];
         // 按实结算
-        
         cell.accessoryView = self.realCost;
+        return cell;
     }
     return cell;
 }
@@ -277,6 +309,12 @@ static NSString *cellid = @"SellerAddShipTemplate";
     if ([cellText isEqualToString:@"发货地址(必填)"]) {
         SellerChoseAdressViewController *choseAdressVC = [[SellerChoseAdressViewController alloc] init];
         choseAdressVC.hidesBottomBarWhenPushed = YES;
+        choseAdressVC.adressBlock = ^(BOOL flag){
+
+            _isAdress = flag;
+            DLog(@"%c--%c", flag, _isAdress);
+//            [self.tableView reloadData];
+        };
         [self.navigationController pushViewController:choseAdressVC animated:YES];
     }
 }

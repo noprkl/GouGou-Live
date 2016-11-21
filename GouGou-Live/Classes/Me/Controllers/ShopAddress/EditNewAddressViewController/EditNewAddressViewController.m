@@ -17,7 +17,6 @@ static NSString * detailCellid = @"detailCellid";
 @property (weak, nonatomic) IBOutlet UITextField *postalcodeTextfiled;
 @property (weak, nonatomic) IBOutlet UITextField *detailAddressTextfiled;
 
-
 @end
 
 @implementation EditNewAddressViewController
@@ -26,54 +25,59 @@ static NSString * detailCellid = @"detailCellid";
     [super viewDidLoad];
     
     [self initUI];
-    self.userNameTextfiled.delegate = self;
-    self.areaChooseTextfiled.delegate = self;
-    self.postalcodeTextfiled.delegate = self;
-    self.detailAddressTextfiled.delegate = self;
-
     [self setNavBarItem];
 }
 
 - (void)initUI {
 
     self.title = @"新增收货地址";
-
+    self.userNameTextfiled.delegate = self;
+    self.areaChooseTextfiled.delegate = self;
+    self.postalcodeTextfiled.delegate = self;
+    self.detailAddressTextfiled.delegate = self;
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSaveBtnAction)];
     
-    [self.areaChooseTextfiled addTarget:self action:@selector(areaChooseTextfiled:) forControlEvents:UIControlEventAllEvents];
+    [self.areaChooseTextfiled addTarget:self action:@selector(editAreaChooseTextfiled:) forControlEvents:UIControlEventTouchDown];
 }
 // 点击保存按钮
 - (void)clickSaveBtnAction {
     
     [self.navigationController popViewControllerAnimated:YES];
 }
-#pragma mark - textfiled内容编辑
-- (void)userNameTextfiled:(UITextField *)sender {
-    
-    
-}
 
-- (void)areaChooseTextfiled:(UITextField *)sender {
+#pragma mark - textfiled内容编辑
+
+- (void)editAreaChooseTextfiled:(UITextField *)sender {
     
-    [sender resignFirstResponder];
+    // 取消第一响应者
+    [self.userNameTextfiled resignFirstResponder];
+    [self.postalcodeTextfiled resignFirstResponder];
+    [self.detailAddressTextfiled resignFirstResponder];
+    [self.areaChooseTextfiled resignFirstResponder];
     
     // 省市区级联
-    AddressChooseView * choose = [[AddressChooseView alloc] init];
-    
+   __block AddressChooseView * choose = [[AddressChooseView alloc] init];
+    choose.areaBlock = ^(NSString *province,NSString *city,NSString *area){
+        DLog(@"区域选择");
+        
+        choose = nil;
+        [choose dismiss];
+    };
     [choose show];
     
 }
 
-- (void)postalcodeTextfiled:(UITextField *)sender {
-    
-    
-    
-}
-
-- (void)detailAddressTextFiled:(UITextField *)sender {
-    
-    
-}
+//- (void)postalcodeTextfiled:(UITextField *)sender {
+//    
+//    
+//    
+//}
+//
+//- (void)detailAddressTextFiled:(UITextField *)sender {
+//    
+//    
+//}
 #pragma mark - 点击保存按钮
 - (void)clickSaveBtn {
     
@@ -83,20 +87,21 @@ static NSString * detailCellid = @"detailCellid";
 #pragma mark
 #pragma mark - TextFiled代理
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
+    [textField resignFirstResponder];
     return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if (textField == self.userNameTextfiled) {
-        
+        if ([string isChinese]) {
+            return YES;
+        }
+        return NO;
         
     } else if (textField == self.areaChooseTextfiled) {
-    
-
-       
-        
+        [textField resignFirstResponder];
+        return NO;
     } else if (textField == self.postalcodeTextfiled) {
     
         BOOL flag = [NSString validateNumber:textField.text];
@@ -109,13 +114,17 @@ static NSString * detailCellid = @"detailCellid";
     
     } else if (textField == self.detailAddressTextfiled) {
     
-    
+        return YES;
     }
-
-    return YES;
+    return NO;
 }
 
-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == self.areaChooseTextfiled) {
+        return NO;
+    }
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

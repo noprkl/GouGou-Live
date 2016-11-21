@@ -34,7 +34,7 @@
 
 @property(nonatomic, strong) UITextField *noteText; /**< 补充 */
 
-@property(nonatomic, assign) NSInteger count; /**< 字数 */
+@property(nonatomic, strong) UILabel *countLabel; /**< 字数 */
 
 @property(nonatomic, assign) BOOL isHaveDian; /**< 小数点 */
 
@@ -199,9 +199,14 @@ static NSString *cellid = @"SellerCreateDogMessage";
             self.noteText = noteText;
             [cell.contentView addSubview:noteText];
             
-            self.count = 0;
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld/40", self.count];
-            cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 45, 13, 40, 15)];
+            label.font = [UIFont systemFontOfSize:12];
+            label.textColor = [UIColor colorWithHexString:@"#999999"];
+            
+            label.text = @"0/40";
+            self.countLabel = label;
+            [cell.contentView addSubview:label];
+            
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
             break;
@@ -214,8 +219,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
         default:
             break;
     }
-    
-    
     return cell;
 }
 #pragma mark - 选中
@@ -226,6 +229,10 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 1:
         {
+            [self textFieldShouldReturn:self.nameText];
+            [self textFieldShouldReturn:self.priceText];
+            [self textFieldShouldReturn:self.priceText];
+            
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
             ageView.dataPlist = @[@"不限", @"1个月", @"2个月", @"3个月", @"4个月", @"5个月", @"6个月", @"1岁", @"2岁", @"3岁", @"4岁", @"5岁", @"6岁", @"7岁", @"以上"];
             [ageView show];
@@ -240,6 +247,10 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 2:
         {
+            [self textFieldShouldReturn:self.nameText];
+            [self textFieldShouldReturn:self.priceText];
+            [self textFieldShouldReturn:self.priceText];
+            
             DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
             sizeView.dataArr = @[@"体型",@"大型犬", @"中型犬", @"小型犬", @"不限", @"确定"];
             [sizeView show];
@@ -261,6 +272,11 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 4:
         {
+            [self textFieldShouldReturn:self.nameText];
+            [self textFieldShouldReturn:self.priceText];
+            [self textFieldShouldReturn:self.priceText];
+
+            
             AddDogColorAlertView *colorView = [[AddDogColorAlertView alloc] init];
             colorView.colorBlock = ^(NSString *color){
                 DLog(@"%@", color);
@@ -270,6 +286,10 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 7:
         {
+            [self textFieldShouldReturn:self.nameText];
+            [self textFieldShouldReturn:self.priceText];
+            [self textFieldShouldReturn:self.priceText];
+            
             SellerAddImpressViewController *impressVC = [[SellerAddImpressViewController alloc] init];
             
             [self.navigationController pushViewController:impressVC animated:YES];
@@ -324,7 +344,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
     }
 }
 - (void)noteTextEditAction:(UITextField *)textField {
-    self.count = textField.text.length;
+
+    self.countLabel.text = [NSString stringWithFormat:@"%ld/40", textField.text.length];
 }
 #pragma mark
 #pragma mark - UItextField代理
@@ -460,7 +481,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
         rect.origin.y = 0;
         self.tableView.frame= rect;
     }];
-    
     
     return YES;
 }

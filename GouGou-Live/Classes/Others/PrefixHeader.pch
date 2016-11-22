@@ -5,6 +5,8 @@
 //  Created by ma c on 16/10/24.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
@@ -49,5 +51,6 @@
 #define MyLog(s,...)
 #endif
 
+#endif
 
 #endif

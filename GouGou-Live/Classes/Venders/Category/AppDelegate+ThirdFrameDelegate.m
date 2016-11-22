@@ -8,26 +8,27 @@
 
 #import "AppDelegate+ThirdFrameDelegate.h"
 #import <UMSocialCore/UMSocialCore.h>
-//#import <HyphenateLite_CN/EMSDK.h>
+#import "EMSDK.h"
+
 
 @implementation AppDelegate (ThirdFrameDelegate)
 
 // 环信
-//+ (void)setEaseMobSDK {
-//    EMOptions *options = [EMOptions optionsWithAppkey:@"1161161023178138#gougoulive"];
-//    options.apnsCertName = @"zhuaxingLive";
-//    [[EMClient sharedClient] initializeSDKWithOptions:options];
-//    
-//}
-///** 进入后台 */
-//+ (void)setEaseMobEnterBackground:(UIApplication *)application{
-//
-//    [[EMClient sharedClient] applicationDidEnterBackground:application];
-//}
-///** 从后台返回 */
-//+ (void)setEaseMobEnterForeground:(UIApplication *)application{
-//    [[EMClient sharedClient] applicationWillEnterForeground:application];
-//}
++ (void)setEaseMobSDK {
+    EMOptions *options = [EMOptions optionsWithAppkey:@"1161161023178138#gougoulive"];
+    options.apnsCertName = @"zhuaxingLive";
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
+    
+}
+/** 进入后台 */
++ (void)setEaseMobEnterBackground:(UIApplication *)application{
+
+    [[EMClient sharedClient] applicationDidEnterBackground:application];
+}
+/** 从后台返回 */
++ (void)setEaseMobEnterForeground:(UIApplication *)application{
+    [[EMClient sharedClient] applicationWillEnterForeground:application];
+}
 
 
 

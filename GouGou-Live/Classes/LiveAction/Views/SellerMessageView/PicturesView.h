@@ -10,13 +10,12 @@
 
 typedef void(^ClickFactoryBtnBlcok)();
 typedef void(^ClickDogViewBtnBlcok)();
+
 @interface PicturesView : UIView
 
 @property(nonatomic, strong) ClickFactoryBtnBlcok factoryBlock; /**< 工程外景回调 */
 @property(nonatomic, strong) ClickDogViewBtnBlcok dogViewBlock; /**< 狗狗实景回调 */
 
 @property(nonatomic, strong) NSArray *pictures; /**< 图片数组 */
-
-- (instancetype)initWithFrame:(CGRect)frame withpictures:(NSArray *)pictures;
 
 @end

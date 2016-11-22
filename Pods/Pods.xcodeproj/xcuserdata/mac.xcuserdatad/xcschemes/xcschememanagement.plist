@@ -34,20 +34,25 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>UMengUShare.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3237FB723FB607119F3B7AA18F4FAE2E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4394F1F66CBCC2E8AB310B2A0728BEE5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5FC776DC4800C965BE2B84CAD22AA1EF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>78023F1C83BEE2F912DF2401D37D9D70</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +67,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC898B45EF4258863C8FDFDD397E48C4</key>
+		<key>C183D6D20E83B8525DCE035B6FE43E0A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F9F06A717D2CF9CF5696E5860C4E7A34</key>
 		<dict>
 			<key>primary</key>
 			<true/>

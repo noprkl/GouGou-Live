@@ -33,7 +33,7 @@
 
 @property(nonatomic, strong) NSMutableArray *selectedData; /**< 选中的数据 */
 
-@property(nonatomic, strong) NSMutableArray *selectedBtns; /**< 选中的按钮 */
+//@property(nonatomic, strong) NSMutableArray *selectedBtns; /**< 选中的按钮 */
 
 @property(nonatomic, strong) UIButton *allBtn; /**< 全选按钮 */
 
@@ -86,12 +86,12 @@ static NSString *cellid = @"SellerMyGoodsCell";
     }
     return _selectedData;
 }
-- (NSMutableArray *)selectedBtns {
-    if (!_selectedBtns) {
-        _selectedBtns = [NSMutableArray array];
-    }
-    return _selectedBtns;
-}
+//- (NSMutableArray *)selectedBtns {
+//    if (!_selectedBtns) {
+//        _selectedBtns = [NSMutableArray array];
+//    }
+//    return _selectedBtns;
+//}
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -257,7 +257,6 @@ static NSString *cellid = @"SellerMyGoodsCell";
             [weakSelf.selectedData addObject:index];
             btn.selected = YES;
         }
-        [self.selectedBtns addObject:btn];
         DLog(@"%@",weakSelf.selectedData);
     };
     

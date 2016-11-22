@@ -8,6 +8,7 @@
 
 #import "ServiceViewController.h"
 #import "TalkingView.h"
+#import <HyphenateLite_CN/EMSDK.h>
 
 @interface ServiceViewController ()<UITextFieldDelegate>
 
@@ -16,6 +17,18 @@
 @end
 
 @implementation ServiceViewController
+- (void)talkToService {
+    [[EMClient sharedClient] loginWithUsername:@"8001"
+                                      password:@"111111"
+                                    completion:^(NSString *aUsername, EMError *aError) {
+                                        if (!aError) {
+                                            DLog(@"登陆成功");
+                                        } else {
+                                            DLog(@"登陆失败");
+                                        }
+                                    }];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,6 +71,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+    // 跟客服聊天
+    [self talkToService];
+    
 }
 
 #pragma mark
@@ -74,29 +90,7 @@
     }
     return _talkView;
 }
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//    [textField resignFirstResponder];
-//    
-//    [UIView animateWithDuration:0.3 animations:^{
-//        [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-//            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
-//            make.left.equalTo(self.view);
-//            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
-//        }];
-//    }];
-//    
-//    return YES;
-//}
-//- (void)touchTextField:(UITextField *)textField {
-//    [textField becomeFirstResponder];
-//    [UIView animateWithDuration:0.3 animations:^{
-//        [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-//            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290- 264);
-//            make.left.equalTo(self.view);
-//            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
-//        }];
-//    }];
-//}
+
 - (void)keyboardWasShown:(NSNotification*)aNotification
 
 {

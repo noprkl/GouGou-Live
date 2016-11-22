@@ -44,6 +44,10 @@
     
 
 }
+- (void)setBtnTitle:(NSString *)btnTitle {
+    _btnTitle = btnTitle;
+    [self.deleteBtn setTitleColor:btnTitle forState:(UIControlStateNormal)];
+}
 - (UIButton *)allSelectBtn {
     if (!_allSelectBtn) {
         _allSelectBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];

@@ -21,5 +21,4 @@ typedef void(^ClickManageBtnBlcok)();
 
 @property(nonatomic, strong) NSArray *pictures; /**< 图片数组 */
 
-- (instancetype)initWithFrame:(CGRect)frame withpictures:(NSArray *)pictures;
 @end

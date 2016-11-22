@@ -88,10 +88,10 @@
         
         [self.picturesView makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.playbackView.bottom).offset(10);
-            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 200));
+            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 230));
             make.left.equalTo(self.view.left);
         }];
-        pictureHeight = 10 + 200;
+        pictureHeight = 10 + 230;
         DLog(@"%@", self.picturesView);
     }
     
@@ -156,7 +156,7 @@
 }
 - (PicturesView *)picturesView {
     if (!_picturesView) {
-        _picturesView = [[PicturesView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+        _picturesView = [[PicturesView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 230)];
         _picturesView.pictures = self.picturesArr;
         _picturesView.backgroundColor = [UIColor whiteColor];
     }

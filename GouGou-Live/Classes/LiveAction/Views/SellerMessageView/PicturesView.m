@@ -15,21 +15,10 @@
 @property(nonatomic, strong) ShareBtn *factorySceneBtn; /**< 厂房外景 */
 
 @property(nonatomic, strong) ShareBtn *DogPictureBtn; /**< 狗狗实景 */
-
 @end
-@implementation PicturesView
-- (instancetype)initWithFrame:(CGRect)frame withpictures:(NSArray *)pictures {
-    if (self = [super init]) {
-        
-        [self addSubview:self.AlumLabel];
-       
-        
-//        [self setBtn:self.factorySceneBtn title:@"厂房外景" normalImage:[UIImage imageNamed:pictures[0]]];
-//        [self setBtn:self.DogPictureBtn title:@"狗狗实景" normalImage:[UIImage imageNamed:pictures[1]]];
 
-    }
-    return self;
-}
+@implementation PicturesView
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -43,8 +32,6 @@
 - (void)setPictures:(NSArray *)pictures {
     _pictures = pictures;
     // 设置图片的信息 相册名字和相册图片
-    
-    
 }
 - (void)layoutSubviews {
     

@@ -21,17 +21,7 @@
 
 @end
 @implementation MyPagePictureView
-- (instancetype)initWithFrame:(CGRect)frame withpictures:(NSArray *)pictures {
-    if (self = [super init]) {
-        
-        [self addSubview:self.AlumLabel];
-        [self addSubview:self.manageBtn];
-    
-        [self setBtn:self.factorySceneBtn title:@"厂房外景" normalImage:[UIImage imageNamed:pictures[0]]];
-        [self setBtn:self.DogPictureBtn title:@"狗狗实景" normalImage:[UIImage imageNamed:pictures[1]]];
-    }
-    return self;
-}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

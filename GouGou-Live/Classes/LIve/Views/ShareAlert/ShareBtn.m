@@ -53,6 +53,5 @@
     CGFloat labelW = self.bounds.size.width;
     CGFloat labelH = imageW - imageW * kImageRatio;
     self.titleLabel.frame = CGRectMake(labelX, labelY, labelW, labelH);
-    
 }
 @end

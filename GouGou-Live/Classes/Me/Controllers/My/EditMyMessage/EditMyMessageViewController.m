@@ -45,7 +45,7 @@ static NSString *cellid = @"cellid";
 
 - (void)initUI {
     self.title = @"个人资料";
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     
     self.edgesForExtendedLayout = 0;
     
@@ -54,6 +54,7 @@ static NSString *cellid = @"cellid";
     [self makeConstraint];
 }
 - (void)makeConstraint {
+
     [self.topTableView makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(self.view);
         make.width.equalTo(SCREEN_WIDTH);

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "BaseTabBarController.h"
+#import "AppDelegate+ThirdFrameDelegate.h" //
 
 @interface AppDelegate ()
 
@@ -29,8 +30,25 @@
     
     [self.window makeKeyAndVisible];
     
+    // 设置友盟SDk
+    [AppDelegate setUMengSDK];
     
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+   return [AppDelegate setUMengBackResult:url];
+}
+// APP进入后台
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [AppDelegate setEaseMobEnterBackground:application];
+}
+
+// APP将要从后台返回
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [AppDelegate setEaseMobEnterForeground:application];
+}
 @end

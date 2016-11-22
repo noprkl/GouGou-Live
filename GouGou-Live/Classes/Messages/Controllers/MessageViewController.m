@@ -10,8 +10,8 @@
 #import "MessageCell.h"
 #import "NotificationMessageCell.h"
 #import "TalkingToOneViewController.h" 
-#import <HyphenateLite_CN/EMSDK.h>
-#import "EaseMessageViewController.h"
+//#import <HyphenateLite_CN/EMSDK.h>
+//#import "EaseMessageViewController.h"
 
 @interface MessageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -134,20 +134,20 @@ static NSString *cellid2 = @"NotificationMessageCell";
     }
     talkVc.hidesBottomBarWhenPushed = YES;
    
-    [[EMClient sharedClient] loginWithUsername:talkVc.title
-                                      password:@"8001"
-                                    completion:^(NSString *aUsername, EMError *aError) {
-                                        if (!aError) {
-                                            NSLog(@"登陆成功");
-                                        } else {
-                                            NSLog(@"登陆失败");
-                                        }
-                                    }];
+//    [[EMClient sharedClient] loginWithUsername:talkVc.title
+//                                      password:@"8001"
+//                                    completion:^(NSString *aUsername, EMError *aError) {
+//                                        if (!aError) {
+//                                            NSLog(@"登陆成功");
+//                                        } else {
+//                                            NSLog(@"登陆失败");
+//                                        }
+//                                    }];
+//    
+//    EaseMessageViewController *chatController = [[EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
     
-    EaseMessageViewController *chatController = [[EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
     
-    
-    [self.navigationController pushViewController:chatController animated:YES];
+    [self.navigationController pushViewController:talkVc animated:YES];
 }
 
 @end

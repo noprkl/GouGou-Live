@@ -8,7 +8,7 @@
 
 #import "ServiceViewController.h"
 #import "TalkingView.h"
-#import <HyphenateLite_CN/EMSDK.h>
+//#import <HyphenateLite_CN/EMSDK.h>
 
 @interface ServiceViewController ()<UITextFieldDelegate>
 
@@ -18,15 +18,15 @@
 
 @implementation ServiceViewController
 - (void)talkToService {
-    [[EMClient sharedClient] loginWithUsername:@"8001"
-                                      password:@"111111"
-                                    completion:^(NSString *aUsername, EMError *aError) {
-                                        if (!aError) {
-                                            DLog(@"登陆成功");
-                                        } else {
-                                            DLog(@"登陆失败");
-                                        }
-                                    }];
+//    [[EMClient sharedClient] loginWithUsername:@"8001"
+//                                      password:@"111111"
+//                                    completion:^(NSString *aUsername, EMError *aError) {
+//                                        if (!aError) {
+//                                            DLog(@"登陆成功");
+//                                        } else {
+//                                            DLog(@"登陆失败");
+//                                        }
+//                                    }];
 }
 
 

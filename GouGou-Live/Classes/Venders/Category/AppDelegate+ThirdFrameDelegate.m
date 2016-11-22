@@ -8,26 +8,27 @@
 
 #import "AppDelegate+ThirdFrameDelegate.h"
 #import <UMSocialCore/UMSocialCore.h>
-#import <HyphenateLite_CN/EMSDK.h>
+//#import <HyphenateLite_CN/EMSDK.h>
 
 @implementation AppDelegate (ThirdFrameDelegate)
 
 // 环信
-+ (void)setEaseMobSDK {
-    EMOptions *options = [EMOptions optionsWithAppkey:@"1161161023178138#gougoulive"];
-    options.apnsCertName = @"zhuaxingLive";
-    [[EMClient sharedClient] initializeSDKWithOptions:options];
-    
-}
-/** 进入后台 */
-+ (void)setEaseMobEnterBackground:(UIApplication *)application{
+//+ (void)setEaseMobSDK {
+//    EMOptions *options = [EMOptions optionsWithAppkey:@"1161161023178138#gougoulive"];
+//    options.apnsCertName = @"zhuaxingLive";
+//    [[EMClient sharedClient] initializeSDKWithOptions:options];
+//    
+//}
+///** 进入后台 */
+//+ (void)setEaseMobEnterBackground:(UIApplication *)application{
+//
+//    [[EMClient sharedClient] applicationDidEnterBackground:application];
+//}
+///** 从后台返回 */
+//+ (void)setEaseMobEnterForeground:(UIApplication *)application{
+//    [[EMClient sharedClient] applicationWillEnterForeground:application];
+//}
 
-    [[EMClient sharedClient] applicationDidEnterBackground:application];
-}
-/** 从后台返回 */
-+ (void)setEaseMobEnterForeground:(UIApplication *)application{
-    [[EMClient sharedClient] applicationWillEnterForeground:application];
-}
 
 
 /** 友盟 */
@@ -48,7 +49,7 @@
     //NSLog(@"UMeng social version: %@", [UMSocialGlobal umSocialSDKVersion]);
     
     //设置微信的appKey和appSecret
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxbef5a0656069e8e2" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:@"http://mobile.umeng.com/social"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxbef5a0656069e8e2" appSecret:@"ac07f6f1f055271566e664b5e8927147" redirectURL:@"http://mobile.umeng.com/social"];
     
     
     //设置分享到QQ互联的appKey和appSecret
@@ -67,7 +68,5 @@
     }
     return result;
 }
-
-
 
 @end

@@ -19,9 +19,6 @@ target 'GouGou-Live' do
     	  pod 'UMengUShare/Social/WeChat'
     	 # 集成QQ
           pod 'UMengUShare/Social/QQ'
-	
-	#环信Lite版本
-	pod 'HyphenateLite_CN'
 
 	
   # Pods for GouGou-Live

@@ -7,8 +7,9 @@
 //  
 
 #import "TalkingToOneViewController.h"
+#import <HyphenateLite_CN/EMSDK.h>
 
-@interface TalkingToOneViewController ()
+@interface TalkingToOneViewController ()<EMClientDelegate>
 
 @end
 
@@ -20,22 +21,35 @@
     [self initUI];
 }
 - (void)initUI {
-    self.title = @"联系买家";
+//    self.title = @"联系买家";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+    
+    [self EaseMobLogin];
+    
 }
+- (void)EaseMobLogin {
+    // 环信登录 验证自动登录
+    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
+    if (!isAutoLogin) {
+        EMError *error = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
+        if (!error) {
+            NSLog(@"登录成功");
+        }
+    }
+    [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+}
+- (void)EaseMobRegiste {
+    // 环信注册
+    EMError *error = [[EMClient sharedClient] registerWithUsername:@"8001" password:@"111111"];
+    if (error==nil) {
+        NSLog(@"注册成功");
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

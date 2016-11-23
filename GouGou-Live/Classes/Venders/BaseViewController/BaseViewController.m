@@ -57,53 +57,97 @@
     }];
 }
 
-/** get图片请求 */
-- (void)getImageRequestWithPath:(NSString *)path
-                         params:(NSDictionary *)params
-                        success:(HttpRequestSuccessBlock)Success
-                          error:(HttpRequestErrorBlock)Error {
-    [HttpImageTool getRequestWithPath:path
-                          params:params
-                         success:^(id successJson) {
-                             Success(successJson);
-                         } error:^(NSError *error) {
-                             Error(error);
-                         }];
-}
-
-#pragma mark - 图片
-/** post图片请求 */
-- (void)postImageRequestWithPath:(NSString *)path
-                          params:(NSDictionary *)params
-                         success:(HttpRequestSuccessBlock)Success
-                           error:(HttpRequestErrorBlock)Error {
-    [HttpImageTool postRequestWithPath:path
-                           params:params
-                          success:^(id successJson) {
-                              Success(successJson);
-                          }
-                            error:^(NSError *error) {
-                                Error(error);
-                            }];
-
-}
-
 - (void)showAlert:(NSString *)string{
     [self.view makeToast:string duration:2 position:@"center"];
 }
 
 #pragma mark
-#pragma mark - 第三方登录
-- (void)QQLogin {}
-- (void)WXLogin {}
-- (void)SinaLogin {}
+#pragma mark - 第三方分享
+/** QQ分享 */
+- (void)QQShare {
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    //设置文本
+    messageObject.text = @"狗狗直播，狗狗直播，狗狗直播";
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_QQ messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            DLog(@"************Share fail with error %@*********",error);
+        }else{
+            DLog(@"response data is %@",data);
+        }
+    }];
+}
+/** 新浪分享 */
+- (void)SinaShare {
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    //设置文本
+    messageObject.text = @"狗狗直播，狗狗直播，狗狗直播";
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Sina messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            DLog(@"************Share fail with error %@*********",error);
+        }else{
+            DLog(@"response data is %@",data);
+        }
+    }];
+}
+/** 微信分享 */
+- (void)WChatShare {
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    //设置文本
+    messageObject.text = @"狗狗直播，狗狗直播，狗狗直播";
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatSession messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            DLog(@"************Share fail with error %@*********",error);
+        }else{
+            DLog(@"response data is %@",data);
+        }
+    }];
+}
+/** 朋友圈分享 */
+- (void)MomentShare {
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    //设置文本
+    messageObject.text = @"狗狗直播，狗狗直播，狗狗直播";
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatTimeLine messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            DLog(@"************Share fail with error %@*********",error);
+        }else{
+            DLog(@"response data is %@",data);
+        }
+    }];
+}
+/** QQ空间分享 */
+- (void)TencentShare {
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    //设置文本
+    messageObject.text = @"狗狗直播，狗狗直播，狗狗直播";
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Qzone messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            DLog(@"************Share fail with error %@*********",error);
+        }else{
+            DLog(@"response data is %@",data);
+        }
+    }];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-
 }
-
 
 - (void)setNavBarItem {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];

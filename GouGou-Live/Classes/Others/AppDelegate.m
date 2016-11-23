@@ -32,6 +32,9 @@
     
     // 设置友盟SDk
     [AppDelegate setUMengSDK];
+
+    // 设置环信
+    [AppDelegate setEaseMobSDK:application launchOptions:launchOptions];
     
     return YES;
 }

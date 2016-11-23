@@ -9,26 +9,15 @@
 #import "ServiceViewController.h"
 #import "TalkingView.h"
 //#import <HyphenateLite_CN/EMSDK.h>
+#import <TZImagePickerController.h>
 
-@interface ServiceViewController ()<UITextFieldDelegate>
+@interface ServiceViewController ()<UITextFieldDelegate, TZImagePickerControllerDelegate>
 
 @property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
 
 @end
 
 @implementation ServiceViewController
-- (void)talkToService {
-//    [[EMClient sharedClient] loginWithUsername:@"8001"
-//                                      password:@"111111"
-//                                    completion:^(NSString *aUsername, EMError *aError) {
-//                                        if (!aError) {
-//                                            DLog(@"登陆成功");
-//                                        } else {
-//                                            DLog(@"登陆失败");
-//                                        }
-//                                    }];
-}
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,7 +26,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
     
     [self.view addSubview:self.talkView];
     [self.talkView makeConstraints:^(MASConstraintMaker *make) {
@@ -71,9 +60,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    // 跟客服聊天
-    [self talkToService];
-    
+    // 跟客服聊天    
 }
 
 #pragma mark
@@ -83,16 +70,36 @@
         _talkView = [[TalkingView alloc] init];
         _talkView.backgroundColor = [UIColor whiteColor];
         
-        self.textField = _talkView.messageTextField;
         __weak typeof(self) weakSelf = self;
-        
-        
+        _talkView.cameraBlock = ^(){
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    UIImage *image = [photos lastObject];
+                    [weakSelf sendImageMessage:image];
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
+        };
+        _talkView.sendBlock = ^(NSString *message){
+            [weakSelf sendTextMessage:message];
+        };
+        _talkView.emojiBlock = ^(){
+            
+        };
+
     }
     return _talkView;
 }
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
-
 {
     //键盘高度
     

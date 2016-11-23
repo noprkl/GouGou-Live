@@ -14,11 +14,27 @@
 @implementation AppDelegate (ThirdFrameDelegate)
 
 // 环信
-+ (void)setEaseMobSDK {
++ (void)setEaseMobSDK:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions {
     EMOptions *options = [EMOptions optionsWithAppkey:@"1161161023178138#gougoulive"];
     options.apnsCertName = @"zhuaxingLive";
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     
+    // 环信登录
+    [[EMClient sharedClient] loginWithUsername:@"8001"
+                                      password:@"111111"
+                                    completion:^(NSString *aUsername, EMError *aError) {
+                                        if (!aError) {
+                                            NSLog(@"登陆成功");
+                                        } else {
+                                            NSLog(@"登陆失败");
+                                        }
+                                    }];
+    // 环信UI调用
+    [[EaseSDKHelper shareHelper] hyphenateApplication:application
+                        didFinishLaunchingWithOptions:launchOptions
+                                               appkey:@"1161161023178138#gougoulive"
+                                         apnsCertName:@"zhuaxingLive"
+                                          otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
 }
 /** 进入后台 */
 + (void)setEaseMobEnterBackground:(UIApplication *)application{
@@ -37,7 +53,7 @@
     /**
      WXAPPID wxbef5a0656069e8e2
      QQ    APP ID 1105774632
-     APP KEY osQW5HPgOna7eHKy
+     
      新浪
      */
     //打开调试日志

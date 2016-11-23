@@ -22,11 +22,9 @@
 - (void)setIsFocus:(BOOL)isFocus {
     _isFocus = isFocus;
     self.focusLabel.selected = !isFocus;
+    self.focusLabel.highlighted = !isFocus;
 }
-- (void)setFocusHide:(BOOL)focusHide {
-    _focusHide = focusHide;
-    self.focusLabel.hidden = focusHide;
-}
+
 - (void)setCountHide:(BOOL)countHide {
     _countHide = countHide;
     self.messageCountLabel.hidden = countHide;

@@ -10,8 +10,6 @@
 
 @interface MessageCell : UITableViewCell
 
-@property(nonatomic, assign) BOOL focusHide; /**< 关注隐藏 */
-
 @property(nonatomic, assign) BOOL countHide; /**< 信息条数隐藏 */
 
 @property(nonatomic, assign) BOOL isFocus; /**< 关注与否 */

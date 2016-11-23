@@ -38,6 +38,9 @@
 // 个人信息
 #import "UserInfos.h"
 
+#import <UMSocialCore/UMSocialCore.h>
+#import "EaseUI.h"
+
 // 展示狗狗图片的边距
 #define kDogImageWidth 10
 

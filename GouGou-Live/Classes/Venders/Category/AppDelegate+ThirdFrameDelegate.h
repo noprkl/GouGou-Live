@@ -11,8 +11,7 @@
 @interface AppDelegate (ThirdFrameDelegate)
 
 /** 环信SDk */
-+ (void)setEaseMobSDK;
-/** 进入后台 */
++ (void)setEaseMobSDK:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions;/** 进入后台 */
 + (void)setEaseMobEnterBackground:(UIApplication *)application;
 /** 从后台返回 */
 + (void)setEaseMobEnterForeground:(UIApplication *)application;

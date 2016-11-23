@@ -120,7 +120,7 @@
     _inputTextView = [[EaseTextView alloc] initWithFrame:CGRectMake(self.horizontalPadding, self.verticalPadding, self.frame.size.width - self.verticalPadding * 2, self.frame.size.height - self.verticalPadding * 2)];
     _inputTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     _inputTextView.scrollEnabled = YES;
-    _inputTextView.returnKeyType = UIReturnKeySend;
+    _inputTextView.returnKeyType = UIReturnKeyDefault;
     _inputTextView.enablesReturnKeyAutomatically = YES; // UITextView内部判断send按钮是否可以用
     _inputTextView.placeHolder = NSEaseLocalizedString(@"message.toolBar.inputPlaceHolder", @"input a new message");
     _inputTextView.delegate = self;

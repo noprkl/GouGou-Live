@@ -11,15 +11,16 @@
 #import "NotificationMessageCell.h"
 #import "TalkingToOneViewController.h" 
 #import "EMSDK.h"
-#import "EaseMessageViewController.h"
+#import "SingleChatViewController.h" // 聊天列表
+#import "MessageListViewController.h" // 会话列表
+
+#import "EaseConversationListViewController.h" // 会话列表
 
 @interface MessageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
-
-@property(nonatomic, strong) MessageCell *headerView; /**< header */
 
 @end
 
@@ -44,14 +45,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
     }
     return _dataArr;
 }
-- (MessageCell *)headerView {
-    if (!_headerView) {
-        _headerView = [[MessageCell alloc] init];
-        _headerView.focusHide = YES;
 
-    }
-    return _headerView;
-}
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 44) style:(UITableViewStylePlain)];
@@ -60,6 +54,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
         
         [_tableView registerNib:[UINib nibWithNibName:@"MessageCell" bundle:nil] forCellReuseIdentifier:cellid];
         [_tableView registerNib:[UINib nibWithNibName:@"NotificationMessageCell" bundle:nil] forCellReuseIdentifier:cellid2];
@@ -110,13 +105,16 @@ static NSString *cellid2 = @"NotificationMessageCell";
     if (section == 1) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 43)];
         view.backgroundColor = [UIColor whiteColor];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH, 43)];
+       
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH, 43)];
         label.backgroundColor = [UIColor whiteColor];
         label.text = @"最近联系";
         label.font = [UIFont systemFontOfSize:16];
         [view addSubview:label];
+       
         UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
-        label.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+
+        label2.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
         [view addSubview:label2];
         
         return view;
@@ -134,20 +132,33 @@ static NSString *cellid2 = @"NotificationMessageCell";
     }
     talkVc.hidesBottomBarWhenPushed = YES;
    
-    [[EMClient sharedClient] loginWithUsername:talkVc.title
-                                      password:@"8001"
-                                    completion:^(NSString *aUsername, EMError *aError) {
-                                        if (!aError) {
-                                            NSLog(@"登陆成功");
-                                        } else {
-                                            NSLog(@"登陆失败");
-                                        }
-                                    }];
+//    [[EMClient sharedClient] loginWithUsername:talkVc.title
+//                                      password:@"8001"
+//                                    completion:^(NSString *aUsername, EMError *aError) {
+//                                        if (!aError) {
+//                                            NSLog(@"登陆成功");
+//                                        } else {
+//                                            NSLog(@"登陆失败");
+//                                        }
+//                                    }];
 
-    EaseMessageViewController *chatController = [[EaseMessageViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
-    
-    
-    [self.navigationController pushViewController:chatController animated:YES];
+    if (indexPath.section == 0) {
+        EaseConversationListViewController *messageListVC = [[EaseConversationListViewController alloc] init];
+        messageListVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:messageListVC animated:YES];
+    }
+    if (indexPath.section == 1) {
+        SingleChatViewController *chatController = [[SingleChatViewController alloc] initWithConversationChatter:@"8001" conversationType:EMConversationTypeChat];
+        
+//        chatController.title = talkVc.title;
+//        chatController.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:chatController animated:YES];
+        
+        MessageListViewController *messageListVC = [[MessageListViewController alloc] init];
+            [self.navigationController pushViewController:messageListVC animated:YES];
+
+        
+    }
 }
 
 @end

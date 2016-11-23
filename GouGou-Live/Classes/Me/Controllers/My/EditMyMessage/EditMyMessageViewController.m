@@ -53,6 +53,7 @@ static NSString *cellid = @"cellid";
     [self.view addSubview:self.bottomTableView];
     [self makeConstraint];
 }
+
 - (void)makeConstraint {
 
     [self.topTableView makeConstraints:^(MASConstraintMaker *make) {

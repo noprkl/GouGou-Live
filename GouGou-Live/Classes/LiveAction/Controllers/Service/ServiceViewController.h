@@ -6,9 +6,9 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseNavigationController.h"
+#import "EaseMessageViewController.h"
 
-@interface ServiceViewController : BaseNavigationController
+@interface ServiceViewController : EaseMessageViewController
 
 @property(nonatomic, strong) UITextField *textField; /**< 输入框 */
 @end

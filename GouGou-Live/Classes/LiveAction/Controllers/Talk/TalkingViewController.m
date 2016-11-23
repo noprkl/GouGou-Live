@@ -81,7 +81,6 @@
         _talkView.backgroundColor = [UIColor whiteColor];
         __weak typeof(self) weakSelf = self;
         
-        self.textField = _talkView.messageTextField;
     }
     return _talkView;
 }

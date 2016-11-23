@@ -24,6 +24,7 @@
 #import "TalkingViewController.h"
 #import "ServiceViewController.h"
 
+
 @interface LivingViewController ()<UIScrollViewDelegate>
 
 /** 返回按钮 */
@@ -113,7 +114,6 @@
 #pragma mark
 #pragma mark - UI
 - (void)initUI {
-    
     
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
 
@@ -217,20 +217,14 @@
     
     self.lastVC = childVC;
 
-
     // 判断当前vc是否加载过
     if ([childVC isViewLoaded]) return;
-    
     
     // 给没加载过的控制器设置frame
     childVC.view.frame = CGRectMake(offset, 0, width, height - 290);
     
-    
-    
     // 添加控制器视图到contentScrollView上
     [scrollView addSubview:childVC.view];
-    
-    
     
 }
 // 减速结束时调用 加载子控制器view的方法
@@ -329,36 +323,59 @@
     return attribute;
 }
 - (void)clickShareBtnAction {
-    ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 150, self.view.bounds.size.width, 150) alertModels:self.shareAlertBtns tapView:^(NSInteger btnTag) {
-
+    
+    __weak typeof(self) weakSelf = self;
+    
+    __block ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 150, self.view.bounds.size.width, 150) alertModels:self.shareAlertBtns tapView:^(NSInteger btnTag) {
+        
         NSInteger index = btnTag - 20;
         switch (index) {
             case 0:
-                DLog(@"朋友圈");
-                
+            {
+                // 朋友圈
+                [weakSelf MomentShare];
+                shareAlert = nil;
+                [shareAlert dismiss];
+            }
                 break;
             case 1:
-                DLog(@"微信");
-                
+            {
+                // 微信
+                [weakSelf WChatShare];
+                shareAlert = nil;
+                [shareAlert dismiss];
+            }
                 break;
             case 2:
-                DLog(@"QQ空间");
-                
+            {
+                // QQ空间
+                [weakSelf TencentShare];
+                shareAlert = nil;
+                [shareAlert dismiss];
+            }
                 break;
             case 3:
-                DLog(@"新浪微博");
-                
+            {
+                // 新浪微博
+                [weakSelf SinaShare];
+                shareAlert = nil;
+                [shareAlert dismiss];
+            }
                 break;
             case 4:
-                DLog(@"QQ");
-                
+            {
+                // QQ
+                [weakSelf QQShare];
+                shareAlert = nil;
+                [shareAlert dismiss];
+            }
                 break;
-
+                
             default:
                 break;
         }
-    }];
-    shareAlert.backgroundColor = [UIColor whiteColor];
+        
+        }];
     [shareAlert show];
 }
 - (void)clickCollectBtnAction {

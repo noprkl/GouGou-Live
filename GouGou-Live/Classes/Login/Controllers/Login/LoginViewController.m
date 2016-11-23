@@ -14,6 +14,9 @@
 
 #import "NSString+MD5Code.h"
 
+// 第三方登录
+#import "LoginViewController+ThirdLogin.h"
+
 @interface LoginViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneTestField;
@@ -176,10 +179,13 @@
 
 #pragma mark - 第三方登录
 - (IBAction)clickQQLogin:(UIButton *)sender {
+    [LoginViewController QQLogin];
 }
 - (IBAction)clickWXLogin:(UIButton *)sender {
+    [LoginViewController WChatLogin];
 }
 - (IBAction)clickSinaLogin:(UIButton *)sender {
+    [LoginViewController SinaLogin];
 }
 
 

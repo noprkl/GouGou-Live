@@ -82,11 +82,11 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
    
-    self.navigationController.navigationBarHidden = NO;
-    [self.navigationController.navigationBar setAlpha:1];
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+//    self.navigationController.navigationBarHidden = NO;
+//    [self.navigationController.navigationBar setAlpha:1];
+//    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+//    
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
 }
 
 - (void)initUI {

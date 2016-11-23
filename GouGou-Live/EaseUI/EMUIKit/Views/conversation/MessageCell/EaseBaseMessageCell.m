@@ -41,7 +41,7 @@
     cell.avatarSize = 30;
     cell.avatarCornerRadius = 0;
     
-    cell.messageNameColor = [UIColor grayColor];
+    cell.messageNameColor = [UIColor colorWithHexString:@"#99cc33"];
     cell.messageNameFont = [UIFont systemFontOfSize:10];
     cell.messageNameHeight = 15;
     if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {

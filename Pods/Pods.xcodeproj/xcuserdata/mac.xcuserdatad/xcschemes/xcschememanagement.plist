@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MJRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Masonry.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TZImagePickerController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UMengUShare.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,17 +52,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>289624371DC53049F01BB2D13A913F07</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5FC776DC4800C965BE2B84CAD22AA1EF</key>
+		<key>70BC44266C6FFE30D2C57129458E070B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>78023F1C83BEE2F912DF2401D37D9D70</key>
+		<key>8F483C33299B4A2084FC83AEF81BF333</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,12 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C183D6D20E83B8525DCE035B6FE43E0A</key>
+		<key>C54889287F223E0B01D106E104923758</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F9F06A717D2CF9CF5696E5860C4E7A34</key>
+		<key>C6285169813CFA142F6454AF055430D6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C671EF173F3FCD2F208B29100B360DFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

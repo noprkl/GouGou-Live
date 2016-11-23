@@ -67,6 +67,7 @@ typedef NS_ENUM(int, DXDeleteConvesationType) {
  @param IConversationModel 会话模型
  @result 返回用户最后一条消息时间的显示文案
  */
+
 - (NSString *)conversationListViewController:(EaseConversationListViewController *)conversationListViewController
        latestMessageTimeForConversationModel:(id<IConversationModel>)conversationModel;
 

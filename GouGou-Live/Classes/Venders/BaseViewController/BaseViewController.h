@@ -13,10 +13,6 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
 
 @interface BaseViewController : UIViewController
 
-- (void)QQLogin;
-- (void)WXLogin;
-- (void)SinaLogin;
-
 /** get请求 */
 - (void)getRequestWithPath:(NSString *)path
                     params:(NSDictionary *)params
@@ -27,24 +23,22 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)Success
                       error:(HttpRequestErrorBlock)Error;
-- (void)postJsonRequestWithPath:(NSString *)path
-                         params:(NSString *)params
-                        success:(HttpRequestSuccessBlock)returnSuccess
-                          error:(HttpRequestErrorBlock)returnError;
-#pragma mark
-#pragma mark - 图片
-/** get请求 */
-- (void)getImageRequestWithPath:(NSString *)path
-                    params:(NSDictionary *)params
-                   success:(HttpRequestSuccessBlock)Success
-                     error:(HttpRequestErrorBlock)Error;
-/** post请求 */
-- (void)postImageRequestWithPath:(NSString *)path
-                     params:(NSDictionary *)params
-                    success:(HttpRequestSuccessBlock)Success
-                      error:(HttpRequestErrorBlock)Error;
 
 // 提示字符
 - (void)showAlert:(NSString *)string;
 - (void)setNavBarItem;
+
+#pragma mark
+#pragma mark - 分享
+/** QQ分享 */
+- (void)QQShare;
+/** 新浪分享 */
+- (void)SinaShare;
+/** 微信分享 */
+- (void)WChatShare;
+/** 朋友圈分享 */
+- (void)MomentShare;
+/** QQ空间分享 */
+- (void)TencentShare;
+
 @end

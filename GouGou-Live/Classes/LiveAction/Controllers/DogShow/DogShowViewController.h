@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseNavigationController.h"
+#import "BaseViewController.h"
 
-@interface DogShowViewController : BaseNavigationController
+@interface DogShowViewController : BaseViewController
 
 @end

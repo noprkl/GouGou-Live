@@ -90,8 +90,11 @@
     return self;
 }
 
+#pragma mark
+#pragma mark -
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:248 / 255.0 green:248 / 255.0 blue:248 / 255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -332,9 +335,9 @@
     self.tableView.frame = tableFrame;
     if ([chatToolbar isKindOfClass:[EaseChatToolbar class]]) {
         [(EaseChatToolbar *)self.chatToolbar setDelegate:self];
-        self.chatBarMoreView = (EaseChatBarMoreView*)[(EaseChatToolbar *)self.chatToolbar moreView];
+//        self.chatBarMoreView = (EaseChatBarMoreView*)[(EaseChatToolbar *)self.chatToolbar moreView];
         self.faceView = (EaseFaceView*)[(EaseChatToolbar *)self.chatToolbar faceView];
-        self.recordView = (EaseRecordView*)[(EaseChatToolbar *)self.chatToolbar recordView];
+//        self.recordView = (EaseRecordView*)[(EaseChatToolbar *)self.chatToolbar recordView];
     }
 }
 

@@ -16,6 +16,8 @@
 
 @property(nonatomic, strong) UILabel *line; /**< 绿色的线 */
 
+@property(nonatomic, strong) UITextField *messageTextField; /**< 信息输入 */
+
 @end
 
 @implementation TalkingView

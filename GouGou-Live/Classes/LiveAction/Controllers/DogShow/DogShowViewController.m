@@ -29,7 +29,7 @@
 
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享模型数组 */
 
-@property(nonatomic, strong) ShareAlertView *shareAlert; /**< 分享view */
+//@property(nonatomic, strong) ShareAlertView *shareAlert; /**< 分享view */
 
 
 @end
@@ -46,13 +46,14 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    self.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = NO;
 }
+
 - (void)initUI {
     
     [self.view addSubview:self.tableView];
@@ -111,30 +112,49 @@ static NSString *cellid = @"DogShowCellid";
     
     cell.shareBlock = ^ (){
         
-        ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 150, self.view.bounds.size.width, 150) alertModels:self.shareAlertBtns tapView:^(NSInteger btnTag) {
+       __block ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 150, self.view.bounds.size.width, 150) alertModels:self.shareAlertBtns tapView:^(NSInteger btnTag) {
             
             NSInteger index = btnTag - 20;
             switch (index) {
                 case 0:
-                    DLog(@"朋友圈");
-                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
-                    
+                {
+                    // 朋友圈
+                    [weakSelf MomentShare];
+                    shareAlert = nil;
+                    [shareAlert dismiss];
+                }
                     break;
                 case 1:
-                    DLog(@"微信");
-                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    {
+                        // 微信
+                        [weakSelf WChatShare];
+                        shareAlert = nil;
+                        [shareAlert dismiss];
+                    }
                     break;
                 case 2:
-                    DLog(@"QQ空间");
-                    //                   [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    {
+                        // QQ空间
+                        [weakSelf TencentShare];
+                        shareAlert = nil;
+                        [shareAlert dismiss];
+                    }
                     break;
                 case 3:
-                    DLog(@"新浪微博");
-                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    {
+                        // 新浪微博
+                        [weakSelf SinaShare];
+                        shareAlert = nil;
+                        [shareAlert dismiss];
+                    }
                     break;
                 case 4:
-                    DLog(@"QQ");
-                    //                    [weakSelf performSelector:@selector(shareAlertDismiss)];
+                    {
+                        // QQ
+                        [weakSelf QQShare];
+                        shareAlert = nil;
+                        [shareAlert dismiss];
+                    }
                     break;
                     
                 default:
@@ -143,8 +163,6 @@ static NSString *cellid = @"DogShowCellid";
             
             
         }];
-        self.shareAlert = shareAlert;
-        shareAlert.backgroundColor = [UIColor whiteColor];
         [shareAlert show];
         
     };

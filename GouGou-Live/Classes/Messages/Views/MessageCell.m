@@ -22,12 +22,15 @@
 - (void)setIsFocus:(BOOL)isFocus {
     _isFocus = isFocus;
     self.focusLabel.selected = !isFocus;
-    self.focusLabel.highlighted = !isFocus;
+//    self.focusLabel.highlighted = !isFocus;
 }
 
-- (void)setCountHide:(BOOL)countHide {
-    _countHide = countHide;
-    self.messageCountLabel.hidden = countHide;
+- (void)setShowAvatar:(BOOL)showAvatar {
+    _showAvatar = showAvatar;
+    self.messageCountLabel.hidden = showAvatar;
+}
+- (void)setListInfo:(NSDictionary *)listInfo {
+    _listInfo = listInfo;
 }
 - (void)awakeFromNib {
     // Initialization code

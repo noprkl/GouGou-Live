@@ -214,7 +214,7 @@
     [self unregisterNotifications];
 }
 
-#pragma mark - private
+#pragma mark - private 
 - (NSString *)_latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
 {
     NSString *latestMessageTitle = @"";

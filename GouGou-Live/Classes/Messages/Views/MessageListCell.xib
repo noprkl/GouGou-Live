@@ -60,12 +60,6 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="消息消息消息消息消息消息消息消息消息消息消息消息消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nV2-61-2ei">
-                        <rect key="frame" x="64" y="37" width="215" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="头像" translatesAutoresizingMaskIntoConstraints="NO" id="fH1-uC-P9d">
                         <rect key="frame" x="10" y="10" width="44" height="44"/>
                         <constraints>
@@ -91,12 +85,17 @@
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kET-yO-54R">
+                        <rect key="frame" x="64" y="37" width="215" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="wLM-at-KyR" firstAttribute="leading" secondItem="rrM-2b-Tqu" secondAttribute="trailing" constant="10" id="5cM-7R-fMa"/>
                     <constraint firstItem="wLM-at-KyR" firstAttribute="centerY" secondItem="rrM-2b-Tqu" secondAttribute="centerY" id="6VB-Mb-1Pj"/>
-                    <constraint firstItem="hsg-tV-Mik" firstAttribute="centerY" secondItem="nV2-61-2ei" secondAttribute="centerY" id="Qbt-YR-nOs"/>
-                    <constraint firstItem="hsg-tV-Mik" firstAttribute="leading" secondItem="nV2-61-2ei" secondAttribute="trailing" constant="10" id="TWE-72-krZ"/>
+                    <constraint firstItem="kET-yO-54R" firstAttribute="top" secondItem="fH1-uC-P9d" secondAttribute="centerY" constant="5" id="8m4-nk-uNv"/>
                     <constraint firstAttribute="bottom" secondItem="gvL-4E-Xas" secondAttribute="bottom" id="UgH-zs-9RP"/>
                     <constraint firstAttribute="trailing" secondItem="xHi-sT-0TG" secondAttribute="trailing" constant="10" id="b4X-cc-3YU"/>
                     <constraint firstItem="fH1-uC-P9d" firstAttribute="centerY" secondItem="RtH-lJ-sHv" secondAttribute="centerY" constant="-5" id="bau-Ue-BKg"/>
@@ -104,13 +103,14 @@
                     <constraint firstItem="gvL-4E-Xas" firstAttribute="leading" secondItem="RtH-lJ-sHv" secondAttribute="leading" id="bln-Te-0mC"/>
                     <constraint firstItem="hsg-tV-Mik" firstAttribute="width" secondItem="hsg-tV-Mik" secondAttribute="height" multiplier="11:11" id="eaH-2v-PeH"/>
                     <constraint firstItem="rrM-2b-Tqu" firstAttribute="bottom" secondItem="fH1-uC-P9d" secondAttribute="centerY" constant="-3" id="gzY-TD-9Zy"/>
-                    <constraint firstItem="nV2-61-2ei" firstAttribute="top" secondItem="fH1-uC-P9d" secondAttribute="centerY" constant="5" id="hBi-jk-ab0"/>
                     <constraint firstItem="fH1-uC-P9d" firstAttribute="centerX" secondItem="RtH-lJ-sHv" secondAttribute="centerX" id="jkH-RB-wsI"/>
+                    <constraint firstItem="kET-yO-54R" firstAttribute="leading" secondItem="fH1-uC-P9d" secondAttribute="trailing" constant="10" id="ovC-Dx-r4w"/>
+                    <constraint firstItem="hsg-tV-Mik" firstAttribute="leading" secondItem="kET-yO-54R" secondAttribute="trailing" constant="10" id="qdv-PX-End"/>
                     <constraint firstItem="xHi-sT-0TG" firstAttribute="centerY" secondItem="rrM-2b-Tqu" secondAttribute="centerY" id="qw1-0H-QbF"/>
                     <constraint firstAttribute="trailing" secondItem="gvL-4E-Xas" secondAttribute="trailing" id="s2J-81-Wfm"/>
                     <constraint firstItem="fH1-uC-P9d" firstAttribute="leading" secondItem="RtH-lJ-sHv" secondAttribute="leading" constant="10" id="uQ6-kc-4Cd"/>
                     <constraint firstItem="rrM-2b-Tqu" firstAttribute="leading" secondItem="fH1-uC-P9d" secondAttribute="trailing" constant="10" id="ukZ-qQ-6VD"/>
-                    <constraint firstItem="nV2-61-2ei" firstAttribute="leading" secondItem="fH1-uC-P9d" secondAttribute="trailing" constant="10" id="xTx-DW-gXE"/>
+                    <constraint firstItem="hsg-tV-Mik" firstAttribute="centerY" secondItem="kET-yO-54R" secondAttribute="centerY" id="yJx-rE-r2E"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -121,12 +121,12 @@
             <connections>
                 <outlet property="iconView" destination="fH1-uC-P9d" id="VkR-Pt-GMf"/>
                 <outlet property="isFocus" destination="wLM-at-KyR" id="NJZ-4z-k5n"/>
-                <outlet property="lastMessageLabel" destination="Qbt-YR-nOs" id="y4g-dO-DZ7"/>
+                <outlet property="lastMessageLabel" destination="kET-yO-54R" id="jgM-oS-PBr"/>
                 <outlet property="lastTimeLabel" destination="xHi-sT-0TG" id="PtL-xe-Lmm"/>
                 <outlet property="nickNameLabel" destination="rrM-2b-Tqu" id="lud-ah-oFM"/>
                 <outlet property="unreadCountLabel" destination="hsg-tV-Mik" id="Ef0-9D-Op5"/>
             </connections>
-            <point key="canvasLocation" x="92" y="132.5"/>
+            <point key="canvasLocation" x="251" y="115.5"/>
         </tableViewCell>
     </objects>
     <resources>

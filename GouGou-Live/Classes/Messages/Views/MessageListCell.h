@@ -12,8 +12,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *isFocus;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lastMessageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastMessageLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *lastTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unreadCountLabel;
+
+@property (strong, nonatomic) id<IConversationModel> model;
+@property (nonatomic) BOOL showAvatar;//default is "YES"
 
 @end

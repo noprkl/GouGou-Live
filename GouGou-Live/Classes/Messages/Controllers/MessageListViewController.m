@@ -7,118 +7,106 @@
 //
 
 #import "MessageListViewController.h"
-#import "EaseConversationListViewController.h"
-#import "NotificationMessageCell.h"
-#import "SystemNotificationViewController.h" // 系统通知
+#import "MessageListCell.h"
+#import "IConversationModel.h"
 
-@interface MessageListViewController ()<UITableViewDelegate, UITableViewDataSource>
-
-@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
-
-@property(nonatomic, strong) UITableView *notificatTableView; /**< TableView */
+@interface MessageListViewController ()
 
 @end
-static NSString *cellid = @"NotificationMessageCell";
+static NSString *cellid = @"MessageListCell";
 
 @implementation MessageListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavBarItem];
     
-    [self initUI];
 }
-- (void)initUI {
-
-#pragma mark - 通知消息
-    self.edgesForExtendedLayout = 0;
-    [self.view addSubview:self.notificatTableView];
-
-#pragma mark - 会话列表
-    EaseConversationListViewController *conversationVC = [[EaseConversationListViewController alloc] init];
-    [self.view addSubview:conversationVC.view];
-    [conversationVC.view makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(self.notificatTableView.bottom);
-        make.height.equalTo(SCREEN_HEIGHT - 98 - 64 - 44);
-    }];
-}
-
-
-- (UITableView *)notificatTableView {
-    if (!_notificatTableView) {
-        _notificatTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98) style:(UITableViewStylePlain)];
-        
-        _notificatTableView.delegate = self;
-        _notificatTableView.dataSource = self;
-        _notificatTableView.tableFooterView = [[UIView alloc] init];
-        _notificatTableView.showsVerticalScrollIndicator = NO;
-        _notificatTableView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
-        _notificatTableView.bounces = NO;
-        
-        [_notificatTableView registerNib:[UINib nibWithNibName:@"NotificationMessageCell" bundle:nil] forCellReuseIdentifier:cellid];
-        
-    }
-    return _notificatTableView;
-}
-#pragma mark
-#pragma mark - TableView代理
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return 1;
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"MessageListCell" bundle:nil] forCellReuseIdentifier:cellid];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    if (indexPath.section == 0) {
-        NotificationMessageCell *notifiCell = [tableView dequeueReusableCellWithIdentifier:cellid];
-        notifiCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        // 设置通知消息
-        
-        return notifiCell;
-    }
-    if (indexPath.section == 1) {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"UITableViewCell"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH, 44)];
-        label.backgroundColor = [UIColor whiteColor];
-        label.text = @"最近联系";
-        label.font = [UIFont systemFontOfSize:16];
-        [cell.contentView addSubview:label];
+    
+    
+    MessageListCell *cell = (MessageListCell *)[tableView dequeueReusableCellWithIdentifier:cellid];
+    
+    if ([self.dataArray count] <= indexPath.row) {
         return cell;
     }
-    return nil;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 65;
-    }
-    return 44;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 1) {
-        return 10;
-    }
-    return 0;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0) {
-        SystemNotificationViewController *systemVC = [[SystemNotificationViewController alloc] init];
-        systemVC.hidesBottomBarWhenPushed = YES;
-        
-        [self.navigationController pushViewController:systemVC animated:YES];
+    id<IConversationModel> model = [self.dataArray objectAtIndex:indexPath.row];
+    cell.model = model;
+    
+    // 最后信息
+    if (self.dataSource && [self.dataSource respondsToSelector:@selector(conversationListViewController:latestMessageTitleForConversationModel:)]) {
+        NSMutableAttributedString *attributedText = [[self.dataSource conversationListViewController:self latestMessageTitleForConversationModel:model] mutableCopy];
+        [attributedText addAttributes:@{NSFontAttributeName : cell.lastMessageLabel.font} range:NSMakeRange(0, attributedText.length)];
+        cell.lastMessageLabel.attributedText =  attributedText;
+    } else {
+        cell.lastMessageLabel.attributedText =  [[EaseEmotionEscape sharedInstance] attStringFromTextForChatting:[self _latestMessageTitleForConversationModel:model]textFont:cell.lastMessageLabel.font];
     }
-}
+    
+    if (self.dataSource && [self.dataSource respondsToSelector:@selector(conversationListViewController:latestMessageTimeForConversationModel:)]) {
+        cell.lastTimeLabel.text = [self.dataSource conversationListViewController:self latestMessageTimeForConversationModel:model];
+    } else {
+        cell.lastTimeLabel.text = [self _latestMessageTimeForConversationModel:model];
+    }
+    
+    return cell;
 
+}
+// 最后信息
+- (NSString *)_latestMessageTimeForConversationModel:(id<IConversationModel>)conversationModel
+{
+    NSString *latestMessageTime = @"";
+    EMMessage *lastMessage = [conversationModel.conversation latestMessage];;
+    if (lastMessage) {
+        double timeInterval = lastMessage.timestamp ;
+        if(timeInterval > 140000000000) {
+            timeInterval = timeInterval / 1000;
+        }
+        NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"YYYY-MM-dd"];
+        latestMessageTime = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeInterval]];
+    }
+    return latestMessageTime;
+}
+// 最后时间
+- (NSString *)_latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
+{
+    NSString *latestMessageTitle = @"";
+    EMMessage *lastMessage = [conversationModel.conversation latestMessage];
+    if (lastMessage) {
+        EMMessageBody *messageBody = lastMessage.body;
+        switch (messageBody.type) {
+            case EMMessageBodyTypeImage:{
+                latestMessageTitle = NSEaseLocalizedString(@"message.image1", @"[image]");
+            } break;
+            case EMMessageBodyTypeText:{
+                NSString *didReceiveText = [EaseConvertToCommonEmoticonsHelper
+                                            convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
+                latestMessageTitle = didReceiveText;
+            } break;
+            case EMMessageBodyTypeVoice:{
+                latestMessageTitle = NSEaseLocalizedString(@"message.voice1", @"[voice]");
+            } break;
+            case EMMessageBodyTypeLocation: {
+                latestMessageTitle = NSEaseLocalizedString(@"message.location1", @"[location]");
+            } break;
+            case EMMessageBodyTypeVideo: {
+                latestMessageTitle = NSEaseLocalizedString(@"message.video1", @"[video]");
+            } break;
+            case EMMessageBodyTypeFile: {
+                latestMessageTitle = NSEaseLocalizedString(@"message.file1", @"[file]");
+            } break;
+            default: {
+            } break;
+        }
+    }
+    return latestMessageTitle;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
 @end

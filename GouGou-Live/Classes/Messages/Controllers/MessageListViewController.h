@@ -6,8 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "EaseConversationListViewController.h"
 
-@interface MessageListViewController : BaseViewController
+@interface MessageListViewController : EaseConversationListViewController
 
 @end

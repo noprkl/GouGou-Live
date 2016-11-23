@@ -10,8 +10,12 @@
 
 @interface MessageCell : UITableViewCell
 
-@property(nonatomic, assign) BOOL countHide; /**< 信息条数隐藏 */
+@property (strong, nonatomic) id<IConversationModel> model;
+
+@property (nonatomic) BOOL showAvatar;//default is "YES"
 
 @property(nonatomic, assign) BOOL isFocus; /**< 关注与否 */
+
+@property(nonatomic, strong) NSDictionary *listInfo; /**< 列表信息 */
 
 @end

@@ -23,7 +23,8 @@
 
 #import "TalkingViewController.h"
 #import "ServiceViewController.h"
-
+#import "DogShowViewController.h"
+#import "SellerShowViewController.h"
 
 @interface LivingViewController ()<UIScrollViewDelegate>
 
@@ -164,14 +165,26 @@
 }
 - (void)addChildViewController {
     
-    NSArray *childVCNames = @[@"TalkingViewController", @"DogShowViewController", @"ServiceViewController", @"SellerShowViewController"];
-    
-    for (NSInteger i = 0; i < childVCNames.count; i ++) {
-        UIViewController *vc = [[NSClassFromString(childVCNames[i]) alloc] init];
-        
-        [self addChildViewController:vc];
-        [self.childVCS addObject:vc];
-    }
+//    NSArray *childVCNames = @[@"TalkingViewController", @"DogShowViewController", @"ServiceViewController", @"SellerShowViewController"];
+//    
+//    for (NSInteger i = 0; i < childVCNames.count; i ++) {
+//        UIViewController *vc = [[NSClassFromString(childVCNames[i]) alloc] init];
+//        
+//        [self addChildViewController:vc];
+//        [self.childVCS addObject:vc];
+//    }
+    TalkingViewController *talkVC = [[TalkingViewController alloc] init];
+    [self.childVCS addObject:talkVC];
+    [self addChildViewController:talkVC];
+    DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
+    [self.childVCS addObject:dogShowVC];
+    [self addChildViewController:dogShowVC];
+    ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:@"liver" conversationType:(EMConversationTypeChat)];
+    [self.childVCS addObject:serviceVC];
+    [self addChildViewController:serviceVC];
+    SellerShowViewController *sellerShowVC = [[SellerShowViewController alloc] init];
+    [self.childVCS addObject:sellerShowVC];
+    [self addChildViewController:sellerShowVC];
     
     // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
     self.baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childTitles.count, 0);

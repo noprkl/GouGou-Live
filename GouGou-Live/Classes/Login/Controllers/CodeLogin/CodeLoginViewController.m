@@ -112,6 +112,7 @@
             if ([successJson[@"message"] isEqualToString:@"成功"]) {
                 
                 [self saveUserWithID:successJson[@"data"][@"id"]
+                            user_pwd:successJson[@"data"][@"user_pwd"]
                         user_img_url:successJson[@"data"][@"user_img_url"]
                            user_name:successJson[@"data"][@"user_name"]
                       user_nick_name:successJson[@"data"][@"user_nick_name"]
@@ -121,10 +122,16 @@
                           user_motto:successJson[@"data"][@"user_motto"]
                              isLogin:@(YES)];
                 // 通知给所有人 已经登录
-                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
+//                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
+//                
+//                [[NSNotificationCenter defaultCenter] postNotification:notification];
                 
-                [[NSNotificationCenter defaultCenter] postNotification:notification];                
-
+                // 环信登录
+                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:successJson[@"data"][@"user_pwd"]];
+                if (!error2) {
+                    DLog(@"登录成功");
+                }
+                
                 [self.navigationController popViewControllerAnimated:YES];
             }
         } error:^(NSError *error) {
@@ -146,6 +153,7 @@
     
 }
 - (void)saveUserWithID:(NSString *)ID
+              user_pwd:(NSString *)user_pwd
           user_img_url:(NSString *)user_img_url
              user_name:(NSString *)user_name
         user_nick_name:(NSString *)user_nick_name
@@ -159,13 +167,14 @@
     [UserInfos sharedUser].username = ![user_name isEqual:[NSNull null]] ?user_name:@"";
     [UserInfos sharedUser].usernickname = ![user_nick_name isEqual:[NSNull null]] ?user_nick_name:@"";
     [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
-   
     [UserInfos sharedUser].ID = ID;
+    [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;
     [UserInfos sharedUser].isLogin = YES;
     
     [UserInfos setUser];
 }
+
 #pragma mark
 #pragma mark - 文本框监听
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {

@@ -17,7 +17,7 @@
 
 #import "SellerOrderDetailBottomView.h" // 底部按钮
 
-#import "TalkingToOneViewController.h"
+#import "SingleChatViewController.h"
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
 #import "SellerSendViewController.h"
@@ -231,9 +231,11 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     
     
     if ([title isEqualToString:@"联系买家"]) {
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
+        // 跳转至买家
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat2;
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
@@ -261,9 +263,9 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat1;
+        [self.navigationController pushViewController:viewController animated:YES];
     }
 }
 @end

@@ -9,7 +9,6 @@
 #import "MessageListCell.h"
 #import "IConversationModel.h"
 
-
 @implementation MessageListCell
 - (void)setModel:(id<IConversationModel>)model
 {

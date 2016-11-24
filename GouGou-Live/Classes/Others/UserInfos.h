@@ -12,6 +12,8 @@
 
 @property(nonatomic, copy) NSString *ID; /**< 用户id */
 
+@property(nonatomic, strong) NSString *userPsd; /**< 用户密码 */
+
 @property(nonatomic, copy) NSString *usernickname; /**< 用户昵称 */
 
 @property(nonatomic, strong) NSString *username; /**< 用户名*/

@@ -59,6 +59,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    DLog(@"%@", self.dataArray);
     return [self.dataArray count];
 }
 
@@ -214,7 +215,7 @@
     [self unregisterNotifications];
 }
 
-#pragma mark - private 
+#pragma mark - private
 - (NSString *)_latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
 {
     NSString *latestMessageTitle = @"";

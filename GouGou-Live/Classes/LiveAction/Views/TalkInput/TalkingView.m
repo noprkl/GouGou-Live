@@ -71,7 +71,10 @@
 
 - (void)clickSendMesBtnAction {
     if (_sendBlock) {
-        _sendBlock();
+
+        _sendBlock(self.messageTextField.text);
+        self.messageTextField.text = @"";
+        [self.messageTextField resignFirstResponder];
     }
 }
 
@@ -89,11 +92,16 @@
         _messageTextField = [[UITextField alloc] init];
         
         _messageTextField.borderStyle = UITextBorderStyleNone;
+        [_messageTextField addTarget:self action:@selector(textFieldEditAction:) forControlEvents:(UIControlEventAllEvents)];
         _messageTextField.delegate = self;
     }
     return _messageTextField;
 }
-
+- (void)textFieldEditAction:(UITextField *)textField {
+    if (_textFieldBlock) {
+        _textFieldBlock(textField);
+    }
+}
 - (UIButton *)faceBtn {
     
     if (!_faceBtn) {

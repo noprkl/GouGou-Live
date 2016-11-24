@@ -18,6 +18,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *unreadCountLabel;
 
 @property (strong, nonatomic) id<IConversationModel> model;
-@property (nonatomic) BOOL showAvatar;//default is "YES"
 
 @end

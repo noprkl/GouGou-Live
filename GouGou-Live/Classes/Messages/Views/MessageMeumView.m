@@ -39,13 +39,14 @@ static NSString *cellid = @"MessageMeumView";
 }
 - (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = @[@"关注", @"举报",  @"屏蔽消息", @"个人主页"];
+        _dataArr = [NSArray array];
     }
     return _dataArr;
 }
 - (void)setDataPlist:(NSArray *)dataPlist {
     _dataPlist = dataPlist;
     self.dataArr = dataPlist;
+    self.dataArr = @[@"关注", @"举报",  @"屏蔽消息", @"个人主页"];
 }
 - (NSMutableArray *)cells {
     if (!_cells) {
@@ -66,9 +67,9 @@ static NSString *cellid = @"MessageMeumView";
     label.text = self.dataArr[indexPath.row];
     label.font = [UIFont systemFontOfSize:16];
     label.textAlignment = NSTextAlignmentCenter;
-    DLog(@"%@", label.text);
     
-    label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//    label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    label.backgroundColor = [UIColor redColor];
     label.textColor = [UIColor colorWithHexString:@"#000000"];
     [cell.contentView addSubview:label];
 

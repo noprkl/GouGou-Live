@@ -6,9 +6,9 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseNavigationController.h"
+#import "BaseViewController.h"
 
-@interface TalkingViewController : BaseNavigationController
+@interface TalkingViewController : BaseViewController
 
 @property(nonatomic, strong) UITextField *textField; /**< 输入框 */
 @end

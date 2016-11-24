@@ -36,7 +36,7 @@
     [super viewWillAppear:animated];
     //    [self.view addSubview:self.noneNetView];
 
-    self.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
     [self.view addSubview:self.talkView];
     [self.talkView makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
@@ -80,7 +80,9 @@
         _talkView = [[TalkingView alloc] init];
         _talkView.backgroundColor = [UIColor whiteColor];
         __weak typeof(self) weakSelf = self;
-        
+        _talkView.textFieldBlock = ^(UITextField *textField){
+            weakSelf.textField = textField;
+        };
     }
     return _talkView;
 }

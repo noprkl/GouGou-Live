@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import "SellerOrderDetailAdressViewController.h"
 #import "SellerOrderDetailLogisticsInfoViewController.h"
-#import "TalkingToOneViewController.h" // 联系买家
+#import "SingleChatViewController.h" // 联系买家
 #import "SellerAcceptedRateViewController.h" // 查看评价
 #import "SellerChangeViewController.h" // 改变运费
 #import "SellerSendViewController.h" // 发货

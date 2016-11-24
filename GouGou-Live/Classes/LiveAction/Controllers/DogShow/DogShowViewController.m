@@ -46,12 +46,12 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)initUI {
@@ -105,7 +105,7 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DogShowMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    cell.selected = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     self.cell = cell;
     __weak typeof(self) weakSelf = self;

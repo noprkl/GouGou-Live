@@ -15,7 +15,6 @@
 #import "SellerProtectPowerCell.h"
 #import "SellerCloseCell.h"
 
-#import "TalkingToOneViewController.h"
 
 @interface SellerSoldGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -200,9 +199,9 @@ static NSString *closeCell = @"SellerCloseCell";
     
     
     if ([title isEqualToString:@"联系买家"]) {
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat2;
+        [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
@@ -230,9 +229,9 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat2;
+        [self.navigationController pushViewController:viewController animated:YES];
     }
 }
 @end

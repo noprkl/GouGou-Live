@@ -95,9 +95,12 @@ static NSString *cellid = @"SellerWaitRateCell";
     
     
     if ([title isEqualToString:@"联系买家"]) {
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat2;
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+        
+
         
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
@@ -125,9 +128,12 @@ static NSString *cellid = @"SellerWaitRateCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat1;
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+        
+
     }
 }
 @end

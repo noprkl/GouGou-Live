@@ -94,7 +94,10 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 
                 // 跳转至联系卖家
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat1;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
@@ -134,7 +137,10 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 
                 // 跳转至联系卖家
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat2;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {

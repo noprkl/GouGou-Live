@@ -90,10 +90,12 @@
     [self.iconView makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.centerX);
         make.top.equalTo(self.top).offset(10);
+        make.size.equalTo(CGSizeMake(60, 60));
+
     }];
     [self.userNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.iconView.bottom).offset(10);
-        make.centerX.equalTo(self.centerX).offset(-30);
+        make.centerX.equalTo(self.centerX).offset(0);
         
     }];
     [self.userNameAuthen makeConstraints:^(MASConstraintMaker *make) {
@@ -172,6 +174,30 @@
         make.left.width.equalTo(self);
         make.height.equalTo(10);
     }];
+    
+    if ([UserInfos sharedUser].userimgurl.length > 0) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+
+        [self.iconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }
+    if ([UserInfos sharedUser].usernickname.length > 0) {
+        self.userNameLabel.text = [UserInfos sharedUser].usernickname;
+    }
+    if ([UserInfos sharedUser].isreal) {
+        self.userNameAuthen.hidden = NO;
+        if ([UserInfos sharedUser].ismerchant) {
+            self.sellerAuthen.hidden = NO;
+        }else{
+            self.sellerAuthen.hidden = YES;
+        }
+    }else{
+        self.userNameAuthen.hidden = YES;
+    }
+    if ([UserInfos sharedUser].usermotto.length > 0) {
+        self.userSign.text = [UserInfos sharedUser].usermotto;
+    }else{
+        self.userSign.text = @"什么也没有，快去设置个性签名吧！";
+    }
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -186,6 +212,7 @@
 - (UIImageView *)iconView {
     if (!_iconView) {
         _iconView = [[UIImageView alloc] init];
+        
         _iconView.image = [UIImage imageNamed:@"头像"];
     }
     return _iconView;
@@ -202,6 +229,7 @@
     if (!_userNameAuthen) {
         _userNameAuthen = [[UILabel alloc] init];
         _userNameAuthen.text = @"实名认证";
+        _userNameAuthen.hidden = YES;
         _userNameAuthen.font = [UIFont systemFontOfSize:10];
         _userNameAuthen.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _userNameAuthen.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];
@@ -216,6 +244,7 @@
     if (!_sellerAuthen) {
         _sellerAuthen = [[UILabel alloc] init];
         _sellerAuthen.text = @"商家认证";
+        _sellerAuthen.hidden = YES;
         _sellerAuthen.font = [UIFont systemFontOfSize:10];
         _sellerAuthen.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _sellerAuthen.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];

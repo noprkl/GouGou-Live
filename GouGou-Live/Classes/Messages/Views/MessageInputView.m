@@ -78,6 +78,7 @@
     if (_sendBlock) {
         _sendBlock(self.messageTextField.text);
         self.messageTextField.text = @"";
+        [self.messageTextField resignFirstResponder];
     }
 }
 

@@ -16,7 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self setNavBarItem];
+    self.title = @"通知消息";
 }
 
 - (void)didReceiveMemoryWarning {

@@ -11,6 +11,7 @@
 #import "DogSizeFilter.h"
 #import "EditNikeNameAlert.h"
 #import <AFNetworking.h>
+#import <TZImagePickerController.h>
 
 @interface EditMyMessageViewController ()<UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -472,9 +473,10 @@ static NSString *cellid = @"cellid";
 // 相册得到的图片
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary<NSString *,id> *)editingInfo {
 
-    NSData *data = UIImagePNGRepresentation(image);
-    NSString *string = [data base64EncodedStringWithOptions:0];
-    NSString *base64 = [self imageBase64WithDataURL:image];
+    // 图片编辑
+    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(60, 60)];
+    
+    NSString *base64 = [self imageBase64WithDataURL:newImage];
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"user_img":base64
@@ -484,7 +486,7 @@ static NSString *cellid = @"cellid";
         if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
             // 修改TableView的显示
             self.userIconView.image = image;
-            
+    
             // 修改本地存储
             [UserInfos sharedUser].userimgurl = successJson[@"data"];
             [UserInfos setUser];
@@ -501,19 +503,50 @@ static NSString *cellid = @"cellid";
 // 图片转化字符串
 - (NSString *)imageBase64WithDataURL:(UIImage *)image
 {
+    CGFloat imageWH = image.size.width;
+    //开启上下文
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(imageWH, imageWH), NO, 0);
+
+    //创建贝塞尔曲线
+    UIBezierPath *bezier = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, imageWH, imageWH)];
+    //添加剪切
+    [bezier addClip];
+    //把图绘上去
+    [image drawAtPoint:CGPointZero];
+    //开启上下文
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    //关闭上下文
+    UIGraphicsEndImageContext();
+    
     NSData *imageData =nil;
     NSString *mimeType =nil;
     
     //图片要压缩的比例，此处100根据需求，自行设置
-    CGFloat x =100 / image.size.height;
+    CGFloat x =100 / newImage.size.height;
     if (x >1)
     {
         x = 1.0;
     }
-    imageData = UIImageJPEGRepresentation(image, x);
+    imageData = UIImageJPEGRepresentation(newImage, x);
     mimeType = @"image/jpeg";
     return [NSString stringWithFormat:@"data:%@;base64,%@", mimeType,
             [imageData base64EncodedStringWithOptions:0]];
+}
+// 图片压缩
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    CGFloat imageWH = newSize.width;
+
+    UIGraphicsBeginImageContext(newSize);
+    
+    [image drawInRect:CGRectMake(0,0,imageWH, imageWH)];
+    
+    //开启上下文
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 //点击Cancel按钮后执行方法

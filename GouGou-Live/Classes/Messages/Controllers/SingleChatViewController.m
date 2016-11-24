@@ -21,29 +21,10 @@
 @end
 
 @implementation SingleChatViewController
-#pragma mark
-#pragma mark - 自定义cell
-// 头像
-- (id<IMessageModel>)messageViewController:(EaseMessageViewController *)viewController
-                           modelForMessage:(EMMessage *)message
-{
-    //用户可以根据自己的用户体系，根据message设置用户昵称和头像
-    id<IMessageModel> model = nil;
-    model = [[EaseMessageModel alloc] initWithMessage:message];
-    model.avatarImage = [UIImage imageNamed:@"头像"];//默认头像
+//#pragma mark
+//#pragma mark - 自定义cell
 
-    if (model.isSender) {
-        NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
-        model.avatarURLPath = urlString;//头像网络地址
-        model.nickname = [UserInfos sharedUser].usernickname;//用户昵称
-    }else{
-        model.avatarURLPath = message.ext[@"avatarURL"];//头像网络地址
-        model.nickname = message.ext[@"nickname"];//用户昵称
-    }
-    
-    return model;
-}
-//声明周期
+//生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setNavBarItem];
@@ -64,6 +45,14 @@
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(44);
     }];
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 重新获取数据
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+    // 进入立即刷新
+    [self.tableView.mj_header beginRefreshing];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

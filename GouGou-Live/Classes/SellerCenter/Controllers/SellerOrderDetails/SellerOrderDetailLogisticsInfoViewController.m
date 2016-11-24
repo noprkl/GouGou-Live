@@ -14,7 +14,7 @@
 #import "SellerOrderDetailMorePriceView.h" // 价格信息
 #import "SellerOrderDetailInfoView.h" // 订单信息
 
-#import "TalkingToOneViewController.h"
+#import "SingleChatViewController.h"
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
 #import "SellerSendViewController.h"
@@ -106,9 +106,11 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     return _callBuyer;
 }
 - (void)clickCallBtnAction {
-    TalkingToOneViewController *talk = [[TalkingToOneViewController alloc] init];
-    talk.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:talk animated:YES];
+    // 跳转至买家
+    SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+    viewController.title = EaseTest_Chat2;
+    viewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 #pragma mark
 #pragma mark - TableView代理
@@ -235,9 +237,11 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     
     
     if ([title isEqualToString:@"联系买家"]) {
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
+        // 跳转至买家
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat2;
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
@@ -265,9 +269,10 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        TalkingToOneViewController *talkVC = [[TalkingToOneViewController alloc] init];
-        talkVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:talkVC animated:YES];
-    }
+        // 跳转至买家
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat1;
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];    }
 }
 @end

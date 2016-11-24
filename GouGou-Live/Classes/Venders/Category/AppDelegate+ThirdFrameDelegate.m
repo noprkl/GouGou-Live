@@ -20,15 +20,25 @@
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     
     // 环信登录
-    [[EMClient sharedClient] loginWithUsername:@"8001"
-                                      password:@"111111"
-                                    completion:^(NSString *aUsername, EMError *aError) {
-                                        if (!aError) {
-                                            NSLog(@"登陆成功");
-                                        } else {
-                                            NSLog(@"登陆失败");
-                                        }
-                                    }];
+    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
+    if (!isAutoLogin) {
+        EMError *error = [[EMClient sharedClient] loginWithUsername:[UserInfos sharedUser].ID password:[UserInfos sharedUser].userPsd];
+        if (!error) {
+            NSLog(@"登陆成功");
+        } else {
+            NSLog(@"登陆失败");
+        }
+    }
+//    [[EMClient sharedClient] loginWithUsername:EaseTest_Login1
+//                                      password:@"1234567"
+//                                    completion:^(NSString *aUsername, EMError *aError) {
+//                                        DLog(@"%@", aUsername);
+//                                        if (!aError) {
+//                                            NSLog(@"登陆成功");
+//                                        } else {
+//                                            NSLog(@"登陆失败");
+//                                        }
+//                                    }];
     // 环信UI调用
     [[EaseSDKHelper shareHelper] hyphenateApplication:application
                         didFinishLaunchingWithOptions:launchOptions

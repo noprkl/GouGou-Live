@@ -9,6 +9,7 @@
 #import "UserInfos.h"
 
 static NSString *IDKey = @"ID";
+static NSString *userPsdKey = @"userPsd";
 static NSString *usernicknameKey = @"usernickname";
 static NSString *usernameKey = @"username";
 static NSString *usertelKey = @"usertel";
@@ -33,6 +34,8 @@ static NSString *usermottoKey = @"usermotto";
     self = [super init];
     if (self) {
         _ID = [[NSUserDefaults standardUserDefaults] objectForKey:IDKey];
+        _userPsd = [[NSUserDefaults standardUserDefaults] objectForKey:userPsdKey];
+
         _usernickname = [[NSUserDefaults standardUserDefaults] objectForKey:usernicknameKey];
         _username = [[NSUserDefaults standardUserDefaults] objectForKey:usernameKey];
         _userimgurl = [[NSUserDefaults standardUserDefaults] objectForKey:userimgurlKey];
@@ -50,6 +53,7 @@ static NSString *usermottoKey = @"usermotto";
 //    if ([UserInfos sharedUser].userimgurl != NULL) {
 //        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
 //    }
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userPsd forKey:userPsdKey];
 
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
 //    if ([UserInfos sharedUser].username != NULL) {
@@ -96,7 +100,8 @@ static NSString *usermottoKey = @"usermotto";
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:ismerchantKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:isrealKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:IDKey];
-    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:userPsdKey];
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

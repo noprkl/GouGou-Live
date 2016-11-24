@@ -22,7 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
+    self.window.backgroundColor = [UIColor groupTableViewBackgroundColor];
     BaseTabBarController *tabBC = [[BaseTabBarController alloc] init];
     [tabBC.tabBar setBackgroundColor:[UIColor whiteColor]];
     self.tabBC = tabBC;

@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "SingleChatViewController.h"
 
 @interface BuyCenterViewController : BaseViewController
 /** 删除订单 */

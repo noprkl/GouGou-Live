@@ -12,6 +12,7 @@ typedef void(^ClickEditBtnBlock)();
 typedef void(^ClickAcquiesceBtnBlock)(UIButton *btn);
 typedef void(^ClickDeleteBteBlock)(UIButton * btn);
 
+@class MyShopAdressModel;
 @interface AddrsssTableViewCell : UITableViewCell
 
 /** 点击编辑回调 */
@@ -20,5 +21,7 @@ typedef void(^ClickDeleteBteBlock)(UIButton * btn);
 @property(nonatomic, strong) ClickAcquiesceBtnBlock acquiesceBlock;
 /** 点击删除按钮回调 */
 @property (strong,nonatomic) ClickDeleteBteBlock deleteBlock;
+
+@property(nonatomic, strong) MyShopAdressModel *adressModel; /**< 模型 */
 
 @end

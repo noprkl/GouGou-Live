@@ -353,7 +353,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
     
     if (textField == self.nameText ) { // 名字
         
-        BOOL isChinese = [string isChinese];
+        BOOL isChinese = [NSString isChinese:string];
+        
         if (range.location < 8 && isChinese) {
             
             return YES;

@@ -24,11 +24,11 @@
 
 @property(nonatomic, strong) NSString *usermotto; /**< 用户签名 */
 
-@property(nonatomic, copy) NSString *ismerchant; /**< 是否商家验证 */
+@property(nonatomic, assign) BOOL ismerchant; /**< 是否商家验证 */
 
-@property(nonatomic, copy) NSString *isreal; /**< 是否进行实名认证 */
+@property(nonatomic, assign) BOOL isreal; /**< 是否进行实名认证 */
 
-@property(nonatomic, assign) BOOL isLogin; /**< 是否登录 */
+@property(nonatomic, strong) NSString *userpaycode; /**< 支付密码 */
 
 + (instancetype)sharedUser;
 

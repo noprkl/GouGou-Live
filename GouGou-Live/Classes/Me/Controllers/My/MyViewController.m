@@ -38,6 +38,9 @@
 @property(nonatomic, strong) NSArray *doneMetchcontrollerNames; /**< 已经商家认证的控制器名字 */
 
 
+@property(nonatomic, strong) NSArray *fansArray; /**< 粉丝数据 */
+@property(nonatomic, strong) NSArray *focusArray; /**< 关注数据 */
+
 @end
 
 @implementation MyViewController
@@ -47,17 +50,41 @@
 // 用户账单
 - (void)postGetUserAsset {
     
-//    NSDictionary *dict = @{
-//                           @"uid":@([[UserInfos sharedUser].ID integerValue]),
-//                           @"page":@1
-//                           };
-//    
-//  [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
-//            DLog(@"%@", successJson);
-//  } error:^(NSError *error) {
-//
-//      DLog(@"%@", error);
-//  }];
+    NSDictionary *dict = @{
+                           @"uid":@([[UserInfos sharedUser].ID integerValue]),
+                           @"page":@1
+                           };
+    
+  [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+  } error:^(NSError *error) {
+
+      DLog(@"%@", error);
+  }];
+}
+// 请求粉丝数据
+- (void)postRequestGetFans {
+    // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{@"user_id":@(11)
+                           };
+    [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.fansArray = successJson[@"data"];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+// 请求关注数
+- (void)postRequestGetFocus {
+    // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{@"user_id":@(11)
+                           };
+    [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.focusArray = successJson[@"data"];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
 #pragma mark
 #pragma mark - 生命周期
@@ -73,20 +100,15 @@
     self.hidesBottomBarWhenPushed = NO;
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
-
-//    self.navigationController.navigationBarHidden = NO;
     [self postGetUserAsset];
+    [self postRequestGetFans];
+
+    
     [self.tableView reloadData];
 
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-   
-//    self.navigationController.navigationBarHidden = NO;
-//    [self.navigationController.navigationBar setAlpha:1];
-//    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-//    
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
 }
 
 - (void)initUI {
@@ -99,6 +121,18 @@
 
 #pragma mark
 #pragma mark - 代理
+- (NSArray *)fansArray {
+    if (!_fansArray) {
+        _fansArray = [NSArray array];
+    }
+    return _fansArray;
+}
+- (NSArray *)focusArray {
+    if (!_focusArray) {
+        _focusArray = [NSArray array];
+    }
+    return _focusArray;
+}
 - (NSArray *)dataSource {
     
     if (!_dataSource) {
@@ -129,21 +163,21 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // 如果已经进行商家认证 就选择已商家认证的数据源
-//    if ([UserInfos sharedUser].ismerchant) {
-//        return self.doneMetchDataSource.count;
-//    }else{
-//        return self.dataSource.count;
-//    }
-    return self.doneMetchDataSource.count;
+    if ([UserInfos sharedUser].ismerchant) {
+        return self.doneMetchDataSource.count;
+    }else{
+        return self.dataSource.count;
+    }
+//    return self.doneMetchDataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // 如果已经进行商家认证 就选择已商家认证的数据源
-//    if ([UserInfos sharedUser].ismerchant) {
-//        return [self.doneMetchDataSource[section] count];
-//    }else{
-//        return [self.dataSource[section] count];
-//    }
-    return [self.doneMetchDataSource[section] count];
+    if ([UserInfos sharedUser].ismerchant) {
+        return [self.doneMetchDataSource[section] count];
+    }else{
+        return [self.dataSource[section] count];
+    }
+//    return [self.doneMetchDataSource[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -153,7 +187,7 @@
     if (section == 0) {
         //判断登录与否
         
-        if ([UserInfos sharedUser].isLogin) {
+        if ([UserInfos getUser]) {
           return 240;
         }else{
         return 150;
@@ -169,49 +203,153 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
-    
-//    NSString *textString = self.dataSource[indexPath.section]
-//    [indexPath.row];
-//    NSString *detailString = self.dataSource[indexPath.section][indexPath.row];
-    // 如果已经商家认证
-    NSString *textString = self.doneMetchDataSource[indexPath.section]
-    [indexPath.row];
-    NSString *detailString = self.doneMetchDataSource[indexPath.section][indexPath.row];
-    
-    
-    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:textString attributes:@{
-                                                                                                                                                   NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
-                                                                                                                                                   NSFontAttributeName:[UIFont systemFontOfSize:14]}];
-    cell.textLabel.attributedText = [[NSAttributedString alloc] initWithString:detailString attributes:@{
-                                                                                                                                              NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
-                                                                                                                                              NSFontAttributeName:[UIFont systemFontOfSize:16]}];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+    // 如果已经登录
+    if ([UserInfos getUser]) { // 登录
+        if ([UserInfos sharedUser].isreal) { // 实名热证
+            if ([UserInfos sharedUser].ismerchant) {
+                // 商家认证
+                
+                NSString *textString = self.doneMetchDataSource[indexPath.section][indexPath.row];
+                cell.textLabel.attributedText = [self getCellTextWithString:textString];
+                cell.detailTextLabel.text = @"";
+
+                if (indexPath.section == 0) {
+                    if (indexPath.row == 0) {
+                        // 账号
+                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"余额"];
+                    }
+                }
+                if (indexPath.section == 2) {
+                    if (indexPath.row == 0){
+                        // 已实名认证
+                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"已认证"];
+                    }
+                    if (indexPath.row == 1){
+                        // 已商家认证
+                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"已认证"];
+                    }
+                }
+            }else{
+                // 未商家认证
+                NSString *textString = self.dataSource[indexPath.section][indexPath.row];
+                cell.textLabel.attributedText = [self getCellTextWithString:textString];
+                cell.detailTextLabel.text = @"";
+                
+                if (indexPath.section == 0) {
+                    if (indexPath.row == 0) {
+                        // 账号
+                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"余额"];
+                    }
+                }
+                if (indexPath.section == 2) {
+                    if (indexPath.row == 0){
+                        // 未实名认证
+                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"已认证"];
+                    }
+                    if (indexPath.row == 1){
+                        // 未商家认证
+                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"去认证"];
+                    }
+                }
+            }
+        }else{
+            // 未实名认证
+            NSString *textString = self.dataSource[indexPath.section][indexPath.row];
+            cell.textLabel.attributedText = [self getCellTextWithString:textString];
+            cell.detailTextLabel.text = @"";
+            if (indexPath.section == 0) {
+                if (indexPath.row == 0) {
+                    // 账号
+                    cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"余额"];
+                }
+            }
+            if (indexPath.section == 2) {
+                if (indexPath.row == 0){
+                    // 实名认证
+                    cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"未认证"];
+                }
+                if (indexPath.row == 1){
+                    // 商家认证
+                    cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"需实名认证"];
+                }
+            }
+        }
+    }else{
+        // 未登录cell
+        NSString *textString = self.dataSource[indexPath.section][indexPath.row];
+        cell.textLabel.attributedText = [self getCellTextWithString:textString];
+
+        cell.detailTextLabel.text = @"";
+        if (indexPath.section == 0) {
+            // 未登录detaile
+            if (indexPath.row == 0) {
+                // 账号
+                cell.detailTextLabel.text = @"";
+            }
+        }
+        if (indexPath.section == 2) {
+            if (indexPath.row == 0){
+                // 实名认证
+                cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"未认证"];
+            }
+            if (indexPath.row == 1){
+                // 商家认证
+                cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"未认证"];
+            }
+        }
+    }
     
     return cell;
+}
+// cell富文本
+- (NSAttributedString *)getCellTextWithString:(NSString *)string {
+  NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:string attributes:@{
+                                                                         NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
+                                                                         NSFontAttributeName:[UIFont systemFontOfSize:16]}];
+    return attribute;
+}
+// detail富文本
+- (NSAttributedString *)getDetailTextWithString:(NSString *)string {
+    NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:string attributes:@{
+                                                                                                   NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
+                                                                                                   NSFontAttributeName:[UIFont systemFontOfSize:12]}];
+    return attribute;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
  
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-//    NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
-//    
-//    NSString *controllerName = self.controllerNames[indexPath.section][indexPath.row];
-  
-    // 如果已经进行商家认证 就选择已商家认证的数据源
-    NSString *cellText = self.doneMetchDataSource[indexPath.section][indexPath.row];
-    
-    NSString *controllerName = self.doneMetchcontrollerNames[indexPath.section][indexPath.row];
-    
-    UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
-    VC.hidesBottomBarWhenPushed = YES;
-    VC.title = cellText;
-    
-    [self.navigationController pushViewController:VC animated:YES];
+    if ([UserInfos getUser]) {
+        
+        // 如果已经进行商家认证 就选择已商家认证的数据源
+        NSString *controllerName;
+        NSString *cellText;
+        if ([UserInfos sharedUser].ismerchant) {
+            cellText = self.dataSource[indexPath.section][indexPath.row];
+            
+            controllerName = self.controllerNames[indexPath.section][indexPath.row];
+        }else{
+            cellText = self.doneMetchDataSource[indexPath.section][indexPath.row];
+            
+            controllerName = self.doneMetchcontrollerNames[indexPath.section][indexPath.row];
+        }
+        
+        // 如果已经进行商家认证 就选择已商家认证的数据源
+        
+        UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
+        VC.hidesBottomBarWhenPushed = YES;
+        VC.title = cellText;
+        
+        [self.navigationController pushViewController:VC animated:YES];
+
+    }else{
+        [self showAlert:@"请登录"];
+    }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        DLog(@"%d", [UserInfos sharedUser].isLogin);
-        if ([UserInfos sharedUser].isLogin == YES) {//判断登录与否
+        if ([UserInfos getUser]) {//判断登录与否
             
             MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
             messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
@@ -222,26 +360,22 @@
                 [weakSelf.navigationController pushViewController:editVC animated:YES];
             };
             
-            // 实名认证
-            
-            messageView.liveBlcok = ^(UIButton *btn){
-
-                [btn setTitle:@"可以认证" forState:(UIControlStateNormal)];
-                
-            };
-        
             // 关注
+            messageView.focusCount = self.focusArray.count;
             messageView.focusBlcok = ^(){
                 MyFocusViewController *myfocus =
                 [[MyFocusViewController alloc] init];
                 myfocus.hidesBottomBarWhenPushed = YES;
+                myfocus.focusArr = self.focusArray;
                 [weakSelf.navigationController pushViewController:myfocus animated:YES];
             };
             
             // 粉丝
+            messageView.fansCount = self.fansArray.count;
             messageView.fansBlcok = ^(){
                 MyFansViewController *myFansVC =
                 [[MyFansViewController alloc] init];
+                myFansVC.fansArr = self.fansArray;
                 myFansVC.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:myFansVC animated:YES];
             };
@@ -253,18 +387,22 @@
                 myPage.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:myPage animated:YES];
             };
-            messageView.liveBlcok = ^(UIButton *btn){
-//                if ([UserInfos sharedUser].ismerchant) {
-//                    MerchantViewController *merchahtVC = [[MerchantViewController alloc] init];
-//                    merchahtVC.hidesBottomBarWhenPushed = YES;
-//                    [weakSelf.navigationController pushViewController:merchahtVC animated:YES];
-//                }else{
+            
+            // 直播按钮
+            messageView.liveBlcok = ^(NSString *btnTitle){
+               
+                if ([btnTitle isEqualToString:@"需要商家认证才能直播"]) {
+                    MerchantViewController *merchahtVC = [[MerchantViewController alloc] init];
+                    merchahtVC.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:merchahtVC animated:YES];
+                }else if([btnTitle isEqualToString:@"我要直播"]){
                     CreateLiveViewController *createLiveVC = [[CreateLiveViewController alloc] init];
                     createLiveVC.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:createLiveVC animated:YES];
-//                }
+                }
             };
             return messageView;
+            
         }else{
             MyUnLoginView *unLoginView = [[MyUnLoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
             unLoginView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];

@@ -82,11 +82,9 @@
     }];
     
     [_instanceImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.instanceView.top).offset(20);
         make.centerX.equalTo(weakself.instanceView.centerX);
         make.size.equalTo(CGSizeMake(167, 105));
-        
     }];
 
     [_instanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -203,7 +201,7 @@
 - (void)photoTapped {
 
     if (_addIdentityBlock) {
-        _addIdentityBlock();
+        _addIdentityBlock(self.identityImage);
     }
 
 }

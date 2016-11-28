@@ -105,7 +105,7 @@ static NSString *cellid = @"PicturesCell";
         flowlayout.itemSize = CGSizeMake(W, W);
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) collectionViewLayout:flowlayout];
-        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
         _collectionView.showsVerticalScrollIndicator = NO;
         
         _collectionView.delegate = self;
@@ -224,50 +224,5 @@ static NSString *cellid = @"PicturesCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
-}
-- (void)test {
-    /*
-     pod 'UMengUShare/UI'
-     
-     # 集成新浪微博
-     pod 'UMengUShare/Social/Sina'
-     
-     # 集成微信
-     pod 'UMengUShare/Social/WeChat'
-     
-     # 集成QQ
-     pod 'UMengUShare/Social/QQ'
-     //打开调试日志
-     [[UMSocialManager defaultManager] openLog:YES];
-     
-     //设置友盟appkey
-     [[UMSocialManager defaultManager] setUmSocialAppkey:@"57b432afe0f55a9832001a0a"];
-     
-     // 获取友盟social版本号
-     //NSLog(@"UMeng social version: %@", [UMSocialGlobal umSocialSDKVersion]);
-     
-     //设置微信的appKey和appSecret
-     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxdc1e388c3822c80b" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:@"http://mobile.umeng.com/social"];
-     
-     
-     //设置分享到QQ互联的appKey和appSecret
-     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"100424468"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
-     
-     //设置新浪的appKey和appSecret
-     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3921700954"  appSecret:@"04b48b094faeb16683c32669824ebdad" redirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-     
-     //支付宝的appKey
-     [[UMSocialManager defaultManager] setPlaform: UMSocialPlatformType_AlipaySession appKey:@"2015111700822536" appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
-     
-     //设置易信的appKey
-     [[UMSocialManager defaultManager] setPlaform: UMSocialPlatformType_YixinSession appKey:@"yx35664bdff4db42c2b7be1e29390c1a06" appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
-     
-     //设置点点虫（原来往）的appKey和appSecret
-     [[UMSocialManager defaultManager] setPlaform: UMSocialPlatformType_LaiWangSession appKey:@"8112117817424282305" appSecret:@"9996ed5039e641658de7b83345fee6c9" redirectURL:@"http://mobile.umeng.com/social"];
-     
-     //设置领英的appKey和appSecret
-     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Linkedin appKey:@"81t5eiem37d2sc"  appSecret:@"7dgUXPLH8kA8WHMV" redirectURL:@"https://api.linkedin.com/v1/people"];
-     */
-//    58330b17717c194faf00069c
 }
 @end

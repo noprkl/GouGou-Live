@@ -9,10 +9,12 @@
 #import "CertificateViewController.h"
 #import "IdentityIfonView.h"
 #import "IdentityPictureCell.h"
+#import "TZImagePickerController.h"
+#import "NSString+CertificateImage.h"
 
 static NSString * identityCell = @"identitiCellID";
 
-@interface CertificateViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface CertificateViewController ()<UITableViewDelegate,UITableViewDataSource, TZImagePickerControllerDelegate>
 /** 身份信息 */
 @property (strong,nonatomic) IdentityIfonView *identityInfoView;
 /** 身份验证tableView */
@@ -22,9 +24,37 @@ static NSString * identityCell = @"identitiCellID";
 /** 接收身份证号 */
 @property (strong,nonatomic) UITextField *acceptIdebtity;
 
+@property(nonatomic, strong) UIImage *faceIdentfityImg; /**< 省份证正面图片 */
+@property(nonatomic, strong) UIImage *backIdentfityImg; /**< 省份证背面图片 */
+
 @end
 
 @implementation CertificateViewController
+#pragma mark
+#pragma mark - 网络请求 实名认证提交
+- (void)postCertificateIdentfity {
+
+    NSDictionary *dict = @{
+                           @"id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_name":self.acceptName.text,
+                           @"user_auth_id":self.acceptIdebtity.text,
+                           @"user_auth_img_front":[NSString imageBase64WithDataURL:self.faceIdentfityImg],
+                           @"user_auth_img_back":[NSString imageBase64WithDataURL:self.backIdentfityImg]
+                           };
+    DLog(@"%@", dict);
+    [self postRequestWithPath:API_Authenticate params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+        if ([successJson[@"message"] isEqualToString:@"信息提交成功"]) {
+            [UserInfos sharedUser].isreal = YES;
+            [UserInfos sharedUser].username = self.acceptName.text;
+            [UserInfos setUser];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,13 +68,44 @@ static NSString * identityCell = @"identitiCellID";
 - (void)initUI {
 
     self.title = @"实名认证";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(handinCertificate)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(requestNameAndIdentiry)];
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.identityInfoView];
     [self.view addSubview:self.identityTableView];
 }
+#pragma 网络请求
+- (void)requestNameAndIdentiry {
+    [self.acceptName resignFirstResponder];
+    [self.acceptIdebtity resignFirstResponder];
 
+    if (self.acceptName.text.length == 0) {
+        
+        [self showAlert:@"姓名不能为空"];
+        
+    } else if (![self.acceptName.text isChinese]) {
+        
+        [self showAlert:@"姓名必须为中文"];
+        
+    } else if (self.acceptName.text.length > 4){
+        
+        [self showAlert:@"姓名最多四个汉字"];
+    } else {
+        if (self.acceptIdebtity.text.length == 0) {
+            [self showAlert:@"身份证号不能为空"];
+        }else{
+            BOOL flag = [[NSString alloc] judgeIdentityStringValid:self.acceptIdebtity.text];
+            
+            if (!flag) {
+                
+                [self showAlert:@"您输入的身份证格式不正确"];
+            } else {
+                
+                [self postCertificateIdentfity];
+            }
+        }
+    }
+}
 - (void)viewWillAppear:(BOOL)animated {
 
     [super viewWillAppear:animated];
@@ -55,6 +116,17 @@ static NSString * identityCell = @"identitiCellID";
 
     if (!_identityInfoView) {
         _identityInfoView = [[IdentityIfonView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
+        __weak typeof(self) weakself = self;
+        
+        _identityInfoView.nameTextBlock = ^(UITextField *textfiled){
+            
+            weakself.acceptName = textfiled;
+        };
+        
+        _identityInfoView.identiityTextBlock = ^(UITextField * textfiled) {
+            
+            weakself.acceptIdebtity = textfiled;
+        };
 
     }
     return _identityInfoView;
@@ -88,18 +160,56 @@ static NSString * identityCell = @"identitiCellID";
     
     if (indexPath.row == 0) {
         [cell identityWithPromptlabel:@"请上传身份证正面标签" instanceImage:[UIImage imageNamed:@"组-12"] instanceLabe:@"(示例)清晰正面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰正面照"];
+       
+        __weak typeof(self) weakSelf = self;
+        cell.addIdentityBlock = ^(UIImageView *identfityView) {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    UIImage *image = [photos lastObject];
+                    identfityView.image = image;
+                    self.faceIdentfityImg = image;
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+
+//            [self pushToAddFacePhoto:identfityView];
+        };
+
     } else if (indexPath.row == 1) {
-        
+
         [cell identityWithPromptlabel:@"请上传身份证背面标签" instanceImage:[UIImage imageNamed:@"组-11"] instanceLabe:@"(示例)清晰背面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰背面照"];
-    
+        __weak typeof(self) weakSelf = self;
+
+        cell.addIdentityBlock = ^(UIImageView *identfityView) {
+           
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    UIImage *image = [photos lastObject];
+                    identfityView.image = image;
+                    self.backIdentfityImg = image;
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
+//            [self pushToAddBackPhoto:identfityView];
+        };
+
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     
-    cell.addIdentityBlock = ^() {
-    
-        [self pushToAddPhoto];
-    };
     return cell;
     
 }
@@ -108,66 +218,21 @@ static NSString * identityCell = @"identitiCellID";
 
     
 }
+#pragma mark
+#pragma mark - 相机调用
 
-- (void)handinCertificate {
-
-    __weak typeof(self) weakself = self;
+- (void)pushToAddFacePhoto:(UIImageView *)identifityView {
     
-    self.identityInfoView.nameTextBlock = ^(UITextField *textfiled){
-        
-        weakself.acceptName = textfiled;
-        
-    };
-
-    self.identityInfoView.identiityTextBlock = ^(UITextField * textfiled) {
+    UIImagePickerController * pickVC = [[UIImagePickerController alloc] init];
     
-        weakself.acceptIdebtity = textfiled;
-        
-    };
-    
-    if (self.acceptName.text.length == 0) {
-        
-        [self showAlert:@"姓名不能为空"];
-        
-    } else if (![self.acceptName.text isChinese]) {
-        
-        [self showAlert:@"姓名必须为中文"];
-        
-    } else if (self.acceptName.text.length > 4){
-        
-        [self showAlert:@"姓名最多四个汉字"];
-    } else {
-    
-        BOOL flag = [[NSString alloc] judgeIdentityStringValid:self.acceptIdebtity.text];
-        
-        if (!flag) {
-            
-            [self showAlert:@"您输入的身份证格式不正确"];
-        } else {
-            
-            [self requestNameAndIdentiry];
-        }
-    }
+    [self.navigationController pushViewController:pickVC animated:YES];
     
 }
-
-
-
-#pragma 网络请求
-- (void)requestNameAndIdentiry {
-
-#warning 验证身份
+- (void)pushToAddBackPhoto:(UIImageView *)identifityView {
+    // 调用相机
     
+
 }
-#pragma 提交认证跳转
-- (void)pushToAddPhoto {
-    
-    //    UIImagePickerController * pickVC = [[UIImagePickerController alloc] init];
-    //
-    //    [self.navigationController pushViewController:pickVC animated:YES];
-    
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

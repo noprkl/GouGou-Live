@@ -68,7 +68,14 @@
 - (NSArray *)controllerNames {
 
     if (!_controllerNames) {
-        _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
+        _controllerNames = [NSArray array];
+        if (![UserInfos sharedUser].isreal) { // 未实名认证
+            _controllerNames = @[@"",@"CertificateViewController"];
+        }else if([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码 需要设置支付密码
+            _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
+        }else{ // 已经设置了支付密码 不能点击
+            _controllerNames = @[@"", @"PresentApplicationViewController",@""];
+        }
     }
     return _controllerNames;
 }
@@ -101,7 +108,42 @@
     }
     
     cell.textLabel.text = self.dataArr[indexPath.row];
-    cell.detailTextLabel.text = @"111";
+    if (![UserInfos sharedUser].isreal) { // 未实名认证
+        if (indexPath.row == 0) {
+            cell.detailTextLabel.text = @"余额";
+        }
+        if (indexPath.row == 1){
+            cell.textLabel.text = @"";
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+            label.text = @"余额提现功能只针对实名认证用户开发,立即认证";
+            label.font = [UIFont systemFontOfSize:12];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+            [cell addSubview:label];
+        }
+
+    }else if([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码 需要设置支付密码
+        if (indexPath.row == 0) {
+            cell.detailTextLabel.text = @"余额";
+        }
+        if (indexPath.row == 1) {
+            cell.detailTextLabel.text = @"";
+        }
+        if (indexPath.row == 2){
+            cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
+        }
+    }else{ // 已经设置了支付密码 不能点击
+        if (indexPath.row == 0) {
+            cell.detailTextLabel.text = @"余额";
+        }
+        if (indexPath.row == 1) {
+            cell.detailTextLabel.text = @"";
+        }
+        if (indexPath.row == 2){
+            cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
+        }
+    }
+
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -111,7 +153,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSString *cellText = self.dataArr[indexPath.row ];
-    
     NSString *controllerName = self.controllerNames[indexPath.row];
     
     UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];

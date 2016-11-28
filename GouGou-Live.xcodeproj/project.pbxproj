@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041DACD71DEC69F9001BA2C2 /* AddPayingSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041DACD21DEC69F9001BA2C2 /* AddPayingSuccessViewController.m */; };
+		041DACD81DEC69F9001BA2C2 /* AddPayingSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041DACD31DEC69F9001BA2C2 /* AddPayingSuccessViewController.xib */; };
+		041DACD91DEC69F9001BA2C2 /* PayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041DACD51DEC69F9001BA2C2 /* PayingViewController.m */; };
+		041DACDA1DEC69F9001BA2C2 /* PayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041DACD61DEC69F9001BA2C2 /* PayingViewController.xib */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
+		0449F93D1DEBDE620060BC90 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0449F93C1DEBDE620060BC90 /* TimePickerView.m */; };
 		044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */; };
 		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
@@ -47,8 +52,6 @@
 		045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30A1DCC65E5001B95B1 /* AccountViewController.m */; };
 		045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */; };
 		045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */; };
-		045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3141DCC8BE2001B95B1 /* AddPayingSuccessViewController.m */; };
-		045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045FE3151DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib */; };
 		045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3221DCC8C66001B95B1 /* EditNewAddressViewController.m */; };
 		045FE3251DCC8C66001B95B1 /* EditNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 045FE3231DCC8C66001B95B1 /* EditNewAddressViewController.xib */; };
 		0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF01DBDEF2200562CC4 /* Main.storyboard */; };
@@ -174,7 +177,6 @@
 		046BF04B1DE5338E00BC32E9 /* MessageListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF04A1DE5338E00BC32E9 /* MessageListCell.m */; };
 		046BF0541DE54C4C00BC32E9 /* MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF0531DE54C4C00BC32E9 /* MessageInputView.m */; };
 		046BF0571DE5507E00BC32E9 /* MessageMeumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF0561DE5507E00BC32E9 /* MessageMeumView.m */; };
-		046BF05D1DE5770400BC32E9 /* SinaleChatToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF05C1DE5770400BC32E9 /* SinaleChatToolBar.m */; };
 		046BF0601DE5940900BC32E9 /* SystemNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF05F1DE5940900BC32E9 /* SystemNotificationViewController.m */; };
 		046BF0621DE5997D00BC32E9 /* MessageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BF0611DE5997D00BC32E9 /* MessageListCell.xib */; };
 		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
@@ -298,8 +300,6 @@
 		0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B54E1DCADC7B00CB288A /* RegisteViewController.xib */; };
 		0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */; };
 		0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */; };
-		0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5601DCADC7B00CB288A /* PayingViewController.m */; };
-		0479B60D1DCADC7B00CB288A /* PayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5611DCADC7B00CB288A /* PayingViewController.xib */; };
 		0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5641DCADC7B00CB288A /* PresentApplicationViewController.m */; };
 		0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5651DCADC7B00CB288A /* PresentApplicationViewController.xib */; };
 		0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5681DCADC7B00CB288A /* PresentWaitingViewController.m */; };
@@ -350,7 +350,11 @@
 		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
 		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
 		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
-		04B161B11DE67F6700DABC77 /* MessageChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161B01DE67F6700DABC77 /* MessageChatListViewController.m */; };
+		04B161B81DE704C200DABC77 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161B71DE704C200DABC77 /* BaseModel.m */; };
+		04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161BD1DE7227300DABC77 /* MyShopAdressModel.m */; };
+		04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161C01DE7E5BD00DABC77 /* AddNewAdressVc.m */; };
+		04B161C31DE7E5BE00DABC77 /* AddNewAdressVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B161C11DE7E5BE00DABC77 /* AddNewAdressVc.xib */; };
+		04B161C61DE8457200DABC77 /* MyShopProvinceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161C51DE8457200DABC77 /* MyShopProvinceModel.m */; };
 		04CE13CE1DDC488100EB8777 /* SellerCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CE136E1DDC488100EB8777 /* SellerCenterViewController.m */; };
 		04CE13CF1DDC488100EB8777 /* SellerProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CE13731DDC488100EB8777 /* SellerProtectPowerViewController.m */; };
 		04CE13D01DDC488100EB8777 /* SellerWaitAcceptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CE13761DDC488100EB8777 /* SellerWaitAcceptViewController.m */; };
@@ -409,6 +413,11 @@
 		04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9B91DD40D610089236D /* ResetPsdViewController.m */; };
 		04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */; };
 		04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */; };
+		04E7772F1DEC24D4007B5146 /* FocusAndFansModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7772E1DEC24D4007B5146 /* FocusAndFansModel.m */; };
+		04E777351DEC2EE6007B5146 /* SystemPushMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */; };
+		04E777391DEC33C2007B5146 /* SystemNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777371DEC33C2007B5146 /* SystemNotificationCell.m */; };
+		04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E777381DEC33C2007B5146 /* SystemNotificationCell.xib */; };
+		04E7773D1DEC3F1F007B5146 /* NSString+CertificateImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7773C1DEC3F1F007B5146 /* NSString+CertificateImage.m */; };
 		04EA2AB51DDDAE5C0023D9A8 /* SellerOrderDetailProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AB41DDDAE5C0023D9A8 /* SellerOrderDetailProtectPowerViewController.m */; };
 		04EA2ACB1DDDAFE80023D9A8 /* SellerOrderDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2ABB1DDDAFE80023D9A8 /* SellerOrderDetailBottomView.m */; };
 		04EA2ACC1DDDAFE80023D9A8 /* SellerOrderDetailInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2ABE1DDDAFE80023D9A8 /* SellerOrderDetailInfoView.m */; };
@@ -427,12 +436,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		041DACD11DEC69F9001BA2C2 /* AddPayingSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPayingSuccessViewController.h; sourceTree = "<group>"; };
+		041DACD21DEC69F9001BA2C2 /* AddPayingSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPayingSuccessViewController.m; sourceTree = "<group>"; };
+		041DACD31DEC69F9001BA2C2 /* AddPayingSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddPayingSuccessViewController.xib; sourceTree = "<group>"; };
+		041DACD41DEC69F9001BA2C2 /* PayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingViewController.h; sourceTree = "<group>"; };
+		041DACD51DEC69F9001BA2C2 /* PayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingViewController.m; sourceTree = "<group>"; };
+		041DACD61DEC69F9001BA2C2 /* PayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayingViewController.xib; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		04486AB51DD012C400BC6D15 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		04486ABD1DD015FC00BC6D15 /* BaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseHandler.h; sourceTree = "<group>"; };
 		04486ABE1DD015FC00BC6D15 /* BaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseHandler.m; sourceTree = "<group>"; };
+		0449F93B1DEBDE620060BC90 /* TimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerView.h; sourceTree = "<group>"; };
+		0449F93C1DEBDE620060BC90 /* TimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerView.m; sourceTree = "<group>"; };
 		044C82EA1DCC411A00B62575 /* ChoseShopAdressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressCell.h; sourceTree = "<group>"; };
 		044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressCell.m; sourceTree = "<group>"; };
 		044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoseShopAdressCell.xib; sourceTree = "<group>"; };
@@ -505,9 +522,6 @@
 		045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChosedAdressView.m; sourceTree = "<group>"; };
 		045FE30F1DCC6C39001B95B1 /* ShopAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopAdressModel.h; sourceTree = "<group>"; };
 		045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopAdressModel.m; sourceTree = "<group>"; };
-		045FE3131DCC8BE2001B95B1 /* AddPayingSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPayingSuccessViewController.h; sourceTree = "<group>"; };
-		045FE3141DCC8BE2001B95B1 /* AddPayingSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPayingSuccessViewController.m; sourceTree = "<group>"; };
-		045FE3151DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddPayingSuccessViewController.xib; sourceTree = "<group>"; };
 		045FE3211DCC8C66001B95B1 /* EditNewAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNewAddressViewController.h; sourceTree = "<group>"; };
 		045FE3221DCC8C66001B95B1 /* EditNewAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNewAddressViewController.m; sourceTree = "<group>"; };
 		045FE3231DCC8C66001B95B1 /* EditNewAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditNewAddressViewController.xib; sourceTree = "<group>"; };
@@ -793,8 +807,6 @@
 		046BF0531DE54C4C00BC32E9 /* MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageInputView.m; sourceTree = "<group>"; };
 		046BF0551DE5507E00BC32E9 /* MessageMeumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMeumView.h; sourceTree = "<group>"; };
 		046BF0561DE5507E00BC32E9 /* MessageMeumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageMeumView.m; sourceTree = "<group>"; };
-		046BF05B1DE5770400BC32E9 /* SinaleChatToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaleChatToolBar.h; sourceTree = "<group>"; };
-		046BF05C1DE5770400BC32E9 /* SinaleChatToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaleChatToolBar.m; sourceTree = "<group>"; };
 		046BF05E1DE5940900BC32E9 /* SystemNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotificationViewController.h; sourceTree = "<group>"; };
 		046BF05F1DE5940900BC32E9 /* SystemNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemNotificationViewController.m; sourceTree = "<group>"; };
 		046BF0611DE5997D00BC32E9 /* MessageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageListCell.xib; sourceTree = "<group>"; };
@@ -1029,9 +1041,6 @@
 		0479B5501DCADC7B00CB288A /* SurePsdSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurePsdSuccessViewController.h; sourceTree = "<group>"; };
 		0479B5511DCADC7B00CB288A /* SurePsdSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurePsdSuccessViewController.m; sourceTree = "<group>"; };
 		0479B5521DCADC7B00CB288A /* SurePsdSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdSuccessViewController.xib; sourceTree = "<group>"; };
-		0479B55F1DCADC7B00CB288A /* PayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingViewController.h; sourceTree = "<group>"; };
-		0479B5601DCADC7B00CB288A /* PayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingViewController.m; sourceTree = "<group>"; };
-		0479B5611DCADC7B00CB288A /* PayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayingViewController.xib; sourceTree = "<group>"; };
 		0479B5631DCADC7B00CB288A /* PresentApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentApplicationViewController.h; sourceTree = "<group>"; };
 		0479B5641DCADC7B00CB288A /* PresentApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentApplicationViewController.m; sourceTree = "<group>"; };
 		0479B5651DCADC7B00CB288A /* PresentApplicationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentApplicationViewController.xib; sourceTree = "<group>"; };
@@ -1118,8 +1127,15 @@
 		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
 		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
 		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
-		04B161AF1DE67F6700DABC77 /* MessageChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageChatListViewController.h; sourceTree = "<group>"; };
-		04B161B01DE67F6700DABC77 /* MessageChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageChatListViewController.m; sourceTree = "<group>"; };
+		04B161B61DE704C200DABC77 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		04B161B71DE704C200DABC77 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
+		04B161BC1DE7227300DABC77 /* MyShopAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopAdressModel.h; sourceTree = "<group>"; };
+		04B161BD1DE7227300DABC77 /* MyShopAdressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShopAdressModel.m; sourceTree = "<group>"; };
+		04B161BF1DE7E5BD00DABC77 /* AddNewAdressVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewAdressVc.h; sourceTree = "<group>"; };
+		04B161C01DE7E5BD00DABC77 /* AddNewAdressVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewAdressVc.m; sourceTree = "<group>"; };
+		04B161C11DE7E5BE00DABC77 /* AddNewAdressVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddNewAdressVc.xib; sourceTree = "<group>"; };
+		04B161C41DE8457200DABC77 /* MyShopProvinceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopProvinceModel.h; sourceTree = "<group>"; };
+		04B161C51DE8457200DABC77 /* MyShopProvinceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShopProvinceModel.m; sourceTree = "<group>"; };
 		04CE136D1DDC488100EB8777 /* SellerCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerCenterViewController.h; sourceTree = "<group>"; };
 		04CE136E1DDC488100EB8777 /* SellerCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerCenterViewController.m; sourceTree = "<group>"; };
 		04CE13721DDC488100EB8777 /* SellerProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerProtectPowerViewController.h; sourceTree = "<group>"; };
@@ -1232,6 +1248,15 @@
 		04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPsdViewController.xib; sourceTree = "<group>"; };
 		04DAC9BD1DD420610089236D /* ResetPsdAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPsdAlertView.h; sourceTree = "<group>"; };
 		04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPsdAlertView.m; sourceTree = "<group>"; };
+		04E7772D1DEC24D4007B5146 /* FocusAndFansModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusAndFansModel.h; sourceTree = "<group>"; };
+		04E7772E1DEC24D4007B5146 /* FocusAndFansModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusAndFansModel.m; sourceTree = "<group>"; };
+		04E777331DEC2EE6007B5146 /* SystemPushMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPushMessageModel.h; sourceTree = "<group>"; };
+		04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemPushMessageModel.m; sourceTree = "<group>"; };
+		04E777361DEC33C2007B5146 /* SystemNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotificationCell.h; sourceTree = "<group>"; };
+		04E777371DEC33C2007B5146 /* SystemNotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemNotificationCell.m; sourceTree = "<group>"; };
+		04E777381DEC33C2007B5146 /* SystemNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemNotificationCell.xib; sourceTree = "<group>"; };
+		04E7773B1DEC3F1F007B5146 /* NSString+CertificateImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CertificateImage.h"; sourceTree = "<group>"; };
+		04E7773C1DEC3F1F007B5146 /* NSString+CertificateImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CertificateImage.m"; sourceTree = "<group>"; };
 		04EA2AB31DDDAE5C0023D9A8 /* SellerOrderDetailProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerOrderDetailProtectPowerViewController.h; sourceTree = "<group>"; };
 		04EA2AB41DDDAE5C0023D9A8 /* SellerOrderDetailProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerOrderDetailProtectPowerViewController.m; sourceTree = "<group>"; };
 		04EA2ABA1DDDAFE80023D9A8 /* SellerOrderDetailBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerOrderDetailBottomView.h; sourceTree = "<group>"; };
@@ -1290,6 +1315,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041DACD01DEC69F9001BA2C2 /* AddPayCode */ = {
+			isa = PBXGroup;
+			children = (
+				041DACD41DEC69F9001BA2C2 /* PayingViewController.h */,
+				041DACD51DEC69F9001BA2C2 /* PayingViewController.m */,
+				041DACD61DEC69F9001BA2C2 /* PayingViewController.xib */,
+				041DACD11DEC69F9001BA2C2 /* AddPayingSuccessViewController.h */,
+				041DACD21DEC69F9001BA2C2 /* AddPayingSuccessViewController.m */,
+				041DACD31DEC69F9001BA2C2 /* AddPayingSuccessViewController.xib */,
+			);
+			path = AddPayCode;
+			sourceTree = "<group>";
+		};
 		04486AB71DD0159900BC6D15 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
@@ -1316,6 +1354,8 @@
 		04486ABA1DD015BB00BC6D15 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
+				04E7773B1DEC3F1F007B5146 /* NSString+CertificateImage.h */,
+				04E7773C1DEC3F1F007B5146 /* NSString+CertificateImage.m */,
 			);
 			path = Handler;
 			sourceTree = "<group>";
@@ -1433,22 +1473,15 @@
 			path = Merchant;
 			sourceTree = "<group>";
 		};
-		045FE3121DCC8BE2001B95B1 /* AddPayongSuccessViewController */ = {
-			isa = PBXGroup;
-			children = (
-				045FE3131DCC8BE2001B95B1 /* AddPayingSuccessViewController.h */,
-				045FE3141DCC8BE2001B95B1 /* AddPayingSuccessViewController.m */,
-				045FE3151DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib */,
-			);
-			path = AddPayongSuccessViewController;
-			sourceTree = "<group>";
-		};
 		045FE3201DCC8C66001B95B1 /* EditNewAddressViewController */ = {
 			isa = PBXGroup;
 			children = (
 				045FE3211DCC8C66001B95B1 /* EditNewAddressViewController.h */,
 				045FE3221DCC8C66001B95B1 /* EditNewAddressViewController.m */,
 				045FE3231DCC8C66001B95B1 /* EditNewAddressViewController.xib */,
+				04B161BF1DE7E5BD00DABC77 /* AddNewAdressVc.h */,
+				04B161C01DE7E5BD00DABC77 /* AddNewAdressVc.m */,
+				04B161C11DE7E5BE00DABC77 /* AddNewAdressVc.xib */,
 			);
 			path = EditNewAddressViewController;
 			sourceTree = "<group>";
@@ -1495,6 +1528,8 @@
 		046BE8D91DE4524100BC32E9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04E777331DEC2EE6007B5146 /* SystemPushMessageModel.h */,
+				04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1502,8 +1537,6 @@
 		046BE8DA1DE4524100BC32E9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				046BF05B1DE5770400BC32E9 /* SinaleChatToolBar.h */,
-				046BF05C1DE5770400BC32E9 /* SinaleChatToolBar.m */,
 				046BF0521DE54C4C00BC32E9 /* MessageInputView.h */,
 				046BF0531DE54C4C00BC32E9 /* MessageInputView.m */,
 				046BF0551DE5507E00BC32E9 /* MessageMeumView.h */,
@@ -1511,6 +1544,9 @@
 				046BE8DE1DE4524100BC32E9 /* NotificationMessageCell.h */,
 				046BE8DF1DE4524100BC32E9 /* NotificationMessageCell.m */,
 				046BE8E01DE4524100BC32E9 /* NotificationMessageCell.xib */,
+				04E777361DEC33C2007B5146 /* SystemNotificationCell.h */,
+				04E777371DEC33C2007B5146 /* SystemNotificationCell.m */,
+				04E777381DEC33C2007B5146 /* SystemNotificationCell.xib */,
 				046BF0491DE5338E00BC32E9 /* MessageListCell.h */,
 				046BF04A1DE5338E00BC32E9 /* MessageListCell.m */,
 				046BF0611DE5997D00BC32E9 /* MessageListCell.xib */,
@@ -2828,10 +2864,7 @@
 		0479B55E1DCADC7B00CB288A /* Paying */ = {
 			isa = PBXGroup;
 			children = (
-				045FE3121DCC8BE2001B95B1 /* AddPayongSuccessViewController */,
-				0479B55F1DCADC7B00CB288A /* PayingViewController.h */,
-				0479B5601DCADC7B00CB288A /* PayingViewController.m */,
-				0479B5611DCADC7B00CB288A /* PayingViewController.xib */,
+				041DACD01DEC69F9001BA2C2 /* AddPayCode */,
 			);
 			path = Paying;
 			sourceTree = "<group>";
@@ -2941,6 +2974,8 @@
 				0479B5881DCADC7B00CB288A /* MessagePushViewController.h */,
 				0479B5891DCADC7B00CB288A /* MessagePushViewController.m */,
 				0479B58A1DCADC7B00CB288A /* MessagePushViewController.xib */,
+				0449F93B1DEBDE620060BC90 /* TimePickerView.h */,
+				0449F93C1DEBDE620060BC90 /* TimePickerView.m */,
 			);
 			path = MessagePush;
 			sourceTree = "<group>";
@@ -3001,6 +3036,9 @@
 		0479B5A31DCADC7B00CB288A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04B161B21DE7046600DABC77 /* ShopAdress */,
+				04E7772D1DEC24D4007B5146 /* FocusAndFansModel.h */,
+				04E7772E1DEC24D4007B5146 /* FocusAndFansModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3021,8 +3059,6 @@
 			children = (
 				046BE8D31DE451EF00BC32E9 /* MessageViewController.h */,
 				046BE8D41DE451EF00BC32E9 /* MessageViewController.m */,
-				04B161AF1DE67F6700DABC77 /* MessageChatListViewController.h */,
-				04B161B01DE67F6700DABC77 /* MessageChatListViewController.m */,
 				046BF05E1DE5940900BC32E9 /* SystemNotificationViewController.h */,
 				046BF05F1DE5940900BC32E9 /* SystemNotificationViewController.m */,
 				046BF0461DE5319B00BC32E9 /* SingleChatViewController.h */,
@@ -3070,6 +3106,8 @@
 				0479B5C91DCADC7B00CB288A /* BaseTabBarController.m */,
 				0479B5CA1DCADC7B00CB288A /* BaseViewController.h */,
 				0479B5CB1DCADC7B00CB288A /* BaseViewController.m */,
+				04B161B61DE704C200DABC77 /* BaseModel.h */,
+				04B161B71DE704C200DABC77 /* BaseModel.m */,
 			);
 			path = BaseViewController;
 			sourceTree = "<group>";
@@ -3135,6 +3173,17 @@
 				047AD6061DD5CE970025290E /* TopButonView.m */,
 			);
 			path = TopButtonsView;
+			sourceTree = "<group>";
+		};
+		04B161B21DE7046600DABC77 /* ShopAdress */ = {
+			isa = PBXGroup;
+			children = (
+				04B161BC1DE7227300DABC77 /* MyShopAdressModel.h */,
+				04B161BD1DE7227300DABC77 /* MyShopAdressModel.m */,
+				04B161C41DE8457200DABC77 /* MyShopProvinceModel.h */,
+				04B161C51DE8457200DABC77 /* MyShopProvinceModel.m */,
+			);
+			path = ShopAdress;
 			sourceTree = "<group>";
 		};
 		04CE136B1DDC488100EB8777 /* SellerCenter */ = {
@@ -3899,6 +3948,7 @@
 				046BE8E41DE4524100BC32E9 /* NotificationMessageCell.xib in Resources */,
 				044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */,
 				046F0BFF1DE2EB1900D50D5C /* ManagePictureaCell.xib in Resources */,
+				04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */,
 				046BF00D1DE4696600BC32E9 /* MWPhotoBrowser.bundle in Resources */,
 				04DAC9941DD21A9A0089236D /* MyFocusTableCell.xib in Resources */,
 				0479B61E1DCADC7B00CB288A /* AboutUsViewController.xib in Resources */,
@@ -3911,10 +3961,10 @@
 				04DAC9AA1DD2D1250089236D /* SearchFocusViewController.xib in Resources */,
 				0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */,
 				0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */,
-				0479B60D1DCADC7B00CB288A /* PayingViewController.xib in Resources */,
 				0479B6261DCADC7B00CB288A /* SettingViewController.xib in Resources */,
 				0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */,
 				0479B5D91DCADC7B00CB288A /* LiveViewController.xib in Resources */,
+				04B161C31DE7E5BE00DABC77 /* AddNewAdressVc.xib in Resources */,
 				045FE3251DCC8C66001B95B1 /* EditNewAddressViewController.xib in Resources */,
 				046BF0621DE5997D00BC32E9 /* MessageListCell.xib in Resources */,
 				046F0C0C1DE33B2000D50D5C /* PicturesCell.xib in Resources */,
@@ -3931,10 +3981,11 @@
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				046F0C071DE33A0400D50D5C /* PicturesViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
-				045FE3171DCC8BE2001B95B1 /* AddPayingSuccessViewController.xib in Resources */,
 				0452A2021DE1A8BB007C1E4F /* SellerDoInputCell.xib in Resources */,
 				046BF03B1DE4696600BC32E9 /* EaseUIResource.bundle in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
+				041DACDA1DEC69F9001BA2C2 /* PayingViewController.xib in Resources */,
+				041DACD81DEC69F9001BA2C2 /* AddPayingSuccessViewController.xib in Resources */,
 				0479B6241DCADC7B00CB288A /* SecurityAccountViewController.xib in Resources */,
 				0479B6201DCADC7B00CB288A /* MessagePushViewController.xib in Resources */,
 				0479B61C1DCADC7B00CB288A /* OrderGoodsViewController.xib in Resources */,
@@ -4011,11 +4062,11 @@
 				046BF0241DE4696600BC32E9 /* EaseViewController.m in Sources */,
 				046BF03A1DE4696600BC32E9 /* EaseConversationCell.m in Sources */,
 				046F0BA21DE2AB8B00D50D5C /* DogDetailCardView.m in Sources */,
+				0449F93D1DEBDE620060BC90 /* TimePickerView.m in Sources */,
 				04EA2AEE1DDDDA6C0023D9A8 /* SellerChangeViewController.m in Sources */,
 				04EA2AD01DDDAFE80023D9A8 /* SellerOrderDetailStateView.m in Sources */,
 				04CE13EC1DDC488100EB8777 /* SellerDogCardView.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
-				045FE3161DCC8BE2001B95B1 /* AddPayingSuccessViewController.m in Sources */,
 				046F0C0B1DE33B2000D50D5C /* PicturesCell.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
@@ -4026,6 +4077,7 @@
 				046BF0021DE4696600BC32E9 /* PSTCollectionViewCell.m in Sources */,
 				046F0BA81DE2AB8B00D50D5C /* StateView.m in Sources */,
 				046F0BF41DE2AB9E00D50D5C /* WatiConsigneeViewController.m in Sources */,
+				04E7773D1DEC3F1F007B5146 /* NSString+CertificateImage.m in Sources */,
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
 				046F0BA61DE2AB8B00D50D5C /* SellinfoView.m in Sources */,
 				046BF0071DE4696600BC32E9 /* PSTCollectionViewLayout.m in Sources */,
@@ -4033,23 +4085,24 @@
 				0479B5DF1DCADC7B00CB288A /* LiveViewCellModel.m in Sources */,
 				0479B6121DCADC7B00CB288A /* CertificateViewController.m in Sources */,
 				046BF0231DE4696600BC32E9 /* EaseUsersListViewController.m in Sources */,
+				04E777351DEC2EE6007B5146 /* SystemPushMessageModel.m in Sources */,
 				046BF00F1DE4696600BC32E9 /* EaseConversationModel.m in Sources */,
 				046BF02B1DE4696600BC32E9 /* EaseBubbleView+Gif.m in Sources */,
 				04CE13D81DDC488100EB8777 /* SellerMyLiveViewController.m in Sources */,
-				0479B60C1DCADC7B00CB288A /* PayingViewController.m in Sources */,
 				04CE13E41DDC488100EB8777 /* SellerAcceptRateHeaderView.m in Sources */,
 				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
+				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				046BF0281DE4696600BC32E9 /* EaseMessageCell.m in Sources */,
 				047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */,
 				046BEFF01DE4696600BC32E9 /* EMSDImageCache.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
-				04B161B11DE67F6700DABC77 /* MessageChatListViewController.m in Sources */,
 				046BF0421DE48F9800BC32E9 /* LoginViewController+ThirdLogin.m in Sources */,
 				046BF0161DE4696600BC32E9 /* UIViewController+HUD.m in Sources */,
+				041DACD71DEC69F9001BA2C2 /* AddPayingSuccessViewController.m in Sources */,
 				04CE13DC1DDC488100EB8777 /* SellerProtectPowerCell.m in Sources */,
 				045D514E1DD99BEF001854A8 /* IdentityPictureCell.m in Sources */,
 				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
@@ -4069,6 +4122,7 @@
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
 				04CE13EA1DDC488100EB8777 /* SellerBaseCell.m in Sources */,
+				041DACD91DEC69F9001BA2C2 /* PayingViewController.m in Sources */,
 				046BF0291DE4696600BC32E9 /* EaseMessageTimeCell.m in Sources */,
 				046BEFFE1DE4696600BC32E9 /* UIImageView+EMWebCache.m in Sources */,
 				04CE13E51DDC488100EB8777 /* SellerMyGoodsCell.m in Sources */,
@@ -4092,6 +4146,7 @@
 				0452A1E51DE0B89C007C1E4F /* AddDogColorAlertView.m in Sources */,
 				0452A1CB1DDF374B007C1E4F /* SellerChangePayView.m in Sources */,
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
+				04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				046F0BA11DE2AB8B00D50D5C /* DetailPayMoney.m in Sources */,
@@ -4114,6 +4169,7 @@
 				046BEFCD1DE4696600BC32E9 /* amrFileCodec.mm in Sources */,
 				046BF0271DE4696600BC32E9 /* EaseCustomMessageCell.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
+				04E7772F1DEC24D4007B5146 /* FocusAndFansModel.m in Sources */,
 				04CE13D31DDC488100EB8777 /* SellerWaitSendViewController.m in Sources */,
 				046BF01C1DE4696600BC32E9 /* EaseEmotionEscape.m in Sources */,
 				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
@@ -4151,7 +4207,6 @@
 				04DAC9901DD21A9A0089236D /* DogDetailInfoCell.m in Sources */,
 				046BF0151DE4696600BC32E9 /* UIViewController+DismissKeyboard.m in Sources */,
 				0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */,
-				046BF05D1DE5770400BC32E9 /* SinaleChatToolBar.m in Sources */,
 				0479B5F71DCADC7B00CB288A /* DogMarkView.m in Sources */,
 				046F0B2B1DE2A8CB00D50D5C /* BuyCenterViewController.m in Sources */,
 				0479B5F21DCADC7B00CB288A /* DogShowViewController.m in Sources */,
@@ -4188,6 +4243,7 @@
 				046BF0541DE54C4C00BC32E9 /* MessageInputView.m in Sources */,
 				046F0BA31DE2AB8B00D50D5C /* GoodsPriceView.m in Sources */,
 				0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */,
+				04E777391DEC33C2007B5146 /* SystemNotificationCell.m in Sources */,
 				046BF0301DE4696600BC32E9 /* EaseBubbleView+Voice.m in Sources */,
 				046BE8D71DE451EF00BC32E9 /* MessageViewController.m in Sources */,
 				046BEFC71DE4696600BC32E9 /* EMAudioRecorderUtil.m in Sources */,
@@ -4262,6 +4318,8 @@
 				046F0BA91DE2AB8B00D50D5C /* ProtectFaliedCell.m in Sources */,
 				046BF0111DE4696600BC32E9 /* EaseUserModel.m in Sources */,
 				046BEFF31DE4696600BC32E9 /* EMSDWebImageDownloader.m in Sources */,
+				04B161C61DE8457200DABC77 /* MyShopProvinceModel.m in Sources */,
+				04B161B81DE704C200DABC77 /* BaseModel.m in Sources */,
 				046BEFFC1DE4696600BC32E9 /* UIImage+EMWebP.m in Sources */,
 				0479B6391DCADC7B00CB288A /* BaseTabBarController.m in Sources */,
 				046BF0181DE4696600BC32E9 /* EaseConvertToCommonEmoticonsHelper.m in Sources */,

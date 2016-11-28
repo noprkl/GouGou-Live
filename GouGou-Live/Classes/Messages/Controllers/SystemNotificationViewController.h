@@ -10,4 +10,6 @@
 
 @interface SystemNotificationViewController : BaseViewController
 
+@property(nonatomic, strong) NSArray *models; /**< 数据 */
+
 @end

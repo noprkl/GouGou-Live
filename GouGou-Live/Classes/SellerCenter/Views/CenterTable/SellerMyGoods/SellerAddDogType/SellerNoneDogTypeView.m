@@ -202,7 +202,7 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if ([string isChinese] && range.location < 10) {
+    if ([NSString isChinese:string] && range.location < 10) {
         return YES;
     }
     

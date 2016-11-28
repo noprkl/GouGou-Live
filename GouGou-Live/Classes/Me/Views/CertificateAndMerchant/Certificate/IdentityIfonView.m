@@ -125,7 +125,7 @@
         _nameTextfiled.delegate = self;
         _nameTextfiled.textColor = [UIColor colorWithHexString:@"#333333"];
         _nameTextfiled.font = [UIFont systemFontOfSize:16];
-        [_nameTextfiled addTarget:self action:@selector(nameTextChangeAction:) forControlEvents:UIControlEventAllEvents];
+        [_nameTextfiled addTarget:self action:@selector(nameTextChangeAction:) forControlEvents:UIControlEventEditingDidBegin];
     }
     return _nameTextfiled;
 }
@@ -166,7 +166,7 @@
         _identitiNumTextfiled.delegate = self;
         _nameTextfiled.textColor = [UIColor colorWithHexString:@"#333333"];
         _identitiNumTextfiled.font = [UIFont systemFontOfSize:16];
-        [_identitiNumTextfiled addTarget:self action:@selector(identityTextChangeAction:) forControlEvents:UIControlEventAllEvents];
+        [_identitiNumTextfiled addTarget:self action:@selector(identityTextChangeAction:) forControlEvents:UIControlEventEditingDidBegin];
     }
     return _identitiNumTextfiled;
 }
@@ -193,37 +193,38 @@
     }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
+    [textField resignFirstResponder];
     return YES;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    if (textField == self.nameTextfiled) {
-        
-        if ([string isChinese]) {
-            
-            return YES;
-        }
-        
-        if (range.location < 4) {
-           
-            return YES;
-        }
-        return NO;
-    
-    
-    }else if (textField == self.identitiNumTextfiled) {
-       
-        if (range.location < 18) {
-            return YES;
-        }
-        return NO;
-        
-        
-    }else{
-        return NO;
-    }
-    
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//
+//    if (textField == self.nameTextfiled) {
+////        if (range.location < 4) {
+////            BOOL flag = [NSString isChinese:string];
+////            
+////            if (flag) {
+////                
+////                return YES;
+////            }
+////            return NO;
+////        }
+////        return NO;
+//        return YES;
+//    
+//    }else if(textField == self.identitiNumTextfiled) {
+//        if (range.location < 18) {
+//            BOOL flagNum = [NSString validateNumber:string];
+//           
+//            NSString *str = [textField.text substringWithRange:NSMakeRange(17, 1)];
+//            BOOL flag = [str isEqualToString:@"X"];
+//            if (flagNum || flag) {
+//                return YES;
+//            }
+//            return NO;
+//        }
+//        return NO;
+//    }
+//        return YES;
+//}
 @end

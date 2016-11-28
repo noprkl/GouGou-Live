@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickImageBlock)();
+typedef void(^ClickImageBlock)(UIImageView *identityView);
 
 @interface IdentityPictureCell : UITableViewCell
 

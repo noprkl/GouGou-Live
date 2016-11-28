@@ -303,7 +303,7 @@
 //        self.shipStyleNote.hidden = YES;
 
         // 判断汉字
-        BOOL flag = [string isChinese];
+        BOOL flag = [NSString isChinese:string];
         if (flag) {
             return YES;
         }

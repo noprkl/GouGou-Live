@@ -37,21 +37,17 @@ static NSString * MedrchantCell = @"MedrchantCell";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    if ([[UserInfos sharedUser].isreal isEqualToString:@"0"]) {
-//        [self.view addSubview:self.unCertificateVIew];
-//
-//    }else{
-//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(clickHandinCertitycate)];
-//        
-//        [self.view addSubview:self.doneCertificateView];
-//    }
-    
-//    [self.view addSubview:self.unCertificateVIew];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(clickHandinCertitycate)];
-    
-    [self.view addSubview:self.doneCertificateView];
-    [self.view addSubview:self.photoView];
+  
+    if ([UserInfos sharedUser].isreal) {
+        [self.view addSubview:self.unCertificateVIew];
+
+    }else{
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(clickHandinCertitycate)];
+        
+        [self.view addSubview:self.doneCertificateView];
+        [self.view addSubview:self.photoView];
+
+    }
 
 }
 // 点击提交认证

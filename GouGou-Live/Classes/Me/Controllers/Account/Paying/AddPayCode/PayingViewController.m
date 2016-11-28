@@ -30,6 +30,7 @@
     [self initUI];
 }
 - (void)initUI {
+    self.userNameTexfiled.text = [UserInfos sharedUser].username;
     self.sureButton.layer.cornerRadius = 7.5;
     self.sureButton.layer.masksToBounds = YES;
     self.userNameTexfiled.delegate = self;
@@ -49,23 +50,26 @@
 }
 
 - (IBAction)cilckSureButton:(UIButton *)sender {
-    
+    [self.payingTextfiled resignFirstResponder];
     NSString * payingAcount = self.payingTextfiled.text;
     
     BOOL flag =  [NSString valiMobile:payingAcount];
     
     if (payingAcount.length == 0) {
         
-        DLog(@"手机号不能为空");
+        [self showAlert:@"手机号不能为空"];
         
     }else if(!flag){
         
-        DLog(@"所输入的不是手机号");
+        [self showAlert:@"手机号输入有误"];
+        
+    }else if(![[UserInfos sharedUser].usertel isEqualToString:payingAcount]){
+        
+        [self showAlert:@"您输入的手机号与账号不一致"];
         
     }else{
-       // 自出说明输入的是手机号，需要进行网络请求验证
+        // 自出说明输入的是手机号，需要进行网络请求验证
         [self requestPhoneNum];
-        
     }
 
 }
@@ -73,10 +77,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
     if (textField == self.userNameTexfiled) {
-        BOOL flag = [NSString validateNumber:string];
-        if (range.location < 11 && flag) {
-            return YES;
-        }
+        
         return NO;
         
     }else if (textField == self.payingTextfiled){
@@ -88,5 +89,20 @@
         return NO;
     }
     return NO;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.userNameTexfiled) {
+        [textField resignFirstResponder];
+    }
+    
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if (textField == self.userNameTexfiled) {
+        return NO;
+    }
+    return YES;
+    
 }
 @end

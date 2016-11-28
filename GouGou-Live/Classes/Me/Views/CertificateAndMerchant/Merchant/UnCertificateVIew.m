@@ -87,9 +87,7 @@
         _countdownBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         
         [_countdownBtn setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
-        
-        [_countdownBtn addTarget:self action:@selector(countdownAction:) forControlEvents:UIControlEventTouchDown];
-    }
+        }
     return _countdownBtn;
 }
 

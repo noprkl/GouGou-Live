@@ -120,7 +120,8 @@
                          is_merchant:successJson[@"data"][@"is_merchant"]
                              is_real:successJson[@"data"][@"is_real"]
                           user_motto:successJson[@"data"][@"user_motto"]
-                             isLogin:@(YES)];
+                       user_pay_code:successJson[@"data"][@"user_pay_code"]                     ];
+                
                 // 通知给所有人 已经登录
 //                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
 //                
@@ -161,20 +162,21 @@
            is_merchant:(NSString *)is_merchant
                is_real:(NSString *)is_real
             user_motto:(NSString *)user_motto
-               isLogin:(BOOL)isLogin
+         user_pay_code:(NSString *)user_pay_code
+
 {
     [UserInfos sharedUser].userimgurl = ![user_img_url isEqual:[NSNull null]] ?user_img_url:@"";
     [UserInfos sharedUser].username = ![user_name isEqual:[NSNull null]] ?user_name:@"";
     [UserInfos sharedUser].usernickname = ![user_nick_name isEqual:[NSNull null]] ?user_nick_name:@"";
     [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
+    [UserInfos sharedUser].userpaycode = ![user_pay_code isEqual:[NSNull null]] ? user_pay_code:@"";
+    
     [UserInfos sharedUser].ID = ID;
     [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;
-    [UserInfos sharedUser].isLogin = YES;
     
     [UserInfos setUser];
 }
-
 #pragma mark
 #pragma mark - 文本框监听
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {

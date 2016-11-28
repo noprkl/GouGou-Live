@@ -16,12 +16,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="369" height="66"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="通知消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRK-AC-yps">
-                        <rect key="frame" x="64" y="12" width="56" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="1" green="0.65490196079999996" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbg-k6-exf">
                         <rect key="frame" x="10" y="10" width="44" height="44"/>
                         <constraints>
@@ -69,17 +63,23 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4O9-FR-TQs">
+                        <rect key="frame" x="64" y="13" width="56" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="1" green="0.63137254901960782" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="eRK-AC-yps" firstAttribute="leading" secondItem="Dbg-k6-exf" secondAttribute="trailing" constant="10" id="1vr-po-Ouz"/>
+                    <constraint firstItem="JLR-oQ-a4m" firstAttribute="centerY" secondItem="4O9-FR-TQs" secondAttribute="centerY" id="434-f1-pF8"/>
                     <constraint firstItem="Bfq-Im-BSK" firstAttribute="top" secondItem="Dbg-k6-exf" secondAttribute="centerY" constant="5" id="4Pq-1d-5jC"/>
                     <constraint firstAttribute="trailing" secondItem="JLR-oQ-a4m" secondAttribute="trailing" constant="10" id="9JB-FY-xfz"/>
                     <constraint firstItem="Dbg-k6-exf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Cs6-zg-eSG"/>
                     <constraint firstAttribute="trailing" secondItem="Bfq-Im-BSK" secondAttribute="trailing" constant="40" id="FAy-ZN-IJC"/>
-                    <constraint firstItem="eRK-AC-yps" firstAttribute="bottom" secondItem="Dbg-k6-exf" secondAttribute="centerY" constant="-3" id="GXU-sf-hGJ"/>
                     <constraint firstItem="Bfq-Im-BSK" firstAttribute="leading" secondItem="Dbg-k6-exf" secondAttribute="trailing" constant="10" id="KfP-2b-G1K"/>
+                    <constraint firstItem="4O9-FR-TQs" firstAttribute="leading" secondItem="Dbg-k6-exf" secondAttribute="trailing" constant="10" id="LjT-6y-HCW"/>
                     <constraint firstItem="Dbg-k6-exf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Thx-cx-8f2"/>
-                    <constraint firstItem="JLR-oQ-a4m" firstAttribute="centerY" secondItem="eRK-AC-yps" secondAttribute="centerY" id="o5p-RL-bti"/>
+                    <constraint firstItem="4O9-FR-TQs" firstAttribute="bottom" secondItem="Dbg-k6-exf" secondAttribute="centerY" constant="-3" id="hPl-qg-dy6"/>
                     <constraint firstAttribute="trailing" secondItem="VUa-16-ZfO" secondAttribute="trailing" constant="10" id="oan-kb-aYl"/>
                     <constraint firstItem="VUa-16-ZfO" firstAttribute="width" secondItem="VUa-16-ZfO" secondAttribute="height" multiplier="11:11" id="qfQ-Uh-A8H"/>
                     <constraint firstItem="VUa-16-ZfO" firstAttribute="leading" secondItem="Bfq-Im-BSK" secondAttribute="trailing" constant="40" id="svi-ek-UTs"/>
@@ -93,8 +93,9 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="messageContentLabel" destination="Bfq-Im-BSK" id="06o-rU-ZSB"/>
                 <outlet property="messageCountLabel" destination="VUa-16-ZfO" id="jb1-1L-6nl"/>
-                <outlet property="messageLabel" destination="vpm-F3-Gfv" id="TWG-LE-7vN"/>
+                <outlet property="messageLabel" destination="4O9-FR-TQs" id="sJM-71-SLc"/>
                 <outlet property="timeLabel" destination="JLR-oQ-a4m" id="JSp-eQ-JD8"/>
             </connections>
             <point key="canvasLocation" x="321.5" y="165.5"/>

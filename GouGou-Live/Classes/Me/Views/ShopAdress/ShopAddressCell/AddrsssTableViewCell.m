@@ -8,7 +8,7 @@
 
 #import "AddrsssTableViewCell.h"
 #import "DeletePrommtView.h"
-
+#import "MyShopAdressModel.h"
 
 @interface AddrsssTableViewCell ()
 /** 间隔view */
@@ -58,6 +58,19 @@
        
      }
     return self;
+}
+- (void)setAdressModel:(MyShopAdressModel *)adressModel {
+    _adressModel = adressModel;
+    self.userName.text = adressModel.userName;
+    self.phoneTextfiled.text = adressModel.userTel;
+    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", adressModel.userProvince, adressModel.userCity, adressModel.userDistrict, adressModel.userAddress];
+    self.detailAddress.text = adress;
+    if (adressModel.isDefault == 1) {
+        self.duihaoImageBtn.selected = YES;
+    }else{
+        self.duihaoImageBtn.selected = NO;
+    }
+    
 }
 #pragma mark
 #pragma mark - 约束
@@ -307,9 +320,6 @@
     if (_deleteBlock) {
         _deleteBlock(self.deleteBtn);
     }
-    
-    DeletePrommtView * deletePrommpt = [[DeletePrommtView alloc] init];
-    [deletePrommpt show];
     
 }
 

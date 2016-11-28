@@ -137,7 +137,7 @@
     BOOL flag =  [NSString valiMobile:textField.text];
     if (!flag) {
         
-        DLog(@"输入不符合");
+        [self showAlert:@"请输入正确的手机号"];
     }
 }
 

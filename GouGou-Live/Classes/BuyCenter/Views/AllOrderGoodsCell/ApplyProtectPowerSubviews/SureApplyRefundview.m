@@ -177,7 +177,7 @@
 
      if (textView == _detailTextView) {
         
-        if ([textView.text isChinese]) {
+        if ([NSString isChinese:textView.text]) {
             
             return YES;
         }

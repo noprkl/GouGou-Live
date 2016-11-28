@@ -96,7 +96,7 @@ static NSString *cellid = @"ManagePictureaCell";
         flowlayout.itemSize = CGSizeMake(W, W + 35);
 
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) collectionViewLayout:flowlayout];
-        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.delegate = self;
         _collectionView.dataSource = self;

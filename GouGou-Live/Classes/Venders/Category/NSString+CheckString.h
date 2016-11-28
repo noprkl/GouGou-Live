@@ -19,7 +19,8 @@
 + (BOOL)validateCharacter:(NSString *)string;
 
 /** 判断是否为中文 */
-- (BOOL)isChinese;
++ (BOOL)isChinese:(NSString *)string;
 
+/** 判断是否为身份证号 */
 - (BOOL)judgeIdentityStringValid:(NSString *)identityString;
 @end

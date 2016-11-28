@@ -10,8 +10,12 @@
 
 typedef void(^SelectBtnBlock)(BOOL isSelect);
 
+@class FocusAndFansModel;
 @interface MyFocusTableCell : UITableViewCell
 
 @property(nonatomic, strong) SelectBtnBlock selectBlock; /**< 后边圆的按钮 */
+
+
+@property(nonatomic, strong) FocusAndFansModel *model; /**< 模型 */
 
 @end

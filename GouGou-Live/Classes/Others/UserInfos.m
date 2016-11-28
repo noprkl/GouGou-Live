@@ -16,8 +16,9 @@ static NSString *usertelKey = @"usertel";
 static NSString *userimgurlKey = @"userimgurl";
 static NSString *ismerchantKey = @"ismerchant";
 static NSString *isrealKey = @"isreal";
-static NSString *isLoginKey = @"isLogin";
 static NSString *usermottoKey = @"usermotto";
+static NSString *userpaycodeKey = @"userpaycode";
+
 @implementation UserInfos
 
 + (instancetype)sharedUser {
@@ -42,43 +43,37 @@ static NSString *usermottoKey = @"usermotto";
         _usertel = [[NSUserDefaults standardUserDefaults] objectForKey:usertelKey];
         _ismerchant = [[NSUserDefaults standardUserDefaults] objectForKey:ismerchantKey];
         _isreal = [[NSUserDefaults standardUserDefaults] objectForKey:isrealKey];
-        _isLogin = [[NSUserDefaults standardUserDefaults] objectForKey:isLoginKey];
         _usermotto = [[NSUserDefaults standardUserDefaults] objectForKey:usermottoKey];
+        _userpaycode = [[NSUserDefaults standardUserDefaults] objectForKey:userpaycodeKey];
+
         }
     return self;
 }
 + (void)setUser {
     
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].ID forKey:IDKey];
-//    if ([UserInfos sharedUser].userimgurl != NULL) {
-//        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
-//    }
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userPsd forKey:userPsdKey];
 
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userimgurl forKey:userimgurlKey];
-//    if ([UserInfos sharedUser].username != NULL) {
-//        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].username forKey:usernameKey];
-//    }
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].username  forKey:usernameKey];
-//    if ([UserInfos sharedUser].usermotto != NULL) {
-//        [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usermotto forKey:usermottoKey];
-//    }
+
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usermotto forKey:usermottoKey];
    
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usernickname forKey:usernicknameKey];
 
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usertel forKey:usertelKey];
-    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].isreal forKey:isrealKey];
-    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].ismerchant forKey:ismerchantKey];
-    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].isLogin) forKey:isLoginKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userpaycode forKey:userpaycodeKey];
+
+    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].isreal) forKey:isrealKey];
+    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].ismerchant) forKey:ismerchantKey];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (BOOL)getUser {
     
-    if ([UserInfos sharedUser].isLogin == YES) {
+    if ([UserInfos sharedUser].usertel.length != 0) {
         
         return YES;
     }
@@ -97,6 +92,10 @@ static NSString *usermottoKey = @"usermotto";
     if ([UserInfos sharedUser].usermotto != NULL) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:usermottoKey];
     }
+    if ([UserInfos sharedUser].userpaycode != NULL) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:userpaycodeKey];
+    }
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:ismerchantKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:isrealKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:IDKey];

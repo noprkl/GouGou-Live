@@ -12,6 +12,7 @@
 #import "PlayBackView.h"
 #import "DogTypeCellModel.h"
 #import "MyPagePictureView.h"
+#import "PromptView.h"
 
 #import "CertificateViewController.h"
 #import "MerchantViewController.h"
@@ -103,7 +104,10 @@ static NSString *cellid = @"cellid";
                 MyPageDescView *descView = [[MyPageDescView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, 73))];
                 descView.backgroundColor = [UIColor whiteColor];
                 descView.editBlock = ^(){
-                    DLog(@"编辑");
+                    PromptView *promit = [[PromptView alloc] init];
+
+                    promit.title = @"简介编辑";
+                    [promit show];
                 };
                    [cell.contentView addSubview:descView];
             }
@@ -122,32 +126,22 @@ static NSString *cellid = @"cellid";
                 [cell.contentView addSubview:label];
 
                 // 根据是否认证 创建认证按钮
-//                if (![[UserInfos sharedUser].isreal isEqualToString:@"0"]) {
-//
-//                    UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-//                    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-//                    btn.frame = CGRectMake(0, 0, 75, 33);
-//                    [btn setTitle:@"去认证" forState:(UIControlStateNormal)];
-//                    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
-//                    btn.titleLabel.font = [UIFont systemFontOfSize:14];
-//                    btn.layer.cornerRadius = 10;
-//                    btn.layer.masksToBounds = YES;
-//
-//                    [btn addTarget:self action:@selector(clickRealBtnAction) forControlEvents:(UIControlEventTouchDown)];
-//
-//                    cell.accessoryView = btn;
-//                }
-                UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-                btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-                btn.frame = CGRectMake(0, 0, 75, 33);
-                [btn setTitle:@"去认证" forState:(UIControlStateNormal)];
-                [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
-                btn.titleLabel.font = [UIFont systemFontOfSize:14];
-                btn.layer.cornerRadius = 10;
-                btn.layer.masksToBounds = YES;
-                [btn addTarget:self action:@selector(clickRealBtnAction) forControlEvents:(UIControlEventTouchDown)];
-                
-                cell.accessoryView = btn;
+                if (![UserInfos sharedUser].isreal) {
+
+                    UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+                    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+                    btn.frame = CGRectMake(0, 0, 75, 33);
+                    [btn setTitle:@"去认证" forState:(UIControlStateNormal)];
+                    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
+                    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+                    btn.layer.cornerRadius = 10;
+                    btn.layer.masksToBounds = YES;
+
+                    [btn addTarget:self action:@selector(clickRealBtnAction) forControlEvents:(UIControlEventTouchDown)];
+
+                    cell.accessoryView = btn;
+                }
+               
             }else if (indexPath.row == 1){ // 商家认证
                 cell.textLabel.text = @"商家认证";
                 cell.textLabel.font = [UIFont systemFontOfSize:16];
@@ -159,34 +153,23 @@ static NSString *cellid = @"cellid";
                 label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
                 [cell.contentView addSubview:label];
-                                // 根据是否认证 创建认证按钮
-//                if (![[UserInfos sharedUser].ismerchant isEqualToString:@"0"] && ![[UserInfos sharedUser].isreal isEqualToString:@"0"]) {
-//                    UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-//                    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-//                    btn.frame = CGRectMake(0, 0, 75, 33);
-//                    [btn setTitle:@"去认证" forState:(UIControlStateNormal)];
-//                    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
-//                    btn.titleLabel.font = [UIFont systemFontOfSize:14];
-//                    btn.layer.cornerRadius = 10;
-//                    btn.layer.masksToBounds = YES;
-//
-//                    [btn addTarget:self action:@selector(clickRealBtnAction) forControlEvents:(UIControlEventTouchDown)];
-//                    
-//                    cell.accessoryView = btn;
-//
-//                }
-                UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-                btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-                btn.frame = CGRectMake(0, 0, 75, 33);
-                [btn setTitle:@"去认证" forState:(UIControlStateNormal)];
-                [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
-                btn.titleLabel.font = [UIFont systemFontOfSize:14];
-                btn.layer.cornerRadius = 10;
-                btn.layer.masksToBounds = YES;
-
-                [btn addTarget:self action:@selector(clickMerchantBtnAction) forControlEvents:(UIControlEventTouchDown)];
                 
-                cell.accessoryView = btn;
+                // 根据是否认证 创建认证按钮
+                if (![UserInfos sharedUser].ismerchant) {
+                    UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+                    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+                    btn.frame = CGRectMake(0, 0, 75, 33);
+                    [btn setTitle:@"去认证" forState:(UIControlStateNormal)];
+                    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
+                    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+                    btn.layer.cornerRadius = 10;
+                    btn.layer.masksToBounds = YES;
+
+                    [btn addTarget:self action:@selector(clickMerchantBtnAction) forControlEvents:(UIControlEventTouchDown)];
+                    
+                    cell.accessoryView = btn;
+
+                }
             }
             break;
         case 3:

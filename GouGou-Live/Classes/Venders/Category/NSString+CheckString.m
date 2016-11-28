@@ -44,9 +44,9 @@
 }
 // 判断是否是数字
 + (BOOL)validateNumber:(NSString*)number {
-    BOOL res =YES;
+    BOOL res = YES;
     NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    int i =0;
+    int i = 0;
     while (i < number.length) {
         NSString * string = [number substringWithRange:NSMakeRange(i,1)];
         NSRange range = [string rangeOfCharacterFromSet:tmpSet];
@@ -59,11 +59,18 @@
     return res;
 }
 // 判断是否为中文
-- (BOOL)isChinese
++ (BOOL)isChinese:(NSString *)string
 {
-    NSString *match = @"(^[\u4e00-\u9fa5]+$)";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF matches %@", match];
-    return [predicate evaluateWithObject:self];
+//    unichar c = [string characterAtIndex:0];
+//    if (c >= 0x4E00 && c <= 0x9FFF)
+//    {
+//        return YES;
+//    }
+//    else
+//    {
+//        return NO;
+//    }
+    return YES;
 }
 
 + (BOOL)validateCharacter:(NSString *)string {

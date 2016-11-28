@@ -8,10 +8,9 @@
 
 #import "BaseViewController.h"
 
-typedef void(^ClickSaveItemBlock)();
-
+@class MyShopAdressModel;
 @interface EditNewAddressViewController : BaseViewController
 
-@property(nonatomic, strong) ClickSaveItemBlock saveBlock; /**< 保存按钮 */
+@property(nonatomic, strong) MyShopAdressModel *adressModel; /**< 地址 */
 
 @end

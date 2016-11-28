@@ -9,6 +9,7 @@
 #import "MyFocusViewController.h"
 #import "MyFocusTableCell.h"
 #import "SearchFocusViewController.h"
+#import "FocusAndFansModel.h"
 
 @interface MyFocusViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -49,6 +50,11 @@ static NSString *cellid = @"MyFocusCell";
     SearchFocusViewController *seachFocusVC = [[SearchFocusViewController alloc] init];
     [self.navigationController pushViewController:seachFocusVC animated:YES];
 }
+
+- (void)setFocusArr:(NSArray *)focusArr {
+    _focusArr = focusArr;
+    [self.dataArr addObjectsFromArray:[FocusAndFansModel mj_objectArrayWithKeyValuesArray:focusArr]];
+}
 #pragma mark
 #pragma mark - TableView
 - (NSMutableArray *)dataArr {
@@ -67,12 +73,14 @@ static NSString *cellid = @"MyFocusCell";
     return _tableView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.dataArr.count;
-    return 15;
+    return self.dataArr.count;
+//    return 15;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.model = self.focusArr[indexPath.row];
+    
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {
             DLog(@"关注");
@@ -91,6 +99,5 @@ static NSString *cellid = @"MyFocusCell";
     [super didReceiveMemoryWarning];
     
 }
-
 
 @end

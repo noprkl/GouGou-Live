@@ -8,6 +8,7 @@
 
 #import "MyFansViewController.h"
 #import "MyFocusTableCell.h"
+#import "FocusAndFansModel.h"
 
 @interface MyFansViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -37,6 +38,10 @@ static NSString *cellid = @"MyFocusCell";
     self.title = @"我的粉丝";
     [self.view addSubview:self.tableView];
 }
+- (void)setFansArr:(NSArray *)fansArr {
+    _fansArr = fansArr;
+    [self.dataArr addObjectsFromArray:[FocusAndFansModel mj_objectArrayWithKeyValuesArray:fansArr]];
+}
 #pragma mark
 #pragma mark - 懒加载
 - (NSMutableArray *)dataArr {
@@ -58,12 +63,14 @@ static NSString *cellid = @"MyFocusCell";
 #pragma mark
 #pragma mark - 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //    return self.dataArr.count;
-    return 15;
+        return self.dataArr.count;
+//    return 15;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.model = self.dataArr[indexPath.row];
+    
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {
             DLog(@"关注");

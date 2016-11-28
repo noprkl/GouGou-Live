@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 typedef void(^ClickEditingControlBlcok)();
-typedef void(^ClickLiveBtnBlcok)(UIButton *btn);
+typedef void(^ClickLiveBtnBlcok)(NSString *btnTitle);
 typedef void(^ClickFocusBtnBlcok)();
 typedef void(^ClickFansBtnBlcok)();
 typedef void(^ClickMyPageBtnBlcok)();
@@ -20,4 +20,7 @@ typedef void(^ClickMyPageBtnBlcok)();
 @property(nonatomic, strong) ClickFocusBtnBlcok focusBlcok; /**< 关注回调 */
 @property(nonatomic, strong) ClickLiveBtnBlcok liveBlcok; /**< 直播回调 */
 @property(nonatomic, strong) ClickMyPageBtnBlcok myPageBlcok; /**< 我的主页回调 */
+
+@property(nonatomic, assign) NSInteger fansCount; /**< 粉丝数 */
+@property(nonatomic, assign) NSInteger focusCount; /**< 关注数 */
 @end

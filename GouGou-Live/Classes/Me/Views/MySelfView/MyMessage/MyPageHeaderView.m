@@ -26,7 +26,7 @@
 @property(nonatomic, strong) UIView *line1; /**< 线 */
 
 @property(nonatomic, strong) UILabel *comment; /**< 评论 */
-@property(nonatomic, strong) UILabel *commentCount; /**< 评论 */
+@property(nonatomic, strong) UILabel *commentCountLabel; /**< 评论 */
 
 @property(nonatomic, strong) UILabel *pleasure; /**< 消费者满意度 */
 
@@ -48,12 +48,24 @@
         [self addSubview:self.fansCountLabel];
         [self addSubview:self.line1];
         [self addSubview:self.comment];
-        [self addSubview:self.commentCount];
+        [self addSubview:self.commentCountLabel];
         [self addSubview:self.pleasure];
         [self addSubview:self.startSource];
         
     }
     return self;
+}
+- (void)setFansCount:(NSInteger)fansCount {
+    _fansCount = fansCount;
+    self.fansCountLabel.text = [@(fansCount) stringValue];
+}
+- (void)setCommentCount:(NSInteger)commentCount {
+    _commentCount = commentCount;
+    self.commentCountLabel.text = [@(commentCount) stringValue];
+}
+- (void)setPleasureCount:(NSInteger)pleasureCount {
+    _pleasureCount = pleasureCount;
+    self.startSource.startCount = pleasureCount;
 }
 // 约束
 - (void)layoutSubviews {
@@ -62,12 +74,20 @@
     [self.iconView makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.centerX);
         make.top.equalTo(self.top).offset(10);
+        make.size.equalTo(CGSizeMake(60, 60));
     }];
-    [self.userNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.iconView.bottom).offset(20);
-        make.centerX.equalTo(self.centerX).offset(-30);
-        
-    }];
+    if ([UserInfos sharedUser].isreal) {
+        [self.userNameLabel remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.iconView.bottom).offset(15);
+            make.centerX.equalTo(self.centerX).offset(-30);
+        }];
+    }else{
+        [self.userNameLabel remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.iconView.bottom).offset(15);
+            make.centerX.equalTo(self.centerX).offset(0);
+        }];
+    }
+    
     [self.userNameAuthen makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.userNameLabel.centerY);
         make.left.equalTo(self.userNameLabel.right).offset(10);
@@ -96,7 +116,7 @@
         make.centerY.equalTo(self.line1.centerY);
         make.left.equalTo(self.line1.right).offset(20);
     }];
-    [self.commentCount makeConstraints:^(MASConstraintMaker *make) {
+    [self.commentCountLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.line1.centerY);
         make.left.equalTo(self.comment.right).offset(5);
     }];
@@ -110,6 +130,28 @@
         make.left.equalTo(self.pleasure.right).offset(10);
         make.height.equalTo(self.pleasure.height);
     }];
+  
+    if ([UserInfos sharedUser].userimgurl.length > 0) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+        
+        [self.iconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }
+    if ([UserInfos sharedUser].usernickname.length > 0) {
+        self.userNameLabel.text = [UserInfos sharedUser].usernickname;
+    }
+    if ([UserInfos sharedUser].isreal) {
+        self.userNameAuthen.hidden = NO;
+        
+        if ([UserInfos sharedUser].ismerchant) {
+            self.sellerAuthen.hidden = NO;
+        }else{
+            self.sellerAuthen.hidden = YES;
+        }
+    }else{
+        self.userNameAuthen.hidden = YES;
+    }
+
+    
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -156,15 +198,15 @@
     }
     return _sellerAuthen;
 }
-- (UILabel *)commentCount {
-    if (!_commentCount) {
-        _commentCount = [[UILabel alloc] init];
-        _commentCount.text = @"111";
-        _commentCount.font = [UIFont systemFontOfSize:14];
-        _commentCount.textColor = [UIColor colorWithHexString:@"#333333"];
+- (UILabel *)commentCountLabel {
+    if (!_commentCountLabel) {
+        _commentCountLabel = [[UILabel alloc] init];
+        _commentCountLabel.text = @"111";
+        _commentCountLabel.font = [UIFont systemFontOfSize:14];
+        _commentCountLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         
     }
-    return _commentCount;
+    return _commentCountLabel;
 }
 - (UILabel *)comment {
     if (!_comment) {

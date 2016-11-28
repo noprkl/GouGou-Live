@@ -27,7 +27,7 @@
 
 @property(nonatomic, strong) UIControl *foucusBtn; /**< 关注按钮 */
 @property(nonatomic, strong) UILabel *focus; /**< 关注 */
-@property(nonatomic, strong) UILabel *focusCount; /**< 关注人数 */
+@property(nonatomic, strong) UILabel *focusCountLabel; /**< 关注人数 */
 
 
 @property(nonatomic, strong) UIControl *fansBtn; /**< 粉丝按钮 */
@@ -59,7 +59,7 @@
         [self.backControl addSubview:self.userSign];
         
         [self addSubview:self.foucusBtn];
-        [self.foucusBtn addSubview:self.focusCount];
+        [self.foucusBtn addSubview:self.focusCountLabel];
         [self.foucusBtn addSubview:self.focus];
         
         [self addSubview:self.fansBtn];
@@ -75,6 +75,14 @@
         [self addSubview:self.line2];
     }
     return self;
+}
+- (void)setFansCount:(NSInteger)fansCount {
+    _fansCount = fansCount;
+    self.fansCountLabel.text = [@(fansCount) stringValue];
+}
+- (void)setFocusCount:(NSInteger)focusCount {
+    _focusCount = focusCount;
+    self.focusCountLabel.text = [@(focusCount) stringValue];
 }
 #pragma mark
 #pragma mark - 约束
@@ -93,11 +101,19 @@
         make.size.equalTo(CGSizeMake(60, 60));
 
     }];
-    [self.userNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.iconView.bottom).offset(10);
-        make.centerX.equalTo(self.centerX).offset(0);
-        
-    }];
+   
+    if ([UserInfos sharedUser].isreal) {
+        [self.userNameLabel remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.iconView.bottom).offset(15);
+            make.centerX.equalTo(self.centerX).offset(-30);
+        }];
+    }else{
+        [self.userNameLabel remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.iconView.bottom).offset(15);
+            make.centerX.equalTo(self.centerX).offset(0);
+        }];
+    }
+
     [self.userNameAuthen makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.userNameLabel.centerY);
         make.left.equalTo(self.userNameLabel.right).offset(10);
@@ -119,13 +135,13 @@
         make.left.equalTo(self.left);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH / 3, 55));
     }];
-    [self.focusCount makeConstraints:^(MASConstraintMaker *make) {
+    [self.focusCountLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.foucusBtn.centerX);
         make.top.equalTo(self.foucusBtn.top).offset(10);
     }];
     [self.focus makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.foucusBtn.centerX);
-        make.top.equalTo(self.focusCount.bottom).offset(10);
+        make.top.equalTo(self.focusCountLabel.bottom).offset(10);
     }];
     
     //
@@ -197,6 +213,13 @@
         self.userSign.text = [UserInfos sharedUser].usermotto;
     }else{
         self.userSign.text = @"什么也没有，快去设置个性签名吧！";
+    }
+    
+    // 设置直播按钮
+    if ([UserInfos sharedUser].ismerchant) {
+        [self.liveBtn setTitle:@"我要直播" forState:(UIControlStateNormal)];
+    }{
+        [self.liveBtn setTitle:@"需要商家认证才能直播" forState:(UIControlStateNormal)];
     }
 }
 #pragma mark
@@ -272,15 +295,15 @@
     }
     return _foucusBtn;
 }
-- (UILabel *)focusCount {
-    if (!_focusCount) {
-        _focusCount = [[UILabel alloc] init];
-        _focusCount.text = @"111";
-        _focusCount.font = [UIFont systemFontOfSize:14];
-        _focusCount.textColor = [UIColor colorWithHexString:@"#333333"];
+- (UILabel *)focusCountLabel {
+    if (!_focusCountLabel) {
+        _focusCountLabel = [[UILabel alloc] init];
+        _focusCountLabel.text = @"111";
+        _focusCountLabel.font = [UIFont systemFontOfSize:14];
+        _focusCountLabel.textColor = [UIColor colorWithHexString:@"#333333"];
 
     }
-    return _focusCount;
+    return _focusCountLabel;
 }
 - (UILabel *)focus {
     if (!_focus) {
@@ -352,11 +375,7 @@
         _liveBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [_liveBtn setTintColor:[UIColor colorWithHexString:@"#333333"]];
         _liveBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        NSString *btnTitle = @"商家认证后才能直播";
-        if ([UserInfos sharedUser].ismerchant) {
-            btnTitle = @"我要直播";
-        }
-        [_liveBtn setTitle:btnTitle forState:(UIControlStateNormal)];
+        [_liveBtn setTitle:@"商家认证后才能直播" forState:(UIControlStateNormal)];
         [_liveBtn addTarget:self action:@selector(ClickLiveBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _liveBtn;
@@ -378,7 +397,7 @@
 - (void)ClickLiveBtnAction:(UIButton *)btn {
 
     if (_liveBlcok) {
-        _liveBlcok(btn);
+        _liveBlcok([btn currentTitle]);
     }
 }
 - (void)ClickFocusBtnAction {

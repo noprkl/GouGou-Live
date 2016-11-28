@@ -12,15 +12,16 @@
 
 #import "SingleChatViewController.h" // 聊天对话
 
-#import "MessageChatListViewController.h"
-
 #import "SystemNotificationViewController.h"
+#import "SystemPushMessageModel.h"
 
 @interface MessageViewController ()<UITableViewDelegate, UITableViewDataSource, EaseConversationListViewControllerDataSource, EaseConversationListViewControllerDelegate, IEMChatManager>
 
 @property(nonatomic, strong) NSMutableArray *arrConversion; /**< 所有会话数据 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
+
+@property(nonatomic, strong) NSArray *systemMessageArr; /**< 系统信息 */
 
 @end
 
@@ -29,6 +30,19 @@ static NSString *cellid2 = @"NotificationMessageCell";
 
 @implementation MessageViewController
 
+- (void)postRequestGetSystemPush {
+    // ([[UserInfos sharedUser].ID integerValue])
+    NSDictionary *dict = @{@"user_id":@(11)};
+    [self getRequestWithPath:API_System_msg params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            self.systemMessageArr = [SystemPushMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 获取会话
 - (void)viewWillAppear:(BOOL)animated {
@@ -38,6 +52,8 @@ static NSString *cellid2 = @"NotificationMessageCell";
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
 
     self.arrConversion = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+    [self postRequestGetSystemPush];
+
     [self.tableView reloadData];
 }
 
@@ -51,20 +67,12 @@ static NSString *cellid2 = @"NotificationMessageCell";
     self.edgesForExtendedLayout = 0;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     [self.view addSubview:self.tableView];
-//    MessageChatListViewController *messageListVC = [[MessageChatListViewController alloc] init];
-//    [self addChildViewController:messageListVC];
-//    [self.view addSubview:messageListVC.view];
     
     [self.tableView makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.top.left.right.equalTo(self.view);
 //        make.height.equalTo(130);
     }];
-//    [messageListVC.view makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.tableView.bottom).offset(1);
-//        make.left.right.equalTo(self.view);
-//        make.bottom.equalTo(self.view.bottom);
-//    }];
-    
+
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 重新获取数据
@@ -77,7 +85,12 @@ static NSString *cellid2 = @"NotificationMessageCell";
 
 #pragma mark
 #pragma mark - 懒加载
-
+- (NSArray *)systemMessageArr {
+    if (!_systemMessageArr) {
+        _systemMessageArr = [NSArray array];
+    }
+    return _systemMessageArr;
+}
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
@@ -110,7 +123,8 @@ static NSString *cellid2 = @"NotificationMessageCell";
     if (indexPath.section == 0) {
         NotificationMessageCell *notifiCell = [tableView dequeueReusableCellWithIdentifier:cellid2];
         notifiCell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        notifiCell.model = [self.systemMessageArr lastObject];
+        notifiCell.unReadCount = self.systemMessageArr.count;
         return notifiCell;
     }
     if (indexPath.section == 1) {
@@ -255,7 +269,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
     if (indexPath.section == 0) {
         SystemNotificationViewController *systemVC = [[SystemNotificationViewController alloc] init];
         systemVC.hidesBottomBarWhenPushed = YES;
-        
+        systemVC.models = self.systemMessageArr;
         [self.navigationController pushViewController:systemVC animated:YES];
     }
     if (indexPath.section == 1) {

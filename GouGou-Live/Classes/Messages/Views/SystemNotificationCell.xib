@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1912" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="105" id="KGk-i7-Jjw" customClass="SystemNotificationCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="neJ-Ld-3DT">
+                        <rect key="frame" x="10" y="5" width="56" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="1" green="0.63137254901960782" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HdS-gi-bw0">
+                        <rect key="frame" x="10" y="32" width="28" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLu-C2-o3L">
+                        <rect key="frame" x="286" y="6" width="24" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNS-nW-3K8">
+                        <rect key="frame" x="0.0" y="54" width="320" height="10"/>
+                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="4H7-5f-bCc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="OLu-C2-o3L" secondAttribute="trailing" constant="10" id="HmI-PU-Leu"/>
+                    <constraint firstItem="HdS-gi-bw0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="J9A-U2-7p4"/>
+                    <constraint firstAttribute="bottom" secondItem="ZNS-nW-3K8" secondAttribute="bottom" id="Ts0-sO-RJk"/>
+                    <constraint firstItem="neJ-Ld-3DT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="UgD-sf-byZ"/>
+                    <constraint firstItem="ZNS-nW-3K8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="XdK-DG-Iu3"/>
+                    <constraint firstAttribute="trailing" secondItem="ZNS-nW-3K8" secondAttribute="trailing" id="boO-MV-ByT"/>
+                    <constraint firstItem="HdS-gi-bw0" firstAttribute="top" secondItem="neJ-Ld-3DT" secondAttribute="bottom" constant="10" id="dJc-tY-ivi"/>
+                    <constraint firstItem="neJ-Ld-3DT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="idt-NO-PHH"/>
+                    <constraint firstItem="OLu-C2-o3L" firstAttribute="centerY" secondItem="neJ-Ld-3DT" secondAttribute="centerY" id="yg3-0C-zyN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="notificationContent" destination="HdS-gi-bw0" id="Ig9-pk-4ks"/>
+                <outlet property="notificationTime" destination="OLu-C2-o3L" id="pt5-8l-kTr"/>
+                <outlet property="notificationType" destination="neJ-Ld-3DT" id="Feu-b5-O6K"/>
+            </connections>
+            <point key="canvasLocation" x="257" y="187.5"/>
+        </tableViewCell>
+    </objects>
+</document>

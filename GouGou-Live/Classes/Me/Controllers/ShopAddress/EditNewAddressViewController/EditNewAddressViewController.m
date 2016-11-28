@@ -8,14 +8,31 @@
 
 #import "EditNewAddressViewController.h"
 #import "AddressChooseView.h"
+#import "MyShopProvinceModel.h"
+#import "MyShopAdressModel.h"
 
-static NSString * detailCellid = @"detailCellid";
 @interface EditNewAddressViewController ()<UITextFieldDelegate>
 
+/** 收货人名字 */
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextfiled;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+
+/** 所在省市区 */
 @property (weak, nonatomic) IBOutlet UITextField *areaChooseTextfiled;
+@property (weak, nonatomic) IBOutlet UITextField *roadTextField;
+
+/** 邮编 */
 @property (weak, nonatomic) IBOutlet UITextField *postalcodeTextfiled;
+/** 详细地址 */
 @property (weak, nonatomic) IBOutlet UITextField *detailAddressTextfiled;
+
+@property(nonatomic, strong) NSString *provice; /**< 省 */
+@property(nonatomic, strong) NSString *city; /**< 市 */
+@property(nonatomic, strong) NSString *district; /**< 县 */
+
+@property(nonatomic, strong) NSArray *proviceDataArr; /**< 省数据 */
+@property(nonatomic, strong) NSMutableArray *cityDataArr; /**< 市数据 */
+@property(nonatomic, strong) NSMutableArray *desticDataArr; /**< 县数据 */
 
 @end
 
@@ -30,22 +47,75 @@ static NSString * detailCellid = @"detailCellid";
 
 - (void)initUI {
 
-    self.title = @"新增收货地址";
     self.userNameTextfiled.delegate = self;
     self.areaChooseTextfiled.delegate = self;
     self.postalcodeTextfiled.delegate = self;
     self.detailAddressTextfiled.delegate = self;
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSaveBtnAction)];
+    self.phoneTextField.delegate = self;
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSaveButtonAction)];
     
     [self.areaChooseTextfiled addTarget:self action:@selector(editAreaChooseTextfiled:) forControlEvents:UIControlEventTouchDown];
-}
-// 点击保存按钮
-- (void)clickSaveBtnAction {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.phoneTextField addTarget:self action:@selector(phoneTextFieldChanged:) forControlEvents:(UIControlEventEditingDidEnd)];
+    
+    self.userNameTextfiled.text = self.adressModel.userName;
+    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@", self.adressModel.userProvince, self.adressModel.userCity, self.adressModel.userDistrict];
+    self.phoneTextField.text = self.adressModel.userTel;
+    self.areaChooseTextfiled.text = adress;
+    self.detailAddressTextfiled.text = self.adressModel.userDistrict;
+    [self requestGetAreaData];
 }
+- (void)setAdressModel:(MyShopAdressModel *)adressModel {
+    _adressModel = adressModel;
+}
+- (NSArray *)proviceDataArr {
+    if (!_proviceDataArr) {
+        _proviceDataArr = [NSArray array];
+    }
+    return _proviceDataArr;
+}
+- (NSMutableArray *)cityDataArr {
+    if (!_cityDataArr) {
+        _cityDataArr = [NSMutableArray array];
+    }
+    return _cityDataArr;
+}
+- (NSMutableArray *)desticDataArr {
+    if (!_desticDataArr) {
+        _desticDataArr = [NSMutableArray array];
+    }
+    return _desticDataArr;
+}
+- (void)requestGetAreaData {
+    [self getRequestWithPath:API_Province params:@{@"id":@(0)} success:^(id successJson) {
+        if (successJson) {
+            self.proviceDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        }
+//        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    [self getRequestWithPath:API_Province params:@{@"id":@(1)} success:^(id successJson) {
+        if (successJson) {
+//            self.cityDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [self.cityDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+        }
+//        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    [self getRequestWithPath:API_Province params:@{@"id":@(36)} success:^(id successJson) {
+        if (successJson) {
+//            self.desticDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [self.desticDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
 
+        }
+//        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark - textfiled内容编辑
 
 - (void)editAreaChooseTextfiled:(UITextField *)sender {
@@ -55,33 +125,72 @@ static NSString * detailCellid = @"detailCellid";
     [self.postalcodeTextfiled resignFirstResponder];
     [self.detailAddressTextfiled resignFirstResponder];
     [self.areaChooseTextfiled resignFirstResponder];
-    
-    // 省市区级联
-   __block AddressChooseView * choose = [[AddressChooseView alloc] init];
-    choose.areaBlock = ^(NSString *province,NSString *city,NSString *area){
-        DLog(@"区域选择");
-        
-        choose = nil;
-        [choose dismiss];
-    };
-    [choose show];
-    
+    [self.phoneTextField resignFirstResponder];
+    [self.roadTextField resignFirstResponder];
 }
 
-//- (void)postalcodeTextfiled:(UITextField *)sender {
-//    
-//    
-//    
-//}
-//
-//- (void)detailAddressTextFiled:(UITextField *)sender {
-//    
-//    
-//}
+- (void)phoneTextFieldChanged:(UITextField *)sender {
+    // 判断正则
+    BOOL flag =  [NSString valiMobile:sender.text];
+    if (!flag) {
+        
+        [self showAlert:@"请输入正确的手机号"];
+    }
+}
+
 #pragma mark - 点击保存按钮
-- (void)clickSaveBtn {
+- (void)clickSaveButtonAction {
     
-    
+       // 判断
+    if ([self.userNameTextfiled.text isEqualToString:@""]) {
+        [self showAlert:@"收货人不能为空"];
+    }else if (![self.userNameTextfiled.text isChinese]){
+        [self showAlert:@"收货人名字为汉字"];
+    }else if (self.userNameTextfiled.text.length > 4){
+        [self showAlert:@"最多四个汉字"];
+    }else{
+        if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
+        [self showAlert:@"地址不能为空"];
+        }else{
+            if ([self.phoneTextField.text isEqualToString:@""]) {
+                [self showAlert:@"手机号不能为空"];
+            }else if (![NSString valiMobile:self.phoneTextField.text]){
+                [self showAlert:@"手机号输入有误，请重新输入"];
+                self.phoneTextField.text = @"";
+            }else{
+                if ([self.detailAddressTextfiled.text isEqualToString:@""]) {
+                    [self showAlert:@"详细地址不能为空"];
+                }else{
+                    NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
+                    NSDictionary *dict = @{
+                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                           @"id":@(_adressModel.ID ),
+                                           @"user_name":self.userNameTextfiled.text,
+                                           @"user_tel":@([self.phoneTextField.text integerValue]),
+                                           @"is_default":@(_adressModel.isDefault),
+                                           @"user_province":_adressModel.userProvince,
+                                           @"user_city":_adressModel.userCity,
+                                           @"user_district":_adressModel.userDistrict,
+                                           @"user_address":adress
+                                           };
+                    NSLog(@"%@", dict);
+
+                    [self postRequestWithPath:API_Up_address params:dict success:^(id successJson) {
+                        [self showAlert:successJson[@"message"]];
+                        if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                            
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                [self.navigationController popViewControllerAnimated:YES];
+                            });
+                        }
+
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+                }
+            }
+        }
+    }
 }
 
 #pragma mark
@@ -94,33 +203,101 @@ static NSString * detailCellid = @"detailCellid";
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if (textField == self.userNameTextfiled) {
-        if ([string isChinese]) {
+        if ([NSString isChinese:string]) {
             return YES;
         }
         return NO;
         
-    } else if (textField == self.areaChooseTextfiled) {
+    }
+    if (textField == self.areaChooseTextfiled) {
         [textField resignFirstResponder];
         return NO;
-    } else if (textField == self.postalcodeTextfiled) {
-    
-        BOOL flag = [NSString validateNumber:textField.text];
+    }
+    if (textField == self.phoneTextField) {
         
-        if (range.location < 6 && flag) {
+        if (range.location < 11) {
+            BOOL flag = [NSString validateNumber:textField.text];
+            if (flag) {
+                return YES;
+            }
+            return NO;
+        }
+        return NO;
+    }
+    if (textField == self.postalcodeTextfiled) {
+        if (range.location < 8) {
+            BOOL flag = [NSString validateNumber:textField.text];
+            if (flag) {
+                return YES;
+            }
+            return NO;
+        }
+        return NO;
+    }
+    if (textField == self.detailAddressTextfiled) {
+        if (range.location < 20) {
             
             return YES;
         }
+        [self showAlert:@"最多20个字"];
         return NO;
-    
-    } else if (textField == self.detailAddressTextfiled) {
-    
-        return YES;
     }
     return NO;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.areaChooseTextfiled) {
+        [textField resignFirstResponder];
+        // 省市区级联
+        __block AddressChooseView * choose = [[AddressChooseView alloc] init];
+        //    __weak typeof(self) weakSelf = self;
+        choose.provinceDataArr = self.proviceDataArr;
+        choose.cityDataArr = self.cityDataArr;
+        choose.desticDataArr = self.desticDataArr;
+        __weak typeof(choose) weakChose = choose;
+        
+        // 选中第一行 第二行请求
+        choose.firstBlock = ^(MyShopProvinceModel *model){
+            [self getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
+                if (successJson) {
+                    [self.cityDataArr removeAllObjects];
+                    [self.cityDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    [weakChose.areaPicker reloadComponent:1];
+                }
+                
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            return self.cityDataArr;
+        };
+        // 选中第二行 第三行请求
+        choose.secondBlock = ^(MyShopProvinceModel *model){
+            
+            [self getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
+                if (successJson) {
+                    [self.desticDataArr removeAllObjects];
+                    [self.desticDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    [weakChose.areaPicker reloadComponent:2];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            return self.desticDataArr;
+        };
+        
+        
+        choose.areaBlock = ^(NSString *province,NSString *city,NSString *district){
+          
+            self.areaChooseTextfiled.text = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
+
+            _adressModel.userProvince = province;
+            _adressModel.userCity = city;
+            _adressModel.userDistrict = district;
+
+        };
+        [choose show];
+
+        
         return NO;
     }
     return YES;

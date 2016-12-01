@@ -35,7 +35,6 @@
 
 
 @implementation SellerDogCardView
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -54,6 +53,22 @@
     }
     return self;
 }
+#pragma mark - 模型赋值
+// 模型赋值
+- (void)setDogCardModel:(DogCardModel *)dogCardModel {
+    
+    _dogCardModel = dogCardModel;
+    self.dogNameLabel.text = dogCardModel.name;
+    self.dogImageView.image = [UIImage imageNamed:dogCardModel.pathSmall];
+    self.dogKindLabel.text = dogCardModel.kindName;
+    self.dogAgeLabel.text = dogCardModel.ageName;
+    self.dogSizeLabel.text = dogCardModel.sizeName;
+    self.dogColorLabel.text = dogCardModel.colorName;
+    self.oldPriceLabel.text = dogCardModel.priceOld;
+    self.nowPriceLabel.text = dogCardModel.price;
+}
+
+#pragma mark - 约束
 - (void)layoutSubviews {
     [super layoutSubviews];
     

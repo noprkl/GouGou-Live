@@ -41,6 +41,14 @@
 
 }
 
+- (void)setCostModel:(CostModel *)costModel {
+
+    _costModel = costModel;
+    self.freightLabel.text = [NSString stringWithFormat:@"%ld",([costModel.productRealDeposit integerValue] + [costModel.balance integerValue])];
+    self.fontMoneyLabel.text = costModel.productRealDeposit;
+    self.remainderMoneylabel.text = costModel.balance;
+}
+
 -(void)setMoneyMessage:(NSString *)moneyMessage {
     
     _moneyMessage = moneyMessage;

@@ -12,6 +12,7 @@
 #import "FunctionButtonView.h" // 订单底部按钮
 #import "PayBackMoneyViewController.h"
 #import "PayFontMoneyViewController.h"
+#import "BuyCenterModel.h"
 
 static NSString * waitBackCells = @"waitBackCells";
 
@@ -24,6 +25,43 @@ static NSString * waitBackCells = @"waitBackCells";
 @end
 
 @implementation AllOrderGoodsViewController
+//#pragma mark - 网络请求
+//- (void)postGetAllStateOrderRequest {
+//    
+//    NSDictionary * dict = @{
+//                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+//                            @"status":@(0),
+//                            @"page":@(1),
+//                            @"pageSize":@(2),
+//                            @"pageSize":@(3)
+//                            };
+//    
+//    [self postRequestWithPath:API_List_order params:dict success:^(id successJson) {
+//        
+//        [self showAlert:successJson[@"message"]];
+//  
+//            if (successJson[@"data"][@"info"]) {
+//                
+//                DLog(@"%@",successJson[@"data"][@"info"]);
+//                
+////                self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+//                
+//               
+//            }
+//        
+//    } error:^(NSError *error) {
+//        
+//        DLog(@"%@",error);
+//        
+//    }];
+//}
+
+//- (void)viewWillAppear:(BOOL)animated {
+//
+//    [super viewWillAppear:animated];
+//    
+//    [self postGetAllStateOrderRequest];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

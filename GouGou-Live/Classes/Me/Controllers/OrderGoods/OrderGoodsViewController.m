@@ -116,7 +116,6 @@
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
                 
                 [weakself.boomScrollView setContentOffset:center animated:YES];
-                
             }
            
         };

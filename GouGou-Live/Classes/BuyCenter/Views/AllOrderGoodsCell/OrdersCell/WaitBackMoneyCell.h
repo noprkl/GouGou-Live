@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BuyCenterModel.h"
 
+@class NickNameModel;
 @interface WaitBackMoneyCell : UITableViewCell
+/** 订单模型 */
+@property (strong,nonatomic) BuyCenterModel *centerModel;
 
 @end

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NickNameModel.h"
 
 @interface NicknameView : UIView
 /** 订单状态信息 */
 @property (strong,nonatomic) NSString *stateMessage;
+/** 昵称model */
+@property (strong,nonatomic) NickNameModel *model;
 
 @end

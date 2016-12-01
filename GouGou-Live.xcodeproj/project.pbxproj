@@ -12,6 +12,8 @@
 		041DACD91DEC69F9001BA2C2 /* PayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041DACD51DEC69F9001BA2C2 /* PayingViewController.m */; };
 		041DACDA1DEC69F9001BA2C2 /* PayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041DACD61DEC69F9001BA2C2 /* PayingViewController.xib */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
+		042DD8991DF02A9F00FFDD90 /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DD8981DF02A9F00FFDD90 /* OrderDetailModel.m */; };
+		043C52711DEFD737006292C5 /* BuyCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 043C52701DEFD737006292C5 /* BuyCenterModel.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
 		0449F93D1DEBDE620060BC90 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0449F93C1DEBDE620060BC90 /* TimePickerView.m */; };
@@ -181,6 +183,9 @@
 		046BF0571DE5507E00BC32E9 /* MessageMeumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF0561DE5507E00BC32E9 /* MessageMeumView.m */; };
 		046BF0601DE5940900BC32E9 /* SystemNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF05F1DE5940900BC32E9 /* SystemNotificationViewController.m */; };
 		046BF0621DE5997D00BC32E9 /* MessageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BF0611DE5997D00BC32E9 /* MessageListCell.xib */; };
+		046D46831DF0096A00FE9DB9 /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D46821DF0096A00FE9DB9 /* NickNameModel.m */; };
+		046D46861DF00C9B00FE9DB9 /* DogCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D46851DF00C9B00FE9DB9 /* DogCardModel.m */; };
+		046D46891DF00CEF00FE9DB9 /* CostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D46881DF00CEF00FE9DB9 /* CostModel.m */; };
 		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
 		046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */; };
 		046F0B2B1DE2A8CB00D50D5C /* BuyCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B2A1DE2A8CB00D50D5C /* BuyCenterViewController.m */; };
@@ -440,6 +445,7 @@
 		04EA2AE21DDDC5A60023D9A8 /* SellerOrderDetailLogisticsInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AE11DDDC5A60023D9A8 /* SellerOrderDetailLogisticsInfoViewController.m */; };
 		04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AEA1DDDD8FE0023D9A8 /* SellerSendViewController.m */; };
 		04EA2AEE1DDDDA6C0023D9A8 /* SellerChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AED1DDDDA6C0023D9A8 /* SellerChangeViewController.m */; };
+		04FE7AB21DF05CD7004E08E9 /* WaitAllNickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE7AB11DF05CD7004E08E9 /* WaitAllNickModel.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -452,6 +458,10 @@
 		041DACD61DEC69F9001BA2C2 /* PayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayingViewController.xib; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
+		042DD8971DF02A9F00FFDD90 /* OrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailModel.h; sourceTree = "<group>"; };
+		042DD8981DF02A9F00FFDD90 /* OrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailModel.m; sourceTree = "<group>"; };
+		043C526F1DEFD737006292C5 /* BuyCenterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCenterModel.h; sourceTree = "<group>"; };
+		043C52701DEFD737006292C5 /* BuyCenterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterModel.m; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		04486AB51DD012C400BC6D15 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		04486ABD1DD015FC00BC6D15 /* BaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseHandler.h; sourceTree = "<group>"; };
@@ -822,6 +832,12 @@
 		046BF05E1DE5940900BC32E9 /* SystemNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotificationViewController.h; sourceTree = "<group>"; };
 		046BF05F1DE5940900BC32E9 /* SystemNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemNotificationViewController.m; sourceTree = "<group>"; };
 		046BF0611DE5997D00BC32E9 /* MessageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageListCell.xib; sourceTree = "<group>"; };
+		046D46811DF0096900FE9DB9 /* NickNameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickNameModel.h; sourceTree = "<group>"; };
+		046D46821DF0096A00FE9DB9 /* NickNameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickNameModel.m; sourceTree = "<group>"; };
+		046D46841DF00C9B00FE9DB9 /* DogCardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogCardModel.h; sourceTree = "<group>"; };
+		046D46851DF00C9B00FE9DB9 /* DogCardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogCardModel.m; sourceTree = "<group>"; };
+		046D46871DF00CEF00FE9DB9 /* CostModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostModel.h; sourceTree = "<group>"; };
+		046D46881DF00CEF00FE9DB9 /* CostModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CostModel.m; sourceTree = "<group>"; };
 		046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLiveViewController.h; sourceTree = "<group>"; };
 		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
 		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
@@ -1307,6 +1323,8 @@
 		04EA2AEA1DDDD8FE0023D9A8 /* SellerSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerSendViewController.m; sourceTree = "<group>"; };
 		04EA2AEC1DDDDA6C0023D9A8 /* SellerChangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangeViewController.h; sourceTree = "<group>"; };
 		04EA2AED1DDDDA6C0023D9A8 /* SellerChangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChangeViewController.m; sourceTree = "<group>"; };
+		04FE7AB01DF05CD7004E08E9 /* WaitAllNickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAllNickModel.h; sourceTree = "<group>"; };
+		04FE7AB11DF05CD7004E08E9 /* WaitAllNickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAllNickModel.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
@@ -1357,6 +1375,25 @@
 				04A31F951DEDCA6800BE175A /* SetPayPsdSuccessViewController.xib */,
 			);
 			path = AddPayCode;
+			sourceTree = "<group>";
+		};
+		043C526E1DEFD71F006292C5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				043C526F1DEFD737006292C5 /* BuyCenterModel.h */,
+				043C52701DEFD737006292C5 /* BuyCenterModel.m */,
+				046D46811DF0096900FE9DB9 /* NickNameModel.h */,
+				046D46821DF0096A00FE9DB9 /* NickNameModel.m */,
+				04FE7AB01DF05CD7004E08E9 /* WaitAllNickModel.h */,
+				04FE7AB11DF05CD7004E08E9 /* WaitAllNickModel.m */,
+				046D46841DF00C9B00FE9DB9 /* DogCardModel.h */,
+				046D46851DF00C9B00FE9DB9 /* DogCardModel.m */,
+				046D46871DF00CEF00FE9DB9 /* CostModel.h */,
+				046D46881DF00CEF00FE9DB9 /* CostModel.m */,
+				042DD8971DF02A9F00FFDD90 /* OrderDetailModel.h */,
+				042DD8981DF02A9F00FFDD90 /* OrderDetailModel.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		04486AB71DD0159900BC6D15 /* Handler */ = {
@@ -3593,7 +3630,7 @@
 			children = (
 				046F0BB91DE2AB9E00D50D5C /* Controllers */,
 				04D361151DDB343F009F35A0 /* Handler */,
-				04D361161DDB343F009F35A0 /* Models */,
+				043C526E1DEFD71F006292C5 /* Models */,
 				046F0B481DE2AB8A00D50D5C /* Views */,
 			);
 			path = BuyCenter;
@@ -3604,13 +3641,6 @@
 			children = (
 			);
 			path = Handler;
-			sourceTree = "<group>";
-		};
-		04D361161DDB343F009F35A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		04DAC9591DD21A9A0089236D /* Views */ = {
@@ -3955,6 +3985,7 @@
 				TargetAttributes = {
 					0467ACE31DBDEF2200562CC4 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 7PDLABN8WZ;
 					};
 				};
 			};
@@ -4106,6 +4137,7 @@
 				04EA2AD01DDDAFE80023D9A8 /* SellerOrderDetailStateView.m in Sources */,
 				04CE13EC1DDC488100EB8777 /* SellerDogCardView.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
+				04FE7AB21DF05CD7004E08E9 /* WaitAllNickModel.m in Sources */,
 				046F0C0B1DE33B2000D50D5C /* PicturesCell.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
@@ -4138,6 +4170,7 @@
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				046BF0281DE4696600BC32E9 /* EaseMessageCell.m in Sources */,
 				047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */,
+				042DD8991DF02A9F00FFDD90 /* OrderDetailModel.m in Sources */,
 				046BEFF01DE4696600BC32E9 /* EMSDImageCache.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
 				046BF0421DE48F9800BC32E9 /* LoginViewController+ThirdLogin.m in Sources */,
@@ -4177,6 +4210,7 @@
 				0479B5F41DCADC7B00CB288A /* ServiceViewController.m in Sources */,
 				046BEFF51DE4696600BC32E9 /* EMSDWebImageManager.m in Sources */,
 				046BEFCF1DE4696600BC32E9 /* EMVoiceConverter.mm in Sources */,
+				046D46891DF00CEF00FE9DB9 /* CostModel.m in Sources */,
 				046BE8E31DE4524100BC32E9 /* NotificationMessageCell.m in Sources */,
 				046BF0221DE4696600BC32E9 /* EaseRefreshTableViewController.m in Sources */,
 				0479B5D71DCADC7B00CB288A /* PlayerViewController.m in Sources */,
@@ -4342,6 +4376,7 @@
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
 				04CE13D21DDC488100EB8777 /* SellerWaitRateViewController.m in Sources */,
 				046BF00A1DE4696600BC32E9 /* PSTGridLayoutItem.m in Sources */,
+				046D46831DF0096A00FE9DB9 /* NickNameModel.m in Sources */,
 				046F0BF71DE2C0AF00D50D5C /* PaySuccessView.m in Sources */,
 				046BF02A1DE4696600BC32E9 /* EaseBubbleView+File.m in Sources */,
 				04A31F911DEDC89700BE175A /* SetPaypsdViewController.m in Sources */,
@@ -4394,6 +4429,7 @@
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
 				0479B5E51DCADC7B00CB288A /* LiveTopView.m in Sources */,
 				046BF0131DE4696600BC32E9 /* NSDateFormatter+Category.m in Sources */,
+				046D46861DF00C9B00FE9DB9 /* DogCardModel.m in Sources */,
 				04CE13FB1DDD4D8B00EB8777 /* SellerBaseViewController.m in Sources */,
 				046BF01D1DE4696600BC32E9 /* EaseEmotionManager.m in Sources */,
 				0479B6451DCB046C00CB288A /* BuyRuleAlertView.m in Sources */,
@@ -4416,6 +4452,7 @@
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				046BF00C1DE4696600BC32E9 /* PSTGridLayoutSection.m in Sources */,
 				04CE13E61DDC488100EB8777 /* SellerMyGoodsTopView.m in Sources */,
+				043C52711DEFD737006292C5 /* BuyCenterModel.m in Sources */,
 				046F0BED1DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.m in Sources */,
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
 				046BF0361DE4696600BC32E9 /* EaseFaceView.m in Sources */,
@@ -4569,7 +4606,8 @@
 			baseConfigurationReference = 1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/GouGou-Live/Classes/Others/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/GouGou-Live/Classes/Others/Info.plist";
@@ -4583,6 +4621,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -4591,7 +4630,8 @@
 			baseConfigurationReference = EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/GouGou-Live/Classes/Others/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/GouGou-Live/Classes/Others/Info.plist";
@@ -4605,6 +4645,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

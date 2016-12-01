@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BuyCenterModel.h"
 
 @interface ProtectFaliedCell : UITableViewCell
-
+/** 订单模型 */
+@property (strong,nonatomic) BuyCenterModel *centerModel;
 @end

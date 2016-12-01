@@ -25,10 +25,19 @@
 }
 - (void)setModel:(FocusAndFansModel *)model {
     _model = model;
+//    if (model.userImgUrl) {
+//        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
+//        [self.userIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+//
+//    }else{
+//        self.userIconView.image = [UIImage imageNamed:@"头像"];
+//    }
     NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
     [self.userIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+
     self.userNameLabel.text = model.userNickName;
     self.userSignLabel.text = model.userMotto;
+    // 判断model的id是否在列表中，如果是就选中，没有就选不中
     
 }
 - (IBAction)clickSelectBtn:(UIButton *)sender {
@@ -38,7 +47,11 @@
         _selectBlock(sender.selected);
     }
 }
-
+- (void)setIsHid:(BOOL)isHid {
+  
+    // 在查看其它人的列表时需要用到这个
+    self.selectBtn.hidden = isHid;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

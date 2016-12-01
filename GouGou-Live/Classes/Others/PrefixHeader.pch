@@ -19,6 +19,11 @@
 
 // 验证码倒计时事件
 #define LASTTIME 60
+// 展示狗狗图片的边距
+#define kDogImageWidth 10
+// 添加图片每行最大的数
+#define kMaxImgCount 5
+
 
 #pragma mark - 第三方头文件
 #define MAS_SHORTHAND
@@ -28,6 +33,8 @@
 #import <MJExtension.h> // 数据解析
 #import <UIImageView+WebCache.h> // 图片加载
 #import <MJRefresh.h> // 上下拉
+#import <TZImagePickerController.h>
+
 
 #pragma mark - 自定义文件
 // 网络请求URL文件
@@ -42,8 +49,6 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import "EaseUI.h"
 
-// 展示狗狗图片的边距
-#define kDogImageWidth 10
 
 // NSLog 增强
 #define MYDEBUG 1

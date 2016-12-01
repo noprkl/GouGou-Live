@@ -9,12 +9,11 @@
 #import "CertificateViewController.h"
 #import "IdentityIfonView.h"
 #import "IdentityPictureCell.h"
-#import "TZImagePickerController.h"
 #import "NSString+CertificateImage.h"
 
 static NSString * identityCell = @"identitiCellID";
 
-@interface CertificateViewController ()<UITableViewDelegate,UITableViewDataSource, TZImagePickerControllerDelegate>
+@interface CertificateViewController ()<UITableViewDelegate,UITableViewDataSource>
 /** 身份信息 */
 @property (strong,nonatomic) IdentityIfonView *identityInfoView;
 /** 身份验证tableView */
@@ -46,7 +45,7 @@ static NSString * identityCell = @"identitiCellID";
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
         if ([successJson[@"message"] isEqualToString:@"信息提交成功"]) {
-            [UserInfos sharedUser].isreal = YES;
+            [UserInfos sharedUser].isreal = @"2";
             [UserInfos sharedUser].username = self.acceptName.text;
             [UserInfos setUser];
         }
@@ -65,6 +64,19 @@ static NSString * identityCell = @"identitiCellID";
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) { //1.未认证 2.审核 3.已认证 4.认证失败
+        
+    }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
+        
+    }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
+        
+    }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
+        
+    }
+}
 - (void)initUI {
 
     self.title = @"实名认证";
@@ -105,11 +117,6 @@ static NSString * identityCell = @"identitiCellID";
             }
         }
     }
-}
-- (void)viewWillAppear:(BOOL)animated {
-
-    [super viewWillAppear:animated];
-    
 }
 
 - (IdentityIfonView *)identityInfoView {

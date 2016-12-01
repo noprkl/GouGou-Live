@@ -12,14 +12,14 @@
 
 typedef void(^selectedAreaBlock)(NSString *province,NSString *city,NSString *area);
 
-typedef NSArray*(^selectFirstCompentBlock)(MyShopProvinceModel *model);
-typedef NSArray*(^selectSecondCompentBlock)(MyShopProvinceModel *model);
+typedef void(^selectFirstCompentBlock)(MyShopProvinceModel *model);
+typedef void(^selectSecondCompentBlock)(MyShopProvinceModel *model);
 
 @interface AddressChooseView : UIView
 
-@property(nonatomic, strong) NSArray *provinceDataArr; /**< 省数据 */
-@property(nonatomic, strong) NSArray *cityDataArr; /**< 市数据 */
-@property(nonatomic, strong) NSArray *desticDataArr; /**< 县数据 */
+@property(nonatomic, strong) NSArray *provinceArr; /**< <#注释#> */
+@property(nonatomic, strong) NSArray *cityArr; /**< <#注释#> */
+@property(nonatomic, strong) NSArray *desticArr; /**< <#注释#> */
 
 /** pickerView */
 @property (strong, nonatomic) UIPickerView *areaPicker;

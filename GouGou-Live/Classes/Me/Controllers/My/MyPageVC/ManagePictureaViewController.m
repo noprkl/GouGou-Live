@@ -17,7 +17,9 @@
 #import "AddPicturesViewController.h" // 添加相册
 #import "PicturesViewController.h" //相册
 
-@interface ManagePictureaViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+#import "MyAlbumsModel.h"
+
+@interface ManagePictureaViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
 @property(nonatomic, strong) UICollectionView *collectionView; /**< 表格 */
 
@@ -37,7 +39,47 @@
 static NSString *cellid = @"ManagePictureaCell";
 
 @implementation ManagePictureaViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // 请求数据
+    [self getRequestAlbums];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+- (void)getRequestAlbums {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           };
+    [self getRequestWithPath:API_album params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.dataArr removeAllObjects];
+        self.dataArr = [MyAlbumsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        // 刷新
+        [self.collectionView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+- (void)deleAlbum {
+    for (NSInteger i = 0; i < self.selectData.count; i ++) {
+        MyAlbumsModel *model = self.selectData[i];
+        [self.selectData replaceObjectAtIndex:i withObject:model.ID];
+    }
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"id":[self.selectData componentsJoinedByString:@","]
+                           };
+    [self getRequestWithPath:API_Del_albums params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+        [self getRequestAlbums];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -72,11 +114,6 @@ static NSString *cellid = @"ManagePictureaCell";
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
         _dataArr = [NSMutableArray array];
-        [_dataArr addObject:@0];
-        [_dataArr addObject:@1];
-        [_dataArr addObject:@2];
-        [_dataArr addObject:@3];
-        [_dataArr addObject:@4];
     }
     return _dataArr;
 }
@@ -171,8 +208,12 @@ static NSString *cellid = @"ManagePictureaCell";
                 count = self.selectData.count;
             }
             prommit.message = [NSString stringWithFormat:@"你将删除%ld个宝贝", count];
+
+            __strong typeof(weakSelf) strSelf = weakSelf;
+
             prommit.sureBlock = ^(UIButton *btn){
-              
+                [strSelf deleAlbum];
+                
                 [weakSelf.dataArr removeObjectsInArray:weakSelf.selectData];
 
                 [weakSelf.collectionView reloadData];
@@ -191,27 +232,34 @@ static NSString *cellid = @"ManagePictureaCell";
 #pragma mark
 #pragma mark - 代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+
     return self.dataArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ManagePictureaCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
-    
+    MyAlbumsModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
     cell.isHid = _isHid;
     cell.isAllSelect = _isSelect;//[self.selectData containsObject:@(indexPath.row)]
     cell.selectBlock = ^(){
-        if ([self.selectData containsObject:@(indexPath.row)]) {
+        if ([self.selectData containsObject:model]) {
             //如果点击的cell在deleArr中，则从deleArr中删除
-            [self.selectData removeObject:@(indexPath.row)];
+            [self.selectData removeObject:model];
         }else{
             //否则添加cell到
-            [self.selectData addObject:@(indexPath.row)];
+            [self.selectData addObject:model];
         }
     
     };
 
+    // 添加长按手势 修改相册名字
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
+    [cell addGestureRecognizer:longPress];
     return cell;
 }
+- (void)longPressAction:(UILongPressGestureRecognizer *)longPress {
 
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
    
@@ -220,7 +268,7 @@ static NSString *cellid = @"ManagePictureaCell";
     PicturesViewController *pictureVc  = [[PicturesViewController alloc] init];
     
     pictureVc.title = [NSString stringWithFormat:@"相册%ld", indexPath.row];
-    
+    pictureVc.model = self.dataArr[indexPath.row];
     [self.navigationController pushViewController:pictureVc animated:YES];
 }
 @end

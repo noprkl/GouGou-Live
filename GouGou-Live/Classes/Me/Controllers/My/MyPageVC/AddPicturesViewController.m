@@ -110,7 +110,27 @@
     self.countLabel.text = [NSString stringWithFormat:@"%ld", (12 - textField.text.length)];
 }
 - (void)clickSaveBtnAction {
-
+    if (self.nameTextField.text.length == 0) {
+        [self showAlert:@"名字不能空"];
+    }else{
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                               @"name":self.nameTextField.text
+                               };
+        [self postRequestWithPath:API_Albums params:dict success:^(id successJson) {
+//            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                // 自动调回
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
+    
 }
 #pragma mark
 #pragma mark - 代理

@@ -31,7 +31,7 @@
         [self addSubview:self.imageView];
         [self addSubview:self.titlelable];
         [self addSubview:self.certificateButton];
-        
+        [self freetimeout];
     }
     return self;
 }

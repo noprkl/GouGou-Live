@@ -8,17 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickFactoryBtnBlcok)();
-typedef void(^ClickDogViewBtnBlcok)();
-typedef void(^ClickManageBtnBlcok)();
-
+typedef void(^ClickManageButtonBlobk)();
 @interface MyPagePictureView : UIView
 
-@property(nonatomic, strong) ClickFactoryBtnBlcok factoryBlock; /**< 工程外景回调 */
-@property(nonatomic, strong) ClickDogViewBtnBlcok dogViewBlock; /**< 狗狗实景回调 */
+@property(nonatomic, assign) NSInteger maxCount; /**< 每行图片最大个数 */
 
-@property(nonatomic, strong) ClickManageBtnBlcok manageBlock; /**< 管理按钮回调 */
+@property(nonatomic, strong) NSArray *dataPlist; /**< 数据源 */
 
-@property(nonatomic, strong) NSArray *pictures; /**< 图片数组 */
+@property(nonatomic, strong) ClickManageButtonBlobk manageBlock; /**< 管理回调 */
 
 @end

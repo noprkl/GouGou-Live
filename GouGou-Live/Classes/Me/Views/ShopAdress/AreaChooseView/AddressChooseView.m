@@ -25,9 +25,6 @@
 @property(nonatomic, strong) NSString *city; /**< 市 */
 @property(nonatomic, strong) NSString *destic; /**< 县 */
 
-@property(nonatomic, strong) NSMutableArray *provinceArr; /**< <#注释#> */
-@property(nonatomic, strong) NSMutableArray *cityArr; /**< <#注释#> */
-@property(nonatomic, strong) NSMutableArray *desticArr; /**< <#注释#> */
 @end
 
 @implementation AddressChooseView
@@ -124,50 +121,34 @@
     return _cancelBtn;
 }
 - (void)clickSureButtonAction {
+    
     if (_areaBlock) {
         _areaBlock(self.province, self.city, self.destic);
         [self dismiss];
     }
 
 }
-- (void)setProvinceDataArr:(NSArray *)provinceDataArr {
-    _provinceDataArr = provinceDataArr;
-    [self.provinceArr addObjectsFromArray:provinceDataArr];
-    [self.areaPicker reloadComponent:0];
-}
-- (void)setCityDataArr:(NSArray *)cityDataArr {
-    _cityDataArr = cityDataArr;
-    [self.cityArr addObjectsFromArray:cityDataArr];
-    [self.areaPicker reloadComponent:1];
-}
-- (void)setDesticDataArr:(NSArray *)desticDataArr {
-    _desticDataArr = desticDataArr;
-    [self.desticArr addObjectsFromArray:desticDataArr];
-    [self.areaPicker reloadComponent:2];
-}
+
 - (void)clickCancelBtnAction {
 
     [self fadeOut];
 }
 #pragma mark
 #pragma mark - 级联代理方法
-- (NSMutableArray *)provinceArr {
-    if (!_provinceArr) {
-        _provinceArr = [NSMutableArray array];
-    }
-    return _provinceArr;
+
+- (void)setProvinceArr:(NSArray *)provinceArr {
+    _provinceArr = provinceArr;
+    self.province = [provinceArr[0] name];
 }
-- (NSMutableArray *)cityArr {
-    if (!_cityArr) {
-        _cityArr = [NSMutableArray array];
-    }
-    return _cityArr;
+- (void)setCityArr:(NSArray *)cityArr {
+    _cityArr = cityArr;
+    [self.areaPicker selectRow:0 inComponent:1 animated:YES];
+    self.city = [cityArr[0] name];
 }
-- (NSMutableArray *)desticArr {
-    if (!_desticArr) {
-        _desticArr = [NSMutableArray array];
-    }
-    return _desticArr;
+- (void)setDesticArr:(NSArray *)desticArr {
+    _desticArr = desticArr;
+    [self.areaPicker selectRow:0 inComponent:2 animated:YES];
+    self.destic = [desticArr[0] name];
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     // 列数
@@ -176,13 +157,13 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) {
         // 获取第一列数据
-        return self.provinceDataArr.count;
+        return self.provinceArr.count;
     }else if(component == 1){
         //第1列选中第几排
-        return self.cityDataArr.count;
+        return self.cityArr.count;
     }else if (component == 2){
         //第2列选中第几排
-        return self.desticDataArr.count;
+        return self.desticArr.count;
     }
     return 0;
 }
@@ -191,15 +172,15 @@
     
     if (component == 0) {
         // 获取第一列数据
-        MyShopProvinceModel *model = self.provinceDataArr[row];
+        MyShopProvinceModel *model = self.provinceArr[row];
         return model.name;
     }else if(component == 1){
         //第1列选中第几排
-        MyShopProvinceModel *model = self.cityDataArr[row];
+        MyShopProvinceModel *model = self.cityArr[row];
         return model.name;
     }else if (component == 2){
         //第2列选中第几排
-        MyShopProvinceModel *model = self.desticDataArr[row];
+        MyShopProvinceModel *model = self.desticArr[row];
         return model.name;
     }
     return nil;
@@ -207,62 +188,40 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 
-    self.province = [self.provinceDataArr[row] name];
-        self.city = [self.cityArr[0] name];
-        self.destic = [self.desticArr[0] name];
-    
     if (component == 0) {
         // 获取第一列数据
-        MyShopProvinceModel *model = self.provinceDataArr[row];
-        self.province = model.name;
+        MyShopProvinceModel *model = self.provinceArr[row];
         if (_firstBlock) {
             // 获得第二行数据
-            [self.cityArr removeAllObjects];
-           [self.cityArr addObjectsFromArray:_firstBlock(model)];
-            
-            // 刷新
-            [self.areaPicker reloadComponent:1];
-            [self.areaPicker selectRow:0 inComponent:1 animated:YES];
-//            [self pickerView:self.areaPicker titleForRow:0 forComponent:1];
-
-            // 县数据
-            MyShopProvinceModel *cityModel = self.cityArr[0];
-            if (_secondBlock) {
-                // 获得第三行数据
-                [self.desticArr removeAllObjects];
-               [self.desticArr addObjectsFromArray:_secondBlock(cityModel)];
-                // 刷新
-                [self.areaPicker selectRow:0 inComponent:2 animated:YES];
-                [self.areaPicker reloadComponent:2];
-
-//                [self pickerView:self.areaPicker titleForRow:0 forComponent:2];
-            }
+            _firstBlock(model);
         }
 
     }else if(component == 1){
         
         //第1列选中第几排
         NSInteger index = [self.areaPicker selectedRowInComponent:1];
-        MyShopProvinceModel *model = self.cityDataArr[index];
-        self.city = model.name;
+        MyShopProvinceModel *model = self.cityArr[index];
         
         if (_secondBlock) {
             // 获得第三行数据
-            [self.desticArr removeAllObjects];
-            [self.desticArr addObjectsFromArray:_secondBlock(model)];
-            // 刷新
-            [self.areaPicker selectRow:0 inComponent:2 animated:YES];
-            [self.areaPicker reloadComponent:2];
-
-//            [self pickerView:self.areaPicker titleForRow:0 forComponent:2];
+            _secondBlock(model);
         }
     }else if (component == 2){
         //第2列选中第几排
         NSInteger index = [self.areaPicker selectedRowInComponent:2];
-        MyShopProvinceModel *model = self.desticDataArr[index];
+        MyShopProvinceModel *model = self.desticArr[index];
      
         self.destic = model.name;
     }
+    
+    MyShopProvinceModel *model = self.provinceArr[row];
+    self.province = model.name;
+    NSInteger index = [self.areaPicker selectedRowInComponent:1];
+    MyShopProvinceModel *cityModel = self.cityArr[index];
+    self.city = cityModel.name;
+    NSInteger desticIndex = [self.areaPicker selectedRowInComponent:2];
+    MyShopProvinceModel *desticModel = self.desticArr[desticIndex];
+    self.destic = desticModel.name;
 }
 
 

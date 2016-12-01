@@ -116,63 +116,56 @@ static NSString * MedrchantCell = @"MedrchantCell";
     
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:MedrchantCell];
     
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
-    textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
-    
-    
     if (indexPath.section == 0 ) {
-        // 接受商品名称
-        self.infoTextfiled = textField;
-        textField.delegate = self;
-
-        textField.font = [UIFont systemFontOfSize:16];
-        
-    } else if (indexPath.section == 1) {
-        
-        textField.font = [UIFont systemFontOfSize:16];
         if (indexPath.row == 0) {
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
+            textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
+            // 接受商品名称
+            self.infoTextfiled = textField;
+            textField.delegate = self;
             
-            // 添加弹出城市选择
-            textField.enabled = NO;
-            self.aresTextField = textField;
-            textField.delegate = self;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-       
-        } else if (indexPath.row == 1){
-          
-            self.aresTextField = textField;
-            textField.delegate = self;
+            textField.font = [UIFont systemFontOfSize:16];
+            [cell.contentView addSubview:textField];
         }
-        
-    } else {
-        // 接受邀请码
-        self.phoneNumTextfiled = textField;
-        textField.delegate = self;
-
-        textField.font = [UIFont systemFontOfSize:14];
     }
     
-    [cell.contentView addSubview:textField];
-    
-    return cell;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            [self.aresTextField resignFirstResponder];
-            [self.adressTextField resignFirstResponder];
-            [self.phoneNumTextfiled resignFirstResponder];
-            [self.infoTextfiled resignFirstResponder];
-            
-            // 城市选择
-            AddressChooseView * choose = [[AddressChooseView alloc] init];
-            choose.areaBlock = ^(NSString *province,NSString *city,NSString *area){
-                DLog(@"省市区");
-            };
-            [choose show];
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
+            textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
+            textField.font = [UIFont systemFontOfSize:16];
+            // 添加弹出城市选择
+            self.areasTextField = textField;
+            textField.delegate = self;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            [cell.contentView addSubview:textField];
+
+        }
+        if (indexPath.row == 1){
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
+            textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
+            self.adressTextField = textField;
+            textField.delegate = self;
+            [cell.contentView addSubview:textField];
+
         }
     }
+    
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
+            textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
+            // 接受邀请码
+            self.phoneNumTextfiled = textField;
+            textField.delegate = self;
+            
+            textField.font = [UIFont systemFontOfSize:14];
+            [cell.contentView addSubview:textField];
+        }
+    }
+    
+    
+    return cell;
 }
 
 #pragma mark
@@ -187,7 +180,14 @@ static NSString * MedrchantCell = @"MedrchantCell";
         }
         return NO;
     }
-    
+    if (textField == self.areasTextField) {
+        [textField resignFirstResponder];
+        [self.areasTextField resignFirstResponder];
+        [self.adressTextField resignFirstResponder];
+        [self.phoneNumTextfiled resignFirstResponder];
+        [self.infoTextfiled resignFirstResponder];
+        return NO;
+    }
     return YES;
 }
 
@@ -196,7 +196,18 @@ static NSString * MedrchantCell = @"MedrchantCell";
     [textField resignFirstResponder];
     return YES;
 }
-
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.areasTextField) {
+        [self.areasTextField resignFirstResponder];
+        [self.adressTextField resignFirstResponder];
+        [self.phoneNumTextfiled resignFirstResponder];
+        [self.infoTextfiled resignFirstResponder];
+        
+        if (_areasBlock) {
+            _areasBlock();
+        }
+    }
+}
 // 点击提交认证
 - (void)clickHandinCertitycate {
     

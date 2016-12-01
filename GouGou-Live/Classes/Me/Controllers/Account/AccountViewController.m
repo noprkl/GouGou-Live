@@ -60,7 +60,19 @@
 }
 - (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = @[@"余额", @"结算", @"提现支付宝"];
+        _dataArr = [NSArray array];
+        if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
+            
+            if([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码 需要设置支付密码
+                _dataArr = @[@"余额", @"结算", @"提现支付宝"];
+            }else{ // 已经设置了支付密码 不能点击
+                _dataArr = @[@"余额", @"结算", @"提现支付宝"];
+            }
+
+        }else { // 未实名
+            _dataArr = @[@"余额",@"提示"];
+        }
+  
     }
     return _dataArr;
 }
@@ -69,13 +81,19 @@
 
     if (!_controllerNames) {
         _controllerNames = [NSArray array];
-        if (![UserInfos sharedUser].isreal) { // 未实名认证
+        if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
+            
+            if([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码 需要设置支付密码
+                _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
+            }else{ // 已经设置了支付密码 不能点击
+
+                _controllerNames = @[@"", @"PresentApplicationViewController",@""];
+            }
+            
+        }else { // 未实名
             _controllerNames = @[@"",@"CertificateViewController"];
-        }else if([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码 需要设置支付密码
-            _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
-        }else{ // 已经设置了支付密码 不能点击
-            _controllerNames = @[@"", @"PresentApplicationViewController",@""];
         }
+       
     }
     return _controllerNames;
 }
@@ -106,44 +124,72 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
-    
-    cell.textLabel.text = self.dataArr[indexPath.row];
-    if (![UserInfos sharedUser].isreal) { // 未实名认证
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
+        
+        if([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码 需要设置支付密码
+            cell.textLabel.text = self.dataArr[indexPath.row];
+            
+            if (indexPath.row == 0) {
+                cell.detailTextLabel.text = @"余额";
+            }
+            if (indexPath.row == 1) {
+                cell.detailTextLabel.text = @"";
+            }
+            if (indexPath.row == 2){
+                cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
+            }
+        }else{ // 已经设置了支付密码 不能点击
+            cell.textLabel.text = self.dataArr[indexPath.row];
+            
+            if (indexPath.row == 0) {
+                cell.detailTextLabel.text = @"余额";
+            }
+            if (indexPath.row == 1) {
+                cell.detailTextLabel.text = @"";
+            }
+            if (indexPath.row == 2){
+                cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
+            }
+        }
+        
+    }else { // 未实名
         if (indexPath.row == 0) {
+            cell.textLabel.text = self.dataArr[indexPath.row];
+            
             cell.detailTextLabel.text = @"余额";
         }
         if (indexPath.row == 1){
-            cell.textLabel.text = @"";
+            
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
             label.text = @"余额提现功能只针对实名认证用户开发,立即认证";
             label.font = [UIFont systemFontOfSize:12];
             label.textAlignment = NSTextAlignmentCenter;
             label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-            [cell addSubview:label];
+            [cell.contentView addSubview:label];
         }
 
-    }else if([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码 需要设置支付密码
+    }
+    
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 未实名认证
+        
+        
+    }else {
         if (indexPath.row == 0) {
+            cell.textLabel.text = self.dataArr[indexPath.row];
+            
             cell.detailTextLabel.text = @"余额";
         }
-        if (indexPath.row == 1) {
-            cell.detailTextLabel.text = @"";
-        }
-        if (indexPath.row == 2){
-            cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
-        }
-    }else{ // 已经设置了支付密码 不能点击
-        if (indexPath.row == 0) {
-            cell.detailTextLabel.text = @"余额";
-        }
-        if (indexPath.row == 1) {
-            cell.detailTextLabel.text = @"";
-        }
-        if (indexPath.row == 2){
-            cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
+        if (indexPath.row == 1){
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+            label.text = @"余额提现功能只针对实名认证用户开发,立即认证";
+            label.font = [UIFont systemFontOfSize:12];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+            [cell.contentView addSubview:label];
         }
     }
-
+        
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;

@@ -102,7 +102,7 @@
 
     }];
    
-    if ([UserInfos sharedUser].isreal) {
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
         [self.userNameLabel remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.iconView.bottom).offset(15);
             make.centerX.equalTo(self.centerX).offset(-30);
@@ -199,9 +199,9 @@
     if ([UserInfos sharedUser].usernickname.length > 0) {
         self.userNameLabel.text = [UserInfos sharedUser].usernickname;
     }
-    if ([UserInfos sharedUser].isreal) {
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
         self.userNameAuthen.hidden = NO;
-        if ([UserInfos sharedUser].ismerchant) {
+        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
             self.sellerAuthen.hidden = NO;
         }else{
             self.sellerAuthen.hidden = YES;
@@ -209,6 +209,7 @@
     }else{
         self.userNameAuthen.hidden = YES;
     }
+    
     if ([UserInfos sharedUser].usermotto.length > 0) {
         self.userSign.text = [UserInfos sharedUser].usermotto;
     }else{
@@ -216,7 +217,7 @@
     }
     
     // 设置直播按钮
-    if ([UserInfos sharedUser].ismerchant) {
+    if ([UserInfos sharedUser].ismerchant == 1) {
         [self.liveBtn setTitle:@"我要直播" forState:(UIControlStateNormal)];
     }{
         [self.liveBtn setTitle:@"需要商家认证才能直播" forState:(UIControlStateNormal)];

@@ -115,16 +115,9 @@ static NSString *cellid = @"SetcellId";
     return 10;
 }
 - (IBAction)clickLoginoutAction:(UIButton *)sender {
-
-   
-//    [UserInfos sharedUser].isLogin = NO;
-//    [UserInfos setUser];
-    
-//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [UserInfos removeUser];
-//    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].isLogin) forKey:@"isLogin"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
+    [UserInfos sharedUser].usertel = @"";
     
     [self.navigationController popViewControllerAnimated:YES];
 }

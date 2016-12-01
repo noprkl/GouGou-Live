@@ -7,162 +7,140 @@
 //
 
 #import "MyPagePictureView.h"
-#import "ShareBtn.h"
+#import "ManagePictureaCell.h"
+#import "MyAlbumsModel.h"
 
-@interface MyPagePictureView ()
+@interface MyPagePictureView ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property(nonatomic, strong) UILabel *AlumLabel; /**< 相册 */
 
-@property(nonatomic, strong) ShareBtn *factorySceneBtn; /**< 厂房外景 */
+@property(nonatomic, strong) UILabel *albumLabel; /**< 相册 */
 
-@property(nonatomic, strong) ShareBtn *DogPictureBtn; /**< 狗狗实景 */
+@property(nonatomic, assign) CGFloat W; /**< 宽高 */
 
-@property(nonatomic, strong) UIButton *manageBtn; /**< 管理相册 */
+@property(nonatomic, strong) UIButton *manageAlbum; /**< 管理相册 */
+
+@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+@property(nonatomic, strong) UICollectionView *collectionView; /**< 列表 */
 
 @end
-@implementation MyPagePictureView
+static NSString *cellid = @"ManagePictureaCell";
 
+@implementation MyPagePictureView
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self addSubview:self.AlumLabel];
-        [self addSubview:self.manageBtn];
-        [self addSubview:self.factorySceneBtn];
-        [self addSubview:self.DogPictureBtn];
+        [self addSubview:self.albumLabel];
+        [self addSubview:self.manageAlbum];
     }
     return self;
 }
-
-// 设置图片的信息 相册名字和相册图片
-- (void)setPictures:(NSArray *)pictures {
-    _pictures = pictures;
-    self.factorySceneBtn.hidden = NO;
-    self.DogPictureBtn.hidden = NO;
-    
-    if (pictures.count == 0) {
-        self.factorySceneBtn.hidden = YES;
-        self.DogPictureBtn.hidden = YES;
-    }
-    
-}
-
 - (void)layoutSubviews {
-    
     [super layoutSubviews];
-    [self.AlumLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.left).offset(10);
+    [self.albumLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(10);
-    }];
-    
-    [self.manageBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.AlumLabel.centerY);
-        make.right.equalTo(self.right).offset(-10);
-    }];
-    
-    [self.factorySceneBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.AlumLabel.bottom).offset(10);
         make.left.equalTo(self.left).offset(10);
-        make.size.equalTo(CGSizeMake(172, 172));
     }];
     
-    [self.DogPictureBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.AlumLabel.bottom).offset(10);
+    [self.manageAlbum makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.top).offset(10);
         make.right.equalTo(self.right).offset(-10);
-        make.size.equalTo(CGSizeMake(172, 172));
     }];
-}
+    
+    [self addSubview:self.collectionView];
 
-#pragma mark
-#pragma mark - Action
-- (void)clickFactoryBtnAction:(UIButton *)btn {
-    if (_factoryBlock) {
-        _factoryBlock();
+    [self.collectionView makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.left.right.equalTo(self);
+        make.top.equalTo(self.albumLabel.bottom).offset(10);
+    }];
+
+}
+- (void)setMaxCount:(NSInteger)maxCount {
+    _maxCount = maxCount;
+    if (maxCount <= kMaxImgCount) {
+        _W = (SCREEN_WIDTH - (_maxCount + 1) * 10) / _maxCount;
+    }else{
+        _W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
     }
 }
-- (void)clickDogViewBtnAction:(UIButton *)btn {
-    if (_dogViewBlock) {
-        _dogViewBlock();
-    }
+- (void)setDataPlist:(NSArray *)dataPlist {
+    _dataPlist = dataPlist;
+    self.dataArr = dataPlist;
+    [self.collectionView reloadData];
 }
-- (void)clickManageBtnAction:(UIButton *)btn {
+- (void)clickManageBtnAction {
     if (_manageBlock) {
         _manageBlock();
     }
 }
 #pragma mark
 #pragma mark - 懒加载
-- (ShareBtn *)factorySceneBtn {
-    if (!_factorySceneBtn) {
-        _factorySceneBtn = [ShareBtn buttonWithType:(UIButtonTypeCustom)];
-        NSDictionary *normalAttributeDict = @{
-                                              NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
-                                              NSFontAttributeName:[UIFont systemFontOfSize:12]
-                                              };
-        NSAttributedString *normalAttribute = [[NSAttributedString alloc] initWithString:@"厂房外景" attributes:normalAttributeDict];
-        
-        [_factorySceneBtn setAttributedTitle:normalAttribute forState:(UIControlStateNormal)];
-        
-        [_factorySceneBtn setImage:[UIImage imageNamed:@"品种02"] forState:(UIControlStateNormal)];
-
-        [_factorySceneBtn addTarget:self action:@selector(clickFactoryBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+- (UILabel *)albumLabel {
+    if (!_albumLabel) {
+        _albumLabel = [[UILabel alloc] init];
+        _albumLabel.text = @"相册";
+        _albumLabel.font = [UIFont systemFontOfSize:18];
     }
-    return _factorySceneBtn;
+    return _albumLabel;
 }
-- (ShareBtn *)DogPictureBtn {
-    if (!_DogPictureBtn) {
-        _DogPictureBtn = [ShareBtn buttonWithType:(UIButtonTypeCustom)];
-        NSDictionary *normalAttributeDict = @{
-                                              NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
-                                              NSFontAttributeName:[UIFont systemFontOfSize:12]
-                                              };
-        NSAttributedString *normalAttribute = [[NSAttributedString alloc] initWithString:@"狗狗实景" attributes:normalAttributeDict];
-        
-        [_DogPictureBtn setAttributedTitle:normalAttribute forState:(UIControlStateNormal)];
-        
-        [_DogPictureBtn setImage:[UIImage imageNamed:@"品种"] forState:(UIControlStateNormal)];
-
-        [_DogPictureBtn addTarget:self action:@selector(clickDogViewBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+- (UIButton *)manageAlbum {
+    if (!_manageAlbum) {
+        _manageAlbum = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        [_manageAlbum setTitle:@"管理" forState:(UIControlStateNormal)];
+        _manageAlbum.titleLabel.font = [UIFont systemFontOfSize:18];
+        [_manageAlbum setTintColor:[UIColor colorWithHexString:@"#000000"]];
+        [_manageAlbum addTarget:self action:@selector(clickManageBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
-    return _DogPictureBtn;
+    return _manageAlbum;
 }
-- (void)setBtn:(UIButton *)button title:(NSString *)title normalImage:(UIImage *)normalImage {
-    
-    // 正常
-    NSDictionary *normalAttributeDict = @{
-                                          NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
-                                          NSFontAttributeName:[UIFont systemFontOfSize:12]
-                                          };
-    NSAttributedString *normalAttribute = [[NSAttributedString alloc] initWithString:title attributes:normalAttributeDict];
-    
-    [button setAttributedTitle:normalAttribute forState:(UIControlStateNormal)];
-    //    button.imageView.frame = button.bounds;
-    //    button.hidden = NO;
-    [normalImage imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)];
-    [button setImage:normalImage forState:(UIControlStateNormal)];
-    
-    
-    [self addSubview:button];
+- (UICollectionView *)collectionView {
+    if (!_collectionView) {
+        
+        UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc] init];
+        
+        flowlayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+        
+        NSInteger count = self.dataArr.count;
+        CGFloat W = 0;
+        if (count == 1) {
+            count = 2;
+            W = (SCREEN_WIDTH - (count + 1) * 10) / count;
+        }else if (count > 1){
+            
+            W = (SCREEN_WIDTH - (count + 1) * 10) / count;
+        }
+        flowlayout.itemSize = CGSizeMake(W, W + 20);
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowlayout];
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        _collectionView.showsVerticalScrollIndicator = NO;
+        
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        _collectionView.bounces = NO;
+        [_collectionView registerNib:[UINib nibWithNibName:@"ManagePictureaCell" bundle:nil] forCellWithReuseIdentifier:cellid];
+    }
+    return _collectionView;
 }
 
-- (UILabel *)AlumLabel {
-    if (!_AlumLabel) {
-        _AlumLabel = [[UILabel alloc] init];
-        _AlumLabel.text = @"相册";
-        _AlumLabel.font = [UIFont systemFontOfSize:16];
-        _AlumLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+- (NSArray *)dataArr {
+    if (!_dataArr) {
+        _dataArr = [NSArray array];
     }
-    return _AlumLabel;
+    return _dataArr;
 }
-- (UIButton *)manageBtn {
-    if (!_manageBtn) {
-        _manageBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_manageBtn setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:(UIControlStateNormal)];
-        _manageBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [_manageBtn setTitle:@"管理" forState:(UIControlStateNormal)];
 
-        [_manageBtn addTarget:self action:@selector(clickManageBtnAction:) forControlEvents:(UIControlEventTouchDown)];
-    }
-    return _manageBtn;
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.dataArr.count;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ManagePictureaCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    cell.model = self.dataArr[indexPath.row];
+    
+    return cell;
+}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 @end

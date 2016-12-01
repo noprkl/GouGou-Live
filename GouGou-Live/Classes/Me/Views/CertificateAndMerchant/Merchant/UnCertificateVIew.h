@@ -10,8 +10,6 @@
 
 typedef void(^ClickCertificateBtnBlock)();
 
-typedef void(^CountdownBlock)(UIButton * btn);
-
 @interface UnCertificateVIew : UIView
 /** 点击实名认证回调 */
 @property (strong,nonatomic) ClickCertificateBtnBlock certificateBlack;

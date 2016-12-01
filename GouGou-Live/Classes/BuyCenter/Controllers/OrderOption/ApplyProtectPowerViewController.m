@@ -5,6 +5,7 @@
 //  Created by ma c on 16/11/14.
 //  Copyright © 2016年 LXq. All rights reserved.
 
+#define ImgCount 3
 
 #import "ApplyProtectPowerViewController.h"
 #import "ProtecePowerPromptView.h"  // 维权提示框
@@ -14,8 +15,9 @@
 #import "CostView.h"            // 花费
 #import "SureApplyRefundview.h"  // 是否申请退款
 #import "UpLoadPictureView.h"    // 上传照片
+#import "AddUpdataImagesView.h"  // 图片
 
-@interface ApplyProtectPowerViewController ()<UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface ApplyProtectPowerViewController ()<UIScrollViewDelegate>
 /** 底部scrollView */
 @property (strong,nonatomic) UIScrollView *boomScrollView;
 /** 订单状态 */
@@ -29,7 +31,10 @@
 /** 是否申请退款 */
 @property (strong,nonatomic) SureApplyRefundview *sureApplyRefundView;
 /** 照片 */
-@property (strong,nonatomic) UpLoadPictureView *upLoadPictureView;
+//@property (strong,nonatomic) UpLoadPictureView *upLoadPictureView;
+
+@property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 图片 */
+
 /** 提交申请 */
 @property (strong,nonatomic) UIButton * handinApplicationBtn;
 /** 接受view */
@@ -60,7 +65,7 @@
     [self.boomScrollView addSubview:self.dogDetailView];
     [self.boomScrollView addSubview:self.costView];
     [self.boomScrollView addSubview:self.sureApplyRefundView];
-    [self.boomScrollView addSubview:self.upLoadPictureView];
+    [self.boomScrollView addSubview:self.photoView];
     [self.boomScrollView addSubview:self.handinApplicationBtn];
 }
 
@@ -70,7 +75,7 @@
         _boomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
         _boomScrollView.delegate = self;
         _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 750);
-        _boomScrollView.bounces = NO;
+        _boomScrollView.showsVerticalScrollIndicator = NO;
     }
     return _boomScrollView;
 }
@@ -120,80 +125,122 @@
     }
     return _sureApplyRefundView;
 }
-
-- (UpLoadPictureView *)upLoadPictureView {
-
-    if (!_upLoadPictureView) {
-        _upLoadPictureView = [[UpLoadPictureView alloc] initWithFrame:CGRectMake(0, 480, SCREEN_WIDTH, 160)];
-        _upLoadPictureView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+- (AddUpdataImagesView *)photoView {
+    
+    if (!_photoView) {
+        __block CGFloat W = 0;
+        if (ImgCount <= kMaxImgCount) {
+            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+        }else{
+            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
+        }
+        _photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(0, 480, SCREEN_WIDTH, W + 20)];
+        _photoView.maxCount = ImgCount;
         
-        __weak typeof(self) weakself = self;
-
-        __weak typeof(_upLoadPictureView) upLoad = _upLoadPictureView;
-
+        __weak typeof(self) weakSelf = self;
         
-        _upLoadPictureView.upLoadImageBlock = ^(UIButton *button) {
-//
-            UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+        __weak typeof(_photoView) weakPhoto = _photoView;
+        _photoView.addBlock = ^(){
             
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-                
-                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                
-                picker.delegate = weakself;
-                picker.allowsEditing = YES;
-                
-                [weakself presentViewController:picker animated:YES completion:^{
-
-//                 图片数量
-                    NSInteger cols = 3;
-
-                    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth) / cols;
-
-                    CGFloat btnH = btnW;
-
-                    CGFloat y = 30;
-
-                    CGFloat x = button.frame.origin.x;
-
-                    CGFloat rightX = kDogImageWidth + btnW;
-
-                    UIView * view = [[UIView alloc] init];
-                    view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
-
-                    UIImageView * imageView = [[UIImageView alloc] init];
-                    imageView.frame = CGRectMake(0, 0, btnW, btnH);
-                    weakself.acceptImageView = imageView;
-                    [view addSubview:imageView];
-
-                    if (x < rightX) {
-
-                        view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
-                        button.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
-
-                    } else if (x < 2 * rightX) {
-
-                        view.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
-                        button.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
-                        
-                    } else if (x < 3 * rightX) {
-                        
-                        view.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
-                        
-                        button.hidden = YES;
-                    }
-                    [(UIView *)upLoad addSubview:view];
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    [weakPhoto.dataArr addObject:photos[0]];
                     
-                }];
-        
-            };
-
+                    [weakPhoto.collectionView reloadData];
+                    CGFloat row = weakPhoto.dataArr.count / kMaxImgCount;
+                    CGRect rect = weakPhoto.frame;
+                    rect.size.height = (row + 1) * (W + 10) + 10;
+                    weakPhoto.frame = rect;
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
         };
+        _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
     }
-
-
-    return _upLoadPictureView;
+    return _photoView;
 }
+
+//- (UpLoadPictureView *)upLoadPictureView {
+//
+//    if (!_upLoadPictureView) {
+//        _upLoadPictureView = [[UpLoadPictureView alloc] initWithFrame:CGRectMake(0, 480, SCREEN_WIDTH, 160)];
+//        _upLoadPictureView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//        
+//        __weak typeof(self) weakself = self;
+//
+//        __weak typeof(_upLoadPictureView) upLoad = _upLoadPictureView;
+//
+//        
+//        _upLoadPictureView.upLoadImageBlock = ^(UIButton *button) {
+////
+//            UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+//            
+//            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+//                
+//                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//                
+//                picker.delegate = weakself;
+//                picker.allowsEditing = YES;
+//                
+//                [weakself presentViewController:picker animated:YES completion:^{
+//
+////                 图片数量
+//                    NSInteger cols = 3;
+//
+//                    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth) / cols;
+//
+//                    CGFloat btnH = btnW;
+//
+//                    CGFloat y = 30;
+//
+//                    CGFloat x = button.frame.origin.x;
+//
+//                    CGFloat rightX = kDogImageWidth + btnW;
+//
+//                    UIView * view = [[UIView alloc] init];
+//                    view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
+//
+//                    UIImageView * imageView = [[UIImageView alloc] init];
+//                    imageView.frame = CGRectMake(0, 0, btnW, btnH);
+//                    weakself.acceptImageView = imageView;
+//                    [view addSubview:imageView];
+//
+//                    if (x < rightX) {
+//
+//                        view.frame = CGRectMake(kDogImageWidth, y, btnW, btnH);
+//                        button.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
+//
+//                    } else if (x < 2 * rightX) {
+//
+//                        view.frame = CGRectMake(kDogImageWidth + rightX , y, btnW, btnH);
+//                        button.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
+//                        
+//                    } else if (x < 3 * rightX) {
+//                        
+//                        view.frame = CGRectMake(kDogImageWidth + 2 * rightX , y, btnW, btnH);
+//                        
+//                        button.hidden = YES;
+//                    }
+//                    [(UIView *)upLoad addSubview:view];
+//                    
+//                }];
+//        
+//            };
+//
+//        };
+//    }
+//
+//
+//    return _upLoadPictureView;
+//}
 
 - (UIButton *)handinApplicationBtn {
 

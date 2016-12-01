@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class MyPictureListModel;
 typedef void(^ClickSelectBtnBlock)();
 
 @interface PicturesCell : UICollectionViewCell
@@ -16,5 +16,7 @@ typedef void(^ClickSelectBtnBlock)();
 @property(nonatomic, strong) ClickSelectBtnBlock selectBlock; /**< 选中按钮 */
 @property(nonatomic, assign) BOOL isHid; /**< 是否隐藏 */
 @property(nonatomic, assign) BOOL isAllSelect; /**< 是否全选 */
+
+@property(nonatomic, strong) MyPictureListModel *model; /**< 图片 */
 
 @end

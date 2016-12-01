@@ -30,6 +30,11 @@ typedef void(^clickCancelBtnBlock)();
 @property(nonatomic, strong) NSString *title; /**< 提示 */
 
 
+@property(nonatomic, assign) BOOL hidNote; /**< 隐藏提示 */
+
+@property(nonatomic, assign) BOOL hidForGet; /**< 隐藏忘记密码 */
+@property(nonatomic, strong) NSString *placeHolder; /**< 占位符 */
+
 - (void)show;
 - (void)dismiss;
 

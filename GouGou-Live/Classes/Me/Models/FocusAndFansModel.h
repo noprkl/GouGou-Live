@@ -16,4 +16,6 @@
 
 @property(nonatomic, strong) NSString *userImgUrl; /**< 头像 */
 
+@property(nonatomic, assign) NSInteger userFanId; /**< 关注ID */
+
 @end

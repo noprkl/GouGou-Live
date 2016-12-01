@@ -76,7 +76,7 @@
         make.top.equalTo(self.top).offset(10);
         make.size.equalTo(CGSizeMake(60, 60));
     }];
-    if ([UserInfos sharedUser].isreal) {
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
         [self.userNameLabel remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.iconView.bottom).offset(15);
             make.centerX.equalTo(self.centerX).offset(-30);
@@ -139,10 +139,9 @@
     if ([UserInfos sharedUser].usernickname.length > 0) {
         self.userNameLabel.text = [UserInfos sharedUser].usernickname;
     }
-    if ([UserInfos sharedUser].isreal) {
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
         self.userNameAuthen.hidden = NO;
-        
-        if ([UserInfos sharedUser].ismerchant) {
+        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
             self.sellerAuthen.hidden = NO;
         }else{
             self.sellerAuthen.hidden = YES;
@@ -188,6 +187,7 @@
     if (!_sellerAuthen) {
         _sellerAuthen = [[UILabel alloc] init];
         _sellerAuthen.text = @"商家认证";
+        _sellerAuthen.hidden = YES;
         _sellerAuthen.font = [UIFont systemFontOfSize:10];
         _sellerAuthen.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _sellerAuthen.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];

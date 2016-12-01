@@ -57,6 +57,18 @@
     _title = title;
     self.titlelabel.text = title;
 }
+- (void)setHidNote:(BOOL)hidNote {
+    _hidNote = hidNote;
+    self.psdLabel.hidden = hidNote;
+}
+- (void)setHidForGet:(BOOL)hidForGet {
+    _hidForGet = hidForGet;
+    self.forgetPsd.hidden = hidForGet;
+}
+- (void)setPlaceHolder:(NSString *)placeHolder {
+    _placeHolder = placeHolder;
+    self.editngtextfiled.placeholder = placeHolder;
+}
 - (void)layoutSubviews {
     
     [super layoutSubviews];

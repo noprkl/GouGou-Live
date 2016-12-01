@@ -43,6 +43,17 @@
 #pragma 验证手机号
     
     // 如果验证成功，跳转到添加成功
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_name":self.userNameTexfiled.text,
+                           @"user_ali_code":self.payingTextfiled.text
+                           };
+    [self postRequestWithPath:API_Treasure params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
     AddPayingSuccessViewController * addPaySuccVC = [[AddPayingSuccessViewController alloc] init];
     
     [self.navigationController pushViewController:addPaySuccVC animated:YES];

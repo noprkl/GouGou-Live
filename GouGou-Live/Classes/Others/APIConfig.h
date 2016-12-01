@@ -40,17 +40,22 @@
 #define API_Albums @"UserService/albums"
 /** 用户相册修改 */
 #define API_Up_albums @"UserService/up_albums"
-/** 用户相册上传图片 */
-#define API_Add_albums @"UserService/add_albums"
 /** 用户相册删除 */
 #define API_Del_albums @"UserService/del_albums"
+
+/** 用户相册相片列表 */
+#define API_Album_list @"UserService/album_list"
+/** 用户相册相片增加 */
+#define API_Add_albums @"UserService/add_albums"
+/** 用户相册相片删除 */
+#define API_Album_del @"UserService/album_del"
 
 
 #pragma mark - 认证
 /** 实名认证 post */
 #define API_Authenticate  @"UserService/Authenticate"
 /** 商家认证 */
-#define API_MerchantAuth @"merchantAuth"
+#define API_MerchantAuth @"UserService/merchantAuth"
 
 #pragma mark - 账户
 /** 获取用户资产 */
@@ -69,8 +74,22 @@
 #define API_Treasure @"UserService/treasure"
 
 #pragma mark - 粉丝关注
-#define API_Fans @"/UserService/fan"
-#define API_Fan_Information @"/UserService/fan_information"
+// 粉丝列表
+#define API_Fans @"UserService/fan"
+// 关注列表
+#define API_Fan_Information @"UserService/fan_information"
+// 搜索用户
+#define API_Search_nick @"UserService/search_nick"
+// 关注/取消关注用户
+#define API_Add_fan @"UserService/add_fan"
+
+
+#pragma mark - 收藏
+// 我的喜欢-狗狗
+#define API_My_like_product @"UserService/my_like_product"
+// 我的喜欢－－添加/删除
+#define API_My_add_like @"UserService/my_add_like"
+
 
 #pragma mark - 个人信息
 /** 个人昵称 */
@@ -91,7 +110,6 @@
 #define API_Del_address @"UserService/del_address"
 /** 默认地址 */
 #define API_Default_address @"UserService/default_address"
-
 /** 省市区 */
 #define API_Province @"UserService/province"
 

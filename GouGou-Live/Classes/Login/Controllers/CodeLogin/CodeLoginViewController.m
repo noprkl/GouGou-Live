@@ -171,6 +171,8 @@
     [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
     [UserInfos sharedUser].userpaycode = ![user_pay_code isEqual:[NSNull null]] ? user_pay_code:@"";
     
+    [UserInfos sharedUser].isreal = is_real;
+    [UserInfos sharedUser].ismerchant = is_merchant;
     [UserInfos sharedUser].ID = ID;
     [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;

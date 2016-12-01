@@ -7,6 +7,7 @@
 //
 
 #import "ManagePictureaCell.h"
+#import "MyAlbumsModel.h"
 
 @interface ManagePictureaCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *picturesImage;
@@ -29,6 +30,13 @@
 - (void)setIsAllSelect:(BOOL)isAllSelect {
     _isAllSelect = isAllSelect;
     self.selectedBtn.selected = isAllSelect;
+}
+- (void)setModel:(MyAlbumsModel *)model {
+    _model = model;
+    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+    [self.picturesImage sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    
+    self.picturesName.text = [NSString stringWithFormat:@"%@(%@)", model.albumName, model.pNum];
 }
 - (void)awakeFromNib {
     // Initialization code

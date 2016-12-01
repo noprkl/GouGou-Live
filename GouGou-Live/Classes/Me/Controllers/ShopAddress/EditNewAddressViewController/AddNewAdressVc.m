@@ -279,53 +279,62 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.areaChooseTextfiled) {
         [textField resignFirstResponder];
+
         
         // 省市区级联
         __block AddressChooseView * choose = [[AddressChooseView alloc] init];
-        //    __weak typeof(self) weakSelf = self;
-        choose.provinceDataArr = self.proviceDataArr;
-        choose.cityDataArr = self.cityDataArr;
-        choose.desticDataArr = self.desticDataArr;
+        
         __weak typeof(choose) weakChose = choose;
-
+        choose.provinceArr = self.proviceDataArr;
+        choose.cityArr = self.cityDataArr;
+        choose.desticArr = self.desticDataArr;
         // 选中第一行 第二行请求
         choose.firstBlock = ^(MyShopProvinceModel *model){
             [self getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
                 if (successJson) {
-                    [self.cityDataArr removeAllObjects];
-                    [self.cityDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    weakChose.cityArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                    [weakChose.areaPicker selectRow:0 inComponent:1 animated:YES];
                     [weakChose.areaPicker reloadComponent:1];
+                    
+                    MyShopProvinceModel *cityModel = weakChose.cityArr[0];
+                    
+                    // 请求第3行
+                    [self getRequestWithPath:API_Province params:@{@"id":@(cityModel.ID)} success:^(id successJson) {
+                        if (successJson) {
+                            weakChose.desticArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                            [weakChose.areaPicker selectRow:0 inComponent:2 animated:YES];
+                            [weakChose.areaPicker reloadComponent:2];
+                        }
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
                 }
-                
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
-            return self.cityDataArr;
         };
         // 选中第二行 第三行请求
         choose.secondBlock = ^(MyShopProvinceModel *model){
             
             [self getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
                 if (successJson) {
-                    [self.desticDataArr removeAllObjects];
-                    [self.desticDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    weakChose.desticArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                    [weakChose.areaPicker selectRow:0 inComponent:2 animated:YES];
                     [weakChose.areaPicker reloadComponent:2];
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
-            return self.desticDataArr;
         };
         
         choose.areaBlock = ^(NSString *province,NSString *city,NSString *district){
-            
+            self.areaChooseTextfiled.text = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
             self.provice = province;
             self.city = city;
             self.district = district;
             self.areaChooseTextfiled.text = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
         };
         [choose show];
-        
         
         return NO;
     }

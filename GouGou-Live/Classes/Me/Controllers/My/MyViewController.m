@@ -19,6 +19,7 @@
 
 #import "MerchantViewController.h" //商家认证
 #import "CreateLiveViewController.h" // 创建直播
+#import "FocusAndFansModel.h" 
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -32,11 +33,6 @@
 
 /** headBtn */
 @property (strong, nonatomic) UIButton *myButton;
-
-@property(nonatomic, strong) NSArray *doneMetchDataSource; /**< 已经商家认证的数据源 */
-
-@property(nonatomic, strong) NSArray *doneMetchcontrollerNames; /**< 已经商家认证的控制器名字 */
-
 
 @property(nonatomic, strong) NSArray *fansArray; /**< 粉丝数据 */
 @property(nonatomic, strong) NSArray *focusArray; /**< 关注数据 */
@@ -56,7 +52,7 @@
                            };
     
   [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
+        DLog(@"%@", successJson);
   } error:^(NSError *error) {
 
       DLog(@"%@", error);
@@ -64,12 +60,18 @@
 }
 // 请求粉丝数据
 - (void)postRequestGetFans {
-    // [[UserInfos sharedUser].ID integerValue]
+    //[[UserInfos sharedUser].ID integerValue]
     NSDictionary *dict = @{@"user_id":@(11)
                            };
     [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.fansArray = successJson[@"data"];
+        
+        if (successJson) {
+//            DLog(@"%@", successJson);
+            self.fansArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            
+            [self.tableView reloadData];
+        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -80,8 +82,17 @@
     NSDictionary *dict = @{@"user_id":@(11)
                            };
     [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        self.focusArray = successJson[@"data"];
+
+        if (successJson) {
+            DLog(@"%@", successJson);
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"MyFocus"];
+            // 得到关注人的人
+            self.focusArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            // 把关注的人存到本地
+//            [[NSUserDefaults standardUserDefaults] setObject:self.focusArray forKey:@"MyFocus"];
+            [self.tableView reloadData];
+        }
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -92,7 +103,7 @@
     [super viewDidLoad];
     
     [self initUI];
-   
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -100,10 +111,12 @@
     self.hidesBottomBarWhenPushed = NO;
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
-    [self postGetUserAsset];
-    [self postRequestGetFans];
+    if ([UserInfos getUser]) {
+        [self postRequestGetFans];
+        [self postRequestGetFocus];
+        [self postGetUserAsset];
+    }
 
-    
     [self.tableView reloadData];
 
 }
@@ -136,7 +149,12 @@
 - (NSArray *)dataSource {
     
     if (!_dataSource) {
-        _dataSource = @[@[@"账号", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
+        _dataSource = [NSArray array];
+        if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+            _dataSource =  @[@[@"账户", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
+        }else{
+            _dataSource = @[@[@"账户", @"我的订单", @"收货地址", @"卖家中心"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
+        }
     }
     return _dataSource;
 }
@@ -144,40 +162,25 @@
 - (NSArray *)controllerNames {
 
     if (!_controllerNames) {
-        _controllerNames = @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+        _controllerNames = [NSArray array];
+        if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+            _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+        }else{
+            _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+        }
+
+  
     }
     return _controllerNames;
 }
-- (NSArray *)doneMetchDataSource {
-    if (!_doneMetchDataSource) {
-        _doneMetchDataSource =  @[@[@"账号", @"我的订单", @"收货地址", @"卖家中心"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
-    }
-    return _doneMetchDataSource;
-}
-- (NSArray *)doneMetchcontrollerNames {
-    if (!_doneMetchcontrollerNames) {
-        _doneMetchcontrollerNames = @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
-    }
-    return _doneMetchcontrollerNames;
-}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    // 如果已经进行商家认证 就选择已商家认证的数据源
-    if ([UserInfos sharedUser].ismerchant) {
-        return self.doneMetchDataSource.count;
-    }else{
-        return self.dataSource.count;
-    }
-//    return self.doneMetchDataSource.count;
+    return self.dataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // 如果已经进行商家认证 就选择已商家认证的数据源
-    if ([UserInfos sharedUser].ismerchant) {
-        return [self.doneMetchDataSource[section] count];
-    }else{
-        return [self.dataSource[section] count];
-    }
-//    return [self.doneMetchDataSource[section] count];
+
+    return [self.dataSource[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -204,100 +207,48 @@
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-    // 如果已经登录
-    if ([UserInfos getUser]) { // 登录
-        if ([UserInfos sharedUser].isreal) { // 实名热证
-            if ([UserInfos sharedUser].ismerchant) {
-                // 商家认证
-                
-                NSString *textString = self.doneMetchDataSource[indexPath.section][indexPath.row];
-                cell.textLabel.attributedText = [self getCellTextWithString:textString];
-                cell.detailTextLabel.text = @"";
-
-                if (indexPath.section == 0) {
-                    if (indexPath.row == 0) {
-                        // 账号
-                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"余额"];
-                    }
-                }
-                if (indexPath.section == 2) {
-                    if (indexPath.row == 0){
-                        // 已实名认证
-                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"已认证"];
-                    }
-                    if (indexPath.row == 1){
-                        // 已商家认证
-                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"已认证"];
-                    }
-                }
-            }else{
-                // 未商家认证
-                NSString *textString = self.dataSource[indexPath.section][indexPath.row];
-                cell.textLabel.attributedText = [self getCellTextWithString:textString];
-                cell.detailTextLabel.text = @"";
-                
-                if (indexPath.section == 0) {
-                    if (indexPath.row == 0) {
-                        // 账号
-                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"余额"];
-                    }
-                }
-                if (indexPath.section == 2) {
-                    if (indexPath.row == 0){
-                        // 未实名认证
-                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"已认证"];
-                    }
-                    if (indexPath.row == 1){
-                        // 未商家认证
-                        cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"去认证"];
-                    }
-                }
-            }
-        }else{
-            // 未实名认证
-            NSString *textString = self.dataSource[indexPath.section][indexPath.row];
-            cell.textLabel.attributedText = [self getCellTextWithString:textString];
-            cell.detailTextLabel.text = @"";
-            if (indexPath.section == 0) {
-                if (indexPath.row == 0) {
-                    // 账号
-                    cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"余额"];
-                }
-            }
-            if (indexPath.section == 2) {
-                if (indexPath.row == 0){
-                    // 实名认证
-                    cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"未认证"];
-                }
-                if (indexPath.row == 1){
-                    // 商家认证
-                    cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"需实名认证"];
-                }
+    NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
+    cell.textLabel.text = cellText;
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+    if ([UserInfos getUser]) { // 如果已经登录
+        
+        if ([cellText isEqualToString:@"账户"]) {
+            
+            cell.detailTextLabel.text = @"余额数";
+        }
+        if ([cellText isEqualToString:@"实名认证"]) { //  1.未认证 2.审核 3.已认证 4.认证失败
+            if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) {
+                cell.detailTextLabel.text = @"未认证";
+            }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
+                cell.detailTextLabel.text = @"审核中";
+            }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
+                cell.detailTextLabel.text = @"已认证";
+            }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
+                cell.detailTextLabel.text = @"认证失败";
             }
         }
-    }else{
-        // 未登录cell
-        NSString *textString = self.dataSource[indexPath.section][indexPath.row];
-        cell.textLabel.attributedText = [self getCellTextWithString:textString];
-
-        cell.detailTextLabel.text = @"";
-        if (indexPath.section == 0) {
-            // 未登录detaile
-            if (indexPath.row == 0) {
-                // 账号
-                cell.detailTextLabel.text = @"";
+        if ([cellText isEqualToString:@"商家认证"]) { // 1：非商家 2：商家 3：审核中 4: 审核失败
+            if ([[UserInfos sharedUser].ismerchant isEqualToString:@"1"]) {
+                cell.detailTextLabel.text = @"非商家";
+            }else if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]){
+                cell.detailTextLabel.text = @"商家";
+            }else if ([[UserInfos sharedUser].ismerchant isEqualToString:@"3"]){
+                cell.detailTextLabel.text = @"审核中";
+            }else if ([[UserInfos sharedUser].ismerchant isEqualToString:@"4"]){
+                cell.detailTextLabel.text = @"审核失败";
             }
         }
-        if (indexPath.section == 2) {
-            if (indexPath.row == 0){
-                // 实名认证
-                cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"未认证"];
-            }
-            if (indexPath.row == 1){
-                // 商家认证
-                cell.detailTextLabel.attributedText = [self getDetailTextWithString:@"未认证"];
-            }
+        
+    }else{  // 未登录
+        if ([cellText isEqualToString:@"账户"]) {
+            cell.detailTextLabel.text = @"余额";
+        }
+        if ([cellText isEqualToString:@"实名认证"]) {
+            cell.detailTextLabel.text = @"未认证";
+        }
+        if ([cellText isEqualToString:@"商家认证"]) {
+            cell.detailTextLabel.text = @"未认证";
         }
     }
     
@@ -323,20 +274,9 @@
     if ([UserInfos getUser]) {
         
         // 如果已经进行商家认证 就选择已商家认证的数据源
-        NSString *controllerName;
-        NSString *cellText;
-        if ([UserInfos sharedUser].ismerchant) {
-            cellText = self.dataSource[indexPath.section][indexPath.row];
-            
-            controllerName = self.controllerNames[indexPath.section][indexPath.row];
-        }else{
-            cellText = self.doneMetchDataSource[indexPath.section][indexPath.row];
-            
-            controllerName = self.doneMetchcontrollerNames[indexPath.section][indexPath.row];
-        }
-        
-        // 如果已经进行商家认证 就选择已商家认证的数据源
-        
+        NSString *controllerName = self.controllerNames[indexPath.section][indexPath.row];
+        NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
+
         UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
         VC.hidesBottomBarWhenPushed = YES;
         VC.title = cellText;
@@ -384,6 +324,7 @@
             messageView.myPageBlcok = ^(){
                 MyPageViewController *myPage =
                 [[MyPageViewController alloc] init];
+                myPage.fansArr = self.fansArray;
                 myPage.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:myPage animated:YES];
             };

@@ -8,6 +8,9 @@
 
 #import "BaseViewController.h"
 
+@class MyAlbumsModel;
 @interface PicturesViewController : BaseViewController
+
+@property(nonatomic, strong) MyAlbumsModel *model; /**< 模型 */
 
 @end

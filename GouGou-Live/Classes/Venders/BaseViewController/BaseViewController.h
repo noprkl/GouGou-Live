@@ -11,7 +11,7 @@
 typedef void(^HttpRequestSuccessBlock)(id successJson);
 typedef void(^HttpRequestErrorBlock)(NSError *error);
 
-@interface BaseViewController : UIViewController
+@interface BaseViewController : UIViewController <TZImagePickerControllerDelegate>
 
 /** get请求 */
 - (void)getRequestWithPath:(NSString *)path

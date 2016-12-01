@@ -41,13 +41,21 @@ static NSString *userpaycodeKey = @"userpaycode";
         _username = [[NSUserDefaults standardUserDefaults] objectForKey:usernameKey];
         _userimgurl = [[NSUserDefaults standardUserDefaults] objectForKey:userimgurlKey];
         _usertel = [[NSUserDefaults standardUserDefaults] objectForKey:usertelKey];
-        _ismerchant = [[NSUserDefaults standardUserDefaults] objectForKey:ismerchantKey];
-        _isreal = [[NSUserDefaults standardUserDefaults] objectForKey:isrealKey];
+        _ismerchant = [[NSUserDefaults standardUserDefaults] valueForKey:ismerchantKey];
+        _isreal = [[NSUserDefaults standardUserDefaults] valueForKey:isrealKey];
         _usermotto = [[NSUserDefaults standardUserDefaults] objectForKey:usermottoKey];
         _userpaycode = [[NSUserDefaults standardUserDefaults] objectForKey:userpaycodeKey];
 
         }
     return self;
+}
++ (BOOL)getUser {
+    
+    if ([UserInfos sharedUser].usertel.length != 0) {
+        
+        return YES;
+    }
+    return NO;
 }
 + (void)setUser {
     
@@ -65,20 +73,13 @@ static NSString *userpaycodeKey = @"userpaycode";
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].usertel forKey:usertelKey];
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userpaycode forKey:userpaycodeKey];
 
-    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].isreal) forKey:isrealKey];
-    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].ismerchant) forKey:ismerchantKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].isreal forKey:isrealKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].ismerchant forKey:ismerchantKey];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (BOOL)getUser {
-    
-    if ([UserInfos sharedUser].usertel.length != 0) {
-        
-        return YES;
-    }
-    return NO;
-}
+
 + (void)removeUser {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:usertelKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:usernicknameKey];
@@ -98,6 +99,7 @@ static NSString *userpaycodeKey = @"userpaycode";
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:ismerchantKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:isrealKey];
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:IDKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:userPsdKey];
 

@@ -14,6 +14,9 @@
 #import "SellerGoodsBottomView.h"
 #import "SellerGoodsBarBtnView.h"
 #import "SellerDeleDDetailView.h"
+#import "MyAlbumsModel.h"
+#import "NSString+CertificateImage.h"
+#import "MyPictureListModel.h"
 
 @interface PicturesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -35,16 +38,46 @@
 static NSString *cellid = @"PicturesCell";
 
 @implementation PicturesViewController
-
+- (void)getRequestAlbumList {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"id":_model.ID
+                           };
+    [self getRequestWithPath:API_Album_list params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.dataArr removeAllObjects];
+        self.dataArr = [MyPictureListModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        [self.collectionView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
+- (void)deletePictures {
+    
+    for (NSInteger i = 0; i < self.selectData.count; i ++) {
+        MyPictureListModel *model = self.selectData[i];
+        [self.selectData replaceObjectAtIndex:i withObject:model.ID];
+    }
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"id":[self.selectData componentsJoinedByString:@","]
+                           };
+    [self getRequestWithPath:API_Album_del params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+        [self getRequestAlbumList];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
     [self setNavBarItem];
 }
 - (void)initUI {
-    
-    self.title = @"相册管理";
-    
+        
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.barBtnView];
     self.navigationItem.rightBarButtonItem = item;
     
@@ -59,37 +92,23 @@ static NSString *cellid = @"PicturesCell";
     
     [self.view addSubview:self.bottomView];
 }
-- (void)choseAddPicture:(UIButton *)btn {
-    btn.selected = !btn.selected;
-    //    self.selectbtn.hidden = btn.selected;
-    
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestAlbumList];
 }
-
+- (void)setModel:(MyAlbumsModel *)model {
+    _model = model;
+    self.title = model.albumName;
+}
 #pragma mark
 #pragma mark - collectionView
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
         _dataArr = [NSMutableArray array];
-        [_dataArr addObject:@0];
-        [_dataArr addObject:@1];
-        [_dataArr addObject:@2];
-        [_dataArr addObject:@3];
-        [_dataArr addObject:@4];
     }
     return _dataArr;
 }
-//- (NSMutableArray *)selectBtns {
-//    if (!_selectBtns) {
-//        _selectBtns = [NSMutableArray array];
-//    }
-//    return _selectBtns;
-//}
-//- (NSMutableArray *)cells {
-//    if (!_cells) {
-//        _cells = [NSMutableArray array];
-//    }
-//    return _cells;
-//}
+
 - (NSMutableArray *)selectData {
     if (!_selectData) {
         _selectData = [NSMutableArray array];
@@ -139,7 +158,51 @@ static NSString *cellid = @"PicturesCell";
         };
         _barBtnView.addBlock = ^(){
             // 添加相片
-           
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    
+                        NSString *base64 = [NSString imageBase64WithDataURL:photos[0]];
+                        NSDictionary *dict = @{
+                                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                               @"img":base64
+                                               };
+                    
+                    
+                    [weakSelf postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+                        if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                            CGSize size = CGSizeMake(200, 300);
+                            // 请求
+                            NSDictionary *dict2 = @{
+                                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                    @"id":weakSelf.model.ID,
+                                                    @"path_small":weakSelf.model.pathSmall,
+                                                    @"path_big":successJson[@"data"],
+                                                    @"photo_space":NSStringFromCGSize(size)
+                                                    };
+                            DLog(@"%@", dict2);
+                            [weakSelf getRequestWithPath:API_Add_albums params:dict2 success:^(id successJson) {
+                                [weakSelf showAlert:successJson[@"message"]];
+                                [weakSelf getRequestAlbumList];
+                                DLog(@"%@", successJson);
+                            } error:^(NSError *error) {
+                                DLog(@"%@", error);
+                            }];
+                        }
+
+                        } error:^(NSError *error) {
+                            DLog(@"%@", error);
+                        }];
+                    
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+
         };
     }
     return _barBtnView;
@@ -181,9 +244,11 @@ static NSString *cellid = @"PicturesCell";
             }
             prommit.message = [NSString stringWithFormat:@"你将删除%ld个宝贝", count];
             prommit.sureBlock = ^(UIButton *btn){
-                
+
+                // 删除请求
+                [weakSelf deletePictures];
+                // 清除数组中数据
                 [weakSelf.dataArr removeObjectsInArray:weakSelf.selectData];
-                
                 [weakSelf.collectionView reloadData];
                 // 清空数据
                 [weakSelf.selectData removeAllObjects];
@@ -204,16 +269,18 @@ static NSString *cellid = @"PicturesCell";
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PicturesCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
+    MyPictureListModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
     
     cell.isHid = _isHid;
     cell.isAllSelect = _isSelect;//[self.selectData containsObject:@(indexPath.row)]
     cell.selectBlock = ^(){
-        if ([self.selectData containsObject:@(indexPath.row)]) {
+        if ([self.selectData containsObject:model]) {
             //如果点击的cell在deleArr中，则从deleArr中删除
-            [self.selectData removeObject:@(indexPath.row)];
+            [self.selectData removeObject:model];
         }else{
             //否则添加cell到
-            [self.selectData addObject:@(indexPath.row)];
+            [self.selectData addObject:model];
         }
         
     };

@@ -7,6 +7,7 @@
 //
 
 #import "PicturesCell.h"
+#import "MyPictureListModel.h"
 
 @interface PicturesCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *pictureImage;
@@ -22,6 +23,12 @@
         _selectBlock();
     }
 }
+- (void)setModel:(MyPictureListModel *)model {
+    _model = model;
+    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathBig];
+    [self.pictureImage sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+}
+
 - (void)setIsHid:(BOOL)isHid {
     _isHid = isHid;
     

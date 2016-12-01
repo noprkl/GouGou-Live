@@ -24,9 +24,9 @@
 
 @property(nonatomic, strong) NSString *usermotto; /**< 用户签名 */
 
-@property(nonatomic, assign) BOOL ismerchant; /**< 是否商家验证 */
+@property(nonatomic, strong) NSString *ismerchant; /**< 商家验证 1：非商家 2：商家 3：审核中 4: 审核失败 */
 
-@property(nonatomic, assign) BOOL isreal; /**< 是否进行实名认证 */
+@property(nonatomic, strong) NSString *isreal; /**< 实名认证 1.未认证 2.审核 3.已认证 4.认证失败 */
 
 @property(nonatomic, strong) NSString *userpaycode; /**< 支付密码 */
 

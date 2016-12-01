@@ -19,12 +19,16 @@
 
 #import "ManagePictureaViewController.h"
 
+#import "MyAlbumsModel.h" // 相册model
+
 @interface MyPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
+
+@property(nonatomic, strong) NSArray *commentArr; /**< 评论数 */
 
 @property(nonatomic, strong) NSArray *dogCardArr; /**< 临时数据 */
 
@@ -36,6 +40,20 @@ static NSString *cellid = @"cellid";
 
 @implementation MyPageViewController
 
+// 相册列表
+- (void)getRequestAlbums {
+    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                               };
+    [self getRequestWithPath:API_album params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.picturesArr = [MyAlbumsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -44,9 +62,11 @@ static NSString *cellid = @"cellid";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.hidesBottomBarWhenPushed = NO;
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
+    
+    // 请求相册数据
+    [self getRequestAlbums];
 }
 
 - (void)initUI {
@@ -63,6 +83,12 @@ static NSString *cellid = @"cellid";
         _dataArr = @[@[@"头部"], @[@"简介"], @[@"实名认证", @"商家认证"],@[@"回放"],@[@"相册"]];
     }
     return _dataArr;
+}
+- (NSArray *)commentArr {
+    if (!_commentArr) {
+        _commentArr = [NSArray array];
+    }
+    return _commentArr;
 }
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -95,6 +121,8 @@ static NSString *cellid = @"cellid";
         case 0:
             if (indexPath.row == 0) { // 头部信息
                 MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+                headerView.fansCount = self.fansArr.count;
+                headerView.commentCount = self.commentArr.count;
                 headerView.backgroundColor = [UIColor whiteColor];
                 [cell.contentView addSubview:headerView];
             }
@@ -102,10 +130,14 @@ static NSString *cellid = @"cellid";
         case 1:
             if (indexPath.row == 0) { // 简介
                 MyPageDescView *descView = [[MyPageDescView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, 73))];
+                
                 descView.backgroundColor = [UIColor whiteColor];
                 descView.editBlock = ^(){
                     PromptView *promit = [[PromptView alloc] init];
-
+                    promit.hidForGet = YES;
+                    promit.hidNote = YES;
+                    promit.placeHolder = @"编辑个人简介";
+                    
                     promit.title = @"简介编辑";
                     [promit show];
                 };
@@ -120,13 +152,16 @@ static NSString *cellid = @"cellid";
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
-                label.text = @"实名";
-                label.font = [UIFont systemFontOfSize:14];
+                if ([UserInfos sharedUser].username.length == 0) {
+                    label.text = @"未实名";
+                }else{
+                    label.text = [UserInfos sharedUser].username;
+                }                label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
                 [cell.contentView addSubview:label];
 
                 // 根据是否认证 创建认证按钮
-                if (![UserInfos sharedUser].isreal) {
+                if (![[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
 
                     UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
                     btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
@@ -149,13 +184,18 @@ static NSString *cellid = @"cellid";
 
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
-                label.text = @"商家";
+//                if ([UserInfos sharedUser].username.length == 0) {
+//                    label.text = @"未实名";
+//                }else{
+//                    label.text = [UserInfos sharedUser].username;
+//                }
+                label.text = @"未认证";
                 label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
                 [cell.contentView addSubview:label];
                 
                 // 根据是否认证 创建认证按钮
-                if (![UserInfos sharedUser].ismerchant) {
+                if (![[UserInfos sharedUser].ismerchant isEqualToString:@"3"]) {
                     UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
                     btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
                     btn.frame = CGRectMake(0, 0, 75, 33);
@@ -217,13 +257,20 @@ static NSString *cellid = @"cellid";
             break;
         case 4:
             if (indexPath.row == 0) {
-                CGFloat pictureHeight = 40;
-               
-                if (self.picturesArr.count != 0) {
-                    pictureHeight += 180;
+
+                NSInteger count = self.picturesArr.count;
+                CGFloat W = 0;
+                if (count == 1) {
+                    count = 2;
+                    W = (SCREEN_WIDTH - (count + 1) * 10) / count;
+                }else if (count > 1){
+                    
+                    W = (SCREEN_WIDTH - (count + 1) * 10) / count;
                 }
-                MyPagePictureView *picture = [[MyPagePictureView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, pictureHeight)];
-                picture.pictures = self.picturesArr;
+                
+                MyPagePictureView *picture = [[MyPagePictureView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40 + W + 45)];
+//                picture.maxCount = 3;
+                picture.dataPlist = self.picturesArr;
                 picture.backgroundColor = [UIColor whiteColor];
                 [cell.contentView addSubview:picture];
                
@@ -257,7 +304,7 @@ static NSString *cellid = @"cellid";
 - (NSArray *)picturesArr {
     if (!_picturesArr) {
         _picturesArr = [NSArray array];
-        _picturesArr = @[@"品种", @"品种"];
+//        _picturesArr = @[@"品种", @"品种"];
     }
     return _picturesArr;
 }
@@ -292,12 +339,17 @@ static NSString *cellid = @"cellid";
             break;
         case 4:
         {
-            CGFloat pictureHeight = 40;
-            
-            if (self.picturesArr.count != 0) {
-                pictureHeight += 180;
+            NSInteger count = self.picturesArr.count;
+            CGFloat W = 0;
+            if (count == 1) {
+                count = 2;
+                W = (SCREEN_WIDTH - (count + 1) * 10) / count + 50;
+            }else if (count > 1){
+                
+                W = (SCREEN_WIDTH - (count + 1) * 10) / count + 50;
             }
-            return pictureHeight;
+            
+            return W + 50;
         }
             break;
         default:
@@ -309,11 +361,15 @@ static NSString *cellid = @"cellid";
 #pragma mark - Action
 - (void)clickRealBtnAction {
     CertificateViewController *certifi = [[CertificateViewController alloc] init];
+    certifi.hidesBottomBarWhenPushed = YES;
+    certifi.title = @"实名认证";
     [self.navigationController pushViewController:certifi animated:YES];
 }
 
 - (void)clickMerchantBtnAction {
     MerchantViewController *merchant = [[MerchantViewController alloc] init];
+    merchant.hidesBottomBarWhenPushed = YES;
+    merchant.title = @"商家认证";
     [self.navigationController pushViewController:merchant animated:YES];
 }
 - (void)didReceiveMemoryWarning {

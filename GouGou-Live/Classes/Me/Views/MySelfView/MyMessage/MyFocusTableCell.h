@@ -18,4 +18,7 @@ typedef void(^SelectBtnBlock)(BOOL isSelect);
 
 @property(nonatomic, strong) FocusAndFansModel *model; /**< 模型 */
 
+
+@property(nonatomic, assign) BOOL isHid; /**< 选中按钮是否隐藏 */
+
 @end

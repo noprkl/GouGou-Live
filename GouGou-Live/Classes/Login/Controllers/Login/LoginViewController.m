@@ -126,7 +126,7 @@
                              is_merchant:successJson[@"data"][@"is_merchant"]
                                  is_real:successJson[@"data"][@"is_real"]
                                  user_motto:successJson[@"data"][@"user_motto"]
-                              user_pay_code:successJson[@"data"][@"user_pay_code"]                     ];
+                           user_pay_code:successJson[@"data"][@"user_pay_code"]                     ];
                    
                     EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:successJson[@"data"][@"user_pwd"]];
                     if (!error2) {
@@ -162,7 +162,8 @@
     [UserInfos sharedUser].usernickname = ![user_nick_name isEqual:[NSNull null]] ?user_nick_name:@"";
     [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
     [UserInfos sharedUser].userpaycode = ![user_pay_code isEqual:[NSNull null]] ? user_pay_code:@"";
-
+    [UserInfos sharedUser].isreal = is_real;
+    [UserInfos sharedUser].ismerchant = is_merchant;
     [UserInfos sharedUser].ID = ID;
     [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;

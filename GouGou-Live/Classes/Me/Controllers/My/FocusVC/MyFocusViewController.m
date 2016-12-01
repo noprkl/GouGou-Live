@@ -17,8 +17,6 @@
 
 @property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 
-@property(nonatomic, strong) NSMutableArray *cells; /**< 数组 */
-
 @end
 
 static NSString *cellid = @"MyFocusCell";
@@ -53,7 +51,7 @@ static NSString *cellid = @"MyFocusCell";
 
 - (void)setFocusArr:(NSArray *)focusArr {
     _focusArr = focusArr;
-    [self.dataArr addObjectsFromArray:[FocusAndFansModel mj_objectArrayWithKeyValuesArray:focusArr]];
+    [self.dataArr addObjectsFromArray:focusArr];
 }
 #pragma mark
 #pragma mark - TableView
@@ -79,13 +77,37 @@ static NSString *cellid = @"MyFocusCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = self.focusArr[indexPath.row];
+    FocusAndFansModel *model = self.focusArr[indexPath.row];
+    cell.model = model;
     
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {
-            DLog(@"关注");
+            
+            NSDictionary *dict = @{
+                                   @"user_id":@(11),
+                                   @"id":@(model.userFanId),
+                                   @"type":@(0)
+                                   };
+            [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            
         }else {
-            DLog(@"取消关注");
+            
+            NSDictionary *dict = @{
+                                   @"user_id":@(11),
+                                   @"id":@(model.userFanId),
+                                   @"type":@(1)
+                                   };
+            [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
         }
     };
     

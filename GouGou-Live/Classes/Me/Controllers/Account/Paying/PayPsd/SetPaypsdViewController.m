@@ -8,33 +8,34 @@
 
 #import "SetPaypsdViewController.h"
 #import "NSString+MD5Code.h"
+#import "SetPayPsdSuccessViewController.h"
 
 @interface SetPaypsdViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *psdTextField;
 @property (weak, nonatomic) IBOutlet UITextField *surePsdTextField;
-
 @end
 
 @implementation SetPaypsdViewController
 - (void)surePsdRequest {
     
-    NSString *pwd = [NSString md5WithString:self.psdTextField.text];
+    NSString *pwd = [NSString md5WithString:self.surePsdTextField.text];
     DLog(@"%@", pwd);
     NSDictionary *dict = @{
-                           @"user_tel":@([self.telNumber integerValue]),
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"pay_password":pwd,
-                           @"code":@([self.codeNumber integerValue])
+                           @"pay_sms":_codeNumber
                            };
-    [self getRequestWithPath:API_Pay_add params:dict success:^(id successJson) {
+    [self postRequestWithPath:API_Pay_add params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
+        //
+        if ([successJson[@"message"] isEqualToString:@"短信已过期"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
         if ([successJson[@"message"] isEqualToString:@"设置成功"]) {
-            
-            //            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:sureSuccVC animated:YES];
-            
+            SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
+            [self.navigationController pushViewController:sureSuccVC animated:YES];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -46,12 +47,16 @@
     // Do any additional setup after loading the view from its nib.
     [self initUI];
     
-    [self setNavBarItem];
+    [self setNavBarItems];
+}
+- (void)setNavBarItems {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] init];
 }
 
 - (void)initUI {
     
     // 设置textField的placeHolder
+    self.title = @"确认支付密码";
     
     UIColor *textcolor1 = [UIColor colorWithHexString:@"666666"];
     UIColor *textcolor2 = [UIColor colorWithHexString:@"cccccc"];
@@ -76,6 +81,9 @@
     self.psdTextField.delegate = self;
     self.surePsdTextField.delegate = self;
     
+}
+- (void)setCodeNumber:(NSString *)codeNumber {
+    _codeNumber = codeNumber;
 }
 
 #pragma mark

@@ -53,7 +53,26 @@ static NSString *cellid = @"cellid";
         DLog(@"%@", error);
     }];
 }
+- (void)getRequestComment {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"page":@(1),
+                           @"pageSize":@(5)
+                           };
+    [self getRequestWithPath:API_My_order_comment params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if (successJson[@"data"][@"info"] == [NSNull null]) {
+            self.commentArr = @[];
+        }else{
+                self.commentArr = successJson[@"data"][@"info"];
+        }
 
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -67,6 +86,8 @@ static NSString *cellid = @"cellid";
     
     // 请求相册数据
     [self getRequestAlbums];
+    // 请求评论数
+    [self getRequestComment];
 }
 
 - (void)initUI {

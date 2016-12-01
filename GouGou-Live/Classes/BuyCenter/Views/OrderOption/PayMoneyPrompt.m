@@ -9,6 +9,7 @@
 #import "PayMoneyPrompt.h"
 #import "PromptView.h"
 #import "PaySuccessViewController.h"
+#import "NSString+MD5Code.h"
 
 @interface PayMoneyPrompt ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -119,6 +120,9 @@ static NSString *cellid = @"SizeFilterCellID";
     _dataArr = dataArr;
     _dataPlist = dataArr;
 }
+- (void)setPayMoney:(NSString *)payMoney {
+    _payMoney = payMoney;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return self.dataPlist.count - 2;
@@ -135,10 +139,11 @@ static NSString *cellid = @"SizeFilterCellID";
     cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#666666"];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.row == 0) {
         
-        cell.detailTextLabel.text = @"￥950";
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"￥%@", _payMoney];
         
     } else if (indexPath.row == 1) {
         
@@ -211,10 +216,6 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (void)clickFooterBtnAction {
     [self dismiss];
-    
-    if (_bottomBlock) {
-        _bottomBlock(self.lastString);
-    }
 }
 
 #pragma mark 选中
@@ -222,31 +223,14 @@ static NSString *cellid = @"SizeFilterCellID";
     
     NSString *text = self.dataPlist[indexPath.row + 1];
     self.lastString = text;
-    if (_payCellBlock) {
-        _payCellBlock(text);
-    }
+   
     if (indexPath.row < 2) {
         
         return;
     } else {
-    
-        // 支付密码提示框
-        PromptView * prompt = [[PromptView alloc] init];
-        prompt.backgroundColor = [UIColor whiteColor];
-       
-        prompt.clickSureBtnBlock = ^() {
-        
-//        // 判断支付状态（成功，失败，余额不足）
-//            
-//            PaySuccessViewController * paySuccessVC = [[PaySuccessViewController alloc] init];
-//            
-//            [[self viewController].navigationController pushViewController:paySuccessVC animated:YES];
-            return @"";
-        };
-        
-        
-        [prompt show];
-        
+        if (_payCellBlock) {
+            _payCellBlock(text);
+        }       
         [self dismiss];
     }
 }

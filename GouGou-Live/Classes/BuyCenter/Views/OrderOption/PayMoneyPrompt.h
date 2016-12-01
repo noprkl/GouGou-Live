@@ -17,8 +17,10 @@ typedef void(^ClickBottomBtnBlovk)(NSString *string);
 
 @property(nonatomic, strong) ClickBottomBtnBlovk bottomBlock; /**< 点击底部按钮回调 */
 
-
 @property(nonatomic, strong) NSArray *dataArr; /**< 选择数组 */
+
+
+@property(nonatomic, strong) NSString *payMoney; /**< 支付钱数 */
 
 - (void)show;
 - (void)dismiss;

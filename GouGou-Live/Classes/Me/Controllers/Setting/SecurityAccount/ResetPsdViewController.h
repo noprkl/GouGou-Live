@@ -10,4 +10,6 @@
 
 @interface ResetPsdViewController : BaseViewController
 
+@property(nonatomic, strong) NSString *oldPsd; /**< 旧支付密码 */
+
 @end

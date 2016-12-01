@@ -7,6 +7,7 @@
 //
 
 #import "DogDetailInfoCell.h"
+#import "DogDetailInfoModel.h"
 
 @interface DogDetailInfoCell ()
 /** 狗狗图片*/
@@ -54,7 +55,18 @@
     }
     return self;
 }
-
+- (void)setModel:(DogDetailInfoModel *)model {
+    _model = model;
+    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+    [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.dogNameLabel.text = model.name;
+    self.dogKindLabel.text = model.kindName;
+    self.dogAgeLabel.text = model.ageName;
+    self.dogSizeLabel.text = model.sizeName;
+    self.dogColorLabel.text = model.colorName;
+    self.oldPriceLabel.text = model.priceOld;
+    self.nowPriceLabel.text = model.price;
+}
 - (void)layoutSubviews {
     [super layoutSubviews];
     

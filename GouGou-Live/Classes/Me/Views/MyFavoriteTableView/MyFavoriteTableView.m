@@ -9,6 +9,7 @@
 #import "MyFavoriteTableView.h"
 #import "WatchHistoryCell.h"
 #import "DogDetailInfoCell.h"
+#import "DogDetailInfoModel.h"
 
 static NSString * liveCell = @"liveCellID";
 static NSString * dogCell = @"dogCellID";
@@ -49,8 +50,8 @@ static NSString * dogCell = @"dogCellID";
 //        return self.favoriteLiveArray.count;
         return 10;
     }else {
-//        return self.favoriteDogArray.count;
-        return 5;
+        return self.favoriteDogArray.count;
+//        return 5;
     }
 }
 
@@ -68,6 +69,11 @@ static NSString * dogCell = @"dogCellID";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DLog(@"%ld", indexPath.row);
+    if (_isLive) {
+        DLog(@"直播");
+    }else{
+        DLog(@"狗狗");
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -81,13 +87,35 @@ static NSString * dogCell = @"dogCellID";
         return cell;
         
     } else {
+        DogDetailInfoModel *model = self.favoriteDogArray[indexPath.row];
+
         DogDetailInfoCell * cell = [tableView dequeueReusableCellWithIdentifier:dogCell];
         if (!cell) {
             cell = [[DogDetailInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:dogCell];
         }
+        
+        cell.model = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 }
-
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!_isLive) {
+        DogDetailInfoModel *model = self.favoriteDogArray[indexPath.row];
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            if (_deleBlock) {
+                _deleBlock(model.ID);
+            }
+        }
+    }
+}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除后不可恢复";
+}
 @end

@@ -17,6 +17,7 @@
 #import "ChosedAdressView.h"
 #import "SellerChangePayView.h"
 
+#import "NSString+MD5Code.h"
 @interface SellerChangeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
@@ -243,12 +244,27 @@ static NSString *cellid = @"SellerAcceptRateCell";
     };
     
     // 点击提示框确认按钮请求支付密码
-    prompt.clickSureBtnBlock = ^(){
-        [weakself codePayPsdRequest];
+    __weak typeof(prompt) weakPrompt = prompt;
+    prompt.clickSureBtnBlock = ^(NSString *text){
         
-        return @"输入错误";
+        // 验证密码
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                               @"pay_password":[NSString md5WithString:text]
+                               };
+        [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            weakPrompt.noteStr = successJson[@"message"];
+            if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
+                // 申请成功
+                [weakPrompt dismiss];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+        
     };
-    
+
     prompt.cancelBlock = ^(){
         [weakself.navigationController popViewControllerAnimated:YES];
         prompt = nil;

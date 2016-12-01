@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class DogDetailInfoModel;
 @interface DogDetailInfoCell : UITableViewCell
+
+@property(nonatomic, strong) DogDetailInfoModel *model; /**< 模型 */
+
 
 @end

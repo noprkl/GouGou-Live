@@ -69,7 +69,7 @@
 }
 - (LiveTableView *)tableView {
     if (!_tableView) {
-        _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 3000) style:(UITableViewStylePlain)];
+        _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 44) style:(UITableViewStylePlain)];
         
         __weak typeof(self) weakSelf = self;
         _tableView.cellBlock = ^(){

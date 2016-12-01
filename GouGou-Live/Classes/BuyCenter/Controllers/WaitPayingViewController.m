@@ -155,7 +155,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"支付全款"]) {
-                // 点击支付全乱
+                // 点击支付全款
                 [self clickPayAllMoney];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);

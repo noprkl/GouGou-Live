@@ -126,7 +126,12 @@
                              is_merchant:successJson[@"data"][@"is_merchant"]
                                  is_real:successJson[@"data"][@"is_real"]
                                  user_motto:successJson[@"data"][@"user_motto"]
-                           user_pay_code:successJson[@"data"][@"user_pay_code"]                     ];
+                           user_pay_code:successJson[@"data"][@"user_pay_code"]
+                           user_ali_code:successJson[@"data"][@"user_ali_code"]
+                              qq_open_id:successJson[@"data"][@"qq_open_id"]
+                              wx_open_id:successJson[@"data"][@"wx_open_id"]
+                             user_status:successJson[@"data"][@"user_status"]
+                     ];
                    
                     EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:successJson[@"data"][@"user_pwd"]];
                     if (!error2) {
@@ -155,13 +160,19 @@
                is_real:(NSString *)is_real
             user_motto:(NSString *)user_motto
          user_pay_code:(NSString *)user_pay_code
+         user_ali_code:(NSString *)user_ali_code
+            qq_open_id:(NSString *)qq_open_id
+            wx_open_id:(NSString *)wx_open_id
+            user_status:(NSString *)user_status
 
 {
     [UserInfos sharedUser].userimgurl = ![user_img_url isEqual:[NSNull null]] ?user_img_url:@"";
     [UserInfos sharedUser].username = ![user_name isEqual:[NSNull null]] ?user_name:@"";
     [UserInfos sharedUser].usernickname = ![user_nick_name isEqual:[NSNull null]] ?user_nick_name:@"";
     [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
+    [UserInfos sharedUser].useralicode = ![user_ali_code isEqual:[NSNull null]] ? user_ali_code:@"";
     [UserInfos sharedUser].userpaycode = ![user_pay_code isEqual:[NSNull null]] ? user_pay_code:@"";
+
     [UserInfos sharedUser].isreal = is_real;
     [UserInfos sharedUser].ismerchant = is_merchant;
     [UserInfos sharedUser].ID = ID;

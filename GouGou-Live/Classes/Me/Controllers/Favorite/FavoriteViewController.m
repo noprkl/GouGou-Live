@@ -9,6 +9,7 @@
 #import "FavoriteViewController.h"
 #import "TowButtonView.h"
 #import "MyFavoriteTableView.h"
+#import "DogDetailInfoModel.h"
 
 @interface FavoriteViewController ()
 /** 两个button View */
@@ -25,10 +26,30 @@
 @implementation FavoriteViewController
 #pragma mark
 #pragma mark - 网络请求
-
+// 我的喜欢-狗狗
+- (void)GetRequestFavoriteDog{
+    NSDictionary *dict = @{
+                           @"user_id":@(11),
+                           @"page":@(1),
+                           @"pageSize":@(1)
+                           };
+    [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [self.favoriteDogTable reloadData];
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
 #pragma mark
 #pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // 请求狗狗数据
+    [self GetRequestFavoriteDog];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -39,6 +60,18 @@
     [self addControllers];
     
     [self setNavBarItem];
+    
+    self.favotiteLiveTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        // 取消下拉刷新
+        [self.favotiteLiveTable.mj_header endRefreshing];
+    }];
+    self.favoriteDogTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 请求数据
+        [self GetRequestFavoriteDog];
+        // 取消下拉刷新
+        [self.favoriteDogTable.mj_header endRefreshing];
+    }];
 }
 #pragma mark
 #pragma mark - 约束
@@ -85,7 +118,25 @@
     if (!_favoriteDogTable) {
         _favoriteDogTable = [[MyFavoriteTableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 44, SCREEN_WIDTH, SCREEN_HEIGHT - 44 - 64) style:UITableViewStylePlain];
         _favoriteDogTable.isLive = NO;
-        
+        _favoriteDogTable.tableFooterView = [[UIView alloc] init];
+        __weak typeof(self) weakSelf = self;
+        _favoriteDogTable.deleBlock = ^(NSString *dogID){
+            NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
+                                   @"user_id":@(11),
+                                   @"product_id":@([dogID integerValue]),
+                                   @"type":@(2)
+                                   };
+            [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [weakSelf showAlert:successJson[@"message"]];
+                if (successJson) {
+                    [weakSelf GetRequestFavoriteDog];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+
+        };
     }
     return _favoriteDogTable;
 }

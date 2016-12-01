@@ -10,7 +10,7 @@
 
 typedef void(^PlayingPasswardBlock)(UITextField *textfiled);
 
-typedef NSString*(^ClickSureButtonBlock)();
+typedef void(^ClickSureButtonBlock)(NSString *text);
 typedef void(^ClickForgrtBtnBlock)();
 typedef void(^clickCancelBtnBlock)();
 
@@ -29,7 +29,7 @@ typedef void(^clickCancelBtnBlock)();
 
 @property(nonatomic, strong) NSString *title; /**< 提示 */
 
-
+@property(nonatomic, strong) NSString *noteStr; /**< 返回提示 */
 @property(nonatomic, assign) BOOL hidNote; /**< 隐藏提示 */
 
 @property(nonatomic, assign) BOOL hidForGet; /**< 隐藏忘记密码 */

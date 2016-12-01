@@ -8,7 +8,7 @@
 
 #import "PayingViewController.h"
 #import "AddPayingSuccessViewController.h"
-
+#import "SetPayingPsdViewController.h"
 
 @interface PayingViewController ()<UITextFieldDelegate>
 
@@ -17,8 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *pointLabel;
-
-
 @end
 
 @implementation PayingViewController
@@ -40,23 +38,32 @@
 #pragma mark
 #pragma mark - 网络请求
 - (void)requestPhoneNum {
-#pragma 验证手机号
     
     // 如果验证成功，跳转到添加成功
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                           @"user_name":self.userNameTexfiled.text,
+                           @"user_name":[UserInfos sharedUser].username,
                            @"user_ali_code":self.payingTextfiled.text
                            };
     [self postRequestWithPath:API_Treasure params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+        if ([successJson[@"message"] isEqualToString:@"成功"]) {
+            
+        }
+        // 延迟两秒跳
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            AddPayingSuccessViewController *payPsdVC = [[AddPayingSuccessViewController alloc] init];
+            [self.navigationController pushViewController:payPsdVC animated:YES];
+        });
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
     
-    AddPayingSuccessViewController * addPaySuccVC = [[AddPayingSuccessViewController alloc] init];
-    
-    [self.navigationController pushViewController:addPaySuccVC animated:YES];
+//    AddPayingSuccessViewController * addPaySuccVC = [[AddPayingSuccessViewController alloc] init];
+//    
+//    [self.navigationController pushViewController:addPaySuccVC animated:YES];
     
 }
 

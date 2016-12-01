@@ -37,6 +37,8 @@
 @property(nonatomic, strong) NSArray *fansArray; /**< 粉丝数据 */
 @property(nonatomic, strong) NSArray *focusArray; /**< 关注数据 */
 
+@property(nonatomic, strong) NSString *userAsset; /**< 用户资产 */
+
 @end
 
 @implementation MyViewController
@@ -53,6 +55,12 @@
     
   [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+      if ([successJson[@"message"] isEqualToString:@"请求成功"]) {
+           self.userAsset = successJson[@"data"][@"asset"];
+      }else {
+            self.userAsset = @"0.00";
+      }
+      
   } error:^(NSError *error) {
 
       DLog(@"%@", error);
@@ -184,7 +192,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    return 31;
+    return 35;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
@@ -209,13 +217,13 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
     cell.textLabel.text = cellText;
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
     if ([UserInfos getUser]) { // 如果已经登录
         
         if ([cellText isEqualToString:@"账户"]) {
             
-            cell.detailTextLabel.text = @"余额数";
+            cell.detailTextLabel.text = self.userAsset;
         }
         if ([cellText isEqualToString:@"实名认证"]) { //  1.未认证 2.审核 3.已认证 4.认证失败
             if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) {
@@ -242,7 +250,7 @@
         
     }else{  // 未登录
         if ([cellText isEqualToString:@"账户"]) {
-            cell.detailTextLabel.text = @"余额";
+            cell.detailTextLabel.text = @"0.00";
         }
         if ([cellText isEqualToString:@"实名认证"]) {
             cell.detailTextLabel.text = @"未认证";

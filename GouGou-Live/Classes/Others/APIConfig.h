@@ -29,6 +29,10 @@
 #define API_Code @"UserService/sms"
 /** 找回密码 get */
 #define API_RetrivePwd @"UserService/retrivePwd"
+/** 验证登录密码 */
+#define API_Validation_l_pwd @"UserService/validation_l_pwd"
+/** 登录密码重置 */
+#define API_Reset_pwd @"UserService/reset_pwd"
 
 #pragma mark
 #pragma mark - 我的模块
@@ -62,16 +66,19 @@
 #define API_UserAsset @"UserService/getUserAsset"
 /** 获取用户资产明细 */
 #define API_GetUserAssertDetai @"UserService/getUserAssertDetai"
+/** 用户提现申请 */
+#define API_RetriveMoney @"UserService/retriveMoney"
+#pragma mark - 支付宝
 /** 用户支付密码添加接口 */
 #define API_Pay_add @"UserService/pay_add"
 /** 用户支付密码修改 */
 #define API_Pay_up @"UserService/pay_up"
-/** 用户提现申请 */
-#define API_RetriveMoney @"UserService/retriveMoney"
 /** 用户提现纪录 */
 #define API_GetRetriveRecord @"UserService/getRetriveRecord"
 /** 用户绑定支付宝 */
 #define API_Treasure @"UserService/treasure"
+/** 验证支付密码接口 */
+#define API_Validation_pwd @"UserService/validation_pwd"
 
 #pragma mark - 粉丝关注
 // 粉丝列表
@@ -141,10 +148,26 @@
 
 #pragma mark
 #pragma mark - 订单
+
+#pragma mark - 买家
 /** 买家订单列表 */
 #define API_List_order @"ProductService/list_order"
-/** 买家订单未支付 */
+/** 买家订单初始化 */
 #define API_Order @"ProductService/order"
+/** 订单评价买家 */
+#define API_Order_evaluation @"ProductService/order_evaluation"
+/** 钱包支付 */
+#define API_Wallet @"OrderService/wallet"
+/** 取消订单 */
+#define API_Cancel_order @"OrderService/cancel_order"
+/** 订单取消原因 */
+#define API_Cancel_order_reason @"OrderService/cancel_order_reason"
+/** 订单维权添加 */
+#define API_Add_activist @"OrderService/add_activist"
+/** 订单维权买家列表 */
+#define API_Activist @"OrderService/activist"
+
+#pragma mark - 卖家
 /** 卖家订单列表 */
 #define API_My_order @"ProductService/my_order"
 /** 订单状态修改 */
@@ -153,18 +176,12 @@
 #define API_Order_limit @"ProductService/order_limit"
 /** 订单修改价格 */
 #define API_Order_up @"ProductService/order_up"
-/** 订单评价 */
-#define API_Order_evaluation @"ProductService/order_evaluation"
-/** 钱包支付 */
-#define API_Wallet @"ProductService/wallet"
-/** 钱包支付 */
-#define API_Order_limit @"ProductService/order_limit"
-/** 订单修改价格 */
-#define API_Order_up @"ProductService/order_up"
-
-
-
-
+/** 订单评价卖家 */
+#define API_My_order_comment @"ProductService/my_order_comment"
+/** 订单维权卖家列表 */
+#define API_My_activist @"OrderService/my_activist"
+/** 订单维权详情 */
+#define API_My_activist_limit @"OrderService/activist_limit"
 
 
 #pragma mark - 系统通知

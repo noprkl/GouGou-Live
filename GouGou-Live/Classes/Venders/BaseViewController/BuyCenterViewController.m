@@ -14,6 +14,8 @@
 #import "ProtecePowerPromptView.h"
 #import "ApplyProtectPowerViewController.h"
 #import "CancleOrderAlter.h"
+#import "NSString+MD5Code.h"
+
 @interface BuyCenterViewController ()
 
 @end
@@ -35,7 +37,7 @@
     [prompt show];
     
 }
-// 尾金支付
+// 尾金支付 传个值 钱数
 - (void)clickPayBackMoney {
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
@@ -45,6 +47,9 @@
     
     payMonery.bottomBlock = ^(NSString *size){
         DLog(@"%@", size);
+    };
+    payMonery.payCellBlock = ^(NSString *payWay){
+        [self payMoneyFroWay:payWay];
     };
     
 }
@@ -59,7 +64,9 @@
     payMonery.bottomBlock = ^(NSString *payAway){
         DLog(@"%@", payAway);
     };
-    
+    payMonery.payCellBlock = ^(NSString *payWay){
+        [self payMoneyFroWay:payWay];
+    };
 }
 // 全款支付
 - (void)clickPayAllMoney {
@@ -72,9 +79,50 @@
     payMonery.bottomBlock = ^(NSString *size){
         DLog(@"%@", size);
     };
-    
+    payMonery.payCellBlock = ^(NSString *payWay){
+        [self payMoneyFroWay:payWay];
+    };
     
 }
+
+#pragma mark
+#pragma mark - 支付方式选择
+- (void)payMoneyFroWay:(NSString *)payWay {
+    if ([payWay isEqualToString:@"账户余额支付"]) {
+        // 支付密码提示框
+        PromptView * prompt = [[PromptView alloc] init];
+        prompt.backgroundColor = [UIColor whiteColor];
+        
+        // 点击提示框确认按钮请求支付密码
+        __weak typeof(prompt) weakPrompt = prompt;
+        prompt.clickSureBtnBlock = ^(NSString *text){
+            
+            // 验证密码
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"pay_password":[NSString md5WithString:text]
+                                   };
+            [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                weakPrompt.noteStr = successJson[@"message"];
+                if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
+                    // 申请成功
+                    [weakPrompt dismiss];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        };
+        [prompt show];
+    }
+    if ([payWay isEqualToString:@"支付宝支付"]) {
+        DLog(@"支付宝支付");
+    }
+    if ([payWay isEqualToString:@"微信宝支付"]) {
+        DLog(@"微信支付");
+    }
+}
+
 // 点击取消订单
 - (void)clickCancleOrder {
     // 点击取消订单出现的弹框
@@ -117,12 +165,26 @@
         
 //        __weak typeof(prompt) weakself = prompt;
         
-        prompt.clickSureBtnBlock = ^() {
+        // 点击提示框确认按钮请求支付密码
+        __weak typeof(prompt) weakPrompt = prompt;
+        prompt.clickSureBtnBlock = ^(NSString *text){
             
-            // 判断支付密码输入是否正确，如果正确（fade）
+            // 验证密码
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"pay_password":[NSString md5WithString:text]
+                                   };
+            [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                weakPrompt.noteStr = successJson[@"message"];
+                if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
+                    // 申请成功
+                    [weakPrompt dismiss];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
             
-            //
-            return @"0";
         };
         
         [prompt show];

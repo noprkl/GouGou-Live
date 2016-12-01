@@ -155,8 +155,8 @@
 }
 - (void)clickSureBtnAction {
     if (_sureBlock) {
+       [self dismiss];
         _sureBlock();
-        [self dismiss];
     }
 }
 

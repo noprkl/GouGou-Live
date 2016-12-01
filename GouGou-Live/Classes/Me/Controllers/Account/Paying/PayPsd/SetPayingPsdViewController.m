@@ -7,6 +7,7 @@
 //
 
 #import "SetPayingPsdViewController.h"
+#import "SetPaypsdViewController.h"
 
 @interface SetPayingPsdViewController ()<UITextFieldDelegate>
 
@@ -35,7 +36,7 @@
 }
 
 - (void)initUI {
-    self.title = @"忘记密码";
+    self.title = @"设置支付密码";
     
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;
@@ -48,16 +49,21 @@
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
     
     [self freetimeout];
-    NSDictionary *dict = @{
-                           @"tel" : @([self.phoneTextField.text integerValue]),
-                           @"type" : @1
-                           };
-    [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+    if (self.phoneTextField.text.length == 0){
+        [self showAlert:@"手机号为空"];
+    }else{
+        NSDictionary *dict = @{
+                               @"tel" : @([self.phoneTextField.text integerValue]),
+                               @"type" : @3
+                               };
+        [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
+    
 }
 
 - (IBAction)codeTextFieldExiding:(UITextField *)sender {
@@ -81,16 +87,16 @@
         [self showAlert:@"所输入的不是手机号"];
         
     }else{
-        
-//        SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
-//        sureVC.title = @"新密码设置";
-//        sureVC.telNumber = self.phoneTextField.text;
-//        sureVC.codeNumber = self.codeTextField.text;
-//        
-//        [self.navigationController pushViewController:sureVC animated:YES];
+        if (self.codeTextField.text.length == 0) {
+            [self showAlert:@"验证码不能为空"];
+        }else{
+            
+            SetPaypsdViewController *payPsdVC = [[SetPaypsdViewController alloc] init];
+            payPsdVC.codeNumber = self.codeTextField.text;
+            payPsdVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:payPsdVC animated:YES];
+        }
     }
-    
-    
 }
 
 #pragma mark

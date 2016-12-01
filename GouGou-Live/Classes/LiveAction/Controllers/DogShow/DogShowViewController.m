@@ -166,8 +166,23 @@ static NSString *cellid = @"DogShowCellid";
         [shareAlert show];
         
     };
+    // 喜欢
     cell.likeBlock = ^ (){
-        
+        // 添加喜欢
+        NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
+                               @"user_id":@(11),
+                               @"product_id":@(0),//[dogID integerValue]),
+                               @"type":@(1)
+                               };
+        [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [weakSelf showAlert:successJson[@"message"]];
+            if (successJson) {
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+
         
     };
     cell.bookBlock = ^ (){

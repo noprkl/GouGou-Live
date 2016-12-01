@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^DeleteFavoritDogBlock)(NSString *dogID);
 
 @interface MyFavoriteTableView : UITableView
 
@@ -17,5 +18,7 @@
 @property (strong,nonatomic) NSArray *favoriteLiveArray;
 /** 存放喜欢的狗狗 */
 @property (strong,nonatomic) NSArray *favoriteDogArray;
+
+@property(nonatomic, strong) DeleteFavoritDogBlock deleBlock; /**< 删除block */
 
 @end

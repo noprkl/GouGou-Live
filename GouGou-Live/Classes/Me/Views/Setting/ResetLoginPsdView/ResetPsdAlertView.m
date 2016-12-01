@@ -166,9 +166,7 @@
 
         }else{
 
-            [self fadeOut];
-            NSString *noteString = _sureBlock();
-            self.noteLabel.text = noteString;
+            _sureBlock(self.editTextField.text);
         }
     }
 }

@@ -69,6 +69,10 @@
     _placeHolder = placeHolder;
     self.editngtextfiled.placeholder = placeHolder;
 }
+- (void)setNoteStr:(NSString *)noteStr {
+    _noteStr = noteStr;
+    self.psdLabel.text = noteStr;
+}
 - (void)layoutSubviews {
     
     [super layoutSubviews];
@@ -240,8 +244,7 @@
         }else{
             
             [self fadeOut];
-            NSString *noteString = _clickSureBtnBlock();
-            self.psdLabel.text = noteString;
+            _clickSureBtnBlock(self.editngtextfiled.text);
         }
     }
 }

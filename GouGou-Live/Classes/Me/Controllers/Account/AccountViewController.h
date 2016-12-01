@@ -10,4 +10,6 @@
 
 @interface AccountViewController : BaseViewController
 
+@property(nonatomic, strong) NSString *userAsset; /**< 用户资产 */
+
 @end

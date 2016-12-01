@@ -25,7 +25,7 @@
 
 - (void)initUI {
     
-    self.title = @"设置密码";
+    self.title = @"设置支付密码";
     
     [self freetimeout];
 }
@@ -36,9 +36,7 @@
 }
 
 - (void)pushLoginVC {
-//    LoginViewController * loginVC = [[LoginViewController alloc] init];
-//    
-//    [self.navigationController pushViewController:loginVC animated:YES];
+
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 - (void)freetimeout {

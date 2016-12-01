@@ -8,6 +8,7 @@
 
 #import "ResetPsdViewController.h"
 #import "NSString+MD5Code.h"
+#import "SetPayPsdSuccessViewController.h"
 
 @interface ResetPsdViewController () <UITextFieldDelegate>
 
@@ -20,26 +21,49 @@
 
 - (void)surePsdRequest {
     
-    NSString *pwd = [NSString md5WithString:self.psdTextField.text];
-    DLog(@"%@", pwd);
-    NSDictionary *dict = @{};//@{
-//                           @"user_tel":@([self.telNumber integerValue]),
-//                           @"user_pwd":pwd,
-//                           @"code":@([self.codeNumber integerValue])
-//                           };
-    [self getRequestWithPath:API_Register params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
-        if ([successJson[@"message"] isEqualToString:@"注册成功"]) {
-            
-            //            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
-            //
-            //            [self.navigationController pushViewController:sureSuccVC animated:YES];
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+    if ([self.title isEqualToString:@"登录密码重置"]) {
+        NSString *pwd = [NSString md5WithString:self.psdTextField.text];
+        DLog(@"%@", pwd);
+        NSDictionary *dict = @{
+                                   @"user_tel":@([[UserInfos sharedUser].usertel integerValue]),
+                                   @"user_pwd":pwd,
+                                   @"user_old_pwd":[NSString md5WithString:_oldPsd]
+                                   };
+        [self getRequestWithPath:API_Reset_pwd params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                
+                SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
+                [self.navigationController pushViewController:sureSuccVC animated:YES];
+            }
+
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+
+        }];
+
+    }
     
+    if ([self.title isEqualToString:@"支付密码重置"]) {
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                               @"old_password":[NSString md5WithString:_oldPsd] ,
+                               @"pay_password":[NSString md5WithString:self.psdTextField.text]
+                               };
+        
+        [self postRequestWithPath:API_Pay_up params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                
+                SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
+                [self.navigationController pushViewController:sureSuccVC animated:YES];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

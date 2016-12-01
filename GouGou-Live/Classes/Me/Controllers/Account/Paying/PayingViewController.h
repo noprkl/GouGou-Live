@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/1.
 //  Copyright © 2016年 LXq. All rights reserved.
-//  添加提现支付宝
+//  用户绑定支付宝
 
 #import "BaseViewController.h"
 

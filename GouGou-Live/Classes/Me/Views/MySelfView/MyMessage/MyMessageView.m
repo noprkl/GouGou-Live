@@ -141,7 +141,7 @@
     }];
     [self.focus makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.foucusBtn.centerX);
-        make.top.equalTo(self.focusCountLabel.bottom).offset(10);
+        make.top.equalTo(self.focusCountLabel.bottom).offset(5);
     }];
     
     //
@@ -157,7 +157,7 @@
     
     [self.fansLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.fansBtn.centerX);
-        make.top.equalTo(self.fansCountLabel.bottom).offset(10);
+        make.top.equalTo(self.fansCountLabel.bottom).offset(5);
     }];
     
     //
@@ -217,7 +217,7 @@
     }
     
     // 设置直播按钮
-    if ([UserInfos sharedUser].ismerchant == 1) {
+    if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
         [self.liveBtn setTitle:@"我要直播" forState:(UIControlStateNormal)];
     }{
         [self.liveBtn setTitle:@"需要商家认证才能直播" forState:(UIControlStateNormal)];
@@ -300,7 +300,7 @@
     if (!_focusCountLabel) {
         _focusCountLabel = [[UILabel alloc] init];
         _focusCountLabel.text = @"111";
-        _focusCountLabel.font = [UIFont systemFontOfSize:14];
+        _focusCountLabel.font = [UIFont systemFontOfSize:16];
         _focusCountLabel.textColor = [UIColor colorWithHexString:@"#333333"];
 
     }
@@ -310,7 +310,7 @@
     if (!_focus) {
         _focus = [[UILabel alloc] init];
         _focus.text = @"关注";
-        _focus.font = [UIFont systemFontOfSize:14];
+        _focus.font = [UIFont systemFontOfSize:16];
         _focus.textColor = [UIColor colorWithHexString:@"#333333"];
 
     }
@@ -328,7 +328,7 @@
         _fansCountLabel = [[UILabel alloc] init];
         _fansCountLabel.text = @"111";
         _fansCountLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        _fansCountLabel.font = [UIFont systemFontOfSize:14];
+        _fansCountLabel.font = [UIFont systemFontOfSize:16];
     }
     return _fansCountLabel;
 }
@@ -337,7 +337,7 @@
         _fansLabel = [[UILabel alloc] init];
         _fansLabel.text = @"粉丝";
         _fansLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        _fansLabel.font = [UIFont systemFontOfSize:14];
+        _fansLabel.font = [UIFont systemFontOfSize:16];
     }
     return _fansLabel;
 }
@@ -360,7 +360,7 @@
         _myPageLabel = [[UILabel alloc] init];
         _myPageLabel.text = @"我的主页";
         _myPageLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        _myPageLabel.font = [UIFont systemFontOfSize:14];
+        _myPageLabel.font = [UIFont systemFontOfSize:16];
     }
     return _myPageLabel;
 }

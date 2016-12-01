@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NSString *(^ClickSureBtnBlock)();
+typedef void(^ClickSureBtnBlock)(NSString *text);
 
 @interface ResetPsdAlertView : UIView
 
@@ -20,4 +20,6 @@ typedef NSString *(^ClickSureBtnBlock)();
 @property(nonatomic, strong) NSString *noteString; /**< 提示 */
 
 - (void)show;
+- (void)dismiss;
+
 @end

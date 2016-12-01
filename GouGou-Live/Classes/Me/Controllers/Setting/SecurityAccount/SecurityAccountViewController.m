@@ -9,7 +9,8 @@
 #import "SecurityAccountViewController.h"
 #import "ResetPsdViewController.h"
 #import "ResetPsdAlertView.h"
-
+#import "SetPayingPsdViewController.h"
+#import "NSString+MD5Code.h"
 
 @interface SecurityAccountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -76,42 +77,72 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    __weak typeof(self) weakSelf = self;
-    DLog(@"%ld", indexPath.row);
-    if (indexPath.row == 0) {
-        ResetPsdAlertView *resetLoginAlert = [[ResetPsdAlertView alloc] init];
+
+   if (indexPath.row == 0) {
+       __block ResetPsdAlertView *resetLoginAlert = [[ResetPsdAlertView alloc] init];
         [resetLoginAlert show];
         resetLoginAlert.title = @"登录密码重置";
         resetLoginAlert.placeHolder = @"请输入原登录密码";
         resetLoginAlert.noteString = @"原密码不能为空";
-        resetLoginAlert.sureBlock = ^(){
-
-            [weakSelf pushResetPsdVC];
+        __weak typeof(resetLoginAlert) weakReset = resetLoginAlert;
+        resetLoginAlert.sureBlock = ^(NSString *text){
             
-            return @"输入有误";
+            // 验证密码
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"user_pwd":[NSString md5WithString:text]
+                                   };
+            [self postRequestWithPath:API_Validation_l_pwd params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                weakReset.noteString = successJson[@"message"];
+                if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
+                    
+                    [weakReset dismiss];
+                    [self pushResetPsdVC:@"登录密码重置" oldPsd:text];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
         };
     }else if (indexPath.row == 1){
-        
-        ResetPsdAlertView *resetPayAlert = [[ResetPsdAlertView alloc] init];
-        [resetPayAlert show];
-        resetPayAlert.title = @"支付密码重置";
-        resetPayAlert.placeHolder = @"请输入原支付密码";
-        resetPayAlert.noteString = @"原密码不能为空";
-        resetPayAlert.sureBlock = ^(){
+        if ([UserInfos sharedUser].userpaycode.length == 0) { // 未设置支付密码
+            SetPayingPsdViewController *payPsdVC = [[SetPayingPsdViewController alloc] init];
+            [self.navigationController pushViewController:payPsdVC animated:YES];
+        }else{
+       
+            __block ResetPsdAlertView *resetPayAlert = [[ResetPsdAlertView alloc] init];
+            [resetPayAlert show];
+            resetPayAlert.title = @"支付密码重置";
+            resetPayAlert.placeHolder = @"请输入原支付密码";
+            resetPayAlert.noteString = @"原密码不能为空";
             
-            [self pushResetPsdVC];
-            
-            return @"输入有误";
-        };
+            __weak typeof(resetPayAlert) weakReset = resetPayAlert;
+            resetPayAlert.sureBlock = ^(NSString *text){
+                // 验证密码
+                NSDictionary *dict = @{
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                       @"pay_password":[NSString md5WithString:text]
+                                       };
+                [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                    weakReset.noteString = successJson[@"message"];
+                    if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
+                        [weakReset dismiss];
+                        [self pushResetPsdVC:@"支付密码重置" oldPsd:text];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            };
+        }
     }
-    
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-- (void)pushResetPsdVC {
+- (void)pushResetPsdVC:(NSString *)title oldPsd:(NSString *)oldPsd {
         ResetPsdViewController *surePsdVC = [[ResetPsdViewController alloc] init];
-        surePsdVC.title = @"新密码确认";
-    
+        surePsdVC.title = title;
+        surePsdVC.oldPsd = oldPsd;
         [self.navigationController pushViewController:surePsdVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {

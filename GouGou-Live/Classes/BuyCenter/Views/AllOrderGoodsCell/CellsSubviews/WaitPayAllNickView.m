@@ -7,6 +7,7 @@
 //
 
 #import "WaitPayAllNickView.h"
+#import "WaitAllNickModel.h"
 
 @interface WaitPayAllNickView ()
 /** 间隔 */
@@ -24,6 +25,13 @@
 
     _orderState = orderState;
     self.stateLabe.text = orderState;
+}
+
+- (void)setModel:(WaitAllNickModel *)model {
+
+    _model = model;
+    self.nickName.text = model.merchantName;
+    self.stateLabe.text = model.status;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame

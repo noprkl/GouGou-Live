@@ -12,6 +12,7 @@
 #import "SellerDogCardView.h"
 #import "LogisticsInfoView.h"
 #import "CostView.h"
+#import "WaitAllNickModel.h"
 
 @interface WaitAllMoneyCell ()
 /** 昵称View */
@@ -44,7 +45,26 @@
     return self;
 }
 
-
+#pragma mark - 模型数据
+- (void)setCenterModel:(BuyCenterModel *)centerModel {
+    
+    _centerModel = centerModel;
+    self.nickView.model.merchantName = centerModel.merchantName;
+    self.nickView.model.status = centerModel.status;
+    
+    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
+    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
+    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
+    self.dogCardView.dogCardModel.name = centerModel.name;
+    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
+    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
+    self.dogCardView.dogCardModel.price = centerModel.price;
+    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
+    
+    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
+    self.costView.costModel.balance = centerModel.balance;
+    
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {

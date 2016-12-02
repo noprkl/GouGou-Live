@@ -31,6 +31,7 @@ static NSString * indenifer = @"addressCellID";
 #pragma mark - 网络请求
 // 所有地址
 - (void)postGetAdressRequest {
+    
     // [[UserInfos sharedUser].ID integerValue]
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue])

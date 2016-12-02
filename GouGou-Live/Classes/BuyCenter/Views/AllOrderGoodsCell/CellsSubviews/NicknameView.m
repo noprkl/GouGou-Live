@@ -24,12 +24,21 @@
 
 @implementation NicknameView
 
+
 - (void)setStateMessage:(NSString *)stateMessage {
 
     _stateMessage = stateMessage;
     self.stateLabe.text = stateMessage;
 }
 
+// 模型信息
+- (void)setModel:(NickNameModel *)model {
+    
+    _model = model;
+    self.nickName.text = _model.merchantName;
+    self.stateLabe.text = _model.status;
+    
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

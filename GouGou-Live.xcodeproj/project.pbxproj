@@ -34,6 +34,12 @@
 		0452A20B1DE1C176007C1E4F /* SellerNoneDogTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A20A1DE1C176007C1E4F /* SellerNoneDogTypeView.m */; };
 		0452A20F1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A20D1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m */; };
 		0452A2131DE1E782007C1E4F /* SellerChoseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */; };
+		04592EB11DF10D9F0095C8EE /* BuyCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EA61DF10D9F0095C8EE /* BuyCenterModel.m */; };
+		04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EA81DF10D9F0095C8EE /* CostModel.m */; };
+		04592EB31DF10D9F0095C8EE /* DogCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EAA1DF10D9F0095C8EE /* DogCardModel.m */; };
+		04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EAC1DF10D9F0095C8EE /* NickNameModel.m */; };
+		04592EB51DF10D9F0095C8EE /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EAE1DF10D9F0095C8EE /* OrderDetailModel.m */; };
+		04592EB61DF10D9F0095C8EE /* WaitAllNickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EB01DF10D9F0095C8EE /* WaitAllNickModel.m */; };
 		045D11A01DF031EF008623E5 /* FocusAndFansModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D11991DF031EF008623E5 /* FocusAndFansModel.m */; };
 		045D11A11DF031EF008623E5 /* MyAlbumsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D119C1DF031EF008623E5 /* MyAlbumsModel.m */; };
 		045D11A21DF031EF008623E5 /* MyPictureListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D119E1DF031EF008623E5 /* MyPictureListModel.m */; };
@@ -496,6 +502,18 @@
 		0452A20D1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAddShipTemplateViewController.m; sourceTree = "<group>"; };
 		0452A2111DE1E782007C1E4F /* SellerChoseAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChoseAdressViewController.h; sourceTree = "<group>"; };
 		0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChoseAdressViewController.m; sourceTree = "<group>"; };
+		04592EA51DF10D9F0095C8EE /* BuyCenterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCenterModel.h; sourceTree = "<group>"; };
+		04592EA61DF10D9F0095C8EE /* BuyCenterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterModel.m; sourceTree = "<group>"; };
+		04592EA71DF10D9F0095C8EE /* CostModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostModel.h; sourceTree = "<group>"; };
+		04592EA81DF10D9F0095C8EE /* CostModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CostModel.m; sourceTree = "<group>"; };
+		04592EA91DF10D9F0095C8EE /* DogCardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogCardModel.h; sourceTree = "<group>"; };
+		04592EAA1DF10D9F0095C8EE /* DogCardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogCardModel.m; sourceTree = "<group>"; };
+		04592EAB1DF10D9F0095C8EE /* NickNameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickNameModel.h; sourceTree = "<group>"; };
+		04592EAC1DF10D9F0095C8EE /* NickNameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickNameModel.m; sourceTree = "<group>"; };
+		04592EAD1DF10D9F0095C8EE /* OrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailModel.h; sourceTree = "<group>"; };
+		04592EAE1DF10D9F0095C8EE /* OrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailModel.m; sourceTree = "<group>"; };
+		04592EAF1DF10D9F0095C8EE /* WaitAllNickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAllNickModel.h; sourceTree = "<group>"; };
+		04592EB01DF10D9F0095C8EE /* WaitAllNickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAllNickModel.m; sourceTree = "<group>"; };
 		045D11981DF031EF008623E5 /* FocusAndFansModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusAndFansModel.h; sourceTree = "<group>"; };
 		045D11991DF031EF008623E5 /* FocusAndFansModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusAndFansModel.m; sourceTree = "<group>"; };
 		045D119B1DF031EF008623E5 /* MyAlbumsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlbumsModel.h; sourceTree = "<group>"; };
@@ -3643,6 +3661,18 @@
 		04D361161DDB343F009F35A0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04592EA51DF10D9F0095C8EE /* BuyCenterModel.h */,
+				04592EA61DF10D9F0095C8EE /* BuyCenterModel.m */,
+				04592EA71DF10D9F0095C8EE /* CostModel.h */,
+				04592EA81DF10D9F0095C8EE /* CostModel.m */,
+				04592EA91DF10D9F0095C8EE /* DogCardModel.h */,
+				04592EAA1DF10D9F0095C8EE /* DogCardModel.m */,
+				04592EAB1DF10D9F0095C8EE /* NickNameModel.h */,
+				04592EAC1DF10D9F0095C8EE /* NickNameModel.m */,
+				04592EAD1DF10D9F0095C8EE /* OrderDetailModel.h */,
+				04592EAE1DF10D9F0095C8EE /* OrderDetailModel.m */,
+				04592EAF1DF10D9F0095C8EE /* WaitAllNickModel.h */,
+				04592EB01DF10D9F0095C8EE /* WaitAllNickModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4166,11 +4196,14 @@
 				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
+				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
+				04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */,
 				046BF0281DE4696600BC32E9 /* EaseMessageCell.m in Sources */,
 				047323EE1DD1B31A006CCC71 /* UserInfos.m in Sources */,
+				04592EB11DF10D9F0095C8EE /* BuyCenterModel.m in Sources */,
 				046BEFF01DE4696600BC32E9 /* EMSDImageCache.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
 				046BF0421DE48F9800BC32E9 /* LoginViewController+ThirdLogin.m in Sources */,
@@ -4262,6 +4295,7 @@
 				046BEFC81DE4696600BC32E9 /* EMCDDeviceManager+Media.m in Sources */,
 				0479B6211DCADC7B00CB288A /* RemoveCookieViewController.m in Sources */,
 				04CE13CF1DDC488100EB8777 /* SellerProtectPowerViewController.m in Sources */,
+				04592EB31DF10D9F0095C8EE /* DogCardModel.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
 				046F0BE51DE2AB9E00D50D5C /* OrderWaitAssessViewController.m in Sources */,
 				04EA2ADF1DDDC57A0023D9A8 /* SellerOrderDetailAdressViewController.m in Sources */,
@@ -4394,6 +4428,7 @@
 				046BF0111DE4696600BC32E9 /* EaseUserModel.m in Sources */,
 				046BEFF31DE4696600BC32E9 /* EMSDWebImageDownloader.m in Sources */,
 				04B161C61DE8457200DABC77 /* MyShopProvinceModel.m in Sources */,
+				04592EB61DF10D9F0095C8EE /* WaitAllNickModel.m in Sources */,
 				04B161B81DE704C200DABC77 /* BaseModel.m in Sources */,
 				046BEFFC1DE4696600BC32E9 /* UIImage+EMWebP.m in Sources */,
 				0479B6391DCADC7B00CB288A /* BaseTabBarController.m in Sources */,
@@ -4471,6 +4506,7 @@
 				046BF0601DE5940900BC32E9 /* SystemNotificationViewController.m in Sources */,
 				046BEFF71DE4696600BC32E9 /* MKAnnotationView+EMWebCache.m in Sources */,
 				0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */,
+				04592EB51DF10D9F0095C8EE /* OrderDetailModel.m in Sources */,
 				046BEFCE1DE4696600BC32E9 /* wav.mm in Sources */,
 				046BEFCC1DE4696600BC32E9 /* EMCDDeviceManagerBase.m in Sources */,
 				046BF0061DE4696600BC32E9 /* PSTCollectionViewItemKey.m in Sources */,

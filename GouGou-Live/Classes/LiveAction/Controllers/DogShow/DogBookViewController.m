@@ -40,6 +40,12 @@
 @end
 
 @implementation DogBookViewController
+#pragma mark - 网络请求
+- (void)postBuyOrderRequest {
+
+    NSDictionary *dict = @{};
+}
+
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -48,7 +54,10 @@
     [self initUI];
     [self setNavBarItem];
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     

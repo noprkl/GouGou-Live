@@ -25,7 +25,11 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 @end
 
 @implementation WaitAssessViewController
+- (void)viewWillAppear:(BOOL)animated {
 
+    [super viewWillAppear:animated];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

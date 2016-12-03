@@ -13,4 +13,7 @@
 @property (copy,nonatomic) NSString *merchantName;
 /** 订单状态 */
 @property (copy,nonatomic) NSString *status;
+/** 商家图片 */
+@property (copy,nonatomic) NSString *merchantImgl;
+
 @end

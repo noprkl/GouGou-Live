@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  代付尾款
 
 #import "PayBackMoneyViewController.h"
 
@@ -42,7 +42,28 @@
 @end
 
 @implementation PayBackMoneyViewController
+#pragma mark - 网络请求
+- (void)getBackMoneyRequest {
 
+    NSDictionary * dict = @{@"id":@(11)};
+    
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"Message"]);
+        DLog(@"%@",successJson[@"data"]);
+
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [self getBackMoneyRequest];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

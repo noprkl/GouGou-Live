@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  商家名称   （只有状态）
 
 #import "WaitPayAllNickView.h"
 #import "WaitAllNickModel.h"
@@ -12,8 +12,8 @@
 @interface WaitPayAllNickView ()
 /** 间隔 */
 @property (strong,nonatomic) UIView *spaceView;
-/** 买家 */
-@property (strong,nonatomic) UILabel *buyLabel;
+/* 商家图片 */
+@property (strong,nonatomic) UIImageView *sellerIamge;
 /** 昵称 */
 @property (strong,nonatomic) UILabel *nickName;
 /** 状态 */
@@ -21,17 +21,22 @@
 @end
 
 @implementation WaitPayAllNickView
-- (void)setOrderState:(NSString *)orderState {
-
-    _orderState = orderState;
-    self.stateLabe.text = orderState;
-}
+//- (void)setOrderState:(NSString *)orderState {
+//
+//    _orderState = orderState;
+//    self.stateLabe.text = orderState;
+//}
 
 - (void)setModel:(WaitAllNickModel *)model {
 
     _model = model;
+    self.sellerIamge.image = [UIImage imageNamed:model.merchantImgl];
     self.nickName.text = model.merchantName;
     self.stateLabe.text = model.status;
+    
+    DLog(@"%@",self.nickName.text);
+    DLog(@"%@",self.stateLabe.text);
+
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -41,7 +46,7 @@
     if (self) {
         
         [self addSubview:self.spaceView];
-        [self addSubview:self.buyLabel];
+        [self addSubview:self.sellerIamge];
         [self addSubview:self.nickName];
         [self addSubview:self.stateLabe];
         
@@ -61,7 +66,7 @@
         
     }];
     
-    [_buyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sellerIamge mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(weakself.left).offset(10);
         make.centerY.equalTo(weakself.centerY).offset(10);
@@ -70,7 +75,7 @@
     
     [_nickName mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.buyLabel.right).offset(10);
+        make.left.equalTo(weakself.sellerIamge.right).offset(10);
         make.centerY.equalTo(weakself.centerY).offset(10);
         
     }];
@@ -96,22 +101,20 @@
     return _spaceView;
 }
 
-- (UILabel *)buyLabel {
+- (UIImageView *)sellerIamge {
     
-    if (!_buyLabel) {
-        _buyLabel = [[UILabel alloc] init];
-        _buyLabel.text = @"买家:";
-        _buyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        _buyLabel.font = [UIFont systemFontOfSize:16];
+    if (!_sellerIamge) {
+        _sellerIamge= [[UIImageView alloc] init];
+      
     }
-    return _buyLabel;
+    return _sellerIamge;
 }
 
 - (UILabel *)nickName {
     
     if (!_nickName) {
         _nickName = [[UILabel alloc] init];
-        _nickName.text = @"丁丁";
+//        _nickName.text = @"丁丁";
         _nickName.textColor = [UIColor colorWithHexString:@"#000000"];
         _nickName.font = [UIFont systemFontOfSize:16];
     }

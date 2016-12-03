@@ -4,13 +4,13 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  支付尾款cell
 
 #import "WaitBackMoneyCell.h"
-#import "NicknameView.h"
-#import "SellerDogCardView.h"
-#import "CostView.h"
-#import "FunctionButtonView.h"
+#import "NicknameView.h"   // 昵称view
+#import "SellerDogCardView.h"  // 狗狗卡片
+#import "CostView.h"         // 花费view
+#import "FunctionButtonView.h"  // 订单操作按钮
 
 @interface WaitBackMoneyCell ()
 /** 昵称View */
@@ -28,27 +28,6 @@
 
 @implementation WaitBackMoneyCell
 
-- (void)setCenterModel:(BuyCenterModel *)centerModel {
-
-    _centerModel = centerModel;
-    self.nickView.model.merchantName = centerModel.merchantName;
-    self.nickView.model.status = centerModel.status;
-    
-    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
-    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
-    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
-    self.dogCardView.dogCardModel.name = centerModel.name;
-    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
-    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
-    self.dogCardView.dogCardModel.price = centerModel.price;
-    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
-    
-    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
-    self.costView.costModel.balance = centerModel.balance;
-    
-}
-
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -63,7 +42,31 @@
     }
     return self;
 }
+#pragma mark - 模型
+- (void)setCenterModel:(BuyCenterModel *)centerModel {
+    
+    _centerModel = centerModel;
+    self.nickView.model.merchantName = centerModel.merchantName;
+    self.nickView.model.status = centerModel.status;
+    self.nickView.model.merchantImgl = centerModel.merchantImgl;
 
+//    self.nickView.stateMessage = centerModel.status;
+//    self.nickView.merchantName = centerModel.merchantName;
+//    self.nickView.merchantImagl = centerModel.merchantImgl;
+    
+    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
+    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
+    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
+    self.dogCardView.dogCardModel.name = centerModel.name;
+    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
+    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
+    self.dogCardView.dogCardModel.price = centerModel.price;
+    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
+    
+    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
+    self.costView.costModel.balance = centerModel.balance;
+    
+}
 
 #pragma mark
 #pragma mark - 约束
@@ -121,7 +124,7 @@
     
     if (!_nickView) {
         _nickView = [[NicknameView alloc] init];
-        [_nickView setStateMessage:@"代付尾款"];
+//        [_nickView setStateMessage:@"代付尾款"];
     }
     return _nickView;
 }
@@ -156,7 +159,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"尾款:" backMoney:@"￥950"];
+//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"尾款:" backMoney:@"￥950"];
     }
     return _costView;
 }

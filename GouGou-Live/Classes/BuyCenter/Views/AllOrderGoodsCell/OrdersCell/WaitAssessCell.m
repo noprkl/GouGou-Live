@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  待评价cell
 
 #import "WaitAssessCell.h"
 
@@ -49,6 +49,28 @@
         
     }
     return self;
+}
+
+#pragma mark - 模型
+- (void)setCenterModel:(BuyCenterModel *)centerModel {
+    
+    _centerModel = centerModel;
+    self.nickView.model.merchantName = centerModel.merchantName;
+    self.nickView.model.status = centerModel.status;
+    self.nickView.model.merchantImgl = centerModel.merchantImgl;
+    
+    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
+    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
+    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
+    self.dogCardView.dogCardModel.name = centerModel.name;
+    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
+    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
+    self.dogCardView.dogCardModel.price = centerModel.price;
+    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
+    
+    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
+    self.costView.costModel.balance = centerModel.balance;
+    
 }
 
 
@@ -123,7 +145,7 @@
     
     if (!_nickView) {
         _nickView = [[WaitPayAllNickView alloc] init];
-        [_nickView setOrderState:@"已完成"];
+//        [_nickView setOrderState:@"已完成"];
     }
     return _nickView;
 }

@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/10.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  物流信息View
 
 #import "LogisticsInfoView.h"
 

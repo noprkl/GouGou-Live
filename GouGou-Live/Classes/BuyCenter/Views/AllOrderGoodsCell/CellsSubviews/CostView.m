@@ -5,7 +5,7 @@
 //
 //  Created by ma c on 16/11/10.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  花费View
 
 #import "CostView.h"
 
@@ -38,22 +38,30 @@
     self.fontMoney.text = fontMoney;
     self.remainderMoneylabel.text = backLabel;
     self.remainderMoeny.text = backMoney;
+    
 
 }
-
+#pragma mark - 模型
 - (void)setCostModel:(CostModel *)costModel {
 
     _costModel = costModel;
-    self.freightLabel.text = [NSString stringWithFormat:@"%ld",([costModel.productRealDeposit integerValue] + [costModel.balance integerValue])];
-    self.fontMoneyLabel.text = costModel.productRealDeposit;
-    self.remainderMoneylabel.text = costModel.balance;
+    self.totalMoney.text = [NSString stringWithFormat:@"%ld",([costModel.productRealDeposit integerValue] + [costModel.balance integerValue])];
+    self.fontMoney.text = costModel.productRealDeposit;
+    self.remainderMoeny.text = costModel.balance;
+    self.freightMoney.text = [NSString stringWithFormat:@"￥%@)",costModel.traficRealFee];
+    
+    DLog(@"%@",self.freightMoney.text);
+    DLog(@"%@",self.fontMoney.text);
+    DLog(@"%@",self.remainderMoeny.text);
+    DLog(@"%@",self.totalMoney.text);
+
 }
 
--(void)setMoneyMessage:(NSString *)moneyMessage {
-    
-    _moneyMessage = moneyMessage;
-    self.totalMoney.text = moneyMessage;
-}
+//-(void)setMoneyMessage:(NSString *)moneyMessage {
+//    
+//    _moneyMessage = moneyMessage;
+//    self.totalMoney.text = moneyMessage;
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

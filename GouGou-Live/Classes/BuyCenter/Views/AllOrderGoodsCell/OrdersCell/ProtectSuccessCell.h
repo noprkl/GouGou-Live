@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BuyCenterModel.h"
 
+@class ProtectProwerTableModel;
 @interface ProtectSuccessCell : UITableViewCell
 /** 订单模型 */
-@property (strong,nonatomic) BuyCenterModel *centerModel;
+@property (strong,nonatomic) ProtectProwerTableModel *protectModel;
 @end

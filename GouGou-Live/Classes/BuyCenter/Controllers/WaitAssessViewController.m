@@ -17,19 +17,26 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 @property (strong,nonatomic) UITableView *tableview;
 /** 数据 */
 @property (strong,nonatomic) NSArray *dataArray;
-/** 按钮 */
-@property (strong,nonatomic) FunctionButtonView *funcBtn;
+///** 按钮 */
+//@property (strong,nonatomic) FunctionButtonView *funcBtn;
 ///** 数组 */
 //@property (strong,nonatomic) NSMutableArray *array;
 
 @end
 
 @implementation WaitAssessViewController
+#pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
-
-    [super viewWillAppear:animated];
     
+    [super viewWillAppear:animated];
+    // 上下拉刷新
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getAssessRequest];
+        [self.tableview.mj_header endRefreshing];
+    }];
+    [self.tableview.mj_header beginRefreshing];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,6 +49,29 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     
     [self.view addSubview:self.tableview];
     
+}
+#pragma mark - 网络请求
+- (void)getAssessRequest {
+    
+    NSDictionary * dict = @{
+                            @"user_id":@(11),
+                            @"status":@(2),
+                            @"page":@(1),
+                            @"pageSize":@(10),
+                            @"is_right":@(2)
+                            };
+    
+    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        DLog(@"%@",successJson[@"data"]);
+        DLog(@"%@",successJson[@"data"][@"info"]);
+        [self.tableview reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
 }
 #pragma mark
 #pragma mark - 初始化
@@ -68,7 +98,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 #pragma mark - tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 2;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -77,26 +107,27 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    BuyCenterModel * model = self.dataArray[indexPath.row];
+
     WaitAssessCell * cell = [tableView dequeueReusableCellWithIdentifier:waitsAssessCell];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    if ([model.status integerValue] == 9) {
+
+        cell.centerModel = model;
     
-    if (indexPath.row == 0) {
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"未评价",@"申请维权",@"联系买家",@"删除订单"] buttonNum:4];
-        
-        self.funcBtn = funcBtn;
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
-                
                 // 跳转删除订单
                 [self clickDeleteOrder];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
                 // 跳转至联系卖家
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat1;
@@ -105,34 +136,27 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
-                
                 // 跳转至申请维权
                 [self clickApplyProtectPower];
-                
                 DLog(@"%@--%@",self,button.titleLabel.text);
-                
             } else if ([button.titleLabel.text isEqual:@"未评价"]) {
-                
                 // 跳转至我要评价
                 GotoAssessViewController * goToAssessVC = [[GotoAssessViewController alloc] init];
-                
                 [self.navigationController pushViewController:goToAssessVC animated:YES];
-                
                 DLog(@"%@",button.titleLabel.text);
-                
             }
-            
         };
+        [cell addSubview:funcBtn];
         
-        [cell addSubview:self.funcBtn];
-    } else if (indexPath.row == 1) {
+    } else if ([model.status integerValue] == 10) {
+        WaitAssessCell * cell = [tableView dequeueReusableCellWithIdentifier:waitsAssessCell];
+
+        cell.centerModel = model;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"查看评价",@"申请维权",@"联系买家",@"删除订单"] buttonNum:4];
-        
-        self.funcBtn = funcBtn;
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
-                
                 // 跳转删除订单
                 [self clickDeleteOrder];
                 
@@ -148,26 +172,15 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
-                
                 // 跳转至申请维权
                 [self clickApplyProtectPower];
-                
                 DLog(@"%@--%@",self,button.titleLabel.text);
-                
             } else if ([button.titleLabel.text isEqual:@"查看评价"]) {
-                
                 // 跳转至查看评价
-                
-                
                 DLog(@"%@",button.titleLabel.text);
-                
             }
-            
         };
-        
-        [cell addSubview:self.funcBtn];
-        
-        
+        [cell addSubview:funcBtn];
     }
     return cell;
 }

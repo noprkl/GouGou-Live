@@ -13,6 +13,7 @@
 #import "FunctionButtonView.h"  // cell下边按钮
 #import "PayingAllMoneyViewController.h"  // 支付全款控制器
 #import "NicknameView.h" // 商家昵称View
+
 #import "BuyCenterModel.h"
 
 static NSString * waitBackCell = @"waitBackCellID";
@@ -29,19 +30,27 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 
 @implementation WaitPayingViewController
 #pragma mark - 网络请求
-- (void)postGetAllStateOrderRequest {
+- (void)getPayStateOrderRequest {
 //    @([[UserInfos sharedUser].ID integerValue]
     NSDictionary * dict = @{
                             @"user_id":@(11),
-                            @"status":@(5),
+                            @"status":@(2),
                             @"page":@(1),
-                            @"pageSize":@(2),
-                            @"is_right":@(1)
+                            @"pageSize":@(10),
+                            @"is_right":@(2)
                             };
     
-    [self postRequestWithPath:API_List_order params:dict success:^(id successJson) {
+    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
         DLog(@"%@",successJson[@"data"][@"info"]);
+        
         self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        
+        DLog(@"%@",self.dataArray);
+        
+        [self.tableview reloadData];
+
     } error:^(NSError *error) {
         
         DLog(@"%@",error);
@@ -49,11 +58,16 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
     }];
 }
 
+#pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    
-    [self postGetAllStateOrderRequest];
+    // 上下拉刷新
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getPayStateOrderRequest];
+        [self.tableview.mj_header endRefreshing];
+    }];
+    [self.tableview.mj_header beginRefreshing];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -108,7 +122,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    
     BuyCenterModel *model = self.dataArray[indexPath.row];
-    
+     /*
     if ([model.status integerValue] == 1) {
         // 代付款cell
         WaitAllMoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAllMoneyCell];
@@ -141,9 +155,8 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         [cell.contentView addSubview:funcBtn];
         
         return cell;
-
     }
-    
+    */
     if ([model.status integerValue] == 2) {
         
         WaitFontMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitFontCell];
@@ -175,6 +188,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         return cell;
     }
+    /*
     if ([model.status integerValue] == 3) {
         
         WaitBackMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitBackCell];
@@ -220,39 +234,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         return cell;
   
     }
-//    else if (indexPath.row == 2) {
-//        
-//        WaitAllMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitAllMoneyCell];
-//        
-//        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系买家"] buttonNum:2];
-//        
-//        funcBtn.difFuncBlock = ^(UIButton * button) {
-//            if ([button.titleLabel.text  isEqual:@"支付全款"]) {
-//                // 点击支付全乱
-//                [self clickPayAllMoney];
-//                
-//                DLog(@"%@--%@",self,button.titleLabel.text);
-//                
-//                //                // 待付全款控制器
-//                //                PayingAllMoneyViewController * payAllVC = [[PayingAllMoneyViewController alloc] init];
-//                //
-//                //                [self.navigationController pushViewController:payAllVC animated:YES];
-//            } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-//                // 跳转至联系卖家
-//                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
-//                viewController.title = EaseTest_Chat3;
-//                viewController.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:viewController animated:YES];
-//                DLog(@"%@--%@",self,button.titleLabel.text);
-//                
-//            }
-//            
-//        };
-//        
-//        [cell.contentView addSubview:funcBtn];
-//        
-//        return cell;
-//    }
+*/
     
     return nil;
 }

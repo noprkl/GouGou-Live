@@ -36,6 +36,32 @@
 
 @implementation GotoAssessViewController
 
+#pragma mark - 网络请求
+- (void)getOrderAssessRequest {
+
+    NSDictionary *dict = @{@"user_id":@(11),
+                           @"order_id":@(1),
+                           @"point":@(10),
+                           @"has_photo":@(10),
+                           @"is_anomy":@(10),
+                           @"img":@"nil",
+                           @"comment":@"yes"
+                           };
+    
+    [self getRequestWithPath:API_Order_evaluation params:dict success:^(id successJson) {
+        DLog(@"%@",successJson[@"code"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [self getOrderAssessRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

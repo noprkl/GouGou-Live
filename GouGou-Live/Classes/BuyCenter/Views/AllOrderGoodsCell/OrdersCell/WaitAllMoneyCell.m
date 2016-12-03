@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  代付全款cell
 
 #import "WaitAllMoneyCell.h"
 
@@ -51,6 +51,7 @@
     _centerModel = centerModel;
     self.nickView.model.merchantName = centerModel.merchantName;
     self.nickView.model.status = centerModel.status;
+    self.nickView.model.merchantImgl = centerModel.merchantImgl;
     
     self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
     self.dogCardView.dogCardModel.colorName = centerModel.colorName;
@@ -120,7 +121,7 @@
     
     if (!_nickView) {
         _nickView = [[WaitPayAllNickView alloc] init];
-        [_nickView setOrderState:@"待付全款"];
+//        [_nickView setOrderState:@"待付全款"];
     }
     return _nickView;
 }
@@ -155,7 +156,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"全款:" backMoney:@"￥1450"];
+//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"全款:" backMoney:@"￥1450"];
     }
     return _costView;
 }

@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  代发货cell
 
 #import "WaitConsignmentCell.h"
 
@@ -41,8 +41,25 @@
     }
     return self;
 }
-
-
+#pragma mark - 模型
+- (void)setCenterModel:(BuyCenterModel *)centerModel {
+    
+    self.nickView.model.merchantName = centerModel.merchantName;
+    self.nickView.model.status = centerModel.status;
+    self.nickView.model.merchantImgl = centerModel.merchantImgl;
+    
+    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
+    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
+    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
+    self.dogCardView.dogCardModel.name = centerModel.name;
+    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
+    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
+    self.dogCardView.dogCardModel.price = centerModel.price;
+    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
+    
+    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
+    self.costView.costModel.balance = centerModel.balance;
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
@@ -98,7 +115,7 @@
     
     if (!_nickView) {
         _nickView = [[NicknameView alloc] init];
-        [_nickView setStateMessage:@"待发货"];
+//        [_nickView setStateMessage:@"待发货"];
     }
     return _nickView;
 }
@@ -133,7 +150,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"已付尾款:" backMoney:@"￥950"];
+//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"已付尾款:" backMoney:@"￥950"];
     }
     return _costView;
 }

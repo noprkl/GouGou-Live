@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//   维权失败cell
 
 #import "ProtectFaliedCell.h"
 
@@ -12,6 +12,8 @@
 #import "SellerDogCardView.h"
 #import "LogisticsInfoView.h"
 #import "CostView.h"
+
+#import "ProtectProwerTableModel.h"
 
 
 @interface ProtectFaliedCell ()
@@ -33,6 +35,28 @@
 @end
 
 @implementation ProtectFaliedCell
+#pragma mark - 模型
+- (void)setProtectModel:(ProtectProwerTableModel *)protectModel {
+    
+    _protectModel = protectModel;
+    // 名称
+    self.nickView.model.merchantName = protectModel.name;
+    self.nickView.model.status = protectModel.status;
+    self.nickView.model.merchantImgl = protectModel.merchantImgl;
+    // 狗狗卡片
+    self.dogCardView.dogCardModel.sizeName = protectModel.sizeName;
+    self.dogCardView.dogCardModel.colorName = protectModel.colorName;
+    self.dogCardView.dogCardModel.ageName = protectModel.ageName;
+    self.dogCardView.dogCardModel.name = protectModel.name;
+    self.dogCardView.dogCardModel.pathSmall = protectModel.pathSmall;
+    self.dogCardView.dogCardModel.priceOld = protectModel.priceOld;
+    self.dogCardView.dogCardModel.price = protectModel.price;
+    self.dogCardView.dogCardModel.kindName = protectModel.kindName;
+    // 商品价格
+    self.costView.costModel.productRealDeposit = protectModel.productPrice;
+    self.costView.costModel.traficRealFee = protectModel.traficRealFee;
+    self.costView.costModel.balance = protectModel.productRealBalance;
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -124,7 +148,7 @@
     
     if (!_nickView) {
         _nickView = [[WaitPayAllNickView alloc] init];
-        [_nickView setOrderState:@"维权成功"];
+//        [_nickView setOrderState:@"维权成功"];
     }
     return _nickView;
 }
@@ -176,7 +200,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"已付全款:" backMoney:@"￥1450"];
+//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"已付全款:" backMoney:@"￥1450"];
     }
     return _costView;
 }

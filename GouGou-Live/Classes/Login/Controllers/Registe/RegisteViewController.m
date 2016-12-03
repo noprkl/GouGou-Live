@@ -91,7 +91,6 @@
         }else{
         
             SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
-            
             sureVC.title = @"密码确认";
             sureVC.telNumber = self.phoneTextField.text;
             sureVC.codeNumber = self.codeTextField.text;

@@ -46,11 +46,30 @@
 static NSString *cellid = @"SellerMyGoodsCell";
 
 @implementation SellerMyGoodsViewController
+
+// 全部商品
+- (void)getRequestSellerDog {
+    NSDictionary *dict = @{ //
+                           @"user_id":@(11),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"type":@(0)
+                           };
+    [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestSellerDog];
 }
 - (void)initUI{
     _isMove = NO;
@@ -70,6 +89,14 @@ static NSString *cellid = @"SellerMyGoodsCell";
     
     [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
 
+    // 上下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestSellerDog];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 
 #pragma mark
@@ -86,12 +113,6 @@ static NSString *cellid = @"SellerMyGoodsCell";
     }
     return _selectedData;
 }
-//- (NSMutableArray *)selectedBtns {
-//    if (!_selectedBtns) {
-//        _selectedBtns = [NSMutableArray array];
-//    }
-//    return _selectedBtns;
-//}
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -115,16 +136,16 @@ static NSString *cellid = @"SellerMyGoodsCell";
 
         _headerView.allBlock = ^(){
             
-            [weakSelf postGetData0];
+            [weakSelf postGetDataAll];
         };
         _headerView.waitSellBlock = ^(){
-            [weakSelf postGetData1];
+            [weakSelf postGetDataWait];
         };
         _headerView.soldBlock = ^(){
-            [weakSelf postGetData0];
+            [weakSelf postGetDataSold];
         };
         _headerView.reviewBlock = ^(){
-            [weakSelf postGetData3];
+            [weakSelf postGetDataReview];
         };
 
     }
@@ -289,22 +310,22 @@ static NSString *cellid = @"SellerMyGoodsCell";
 
 #pragma mark
 #pragma mark - 网络请求
-- (void)postGetData0{
+- (void)postGetDataAll{
     [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
     [self.tableView reloadData];
 
 }
-- (void)postGetData1{
+- (void)postGetDataWait{
     [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
     [self.tableView reloadData];
 
 }
-- (void)postGetData2{
+- (void)postGetDataSold{
     [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
     [self.tableView reloadData];
 
 }
-- (void)postGetData3{
+- (void)postGetDataReview{
     [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
     [self.tableView reloadData];
 

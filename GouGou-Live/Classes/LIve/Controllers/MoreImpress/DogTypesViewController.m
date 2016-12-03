@@ -105,8 +105,8 @@
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            sizeView.sizeCellBlock = ^(NSString *size){
-                DLog(@"%@", size);
+            sizeView.sizeCellBlock = ^(DogCategoryModel *sizeModel){
+                DLog(@"%@", sizeModel);
             };
             
         };
@@ -117,9 +117,9 @@
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(NSString *minString, NSString *maxString){
+            ageView.ageRangeBlock = ^(DogCategoryModel *minModle, DogCategoryModel *maxmodel){
                 
-                DLog(@"%@--%@", minString, maxString);
+                DLog(@"%@--%@", minModle, maxmodel);
             };
             
         };
@@ -130,10 +130,11 @@
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            priceView.priceRangeBlock = ^(NSString *minString, NSString *maxString){
+            priceView.priceRangeBlock = ^(DogCategoryModel *minModle, DogCategoryModel *maxmodel){
                 
-                DLog(@"%@--%@", minString, maxString);
+                DLog(@"%@--%@", minModle, maxmodel);
             };
+
             
             
         };

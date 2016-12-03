@@ -45,9 +45,7 @@
         make.height.equalTo(self.dataArr.count * 44);
     }];
 }
-- (void)setUserAsset:(NSString *)userAsset {
-    _userAsset = userAsset;
-}
+
 #pragma mark
 #pragma mark - 懒加载
 - (UITableView *)tableView {
@@ -129,11 +127,11 @@
     }
     if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
         
-        if(![UserInfos sharedUser].useralicode.length == 0) { // 未设置支付密码 需要设置支付密码
+        if([UserInfos sharedUser].useralicode.length == 0) { // 未设置支付密码 需要设置支付密码
             cell.textLabel.text = self.dataArr[indexPath.row];
             
             if (indexPath.row == 0) {
-                cell.detailTextLabel.text = @"余额";
+                cell.detailTextLabel.text = [UserInfos sharedUser].userAsset;
             }
             if (indexPath.row == 1) {
                 cell.detailTextLabel.text = @"";
@@ -145,7 +143,7 @@
             cell.textLabel.text = self.dataArr[indexPath.row];
             
             if (indexPath.row == 0) {
-                cell.detailTextLabel.text = @"余额";
+                cell.detailTextLabel.text = [UserInfos sharedUser].userAsset;
             }
             if (indexPath.row == 1) {
                 cell.detailTextLabel.text = @"";

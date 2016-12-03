@@ -27,7 +27,10 @@ static NSString * watchCell = @"watchCellID";
     
     [self setNavBarItem];
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)initUI {
 
     [self.view addSubview:self.tableview];
@@ -68,6 +71,8 @@ static NSString * watchCell = @"watchCellID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     LivingViewController * livingVC = [[LivingViewController alloc] init];
     
     [self.navigationController pushViewController:livingVC animated:YES];

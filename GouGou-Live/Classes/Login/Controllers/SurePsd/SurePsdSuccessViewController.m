@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     [self initUI];
-    
+    [self setNavBarItem];
 }
 
 - (void)initUI {
@@ -41,6 +41,7 @@
     LoginViewController * loginVC = [[LoginViewController alloc] init];
     
     [self.navigationController pushViewController:loginVC animated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 - (void)freetimeout {
     __block NSInteger time = 3;

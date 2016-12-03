@@ -40,6 +40,18 @@
 		04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EAC1DF10D9F0095C8EE /* NickNameModel.m */; };
 		04592EB51DF10D9F0095C8EE /* OrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EAE1DF10D9F0095C8EE /* OrderDetailModel.m */; };
 		04592EB61DF10D9F0095C8EE /* WaitAllNickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EB01DF10D9F0095C8EE /* WaitAllNickModel.m */; };
+		04592EBD1DF11D960095C8EE /* SellerAccepeRateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EBC1DF11D960095C8EE /* SellerAccepeRateModel.m */; };
+		04592EC01DF145C10095C8EE /* AcceptRateBuyerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EBF1DF145C10095C8EE /* AcceptRateBuyerModel.m */; };
+		04592EC41DF14CCB0095C8EE /* UserAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EC31DF14CCB0095C8EE /* UserAssetModel.m */; };
+		04592EC91DF166F90095C8EE /* ForgetPayPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EC71DF166F90095C8EE /* ForgetPayPsdViewController.m */; };
+		04592ECA1DF166F90095C8EE /* ForgetPayPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04592EC81DF166F90095C8EE /* ForgetPayPsdViewController.xib */; };
+		04592ED31DF1674A0095C8EE /* SureForgetPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592ED11DF1674A0095C8EE /* SureForgetPayViewController.m */; };
+		04592ED41DF1674A0095C8EE /* SureForgetPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04592ED21DF1674A0095C8EE /* SureForgetPayViewController.xib */; };
+		04592ED81DF17C5C0095C8EE /* SellerMyGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592ED71DF17C5C0095C8EE /* SellerMyGoodsModel.m */; };
+		04592EDB1DF1830B0095C8EE /* DogImpressionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EDA1DF1830B0095C8EE /* DogImpressionModel.m */; };
+		04592EE11DF194BC0095C8EE /* AddDogImpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EE01DF194BC0095C8EE /* AddDogImpressionView.m */; };
+		04592EE41DF199390095C8EE /* DogCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EE31DF199390095C8EE /* DogCategoryModel.m */; };
+		04592EE71DF19CFE0095C8EE /* ChoseCamearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EE61DF19CFE0095C8EE /* ChoseCamearView.m */; };
 		045D11A01DF031EF008623E5 /* FocusAndFansModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D11991DF031EF008623E5 /* FocusAndFansModel.m */; };
 		045D11A11DF031EF008623E5 /* MyAlbumsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D119C1DF031EF008623E5 /* MyAlbumsModel.m */; };
 		045D11A21DF031EF008623E5 /* MyPictureListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D119E1DF031EF008623E5 /* MyPictureListModel.m */; };
@@ -514,6 +526,28 @@
 		04592EAE1DF10D9F0095C8EE /* OrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailModel.m; sourceTree = "<group>"; };
 		04592EAF1DF10D9F0095C8EE /* WaitAllNickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAllNickModel.h; sourceTree = "<group>"; };
 		04592EB01DF10D9F0095C8EE /* WaitAllNickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAllNickModel.m; sourceTree = "<group>"; };
+		04592EBB1DF11D960095C8EE /* SellerAccepeRateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAccepeRateModel.h; sourceTree = "<group>"; };
+		04592EBC1DF11D960095C8EE /* SellerAccepeRateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAccepeRateModel.m; sourceTree = "<group>"; };
+		04592EBE1DF145C00095C8EE /* AcceptRateBuyerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptRateBuyerModel.h; sourceTree = "<group>"; };
+		04592EBF1DF145C10095C8EE /* AcceptRateBuyerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptRateBuyerModel.m; sourceTree = "<group>"; };
+		04592EC21DF14CCB0095C8EE /* UserAssetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAssetModel.h; sourceTree = "<group>"; };
+		04592EC31DF14CCB0095C8EE /* UserAssetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAssetModel.m; sourceTree = "<group>"; };
+		04592EC61DF166F90095C8EE /* ForgetPayPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPayPsdViewController.h; sourceTree = "<group>"; };
+		04592EC71DF166F90095C8EE /* ForgetPayPsdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPayPsdViewController.m; sourceTree = "<group>"; };
+		04592EC81DF166F90095C8EE /* ForgetPayPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPayPsdViewController.xib; sourceTree = "<group>"; };
+		04592ED01DF1674A0095C8EE /* SureForgetPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureForgetPayViewController.h; sourceTree = "<group>"; };
+		04592ED11DF1674A0095C8EE /* SureForgetPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureForgetPayViewController.m; sourceTree = "<group>"; };
+		04592ED21DF1674A0095C8EE /* SureForgetPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPayViewController.xib; sourceTree = "<group>"; };
+		04592ED61DF17C5C0095C8EE /* SellerMyGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerMyGoodsModel.h; sourceTree = "<group>"; };
+		04592ED71DF17C5C0095C8EE /* SellerMyGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerMyGoodsModel.m; sourceTree = "<group>"; };
+		04592ED91DF1830B0095C8EE /* DogImpressionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogImpressionModel.h; sourceTree = "<group>"; };
+		04592EDA1DF1830B0095C8EE /* DogImpressionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogImpressionModel.m; sourceTree = "<group>"; };
+		04592EDF1DF194BC0095C8EE /* AddDogImpressionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDogImpressionView.h; sourceTree = "<group>"; };
+		04592EE01DF194BC0095C8EE /* AddDogImpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDogImpressionView.m; sourceTree = "<group>"; };
+		04592EE21DF199390095C8EE /* DogCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogCategoryModel.h; sourceTree = "<group>"; };
+		04592EE31DF199390095C8EE /* DogCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogCategoryModel.m; sourceTree = "<group>"; };
+		04592EE51DF19CFE0095C8EE /* ChoseCamearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseCamearView.h; sourceTree = "<group>"; };
+		04592EE61DF19CFE0095C8EE /* ChoseCamearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseCamearView.m; sourceTree = "<group>"; };
 		045D11981DF031EF008623E5 /* FocusAndFansModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusAndFansModel.h; sourceTree = "<group>"; };
 		045D11991DF031EF008623E5 /* FocusAndFansModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusAndFansModel.m; sourceTree = "<group>"; };
 		045D119B1DF031EF008623E5 /* MyAlbumsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlbumsModel.h; sourceTree = "<group>"; };
@@ -1409,6 +1443,8 @@
 			children = (
 				0452A1E01DE0B30A007C1E4F /* AddDogPictures.h */,
 				0452A1E11DE0B30A007C1E4F /* AddDogPictures.m */,
+				04592EDF1DF194BC0095C8EE /* AddDogImpressionView.h */,
+				04592EE01DF194BC0095C8EE /* AddDogImpressionView.m */,
 			);
 			path = SellerAddDog;
 			sourceTree = "<group>";
@@ -1442,6 +1478,52 @@
 				0452A20A1DE1C176007C1E4F /* SellerNoneDogTypeView.m */,
 			);
 			path = SellerAddDogType;
+			sourceTree = "<group>";
+		};
+		04592EBA1DF11D960095C8EE /* SellerAcceptRate */ = {
+			isa = PBXGroup;
+			children = (
+				04592EBB1DF11D960095C8EE /* SellerAccepeRateModel.h */,
+				04592EBC1DF11D960095C8EE /* SellerAccepeRateModel.m */,
+				04592EBE1DF145C00095C8EE /* AcceptRateBuyerModel.h */,
+				04592EBF1DF145C10095C8EE /* AcceptRateBuyerModel.m */,
+			);
+			path = SellerAcceptRate;
+			sourceTree = "<group>";
+		};
+		04592EC11DF14CB30095C8EE /* UserAsset */ = {
+			isa = PBXGroup;
+			children = (
+				04592EC21DF14CCB0095C8EE /* UserAssetModel.h */,
+				04592EC31DF14CCB0095C8EE /* UserAssetModel.m */,
+			);
+			path = UserAsset;
+			sourceTree = "<group>";
+		};
+		04592EC51DF166D00095C8EE /* ForgetPayPsd */ = {
+			isa = PBXGroup;
+			children = (
+				04592EC61DF166F90095C8EE /* ForgetPayPsdViewController.h */,
+				04592EC71DF166F90095C8EE /* ForgetPayPsdViewController.m */,
+				04592EC81DF166F90095C8EE /* ForgetPayPsdViewController.xib */,
+				04592ED01DF1674A0095C8EE /* SureForgetPayViewController.h */,
+				04592ED11DF1674A0095C8EE /* SureForgetPayViewController.m */,
+				04592ED21DF1674A0095C8EE /* SureForgetPayViewController.xib */,
+			);
+			path = ForgetPayPsd;
+			sourceTree = "<group>";
+		};
+		04592ED51DF17C430095C8EE /* SellerMyGoods */ = {
+			isa = PBXGroup;
+			children = (
+				04592ED61DF17C5C0095C8EE /* SellerMyGoodsModel.h */,
+				04592ED71DF17C5C0095C8EE /* SellerMyGoodsModel.m */,
+				04592ED91DF1830B0095C8EE /* DogImpressionModel.h */,
+				04592EDA1DF1830B0095C8EE /* DogImpressionModel.m */,
+				04592EE21DF199390095C8EE /* DogCategoryModel.h */,
+				04592EE31DF199390095C8EE /* DogCategoryModel.m */,
+			);
+			path = SellerMyGoods;
 			sourceTree = "<group>";
 		};
 		045D11961DF031EF008623E5 /* MyMessage */ = {
@@ -1493,6 +1575,7 @@
 				045D11AB1DF05C0E008623E5 /* PayingViewController.m */,
 				045D11AC1DF05C0E008623E5 /* PayingViewController.xib */,
 				045D11AD1DF05C0E008623E5 /* PayPsd */,
+				04592EC51DF166D00095C8EE /* ForgetPayPsd */,
 			);
 			path = Paying;
 			sourceTree = "<group>";
@@ -3125,6 +3208,7 @@
 		0479B5A31DCADC7B00CB288A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04592EC11DF14CB30095C8EE /* UserAsset */,
 				045D11961DF031EF008623E5 /* MyMessage */,
 				04B161B21DE7046600DABC77 /* ShopAdress */,
 			);
@@ -3374,9 +3458,9 @@
 				04CE13911DDC488100EB8777 /* SellerSoldGoods */,
 				04CE13811DDC488100EB8777 /* SellerAcceptedRate */,
 				04CE13841DDC488100EB8777 /* SellerAdress */,
-				04CE13871DDC488100EB8777 /* SellerMyGoods */,
 				04CE138B1DDC488100EB8777 /* SellerMyLive */,
 				04CE138E1DDC488100EB8777 /* SellerShipTemplate */,
+				04CE13871DDC488100EB8777 /* SellerMyGoods */,
 			);
 			path = CenterTable;
 			sourceTree = "<group>";
@@ -3457,6 +3541,8 @@
 		04CE13951DDC488100EB8777 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04592ED51DF17C430095C8EE /* SellerMyGoods */,
+				04592EBA1DF11D960095C8EE /* SellerAcceptRate */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3850,6 +3936,8 @@
 			children = (
 				04DAC9B21DD317700089236D /* EditNikeNameAlert.h */,
 				04DAC9B31DD317700089236D /* EditNikeNameAlert.m */,
+				04592EE51DF19CFE0095C8EE /* ChoseCamearView.h */,
+				04592EE61DF19CFE0095C8EE /* ChoseCamearView.m */,
 			);
 			path = EditAlert;
 			sourceTree = "<group>";
@@ -4056,6 +4144,7 @@
 				0479B6281DCADC7B00CB288A /* SuggestViewController.xib in Resources */,
 				0479B6041DCADC7B00CB288A /* LoginViewController.xib in Resources */,
 				0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */,
+				04592ED41DF1674A0095C8EE /* SureForgetPayViewController.xib in Resources */,
 				0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */,
 				046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */,
 				04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */,
@@ -4081,6 +4170,7 @@
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
 				045D11BC1DF05C0E008623E5 /* SetPayingPsdViewController.xib in Resources */,
+				04592ECA1DF166F90095C8EE /* ForgetPayPsdViewController.xib in Resources */,
 				0479B6221DCADC7B00CB288A /* RemoveCookieViewController.xib in Resources */,
 				047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */,
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
@@ -4153,6 +4243,7 @@
 				0479B5D81DCADC7B00CB288A /* LiveViewController.m in Sources */,
 				04EA2AE21DDDC5A60023D9A8 /* SellerOrderDetailLogisticsInfoViewController.m in Sources */,
 				04EA2ACC1DDDAFE80023D9A8 /* SellerOrderDetailInfoView.m in Sources */,
+				04592EE71DF19CFE0095C8EE /* ChoseCamearView.m in Sources */,
 				04CE13D51DDC488100EB8777 /* SellerAdressViewController.m in Sources */,
 				0479B5E21DCADC7B00CB288A /* DogTypesView.m in Sources */,
 				04CE13CE1DDC488100EB8777 /* SellerCenterViewController.m in Sources */,
@@ -4196,6 +4287,7 @@
 				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
+				04592EE41DF199390095C8EE /* DogCategoryModel.m in Sources */,
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
@@ -4207,16 +4299,19 @@
 				046BEFF01DE4696600BC32E9 /* EMSDImageCache.m in Sources */,
 				0479B6371DCADC7B00CB288A /* ViewController.m in Sources */,
 				046BF0421DE48F9800BC32E9 /* LoginViewController+ThirdLogin.m in Sources */,
+				04592EC41DF14CCB0095C8EE /* UserAssetModel.m in Sources */,
 				046BF0161DE4696600BC32E9 /* UIViewController+HUD.m in Sources */,
 				04CE13DC1DDC488100EB8777 /* SellerProtectPowerCell.m in Sources */,
 				045D514E1DD99BEF001854A8 /* IdentityPictureCell.m in Sources */,
 				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
 				046BEFEE1DE4696600BC32E9 /* MWZoomingScrollView.m in Sources */,
 				04DAC99B1DD21A9A0089236D /* AddrsssTableViewCell.m in Sources */,
+				04592EBD1DF11D960095C8EE /* SellerAccepeRateModel.m in Sources */,
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
 				04CE13D11DDC488100EB8777 /* SellerWaitPayViewController.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
 				047324001DD1DC18006CCC71 /* MyFansViewController.m in Sources */,
+				04592EDB1DF1830B0095C8EE /* DogImpressionModel.m in Sources */,
 				04EA2ACB1DDDAFE80023D9A8 /* SellerOrderDetailBottomView.m in Sources */,
 				046BEFFD1DE4696600BC32E9 /* UIImageView+EMHighlightedWebCache.m in Sources */,
 				04CE13DF1DDC488100EB8777 /* SellerWaitRateCell.m in Sources */,
@@ -4251,6 +4346,7 @@
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
+				04592ED31DF1674A0095C8EE /* SureForgetPayViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				046F0BA11DE2AB8B00D50D5C /* DetailPayMoney.m in Sources */,
 				04DAC9B41DD317700089236D /* EditNikeNameAlert.m in Sources */,
@@ -4349,6 +4445,7 @@
 				045D11BD1DF05C0E008623E5 /* SetPayPsdSuccessViewController.m in Sources */,
 				046F0BA31DE2AB8B00D50D5C /* GoodsPriceView.m in Sources */,
 				0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */,
+				04592EC91DF166F90095C8EE /* ForgetPayPsdViewController.m in Sources */,
 				04E777391DEC33C2007B5146 /* SystemNotificationCell.m in Sources */,
 				046BF0301DE4696600BC32E9 /* EaseBubbleView+Voice.m in Sources */,
 				046BE8D71DE451EF00BC32E9 /* MessageViewController.m in Sources */,
@@ -4361,6 +4458,7 @@
 				04CE13D41DDC488100EB8777 /* SellerAcceptedRateViewController.m in Sources */,
 				04CE13DE1DDC488100EB8777 /* SellerWaitPayCell.m in Sources */,
 				046F0BE41DE2AB9E00D50D5C /* OrderCompleteViewController.m in Sources */,
+				04592EE11DF194BC0095C8EE /* AddDogImpressionView.m in Sources */,
 				046BF0211DE4696600BC32E9 /* EaseMessageViewController.m in Sources */,
 				046BF0331DE4696600BC32E9 /* EaseChatToolbarItem.m in Sources */,
 				0479B5D61DCADC7B00CB288A /* LivingViewController.m in Sources */,
@@ -4485,6 +4583,7 @@
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				046BF00C1DE4696600BC32E9 /* PSTGridLayoutSection.m in Sources */,
 				04CE13E61DDC488100EB8777 /* SellerMyGoodsTopView.m in Sources */,
+				04592ED81DF17C5C0095C8EE /* SellerMyGoodsModel.m in Sources */,
 				046F0BED1DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.m in Sources */,
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
 				046BF0361DE4696600BC32E9 /* EaseFaceView.m in Sources */,
@@ -4506,6 +4605,7 @@
 				046BF0601DE5940900BC32E9 /* SystemNotificationViewController.m in Sources */,
 				046BEFF71DE4696600BC32E9 /* MKAnnotationView+EMWebCache.m in Sources */,
 				0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */,
+				04592EC01DF145C10095C8EE /* AcceptRateBuyerModel.m in Sources */,
 				04592EB51DF10D9F0095C8EE /* OrderDetailModel.m in Sources */,
 				046BEFCE1DE4696600BC32E9 /* wav.mm in Sources */,
 				046BEFCC1DE4696600BC32E9 /* EMCDDeviceManagerBase.m in Sources */,

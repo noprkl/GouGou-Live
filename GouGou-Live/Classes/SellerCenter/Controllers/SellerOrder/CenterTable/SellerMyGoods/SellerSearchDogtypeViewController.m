@@ -25,26 +25,63 @@
 
 @implementation SellerSearchDogtypeViewController
 
+- (void)getRequestDogType {
+    NSDictionary *dict = @{
+                           @"type":@(3)
+                           };
+    [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
     [self setNavBarItem];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestDogType];
 }
 - (void)initUI {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"搜索icon-拷贝"] style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSearchBtnAction)];
     
     [self.navigationItem setTitleView:self.titleInputView];
     [self.view addSubview:self.noinputView];
-
+    [self.view addSubview:self.doInputView];
+    [self.view addSubview:self.noneDoyType];
+    self.noinputView.hidden = NO;
+    self.doInputView.hidden = YES;
+    self.noneDoyType.hidden = YES;
 }
 - (void)clickSearchBtnAction {
-    [self.noinputView removeFromSuperview];
-//    [self.view addSubview:self.doInputView];
-    [self.view addSubview:self.noneDoyType];
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"name":self.titleInputView.text
+                           };
+    [self postRequestWithPath:API_Add_Impression params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"data"] count] == 0) {
+            self.noinputView.hidden = YES;
+            self.doInputView.hidden = YES;
+            self.noneDoyType.hidden = NO;
+            self.noneDoyType.dogType = self.titleInputView.text;
+        }else{
+            self.noinputView.hidden = YES;
+            self.doInputView.hidden = NO;
+            self.noneDoyType.hidden = YES;
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+
+
 }
 - (void)editSearchAction:(UITextField *)textField {
-    
-}
+    }
 #pragma mark
 #pragma mark - 懒加载
 - (UITextField *)titleInputView {
@@ -80,8 +117,21 @@
 - (SellerNoneDogTypeView *)noneDoyType {
     if (!_noneDoyType) {
         _noneDoyType = [[SellerNoneDogTypeView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64))];
+        
+        // 添加品种
+        __weak typeof(self) weakSelf = self;
         _noneDoyType.addBlock = ^(NSString *dogType){
-            DLog(@"%@", dogType);
+           
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"name":dogType
+                                   };
+            [weakSelf postRequestWithPath:API_Add_varieties params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [weakSelf showAlert:successJson[@"message"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
         };
     }
     return _noneDoyType;

@@ -267,6 +267,7 @@
 }
 - (void)clickForgrtBtnAction {
     if (_forgetBlock) {
+        [self dismiss];
         _forgetBlock();
     }
 }

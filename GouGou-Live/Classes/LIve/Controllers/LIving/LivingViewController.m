@@ -106,7 +106,7 @@
     self.collectBtn.hidden = YES;
     self.watchLabel.hidden = YES;
     self.screenBtn.hidden = YES;
-    
+
     self.hidesBottomBarWhenPushed = NO;
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];

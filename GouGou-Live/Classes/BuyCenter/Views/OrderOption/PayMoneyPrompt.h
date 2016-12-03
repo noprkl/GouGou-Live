@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickSizeCellBlock)(NSString *payWays);
-typedef void(^ClickBottomBtnBlovk)(NSString *string);
+typedef void(^ClickPromptCellBlock)(NSString *payWays);
+typedef void(^ClickPromptBtnBlock)(NSString *string);
+
 @interface PayMoneyPrompt : UITableView
 
 /** 点击cell回调 */
-@property (strong, nonatomic) ClickSizeCellBlock payCellBlock;
+@property (strong, nonatomic) ClickPromptCellBlock payCellBlock;
 
-@property(nonatomic, strong) ClickBottomBtnBlovk bottomBlock; /**< 点击底部按钮回调 */
+@property(nonatomic, strong) ClickPromptBtnBlock bottomBlock; /**< 点击底部按钮回调 */
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 选择数组 */
 

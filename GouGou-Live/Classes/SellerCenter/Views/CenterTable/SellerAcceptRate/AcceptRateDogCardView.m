@@ -7,28 +7,29 @@
 //
 
 #import "AcceptRateDogCardView.h"
+#import "DogDetailInfoModel.h"
 
 @interface AcceptRateDogCardView ()
 
-/** 狗狗图片*/
-@property (strong, nonatomic)  UIImageView *dogImageView;
-/** 狗狗名字 */
-@property (strong, nonatomic)  UILabel *dogNameLabel;
-/** 品种 */
-@property(nonatomic, strong) UILabel *kindLabel;
-/** 狗狗种类 */
-@property (strong, nonatomic)  UILabel *dogKindLabel;
-/** 狗狗年龄*/
-@property (strong, nonatomic)  UILabel *dogAgeLabel;
-/** 狗狗体型*/
-@property (strong, nonatomic)  UILabel *dogSizeLabel;
-/** 狗狗颜色*/
-@property (strong, nonatomic)  UILabel *dogColorLabel;
-/** 狗狗价格*/
-@property (strong, nonatomic)  UILabel *nowPriceLabel;
-/** 狗狗老价格*/
-@property (strong, nonatomic)  UILabel *oldPriceLabel;
-
+///** 狗狗图片*/
+//@property (strong, nonatomic)  UIImageView *dogImageView;
+///** 狗狗名字 */
+//@property (strong, nonatomic)  UILabel *dogNameLabel;
+///** 品种 */
+//@property(nonatomic, strong) UILabel *kindLabel;
+///** 狗狗种类 */
+//@property (strong, nonatomic)  UILabel *dogKindLabel;
+///** 狗狗年龄*/
+//@property (strong, nonatomic)  UILabel *dogAgeLabel;
+///** 狗狗体型*/
+//@property (strong, nonatomic)  UILabel *dogSizeLabel;
+///** 狗狗颜色*/
+//@property (strong, nonatomic)  UILabel *dogColorLabel;
+///** 狗狗价格*/
+//@property (strong, nonatomic)  UILabel *nowPriceLabel;
+///** 狗狗老价格*/
+//@property (strong, nonatomic)  UILabel *oldPriceLabel;
+//
 @end
 
 
@@ -98,7 +99,18 @@
     }];
     
 }
-
+- (void)setModel:(DogDetailInfoModel *)model {
+    _model = model;
+    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+    [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.dogNameLabel.text = model.name;
+    self.dogKindLabel.text = model.kindName;
+    self.dogAgeLabel.text = model.ageName;
+    self.dogSizeLabel.text = model.sizeName;
+    self.dogColorLabel.text = model.colorName;
+    self.oldPriceLabel.text = model.priceOld;
+    self.nowPriceLabel.text = model.price;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UIImageView *)dogImageView {
@@ -113,7 +125,7 @@
 - (UILabel *)dogNameLabel {
     if (!_dogNameLabel) {
         _dogNameLabel = [[UILabel alloc] init];
-        _dogNameLabel.text = @"小黑";
+//        _dogNameLabel.text = @"小黑";
         _dogNameLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _dogNameLabel.font = [UIFont systemFontOfSize:16];
         
@@ -124,7 +136,7 @@
     if (!_kindLabel) {
         _kindLabel = [[UILabel alloc] init];
         
-        _kindLabel.text = @"品种";
+//        _kindLabel.text = @"品种";
         _kindLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _kindLabel.font = [UIFont systemFontOfSize:14];
     }
@@ -134,7 +146,7 @@
     if (!_dogKindLabel) {
         _dogKindLabel = [[UILabel alloc] init];
         
-        _dogKindLabel.text = @"拉布拉多";
+//        _dogKindLabel.text = @"拉布拉多";
         _dogKindLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogKindLabel.font = [UIFont systemFontOfSize:14];
         
@@ -145,7 +157,7 @@
     if (!_dogAgeLabel) {
         _dogAgeLabel = [[UILabel alloc] init];
         
-        _dogAgeLabel.text = @"6个月";
+//        _dogAgeLabel.text = @"6个月";
         _dogAgeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogAgeLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -155,7 +167,7 @@
     if (!_dogSizeLabel) {
         _dogSizeLabel = [[UILabel alloc] init];
         
-        _dogSizeLabel.text = @"大型犬";
+//        _dogSizeLabel.text = @"大型犬";
         _dogSizeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogSizeLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -165,7 +177,7 @@
     if (!_dogColorLabel) {
         _dogColorLabel = [[UILabel alloc] init];
         
-        _dogColorLabel.text = @"白色";
+//        _dogColorLabel.text = @"白色";
         _dogColorLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogColorLabel.font = [UIFont systemFontOfSize:12];
     }

@@ -22,7 +22,7 @@
 // 展示狗狗图片的边距
 #define kDogImageWidth 10
 // 添加图片每行最大的数
-#define kMaxImgCount 5
+#define kMaxImgCount 6
 
 
 #pragma mark - 第三方头文件
@@ -34,7 +34,8 @@
 #import <UIImageView+WebCache.h> // 图片加载
 #import <MJRefresh.h> // 上下拉
 #import <TZImagePickerController.h>
-
+#import <UMSocialCore/UMSocialCore.h>
+#import "EaseUI.h"
 
 #pragma mark - 自定义文件
 // 网络请求URL文件
@@ -45,9 +46,10 @@
 #import "UIColor+HexString.h"
 // 个人信息
 #import "UserInfos.h"
+// 狗狗品种
+#import "DogCategoryModel.h"
 
-#import <UMSocialCore/UMSocialCore.h>
-#import "EaseUI.h"
+
 
 
 // NSLog 增强

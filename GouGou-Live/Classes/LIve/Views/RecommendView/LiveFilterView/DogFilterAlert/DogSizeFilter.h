@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickSizeCellBlock)(NSString *size);
-typedef void(^ClickBottomBtnBlovk)(NSString *string);
+typedef void(^ClickSizeCellBlock)(DogCategoryModel *sizeModel);
+typedef void(^ClickBottomBtnBlovk)(DogCategoryModel *sizeModel);
 @interface DogSizeFilter : UITableView
 
 /** 点击cell回调 */
@@ -17,8 +17,9 @@ typedef void(^ClickBottomBtnBlovk)(NSString *string);
 
 @property(nonatomic, strong) ClickBottomBtnBlovk bottomBlock; /**< 点击底部按钮回调 */
 
-
 @property(nonatomic, strong) NSArray *dataArr; /**< 选择数组 */
+
+@property(nonatomic, strong) NSString *title; /**< 提示 */
 
 - (void)show;
 - (void)dismiss;

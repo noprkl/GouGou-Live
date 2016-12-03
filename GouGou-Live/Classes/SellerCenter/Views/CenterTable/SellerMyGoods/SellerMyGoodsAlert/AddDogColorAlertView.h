@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-typedef void(^SelectColocrRangeBlock)(NSString *color);
+typedef void(^SelectColocrRangeBlock)(DogCategoryModel *color);
 
 @interface AddDogColorAlertView : UIView
 

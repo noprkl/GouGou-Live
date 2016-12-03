@@ -48,9 +48,8 @@
 // 用户账单
 - (void)postGetUserAsset {
     
-    NSDictionary *dict = @{
-                           @"uid":@([[UserInfos sharedUser].ID integerValue]),
-                           @"page":@1
+    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
+                           @"uid":@(11),
                            };
     
   [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
@@ -60,7 +59,8 @@
       }else {
             self.userAsset = @"0.00";
       }
-      
+      [UserInfos sharedUser].userAsset = self.userAsset;
+      [self.tableView reloadData];
   } error:^(NSError *error) {
 
       DLog(@"%@", error);
@@ -77,8 +77,8 @@
         if (successJson) {
 //            DLog(@"%@", successJson);
             self.fansArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            
-            [self.tableView reloadData];
+            [UserInfos sharedUser].fansCount = self.fansArray.count;
+//            [self.tableView reloadData];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -98,7 +98,7 @@
             self.focusArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             // 把关注的人存到本地
 //            [[NSUserDefaults standardUserDefaults] setObject:self.focusArray forKey:@"MyFocus"];
-            [self.tableView reloadData];
+//            [self.tableView reloadData];
         }
 
     } error:^(NSError *error) {
@@ -138,6 +138,7 @@
     self.tableView.delegate = self;
     self.tableView.bounces = NO;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    self.tableView.showsVerticalScrollIndicator = NO;
 }
 
 #pragma mark
@@ -319,7 +320,7 @@
             };
             
             // 粉丝
-            messageView.fansCount = self.fansArray.count;
+            messageView.fansCount = [UserInfos sharedUser].fansCount;
             messageView.fansBlcok = ^(){
                 MyFansViewController *myFansVC =
                 [[MyFansViewController alloc] init];
@@ -332,7 +333,6 @@
             messageView.myPageBlcok = ^(){
                 MyPageViewController *myPage =
                 [[MyPageViewController alloc] init];
-                myPage.fansArr = self.fansArray;
                 myPage.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:myPage animated:YES];
             };
@@ -358,9 +358,7 @@
             __weak typeof(self) weakSelf = self;
             unLoginView.loginBlcok = ^(){
                 LoginViewController *VC = [[LoginViewController alloc] init];
-                
                 VC.hidesBottomBarWhenPushed = YES;
-                
                 [weakSelf.navigationController pushViewController:VC animated:YES];
             };
             

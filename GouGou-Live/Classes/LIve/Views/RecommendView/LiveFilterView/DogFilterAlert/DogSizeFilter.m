@@ -8,6 +8,7 @@
 
 #import "DogSizeFilter.h"
 
+
 @interface DogSizeFilter ()<UITableViewDataSource, UITableViewDelegate>
 
 /** 蒙版 */
@@ -17,7 +18,7 @@
 @property (strong, nonatomic) NSArray *dataPlist;
 
 /** 选择的字符串 */
-@property (strong, nonatomic) NSString *lastString;
+@property (strong, nonatomic) DogCategoryModel *lastString;
 
 @end
 
@@ -32,7 +33,7 @@ static NSString *cellid = @"SizeFilterCellID";
         _overLayer = [[UIControl alloc] initWithFrame:[UIScreen mainScreen].bounds];
         
         _overLayer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-//        [_overLayer addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        [_overLayer addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _overLayer;
@@ -68,7 +69,7 @@ static NSString *cellid = @"SizeFilterCellID";
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 44 * self.dataArr.count, SCREEN_WIDTH, 44 * self.dataArr.count);
+    rect = CGRectMake(0, SCREEN_HEIGHT - 44 * (self.dataArr.count + 2), SCREEN_WIDTH, 44 * (self.dataArr.count + 2));
     self.frame = rect;
     //渐入动画
     [self fadeIn];
@@ -103,6 +104,10 @@ static NSString *cellid = @"SizeFilterCellID";
     }];
 }
 
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    [self reloadData];
+}
 #pragma mark
 #pragma mark - TableView 代理
 
@@ -116,10 +121,11 @@ static NSString *cellid = @"SizeFilterCellID";
 - (void)setDataArr:(NSArray *)dataArr {
     _dataArr = dataArr;
     _dataPlist = dataArr;
+    [self reloadData];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.dataPlist.count - 2;
+    return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -129,13 +135,13 @@ static NSString *cellid = @"SizeFilterCellID";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
     }
-    
-    NSString *text = self.dataPlist[indexPath.row + 1];
+
+    DogCategoryModel *model = self.dataPlist[indexPath.row];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     label.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor whiteColor];
-    label.text = text;
+    label.text = model.name;
     label.textColor = [UIColor colorWithHexString:@"666666"];
     label.font = [UIFont systemFontOfSize:14];
     label.textAlignment = NSTextAlignmentCenter;
@@ -160,8 +166,8 @@ static NSString *cellid = @"SizeFilterCellID";
     if (section == 0) {
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-        
-        label.text = [self.dataPlist firstObject];
+
+        label.text = self.title;
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor colorWithHexString:@"#666666"];
         label.font = [UIFont systemFontOfSize:16];
@@ -181,7 +187,7 @@ static NSString *cellid = @"SizeFilterCellID";
         
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
-        [button setTitle:[self.dataPlist lastObject] forState:(UIControlStateNormal)];
+        [button setTitle:@"确定" forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         
         [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
@@ -204,7 +210,7 @@ static NSString *cellid = @"SizeFilterCellID";
 #pragma mark 选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-     NSString *text = self.dataPlist[indexPath.row + 1];
+     DogCategoryModel *text = self.dataPlist[indexPath.row];
     self.lastString = text;
     if (_sizeCellBlock) {
 //        [self dismiss];

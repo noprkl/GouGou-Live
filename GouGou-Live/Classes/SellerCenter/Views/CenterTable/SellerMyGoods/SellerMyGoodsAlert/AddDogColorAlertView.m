@@ -27,7 +27,7 @@
 
 #pragma mark pickerView的值
 /** 最小 */
-@property (strong, nonatomic) NSString *colorString;
+@property (strong, nonatomic) DogCategoryModel *colorString;
 
 /** 记录当前的角标 */
 @property (assign, nonatomic) NSInteger currentIndex;
@@ -41,6 +41,7 @@ static NSString *cellid = @"AddDogColorAlert";
     
     _dataPlist = dataPlist;
     self.colorData = dataPlist;
+    [self.colorPicker reloadAllComponents];
 }
 
 
@@ -63,12 +64,12 @@ static NSString *cellid = @"AddDogColorAlert";
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     
     // 列数
-    
-    return 2;
+    return 1;
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-
-    return self.dataPlist[row];
+    DogCategoryModel *model = self.dataPlist[row];
+    
+    return model.name;
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
         

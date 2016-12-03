@@ -33,6 +33,14 @@
 #define API_Validation_l_pwd @"UserService/validation_l_pwd"
 /** 登录密码重置 */
 #define API_Reset_pwd @"UserService/reset_pwd"
+/** 第三方登录 */
+#define API_Login_binding @"UserService/login_binding"
+/** 第三方绑定 */
+#define API_Binding @"UserService/binding"
+/** 第三方解绑 */
+#define API_Del_binding @"UserService/del_binding"
+
+
 
 #pragma mark
 #pragma mark - 我的模块
@@ -68,17 +76,20 @@
 #define API_GetUserAssertDetai @"UserService/getUserAssertDetai"
 /** 用户提现申请 */
 #define API_RetriveMoney @"UserService/retriveMoney"
+/** 用户提现纪录 */
+#define API_GetRetriveRecord @"UserService/getRetriveRecord"
+
 #pragma mark - 支付宝
 /** 用户支付密码添加接口 */
 #define API_Pay_add @"UserService/pay_add"
 /** 用户支付密码修改 */
 #define API_Pay_up @"UserService/pay_up"
-/** 用户提现纪录 */
-#define API_GetRetriveRecord @"UserService/getRetriveRecord"
 /** 用户绑定支付宝 */
 #define API_Treasure @"UserService/treasure"
 /** 验证支付密码接口 */
 #define API_Validation_pwd @"UserService/validation_pwd"
+/** 支付密码找回 */
+#define API_Pay_find @"UserService/pay_find"
 
 #pragma mark - 粉丝关注
 // 粉丝列表
@@ -125,10 +136,17 @@
 #pragma mark - 商品
 /** 印象列表 */
 #define API_Impression @"ProductService/Impression"
+/** 搜索印象 */
+#define API_Search_impression @"ProductService/search_impression"
 /** 添加印象 */
 #define API_Add_Impression @"ProductService/Add_Impression"
+
+/** 搜索品种 */
+#define API_Search_varieties @"ProductService/search_varieties"
 /** 添加品种 */
 #define API_Add_varieties @"ProductService/Add_varieties"
+
+
 /** 商品分类－获取筛选过滤值 */
 #define API_Category @"ProductService/category"
 /** 商品添加 */

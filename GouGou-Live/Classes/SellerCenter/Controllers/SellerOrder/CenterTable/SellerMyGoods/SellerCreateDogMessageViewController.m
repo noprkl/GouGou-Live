@@ -5,9 +5,11 @@
 //  Created by ma c on 16/11/20.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
+#define ImgCount 6
 
 #import "SellerCreateDogMessageViewController.h"
-#import "AddDogPictures.h" // 添加狗狗图片
+#import "AddUpdataImagesView.h" // 添加狗狗图片
+
 
 #import "DogAgeFilter.h" // 年龄
 #import "DogSizeFilter.h" // 体型
@@ -40,6 +42,16 @@
 
 @property(nonatomic, assign) BOOL isFirstZero; /**< 首位为0 */
 
+@property(nonatomic, strong) UILabel *ageLabel; /**< 年龄 */
+@property(nonatomic, strong) DogCategoryModel *ageModel; /**< 年龄 */
+@property(nonatomic, strong) UILabel *sizeLabel; /**< 体型 */
+@property(nonatomic, strong) DogCategoryModel *sizeModel; /**< 体型 */
+@property(nonatomic, strong) UILabel *colorLabel; /**< 颜色 */
+@property(nonatomic, strong) DogCategoryModel *colorModel; /**< 颜色 */
+@property(nonatomic, strong) UILabel *typeLabel; /**< 品种 */
+@property(nonatomic, strong) DogCategoryModel *typeModel; /**< 品种 */
+@property(nonatomic, strong) UILabel *impressLabel; /**< 印象 */
+@property(nonatomic, strong) NSArray *impressModels; /**< 印象数组 */
 @end
 
 static NSString *cellid = @"SellerCreateDogMessage";
@@ -114,10 +126,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataArr[indexPath.row] attributes:@{
-                                                                                                                        NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"],
-                                                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:14]
-                                                                                                                        }];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -147,6 +155,44 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [cell.contentView addSubview:nameText];
         }
             break;
+            case 1:
+        {
+            UILabel *ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            ageLabel.attributedText = [self getCellTextWith:self.dataArr[1]];
+            
+            self.ageLabel = ageLabel;
+            [cell.contentView addSubview:ageLabel];
+        }
+            break;
+        case 2:
+        {
+            UILabel *sizeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            sizeLabel.attributedText = [self getCellTextWith:self.dataArr[4]];
+            
+            self.sizeLabel = sizeLabel;
+            [cell.contentView addSubview:sizeLabel];
+        }
+            break;
+        case 3:
+        {
+            
+            UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            typeLabel.attributedText = [self getCellTextWith:self.dataArr[2]];
+            
+            self.typeLabel = typeLabel;
+            [cell.contentView addSubview:typeLabel];
+        }
+            break;
+        case 4:
+        {
+            UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            colorLabel.attributedText = [self getCellTextWith:self.dataArr[3]];
+            
+            self.colorLabel = colorLabel;
+            [cell.contentView addSubview:colorLabel];
+        }
+            break;
+
         case 5:
         {
             // 一口价
@@ -185,6 +231,16 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
         }
             break;
+        case 7:
+        {
+            UILabel *impressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            impressLabel.attributedText = [self getCellTextWith:self.dataArr[7]];
+            
+            self.impressLabel = impressLabel;
+            [cell.contentView addSubview:impressLabel];
+        }
+            break;
+
         case 8:
         {
             // 补充
@@ -232,15 +288,25 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [self textFieldShouldReturn:self.nameText];
             [self textFieldShouldReturn:self.priceText];
             [self textFieldShouldReturn:self.priceText];
-            
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
-            ageView.dataPlist = @[@"不限", @"1个月", @"2个月", @"3个月", @"4个月", @"5个月", @"6个月", @"1岁", @"2岁", @"3岁", @"4岁", @"5岁", @"6岁", @"7岁", @"以上"];
+
+            NSDictionary *dict = @{
+                                   @"type":@(1)
+                                   };
+            [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                 ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            
             [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(NSString *minString, NSString *maxString){
-                
+            ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
+                self.ageLabel.attributedText = [self getCellTextWith:minString.name];
+                self.ageModel = minString;
                 DLog(@"%@--%@", minString, maxString);
             };
         }
@@ -252,12 +318,30 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [self textFieldShouldReturn:self.priceText];
             
             DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
-            sizeView.dataArr = @[@"体型",@"大型犬", @"中型犬", @"小型犬", @"不限", @"确定"];
-            [sizeView show];
+            sizeView.title = @"体型";
+            
+            NSDictionary *dict = @{
+                                   @"type":@(4)
+                                   };
+                       [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                           if (successJson) {
+                              
+                               sizeView.dataArr = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                               
+                               [sizeView show];
+                           }
+
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+
             
             //            __weak typeof(sizeView) weakView = sizeView;
-            sizeView.bottomBlock = ^(NSString *size){
+            sizeView.bottomBlock = ^(DogCategoryModel *size){
                 DLog(@"%@", size);
+                self.sizeLabel.attributedText = [self getCellTextWith:size.name];
+                self.sizeModel = size;
             };
         }
             break;
@@ -278,8 +362,20 @@ static NSString *cellid = @"SellerCreateDogMessage";
 
             
             AddDogColorAlertView *colorView = [[AddDogColorAlertView alloc] init];
-            colorView.colorBlock = ^(NSString *color){
-                DLog(@"%@", color);
+            
+            NSDictionary *dict = @{
+                                   @"type":@(2)
+                                   };
+            [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                colorView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            colorView.colorBlock = ^(DogCategoryModel *color){
+                self.colorLabel.attributedText = [self getCellTextWith:color.name];
+                self.colorModel = color;
             };
             [colorView show];
         }
@@ -312,15 +408,47 @@ static NSString *cellid = @"SellerCreateDogMessage";
 #pragma mark - 头尾
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        AddDogPictures *addPict = [[AddDogPictures alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 105)];
-        addPict.backgroundColor = [UIColor whiteColor];
-        return addPict;
+        __block CGFloat W = 0;
+        if (ImgCount <= kMaxImgCount) {
+            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+        }else{
+            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
+        }
+        AddUpdataImagesView *photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, W + 20)];
+        photoView.maxCount = ImgCount;
+        
+        __weak typeof(self) weakSelf = self;
+        __weak typeof(photoView) weakPhoto = photoView;
+        photoView.addBlock = ^(){
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    [weakPhoto.dataArr addObject:photos[0]];
+                    
+                    [weakPhoto.collectionView reloadData];
+                    CGFloat row = weakPhoto.dataArr.count / kMaxImgCount;
+                    CGRect rect = weakPhoto.frame;
+                    rect.size.height = (row + 1) * (W + 10) + 10;
+                    weakPhoto.frame = rect;
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
+        };
+        photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        return photoView;
     }
     return nil;
 }
 #pragma mark - 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 115;
+    return 60;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -457,7 +585,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
         //键盘高度
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.tableView.frame;
-            rect.origin.y = (- 264) + 64;
+            rect.origin.y = (- 264) + 10;
             self.tableView.frame= rect;
         }];
     }
@@ -492,5 +620,11 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                                                                   }];
     return attribut;
 }
-
+- (NSAttributedString *)getCellTextWith:(NSString *)string {
+  NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:string attributes:@{
+                                                                                        NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"],
+                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:14]
+                                                                                        }];
+    return attribute;
+}
 @end

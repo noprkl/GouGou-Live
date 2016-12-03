@@ -13,5 +13,6 @@ typedef void(^ClickSureAddBtnBlock)(NSString *dogType);
 @interface SellerNoneDogTypeView : UIView
 
 @property(nonatomic, strong) ClickSureAddBtnBlock addBlock; /**< 添加回调 */
+@property(nonatomic, strong) NSString *dogType; /**< 狗狗种类 */
 
 @end

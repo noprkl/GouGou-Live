@@ -30,6 +30,17 @@
 
 @property(nonatomic, strong) NSString *useralicode; /**< 支付宝账号 */
 @property(nonatomic, strong) NSString *userpaycode; /**< 支付宝账号 */
+@property(nonatomic, strong) NSString *wxopenid; /**< 微信快捷登录 */
+@property(nonatomic, strong) NSString *wbopenid; /**< 微博快捷登录 */
+@property(nonatomic, strong) NSString *qqopenid; /**< QQ快捷登录 */
+
+
+// 个人信息 无需本地存储
+
+@property(nonatomic, assign) NSInteger fansCount; /**< 粉丝数 */
+@property(nonatomic, assign) NSInteger commentCount; /**< 评论数 */
+@property(nonatomic, strong) NSArray *focusArr; /**< 关注人数 */
+@property(nonatomic, strong) NSString *userAsset; /**< 用户资产 */
 + (instancetype)sharedUser;
 
 + (void)setUser;

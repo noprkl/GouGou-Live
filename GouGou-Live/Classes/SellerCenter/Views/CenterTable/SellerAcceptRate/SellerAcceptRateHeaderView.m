@@ -109,14 +109,22 @@
         make.left.equalTo(self.pleaseLabel.right).offset(10);
         make.size.equalTo(CGSizeMake(100, 15));
     }];
-
+    self.fansCountLabel.text = [@([UserInfos sharedUser].fansCount) stringValue];
+    self.rateCountLabel.text = [@([UserInfos sharedUser].commentCount) stringValue];
+    
+    if ([UserInfos sharedUser].userimgurl.length > 0) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+        
+        [self.sellerIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }
+    
 }
 #pragma mark
 #pragma mark - 懒加载
 - (UIImageView *)sellerIconView {
     if (!_sellerIconView) {
         _sellerIconView = [[UIImageView alloc] init];
-        _sellerIconView.image = [UIImage imageNamed:@"主播头像"];
+        _sellerIconView.image = [UIImage imageNamed:@"头像"];
 
         // 切圆
         _sellerIconView.layer.cornerRadius = 30;

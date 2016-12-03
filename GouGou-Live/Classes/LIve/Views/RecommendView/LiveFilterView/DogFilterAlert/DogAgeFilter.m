@@ -31,9 +31,9 @@
 
 #pragma mark pickerView的值
 /** 最小 */
-@property (strong, nonatomic) NSString *minString;
+@property (strong, nonatomic) DogCategoryModel *minModel;
 /** 最大 */
-@property (strong, nonatomic) NSString *maxString;
+@property (strong, nonatomic) DogCategoryModel *maxModel;
 /** 记录当前的角标 */
 @property (assign, nonatomic) NSInteger currentminIndex;
 /** 记录当前的角标 */
@@ -48,6 +48,7 @@ static NSString *cellid = @"SizeFilterCellID";
 
     _dataPlist = dataPlist;
     self.ageData = dataPlist;
+    [self.agePicker reloadAllComponents];
 }
 
 
@@ -55,7 +56,7 @@ static NSString *cellid = @"SizeFilterCellID";
 #pragma mark - Action + 代理
 - (void)clickSureBtnAction {
     if (_ageRangeBlock) {
-        _ageRangeBlock(self.minString, self.maxString);
+        _ageRangeBlock(self.minModel, self.maxModel);
         
         [self fadeOut];
     }}
@@ -84,17 +85,17 @@ static NSString *cellid = @"SizeFilterCellID";
     return 2;
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    
+    DogCategoryModel *model = self.dataPlist[row];
     if (component == 0) {
         
 //        self.minString = self.dataPlist[row];
-        return self.dataPlist[row];
+        return model.name;
     } else {
         
 //        self.maxString = self.dataPlist[row];
 #pragma mark - 级联菜单越界问题
-        //给个属性记录当前的省份 在选中刷新之前，还保持在之前的那组数据
-        return self.dataPlist[row];
+
+        return model.name;
     }
     
 }
@@ -124,8 +125,8 @@ static NSString *cellid = @"SizeFilterCellID";
     
     NSInteger index = [pickerView selectedRowInComponent:1];
     
-    self.minString = self.dataPlist[row];
-    self.maxString = self.dataPlist[index];
+    self.minModel = self.dataPlist[row];
+    self.maxModel = self.dataPlist[index];
     
 }
 

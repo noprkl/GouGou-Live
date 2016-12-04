@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  （订单详情）代付尾款
 
 #import "PayBackMoneyViewController.h"
 
@@ -18,6 +18,7 @@
 #import "DetailPayMoney.h"  // 详细价格状况
 #import "BottomButtonView.h"   // 按钮创建
 
+#import "OrderDetailModel.h"
 @interface PayBackMoneyViewController ()<UIScrollViewDelegate>
 /** 底部scrollView */
 @property (strong,nonatomic) UIScrollView *boomScrollView;
@@ -39,10 +40,79 @@
 @property (strong,nonatomic) OrderNumberView *orderNumberView;
 /** 按钮 */
 @property (strong,nonatomic) BottomButtonView *bottomButton;
+/** 数据 */
+@property (strong,nonatomic) NSArray *dataArray;
+
 @end
 
 @implementation PayBackMoneyViewController
 
+#pragma mark - 网络请求
+- (void)getBackMoneyRequest {
+
+    NSDictionary * dict = @{@"id":@(12)};
+    
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+       
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"Message"]);
+        DLog(@"%@",successJson[@"data"]);
+//        self.dataArray = [OrderDetailModel mj_keyValuesArrayWithObjectArray:successJson[@"data"]];
+
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+
+#pragma mark - 赋值
+- (void)setDetailModel:(OrderDetailModel *)detailModel {
+
+    _detailModel = detailModel;
+    
+    self.orderStateView.stateMessage = detailModel.status;
+    self.orderStateView.timeMessage = detailModel.closeTime;
+    
+    self.consigneeViw.buyUserName = detailModel.buyUserName;
+    self.consigneeViw.buyUserTel = detailModel.buyUserTel;
+    self.consigneeViw.recevieAddress = detailModel.recevieAddress;
+    
+    
+    NSString *urlString = [IMAGE_HOST stringByAppendingString:detailModel.pathSmall];
+    [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    self.dogCardView.dogNameLabel.text = detailModel.name;
+    self.dogCardView.dogAgeLabel.text = detailModel.ageName;
+    self.dogCardView.dogSizeLabel.text = detailModel.sizeName;
+    self.dogCardView.dogColorLabel.text = detailModel.colorName;
+    self.dogCardView.dogKindLabel.text = detailModel.kindName;
+    self.dogCardView.oldPriceLabel.text = detailModel.priceOld;
+    self.dogCardView.nowPriceLabel.text = detailModel.price;
+    
+    self.goodsPriceView.totalsMoney = [NSString stringWithFormat:@"%ld",[detailModel.productBalance integerValue] + [detailModel.productDeposit integerValue]];
+    self.goodsPriceView.traficFee  = detailModel.traficFee;
+    self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[detailModel.productDeposit integerValue] + [detailModel.productBalance integerValue] - [detailModel.traficRealFee integerValue] - [detailModel.productRealDeposit integerValue] - [detailModel.productRealBalance integerValue]];
+    
+    self.detailPayView.needBackMessage = detailModel.productRealBalance;
+    self.detailPayView.fontMoneyMessage = detailModel.productRealDeposit;
+    self.detailPayView.realMoney = [NSString stringWithFormat:@"%ld",[detailModel.productRealDeposit integerValue] + [detailModel.productRealBalance integerValue]];
+    self.detailPayView.balance = detailModel.productRealBalance;
+    
+    self.orderNumberView.buyUserId = detailModel.buyUserId;
+    self.orderNumberView.createTimes = detailModel.createTime;
+    self.orderNumberView.depositTimes = detailModel.depositTime;
+    self.orderNumberView.balanceTimes = detailModel.balanceTime;
+    self.orderNumberView.deliveryTimes = detailModel.deliveryTime;
+    
+    
+}
+ 
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+//    [self getBackMoneyRequest];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -151,6 +221,7 @@
 - (StateView *)orderStateView {
     
     if (!_orderStateView) {
+        
         _orderStateView = [[StateView alloc] init];
         _orderStateView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         _orderStateView.stateMessage = @"代付尾款";
@@ -240,7 +311,10 @@
             
                 [weakself clickNotBuy];
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [weakself.navigationController pushViewController:viewController animated:YES];
                 
             } else if ([button.titleLabel.text isEqual:@"支付尾款"]) {
                 

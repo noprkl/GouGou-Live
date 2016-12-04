@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/16.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  订单详情（待收货）
 
 #import "SureConsigneedViewController.h"
 
@@ -242,7 +242,10 @@
                 [weakself clickApplyProtectPower];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [weakself.navigationController pushViewController:viewController animated:YES];
                 
             } else if ([button.titleLabel.text isEqual:@"确认收货"]) {
                 

@@ -41,6 +41,18 @@
     self.fontMoneyLabel.text = fontMoneyMessage;
 }
 
+- (void)setBalance:(NSString *)balance {
+
+    _balance = balance;
+    self.backMoney.text = balance;
+}
+
+- (void)setRealMoney:(NSString *)realMoney {
+    
+    _realMoney = realMoney;
+    self.totalMoney.text = [NSString stringWithFormat:@"%ld",[self.needBackMessage integerValue] + [self.fontMoneyMessage integerValue]];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

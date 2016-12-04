@@ -133,7 +133,7 @@
     
     if (!_nickView) {
         _nickView = [[NicknameView alloc] init];
-        [_nickView setStateMessage:@"待付定金"];
+//        [_nickView setStateMessage:@"待付定金"];
     }
     return _nickView;
 }

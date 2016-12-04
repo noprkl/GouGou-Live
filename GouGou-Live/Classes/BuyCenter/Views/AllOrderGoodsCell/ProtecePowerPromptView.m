@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/14.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  弹框（点击申请维权出现）
 
 #import "ProtecePowerPromptView.h"
 

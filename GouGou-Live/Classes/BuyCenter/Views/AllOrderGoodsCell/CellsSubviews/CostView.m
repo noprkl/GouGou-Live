@@ -5,27 +5,27 @@
 //
 //  Created by ma c on 16/11/10.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  花费View
 
 #import "CostView.h"
 
 @interface CostView  ()
 /** 合计 */
 @property (strong,nonatomic) UILabel *totalLabel;
-/** 总钱数 */
-@property (strong,nonatomic) UILabel *totalMoney;
+///** 总钱数 */
+//@property (strong,nonatomic) UILabel *totalMoney;
 /** 运费 */
 @property (strong,nonatomic) UILabel *freightLabel;
-/** 运费数 */
-@property (strong,nonatomic) UILabel *freightMoney;
+///** 运费数 */
+//@property (strong,nonatomic) UILabel *freightMoney;
 /** 已付定金 */
 @property (strong,nonatomic) UILabel *fontMoneyLabel;
-/** 定金 */
-@property (strong,nonatomic) UILabel *fontMoney;
+///** 定金 */
+//@property (strong,nonatomic) UILabel *fontMoney;
 /** 已付尾款 */
 @property (strong,nonatomic) UILabel *remainderMoneylabel;
-/** 尾款 */
-@property (strong,nonatomic) UILabel *remainderMoeny;
+///** 尾款 */
+//@property (strong,nonatomic) UILabel *remainderMoeny;
 
 @end
 
@@ -38,22 +38,31 @@
     self.fontMoney.text = fontMoney;
     self.remainderMoneylabel.text = backLabel;
     self.remainderMoeny.text = backMoney;
+    
 
 }
-
+/*
+#pragma mark - 模型
 - (void)setCostModel:(CostModel *)costModel {
 
     _costModel = costModel;
-    self.freightLabel.text = [NSString stringWithFormat:@"%ld",([costModel.productRealDeposit integerValue] + [costModel.balance integerValue])];
-    self.fontMoneyLabel.text = costModel.productRealDeposit;
-    self.remainderMoneylabel.text = costModel.balance;
-}
-
--(void)setMoneyMessage:(NSString *)moneyMessage {
+    self.totalMoney.text = [NSString stringWithFormat:@"%ld",([costModel.productRealDeposit integerValue] + [costModel.balance integerValue])];
+    self.fontMoney.text = costModel.productRealDeposit;
+    self.remainderMoeny.text = costModel.balance;
+    self.freightMoney.text = [NSString stringWithFormat:@"￥%@)",costModel.traficRealFee];
     
-    _moneyMessage = moneyMessage;
-    self.totalMoney.text = moneyMessage;
+    DLog(@"%@",self.freightMoney.text);
+    DLog(@"%@",self.fontMoney.text);
+    DLog(@"%@",self.remainderMoeny.text);
+    DLog(@"%@",self.totalMoney.text);
+
 }
+*/
+//-(void)setMoneyMessage:(NSString *)moneyMessage {
+//    
+//    _moneyMessage = moneyMessage;
+//    self.totalMoney.text = moneyMessage;
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

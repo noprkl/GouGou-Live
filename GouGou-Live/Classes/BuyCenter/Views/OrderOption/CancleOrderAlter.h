@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickCancelCellBlock)(NSString *size);
-typedef void(^ClickCancelBtnBlovk)(NSString *string);
+
+typedef void(^ClickCalcelSizeCellBlock)(NSString *size);
+
 @interface CancleOrderAlter : UITableView
 
 /** 点击cell回调 */
-@property (strong, nonatomic) ClickCancelCellBlock sizeCellBlock;
-
-@property(nonatomic, strong) ClickCancelBtnBlovk bottomBlock; /**< 点击底部按钮回调 */
-
+@property (strong, nonatomic) ClickCalcelSizeCellBlock reasonCellBlock;
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 选择数组 */
 

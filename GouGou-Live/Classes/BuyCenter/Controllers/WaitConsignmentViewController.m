@@ -4,14 +4,16 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+// 待发货
 
 #import "WaitConsignmentViewController.h"
 #import "FunctionButtonView.h"  // cell下边的按钮
 #import "WaitConsignmentCell.h" // 待发货cell
+#import "WaitConsignessCell.h"
 #import "ProtecePowerPromptView.h"
 
 static NSString * waitConsignmentCell = @"waitConsignmentCell";
+
 @interface WaitConsignmentViewController ()<UITableViewDelegate,UITableViewDataSource>
 /** tableView */
 @property (strong,nonatomic) UITableView *tableview;
@@ -21,19 +23,50 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 @end
 
 @implementation WaitConsignmentViewController
-
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    // 上下拉刷新
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getConsignmentRequest];
+        [self.tableview.mj_header endRefreshing];
+    }];
+    [self.tableview.mj_header beginRefreshing];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initUI];
-    
     [self setNavBarItem];
 }
 
 - (void)initUI {
     
     [self.view addSubview:self.tableview];
+}
+
+#pragma mark - 网络请求
+- (void)getConsignmentRequest {
+
+    NSDictionary * dict = @{@"user_id":@(11),
+                            @"status":@(2),
+                            @"page":@(1),
+                            @"pageSize":@(10),
+                            @"is_right":@(2)
+                            };
     
+    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+    
+        DLog(@"%@",successJson[@"message"]);
+        DLog(@"%@",successJson[@"data"][@"info"]);
+        
+        [self.tableview reloadData];
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
 }
 #pragma mark
 #pragma mark - 初始化
@@ -60,7 +93,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 #pragma mark - tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 5;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -70,7 +103,14 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    WaitConsignmentCell * cell = [tableView dequeueReusableCellWithIdentifier:waitConsignmentCell];
+    BuyCenterModel * model = self.dataArray[indexPath.row];
+        
+        WaitConsignmentCell * cell = [tableView dequeueReusableCellWithIdentifier:waitConsignmentCell];
+        if ([model.status integerValue] == 7) {
+            
+            cell.centerModel = model;
+        
+        }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -99,12 +139,11 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
             DLog(@"%@--%@",self,button.titleLabel.text);
             
         }
-        
     };
     
     [cell addSubview:funcBtn];
-    
     return cell;
+
 }
 
 @end

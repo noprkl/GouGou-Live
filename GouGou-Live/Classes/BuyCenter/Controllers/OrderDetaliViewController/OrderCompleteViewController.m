@@ -4,10 +4,10 @@
 //
 //  Created by ma c on 16/11/16.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//   订单完成（未评价）
 
 #import "OrderCompleteViewController.h"
-
+#import "GotoAssessViewController.h" // 去评价
 #import "StateView.h"  // 订单状态
 #import "ConsigneeView.h"  // (联系)收货人
 #import "SellerDogCardView.h"   // 狗狗详情
@@ -250,11 +250,14 @@
                 [weakself clickApplyProtectPower];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [weakself.navigationController pushViewController:viewController animated:YES];
             } else if ([button.titleLabel.text isEqual:@"未评价"]) {
                 
-                //                GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];
-                //                [weakself.navigationController pushViewController:goToVC animated:YES];
+                GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];
+                [weakself.navigationController pushViewController:goToVC animated:YES];
                 
             }
         };

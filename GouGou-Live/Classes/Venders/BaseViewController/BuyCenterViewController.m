@@ -123,8 +123,30 @@
     }
 }
 
+#pragma mark - 取消订单网络请求
+- (void)getCancleOrderRequest {
+
+    NSDictionary * dict = @{@"user_id":@(11),
+                            @"order_id":@(12),
+                            @"note":@(23)
+                            };
+    
+    [self getRequestWithPath:API_Cancel_order params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+
+    } error:^(NSError *error) {
+       
+        DLog(@"%@",error);
+
+    }];
+}
 // 点击取消订单
 - (void)clickCancleOrder {
+    
+    [self getCancleOrderRequest];
+    
     // 点击取消订单出现的弹框
     DeletePrommtView * promptView = [[DeletePrommtView alloc] init];
     __weak typeof(promptView) weakself = promptView;
@@ -136,13 +158,27 @@
         [weakself dismiss];
         // 点击确定按钮出现的弹框（原因选择）
        CancleOrderAlter  *cancleOrder = [[CancleOrderAlter alloc] init];
+      
         cancleOrder.dataArr =  @[@"请选择原因", @"喜欢其他狗狗",@"不喜欢这只了",@"条件不允许养了",@"运费太贵", @"取消"];
         [cancleOrder show];
 #pragma mark - 有问题
-        cancleOrder.bottomBlock = ^(NSString *reson){
-           // 此处删除订单，并返回
-            
-            DLog(@"%@", reson);
+        __weak typeof(cancleOrder) cancleSelf = cancleOrder;
+
+        // 点击cell
+        cancleOrder.reasonCellBlock = ^(NSString *text) {
+        
+            [self getRequestWithPath:API_Cancel_order_reason params:nil success:^(id successJson) {
+                
+                DLog(@"%@",successJson[@"data"]);
+                
+            } error:^(NSError *error) {
+                
+                DLog(@"%@",error);
+            }];
+            DLog(@"%@", text);
+
+            [cancleSelf dismiss];
+            // 弹框退出，要删除对应cell
         };
         
     };

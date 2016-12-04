@@ -13,6 +13,7 @@
 #import "PayBackMoneyViewController.h"
 #import "PayFontMoneyViewController.h"
 #import "BuyCenterModel.h"
+#import "GotoAssessViewController.h"
 
 static NSString * waitBackCells = @"waitBackCells";
 
@@ -123,7 +124,9 @@ static NSString * waitBackCells = @"waitBackCells";
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"删除订单"]) {
             
-            [self clickDeleteOrder];
+//            [self clickDeleteOrder];
+            [self clickCancleOrder];
+
             
         } else if ([button.titleLabel.text  isEqual:@"查看评价"]){
             // 跳转至支付全款
@@ -146,6 +149,12 @@ static NSString * waitBackCells = @"waitBackCells";
     [cell addSubview:funcBtn];
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    GotoAssessViewController * goToAssessVC = [[GotoAssessViewController alloc] init];
+    [self.navigationController pushViewController:goToAssessVC animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

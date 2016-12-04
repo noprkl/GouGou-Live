@@ -4,8 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
-
+//  去评价（订单操作）
 #import "GotoAssessViewController.h"
 #import "SellNameView.h"
 #import "SellerDogCardView.h"
@@ -36,6 +35,32 @@
 
 @implementation GotoAssessViewController
 
+#pragma mark - 网络请求
+- (void)getOrderAssessRequest {
+
+    NSDictionary *dict = @{@"user_id":@(11),
+                           @"order_id":@(12),
+                           @"point":@(10),
+                           @"has_photo":@(10),
+                           @"is_anomy":@(10),
+                           @"img":@"nil",
+                           @"comment":@"yes"
+                           };
+    
+    [self postRequestWithPath:API_Order_evaluation params:dict success:^(id successJson) {
+        DLog(@"%@",successJson[@"code"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [self getOrderAssessRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

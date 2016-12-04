@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//   代付款
 
 #import "WaitPayingViewController.h"  // 待支付控制器
 #import "WaitBackMoneyCell.h"  // 待付尾款cell
@@ -122,12 +122,12 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    
     BuyCenterModel *model = self.dataArray[indexPath.row];
-     /*
+    
     if ([model.status integerValue] == 1) {
         // 代付款cell
         WaitAllMoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAllMoneyCell];
         cell.centerModel = model;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系买家"] buttonNum:2];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家"] buttonNum:2];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"支付全款"]) {
@@ -156,12 +156,12 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         return cell;
     }
-    */
+    
     if ([model.status integerValue] == 2) {
         
         WaitFontMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitFontCell];
         cell.centerModel = model;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付定金",@"取消订单",@"联系买家"] buttonNum:3];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付定金",@"取消订单",@"联系卖家"] buttonNum:3];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"取消订单"]) {
@@ -178,7 +178,10 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
                 
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
             }
             
@@ -188,7 +191,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         return cell;
     }
-    /*
+    
     if ([model.status integerValue] == 3) {
         
         WaitBackMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitBackCell];
@@ -223,7 +226,10 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
             }
             
@@ -234,7 +240,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         return cell;
   
     }
-*/
+
     
     return nil;
 }

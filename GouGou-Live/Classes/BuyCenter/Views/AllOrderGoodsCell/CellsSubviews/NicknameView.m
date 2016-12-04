@@ -9,16 +9,16 @@
 #import "NicknameView.h"
 
 @interface NicknameView ()
-/** 间隔 */
-@property (strong,nonatomic) UIView *spaceView;
-/** 买家 */
-@property (strong,nonatomic) UIImageView *sellerIamge;
-/** 昵称 */
-@property (strong,nonatomic) UILabel *nickName;
-/** 剩余时间 */
-@property (strong,nonatomic) UILabel *remainTimeLabel;
-/** 状态 */
-@property (strong,nonatomic) UILabel *stateLabe;
+///** 间隔 */
+//@property (strong,nonatomic) UIView *spaceView;
+///** 买家 */
+//@property (strong,nonatomic) UIImageView *sellerIamge;
+///** 昵称 */
+//@property (strong,nonatomic) UILabel *nickName;
+///** 剩余时间 */
+//@property (strong,nonatomic) UILabel *remainTimeLabel;
+///** 状态 */
+//@property (strong,nonatomic) UILabel *stateLabe;
 
 @end
 
@@ -43,8 +43,8 @@
     self.sellerIamge.image = [UIImage imageNamed:merchantImagl];
 }
  */
-
-// 模型信息
+/*
+ //模型信息
 - (void)setModel:(NickNameModel *)model {
     
     _model = model;
@@ -57,7 +57,7 @@
 //    DLog(@"%@",self.freightMoney.text);
 
 }
- 
+ */
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

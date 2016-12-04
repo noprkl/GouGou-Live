@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  联系人信息
 
 #import "ConsigneeView.h"
 
@@ -27,6 +27,29 @@
 @end
 
 @implementation ConsigneeView
+
+- (void)setBuyUserName:(NSString *)buyUserName {
+
+    _buyUserName = buyUserName;
+    self.userName.text = buyUserName;
+}
+
+- (void)setBuyUserTel:(NSString *)buyUserTel {
+    
+    _buyUserTel = buyUserTel;
+    self.phoneNum.text = buyUserTel;
+}
+
+- (void)setRecevieAddress:(NSString *)recevieAddress {
+
+    _recevieAddress = recevieAddress;
+    
+    recevieAddress = [NSString stringWithFormat:@"%@,%@,%@",self.recevieProvince,self.recevieCity,self.recevieDistrict];
+    
+    self.addressLabel.text = recevieAddress;
+    
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

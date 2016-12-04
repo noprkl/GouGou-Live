@@ -131,7 +131,9 @@ static NSString *cellid = @"SizeFilterCellID";
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
     }
     
-    NSString *text = self.dataPlist[indexPath.row + 1];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    NSString *text = self.dataPlist[indexPath.row];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     label.textColor = [UIColor blackColor];
@@ -196,24 +198,20 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (void)clickFooterBtnAction {
     [self dismiss];
-    
-    if (_bottomBlock) {
-        _bottomBlock(self.lastString);
-    }
 }
 
 #pragma mark 选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *text = self.dataPlist[indexPath.row + 1];
+    NSString *text = self.dataPlist[indexPath.row];
     self.lastString = text;
     
-    if (indexPath.row < 1) {
+    if (indexPath.row < 0) {
         return;
     } else {
         // 删除订单，然后返回
-        if (_sizeCellBlock) {
-            _sizeCellBlock(text);
+        if (_reasonCellBlock) {
+            _reasonCellBlock(text);
         }
     }
 }

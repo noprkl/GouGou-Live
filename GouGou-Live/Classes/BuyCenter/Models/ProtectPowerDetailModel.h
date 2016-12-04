@@ -1,19 +1,18 @@
 //
-//  ProtectProwerTableModel.h
+//  ProtectPowerDetailModel.h
 //  GouGou-Live
 //
-//  Created by ma c on 16/12/2.
+//  Created by ma c on 16/12/4.
 //  Copyright © 2016年 LXq. All rights reserved.
-//  维权列表
+//  维权详细
 
 #import "BaseModel.h"
 
-@interface ProtectProwerTableModel : BaseModel
-/** 商家图片 */
-@property (copy,nonatomic) NSString *merchantImgl;
-/** 商家名称 */
-@property (copy,nonatomic) NSString *merchantName;
-/** 订单状态 */
+@interface ProtectPowerDetailModel : BaseModel
+
+/** 买家昵称 */
+@property (copy,nonatomic) NSString *userNickName;
+/** 维权状态 */
 @property (copy,nonatomic) NSString *status;
 
 /** 商品名称 */
@@ -35,13 +34,14 @@
 
 /** 商品实际价格 */
 @property (copy,nonatomic) NSString *productPrice;
-/** 实付定金 */
+/** 商品实付定金 */
 @property (copy,nonatomic) NSString *productRealDeposit;
-/** 商品尾款 */
+/** 商品实付尾款 */
 @property (copy,nonatomic) NSString *productRealBalance;
-/** 运费 */
+/** 商品实付运费 */
 @property (copy,nonatomic) NSString *traficRealFee;
-
-@property (copy, nonatomic) NSString *closeTime; /**< 维权关闭时间 */
-
+/**< 评价内容 */
+@property (copy, nonatomic) NSString *comment;
+/**< 照片URL评价 */
+@property (copy, nonatomic) NSString *photoPath;
 @end

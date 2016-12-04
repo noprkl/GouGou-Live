@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/17.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  （订单详情）待评价
 
 #import "OrderWaitAssessViewController.h"
 
@@ -247,7 +247,10 @@
                 [weakself clickApplyProtectPower];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [weakself.navigationController pushViewController:viewController animated:YES];
             } else if ([button.titleLabel.text isEqual:@"去评价"]) {
                 
                 GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];

@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-// 发货
+// 待发货
 
 #import "WaitConsignmentViewController.h"
 #import "FunctionButtonView.h"  // cell下边的按钮

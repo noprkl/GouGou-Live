@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  订单详情（代付全款）
 
 #import "PayingAllMoneyViewController.h"
 #import "StateView.h"  // 订单状态
@@ -232,7 +232,10 @@
                 [weakself clickCancleOrder];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [weakself.navigationController pushViewController:viewController animated:YES];
                 
             } else if ([button.titleLabel.text isEqual:@"支付全款"]) {
                 

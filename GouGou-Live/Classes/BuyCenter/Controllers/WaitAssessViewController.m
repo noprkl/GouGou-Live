@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//   待评价
 #import "WaitAssessViewController.h"
 
 #import "WaitAssessCell.h"  // 待评价cell
@@ -184,5 +184,6 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     }
     return cell;
 }
+
 
 @end

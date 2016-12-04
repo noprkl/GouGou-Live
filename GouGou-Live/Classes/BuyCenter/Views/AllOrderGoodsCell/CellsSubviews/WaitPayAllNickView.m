@@ -10,14 +10,14 @@
 #import "WaitAllNickModel.h"
 
 @interface WaitPayAllNickView ()
-/** 间隔 */
-@property (strong,nonatomic) UIView *spaceView;
-/* 商家图片 */
-@property (strong,nonatomic) UIImageView *sellerIamge;
-/** 昵称 */
-@property (strong,nonatomic) UILabel *nickName;
-/** 状态 */
-@property (strong,nonatomic) UILabel *stateLabe;
+///** 间隔 */
+//@property (strong,nonatomic) UIView *spaceView;
+///* 商家图片 */
+//@property (strong,nonatomic) UIImageView *sellerIamge;
+///** 昵称 */
+//@property (strong,nonatomic) UILabel *nickName;
+///** 状态 */
+//@property (strong,nonatomic) UILabel *stateLabe;
 @end
 
 @implementation WaitPayAllNickView
@@ -26,7 +26,7 @@
 //    _orderState = orderState;
 //    self.stateLabe.text = orderState;
 //}
-
+/*
 - (void)setModel:(WaitAllNickModel *)model {
 
     _model = model;
@@ -38,7 +38,7 @@
     DLog(@"%@",self.stateLabe.text);
 
 }
-
+*/
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

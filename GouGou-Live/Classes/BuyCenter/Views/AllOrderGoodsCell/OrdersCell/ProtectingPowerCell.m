@@ -37,6 +37,31 @@
 - (void)setProtectModel:(ProtectProwerTableModel *)protectModel {
     
     _protectModel = protectModel;
+    
+    // 直接赋值
+//NSString *urlString1 = [IMAGE_HOST stringByAppendingString:protectModel.merchantImgl];
+//[self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+
+    self.nickView.sellerIamge.image = [UIImage imageNamed:protectModel.merchantImgl];
+    self.nickView.nickName.text = protectModel.merchantName;
+    self.nickView.stateLabe.text = protectModel.status;
+    
+//    NSString *urlString = [IMAGE_HOST stringByAppendingString:protectModel.pathSmall];
+//    [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+//    self.dogCardView.dogImageView.image = [UIImage imageNamed:protectModel.pathSmall];
+    self.dogCardView.dogNameLabel.text = protectModel.name;
+    self.dogCardView.dogAgeLabel.text = protectModel.ageName;
+    self.dogCardView.dogSizeLabel.text = protectModel.sizeName;
+    self.dogCardView.dogColorLabel.text = protectModel.colorName;
+    self.dogCardView.dogKindLabel.text = protectModel.kindName;
+    self.dogCardView.oldPriceLabel.text = protectModel.priceOld;
+    self.dogCardView.nowPriceLabel.text = protectModel.price;
+    
+    self.costView.fontMoney.text = protectModel.productRealDeposit;
+    self.costView.remainderMoeny.text = protectModel.productRealBalance;
+    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];
+    /*
     // 名称
     self.nickView.model.merchantName = protectModel.name;
     self.nickView.model.status = protectModel.status;
@@ -50,10 +75,11 @@
     self.dogCardView.dogCardModel.priceOld = protectModel.priceOld;
     self.dogCardView.dogCardModel.price = protectModel.price;
     self.dogCardView.dogCardModel.kindName = protectModel.kindName;
-    // 商品价格
+     // 商品价格
     self.costView.costModel.productRealDeposit = protectModel.productPrice;
     self.costView.costModel.traficRealFee = protectModel.traficRealFee;
     self.costView.costModel.balance = protectModel.productRealBalance;
+     */
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

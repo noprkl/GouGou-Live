@@ -4,6 +4,7 @@
 //
 //  Created by ma c on 16/11/14.
 //  Copyright © 2016年 LXq. All rights reserved.
+//  申请维权（订单操作）
 
 #define ImgCount 3
 
@@ -43,8 +44,31 @@
 @end
 
 @implementation ApplyProtectPowerViewController
+#pragma mark - 网络请求
+- (void)postAddProtectProwerRequest {
 
+    NSDictionary * dict = @{@"user_id":@(11),
+                            @"order_id":@(12),
+                            @"content":@"nil",
+                            @"has_money":@(1),
+                            @"money":@(10),
+                            @"has_photo":@(2),
+                            };
+    [self postRequestWithPath:API_Add_activist params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"data"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+}
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
 
+    [super viewWillAppear:animated];
+    [self postAddProtectProwerRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
  

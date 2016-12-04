@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DogDetailModel.h"
 
-@interface SellerDogDetailView : UIView
+@interface SellerDogDetailView : UIScrollView
 
-@property(nonatomic, strong) NSString *orderState; /**< 订单状态 */
+@property(nonatomic, strong) DogDetailModel *dogInfo; /**< 订单数据数据 */
+
 @end

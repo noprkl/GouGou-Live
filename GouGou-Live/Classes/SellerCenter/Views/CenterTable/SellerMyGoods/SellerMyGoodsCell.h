@@ -4,16 +4,16 @@
 //
 //  Created by ma c on 16/11/16.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  我的狗狗cell
 
 #import "SellerBaseCell.h"
+#import "SellerMyGoodsModel.h"
 
 typedef void(^ClickSelectBtnBlock)(UIButton *btn);
 
 @interface SellerMyGoodsCell : SellerBaseCell
 
-@property(nonatomic, strong) NSArray *dogCard; /**< 狗Card */
-@property(nonatomic, strong) NSString *cellState; /**< cell状态 */
+@property(nonatomic, strong) SellerMyGoodsModel *model; /**< 我的狗狗模型 */
 
 @property(nonatomic, strong) ClickSelectBtnBlock selectBlock; /**< 多选按钮 */
 

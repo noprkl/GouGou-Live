@@ -14,4 +14,6 @@ typedef void(^ClickSureAddBtnBlock)();
 
 @property(nonatomic, strong) ClickSureAddBtnBlock sureAddBlock; /**< 确认添加按钮 */
 
+@property(nonatomic, strong) DogCategoryModel *model; /**< 模型 */
+
 @end

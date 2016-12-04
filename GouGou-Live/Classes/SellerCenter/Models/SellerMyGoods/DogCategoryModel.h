@@ -14,8 +14,8 @@
 
 @property(nonatomic, strong) NSString *ID; /**< id */
 
-@property(nonatomic, strong) NSString *createTime; /**< <#注释#> */
-@property(nonatomic, strong) NSString *delFlg; /**< <#注释#> */
-@property(nonatomic, strong) NSString *updateTime; /**< <#注释#> */
+//@property(nonatomic, strong) NSString *createTime; /**< <#注释#> */
+//@property(nonatomic, strong) NSString *delFlg; /**< <#注释#> */
+//@property(nonatomic, strong) NSString *updateTime; /**< <#注释#> */
 
 @end

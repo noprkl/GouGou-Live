@@ -32,6 +32,11 @@ static NSString *cellid = @"SellerDoInputCell";
     }
     return self;
 }
+- (void)setDataPlist:(NSArray *)dataPlist {
+    _dataPlist = dataPlist;
+    self.dataArr = dataPlist;
+    [self reloadData];
+}
 #pragma mark
 #pragma mark - 懒加载
 - (NSArray *)dataArr {
@@ -44,14 +49,16 @@ static NSString *cellid = @"SellerDoInputCell";
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerDoInputCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    DogCategoryModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.sureAddBlock = ^(){
         if (_sureAddBlock) {
-            _sureAddBlock();
+            _sureAddBlock(model);
         }
     };
     return cell;

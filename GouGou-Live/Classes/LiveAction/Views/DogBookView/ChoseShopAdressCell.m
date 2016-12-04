@@ -7,7 +7,8 @@
 //
 
 #import "ChoseShopAdressCell.h"
-
+#import "SellerAdressModel.h"
+#import "MyShopAdressModel.h"
 @interface ChoseShopAdressCell ()
 @property (weak, nonatomic) IBOutlet UIButton *chosedBtn;
 @property (weak, nonatomic) IBOutlet UILabel *shopOwner;
@@ -25,7 +26,18 @@
 - (void)awakeFromNib {
     // Initialization code
 }
-
+- (void)setAcceptAdress:(MyShopAdressModel *)acceptAdress {
+    _acceptAdress = acceptAdress;
+    self.shopOwner.text = acceptAdress.userName;
+    self.shopPhone.text = acceptAdress.userTel;
+    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", acceptAdress.userProvince, acceptAdress.userCity, acceptAdress.userDistrict, acceptAdress.userAddress];
+    self.shopAdress.text = adress;
+    if (acceptAdress.isDefault == 1) {
+        self.chosedBtn.selected = YES;
+    }else{
+        self.chosedBtn.selected = NO;
+    }
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     self.chosedBtn.selected = selected;

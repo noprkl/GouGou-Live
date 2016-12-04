@@ -7,9 +7,10 @@
 //
 
 #import "BaseViewController.h"
-@class ShopAdressModel;
+#import "DogDetailModel.h"
 
 @interface DogBookViewController : BaseViewController
 
+@property(nonatomic, strong) DogDetailModel *model; /**< 模型 */
 
 @end

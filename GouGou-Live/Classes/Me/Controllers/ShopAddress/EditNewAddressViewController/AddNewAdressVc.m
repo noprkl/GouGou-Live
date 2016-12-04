@@ -147,11 +147,11 @@
         if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
             [self showAlert:@"地址不能为空"];
         }else{
-            if ([self.postalcodeTextfiled.text isEqualToString:@""]) {
+            if ([self.phoneTextField.text isEqualToString:@""]) {
                 [self showAlert:@"收货人不能为空"];
-            }else if (![NSString valiMobile:self.postalcodeTextfiled.text]){
+            }else if (![NSString valiMobile:self.phoneTextField.text]){
                 [self showAlert:@"手机号输入有误，请重新输入"];
-                self.postalcodeTextfiled.text = @"";
+                self.phoneTextField.text = @"";
             }else{
                 if ([self.detailAddressTextfiled.text isEqualToString:@""]) {
                     [self showAlert:@"详细地址不能为空"];

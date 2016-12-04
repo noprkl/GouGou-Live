@@ -55,7 +55,12 @@
         
         NSString *imageName = images[i];
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage imageNamed:imageName];
+       
+        // 图片
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:imageName];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+//        imageView.image = [UIImage imageNamed:imageName];
+
         col = i % cols;
         row = (int)i / cols;
         
@@ -67,7 +72,6 @@
             _maxY = CGRectGetMaxY(imageView.frame);
         }
         [self addSubview:imageView];
-        
     }
     
     return _maxY;

@@ -17,7 +17,7 @@
 
 @property (strong, nonatomic)  UIImageView *dogImageView;/**< 狗狗图片*/
 @property (strong, nonatomic)  UILabel *dogNameLabel;/**< 狗狗名字 */
-@property(nonatomic, strong) UILabel *kindLabel; /**< 品种 */
+@property (strong, nonatomic) UILabel *kindLabel; /**< 品种 */
 @property (strong, nonatomic)  UILabel *dogKindLabel;/**< 狗狗种类 */
 @property (strong, nonatomic)  UILabel *dogAgeLabel;/**< 狗狗年龄*/
 
@@ -133,13 +133,35 @@
     _isBtnSelect = isBtnSelect;
     self.selectBtn.selected = isBtnSelect;
 }
-- (void)setDogCard:(NSArray *)dogCard {
-    _dogCard = dogCard;
+
+- (void)setModel:(SellerMyGoodsModel *)model {
+    self.dogAgeLabel.text = model.ageName;
+    if (model.pathSmall != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+        [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
     
-}
-- (void)setCellState:(NSString *)cellState {
-    _cellState = cellState;
-    self.stateLabel.text = cellState;
+    self.dogNameLabel.text = model.name;
+    self.dogKindLabel.text = model.kindName;
+    self.dogAgeLabel.text = model.ageName;
+    self.dogSizeLabel.text = model.sizeName;
+    self.dogColorLabel.text = model.colorName;
+    self.oldPriceLabel.attributedText = [self getCenterLineWithString:[NSString stringWithFormat:@"￥%@", model.priceOld]];
+    self.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+    // 判断状态
+    NSString *state = @"";
+    if ([model.status isEqualToString:@"1"]) {// 1：新建商品 2：审核未通过  3：上线 4：下线5：售完
+        state = @"新建商品";
+    }else if ([model.status isEqualToString:@"2"]) {
+        state = @"审核未通过";
+    }else if ([model.status isEqualToString:@"3"]) {
+        state = @"上线";
+    }else if ([model.status isEqualToString:@"4"]) {
+        state = @"下线";
+    }else if ([model.status isEqualToString:@"5"]) {
+        state = @"售完";
+    }
+    self.stateLabel.text = state;
 }
 #pragma mark
 #pragma mark - 懒加载

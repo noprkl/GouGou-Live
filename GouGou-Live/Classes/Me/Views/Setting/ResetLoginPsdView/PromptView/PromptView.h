@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/2.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  支付密码弹出框
 
 #import <UIKit/UIKit.h>
 

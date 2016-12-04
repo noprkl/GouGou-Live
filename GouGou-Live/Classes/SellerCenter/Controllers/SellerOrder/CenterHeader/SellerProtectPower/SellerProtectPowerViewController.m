@@ -21,7 +21,38 @@
 static NSString *cellid = @"SellerProtectPowerCell";
 
 @implementation SellerProtectPowerViewController
+#pragma mark
+#pragma mark - 网络请求
+// 请求维权的订单
+- (void)getRequestProtectPowerOrder {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"status":@(0),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"is_right":@(1)
+                           };
+    [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
+#pragma mark
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestProtectPowerOrder];
+    // 上下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestProtectPowerOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -85,7 +116,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
 }
 - (void)clickBtnActionWithBtnTitle:(NSString *)title {
 
-    if ([title isEqualToString:@"联系买家"]) {
+    if ([title isEqualToString:@"在线客服"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
         viewController.title = EaseTest_Chat2;
         [self.navigationController pushViewController:viewController animated:YES];

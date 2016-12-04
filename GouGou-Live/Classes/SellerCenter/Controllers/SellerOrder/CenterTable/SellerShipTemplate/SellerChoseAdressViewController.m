@@ -9,7 +9,7 @@
 #import "SellerChoseAdressViewController.h"
 #import "ChoseShopAdressCell.h"
 #import "ChosedAdressView.h" // 地址选择
-#import "ShopAdressModel.h"
+#import "SellerAdressModel.h"
 
 #import "EditNewAddressViewController.h"
 
@@ -31,7 +31,43 @@ static NSString *cellid = @"ChoseShopAdressCell";
 
 @implementation SellerChoseAdressViewController
 #pragma mark
+#pragma mark - 网络请求
+// 所有发货地址
+- (void)postGetAdressRequest {
+    
+    // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           };
+    [self getRequestWithPath:API_Seller_address params:dict success:^(id successJson) {
+        [self showAlert:successJson[@"message"]];
+        DLog(@"1%@", successJson);
+        if (successJson[@"code"]) {
+            // 数据解析
+            self.dataArr = [[SellerAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
+            DLog(@"11%@", self.dataArr);
+            // 刷新
+            [self.tableView reloadData];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
+#pragma mark
 #pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self postGetAdressRequest];
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self postGetAdressRequest];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,7 +97,6 @@ static NSString *cellid = @"ChoseShopAdressCell";
     EditNewAddressViewController *editAdressVC = [[EditNewAddressViewController alloc] init];
     editAdressVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:editAdressVC animated:YES];
-    
 }
 - (void)initUI {
     [self addRightBarButtonitem];
@@ -86,25 +121,32 @@ static NSString *cellid = @"ChoseShopAdressCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ChoseShopAdressCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    
+    SellerAdressModel *model = self.dataArr[indexPath.row];
+    cell.sendAdress = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    SellerAdressModel *model = self.dataArr[indexPath.row];
+
+    // 通知
+    NSDictionary *dict = @{
+                           @"ChoseSendAdress":model
+                           };
     
-    //    NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:self.dataArr[indexPath.row]];
+    NSNotification *notification = [NSNotification notificationWithName:@"ChoseSendAdress" object:nil userInfo:dict];
     
-   
-//    if (_adressBlock) {
-//        _adressBlock(YES);
-//    }
-    _isAdress = YES;
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChoseSendAdress" object:notification];
+    
     [self.navigationController popViewControllerAnimated:YES];
-    
+    _isAdress = YES;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //    return self.dataArr.count;
-    return 5;
+    
+    return self.dataArr.count;
+//    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     

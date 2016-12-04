@@ -24,6 +24,38 @@
 static NSString *cellid = @"SellerWaitSendCell";
 
 @implementation SellerWaitSendViewController
+#pragma mark
+#pragma mark - 网络请求
+// 请求待发货的订单
+- (void)getRequestWaitSendOrder {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"status":@(0),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"is_right":@(1)
+                           };
+    [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
+#pragma mark
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestWaitSendOrder];
+    // 上下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestWaitSendOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

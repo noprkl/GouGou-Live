@@ -15,13 +15,10 @@
 #import "SellerProtectPowerCell.h"
 #import "SellerCloseCell.h"
 
-
 @interface SellerSoldGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
-
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
-
 @property(nonatomic, strong) NSMutableArray *cellStates; /**< cell数组 */
 
 @end
@@ -35,6 +32,35 @@ static NSString *closeCell = @"SellerCloseCell";
 
 @implementation SellerSoldGoodsViewController
 
+// 请求所有的订单
+- (void)getRequestAllOrder {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"status":@(0),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"is_right":@(1)
+                           };
+    DLog(@"%@", dict);
+    [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+#pragma mark
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestAllOrder];
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestAllOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];

@@ -52,6 +52,13 @@ static NSString *cellid = @"SellerAcceptRateCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self getRequestComment];
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestComment];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 - (void)initUI{
     [self.view addSubview:self.tableView];

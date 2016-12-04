@@ -36,6 +36,11 @@ static NSString *cellid = @"SellerNoInputcell";
     }
     return self;
 }
+- (void)setHotArr:(NSArray *)hotArr {
+    _hotArr = hotArr;
+    self.hotDataArr = hotArr;
+    [self reloadData];
+}
 #pragma mark
 #pragma mark - 懒加载
 - (NSMutableArray *)historyDataArr {
@@ -50,7 +55,6 @@ static NSString *cellid = @"SellerNoInputcell";
 - (NSArray *)hotDataArr {
     if (!_hotDataArr) {
         _hotDataArr = [NSArray array];
-        _hotDataArr = @[@"金毛1", @"金毛2", @"金毛3", @"金毛4", @"金毛5", @"金毛6", @"金毛7", @"金毛8", @"金毛9", @"金毛21", @"金毛12"];
     }
     return _hotDataArr;
 }
@@ -78,6 +82,11 @@ static NSString *cellid = @"SellerNoInputcell";
         
         SellerNoInputHotBtnView *hotView = [[SellerNoInputHotBtnView alloc] init];
         hotView.datalist = self.hotDataArr;
+        hotView.clickBlcok = ^(DogCategoryModel *model){
+            if (_typeBlock) {
+                _typeBlock(model);
+            }
+        };
         CGFloat height = [hotView getViewHeight:self.hotDataArr];
         hotView.frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
         self.hotViewHeight = height;

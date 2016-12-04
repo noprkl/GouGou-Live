@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickBtnBlock)(NSString *btnTitle);
+typedef void(^ClickBtnBlock)(DogCategoryModel *btnTitle);
 
 @interface SellerNoInputHotBtnView : UIView
 /** 数据 */

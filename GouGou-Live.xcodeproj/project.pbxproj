@@ -52,6 +52,14 @@
 		04592EE11DF194BC0095C8EE /* AddDogImpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EE01DF194BC0095C8EE /* AddDogImpressionView.m */; };
 		04592EE41DF199390095C8EE /* DogCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EE31DF199390095C8EE /* DogCategoryModel.m */; };
 		04592EE71DF19CFE0095C8EE /* ChoseCamearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EE61DF19CFE0095C8EE /* ChoseCamearView.m */; };
+		04592EEA1DF2DA570095C8EE /* ChageGoodsMessageVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EE91DF2DA570095C8EE /* ChageGoodsMessageVc.m */; };
+		04592EF41DF2F1970095C8EE /* SellerEditAdressVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EF21DF2F1970095C8EE /* SellerEditAdressVc.m */; };
+		04592EF51DF2F1970095C8EE /* SellerEditAdressVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04592EF31DF2F1970095C8EE /* SellerEditAdressVc.xib */; };
+		04592EF91DF2F2090095C8EE /* SellerAddNewAdressVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EF71DF2F2090095C8EE /* SellerAddNewAdressVc.m */; };
+		04592EFA1DF2F2090095C8EE /* SellerAddNewAdressVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04592EF81DF2F2090095C8EE /* SellerAddNewAdressVc.xib */; };
+		04592F031DF3133B0095C8EE /* SellerAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592F021DF3133B0095C8EE /* SellerAdressModel.m */; };
+		04592F071DF315AC0095C8EE /* SellerAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592F061DF315AC0095C8EE /* SellerAdressCell.m */; };
+		04592F0A1DF3C92C0095C8EE /* DogDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592F091DF3C92C0095C8EE /* DogDetailModel.m */; };
 		045D11A01DF031EF008623E5 /* FocusAndFansModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D11991DF031EF008623E5 /* FocusAndFansModel.m */; };
 		045D11A11DF031EF008623E5 /* MyAlbumsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D119C1DF031EF008623E5 /* MyAlbumsModel.m */; };
 		045D11A21DF031EF008623E5 /* MyPictureListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D119E1DF031EF008623E5 /* MyPictureListModel.m */; };
@@ -548,6 +556,20 @@
 		04592EE31DF199390095C8EE /* DogCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogCategoryModel.m; sourceTree = "<group>"; };
 		04592EE51DF19CFE0095C8EE /* ChoseCamearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseCamearView.h; sourceTree = "<group>"; };
 		04592EE61DF19CFE0095C8EE /* ChoseCamearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseCamearView.m; sourceTree = "<group>"; };
+		04592EE81DF2DA570095C8EE /* ChageGoodsMessageVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChageGoodsMessageVc.h; sourceTree = "<group>"; };
+		04592EE91DF2DA570095C8EE /* ChageGoodsMessageVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChageGoodsMessageVc.m; sourceTree = "<group>"; };
+		04592EF11DF2F1970095C8EE /* SellerEditAdressVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerEditAdressVc.h; sourceTree = "<group>"; };
+		04592EF21DF2F1970095C8EE /* SellerEditAdressVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerEditAdressVc.m; sourceTree = "<group>"; };
+		04592EF31DF2F1970095C8EE /* SellerEditAdressVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerEditAdressVc.xib; sourceTree = "<group>"; };
+		04592EF61DF2F2090095C8EE /* SellerAddNewAdressVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAddNewAdressVc.h; sourceTree = "<group>"; };
+		04592EF71DF2F2090095C8EE /* SellerAddNewAdressVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAddNewAdressVc.m; sourceTree = "<group>"; };
+		04592EF81DF2F2090095C8EE /* SellerAddNewAdressVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerAddNewAdressVc.xib; sourceTree = "<group>"; };
+		04592F011DF3133B0095C8EE /* SellerAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAdressModel.h; sourceTree = "<group>"; };
+		04592F021DF3133B0095C8EE /* SellerAdressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAdressModel.m; sourceTree = "<group>"; };
+		04592F051DF315AC0095C8EE /* SellerAdressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerAdressCell.h; sourceTree = "<group>"; };
+		04592F061DF315AC0095C8EE /* SellerAdressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAdressCell.m; sourceTree = "<group>"; };
+		04592F081DF3C92C0095C8EE /* DogDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogDetailModel.h; sourceTree = "<group>"; };
+		04592F091DF3C92C0095C8EE /* DogDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogDetailModel.m; sourceTree = "<group>"; };
 		045D11981DF031EF008623E5 /* FocusAndFansModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusAndFansModel.h; sourceTree = "<group>"; };
 		045D11991DF031EF008623E5 /* FocusAndFansModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusAndFansModel.m; sourceTree = "<group>"; };
 		045D119B1DF031EF008623E5 /* MyAlbumsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlbumsModel.h; sourceTree = "<group>"; };
@@ -1518,12 +1540,32 @@
 			children = (
 				04592ED61DF17C5C0095C8EE /* SellerMyGoodsModel.h */,
 				04592ED71DF17C5C0095C8EE /* SellerMyGoodsModel.m */,
+				04592F081DF3C92C0095C8EE /* DogDetailModel.h */,
+				04592F091DF3C92C0095C8EE /* DogDetailModel.m */,
 				04592ED91DF1830B0095C8EE /* DogImpressionModel.h */,
 				04592EDA1DF1830B0095C8EE /* DogImpressionModel.m */,
 				04592EE21DF199390095C8EE /* DogCategoryModel.h */,
 				04592EE31DF199390095C8EE /* DogCategoryModel.m */,
 			);
 			path = SellerMyGoods;
+			sourceTree = "<group>";
+		};
+		04592EFD1DF3124B0095C8EE /* SellerAdress */ = {
+			isa = PBXGroup;
+			children = (
+				04592F011DF3133B0095C8EE /* SellerAdressModel.h */,
+				04592F021DF3133B0095C8EE /* SellerAdressModel.m */,
+			);
+			path = SellerAdress;
+			sourceTree = "<group>";
+		};
+		04592F041DF315960095C8EE /* SellerAdress */ = {
+			isa = PBXGroup;
+			children = (
+				04592F051DF315AC0095C8EE /* SellerAdressCell.h */,
+				04592F061DF315AC0095C8EE /* SellerAdressCell.m */,
+			);
+			path = SellerAdress;
 			sourceTree = "<group>";
 		};
 		045D11961DF031EF008623E5 /* MyMessage */ = {
@@ -3479,6 +3521,12 @@
 			children = (
 				04CE13851DDC488100EB8777 /* SellerAdressViewController.h */,
 				04CE13861DDC488100EB8777 /* SellerAdressViewController.m */,
+				04592EF11DF2F1970095C8EE /* SellerEditAdressVc.h */,
+				04592EF21DF2F1970095C8EE /* SellerEditAdressVc.m */,
+				04592EF31DF2F1970095C8EE /* SellerEditAdressVc.xib */,
+				04592EF61DF2F2090095C8EE /* SellerAddNewAdressVc.h */,
+				04592EF71DF2F2090095C8EE /* SellerAddNewAdressVc.m */,
+				04592EF81DF2F2090095C8EE /* SellerAddNewAdressVc.xib */,
 			);
 			path = SellerAdress;
 			sourceTree = "<group>";
@@ -3490,6 +3538,8 @@
 				04CE13891DDC488100EB8777 /* SellerMyGoodsViewController.m */,
 				0452A1CC1DE0336B007C1E4F /* DogDetailViewController.h */,
 				0452A1CD1DE0336B007C1E4F /* DogDetailViewController.m */,
+				04592EE81DF2DA570095C8EE /* ChageGoodsMessageVc.h */,
+				04592EE91DF2DA570095C8EE /* ChageGoodsMessageVc.m */,
 				0452A1E61DE173A4007C1E4F /* SellerCreateDogMessageViewController.h */,
 				0452A1E71DE173A5007C1E4F /* SellerCreateDogMessageViewController.m */,
 				0452A1E91DE173E0007C1E4F /* SellerAddImpressViewController.h */,
@@ -3541,6 +3591,7 @@
 		04CE13951DDC488100EB8777 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04592EFD1DF3124B0095C8EE /* SellerAdress */,
 				04592ED51DF17C430095C8EE /* SellerMyGoods */,
 				04592EBA1DF11D960095C8EE /* SellerAcceptRate */,
 			);
@@ -3631,6 +3682,7 @@
 		04CE13AA1DDC488100EB8777 /* CenterTable */ = {
 			isa = PBXGroup;
 			children = (
+				04592F041DF315960095C8EE /* SellerAdress */,
 				04CE13AB1DDC488100EB8777 /* SellerAcceptRate */,
 				04CE13BC1DDC488100EB8777 /* SellerShipTemplate */,
 				04CE13B41DDC488100EB8777 /* SellerMyGoods */,
@@ -4175,11 +4227,13 @@
 				047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */,
 				0479B6181DCADC7B00CB288A /* FavoriteViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
+				04592EFA1DF2F2090095C8EE /* SellerAddNewAdressVc.xib in Resources */,
 				0452A2021DE1A8BB007C1E4F /* SellerDoInputCell.xib in Resources */,
 				046BF03B1DE4696600BC32E9 /* EaseUIResource.bundle in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
 				0479B6201DCADC7B00CB288A /* MessagePushViewController.xib in Resources */,
 				0479B61C1DCADC7B00CB288A /* OrderGoodsViewController.xib in Resources */,
+				04592EF51DF2F1970095C8EE /* SellerEditAdressVc.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4252,6 +4306,7 @@
 				046BF0351DE4696600BC32E9 /* EaseTextView.m in Sources */,
 				04CE13DA1DDC488100EB8777 /* SellerSoldGoodsViewController.m in Sources */,
 				046BF0241DE4696600BC32E9 /* EaseViewController.m in Sources */,
+				04592EF41DF2F1970095C8EE /* SellerEditAdressVc.m in Sources */,
 				046BF03A1DE4696600BC32E9 /* EaseConversationCell.m in Sources */,
 				045D11A01DF031EF008623E5 /* FocusAndFansModel.m in Sources */,
 				046F0BA21DE2AB8B00D50D5C /* DogDetailCardView.m in Sources */,
@@ -4357,6 +4412,7 @@
 				046F0BEA1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m in Sources */,
 				046F0B961DE2AB8B00D50D5C /* PowerOrderStateView.m in Sources */,
 				046BEFEF1DE4696600BC32E9 /* DACircularProgressView.m in Sources */,
+				04592EF91DF2F2090095C8EE /* SellerAddNewAdressVc.m in Sources */,
 				045D51511DD99BEF001854A8 /* PhotoView.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
@@ -4403,6 +4459,7 @@
 				046F0B9A1DE2AB8B00D50D5C /* FunctionButtonView.m in Sources */,
 				04CE13E91DDC488100EB8777 /* SellerShipTemplateCell.m in Sources */,
 				0479B63D1DCADC7B00CB288A /* HTTPTool.m in Sources */,
+				04592F0A1DF3C92C0095C8EE /* DogDetailModel.m in Sources */,
 				04DAC9901DD21A9A0089236D /* DogDetailInfoCell.m in Sources */,
 				046BF0151DE4696600BC32E9 /* UIViewController+DismissKeyboard.m in Sources */,
 				0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */,
@@ -4430,7 +4487,9 @@
 				046BF0101DE4696600BC32E9 /* EaseMessageModel.m in Sources */,
 				04CE13EF1DDC488100EB8777 /* SellerNickNameView.m in Sources */,
 				0479B5E81DCADC7B00CB288A /* DogSizeFilter.m in Sources */,
+				04592F071DF315AC0095C8EE /* SellerAdressCell.m in Sources */,
 				046F0B971DE2AB8B00D50D5C /* SureApplyRefundview.m in Sources */,
+				04592F031DF3133B0095C8EE /* SellerAdressModel.m in Sources */,
 				045D11A51DF03430008623E5 /* DogDetailInfoModel.m in Sources */,
 				045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */,
 				046F0B981DE2AB8B00D50D5C /* UpLoadPictureView.m in Sources */,
@@ -4448,6 +4507,7 @@
 				04592EC91DF166F90095C8EE /* ForgetPayPsdViewController.m in Sources */,
 				04E777391DEC33C2007B5146 /* SystemNotificationCell.m in Sources */,
 				046BF0301DE4696600BC32E9 /* EaseBubbleView+Voice.m in Sources */,
+				04592EEA1DF2DA570095C8EE /* ChageGoodsMessageVc.m in Sources */,
 				046BE8D71DE451EF00BC32E9 /* MessageViewController.m in Sources */,
 				046BEFC71DE4696600BC32E9 /* EMAudioRecorderUtil.m in Sources */,
 				04CE13E31DDC488100EB8777 /* SellerAcceptRateCell.m in Sources */,

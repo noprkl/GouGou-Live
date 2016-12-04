@@ -117,7 +117,7 @@
 /** 个人头像 */
 #define API_Portrait @"UserService/portrait"
 
-#pragma mark - 我的地址
+#pragma mark - 收货地址
 /** 收货地址 */
 #define API_Address @"UserService/address"
 /** 地址修改 */
@@ -130,6 +130,18 @@
 #define API_Default_address @"UserService/default_address"
 /** 省市区 */
 #define API_Province @"UserService/province"
+
+#pragma mark - 发货地址
+/** 发货地址列表 */
+#define API_Seller_address @"UserService/seller_address"
+/** 发货地址修改 */
+#define API_Seller_address_up @"UserService/seller_address_up"
+/** 发货地址添加 */
+#define API_Seller_address_add @"UserService/seller_address_add"
+/** 发货地址删除 */
+#define API_Seller_address_del @"UserService/seller_address_del"
+/** 发货默认地址 */
+#define API_Seller_address_default @"UserService/seller_address_default"
 
 
 #pragma mark
@@ -169,11 +181,11 @@
 
 #pragma mark - 买家
 /** 买家订单列表 */
-#define API_List_order @"ProductService/list_order"
+#define API_List_order @"OrderService/list_order"
 /** 买家订单初始化 */
-#define API_Order @"ProductService/order"
+#define API_Order @"OrderService/order"
 /** 订单评价买家 */
-#define API_Order_evaluation @"ProductService/order_evaluation"
+#define API_Order_evaluation @"OrderService/order_evaluation"
 /** 钱包支付 */
 #define API_Wallet @"OrderService/wallet"
 /** 取消订单 */
@@ -187,15 +199,15 @@
 
 #pragma mark - 卖家
 /** 卖家订单列表 */
-#define API_My_order @"ProductService/my_order"
+#define API_My_order @"OrderService/my_order"
 /** 订单状态修改 */
-#define API_Up_status @"ProductService/up_status"
+#define API_Up_status @"OrderService/up_status"
 /** 订单详情 */
-#define API_Order_limit @"ProductService/order_limit"
+#define API_Order_limit @"OrderService/order_limit"
 /** 订单修改价格 */
-#define API_Order_up @"ProductService/order_up"
+#define API_Order_up @"OrderService/order_up"
 /** 订单评价卖家 */
-#define API_My_order_comment @"ProductService/my_order_comment"
+#define API_My_order_comment @"OrderService/my_order_comment"
 /** 订单维权卖家列表 */
 #define API_My_activist @"OrderService/my_activist"
 /** 订单维权详情 */

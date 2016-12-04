@@ -159,10 +159,10 @@
     
     if (!_dataSource) {
         _dataSource = [NSArray array];
-        if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
-            _dataSource =  @[@[@"账户", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
-        }else{
+        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
             _dataSource = @[@[@"账户", @"我的订单", @"收货地址", @"卖家中心"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
+        }else{
+             _dataSource =  @[@[@"账户", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
         }
     }
     return _dataSource;
@@ -172,10 +172,11 @@
 
     if (!_controllerNames) {
         _controllerNames = [NSArray array];
-        if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
-            _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
-        }else{
+        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
             _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+        }else{
+            _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+
         }
 
   

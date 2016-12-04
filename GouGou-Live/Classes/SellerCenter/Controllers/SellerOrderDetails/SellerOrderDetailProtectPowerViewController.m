@@ -104,10 +104,12 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+            cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPowerStateView *stateView = [[SellerProtectPowerStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
             [cell.contentView addSubview:stateView];
+            return cell;
         }
             break;
         case 1:
@@ -116,7 +118,8 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+            cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPLogisticsInfoView *logisticsInfoView = [[SellerProtectPLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
             [cell.contentView addSubview:logisticsInfoView];
@@ -156,7 +159,6 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
             [cell.contentView addSubview:dogCardView];
             return cell;
-
         }
             break;
         case 4:

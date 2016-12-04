@@ -24,15 +24,44 @@
 static NSString *cellid = @"SellerWaitPayCell";
 
 @implementation SellerWaitPayViewController
+#pragma mark
+#pragma mark - 网络请求
+// 请求待支付的订单
+- (void)getRequestWaitPayOrder {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"status":@(0),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"is_right":@(1)
+                           };
+    [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
+#pragma mark
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestWaitPayOrder];
+    // 上下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestWaitPayOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
 }
 - (void)initUI{
-    
     [self.view addSubview:self.tableView];
-    
 }
 #pragma mark
 #pragma mark - 懒加载

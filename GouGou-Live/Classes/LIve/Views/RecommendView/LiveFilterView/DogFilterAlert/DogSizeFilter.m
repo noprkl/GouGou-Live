@@ -107,6 +107,7 @@ static NSString *cellid = @"SizeFilterCellID";
 - (void)setTitle:(NSString *)title {
     _title = title;
     [self reloadData];
+    
 }
 #pragma mark
 #pragma mark - TableView 代理
@@ -122,6 +123,8 @@ static NSString *cellid = @"SizeFilterCellID";
     _dataArr = dataArr;
     _dataPlist = dataArr;
     [self reloadData];
+    self.lastString = self.dataArr[0];
+
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     

@@ -243,7 +243,7 @@
             
         }else{
             
-            [self fadeOut];
+//            [self fadeOut];
             _clickSureBtnBlock(self.editngtextfiled.text);
         }
     }

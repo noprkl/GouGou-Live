@@ -19,4 +19,5 @@
 @property(nonatomic, strong) NSString *delFlg; /**< <#注释#> */
 @property(nonatomic, strong) NSString *updateTime; /**< <#注释#> */
 @property(nonatomic, strong) NSString *updateUser; /**< <#注释#> */
+
 @end

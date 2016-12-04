@@ -42,6 +42,7 @@ static NSString *cellid = @"AddDogColorAlert";
     _dataPlist = dataPlist;
     self.colorData = dataPlist;
     [self.colorPicker reloadAllComponents];
+    self.colorString = self.colorData[0];
 }
 
 

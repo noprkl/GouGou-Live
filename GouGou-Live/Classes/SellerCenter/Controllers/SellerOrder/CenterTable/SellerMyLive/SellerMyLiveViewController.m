@@ -27,6 +27,13 @@ static NSString *cellid = @"SellerMyLiveCell";
 }
 - (void)initUI{
     [self.view addSubview:self.tableView];
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+//        [self getRequestAllOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 - (NSArray *)dataArr {
     if (!_dataArr) {

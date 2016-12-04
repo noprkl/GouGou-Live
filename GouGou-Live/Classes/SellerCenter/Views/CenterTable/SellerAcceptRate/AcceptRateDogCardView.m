@@ -63,11 +63,11 @@
         make.size.equalTo(CGSizeMake(78, 78));
     }];
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.top).offset(10);
+        make.top.equalTo(weakself.top).offset(5);
         make.left.equalTo(weakself.dogImageView.right).offset(20);
     }];
     [_kindLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.dogNameLabel.bottom).offset(10);
+        make.top.equalTo(weakself.dogNameLabel.bottom).offset(15);
         make.left.equalTo(weakself.dogImageView.right).offset(20);
     }];
     
@@ -102,7 +102,7 @@
 - (void)setModel:(DogDetailInfoModel *)model {
     _model = model;
     NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
-    [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
     self.dogNameLabel.text = model.name;
     self.dogKindLabel.text = model.kindName;
     self.dogAgeLabel.text = model.ageName;
@@ -125,7 +125,7 @@
 - (UILabel *)dogNameLabel {
     if (!_dogNameLabel) {
         _dogNameLabel = [[UILabel alloc] init];
-//        _dogNameLabel.text = @"小黑";
+        _dogNameLabel.text = @"小黑";
         _dogNameLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _dogNameLabel.font = [UIFont systemFontOfSize:16];
         
@@ -136,7 +136,7 @@
     if (!_kindLabel) {
         _kindLabel = [[UILabel alloc] init];
         
-//        _kindLabel.text = @"品种";
+        _kindLabel.text = @"品种";
         _kindLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _kindLabel.font = [UIFont systemFontOfSize:14];
     }
@@ -146,7 +146,7 @@
     if (!_dogKindLabel) {
         _dogKindLabel = [[UILabel alloc] init];
         
-//        _dogKindLabel.text = @"拉布拉多";
+        _dogKindLabel.text = @"拉布拉多";
         _dogKindLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogKindLabel.font = [UIFont systemFontOfSize:14];
         
@@ -157,7 +157,7 @@
     if (!_dogAgeLabel) {
         _dogAgeLabel = [[UILabel alloc] init];
         
-//        _dogAgeLabel.text = @"6个月";
+        _dogAgeLabel.text = @"6个月";
         _dogAgeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogAgeLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -167,7 +167,7 @@
     if (!_dogSizeLabel) {
         _dogSizeLabel = [[UILabel alloc] init];
         
-//        _dogSizeLabel.text = @"大型犬";
+        _dogSizeLabel.text = @"大型犬";
         _dogSizeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogSizeLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -177,7 +177,7 @@
     if (!_dogColorLabel) {
         _dogColorLabel = [[UILabel alloc] init];
         
-//        _dogColorLabel.text = @"白色";
+        _dogColorLabel.text = @"白色";
         _dogColorLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogColorLabel.font = [UIFont systemFontOfSize:12];
     }

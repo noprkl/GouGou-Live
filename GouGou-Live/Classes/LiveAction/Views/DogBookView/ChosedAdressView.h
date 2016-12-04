@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class ShopAdressModel;
-
+@class SellerAdressModel;
 @interface ChosedAdressView : UIView
 
 
 @property(nonatomic, strong) ShopAdressModel *shopAdress; /**< 收货地址 */
+@property(nonatomic, strong) SellerAdressModel *sellerAdress; /**< 发货地址 */
 
 
 @property(nonatomic, assign) BOOL isHid; /**< 箭头是否隐藏 */

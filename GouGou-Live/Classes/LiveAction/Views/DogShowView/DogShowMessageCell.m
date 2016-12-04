@@ -212,6 +212,47 @@
 - (CGFloat)getCellHeight {
     return CGRectGetMaxY(self.line5.frame);
 }
+- (void)setModel:(DogDetailModel *)model {
+    _model = model;
+    self.dogAgeLaebl.text = model.age.name;
+    self.dogColorLaebl.text = model.color.name;
+    self.dogKindLabel.text = model.kind.name;
+    self.dogNameLabel.text = model.name;
+    self.dogSizeLabel.text = model.size.name;
+    
+    self.dogPriceLaebl.text = model.price;
+    
+    self.descLabel.text = model.comment;
+    self.promulgateTimeLabel.text = model.createTime;
+    
+    NSArray *imsArr = [model.pathBig componentsSeparatedByString:@","];
+    
+    CGFloat height = [_dogImageView getCellHeightWithImages:imsArr];
+    _dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
+    
+    // 数组转化模型
+    NSArray *impressModels = [DogCategoryModel mj_objectArrayWithKeyValuesArray:model.impresssion];
+    
+    NSMutableArray *impressArr = [NSMutableArray array];
+    for (DogCategoryModel *impress in impressModels) {
+        [impressArr addObject:impress.name];
+    }
+    [self.markView creatDogMarksWithMark:impressArr];
+    
+    NSString *state = @"";
+    if ([model.status isEqualToString:@"1"]) {// 1：新建商品 2：审核未通过  3：上线 4：下线5：售完
+        state = @"新建商品";
+    }else if ([model.status isEqualToString:@"2"]) {
+        state = @"审核未通过";
+    }else if ([model.status isEqualToString:@"3"]) {
+        state = @"上线";
+    }else if ([model.status isEqualToString:@"4"]) {
+        state = @"下线";
+    }else if ([model.status isEqualToString:@"5"]) {
+        state = @"售完";
+    }
+    self.liveStateLabel.text = state;
+}
 #pragma mark
 #pragma mark - 懒加载
 
@@ -237,10 +278,7 @@
 - (DogImageView *)dogImageView {
     if (!_dogImageView) {
         _dogImageView = [[DogImageView alloc] init];
-        
-        CGFloat height = [_dogImageView getCellHeightWithImages:@[@"组-7", @"组-7", @"组-7", @"组-7"]];
-        _dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
-        
+      
     }
     return _dogImageView;
 }
@@ -255,8 +293,7 @@
 }
 - (DogMarkView *)markView {
     if (!_markView) {
-        _markView = [[DogMarkView alloc] initWithFrame:CGRectZero Titles:@[@"聪明", @"不掉毛", @"可爱"]];
-        
+        _markView = [[DogMarkView alloc] init];
     }
     return _markView;
 }

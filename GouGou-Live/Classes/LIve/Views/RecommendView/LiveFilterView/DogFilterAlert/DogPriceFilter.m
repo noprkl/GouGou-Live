@@ -50,6 +50,8 @@ static NSString *cellid = @"SizeFilterCellID";
     _dataPlist = dataPlist;
     self.ageData = dataPlist;
     [self.agePicker reloadAllComponents];
+    self.minModel = self.ageData[0];
+    self.maxModel = self.ageData[0];
 
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "SellerAddShipTemplateViewController.h"
-#import "ShopAdressModel.h"
+#import "SellerAdressModel.h"
 #import "ChosedAdressView.h"
 #import "SellerChoseAdressViewController.h" // 选择地址
 
@@ -19,10 +19,9 @@
 
 @property(nonatomic, strong) UITextField *templateName; /**< 模板名字 */
 
-@property(nonatomic, strong) ShopAdressModel *adressModel; /**< 传过来的数据 */
+@property(nonatomic, strong) SellerAdressModel *adressModel; /**< 传过来的数据 */
 
 @property(nonatomic, assign) BOOL isAdress; /**< 是地址 */
-
 
 @property(nonatomic, strong) UISwitch *freeCost; /**< 免费 */
 
@@ -54,15 +53,25 @@ static NSString *templateNameStr = @"templateNameStr";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"SellerShopAderss" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"SellerShopAderss" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ChoseSendAdress" object:nil];
+
 }
 
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
     
     self.isAdress = adress.userInfo[@"ISAdress"];
+
     if (_isAdress) {
         [self.view addSubview:self.tableView];
         [self.tableView reloadData];
+    }
+    
+    SellerAdressModel *model = adress.userInfo[@"ChoseSendAdress"];
+    if (model.merchantTel.length != 0) {
+        [self.view addSubview:self.tableView];
+        [self.tableView reloadData];
+        self.adressModel = model;
     }
 }
 
@@ -207,9 +216,9 @@ static NSString *templateNameStr = @"templateNameStr";
         return cell;
     }
     if ([cellText isEqualToString:@"发货地址(必填)"]) {
-        if (_isAdress) {
+        if (self.adressModel.merchantTel.length != 0) {
             ChosedAdressView *adressView = [[ChosedAdressView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
-            
+            adressView.sellerAdress = self.adressModel;
             [cell.contentView addSubview:adressView];
 
         }else{

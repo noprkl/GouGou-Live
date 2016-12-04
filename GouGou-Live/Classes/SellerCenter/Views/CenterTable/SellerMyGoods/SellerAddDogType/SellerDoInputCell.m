@@ -23,6 +23,10 @@
 - (void)awakeFromNib {
     // Initialization code
 }
+- (void)setModel:(DogCategoryModel *)model {
+    _model = model;
+    self.dogType.text = model.name;
+}
 - (IBAction)clickSureAddAction:(UIButton *)sender {
     if (_sureAddBlock) {
         _sureAddBlock();

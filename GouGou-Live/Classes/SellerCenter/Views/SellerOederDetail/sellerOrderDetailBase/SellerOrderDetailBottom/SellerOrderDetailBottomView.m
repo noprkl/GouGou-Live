@@ -14,23 +14,27 @@
 
 @property(nonatomic, assign) NSInteger count; /**< 个数 */
 
+@property(nonatomic, strong) UIView *line; /**< 线 */
+
 @end
 @implementation SellerOrderDetailBottomView
 
 - (void)setBtnTitles:(NSArray *)btnTitles {
     _btnTitles = btnTitles;
     self.count = btnTitles.count;
-
-    DLog(@"%@", btnTitles);
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+    [self addSubview:self.line];
+    [self.line makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self);
+        make.height.equalTo(1);
+    }];
     
     CGFloat W = SCREEN_WIDTH / _count;
-    CGFloat H = 49;
+    CGFloat H = 48;
     CGFloat x = 0;
-    CGFloat y = 0;
+    CGFloat y = 1;
     
     for (NSInteger i = 0; i < _count; i ++) {
         x =  SCREEN_WIDTH - W * (_count - i);
@@ -57,6 +61,13 @@
         
         [self addSubview:btn];
     }
+}
+- (UIView *)line {
+    if (!_line) {
+        _line = [[UIView alloc] init];
+        _line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _line;
 }
 - (void)clickBtnAction:(UIButton *)btn {
     NSInteger index = btn.tag - 110;

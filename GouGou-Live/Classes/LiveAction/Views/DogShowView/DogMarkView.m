@@ -38,5 +38,35 @@
     return self;
 }
 
+- (void)creatDogMarksWithMark:(NSArray *)marks {
+    CGFloat w = 0;
+    CGFloat h = 22;
+    CGFloat magrin = 10;
+    
+    for (NSInteger i = 0; i < marks.count; i ++) {
+        
+        UILabel *label = [[UILabel alloc] init];
+        NSDictionary *attrs = @{
+                                NSFontAttributeName : [UIFont systemFontOfSize:12],
+                                NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#ffffff"]
+                                
+                                };
+        label.text = marks[i];
+        CGSize size=[label.text sizeWithAttributes:attrs];
+        w = size.width + 10;
+        
+        label.frame = CGRectMake(i * (w + magrin), 0, w, h);
+        label.font = [UIFont systemFontOfSize:12];
+        label.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        label.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        label.layer.cornerRadius = 5;
+        label.layer.masksToBounds = YES;
+        
+        [self addSubview:label];
+    }
+
+}
 
 @end

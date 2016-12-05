@@ -48,7 +48,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 #pragma mark - 网络请求
 - (void)getConsignmentRequest {
 
-    NSDictionary * dict = @{@"user_id":@(11),
+    NSDictionary * dict = @{@"user_id":@(TestID),
                             @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10),

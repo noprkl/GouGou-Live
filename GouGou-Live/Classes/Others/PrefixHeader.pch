@@ -72,6 +72,9 @@
 #define EaseTest_Chat2 @"lxq2" // 买家
 #define EaseTest_Chat3 @"lxq3" // 卖家
 #define EaseTest_Liver @"liver" // 主播
+
+#define TestID 17
+
 #endif
 
 #endif

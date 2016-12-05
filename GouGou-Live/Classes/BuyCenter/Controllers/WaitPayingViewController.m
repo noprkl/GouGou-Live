@@ -33,7 +33,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 - (void)getPayStateOrderRequest {
 //    @([[UserInfos sharedUser].ID integerValue]
     NSDictionary * dict = @{
-                            @"user_id":@(11),
+                            @"user_id":@(TestID),
                             @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10),

@@ -126,7 +126,7 @@
 #pragma mark - 取消订单网络请求
 - (void)getCancleOrderRequest {
 
-    NSDictionary * dict = @{@"user_id":@(11),
+    NSDictionary * dict = @{@"user_id":@(TestID),
                             @"order_id":@(12),
                             @"note":@(23)
                             };

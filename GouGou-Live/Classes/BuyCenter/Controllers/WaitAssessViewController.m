@@ -54,7 +54,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 - (void)getAssessRequest {
     
     NSDictionary * dict = @{
-                            @"user_id":@(11),
+                            @"user_id":@(TestID),
                             @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10),

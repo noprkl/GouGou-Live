@@ -67,8 +67,8 @@
     self.costView.costModel.balance = centerModel.balance;
     */
     // 直接赋值
-//    NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
-//    [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+    NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
+    [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
 
     self.nickView.sellerIamge.image = [UIImage imageNamed:centerModel.merchantImgl];
     self.nickView.nickName.text = centerModel.merchantName;

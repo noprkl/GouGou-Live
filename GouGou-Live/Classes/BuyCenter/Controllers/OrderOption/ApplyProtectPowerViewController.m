@@ -47,9 +47,9 @@
 #pragma mark - 网络请求
 - (void)postAddProtectProwerRequest {
 
-    NSDictionary * dict = @{@"user_id":@(11),
+    NSDictionary * dict = @{@"user_id":@(TestID),
                             @"order_id":@(12),
-                            @"content":@"nil",
+                            @"content":@"test",
                             @"has_money":@(1),
                             @"money":@(10),
                             @"has_photo":@(2),

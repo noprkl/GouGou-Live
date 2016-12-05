@@ -17,6 +17,8 @@
 
 #import "BottomButtonView.h"   // 按钮创建
 
+#import "OrderDetailModel.h"
+
 @interface PayingAllMoneyViewController ()<UIScrollViewDelegate>
 /** 底部scrollView */
 @property (strong,nonatomic) UIScrollView *boomScrollView;
@@ -36,11 +38,64 @@
 @property (strong,nonatomic) OrderNumberView *orderNumberView;
 /** 按钮 */
 @property (strong,nonatomic) BottomButtonView *bottomButton;
+/** 订单详情模型 */
+@property (strong,nonatomic) OrderDetailModel *orderInfo;
 
 @end
 
 @implementation PayingAllMoneyViewController
-
+#pragma mark - 网络请求
+- (void)getAllMoneyRequest {
+    
+    NSDictionary * dict = @{@"id":@(12)};
+    
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"Message"]);
+        DLog(@"%@",successJson[@"data"]);
+        
+        self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+        self.orderStateView.stateMessage = self.orderInfo.status;
+        self.orderStateView.timeMessage = self.orderInfo.closeTime;
+        
+        self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
+        self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
+        self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
+        
+        
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
+        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        self.dogCardView.dogNameLabel.text = self.orderInfo.name;
+        self.dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
+        self.dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
+        self.dogCardView.dogColorLabel.text = self.orderInfo.colorName;
+        self.dogCardView.dogKindLabel.text = self.orderInfo.kindName;
+        self.dogCardView.oldPriceLabel.text = self.orderInfo.priceOld;
+        self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
+        
+        self.goodsPriceView.totalsMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productBalance integerValue] + [self.orderInfo.productDeposit integerValue]];
+        self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
+        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
+        
+        self.payMonyView.totalMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productBalance integerValue] + [self.orderInfo.productRealDeposit integerValue]];
+        
+        self.orderNumberView.buyUserId = self.orderInfo.buyUserId;
+        self.orderNumberView.createTimes = self.orderInfo.createTime;
+        self.orderNumberView.depositTimes = self.orderInfo.depositTime;
+        self.orderNumberView.balanceTimes = self.orderInfo.balanceTime;
+        self.orderNumberView.deliveryTimes = self.orderInfo.deliveryTime;
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    [self getAllMoneyRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     

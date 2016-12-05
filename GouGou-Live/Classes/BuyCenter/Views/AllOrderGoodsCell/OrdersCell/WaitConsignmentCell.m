@@ -80,8 +80,8 @@
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     
     self.costView.fontMoney.text = centerModel.productRealDeposit;
-    self.costView.remainderMoeny.text = centerModel.balance;
-    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.balance integerValue])];
+    self.costView.remainderMoeny.text = centerModel.productRealBalance;
+    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.productRealBalance integerValue])];
     
 }
 #pragma mark

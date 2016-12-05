@@ -33,8 +33,8 @@
 @property (strong,nonatomic) GoodsPriceView *goodsPriceView;
 /** 详细付款状况 */
 @property (strong,nonatomic) DetailPayMoney *detailPayView;
-/** 付款状态 */
-@property (strong,nonatomic) PayingMoney *payMonyView;
+///** 付款状态 */
+//@property (strong,nonatomic) PayingMoney *payMonyView;
 /** 订单编号 */
 @property (strong,nonatomic) OrderNumberView *orderNumberView;
 /** 按钮 */
@@ -64,7 +64,7 @@
     [self.boomScrollView addSubview:self.dogCardView];
     [self.boomScrollView addSubview:self.goodsPriceView];
     [self.boomScrollView addSubview:self.detailPayView];
-    [self.boomScrollView addSubview:self.payMonyView];
+//    [self.boomScrollView addSubview:self.payMonyView];
     [self.boomScrollView addSubview:self.orderNumberView];
     [self.boomScrollView addSubview:self.bottomButton];
 
@@ -210,14 +210,14 @@
     return _detailPayView;
 }
 
-- (PayingMoney *)payMonyView {
-    
-    if (!_payMonyView) {
-        _payMonyView = [[PayingMoney alloc] init];
-        _payMonyView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
-    return _payMonyView;
-}
+//- (PayingMoney *)payMonyView {
+//    
+//    if (!_payMonyView) {
+//        _payMonyView = [[PayingMoney alloc] init];
+//        _payMonyView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//    }
+//    return _payMonyView;
+//}
 
 - (OrderNumberView *)orderNumberView {
     
@@ -253,8 +253,6 @@
             }
             
         };
-        
-
     }
     return _bottomButton;
 }

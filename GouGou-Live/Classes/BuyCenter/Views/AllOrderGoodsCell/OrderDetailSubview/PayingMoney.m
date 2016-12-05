@@ -28,8 +28,12 @@
     }
     return self;
 }
-#pragma mark
-#pragma mark - 约束
+
+- (void)setTotalMoney:(NSString *)totalMoney {
+
+    _totalMoney = totalMoney;
+    self.payMoney.text = [NSString stringWithFormat:@"%ld",[self.realLalance integerValue] + [self.productRealDeposit integerValue]];
+}
 
 #pragma mark
 #pragma mark - 约束

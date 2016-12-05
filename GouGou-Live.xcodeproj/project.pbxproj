@@ -277,7 +277,6 @@
 		046F0BEA1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCC1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m */; };
 		046F0BEB1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */; };
 		046F0BEC1DE2AB9E00D50D5C /* GotoAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */; };
-		046F0BED1DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD31DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.m */; };
 		046F0BEE1DE2AB9E00D50D5C /* PaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */; };
 		046F0BF01DE2AB9E00D50D5C /* ProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD91DE2AB9E00D50D5C /* ProtectPowerViewController.m */; };
 		046F0BF11DE2AB9E00D50D5C /* WaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BDB1DE2AB9E00D50D5C /* WaitAssessViewController.m */; };
@@ -1036,8 +1035,6 @@
 		046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyProtectPowerViewController.m; sourceTree = "<group>"; };
 		046F0BD01DE2AB9E00D50D5C /* GotoAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoAssessViewController.h; sourceTree = "<group>"; };
 		046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoAssessViewController.m; sourceTree = "<group>"; };
-		046F0BD21DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlineCustomerServiceViewController.h; sourceTree = "<group>"; };
-		046F0BD31DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlineCustomerServiceViewController.m; sourceTree = "<group>"; };
 		046F0BD41DE2AB9E00D50D5C /* PaySuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySuccessViewController.h; sourceTree = "<group>"; };
 		046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessViewController.m; sourceTree = "<group>"; };
 		046F0BD81DE2AB9E00D50D5C /* ProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerViewController.h; sourceTree = "<group>"; };
@@ -2576,8 +2573,6 @@
 				046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */,
 				046F0BD01DE2AB9E00D50D5C /* GotoAssessViewController.h */,
 				046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */,
-				046F0BD21DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.h */,
-				046F0BD31DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.m */,
 				046F0BD41DE2AB9E00D50D5C /* PaySuccessViewController.h */,
 				046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */,
 			);
@@ -4721,7 +4716,6 @@
 				04CE13E61DDC488100EB8777 /* SellerMyGoodsTopView.m in Sources */,
 				045C5CB71DF50A58000B8509 /* SellerOrderModel.m in Sources */,
 				04592ED81DF17C5C0095C8EE /* SellerMyGoodsModel.m in Sources */,
-				046F0BED1DE2AB9E00D50D5C /* OnlineCustomerServiceViewController.m in Sources */,
 				0479B5FA1DCADC7B00CB288A /* PlayBackCard.m in Sources */,
 				046BF0361DE4696600BC32E9 /* EaseFaceView.m in Sources */,
 				0452A2131DE1E782007C1E4F /* SellerChoseAdressViewController.m in Sources */,

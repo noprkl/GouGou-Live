@@ -139,7 +139,7 @@
     
     if (!_nickName) {
         _nickName = [[UILabel alloc] init];
-//        _nickName.text = @"丁丁";
+        _nickName.text = @"丁丁";
         _nickName.textColor = [UIColor colorWithHexString:@"#000000"];
         _nickName.font = [UIFont systemFontOfSize:16];
     }
@@ -150,7 +150,7 @@
 
     if (!_remainTimeLabel) {
         _remainTimeLabel = [[UILabel alloc] init];
-//        _remainTimeLabel.text = @"剩余1天1小时";
+        _remainTimeLabel.text = @"剩余1天1小时";
         _remainTimeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _remainTimeLabel.font = [UIFont systemFontOfSize:14];
     }
@@ -161,7 +161,7 @@
     
     if (!_stateLabe) {
         _stateLabe = [[UILabel alloc] init];
-//        _stateLabe.text = @"已完成";
+        _stateLabe.text = @"已完成";
         _stateLabe.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _stateLabe.font = [UIFont systemFontOfSize:14];
         _stateLabe.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];

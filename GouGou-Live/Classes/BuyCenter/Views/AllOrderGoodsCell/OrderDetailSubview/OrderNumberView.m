@@ -39,7 +39,7 @@
 - (void)setBuyUserId:(NSString *)buyUserId {
 
     _buyUserId = buyUserId;
-    self.orderNumLabel.text = buyUserId;
+    self.orderNumber.text = buyUserId;
 }
 // 订单创建时间
 - (void)setCreateTimes:(NSString *)createTimes {

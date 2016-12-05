@@ -7,7 +7,25 @@
 //
 
 #import "BaseModel.h"
+/*
+ 
+ 
+ comment = 111;
+ id = 9;
+ impresssion = "\U84dd\U8272";
+ 
+ 
+ 
+ name = "(\U672a\U8d77\U540d)";
+ "path_small" = "product/4c176bfae0477ff7195cb6c4495c9eb1.jpeg";
+ 
+ 
+ 
 
+ 
+ },
+ 
+ */
 @interface BuyCenterModel : BaseModel
 /** 商家图片 */
 @property (copy,nonatomic) NSString *merchantImgl;
@@ -38,8 +56,8 @@
 /** 实付定金 */
 @property (copy,nonatomic) NSString *productRealDeposit;
 /** 商品尾款 */
-@property (copy,nonatomic) NSString *balance;
+@property (copy,nonatomic) NSString *productBalance;
 /** 实付尾款 */
-@property (copy,nonatomic) NSString *realLalance;
+@property (copy,nonatomic) NSString *productRealBalance;
 
 @end

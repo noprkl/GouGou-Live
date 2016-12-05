@@ -114,7 +114,7 @@
     
     if (!_nickName) {
         _nickName = [[UILabel alloc] init];
-//        _nickName.text = @"丁丁";
+        _nickName.text = @"丁丁";
         _nickName.textColor = [UIColor colorWithHexString:@"#000000"];
         _nickName.font = [UIFont systemFontOfSize:16];
     }

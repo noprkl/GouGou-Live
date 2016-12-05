@@ -14,6 +14,11 @@
 #import "PayingAllMoneyViewController.h"  // 支付全款控制器
 #import "NicknameView.h" // 商家昵称View
 
+// 订单详情
+#import "PayBackMoneyViewController.h" // 代付尾款
+#import "PayFontMoneyViewController.h" // 代付定金
+#import "PayingAllMoneyViewController.h" // 代付全款
+
 #import "BuyCenterModel.h"
 
 static NSString * waitBackCell = @"waitBackCellID";
@@ -33,7 +38,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 - (void)getPayStateOrderRequest {
 //    @([[UserInfos sharedUser].ID integerValue]
     NSDictionary * dict = @{
-                            @"user_id":@(TestID),
+                            @"user_id":@(17),
                             @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10),
@@ -67,7 +72,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         [self getPayStateOrderRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-    [self.tableview.mj_header beginRefreshing];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -98,6 +103,8 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 88 - 64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         // 注册cell
         [_tableview registerClass:[WaitBackMoneyCell class] forCellReuseIdentifier:waitBackCell];
         [_tableview registerClass:[WaitFontMoneyCell class] forCellReuseIdentifier:waitFontCell];
@@ -245,10 +252,30 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
     return nil;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    BuyCenterModel * model = self.dataArray[indexPath.row];
+   
+    if ([model.status integerValue] == 1) {
+        
+        PayingAllMoneyViewController * allVC = [[PayingAllMoneyViewController alloc] init];
+        [self.navigationController pushViewController:allVC animated:YES];
+    }
+    
+    if ([model.status integerValue] == 2) {
+        
+        PayBackMoneyViewController * backVC = [[PayBackMoneyViewController alloc] init];
+        
+        [self.navigationController pushViewController:backVC animated:YES];
+        
+    }
+    
+    if ([model.status integerValue] == 3) {
+        PayFontMoneyViewController * fontVC = [[PayFontMoneyViewController alloc] init];
+        [self.navigationController pushViewController:fontVC animated:YES];
+        
+    }
 
+}
 
 @end

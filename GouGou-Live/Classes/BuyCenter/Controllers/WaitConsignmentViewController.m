@@ -12,6 +12,7 @@
 #import "WaitConsignessCell.h"
 #import "ProtecePowerPromptView.h"
 
+#import "WaitSellConsigmentViewContorller.h" // 代发货订单详情
 static NSString * waitConsignmentCell = @"waitConsignmentCell";
 
 @interface WaitConsignmentViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -32,7 +33,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
         [self getConsignmentRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-    [self.tableview.mj_header beginRefreshing];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,7 +49,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 #pragma mark - 网络请求
 - (void)getConsignmentRequest {
 
-    NSDictionary * dict = @{@"user_id":@(TestID),
+    NSDictionary * dict = @{@"user_id":@(17),
                             @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10),
@@ -84,6 +85,8 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 88 - 64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         [_tableview registerClass:[WaitConsignmentCell class] forCellReuseIdentifier:waitConsignmentCell];
     }
     return _tableview;
@@ -144,6 +147,12 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
     [cell addSubview:funcBtn];
     return cell;
 
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    WaitSellConsigmentViewContorller * waitSelllVC = [[WaitSellConsigmentViewContorller alloc] init];
+    
+    [self.navigationController pushViewController:waitSelllVC animated:YES];
 }
 
 @end

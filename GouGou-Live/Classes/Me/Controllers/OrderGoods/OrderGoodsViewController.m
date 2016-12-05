@@ -24,9 +24,17 @@
 /** 上一个控制器 */
 @property(nonatomic, strong) UIViewController *lastVC;
 
+/** 最后加载的页面 */
+@property (assign,nonatomic) CGPoint centerPoint;
 @end
 
 @implementation OrderGoodsViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [self.boomScrollView setContentOffset:self.centerPoint animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,36 +93,37 @@
             if (flag == 0) {
                 
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
-                
+                weakself.centerPoint = center;
                 [weakself.boomScrollView setContentOffset:center animated:YES];
-            } else if (flag == 1) {
-            
-                CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
                 
+            } else if (flag == 1) {
+               
+                CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
+                weakself.centerPoint = center;
                 [weakself.boomScrollView setContentOffset:center animated:YES];
             
             } else if (flag == 2) {
-                
+
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
-                
+                weakself.centerPoint = center;
                 [weakself.boomScrollView setContentOffset:center animated:YES];
                 
             } else if (flag == 3) {
-                
+
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
-                
+                weakself.centerPoint = center;
                 [weakself.boomScrollView setContentOffset:center animated:YES];
                 
             } else if (flag == 4) {
-                
+
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
-                
+                weakself.centerPoint = center;
                 [weakself.boomScrollView setContentOffset:center animated:YES];
                 
             } else if (flag == 5) {
-                
+
                 CGPoint center = CGPointMake(flag * SCREEN_WIDTH, weakself.boomScrollView.contentOffset.y);
-                
+                weakself.centerPoint = center;
                 [weakself.boomScrollView setContentOffset:center animated:YES];
             }
            

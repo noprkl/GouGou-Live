@@ -38,7 +38,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
                             };
     
     
-    [self getRequestWithPath:@"http://gougou.itnuc.com/api/ProductService/activist/user_id/17/page/1/pageSize/10" params:dict success:^(id successJson) {
+    [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
         
         self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         
@@ -62,7 +62,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
         [self getProtectPowerRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-    [self.tableview.mj_header beginRefreshing];
+//    [self.tableview.mj_header beginRefreshing];
 }
 
 - (void)viewDidLoad {
@@ -94,6 +94,8 @@ static NSString * protectFailedCell = @"protectFailedCell";
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 88 -64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         // 注册cell
         [_tableview registerClass:[ProtectingPowerCell class] forCellReuseIdentifier:protectingCell];
         [_tableview registerClass:[ProtectSuccessCell class] forCellReuseIdentifier:protectSuccessCell];
@@ -115,6 +117,10 @@ static NSString * protectFailedCell = @"protectFailedCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell1 == nil) {
+        cell1 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"cell"];
+    }
     
     ProtectProwerTableModel * model = self.dataArray[indexPath.row];
     
@@ -137,7 +143,9 @@ static NSString * protectFailedCell = @"protectFailedCell";
         [cell addSubview:funcBtn];
         
         return cell;
-    } else if ([model.status integerValue] == 2) {
+    }
+    
+    if ([model.status integerValue] == 2) {
         
         ProtectSuccessCell * cell = [tableView dequeueReusableCellWithIdentifier:protectSuccessCell];
         cell.protectModel = model;
@@ -161,7 +169,9 @@ static NSString * protectFailedCell = @"protectFailedCell";
         
         return cell;
 
-    } else if ([model.status integerValue] == 3) {
+    }
+    
+    if ([model.status integerValue] == 3) {
         
         ProtectFaliedCell * cell = [tableView dequeueReusableCellWithIdentifier:protectFailedCell];
         cell.protectModel = model;
@@ -193,9 +203,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
         
         return cell;
     }
-    return nil;
-    
+    return cell1;
 }
-
 
 @end

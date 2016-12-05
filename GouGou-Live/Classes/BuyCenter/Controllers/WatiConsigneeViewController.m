@@ -10,6 +10,7 @@
 
 #import "FunctionButtonView.h" // cell下边的按钮
 #import "WaitConsignessCell.h" // 代收货cell
+#import "SureConsigneedViewController.h"
 
 static NSString * waitConsignessCell = @"waitConsignessCell";
 @interface WatiConsigneeViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -30,7 +31,7 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
         [self getConsigneeRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-    [self.tableview.mj_header beginRefreshing];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,7 +49,7 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
 #pragma mark - 网络请求
 - (void)getConsigneeRequest {
     
-    NSDictionary * dict = @{@"user_id":@(TestID),
+    NSDictionary * dict = @{@"user_id":@(17),
                             @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10),
@@ -86,6 +87,8 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 88 - 64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         [_tableview registerClass:[WaitConsignessCell class] forCellReuseIdentifier:waitConsignessCell];
     }
     return _tableview;
@@ -139,4 +142,12 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
     [cell addSubview:funcBtn];
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    SureConsigneedViewController * congisnee = [[SureConsigneedViewController alloc] init];
+    
+    [self.navigationController pushViewController:congisnee animated:YES];
+}
+
 @end

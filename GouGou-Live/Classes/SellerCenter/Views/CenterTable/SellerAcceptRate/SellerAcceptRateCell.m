@@ -86,9 +86,10 @@
 //    self.buyerView.model.userImgUrl = model.userImgUrl;
 //    self.buyerView.model.userNickName = model.userNickName;
 //    self.buyerView.model.comment = model.comment;
-    
-    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
-    [self.buyerView.buyerIcon sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    if (model.userImgUrl.length != 0) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
+        [self.buyerView.buyerIcon sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }
     self.buyerView.buyerName.text = model.userNickName;
     self.buyerView.commentContent.text = model.comment;
     

@@ -44,7 +44,10 @@
     _stateMessage = stateMessage;
     self.stateLabel.text = stateMessage;
 }
-
+- (void)setNoteStr:(NSString *)noteStr {
+    _noteStr = noteStr;
+    self.noteLabel.text = noteStr;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UILabel *)stateLabel {

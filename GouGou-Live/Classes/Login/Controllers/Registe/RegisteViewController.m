@@ -54,19 +54,25 @@
 }
 
 - (IBAction)clickGetCodeAction:(UIButton *)sender {
-    
-    [self freetimeout];
-
-    NSDictionary *dict = @{
-                           @"tel" : @([self.phoneTextField.text integerValue]),
-                           @"type" : @0
-                           };
-    [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+    BOOL flag =  [NSString valiMobile:self.phoneTextField.text];
+    if (!flag) {
+        
+        [self showAlert:@"请输入正确的手机号"];
+    }else{
+        [self freetimeout];
+        
+        NSDictionary *dict = @{
+                               @"tel" : @([self.phoneTextField.text integerValue]),
+                               @"type" : @0
+                               };
+        DLog(@"%@", dict);
+        [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
     
@@ -87,7 +93,6 @@
         if (codeNumber.length != 6) {
             
             [self showAlert:@"验证码只能是6位"];
-            
         }else{
         
             SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];

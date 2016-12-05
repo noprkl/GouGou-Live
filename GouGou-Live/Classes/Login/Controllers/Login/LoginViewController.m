@@ -71,6 +71,10 @@
 
 #pragma mark
 #pragma mark - Action
+- (IBAction)clickBackAction:(UIButton *)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (IBAction)clickEyeBtnAction:(UIButton *)sender {
 
     self.psdTextField.secureTextEntry = !self.psdTextField.secureTextEntry;
@@ -110,7 +114,6 @@
                                    @"user_pwd":pwd
                                    };
             // 请求之前删掉上一次的信息
-
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
                
                 [self showAlert:successJson[@"message"]];
@@ -139,10 +142,8 @@
                     if (!error2) {
                         DLog(@"登录成功");
                     }
-                    // 通知给所有人 已经登录
-                    NSNotification* notification = [NSNotification notificationWithName:@"LoginSuccess" object:successJson[@"data"]];
-
-                    [[NSNotificationCenter defaultCenter] postNotification:notification];
+                    
+                    // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
 
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }

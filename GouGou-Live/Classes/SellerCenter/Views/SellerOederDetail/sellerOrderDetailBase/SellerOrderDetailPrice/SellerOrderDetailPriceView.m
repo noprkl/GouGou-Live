@@ -12,24 +12,15 @@
 
 @property(nonatomic, strong) UILabel *allPrice; /**< 总价 */
 
-@property(nonatomic, strong) UILabel *allPriceCount; /**< 总价数 */
-
 @property(nonatomic, strong) UILabel *templatePrice; /**< 运费 */
-
-@property(nonatomic, strong) UILabel *templatePriceCount; /**< 运费数 */
 
 @property(nonatomic, strong) UILabel *favorablePrice; /**< 优惠 */
 
-@property(nonatomic, strong) UILabel *favorablePriceCount; /**< 优惠数 */
-
 @property(nonatomic, strong) UIView *line; /**< 线 */
-
 
 @property(nonatomic, strong) UIView *backView; /**< 背景 */
 
 @property(nonatomic, strong) UILabel *realPrice; /**< 实付 */
-
-@property(nonatomic, strong) UILabel *realPriceCount; /**< 实付数 */
 
 @end
 @implementation SellerOrderDetailPriceView

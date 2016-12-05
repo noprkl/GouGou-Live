@@ -13,7 +13,12 @@
 #import "SellerLogisticsInfoView.h"
 #import "SellerFunctionButtonView.h"
 #import "SellerDogCardView.h"
+#import "SellerOrderModel.h"
 
 @interface SellerBaseCell : UITableViewCell
+
+
+// 文字富文本
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text;
 
 @end

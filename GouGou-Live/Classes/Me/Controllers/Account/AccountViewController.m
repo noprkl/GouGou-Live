@@ -32,7 +32,7 @@
     [self initUI];
 }
 - (void)initUI {
-    
+    self.navigationController.navigationBarHidden = NO;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"明细" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBtnAction)];
     
     [self.view addSubview:self.tableView];
@@ -84,7 +84,7 @@
         _controllerNames = [NSArray array];
         if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
             
-            if(![UserInfos sharedUser].useralicode.length == 0) { // 未绑定支付宝 需要绑定
+            if([UserInfos sharedUser].useralicode.length == 0) { // 未绑定支付宝 需要绑定
                 _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
             }else{ // 已经设置了支付宝 不能点击
 

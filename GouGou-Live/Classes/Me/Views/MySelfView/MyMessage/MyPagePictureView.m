@@ -141,6 +141,8 @@ static NSString *cellid = @"ManagePictureaCell";
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (_pictureBlock) {
+        _pictureBlock();
+    }
 }
 @end

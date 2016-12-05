@@ -28,8 +28,8 @@
 //@property (strong, nonatomic)  UILabel *nowPriceLabel;
 ///** 狗狗老价格*/
 //@property (strong, nonatomic)  UILabel *oldPriceLabel;
-///** 间隔View */
-//@property (strong,nonatomic) UIView *spaceView;
+/** 间隔View */
+@property (strong,nonatomic) UIView *spaceView;
 
 @end
 
@@ -210,7 +210,7 @@
 - (UILabel *)oldPriceLabel {
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
-        
+
 //        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
     }
     return _oldPriceLabel;

@@ -13,6 +13,8 @@
 #import "ChosedAdressView.h" // 收货地址内容有值
 #import "MyShopAdressModel.h"
 
+#import <AlipaySDK/AlipaySDK.h>
+
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
 @property(nonatomic, strong) UITableView *tablevView; /**< 表格 */
@@ -45,20 +47,42 @@
 // 结算
 - (void)clickPayBtnAction:(UIButton *)btn {
     
-    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@(11),
-                           @"id":@([_model.ID integerValue]),
-                           @"address_id":@(_defaultModel.ID)
-                           };
-    DLog(@"%@", dict);
-    [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
+//    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
+//                           @"user_id":@(11),
+//                           @"id":@([_model.ID integerValue]),
+//                           @"address_id":@(_defaultModel.ID)
+//                           };
+//    DLog(@"%@", dict);
+//    [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//        if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
+//    } error:^(NSError *error) {
+//        DLog(@"%@", error);
+//    }];
+    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+    NSDictionary *dit = @{
+                          @"id":@(111111111111),
+                          @"total_fee":@(1)
+                          };
+    [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
         DLog(@"%@", successJson);
-        if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
+        [self showAlert:successJson[@"msg"]];
+        [self aliPayWithOrderString:successJson[@"data"]];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
+}
+- (void)aliPayWithOrderString:(NSString *)orderStr {
+    if (orderStr != nil) {
+        
+        NSString *appScheme = @"ap2016112203105439";
+        
+        [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            DLog(@"reslut = %@",resultDic);
+        }];
+    }
 }
 // 所有地址
 - (void)postGetAdressRequest {
@@ -67,6 +91,7 @@
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue])
                            };
+    
     [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
         [self showAlert:successJson[@"message"]];
         DLog(@"1%@", successJson);
@@ -392,8 +417,6 @@
 
         }];
     }];
-    
-    DLog(@"%@", self.noteTextView.text);
 }
 
 

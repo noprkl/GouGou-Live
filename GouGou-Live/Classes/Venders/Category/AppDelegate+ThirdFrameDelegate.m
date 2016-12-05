@@ -9,7 +9,7 @@
 #import "AppDelegate+ThirdFrameDelegate.h"
 #import <UMSocialCore/UMSocialCore.h>
 #import "EMSDK.h"
-
+#import <AlipaySDK/AlipaySDK.h>
 
 @implementation AppDelegate (ThirdFrameDelegate)
 
@@ -73,27 +73,41 @@
     [[UMSocialManager defaultManager] setUmSocialAppkey:@"58330b17717c194faf00069c"];
     
     // 获取友盟social版本号
-    //NSLog(@"UMeng social version: %@", [UMSocialGlobal umSocialSDKVersion]);
+    //DLog(@"UMeng social version: %@", [UMSocialGlobal umSocialSDKVersion]);
     
     //设置微信的appKey和appSecret
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxbef5a0656069e8e2" appSecret:@"ac07f6f1f055271566e664b5e8927147" redirectURL:@"http://mobile.umeng.com/social"];
     
-    
     //设置分享到QQ互联的appKey和appSecret
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"xbzoAbVrckWipE6W"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
     
-    
     //设置新浪的appKey和appSecret
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"2247552123"  appSecret:@"b8dbc8631b270432bade30f503ebf4c1" redirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-    
 }
 + (BOOL)setUMengBackResult:(NSURL *)url {
     
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
     if (!result) {
         // 其他如支付等SDK的回调
+        // 支付宝
+        if ([url.host isEqualToString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+                DLog(@"result = %@",resultDic);
+            }];
+        }
+        
     }
     return result;
 }
 
++ (void)setAlipayResult:(NSURL *)url {
+    
+    if ([url.host isEqualToString:@"safepay"]) {
+        //跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            DLog(@"result = %@",resultDic);
+        }];
+    }
+}
 @end

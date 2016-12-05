@@ -12,12 +12,12 @@
 
 /** 买家 */
 @property (strong,nonatomic) UILabel *buyLabel;
-/** 昵称 */
-@property (strong,nonatomic) UILabel *nickName;
+///** 昵称 */
+//@property (strong,nonatomic) UILabel *nickName;
 /** 状态 */
 @property (strong,nonatomic) UILabel *stateLabe;
 
-@property(nonatomic, strong) UILabel *dateLabel; /**< 时间 */
+//@property(nonatomic, strong) UILabel *dateLabel; /**< 时间 */
 
 @property(nonatomic, strong) UIView *line; /**< 线 */
 

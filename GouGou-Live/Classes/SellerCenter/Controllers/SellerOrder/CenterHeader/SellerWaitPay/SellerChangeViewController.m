@@ -25,6 +25,9 @@
 
 @property(nonatomic, strong) UIButton *sureBtn; /**< 确认按钮 */
 
+
+@property(nonatomic, strong) NSString *nowCost; /**< 新的值 */
+
 @end
 
 static NSString *cellid = @"SellerAcceptRateCell";
@@ -63,6 +66,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
         SellerChangeShipCostView *costView = [[SellerChangeShipCostView alloc] init];
         costView.commitBlock = ^(NSString *newCost){
             DLog(@"%@", newCost);
+            self.nowCost = newCost;
         };
         [costView show];
         
@@ -70,6 +74,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
         SellerChangePriceAlertView *priceView = [[SellerChangePriceAlertView alloc] init];
         priceView.commitBlock = ^(NSString *newPrice){
             DLog(@"%@", newPrice);
+            self.nowCost = newPrice;
         };
         [priceView show];
     }
@@ -80,6 +85,18 @@ static NSString *cellid = @"SellerAcceptRateCell";
 }
 - (void)clickSureBtnAction {
     DLog(@"sure");
+    // 请求
+    NSDictionary *dict = @{
+                           @"id":@"订单id",
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"price":self.nowCost
+                           };
+    [self getRequestWithPath:API_Order_up params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -265,14 +282,18 @@ static NSString *cellid = @"SellerAcceptRateCell";
         
     };
 
+    // 取消
     prompt.cancelBlock = ^(){
         [weakself.navigationController popViewControllerAnimated:YES];
         prompt = nil;
         [prompt dismiss];
         
+    };
+    // 忘记密码
+    prompt.forgetBlock = ^(){
         
     };
     // 显示蒙版
-//    [prompt show];
+    [prompt show];
 }
 @end

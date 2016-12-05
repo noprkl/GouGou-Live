@@ -24,15 +24,18 @@ static NSString *cellid = @"SellerWaitRateCell";
 #pragma mark - 网络请求
 // 请求待评价的订单
 - (void)getRequestWaitRaterder {
-    NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                           @"status":@(0),
+    NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
+                          @"user_id":@(11),
+                           @"status":@(9),
                            @"page":@(1),
                            @"pageSize":@(10),
                            @"is_right":@(1)
                            };
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [self.tableView reloadData];
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -78,23 +81,19 @@ static NSString *cellid = @"SellerWaitRateCell";
     return _tableView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerWaitRateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    SellerOrderModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
+    
     cell.orderState = @"待评价";
     cell.btnTitles = @[@"联系买家"];
-    cell.costMessage = @[@"已付定金：500"];
-    //    if (indexPath.row == 0) {
-//        cell.orderState = @"待付尾款";
-//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-//    }else if (indexPath.row == 1){
-//        cell.orderState = @"待付全款";
-//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-//    }else if (indexPath.row == 2){
-//        cell.orderState = @"待付定金";
-//        cell.btnTitles = @[@"联系买家"];
-//    }
+    NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+    NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+    cell.costMessage = @[realFinalMoney, realDepositMoney];
+
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
         [weakSelf clickBtnActionWithBtnTitle:btnText];
@@ -102,6 +101,7 @@ static NSString *cellid = @"SellerWaitRateCell";
     
     cell.editBlock = ^(){
         DLog(@"编辑");
+        // 
     };
     return cell;
 }

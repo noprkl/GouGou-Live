@@ -25,15 +25,17 @@ static NSString *cellid = @"SellerProtectPowerCell";
 #pragma mark - 网络请求
 // 请求维权的订单
 - (void)getRequestProtectPowerOrder {
-    NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                           @"status":@(0),
+    NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@(11),
+                           @"status":@(1),
                            @"page":@(1),
                            @"pageSize":@(10),
-                           @"is_right":@(1)
+                           @"is_right":@(2)
                            };
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -79,21 +81,19 @@ static NSString *cellid = @"SellerProtectPowerCell";
     return _tableView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerProtectPowerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-        if (indexPath.row == 0) {
-            cell.orderState = @"维权成功";
-
-        }else if (indexPath.row == 1){
-            cell.orderState = @"维权中";
-        }else if (indexPath.row == 2){
-            cell.orderState = @"维权失败";
-        }
-    cell.costMessage = @[@"已付全款：¥ 950"];
+    SellerOrderModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
+    
+    cell.orderState = @"待评价";
+    cell.btnTitles = @[@"在线客服", @"查看详情"];
+    NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+    NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+    cell.costMessage = @[realFinalMoney, realDepositMoney];
 
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){

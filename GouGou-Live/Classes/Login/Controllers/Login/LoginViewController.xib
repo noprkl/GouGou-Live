@@ -204,6 +204,13 @@
                         <action selector="clickLoginBtnAction:" destination="-1" eventType="touchUpInside" id="Qxu-Zt-udc"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPf-dS-w6l">
+                    <rect key="frame" x="20" y="20" width="15" height="22"/>
+                    <state key="normal" image="-单删除-拷贝"/>
+                    <connections>
+                        <action selector="clickBackAction:" destination="-1" eventType="touchUpInside" id="ClO-QN-j4W"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -230,6 +237,7 @@
                 <constraint firstAttribute="trailing" secondItem="J3X-tC-0RL" secondAttribute="trailing" id="GEL-tn-aic"/>
                 <constraint firstItem="rGZ-wX-Mpa" firstAttribute="trailing" secondItem="N3H-yV-FRL" secondAttribute="trailing" id="Gjn-YI-ebe"/>
                 <constraint firstItem="e4O-0F-EfR" firstAttribute="centerY" secondItem="vuV-Di-3er" secondAttribute="centerY" id="HSb-FV-ikz"/>
+                <constraint firstItem="qPf-dS-w6l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="J24-9a-jll"/>
                 <constraint firstItem="N3H-yV-FRL" firstAttribute="top" secondItem="dPE-qx-UCk" secondAttribute="bottom" constant="20" id="K3x-UH-2hD"/>
                 <constraint firstItem="J3X-tC-0RL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Knf-i3-ODc"/>
                 <constraint firstItem="nEe-0Z-sD9" firstAttribute="centerY" secondItem="oWi-ZL-jok" secondAttribute="centerY" id="LMh-6o-RXG"/>
@@ -263,6 +271,7 @@
                 <constraint firstItem="SqU-3G-7Jr" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="20" id="tD9-wU-o6F"/>
                 <constraint firstItem="N4B-Rh-ahO" firstAttribute="centerY" secondItem="oWi-ZL-jok" secondAttribute="centerY" id="tDG-UN-HjZ"/>
                 <constraint firstItem="dfn-Ev-5pa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tuG-5Z-cy7"/>
+                <constraint firstItem="qPf-dS-w6l" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="vJT-Ql-UJL"/>
                 <constraint firstItem="dfn-Ev-5pa" firstAttribute="top" secondItem="N3H-yV-FRL" secondAttribute="bottom" constant="70" id="xea-Zi-LXe"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -275,6 +284,7 @@
         </view>
     </objects>
     <resources>
+        <image name="-单删除-拷贝" width="15" height="15"/>
         <image name="01登录页 背景" width="750" height="1334"/>
         <image name="LOGO" width="70" height="70"/>
         <image name="QQ" width="40" height="40"/>

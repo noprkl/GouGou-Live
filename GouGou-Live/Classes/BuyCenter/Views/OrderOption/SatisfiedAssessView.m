@@ -13,7 +13,8 @@
 @property (strong,nonatomic) UILabel *satisfiledLabel;
 /** 星星 */
 @property (strong,nonatomic) UIButton *starBtn;
-
+/** 存放星星的数组 */
+@property (strong,nonatomic) NSMutableArray *startArray;
 @end
 
 @implementation SatisfiedAssessView
@@ -28,8 +29,6 @@
     }
     return self;
 }
-#pragma mark
-#pragma mark - 约束
 
 #pragma mark
 #pragma mark - 约束
@@ -75,6 +74,8 @@
         [button setImage:[UIImage imageNamed:@"星星白"] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:@"星星黄"] forState:UIControlStateSelected];
         
+        [self.startArray addObject:button];
+        
         [button addTarget:self action:@selector(clickStartBtn:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:button];
@@ -83,7 +84,18 @@
 }
 - (void)clickStartBtn:(UIButton *)button {
 
-    button.selected = !button.selected;
+    for (UIButton *btn in self.startArray) {
+        
+        if (button.selected) {
+         button.selected = !button.selected;
+            if (btn.frame.origin.x < button.frame.origin.x) {
+                
+                btn.selected = YES;
+                [button setImage:[UIImage imageNamed:@"星星黄"] forState:UIControlStateSelected];
+                btn.userInteractionEnabled = NO;
+            } 
+        }
+    }
 
 }
 @end

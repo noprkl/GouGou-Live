@@ -130,7 +130,7 @@
 - (UIImageView *)dogImageView {
     if (!_dogImageView) {
         _dogImageView = [[UIImageView alloc] init];
-//        _dogImageView.image = [UIImage imageNamed:@"组-7"];
+        _dogImageView.image = [UIImage imageNamed:@"组-7"];
         _dogImageView.layer.cornerRadius = 10;
         _dogImageView.layer.masksToBounds = YES;
     }
@@ -139,7 +139,7 @@
 - (UILabel *)dogNameLabel {
     if (!_dogNameLabel) {
         _dogNameLabel = [[UILabel alloc] init];
-//        _dogNameLabel.text = @"小黑";
+        _dogNameLabel.text = @"小黑";
         _dogNameLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         _dogNameLabel.font = [UIFont systemFontOfSize:16];
         
@@ -150,7 +150,7 @@
     if (!_kindLabel) {
         _kindLabel = [[UILabel alloc] init];
         
-//        _kindLabel.text = @"品种";
+        _kindLabel.text = @"品种";
         _kindLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _kindLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -160,7 +160,7 @@
     if (!_dogKindLabel) {
         _dogKindLabel = [[UILabel alloc] init];
         
-//        _dogKindLabel.text = @"拉布拉多";
+        _dogKindLabel.text = @"拉布拉多";
         _dogKindLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _dogKindLabel.font = [UIFont systemFontOfSize:12];
         
@@ -171,7 +171,7 @@
     if (!_dogAgeLabel) {
         _dogAgeLabel = [[UILabel alloc] init];
         
-//        _dogAgeLabel.text = @"6个月";
+        _dogAgeLabel.text = @"6个月";
         _dogAgeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogAgeLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -181,7 +181,7 @@
     if (!_dogSizeLabel) {
         _dogSizeLabel = [[UILabel alloc] init];
         
-//        _dogSizeLabel.text = @"大型犬";
+        _dogSizeLabel.text = @"大型犬";
         _dogSizeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogSizeLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -191,7 +191,7 @@
     if (!_dogColorLabel) {
         _dogColorLabel = [[UILabel alloc] init];
         
-//        _dogColorLabel.text = @"白色";
+        _dogColorLabel.text = @"白色";
         _dogColorLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dogColorLabel.font = [UIFont systemFontOfSize:12];
     }
@@ -201,7 +201,7 @@
     if (!_nowPriceLabel) {
         _nowPriceLabel = [[UILabel alloc] init];
         
-//        _nowPriceLabel.text = @"¥ 1400";
+        _nowPriceLabel.text = @"¥ 1400";
         _nowPriceLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         _nowPriceLabel.font = [UIFont systemFontOfSize:18];
     }
@@ -210,8 +210,8 @@
 - (UILabel *)oldPriceLabel {
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
+        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
         
-//        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
     }
     return _oldPriceLabel;
 }

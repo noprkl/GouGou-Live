@@ -188,7 +188,7 @@
     
     if (!_freightMoney) {
         _freightMoney = [[UILabel alloc] init];
-//        _freightMoney.text = @"￥50)";
+        _freightMoney.text = @"￥50)";
         _freightMoney.textColor = [UIColor colorWithHexString:@"#999999"];
         _freightMoney.font = [UIFont systemFontOfSize:12];
     }
@@ -198,7 +198,7 @@
     
     if (!_fontMoneyLabel) {
         _fontMoneyLabel = [[UILabel alloc] init];
-//        _fontMoneyLabel.text = @"已付定金:";
+        _fontMoneyLabel.text = @"已付定金:";
         _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _fontMoneyLabel.font = [UIFont systemFontOfSize:14];
     }
@@ -209,7 +209,7 @@
     
     if (!_fontMoney) {
         _fontMoney = [[UILabel alloc] init];
-//        _fontMoney.text = @"￥500";
+        _fontMoney.text = @"￥500";
         _fontMoney.textColor = [UIColor colorWithHexString:@"#333333"];
         _fontMoney.font = [UIFont systemFontOfSize:16];
     }
@@ -220,7 +220,7 @@
     
     if (!_remainderMoneylabel) {
         _remainderMoneylabel = [[UILabel alloc] init];
-//        _remainderMoneylabel.text = @"已付尾款:";
+        _remainderMoneylabel.text = @"已付尾款:";
         _remainderMoneylabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _remainderMoneylabel.font = [UIFont systemFontOfSize:14];
     }
@@ -231,7 +231,7 @@
     
     if (!_remainderMoeny) {
         _remainderMoeny = [[UILabel alloc] init];
-//        _remainderMoeny.text = @"￥950";
+        _remainderMoeny.text = @"￥950";
         _remainderMoeny.textColor = [UIColor colorWithHexString:@"#333333"];
         _remainderMoeny.font = [UIFont systemFontOfSize:16];
     }

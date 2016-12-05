@@ -76,7 +76,6 @@
     
     NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
     [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-//    self.dogCardView.dogImageView.image = [UIImage imageNamed:centerModel.pathSmall];
     self.dogCardView.dogNameLabel.text = centerModel.name;
     self.dogCardView.dogAgeLabel.text = centerModel.ageName;
     self.dogCardView.dogSizeLabel.text = centerModel.sizeName;
@@ -86,8 +85,8 @@
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     
     self.costView.fontMoney.text = centerModel.productRealDeposit;
-    self.costView.remainderMoeny.text = centerModel.balance;
-    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.balance integerValue])];
+    self.costView.remainderMoeny.text = centerModel.productRealBalance;
+    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.productRealBalance integerValue])];
      
 }
 #pragma mark

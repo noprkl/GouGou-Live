@@ -11,6 +11,11 @@
 #import "FunctionButtonView.h"  // cell底部按钮
 #import "GotoAssessViewController.h"
 
+// 订单详情
+#import "OrderCompleteAssess.h" // 完成评价
+#import "OrderCompleteViewController.h" // 订单完成（未评价）
+#import "OrderWaitAssessViewController.h" // 待评价
+
 static NSString * waitsAssessCell = @"waitsAssessCell";
 @interface WaitAssessViewController ()<UITableViewDelegate,UITableViewDataSource>
 /** tableView */
@@ -34,7 +39,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         [self getAssessRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-    [self.tableview.mj_header beginRefreshing];
+    
 }
 
 - (void)viewDidLoad {
@@ -54,7 +59,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 - (void)getAssessRequest {
     
     NSDictionary * dict = @{
-                            @"user_id":@(11),
+                            @"user_id":@(17),
                             @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10),
@@ -89,6 +94,8 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 88 - 64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        _tableview.showsVerticalScrollIndicator = NO;
         [_tableview registerClass:[WaitAssessCell class] forCellReuseIdentifier:waitsAssessCell];
     }
     return _tableview;
@@ -153,7 +160,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 
         cell.centerModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"查看评价",@"申请维权",@"联系买家",@"删除订单"] buttonNum:4];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"查看评价",@"申请维权",@"联系卖家",@"删除订单"] buttonNum:4];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
@@ -183,6 +190,22 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         [cell addSubview:funcBtn];
     }
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    BuyCenterModel * model = self.dataArray[indexPath.row];
+    if ([model.status integerValue] == 9) {
+        OrderCompleteViewController * OrderVC = [[OrderCompleteViewController alloc] init];
+        [self.navigationController pushViewController:OrderVC animated:YES];
+        
+    } else if ([model.status integerValue] == 10) {
+        
+        OrderCompleteAssess * orderAssessVc = [[OrderCompleteAssess alloc] init];
+        
+        [self.navigationController pushViewController:orderAssessVc animated:YES];
+     
+    }
+    
 }
 
 

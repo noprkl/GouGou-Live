@@ -29,7 +29,7 @@
 - (void)setTraficFee:(NSString *)traficFee {
 
     _traficFee = traficFee;
-    self.freightLabel.text = traficFee;
+    self.freightMoney.text = traficFee;
 }
 
 - (void)setTotalsMoney:(NSString *)totalsMoney {
@@ -42,7 +42,7 @@
 - (void)setCutMoney:(NSString *)cutMoney {
 
     _cutMoney = cutMoney;
-    self.preferentialLabel.text = [NSString stringWithFormat:@"%ld",([self.totalMoney.text integerValue] - [self.productRealDeposit integerValue] - [self.productRealBalance integerValue] - [self.freightLabel.text integerValue])];
+    self.preferentialMoney.text = [NSString stringWithFormat:@"%ld",([self.totalMoney.text integerValue] - [self.productRealDeposit integerValue] - [self.productRealBalance integerValue] - [self.freightMoney.text integerValue])];
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {

@@ -32,13 +32,13 @@
 - (void)setNeedBackMessage:(NSString *)needBackMessage {
 
     _needBackMessage = needBackMessage;
-    self.needBackLabel.text = needBackMessage;
+    self.needBackMoney.text = needBackMessage;
 }
 
 - (void)setFontMoneyMessage:(NSString *)fontMoneyMessage {
 
     _fontMoneyMessage = fontMoneyMessage;
-    self.fontMoneyLabel.text = fontMoneyMessage;
+    self.fontMoney.text = fontMoneyMessage;
 }
 
 - (void)setBalance:(NSString *)balance {

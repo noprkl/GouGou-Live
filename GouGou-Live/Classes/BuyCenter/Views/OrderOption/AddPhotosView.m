@@ -7,6 +7,7 @@
 //
 
 #import "AddPhotosView.h"
+
 #import "UpLoadPictureView.h"
 
 int counts = 0;

@@ -30,6 +30,8 @@
 @property (strong,nonatomic) AnonymityAssessView *aninymityView;
 /** 提交评价 */
 @property (strong,nonatomic) UIButton * handinAssess;
+/** 照片数量 */
+@property (assign,nonatomic) NSInteger imageCount;
 
 @end
 
@@ -38,17 +40,18 @@
 #pragma mark - 网络请求
 - (void)getOrderAssessRequest {
 
-    NSDictionary *dict = @{@"user_id":@(11),
+    NSDictionary *dict = @{@"user_id":@(17),
                            @"order_id":@(12),
-                           @"point":@(10),
-                           @"has_photo":@(10),
-                           @"is_anomy":@(10),
-                           @"img":@"nil",
-                           @"comment":@"yes"
+                           @"point":@(5),
+                           @"has_photo":@(2),
+                           @"is_anomy":@(2),
+                           @"img":@"image",
+                           @"comment":@"text"
                            };
     
-    [self postRequestWithPath:API_Order_evaluation params:dict success:^(id successJson) {
+    [self postRequestWithPath:API_My_order_comment params:dict success:^(id successJson) {
         DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
         
     } error:^(NSError *error) {
         DLog(@"%@",error);
@@ -202,7 +205,9 @@
 - (AddPhotosView *)addPhotoView {
 
     if (!_addPhotoView) {
-        _addPhotoView = [[AddPhotosView alloc] init];
+        self.imageCount = 0;
+            _addPhotoView = [[AddPhotosView alloc] init];
+        
         _addPhotoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
         __weak typeof(self) weakself = self;
@@ -210,6 +215,7 @@
     
         _addPhotoView.addPhotoBlock = ^(UIButton *button) {
         
+            weakself.imageCount ++;
             UIImagePickerController * picker = [[UIImagePickerController alloc] init];
             
             addPhotoView.pickers = picker;
@@ -225,13 +231,9 @@
                 
                 [weakself presentViewController:picker animated:YES completion:^{
                 
-                
-                
                 }];
             }
-//
         };
-        
     }
     return _addPhotoView;
 }
@@ -266,7 +268,6 @@
 
 #pragma mark
 #pragma mark - TextFiled代理
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 
     return YES;
@@ -278,11 +279,4 @@
     return YES;
 
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
-
-
-
 @end

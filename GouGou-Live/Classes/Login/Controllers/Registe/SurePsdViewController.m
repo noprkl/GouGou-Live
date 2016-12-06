@@ -23,7 +23,7 @@
     NSString *pwd = [NSString md5WithString:self.psdTextField.text];
     DLog(@"%@", pwd);
     NSDictionary *dict = @{
-                           @"user_tel":@([self.telNumber integerValue]),
+                           @"user_tel":self.telNumber,
                            @"user_pwd":pwd,
                            @"code":@([self.codeNumber integerValue])
                            };

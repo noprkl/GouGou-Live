@@ -62,7 +62,7 @@
         [self freetimeout];
         
         NSDictionary *dict = @{
-                               @"tel" : @([self.phoneTextField.text integerValue]),
+                               @"tel" :self.phoneTextField.text,
                                @"type" : @0
                                };
         DLog(@"%@", dict);

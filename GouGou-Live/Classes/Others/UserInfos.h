@@ -30,12 +30,14 @@
 
 @property(nonatomic, strong) NSString *useralicode; /**< 支付宝账号 */
 @property(nonatomic, strong) NSString *userpaycode; /**< 支付宝账号 */
+
+// 不可删掉
 @property(nonatomic, strong) NSString *wxopenid; /**< 微信快捷登录 */
 @property(nonatomic, strong) NSString *wbopenid; /**< 微博快捷登录 */
 @property(nonatomic, strong) NSString *qqopenid; /**< QQ快捷登录 */
 
 
-// 个人信息 无需本地存储
+// 个人信息 用于传值
 
 @property(nonatomic, assign) NSInteger fansCount; /**< 粉丝数 */
 @property(nonatomic, assign) NSInteger commentCount; /**< 评论数 */

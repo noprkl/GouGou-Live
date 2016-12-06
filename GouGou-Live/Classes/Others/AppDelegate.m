@@ -57,7 +57,10 @@
 
     return YES;
 }
-
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+//    
+//    return [UMSocials]
+//}
 // APP将要从后台返回
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {

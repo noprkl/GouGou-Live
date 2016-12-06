@@ -20,6 +20,7 @@
 #import "ManagePictureaViewController.h"
 
 #import "MyAlbumsModel.h" // 相册model
+#import "PicturesViewController.h" // 照片列表
 
 @interface MyPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -301,6 +302,12 @@ static NSString *cellid = @"cellid";
                     ManagePictureaViewController *manage = [[ManagePictureaViewController alloc] init];
                     manage.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:manage animated:YES];
+                };
+                picture.pictureBlock = ^(MyAlbumsModel *model){
+                    PicturesViewController *pictureVC = [[PicturesViewController alloc] init];
+                    pictureVC.model = model;
+                    pictureVC.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:pictureVC animated:YES];
                 };
             }
             break;

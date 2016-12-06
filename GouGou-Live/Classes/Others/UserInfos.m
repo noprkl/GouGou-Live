@@ -120,15 +120,15 @@ static NSString *userAssetKey = @"userAsset";
     if ([UserInfos sharedUser].userpaycode != NULL) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:userpaycodeKey];
     }
-    if ([UserInfos sharedUser].wxopenid != NULL) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wxopenidKey];
-    }
-    if ([UserInfos sharedUser].wbopenid != NULL) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wbopenidKey];
-    }
-    if ([UserInfos sharedUser].qqopenid != NULL) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:qqopenidKey];
-    }
+//    if ([UserInfos sharedUser].wxopenid != NULL) {
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wxopenidKey];
+//    }
+//    if ([UserInfos sharedUser].wbopenid != NULL) {
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wbopenidKey];
+//    }
+//    if ([UserInfos sharedUser].qqopenid != NULL) {
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:qqopenidKey];
+//    }
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:ismerchantKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:isrealKey];
     

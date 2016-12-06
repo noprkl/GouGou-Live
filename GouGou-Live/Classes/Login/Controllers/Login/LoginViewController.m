@@ -110,7 +110,7 @@
             NSString *pwd = [NSString md5WithString:self.psdTextField.text];
 
             NSDictionary *dict = @{
-                                   @"user_tel":@([self.phoneTestField.text integerValue]),
+                                   @"user_tel":self.phoneTestField.text,
                                    @"user_pwd":pwd
                                    };
             // 请求之前删掉上一次的信息

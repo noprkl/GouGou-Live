@@ -11,6 +11,7 @@
 #import "AppDelegate+ThirdFrameDelegate.h" //
 #import "WXApi.h"
 #import <AlipaySDK/AlipaySDK.h>
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -41,6 +42,9 @@
 //    // 微信支付
 //    [WXApi registerApp:@"wxbef5a0656069e8e2" withDescription:@"demo 2.0"];
    
+    // 七牛云
+    [PLStreamingEnv initEnv];
+    
     return YES;
 }
 

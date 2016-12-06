@@ -21,11 +21,11 @@
 @end
 
 @implementation WaitPayAllNickView
-//- (void)setOrderState:(NSString *)orderState {
-//
-//    _orderState = orderState;
-//    self.stateLabe.text = orderState;
-//}
+- (void)setOrderState:(NSString *)orderState {
+
+    _orderState = orderState;
+    self.stateLabe.text = orderState;
+}
 /*
 - (void)setModel:(WaitAllNickModel *)model {
 

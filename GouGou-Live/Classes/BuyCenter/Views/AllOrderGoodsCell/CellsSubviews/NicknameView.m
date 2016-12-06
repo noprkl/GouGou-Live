@@ -23,13 +23,13 @@
 @end
 
 @implementation NicknameView
-/*
 // 状态设置
 - (void)setStateMessage:(NSString *)stateMessage {
-
+    
     _stateMessage = stateMessage;
     self.stateLabe.text = stateMessage;
 }
+/*
 // 商家名称设置
 - (void)setMerchantName:(NSString *)merchantName {
 

@@ -139,7 +139,7 @@
     
     if (!_nickView) {
         _nickView = [[NicknameView alloc] init];
-//        [_nickView setStateMessage:@"待发货"];
+        [_nickView setStateMessage:@"待发货"];
     }
     return _nickView;
 }

@@ -253,7 +253,7 @@
         
         _dogImageView = [[UIImageView alloc] init];
         
-        //        _dogImageView.image = [UIImage imageNamed:@"组-7"];
+        _dogImageView.image = [UIImage imageNamed:@"组-7"];
         
         _dogImageView.layer.cornerRadius = 10;
         
@@ -271,7 +271,7 @@
         
         _dogNameLabel = [[UILabel alloc] init];
         
-        //        _dogNameLabel.text = @"小黑";
+        _dogNameLabel.text = @"小黑";
         
         _dogNameLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         
@@ -291,9 +291,7 @@
         
         _kindLabel = [[UILabel alloc] init];
         
-        
-        
-        //        _kindLabel.text = @"品种";
+        _kindLabel.text = @"品种";
         
         _kindLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         
@@ -311,9 +309,7 @@
         
         _dogKindLabel = [[UILabel alloc] init];
         
-        
-        
-        //        _dogKindLabel.text = @"拉布拉多";
+        _dogKindLabel.text = @"拉布拉多";
         
         _dogKindLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         
@@ -333,9 +329,7 @@
         
         _dogAgeLabel = [[UILabel alloc] init];
         
-        
-        
-        //        _dogAgeLabel.text = @"6个月";
+        _dogAgeLabel.text = @"6个月";
         
         _dogAgeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         
@@ -353,9 +347,7 @@
         
         _dogSizeLabel = [[UILabel alloc] init];
         
-        
-        
-        //        _dogSizeLabel.text = @"大型犬";
+        _dogSizeLabel.text = @"大型犬";
         
         _dogSizeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         
@@ -373,9 +365,7 @@
         
         _dogColorLabel = [[UILabel alloc] init];
         
-        
-        
-        //        _dogColorLabel.text = @"白色";
+        _dogColorLabel.text = @"白色";
         
         _dogColorLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         
@@ -393,9 +383,7 @@
         
         _nowPriceLabel = [[UILabel alloc] init];
         
-        
-        
-        //        _nowPriceLabel.text = @"¥ 1400";
+        _nowPriceLabel.text = @"¥ 1400";
         
         _nowPriceLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         
@@ -413,9 +401,7 @@
         
         _oldPriceLabel = [[UILabel alloc] init];
         
-        
-        
-        //        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
+        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
         
     }
     

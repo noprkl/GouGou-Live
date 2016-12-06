@@ -9,13 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailPayMoney : UIView
-/** 需付尾款信息 */
+/**< 尾款 */
+@property (copy, nonatomic) NSString *balance;
+/**< 实付款 */
+@property (copy, nonatomic) NSString *realMoney;
+/** 实付尾款 */
 @property (strong,nonatomic) NSString *needBackMessage;
 /** 待付定金 */
 @property (strong,nonatomic) NSString *fontMoneyMessage;
-
-@property (copy, nonatomic) NSString *balance; /**< 尾款 */
-
-@property (copy, nonatomic) NSString *realMoney; /**< 实付款 */
-
 @end

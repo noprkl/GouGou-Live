@@ -20,8 +20,8 @@
 /** 状态 */
 @property (strong,nonatomic) UILabel *stateLabe;
 
-///** 订单状态信息 */
-//@property (strong,nonatomic) NSString *orderState;
+/** 订单状态信息 */
+@property (strong,nonatomic) NSString *orderState;
 ///** 昵称model */
 //@property (strong,nonatomic) WaitAllNickModel *model;
 

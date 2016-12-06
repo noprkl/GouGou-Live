@@ -169,7 +169,7 @@
     
     if (!_nickView) {
         _nickView = [[WaitPayAllNickView alloc] init];
-//        [_nickView setOrderState:@"已完成"];
+        [_nickView setOrderState:@"已完成"];
     }
     return _nickView;
 }

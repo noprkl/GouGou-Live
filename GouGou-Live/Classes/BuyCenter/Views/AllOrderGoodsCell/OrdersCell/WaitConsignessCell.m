@@ -165,7 +165,7 @@
     
     if (!_nickView) {
         _nickView = [[WaitPayAllNickView alloc] init];
-//        [_nickView setOrderState:@"待收货"];
+        [_nickView setOrderState:@"待收货"];
     }
     return _nickView;
 }

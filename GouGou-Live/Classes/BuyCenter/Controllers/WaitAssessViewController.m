@@ -34,6 +34,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [self getAssessRequest];
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getAssessRequest];
@@ -114,6 +115,13 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+//    UITableViewCell * cellSys = [tableView dequeueReusableCellWithIdentifier:@"cellid"];
+//    
+//    if (!cellSys) {
+//        
+//        cellSys = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellid"];
+//    }
+    
     BuyCenterModel * model = self.dataArray[indexPath.row];
 
     WaitAssessCell * cell = [tableView dequeueReusableCellWithIdentifier:waitsAssessCell];
@@ -121,11 +129,10 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     if ([model.status integerValue] == 9) {
-
         cell.centerModel = model;
     
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"未评价",@"申请维权",@"联系买家",@"删除订单"] buttonNum:4];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"未评价",@"申请维权",@"联系卖家",@"删除订单"] buttonNum:4];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
@@ -154,9 +161,9 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
             }
         };
         [cell addSubview:funcBtn];
-        
+//        return cell;
     } else if ([model.status integerValue] == 10) {
-        WaitAssessCell * cell = [tableView dequeueReusableCellWithIdentifier:waitsAssessCell];
+//        WaitAssessCell * cell = [tableView equeueReusableCellWithIdentifier:waitsAssessCell];
 
         cell.centerModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -188,6 +195,8 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
             }
         };
         [cell addSubview:funcBtn];
+//        return cell;
+
     }
     return cell;
 }

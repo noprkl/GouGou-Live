@@ -17,29 +17,18 @@
 @property (strong,nonatomic) UILabel *totalMoneyLabel;
 /** 总款数 */
 @property (strong,nonatomic) UILabel *totalMoney;
-/** 需付尾款 */
+/** 实付尾款 */
 @property (strong,nonatomic) UILabel *needBackLabel;
-/** 需付尾款数 */
+/** 实付尾款数 */
 @property (strong,nonatomic) UILabel *needBackMoney;
-/** 代付定金 */
+/** 实付定金 */
 @property (strong,nonatomic) UILabel *fontMoneyLabel;
-/** 定金数 */
+/** 实付定金数 */
 @property (strong,nonatomic) UILabel *fontMoney;
 
 @end
 
 @implementation DetailPayMoney
-- (void)setNeedBackMessage:(NSString *)needBackMessage {
-
-    _needBackMessage = needBackMessage;
-    self.needBackMoney.text = needBackMessage;
-}
-
-- (void)setFontMoneyMessage:(NSString *)fontMoneyMessage {
-
-    _fontMoneyMessage = fontMoneyMessage;
-    self.fontMoney.text = fontMoneyMessage;
-}
 
 - (void)setBalance:(NSString *)balance {
 
@@ -51,6 +40,17 @@
     
     _realMoney = realMoney;
     self.totalMoney.text = [NSString stringWithFormat:@"%ld",[self.needBackMessage integerValue] + [self.fontMoneyMessage integerValue]];
+}
+- (void)setNeedBackMessage:(NSString *)needBackMessage {
+    
+    _needBackMessage = needBackMessage;
+    self.needBackMoney.text = needBackMessage;
+}
+
+- (void)setFontMoneyMessage:(NSString *)fontMoneyMessage {
+    
+    _fontMoneyMessage = fontMoneyMessage;
+    self.fontMoney.text = fontMoneyMessage;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame

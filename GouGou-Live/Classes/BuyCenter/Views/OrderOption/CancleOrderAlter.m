@@ -69,7 +69,7 @@ static NSString *cellid = @"SizeFilterCellID";
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 44 * self.dataArr.count, SCREEN_WIDTH, 44 * self.dataArr.count);
+    rect = CGRectMake(0, SCREEN_HEIGHT - 44 * (self.dataArr.count + 2), SCREEN_WIDTH, 44 *(self.dataArr.count + 2));
     self.frame = rect;
     //渐入动画
     [self fadeIn];
@@ -117,10 +117,13 @@ static NSString *cellid = @"SizeFilterCellID";
 - (void)setDataArr:(NSArray *)dataArr {
     _dataArr = dataArr;
     _dataPlist = dataArr;
+    [self reloadData];
+    
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.dataPlist.count - 2;
+    return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -133,17 +136,16 @@ static NSString *cellid = @"SizeFilterCellID";
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSString *text = self.dataPlist[indexPath.row];
+    DogCategoryModel * model = self.dataPlist[indexPath.row];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-    label.textColor = [UIColor blackColor];
-    cell.backgroundColor = [UIColor whiteColor];
-    label.text = text;
-    label.textColor = [UIColor colorWithHexString:@"666666"];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentCenter;
-    [cell.contentView addSubview:label];
-    
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.textLabel.backgroundColor = [UIColor whiteColor];
+    cell.textLabel.text = model.name;
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"666666"];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+
+
     return cell;
     
 }
@@ -164,7 +166,7 @@ static NSString *cellid = @"SizeFilterCellID";
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
         
-        label.text = [self.dataPlist firstObject];
+        label.text = @"取消订单原因";
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor colorWithHexString:@"#666666"];
         label.font = [UIFont systemFontOfSize:16];
@@ -184,7 +186,7 @@ static NSString *cellid = @"SizeFilterCellID";
         
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
-        [button setTitle:[self.dataPlist lastObject] forState:(UIControlStateNormal)];
+        [button setTitle:@"取消" forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         
         [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
@@ -207,13 +209,9 @@ static NSString *cellid = @"SizeFilterCellID";
     NSString *text = self.dataPlist[indexPath.row];
     self.lastString = text;
     
-    if (indexPath.row < 0) {
-        return;
-    } else {
         // 删除订单，然后返回
-        if (_reasonCellBlock) {
-            _reasonCellBlock(text);
-        }
+    if (_reasonCellBlock) {
+        _reasonCellBlock(text);
     }
 }
 @end

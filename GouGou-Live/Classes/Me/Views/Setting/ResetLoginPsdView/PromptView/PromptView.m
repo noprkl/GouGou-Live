@@ -243,7 +243,7 @@
             
         }else{
             
-            [self fadeOut];
+//            [self fadeOut];
             _clickSureBtnBlock(self.editngtextfiled.text);
         }
     }
@@ -267,6 +267,7 @@
 }
 - (void)clickForgrtBtnAction {
     if (_forgetBlock) {
+        [self dismiss];
         _forgetBlock();
     }
 }

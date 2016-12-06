@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="psdTextField" destination="pi8-LJ-Zjq" id="5At-Bk-EtE"/>
                 <outlet property="surePsdTextField" destination="K0U-6I-tVQ" id="m1N-xX-S3w"/>
+                <outlet property="view" destination="iN0-l3-epB" id="LQ2-8f-5zK"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -16,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="U0p-Cj-CFo">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="U0p-Cj-CFo">
                     <rect key="frame" x="28" y="26" width="16" height="18"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faf-JR-isw">
@@ -89,7 +90,7 @@
                         <action selector="clickSureBtnAction:" destination="-1" eventType="touchUpInside" id="6mR-wy-Vy2"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="RC6-S6-tbH">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="RC6-S6-tbH">
                     <rect key="frame" x="28" y="78" width="16" height="18"/>
                 </imageView>
             </subviews>
@@ -119,7 +120,7 @@
                 <constraint firstItem="K0U-6I-tVQ" firstAttribute="width" secondItem="pi8-LJ-Zjq" secondAttribute="width" id="zD8-gb-CFs"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="235.5" y="182.5"/>
+            <point key="canvasLocation" x="167.5" y="187.5"/>
         </view>
     </objects>
     <resources>

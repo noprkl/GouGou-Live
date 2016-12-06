@@ -5,27 +5,27 @@
 //
 //  Created by ma c on 16/11/10.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  花费View
 
 #import "CostView.h"
 
 @interface CostView  ()
 /** 合计 */
 @property (strong,nonatomic) UILabel *totalLabel;
-/** 总钱数 */
-@property (strong,nonatomic) UILabel *totalMoney;
+///** 总钱数 */
+//@property (strong,nonatomic) UILabel *totalMoney;
 /** 运费 */
 @property (strong,nonatomic) UILabel *freightLabel;
-/** 运费数 */
-@property (strong,nonatomic) UILabel *freightMoney;
+///** 运费数 */
+//@property (strong,nonatomic) UILabel *freightMoney;
 /** 已付定金 */
 @property (strong,nonatomic) UILabel *fontMoneyLabel;
-/** 定金 */
-@property (strong,nonatomic) UILabel *fontMoney;
+///** 定金 */
+//@property (strong,nonatomic) UILabel *fontMoney;
 /** 已付尾款 */
 @property (strong,nonatomic) UILabel *remainderMoneylabel;
-/** 尾款 */
-@property (strong,nonatomic) UILabel *remainderMoeny;
+///** 尾款 */
+//@property (strong,nonatomic) UILabel *remainderMoeny;
 
 @end
 
@@ -38,22 +38,31 @@
     self.fontMoney.text = fontMoney;
     self.remainderMoneylabel.text = backLabel;
     self.remainderMoeny.text = backMoney;
+    
 
 }
-
+/*
+#pragma mark - 模型
 - (void)setCostModel:(CostModel *)costModel {
 
     _costModel = costModel;
-    self.freightLabel.text = [NSString stringWithFormat:@"%ld",([costModel.productRealDeposit integerValue] + [costModel.balance integerValue])];
-    self.fontMoneyLabel.text = costModel.productRealDeposit;
-    self.remainderMoneylabel.text = costModel.balance;
-}
-
--(void)setMoneyMessage:(NSString *)moneyMessage {
+    self.totalMoney.text = [NSString stringWithFormat:@"%ld",([costModel.productRealDeposit integerValue] + [costModel.balance integerValue])];
+    self.fontMoney.text = costModel.productRealDeposit;
+    self.remainderMoeny.text = costModel.balance;
+    self.freightMoney.text = [NSString stringWithFormat:@"￥%@)",costModel.traficRealFee];
     
-    _moneyMessage = moneyMessage;
-    self.totalMoney.text = moneyMessage;
+    DLog(@"%@",self.freightMoney.text);
+    DLog(@"%@",self.fontMoney.text);
+    DLog(@"%@",self.remainderMoeny.text);
+    DLog(@"%@",self.totalMoney.text);
+
 }
+*/
+//-(void)setMoneyMessage:(NSString *)moneyMessage {
+//    
+//    _moneyMessage = moneyMessage;
+//    self.totalMoney.text = moneyMessage;
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -179,7 +188,7 @@
     
     if (!_freightMoney) {
         _freightMoney = [[UILabel alloc] init];
-//        _freightMoney.text = @"￥50)";
+        _freightMoney.text = @"￥50)";
         _freightMoney.textColor = [UIColor colorWithHexString:@"#999999"];
         _freightMoney.font = [UIFont systemFontOfSize:12];
     }
@@ -189,7 +198,7 @@
     
     if (!_fontMoneyLabel) {
         _fontMoneyLabel = [[UILabel alloc] init];
-//        _fontMoneyLabel.text = @"已付定金:";
+        _fontMoneyLabel.text = @"已付定金:";
         _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _fontMoneyLabel.font = [UIFont systemFontOfSize:14];
     }
@@ -200,7 +209,7 @@
     
     if (!_fontMoney) {
         _fontMoney = [[UILabel alloc] init];
-//        _fontMoney.text = @"￥500";
+        _fontMoney.text = @"￥500";
         _fontMoney.textColor = [UIColor colorWithHexString:@"#333333"];
         _fontMoney.font = [UIFont systemFontOfSize:16];
     }
@@ -211,7 +220,7 @@
     
     if (!_remainderMoneylabel) {
         _remainderMoneylabel = [[UILabel alloc] init];
-//        _remainderMoneylabel.text = @"已付尾款:";
+        _remainderMoneylabel.text = @"已付尾款:";
         _remainderMoneylabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _remainderMoneylabel.font = [UIFont systemFontOfSize:14];
     }
@@ -222,7 +231,7 @@
     
     if (!_remainderMoeny) {
         _remainderMoeny = [[UILabel alloc] init];
-//        _remainderMoeny.text = @"￥950";
+        _remainderMoeny.text = @"￥950";
         _remainderMoeny.textColor = [UIColor colorWithHexString:@"#333333"];
         _remainderMoeny.font = [UIFont systemFontOfSize:16];
     }

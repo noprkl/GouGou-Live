@@ -45,7 +45,13 @@ static NSString *cellid = @"SellerShipTemplateCell";
 
 }
 - (void)initUI{
-    
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+//        [self getRequestAllOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 - (void)addShipTemplate {
     SellerAddShipTemplateViewController *addTemplateVC = [[SellerAddShipTemplateViewController alloc] init];

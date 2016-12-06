@@ -13,6 +13,9 @@
 #import "DogBookViewController.h"
 #import "BuyRuleAlertView.h"
 
+#import "DogDetailModel.h"
+#import "DogImageView.h"
+
 @interface DogShowViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 /** TableView */
@@ -21,9 +24,6 @@
 /** 数据源 */
 @property (strong, nonatomic) NSArray *dataArr;
 
-/** 图片的个数 */
-@property (assign, nonatomic) NSInteger images;
-
 /** cell */
 @property (strong, nonatomic) DogShowMessageCell *cell;
 
@@ -31,12 +31,34 @@
 
 //@property(nonatomic, strong) ShareAlertView *shareAlert; /**< 分享view */
 
+@property(nonatomic, strong) DogDetailModel *dogInfo; /**< 狗狗信息 */
 
 @end
 
 static NSString *cellid = @"DogShowCellid";
 
 @implementation DogShowViewController
+#pragma mark
+#pragma mark - 网络请求
+// 全部商品
+- (void)getGoodsDetail {
+    NSDictionary *dict = @{
+                           @"id":@(50)
+                           };
+    DLog(@"%@", dict);
+    [self getRequestWithPath:API_Product_limit params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if (successJson) {
+            self.dogInfo = [DogDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+            DLog(@"%@", self.dogInfo);
+            
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -47,11 +69,13 @@ static NSString *cellid = @"DogShowCellid";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [self getGoodsDetail];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     self.navigationController.navigationBarHidden = YES;
+    self.hidesBottomBarWhenPushed = YES;
 }
 
 - (void)initUI {
@@ -76,6 +100,7 @@ static NSString *cellid = @"DogShowCellid";
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.decelerationRate = 0.9;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerClass:[DogShowMessageCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;
@@ -101,12 +126,15 @@ static NSString *cellid = @"DogShowCellid";
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //    return self.dataArr.count;
-    return 4;
+    return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DogShowMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+//    SellerMyGoodsModel *model = self.dataArr[indexPath.row];
+//    cell.model = model;
+    cell.model = self.dogInfo;
+
     self.cell = cell;
     __weak typeof(self) weakSelf = self;
     
@@ -160,8 +188,6 @@ static NSString *cellid = @"DogShowCellid";
                 default:
                     break;
             }
-            
-            
         }];
         [shareAlert show];
         
@@ -191,7 +217,7 @@ static NSString *cellid = @"DogShowCellid";
         [rulesAlert show];
         
         rulesAlert.sureBlock = ^(){
-            [self pushToDogBookVC];
+            [self pushToDogBookVC:self.dogInfo];
             
         };
     };
@@ -204,12 +230,17 @@ static NSString *cellid = @"DogShowCellid";
    
     DogShowMessageCell *cell = (DogShowMessageCell *)self.cell;
    
-    return [cell getCellHeight];
+    NSArray *imsArr = [self.dogInfo.pathBig componentsSeparatedByString:@","];
+    DogImageView *dogimageView = [[DogImageView alloc] init];
+    CGFloat height = [dogimageView getCellHeightWithImages:imsArr];
+    
+    return [cell getCellHeight] + height;
 }
-- (void)pushToDogBookVC {
+- (void)pushToDogBookVC:(DogDetailModel *)model {
    
     DogBookViewController *dogBookVC = [[DogBookViewController alloc] init];
     dogBookVC.hidesBottomBarWhenPushed = YES;
+    dogBookVC.model = model;
     [self.navigationController pushViewController:dogBookVC animated:YES];
 }
 

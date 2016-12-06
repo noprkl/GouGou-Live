@@ -26,6 +26,24 @@
 
 @implementation GoodsPriceView
 
+- (void)setTraficFee:(NSString *)traficFee {
+
+    _traficFee = traficFee;
+    self.freightMoney.text = traficFee;
+}
+
+- (void)setTotalsMoney:(NSString *)totalsMoney {
+    
+    _totalsMoney = totalsMoney;
+    self.totalMoney.text = [NSString stringWithFormat:@"%ld",[self.productBalance integerValue] + [self.productDeposit integerValue]];
+    
+}
+
+- (void)setCutMoney:(NSString *)cutMoney {
+
+    _cutMoney = cutMoney;
+    self.preferentialMoney.text = [NSString stringWithFormat:@"%ld",([self.totalMoney.text integerValue] - [self.productRealDeposit integerValue] - [self.productRealBalance integerValue] - [self.freightMoney.text integerValue])];
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

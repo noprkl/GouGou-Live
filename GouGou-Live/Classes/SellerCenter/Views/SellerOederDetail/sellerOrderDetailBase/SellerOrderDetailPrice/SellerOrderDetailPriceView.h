@@ -10,4 +10,9 @@
 
 @interface SellerOrderDetailPriceView : UIView
 
+@property(nonatomic, strong) UILabel *allPriceCount; /**< 总价数 */
+@property(nonatomic, strong) UILabel *templatePriceCount; /**< 运费数 */
+@property(nonatomic, strong) UILabel *favorablePriceCount; /**< 优惠数 */
+@property(nonatomic, strong) UILabel *realPriceCount; /**< 实付数 */
+
 @end

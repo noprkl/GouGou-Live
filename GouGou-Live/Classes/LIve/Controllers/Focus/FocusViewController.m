@@ -74,8 +74,9 @@
         __weak typeof(self) weakSelf = self;
         _tableView.cellBlock = ^(){
             
-            //            LivingViewController *livingVC = [[LivingViewController alloc] init];
-            //            [weakSelf.navigationController pushViewController:livingVC animated:YES];
+        LivingViewController *livingVC = [[LivingViewController alloc] init];
+            livingVC.hidesBottomBarWhenPushed = YES;
+        [weakSelf.navigationController pushViewController:livingVC animated:YES];
             
         };
     }

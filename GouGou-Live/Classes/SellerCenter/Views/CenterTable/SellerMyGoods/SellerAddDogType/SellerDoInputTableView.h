@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickSureAddButtonBlock)();
+typedef void(^ClickSureAddButtonBlock)(DogCategoryModel *model);
 
 @interface SellerDoInputTableView : UITableView
 
 @property(nonatomic, strong) ClickSureAddButtonBlock sureAddBlock; /**< 确认添加按钮 */
 
+
+@property(nonatomic, strong) NSArray *dataPlist; /**< 数据 */
 
 @end

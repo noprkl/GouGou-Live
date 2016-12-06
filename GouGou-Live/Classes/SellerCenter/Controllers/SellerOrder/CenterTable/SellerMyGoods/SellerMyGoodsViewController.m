@@ -16,6 +16,7 @@
 #import "SellerCreateDogMessageViewController.h" // 新建狗狗
 
 #import "SellerDeleDDetailView.h" //删除弹窗
+#import "SellerMyGoodsModel.h"
 
 @interface SellerMyGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -47,10 +48,70 @@ static NSString *cellid = @"SellerMyGoodsCell";
 
 @implementation SellerMyGoodsViewController
 #pragma mark
+#pragma mark - 网络请求
+
+// 全部商品
+- (void)getRequestSellerDog {
+    NSDictionary *dict = @{ //
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"type":@(0)
+                           };
+    [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if (successJson) {
+            self.dataArr = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+// 删除
+- (void)deleGoods {
+    for (NSInteger i = 0; i < self.selectedData.count; i ++) {
+        SellerMyGoodsModel *model = self.selectedData[i];
+        [self.selectedData replaceObjectAtIndex:i withObject:model.ID];
+    }
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"id":[self.selectedData componentsJoinedByString:@","]
+                           };
+    
+    [self getRequestWithPath:API_Del_Commodity params:dict success:^(id successJson) {
+        //        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+        [self getRequestSellerDog];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+// 不同状态请求
+- (void)GetRequestStateGoods:(NSInteger)state {
+    NSDictionary *dict = @{ //
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"type":@(state)
+                           };
+    [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
+#pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestSellerDog];
 }
 - (void)initUI{
     _isMove = NO;
@@ -68,8 +129,14 @@ static NSString *cellid = @"SellerMyGoodsCell";
         make.height.equalTo(50);
     }];
     
-    [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
-
+    // 上下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestSellerDog];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 
 #pragma mark
@@ -86,12 +153,6 @@ static NSString *cellid = @"SellerMyGoodsCell";
     }
     return _selectedData;
 }
-//- (NSMutableArray *)selectedBtns {
-//    if (!_selectedBtns) {
-//        _selectedBtns = [NSMutableArray array];
-//    }
-//    return _selectedBtns;
-//}
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -103,6 +164,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
         _tableView.tableHeaderView = [[UIView alloc] init];
         _tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         _tableView.showsVerticalScrollIndicator = NO;
+        [_tableView registerClass:[SellerMyGoodsCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;
 }
@@ -115,16 +177,16 @@ static NSString *cellid = @"SellerMyGoodsCell";
 
         _headerView.allBlock = ^(){
             
-            [weakSelf postGetData0];
+            [weakSelf getRequestSellerDog];
         };
         _headerView.waitSellBlock = ^(){
-            [weakSelf postGetData1];
+            [weakSelf GetRequestStateGoods:3];
         };
         _headerView.soldBlock = ^(){
-            [weakSelf postGetData0];
+            [weakSelf GetRequestStateGoods:5];
         };
         _headerView.reviewBlock = ^(){
-            [weakSelf postGetData3];
+            [weakSelf GetRequestStateGoods:4];
         };
 
     }
@@ -200,12 +262,11 @@ static NSString *cellid = @"SellerMyGoodsCell";
             }
             prommit.message = [NSString stringWithFormat:@"你将删除%ld个宝贝", count];
             prommit.sureBlock = ^(UIButton *btn){
-                for (NSInteger i = 0; i < self.selectedData.count; i ++) {
-                    
-                    [weakSelf.dataArr removeObject:weakSelf.selectedData[i]];
-                }
+                [weakSelf deleGoods];
+                [weakSelf.dataArr removeObjectsInArray:weakSelf.selectedData];
+                
                 _isMove = YES;
-                [weakSelf.tableView reloadData];
+//                [weakSelf.tableView reloadData];
                 // 清空数据
                 [weakSelf.selectedData removeAllObjects];
                 
@@ -222,18 +283,16 @@ static NSString *cellid = @"SellerMyGoodsCell";
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return self.dataArr.count;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     SellerMyGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    NSString *index = self.dataArr[indexPath.row];
+    SellerMyGoodsModel *index = self.dataArr[indexPath.row];
+    cell.model = index;
+
     BOOL btnFlag = [self.selectedData containsObject:index];
     cell.isBtnSelect = btnFlag;
-    
-    if (cell == nil) {
-        cell = [[SellerMyGoodsCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.isMove = _isMove;
 
@@ -260,17 +319,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
         DLog(@"%@",weakSelf.selectedData);
     };
     
-    if (indexPath.row == 0) {
-        cell.cellState = @"待售";
-    }else if (indexPath.row == 1){
-        cell.cellState = @"已预订";
-    }else if (indexPath.row == 2){
-        cell.cellState = @"已售";
-    }else if (indexPath.row == 3){
-        cell.cellState = @"审核中";
-    }else if (indexPath.row == 4){
-        cell.cellState = @"未通过";
-    }
+
 
     return cell;
 }
@@ -279,35 +328,13 @@ static NSString *cellid = @"SellerMyGoodsCell";
     return 108;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    SellerMyGoodsModel *model = self.dataArr[indexPath.row];
+
     if (!_isMove) {
         DogDetailViewController *dogDetailVC = [[DogDetailViewController alloc] init];
+        dogDetailVC.model = model;
         [self.navigationController pushViewController:dogDetailVC animated:YES];
     }
   
 }
-
-#pragma mark
-#pragma mark - 网络请求
-- (void)postGetData0{
-    [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
-    [self.tableView reloadData];
-
-}
-- (void)postGetData1{
-    [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
-    [self.tableView reloadData];
-
-}
-- (void)postGetData2{
-    [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
-    [self.tableView reloadData];
-
-}
-- (void)postGetData3{
-    [self.dataArr addObjectsFromArray:@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11"]];
-    [self.tableView reloadData];
-
-}
-
 @end

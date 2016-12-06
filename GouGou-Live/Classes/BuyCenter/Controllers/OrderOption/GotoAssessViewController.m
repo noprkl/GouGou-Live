@@ -4,8 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
-
+//  去评价（订单操作）
 #import "GotoAssessViewController.h"
 #import "SellNameView.h"
 #import "SellerDogCardView.h"
@@ -31,11 +30,40 @@
 @property (strong,nonatomic) AnonymityAssessView *aninymityView;
 /** 提交评价 */
 @property (strong,nonatomic) UIButton * handinAssess;
+/** 照片数量 */
+@property (assign,nonatomic) NSInteger imageCount;
 
 @end
 
 @implementation GotoAssessViewController
 
+#pragma mark - 网络请求
+- (void)getOrderAssessRequest {
+
+    NSDictionary *dict = @{@"user_id":@(17),
+                           @"order_id":@(12),
+                           @"point":@(5),
+                           @"has_photo":@(2),
+                           @"is_anomy":@(2),
+                           @"img":@"image",
+                           @"comment":@"text"
+                           };
+    
+    [self postRequestWithPath:API_My_order_comment params:dict success:^(id successJson) {
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [self getOrderAssessRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -177,7 +205,9 @@
 - (AddPhotosView *)addPhotoView {
 
     if (!_addPhotoView) {
-        _addPhotoView = [[AddPhotosView alloc] init];
+        self.imageCount = 0;
+            _addPhotoView = [[AddPhotosView alloc] init];
+        
         _addPhotoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
         __weak typeof(self) weakself = self;
@@ -185,6 +215,7 @@
     
         _addPhotoView.addPhotoBlock = ^(UIButton *button) {
         
+            weakself.imageCount ++;
             UIImagePickerController * picker = [[UIImagePickerController alloc] init];
             
             addPhotoView.pickers = picker;
@@ -200,13 +231,9 @@
                 
                 [weakself presentViewController:picker animated:YES completion:^{
                 
-                
-                
                 }];
             }
-//
         };
-        
     }
     return _addPhotoView;
 }
@@ -241,7 +268,6 @@
 
 #pragma mark
 #pragma mark - TextFiled代理
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 
     return YES;
@@ -253,11 +279,4 @@
     return YES;
 
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
-
-
-
 @end

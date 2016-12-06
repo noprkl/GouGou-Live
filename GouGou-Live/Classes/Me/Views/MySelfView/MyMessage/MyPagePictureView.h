@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^ClickManageButtonBlobk)();
+typedef void(^ClickPictureCellBlobk)();
 @interface MyPagePictureView : UIView
 
 @property(nonatomic, assign) NSInteger maxCount; /**< 每行图片最大个数 */
@@ -17,4 +18,5 @@ typedef void(^ClickManageButtonBlobk)();
 
 @property(nonatomic, strong) ClickManageButtonBlobk manageBlock; /**< 管理回调 */
 
+@property(nonatomic, strong) ClickPictureCellBlobk pictureBlock; /**< 管理回调 */
 @end

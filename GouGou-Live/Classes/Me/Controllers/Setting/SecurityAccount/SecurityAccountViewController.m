@@ -71,9 +71,7 @@
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    cell.textLabel.text = self.dataArr[indexPath.row];
-    cell.detailTextLabel.text = @"detailTextLabel";
-    
+    cell.textLabel.text = self.dataArr[indexPath.row];    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

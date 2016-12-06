@@ -19,6 +19,13 @@ static NSString *isrealKey = @"isreal";
 static NSString *usermottoKey = @"usermotto";
 static NSString *useralicodeKey = @"useralicode";
 static NSString *userpaycodeKey = @"userpaycode";
+static NSString *wxopenidKey = @"wxopenid";
+static NSString *wbopenidKey = @"wbopenid";
+static NSString *qqopenidKey = @"qqopenid";
+static NSString *fansCountKey = @"fansCount";
+static NSString *commentCountKey = @"commentCount";
+static NSString *focusArrKey = @"focusArr";
+static NSString *userAssetKey = @"userAsset";
 
 @implementation UserInfos
 
@@ -42,11 +49,19 @@ static NSString *userpaycodeKey = @"userpaycode";
         _username = [[NSUserDefaults standardUserDefaults] objectForKey:usernameKey];
         _userimgurl = [[NSUserDefaults standardUserDefaults] objectForKey:userimgurlKey];
         _usertel = [[NSUserDefaults standardUserDefaults] objectForKey:usertelKey];
-        _ismerchant = [[NSUserDefaults standardUserDefaults] valueForKey:ismerchantKey];
-        _isreal = [[NSUserDefaults standardUserDefaults] valueForKey:isrealKey];
+        _ismerchant = [[NSUserDefaults standardUserDefaults] objectForKey:ismerchantKey];
+        _isreal = [[NSUserDefaults standardUserDefaults] objectForKey:isrealKey];
         _usermotto = [[NSUserDefaults standardUserDefaults] objectForKey:usermottoKey];
         _useralicode = [[NSUserDefaults standardUserDefaults] objectForKey:useralicodeKey];
         _userpaycode = [[NSUserDefaults standardUserDefaults] objectForKey:userpaycodeKey];
+        _wxopenid = [[NSUserDefaults standardUserDefaults] objectForKey:wxopenidKey];
+        _wbopenid = [[NSUserDefaults standardUserDefaults] objectForKey:wbopenidKey];
+        _qqopenid = [[NSUserDefaults standardUserDefaults] objectForKey:qqopenidKey];
+        
+        _fansCount = (NSInteger)[[NSUserDefaults standardUserDefaults] valueForKey:fansCountKey];
+        _commentCount = (NSInteger)[[NSUserDefaults standardUserDefaults] valueForKey:commentCountKey];
+        _focusArr = [[NSUserDefaults standardUserDefaults] objectForKey:focusArrKey];
+        _userAsset = [[NSUserDefaults standardUserDefaults] objectForKey:userAssetKey];
 
         }
     return self;
@@ -78,6 +93,9 @@ static NSString *userpaycodeKey = @"userpaycode";
 
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].isreal forKey:isrealKey];
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].ismerchant forKey:ismerchantKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].wxopenid forKey:wxopenidKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].wbopenid forKey:wbopenidKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].qqopenid forKey:qqopenidKey];
 
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -101,6 +119,15 @@ static NSString *userpaycodeKey = @"userpaycode";
     }
     if ([UserInfos sharedUser].userpaycode != NULL) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:userpaycodeKey];
+    }
+    if ([UserInfos sharedUser].wxopenid != NULL) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wxopenidKey];
+    }
+    if ([UserInfos sharedUser].wbopenid != NULL) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wbopenidKey];
+    }
+    if ([UserInfos sharedUser].qqopenid != NULL) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:qqopenidKey];
     }
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:ismerchantKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:isrealKey];

@@ -11,6 +11,9 @@
 #import "TransformStyleView.h"
 #import "ChoseShopAdressViewController.h"
 #import "ChosedAdressView.h" // 收货地址内容有值
+#import "MyShopAdressModel.h"
+
+#import <AlipaySDK/AlipaySDK.h>
 
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
@@ -21,7 +24,6 @@
 @property(nonatomic, strong) UILabel *bookMoneyLabel; /**< 应付定金 */
 
 @property(nonatomic, strong) UIButton *payCount; /**< 结算按钮 */
-
 
 @property(nonatomic, strong) UITableViewCell *bookMoneyCell4; /**< 应付定金cell */
 
@@ -35,17 +37,83 @@
 
 @property(nonatomic, strong) UILabel *placeLabel; /**< 站位字符 */
 
-@property(nonatomic, strong) ShopAdressModel *adressModel; /**< 返回的值 */
+
+@property(nonatomic, strong) MyShopAdressModel *defaultModel; /**< 默认地址 */
 
 @end
 
 @implementation DogBookViewController
 #pragma mark - 网络请求
-- (void)postBuyOrderRequest {
-
-    NSDictionary *dict = @{};
+// 结算
+- (void)clickPayBtnAction:(UIButton *)btn {
+    
+//    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
+//                           @"user_id":@(11),
+//                           @"id":@([_model.ID integerValue]),
+//                           @"address_id":@(_defaultModel.ID)
+//                           };
+//    DLog(@"%@", dict);
+//    [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//        if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
+//    } error:^(NSError *error) {
+//        DLog(@"%@", error);
+//    }];
+    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+    NSDictionary *dit = @{
+                          @"id":@(111111111111),
+                          @"total_fee":@(1)
+                          };
+    [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"msg"]];
+        [self aliPayWithOrderString:successJson[@"data"]];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
-
+- (void)aliPayWithOrderString:(NSString *)orderStr {
+    if (orderStr != nil) {
+        
+        NSString *appScheme = @"ap2016112203105439";
+        
+        [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            DLog(@"reslut = %@",resultDic);
+        }];
+    }
+}
+// 所有地址
+- (void)postGetAdressRequest {
+    
+    // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           };
+    
+    [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
+        [self showAlert:successJson[@"message"]];
+        DLog(@"1%@", successJson);
+        if (successJson[@"code"]) {
+            // 数据解析
+            NSArray *adressArr = [NSArray array];
+            adressArr = [[MyShopAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
+            for (MyShopAdressModel *model in adressArr) {
+                if (model.isDefault == 1) {
+                    self.defaultModel = model;
+                }
+            }
+            DLog(@"11%@", self.dataArr);
+            // 刷新
+            [self.tablevView reloadData];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -57,15 +125,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    self.hidesBottomBarWhenPushed = YES;
+    [self postGetAdressRequest];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
+    self.hidesBottomBarWhenPushed = YES;
 }
 
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
-    self.adressModel = adress.userInfo[@"ShopAdress"];
+    self.defaultModel = adress.userInfo[@"ShopAdress"];
+    [self.tablevView reloadData];
     DLog(@"已传");
 }
 - (void)initUI {
@@ -106,7 +178,9 @@
         make.left.right.equalTo(self.view);
     }];
 }
-
+- (void)setModel:(DogDetailModel *)model {
+    _model = model;
+}
 #pragma mark
 #pragma mark - TableView
 
@@ -141,15 +215,16 @@
     switch (indexPath.row) {
         case 0:
         {
-//            if (self.adressModel) { //如果默认值 添加view
-//                
-//            }
-            ChosedAdressView *chosedView = [[ChosedAdressView alloc] init];
-            chosedView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 85);
-            [cell.contentView addSubview:chosedView];
-//            cell.textLabel.text = self.dataArr[indexPath.row];
-//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            self.shopAdressCell1 = cell;
+            if (self.defaultModel.userTel.length > 0) { // 添加地址
+                ChosedAdressView *chosedView = [[ChosedAdressView alloc] init];
+                chosedView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 85);
+                [cell.contentView addSubview:chosedView];
+               
+                self.shopAdressCell1 = cell;
+            }else{
+                cell.textLabel.text = self.dataArr[indexPath.row];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
         }
             break;
 
@@ -239,7 +314,11 @@
 //        return 163;
 //    }
     if (indexPath.row == 0) {
-        return 85;
+        if (self.defaultModel.userTel.length != 0) {
+            return 85;
+        }else{
+            return 44;
+        }
     }else if (indexPath.row == 1){
         return 170;
     }else if (indexPath.row == 6){
@@ -293,10 +372,6 @@
     return _payCount;
 }
 
-- (void)clickPayBtnAction:(UIButton *)btn {
-    
-}
-
 - (NSAttributedString *)getAttributeWithString1:(NSString *)text1 string2:(NSString *)text2 {
     
     NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:text1 attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"], NSFontAttributeName:[UIFont systemFontOfSize:14]}];
@@ -342,8 +417,6 @@
 
         }];
     }];
-    
-    DLog(@"%@", self.noteTextView.text);
 }
 
 

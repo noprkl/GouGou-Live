@@ -53,6 +53,7 @@ static NSString *cellid = @"cellid";
         DLog(@"%@", error);
     }];
 }
+// 评价
 - (void)getRequestComment {
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
@@ -66,7 +67,7 @@ static NSString *cellid = @"cellid";
         }else{
                 self.commentArr = successJson[@"data"][@"info"];
         }
-
+        [UserInfos sharedUser].commentCount = self.commentArr.count;
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -142,8 +143,8 @@ static NSString *cellid = @"cellid";
         case 0:
             if (indexPath.row == 0) { // 头部信息
                 MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
-                headerView.fansCount = self.fansArr.count;
-                headerView.commentCount = self.commentArr.count;
+                headerView.fansCount = [UserInfos sharedUser].fansCount;
+                headerView.commentCount = [UserInfos sharedUser].commentCount;
                 headerView.backgroundColor = [UIColor whiteColor];
                 [cell.contentView addSubview:headerView];
             }

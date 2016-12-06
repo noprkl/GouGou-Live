@@ -24,6 +24,40 @@
 static NSString *cellid = @"SellerWaitSendCell";
 
 @implementation SellerWaitSendViewController
+#pragma mark
+#pragma mark - 网络请求
+// 请求待发货的订单
+- (void)getRequestWaitSendOrder {
+    NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@(11),
+                           @"status":@(7),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"is_right":@(1)
+                           };
+    [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
+#pragma mark
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestWaitSendOrder];
+    // 上下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestWaitSendOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,24 +97,19 @@ static NSString *cellid = @"SellerWaitSendCell";
     return _tableView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerWaitSendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    cell.orderState = @"待发货";
+    SellerOrderModel *model = self.dataArr[indexPath.row];
+    cell.model = model;cell.orderState = @"待发货";
+    
     cell.btnTitles = @[@"联系买家", @"发货"];
-    cell.costMessage = @[@"已付全款：950"];
+    NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+    NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+    cell.costMessage = @[finalMoney, depositMoney];
 
-//    if (indexPath.row == 0) {
-//        cell.orderState = @"待发货";
-//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-//    }else if (indexPath.row == 1){
-//        cell.orderState = @"待付全款";
-//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-//    }else if (indexPath.row == 2){
-//        cell.orderState = @"待付定金";
-//        cell.btnTitles = @[@"联系买家"];
-//    }
     [self.btnTitles addObject:cell.btnTitles];
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
@@ -113,10 +142,16 @@ static NSString *cellid = @"SellerWaitSendCell";
         viewController.title = EaseTest_Chat2;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
+    }else if ([title isEqualToString:@"发货"]){
         
+        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
+        sendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:sendVC animated:YES];
+    }
+}
 
-        
-    }else if ([title isEqualToString:@"修改运费"]){
+- (void)test:(NSString *)title {
+     if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
         changeVC.hidesBottomBarWhenPushed = YES;
@@ -126,12 +161,6 @@ static NSString *cellid = @"SellerWaitSendCell";
         changeVC.title = title;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
-    }else if ([title isEqualToString:@"发货"]){
-        
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:sendVC animated:YES];
-        
     }else if ([title isEqualToString:@"查看评价"]){
         
         SellerAcceptedRateViewController *rateVC = [[SellerAcceptedRateViewController alloc] init];

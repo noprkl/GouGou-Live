@@ -8,6 +8,7 @@
 
 #import "ChosedAdressView.h"
 #import "ShopAdressModel.h"
+#import "SellerAdressModel.h"
 
 @interface ChosedAdressView ()
 

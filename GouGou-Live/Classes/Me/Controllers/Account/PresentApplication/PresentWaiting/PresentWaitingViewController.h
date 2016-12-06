@@ -10,4 +10,6 @@
 
 @interface PresentWaitingViewController : BaseViewController
 
+@property(nonatomic, strong) NSString *noteStr; /**< 提示 */
+
 @end

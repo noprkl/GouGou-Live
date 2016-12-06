@@ -94,7 +94,7 @@
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    
+    self.hidesBottomBarWhenPushed = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -106,8 +106,8 @@
     self.collectBtn.hidden = YES;
     self.watchLabel.hidden = YES;
     self.screenBtn.hidden = YES;
-    
-    self.hidesBottomBarWhenPushed = NO;
+
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
 }
@@ -313,6 +313,23 @@
 #pragma mark
 #pragma mark - Action
 - (void)clickBackBtnAction {
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    // 横屏->竖屏
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        [self forceOrientation:UIInterfaceOrientationPortrait];
+        
+        self.shareBtn.hidden = NO;
+        self.collectBtn.hidden = NO;
+        self.reportBtn.hidden = NO;
+        self.centerView.hidden = NO;
+        self.baseScrollView.hidden = NO;
+        
+        CGRect rect = self.screenBtn.frame;
+        rect = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
+        self.screenBtn.frame = rect;
+        
+        //        [self forceOrientation:UIInterfaceOrientationPortrait];
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -412,6 +429,10 @@
         rect = CGRectMake(SCREEN_WIDTH - 20 - kWidth, 30, kWidth, kWidth);
         self.screenBtn.frame = rect;
         
+        CGRect playRect = self.playerVC.view.frame;
+        playRect = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+        self.playerVC.view.frame = playRect;
+        
     }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
        [self forceOrientation:UIInterfaceOrientationPortrait];
        
@@ -424,6 +445,10 @@
         CGRect rect = self.screenBtn.frame;
         rect = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
         self.screenBtn.frame = rect;
+        
+        CGRect playRect = self.playerVC.view.frame;
+        playRect = CGRectMake(0, 10, SCREEN_WIDTH, 225);
+        self.playerVC.view.frame = playRect;
         
 //        [self forceOrientation:UIInterfaceOrientationPortrait];
     }

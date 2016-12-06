@@ -9,36 +9,55 @@
 #import "NicknameView.h"
 
 @interface NicknameView ()
-/** 间隔 */
-@property (strong,nonatomic) UIView *spaceView;
-/** 买家 */
-@property (strong,nonatomic) UILabel *buyLabel;
-/** 昵称 */
-@property (strong,nonatomic) UILabel *nickName;
-/** 剩余时间 */
-@property (strong,nonatomic) UILabel *remainTimeLabel;
-/** 状态 */
-@property (strong,nonatomic) UILabel *stateLabe;
+///** 间隔 */
+//@property (strong,nonatomic) UIView *spaceView;
+///** 买家 */
+//@property (strong,nonatomic) UIImageView *sellerIamge;
+///** 昵称 */
+//@property (strong,nonatomic) UILabel *nickName;
+///** 剩余时间 */
+//@property (strong,nonatomic) UILabel *remainTimeLabel;
+///** 状态 */
+//@property (strong,nonatomic) UILabel *stateLabe;
 
 @end
 
 @implementation NicknameView
-
-
+/*
+// 状态设置
 - (void)setStateMessage:(NSString *)stateMessage {
 
     _stateMessage = stateMessage;
     self.stateLabe.text = stateMessage;
 }
+// 商家名称设置
+- (void)setMerchantName:(NSString *)merchantName {
 
-// 模型信息
+    _merchantName = merchantName;
+    self.nickName.text = merchantName;
+}
+// 商家图片
+- (void)setMerchantImagl:(NSString *)merchantImagl {
+    
+    _merchantImagl = merchantImagl;
+    self.sellerIamge.image = [UIImage imageNamed:merchantImagl];
+}
+ */
+/*
+ //模型信息
 - (void)setModel:(NickNameModel *)model {
     
     _model = model;
     self.nickName.text = _model.merchantName;
     self.stateLabe.text = _model.status;
+    self.sellerIamge.image = [UIImage imageNamed:self.model.merchantImgl];
     
+    DLog(@"%@",self.nickName.text);
+    DLog(@"%@",self.stateLabe.text);
+//    DLog(@"%@",self.freightMoney.text);
+
 }
+ */
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -46,7 +65,7 @@
     if (self) {
 
         [self addSubview:self.spaceView];
-        [self addSubview:self.buyLabel];
+        [self addSubview:self.sellerIamge];
         [self addSubview:self.nickName];
         [self addSubview:self.stateLabe];
         [self addSubview:self.remainTimeLabel];
@@ -67,7 +86,7 @@
         
     }];
     
-    [_buyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sellerIamge mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(weakself.left).offset(10);
         make.centerY.equalTo(weakself.centerY).offset(10);
@@ -76,7 +95,7 @@
     
     [_nickName mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.buyLabel.right).offset(10);
+        make.left.equalTo(weakself.sellerIamge.right).offset(10);
         make.centerY.equalTo(weakself.centerY).offset(10);
         
     }];
@@ -107,15 +126,13 @@
     return _spaceView;
 }
 
-- (UILabel *)buyLabel {
+- (UIImageView *)sellerIamge {
 
-    if (!_buyLabel) {
-        _buyLabel = [[UILabel alloc] init];
-        _buyLabel.text = @"买家:";
-        _buyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        _buyLabel.font = [UIFont systemFontOfSize:16];
+    if (!_sellerIamge) {
+        _sellerIamge = [[UIImageView alloc] init];
+        
     }
-    return _buyLabel;
+    return _sellerIamge;
 }
 
 - (UILabel *)nickName {

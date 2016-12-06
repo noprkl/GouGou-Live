@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  维权
 
 #import "ProtectPowerViewController.h"
 
@@ -13,6 +13,8 @@
 #import "ProtectingPowerCell.h" // 维权中cell
 #import "ProtectSuccessCell.h"  // 维权成功cell
 #import "ProtectFaliedCell.h"   // 维权失败cell
+
+#import "ProtectProwerTableModel.h"
 
 static NSString * protectingCell = @"protectingCell";
 static NSString * protectSuccessCell = @"protectSuccessCell";
@@ -27,6 +29,41 @@ static NSString * protectFailedCell = @"protectFailedCell";
 @end
 
 @implementation ProtectPowerViewController
+#pragma mark - 网络请求
+- (void)getProtectPowerRequest {
+
+    NSDictionary * dict = @{@"user_id":@(TestID),
+                            @"page":@(1),
+                            @"pageSize":@(10)
+                            };
+    
+    
+    [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
+        
+        self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        
+        [self.tableview reloadData];
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        DLog(@"%@",successJson[@"data"]);
+        DLog(@"%@",self.dataArray);
+
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+}
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    // 上下拉刷新
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getProtectPowerRequest];
+        [self.tableview.mj_header endRefreshing];
+    }];
+//    [self.tableview.mj_header beginRefreshing];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,6 +94,8 @@ static NSString * protectFailedCell = @"protectFailedCell";
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 88 -64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         // 注册cell
         [_tableview registerClass:[ProtectingPowerCell class] forCellReuseIdentifier:protectingCell];
         [_tableview registerClass:[ProtectSuccessCell class] forCellReuseIdentifier:protectSuccessCell];
@@ -69,7 +108,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
 #pragma mark - tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 3;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,34 +117,38 @@ static NSString * protectFailedCell = @"protectFailedCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell1 == nil) {
+        cell1 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"cell"];
+    }
     
-    if (indexPath.row == 0) {
+    ProtectProwerTableModel * model = self.dataArray[indexPath.row];
+    
+    if ([model.status integerValue] == 1) {
         ProtectingPowerCell * cell = [tableView dequeueReusableCellWithIdentifier:protectingCell];
-        
+        cell.protectModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
-                
                 // 跳转至在线客服
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat1;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
-                
-
             }
         };
         
         [cell addSubview:funcBtn];
         
         return cell;
-
-    } else if (indexPath.row == 1) {
+    }
     
-        ProtectSuccessCell * cell = [tableView dequeueReusableCellWithIdentifier:protectSuccessCell];
+    if ([model.status integerValue] == 2) {
         
+        ProtectSuccessCell * cell = [tableView dequeueReusableCellWithIdentifier:protectSuccessCell];
+        cell.protectModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
         
@@ -117,7 +160,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
                 viewController.title = EaseTest_Chat1;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
-
+                
             }
             
         };
@@ -125,10 +168,13 @@ static NSString * protectFailedCell = @"protectFailedCell";
         [cell addSubview:funcBtn];
         
         return cell;
+
+    }
     
-    } else if (indexPath.row == 2) {
-        ProtectFaliedCell * cell = [tableView dequeueReusableCellWithIdentifier:protectFailedCell];
+    if ([model.status integerValue] == 3) {
         
+        ProtectFaliedCell * cell = [tableView dequeueReusableCellWithIdentifier:protectFailedCell];
+        cell.protectModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"再次申请",@"在线客服"] buttonNum:2];
         
@@ -156,10 +202,8 @@ static NSString * protectFailedCell = @"protectFailedCell";
         [cell addSubview:funcBtn];
         
         return cell;
-    
     }
-    return nil;
+    return cell1;
 }
-
 
 @end

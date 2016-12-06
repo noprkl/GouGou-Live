@@ -124,9 +124,9 @@
                        user_ali_code:successJson[@"data"][@"user_ali_code"]
                           qq_open_id:successJson[@"data"][@"qq_open_id"]
                           wx_open_id:successJson[@"data"][@"wx_open_id"]
+                          wb_open_id:successJson[@"data"][@"wb_open_id"]
                          user_status:successJson[@"data"][@"user_status"]
                  ];
-                
 
                 
                 // 通知给所有人 已经登录
@@ -173,6 +173,7 @@
          user_ali_code:(NSString *)user_ali_code
             qq_open_id:(NSString *)qq_open_id
             wx_open_id:(NSString *)wx_open_id
+            wb_open_id:(NSString *)wb_open_id
            user_status:(NSString *)user_status
 
 {
@@ -183,11 +184,16 @@
     [UserInfos sharedUser].useralicode = ![user_ali_code isEqual:[NSNull null]] ? user_ali_code:@"";
     [UserInfos sharedUser].userpaycode = ![user_pay_code isEqual:[NSNull null]] ? user_pay_code:@"";
     
+    [UserInfos sharedUser].wxopenid = ![wx_open_id isEqual:[NSNull null]] ? wx_open_id:@"";
+    [UserInfos sharedUser].wbopenid = ![wb_open_id isEqual:[NSNull null]] ? wb_open_id:@"";
+    [UserInfos sharedUser].qqopenid = ![qq_open_id isEqual:[NSNull null]] ? qq_open_id:@"";
+    
     [UserInfos sharedUser].isreal = is_real;
     [UserInfos sharedUser].ismerchant = is_merchant;
     [UserInfos sharedUser].ID = ID;
     [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;
+    
     
     [UserInfos setUser];
 }

@@ -61,6 +61,7 @@
     self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
 - (void)didReceiveMemoryWarning {
@@ -70,6 +71,10 @@
 
 #pragma mark
 #pragma mark - Action
+- (IBAction)clickBackAction:(UIButton *)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (IBAction)clickEyeBtnAction:(UIButton *)sender {
 
     self.psdTextField.secureTextEntry = !self.psdTextField.secureTextEntry;
@@ -109,7 +114,6 @@
                                    @"user_pwd":pwd
                                    };
             // 请求之前删掉上一次的信息
-
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
                
                 [self showAlert:successJson[@"message"]];
@@ -130,6 +134,7 @@
                            user_ali_code:successJson[@"data"][@"user_ali_code"]
                               qq_open_id:successJson[@"data"][@"qq_open_id"]
                               wx_open_id:successJson[@"data"][@"wx_open_id"]
+                              wb_open_id:successJson[@"data"][@"wb_open_id"]
                              user_status:successJson[@"data"][@"user_status"]
                      ];
                    
@@ -137,12 +142,10 @@
                     if (!error2) {
                         DLog(@"登录成功");
                     }
-                    // 通知给所有人 已经登录
-                    NSNotification* notification = [NSNotification notificationWithName:@"LoginSuccess" object:successJson[@"data"]];
+                    
+                    // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
 
-                    [[NSNotificationCenter defaultCenter] postNotification:notification];
-
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -163,7 +166,8 @@
          user_ali_code:(NSString *)user_ali_code
             qq_open_id:(NSString *)qq_open_id
             wx_open_id:(NSString *)wx_open_id
-            user_status:(NSString *)user_status
+            wb_open_id:(NSString *)wb_open_id
+           user_status:(NSString *)user_status
 
 {
     [UserInfos sharedUser].userimgurl = ![user_img_url isEqual:[NSNull null]] ?user_img_url:@"";
@@ -172,12 +176,17 @@
     [UserInfos sharedUser].usermotto = ![user_motto isEqual:[NSNull null]] ? user_motto:@"";
     [UserInfos sharedUser].useralicode = ![user_ali_code isEqual:[NSNull null]] ? user_ali_code:@"";
     [UserInfos sharedUser].userpaycode = ![user_pay_code isEqual:[NSNull null]] ? user_pay_code:@"";
+    
+    [UserInfos sharedUser].wxopenid = ![wx_open_id isEqual:[NSNull null]] ? wx_open_id:@"";
+    [UserInfos sharedUser].wbopenid = ![wb_open_id isEqual:[NSNull null]] ? wb_open_id:@"";
+    [UserInfos sharedUser].qqopenid = ![qq_open_id isEqual:[NSNull null]] ? qq_open_id:@"";
 
     [UserInfos sharedUser].isreal = is_real;
     [UserInfos sharedUser].ismerchant = is_merchant;
     [UserInfos sharedUser].ID = ID;
     [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;
+    
     
     [UserInfos setUser];
 }

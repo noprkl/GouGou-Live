@@ -10,6 +10,7 @@
 #import "IdentityIfonView.h"
 #import "IdentityPictureCell.h"
 #import "NSString+CertificateImage.h"
+#import "NSString+MD5Code.h"
 
 static NSString * identityCell = @"identitiCellID";
 
@@ -33,26 +34,66 @@ static NSString * identityCell = @"identitiCellID";
 #pragma mark - 网络请求 实名认证提交
 - (void)postCertificateIdentfity {
 
-    NSDictionary *dict = @{
-                           @"id":@([[UserInfos sharedUser].ID integerValue]),
-                           @"user_name":self.acceptName.text,
-                           @"user_auth_id":self.acceptIdebtity.text,
-                           @"user_auth_img_front":[NSString imageBase64WithDataURL:self.faceIdentfityImg],
-                           @"user_auth_img_back":[NSString imageBase64WithDataURL:self.backIdentfityImg]
+    // 请求图片
+    // 正面
+    NSString *faceBase64 = [NSString imageBase64WithDataURL:self.faceIdentfityImg];
+    
+    NSDictionary *faceDict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"img":faceBase64
                            };
-    DLog(@"%@", dict);
-    [self postRequestWithPath:API_Authenticate params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
-        if ([successJson[@"message"] isEqualToString:@"信息提交成功"]) {
-            [UserInfos sharedUser].isreal = @"2";
-            [UserInfos sharedUser].username = self.acceptName.text;
-            [UserInfos setUser];
+    
+    [self postRequestWithPath:API_UploadImg params:faceDict success:^(id successJson) {
+        if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+            NSString *faceStr = successJson[@"data"];
+           // 背面
+            NSString *backBase64 = [NSString imageBase64WithDataURL:self.backIdentfityImg];
+            
+            NSDictionary *backDict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"img":backBase64
+                                   };
+            
+            [self postRequestWithPath:API_UploadImg params:backDict success:^(id successJson) {
+                if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                    NSString *backStr = successJson[@"data"];
+                    // 提交认证
+                    NSDictionary *dict = @{
+                                           @"id":@([[UserInfos sharedUser].ID integerValue]),
+                                           @"user_name":self.acceptName.text,
+                                           @"user_auth_id":self.acceptIdebtity.text,
+                                           @"user_auth_img_front":faceStr,
+                                           @"user_auth_img_back":backStr
+                                           };
+                    DLog(@"%@", dict);
+                    [self postRequestWithPath:API_Authenticate params:dict success:^(id successJson) {
+
+                        [self showAlert:successJson[@"message"]];
+                        if ([successJson[@"message"] isEqualToString:@"信息提交成功"]) {
+                            [UserInfos sharedUser].isreal = @"2";
+                            [UserInfos sharedUser].username = self.acceptName.text;
+                            [UserInfos setUser];
+                        }
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+
+                }
+                
+
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
         }
         
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
+    
+
+    
+    
 }
 
 - (void)viewDidLoad {

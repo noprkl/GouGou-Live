@@ -23,7 +23,40 @@
 static NSString *cellid = @"SellerWaitAcceptCell";
 
 @implementation SellerWaitAcceptViewController
+#pragma mark
+#pragma mark - 网络请求
+// 请求待收货的订单
+- (void)getRequestWaitAcceptOrder {
+    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@(11),
+                           @"status":@(8),
+                           @"page":@(1),
+                           @"pageSize":@(10),
+                           @"is_right":@(1)
+                           };
+    [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
+#pragma mark
+#pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestWaitAcceptOrder];
+    // 上下拉刷新
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestWaitAcceptOrder];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -62,23 +95,18 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     return _tableView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerWaitAcceptCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-
-    //    if (indexPath.row == 0) {
-    //        cell.orderState = @"待发货";
-    //        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-    //    }else if (indexPath.row == 1){
-    //        cell.orderState = @"待付全款";
-    //        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-    //    }else if (indexPath.row == 2){
-    //        cell.orderState = @"待付定金";
-    //        cell.btnTitles = @[@"联系买家"];
-    //    }
+    SellerOrderModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
+    
+    cell.orderState = @"待发货";
     cell.btnTitles = @[@"联系买家"];
-    cell.costMessage = @[@"已付全款：1450"];
+    NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.price];
+
+    cell.costMessage = @[allMoney];
     
     [self.btnTitles addObject:cell.btnTitles];
 

@@ -8,7 +8,7 @@
 
 #import "EditMyMessageViewController.h"
 #import "DeletePrommtView.h"
-#import "DogSizeFilter.h"
+#import "ChoseCamearView.h"
 #import "EditNikeNameAlert.h"
 #import <AFNetworking.h>
 #import <TZImagePickerController.h>
@@ -83,7 +83,6 @@ static NSString *cellid = @"cellid";
         }
         if ([UserInfos sharedUser].usernickname != NULL) {
             userNike = [UserInfos sharedUser].usernickname;
-            DLog(@"%@", [UserInfos sharedUser].usernickname);
         }
         if ([UserInfos sharedUser].usermotto != NULL) {
             userMotto = [UserInfos sharedUser].usermotto;
@@ -210,6 +209,22 @@ static NSString *cellid = @"cellid";
         // 添加开关
         UISwitch *switchBtn = [[UISwitch alloc] init];
         switchBtn.tag = 50 + indexPath.row;
+        if (indexPath.row == 0) {
+            if ([UserInfos sharedUser].wxopenid != NULL) {
+                switchBtn.on = YES;
+            }
+        }
+        if (indexPath.row == 1) {
+            if ([UserInfos sharedUser].qqopenid != NULL) {
+                switchBtn.on = YES;
+            }
+        }
+        if (indexPath.row == 2) {
+            if ([UserInfos sharedUser].wbopenid != NULL) {
+                switchBtn.on = YES;
+            }
+        }
+        
         [switchBtn addTarget:self action:@selector(clickSwitchAction:) forControlEvents:(UIControlEventValueChanged)];
         cell.accessoryView = switchBtn;
         [self.accessosys addObject:switchBtn];
@@ -365,56 +380,130 @@ static NSString *cellid = @"cellid";
         BOOL isButtonOn = [switc isOn];
         if (isButtonOn) {
             DLog(@"微信绑定");
+            __block  DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
+            WXprommt.message = @"你将要绑定微信!";
+            [WXprommt show];
+            WXprommt.sureBlock = ^(UIButton *btn){
+                NSDictionary *dict = @{
+                                       @"type":@"1",
+                                       @"name":[UserInfos sharedUser].wxopenid,
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                       };
+                [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+                WXprommt = nil;
+                [WXprommt dismiss];
+            };
+        
         }else {
            
-            DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
+           __block DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
             WXprommt.message = @"你确定解绑微信？";
             [WXprommt show];
             WXprommt.sureBlock = ^(UIButton *btn){
-                DLog(@"微信解绑");
+                NSDictionary *dict = @{
+                                       @"type":@"1",
+                                       @"name":[UserInfos sharedUser].wxopenid,
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                       };
+                [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+                WXprommt = nil;
+                [WXprommt dismiss];
             };
-            WXprommt.cancelBlock = ^(){
-                switc.on = YES;
-                DLog(@"不解除");
-            };
-            
         }
     }else if (index == 1){
         BOOL isButtonOn = [switc isOn];
         if (isButtonOn) {
-            DLog(@"腾讯绑定");
-        }else {
-            DeletePrommtView *Tencetprommt = [[DeletePrommtView alloc] init];
-            Tencetprommt.message = @"你确定解绑腾讯？";
-            [Tencetprommt show];
-            Tencetprommt.sureBlock = ^(UIButton *btn){
-                DLog(@"腾讯解绑");
+            DLog(@"微信绑定");
+            __block  DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
+            QQprommt.message = @"你将要绑定腾讯!";
+            [QQprommt show];
+            QQprommt.sureBlock = ^(UIButton *btn){
+                NSDictionary *dict = @{
+                                       @"type":@"2",
+                                       @"name":[UserInfos sharedUser].qqopenid,
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                       };
+                [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+                QQprommt = nil;
+                [QQprommt dismiss];
             };
-            Tencetprommt.cancelBlock = ^(){
-                switc.on = YES;
-                DLog(@"不解除");
+            
+        }else {
+            
+            __block DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
+            QQprommt.message = @"你确定解绑腾讯？";
+            [QQprommt show];
+            QQprommt.sureBlock = ^(UIButton *btn){
+                NSDictionary *dict = @{
+                                       @"type":@"2",
+                                       @"name":[UserInfos sharedUser].qqopenid,
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                       };
+                [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+                QQprommt = nil;
+                [QQprommt dismiss];
             };
         }
 
     }else if (index == 2){
         BOOL isButtonOn = [switc isOn];
         if (isButtonOn) {
-            DLog(@"新浪绑定");
-        }else {
-            DeletePrommtView *Sinaprommt = [[DeletePrommtView alloc] init];
-            Sinaprommt.message = @"你确定解绑新浪？";
-            [Sinaprommt show];
-            Sinaprommt.sureBlock = ^(UIButton *btn){
-                DLog(@"新浪解绑");
+            DLog(@"微信微博");
+            __block  DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
+            WBprommt.message = @"你将要绑定微博!";
+            [WBprommt show];
+            WBprommt.sureBlock = ^(UIButton *btn){
+                NSDictionary *dict = @{
+                                       @"type":@"3",
+                                       @"name":[UserInfos sharedUser].wxopenid,
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                       };
+                [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+                WBprommt = nil;
+                [WBprommt dismiss];
             };
-            Sinaprommt.cancelBlock = ^(){
-                switc.on = YES;
-                DLog(@"不解除");
+            
+        }else {
+            
+            __block DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
+            WBprommt.message = @"你确定解绑微博？";
+            [WBprommt show];
+            WBprommt.sureBlock = ^(UIButton *btn){
+                NSDictionary *dict = @{
+                                       @"type":@"3",
+                                       @"name":[UserInfos sharedUser].wxopenid,
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                       };
+                [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+                WBprommt = nil;
+                [WBprommt dismiss];
             };
         }
-
     }
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -424,7 +513,7 @@ static NSString *cellid = @"cellid";
 #pragma mark - 上传头像
 // 相册
 - (void)presentCmear {
-    __block   DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
+    __block   ChoseCamearView *sizeView = [[ChoseCamearView alloc] init];
     sizeView.dataArr = @[@"更换头像",@"从相册选择", @"拍照", @"取消"];
     [sizeView show];
     

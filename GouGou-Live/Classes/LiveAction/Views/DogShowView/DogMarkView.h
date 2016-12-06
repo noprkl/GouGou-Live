@@ -11,5 +11,5 @@
 @interface DogMarkView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame Titles:(NSArray *)marks;
-//- (void)creatDogMarksWithMark:(NSArray *)marks;
+- (void)creatDogMarksWithMark:(NSArray *)marks;
 @end

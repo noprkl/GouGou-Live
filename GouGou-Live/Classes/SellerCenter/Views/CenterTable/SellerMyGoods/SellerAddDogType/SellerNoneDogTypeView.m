@@ -45,7 +45,10 @@
     }
     return self;
 }
-
+- (void)setDogType:(NSString *)dogType {
+    _dogType = dogType;
+    self.searchTextfiled.text = dogType;
+}
 #pragma mark
 #pragma mark - 约束
 

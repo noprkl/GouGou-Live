@@ -27,10 +27,10 @@
 
     sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
         // 送货请求，如果成功返回YES 失败返回NO
-
+        
         return YES;
     };
-//    [sendView show];
+    [sendView show];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

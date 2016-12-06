@@ -4,13 +4,16 @@
 //
 //  Created by ma c on 16/11/18.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  支付成功（已完成）（订单操作）
 
 #import "PaySuccessViewController.h"
 #import "PaySuccessView.h"
+#import "OrderDetailModel.h"
 @interface PaySuccessViewController ()
 /** 支付成功 */
 @property (strong,nonatomic) PaySuccessView *paysuccessView;
+/** 订单详情模型 */
+@property (strong,nonatomic) OrderDetailModel *orderInfo;
 
 @end
 

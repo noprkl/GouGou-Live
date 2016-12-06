@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class ShopAdressModel;
+@class MyShopAdressModel;
+@class SellerAdressModel;
 
 @interface ChoseShopAdressCell : UITableViewCell
 
-@property(nonatomic, strong) ShopAdressModel *adress; /**< 收货地址 */
+@property(nonatomic, strong) SellerAdressModel *sendAdress; /**< 发货地址 */
+@property(nonatomic, strong) MyShopAdressModel *acceptAdress; /**< 收货地址 */
 
 @end

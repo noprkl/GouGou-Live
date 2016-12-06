@@ -8,7 +8,7 @@
 
 #import "TimePickerView.h"
 
-@interface TimePickerView ()<UIPickerViewDelegate,UIPickerViewDataSource>
+@interface TimePickerView ()
 /** 蒙版 */
 @property (strong,nonatomic) UIControl *areaHUD;
 
@@ -19,9 +19,8 @@
 @property (strong, nonatomic) UILabel *titleLabel;
 /** 确认按钮 */
 @property (strong, nonatomic) UIButton *sureBtn;
-///** pickerView */
-//@property (strong, nonatomic) UIPickerView *areaPicker;
-/** 时间datePicker */
+
+// 时间滚轮
 @property (strong,nonatomic) UIDatePicker *datePicker;
 /** 第一列数据 */
 @property (strong,nonatomic) NSArray *firstData;
@@ -97,20 +96,24 @@
     }
     return _backGroundView;
 }
-//- (UIPickerView *)areaPicker {
-//    if (!_areaPicker) {
-//        _areaPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
-//        _areaPicker.backgroundColor = [UIColor whiteColor];
-//        _areaPicker.delegate = self;
-//        _areaPicker.dataSource = self;
-//    }
-//    return _areaPicker;
-//}
 
 - (UIDatePicker *)datePicker {
 
     if (!_datePicker) {
+        _datePicker = [[UIDatePicker alloc] init];
+        _datePicker.backgroundColor = [UIColor whiteColor];
+        [_datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_CN"]];
+        // 设置时区
+        [_datePicker setTimeZone:[NSTimeZone localTimeZone]];
         
+        // 设置当前显示时间
+        [_datePicker setDate:[NSDate date] animated:YES];
+       
+        // 设置UIDatePicker的显示模式
+        [_datePicker setDatePickerMode:UIDatePickerModeTime];
+        // 当值发生改变的时候调用的方法
+//        [_datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+//        [_datePicker addTarget:self  action:@selector(hideDateView) forControlEvents:UIControlEventTouchUpInside];
     }
     return _datePicker;
 }
@@ -146,6 +149,7 @@
 }
 - (void)clickSureBtnAction {
     if (_timeBlock) {
+        [self dismiss];
         _timeBlock( @"am", @"pm");
     }
     
@@ -155,84 +159,9 @@
     
     [self fadeOut];
 }
-/*
+
 #pragma mark
 #pragma mark - 级联代理方法
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    
-    // 列数
-    
-    return 3;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    
-    if (component == 0) {
-        // 获取第一列数据
-        return self.firstData.count;
-    } else if (component == 1) {
-    
-        return self.hourTime.count;
-    } else if (component == 2) {
-    
-        return 60;
-    }
-    
-    return 0;
-}
-- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    
-    if (component == 0) {
-        return self.firstData[row];
-    } else if (component == 1) {
-
-        
-        NSString * string = [NSString stringWithFormat:@"%@",self.hourTime[row]];
-        
-        return string;
-    } else if (component == 2) {
-    
-        NSString * string = [NSString stringWithFormat:@"%@",self.secondTime[row]];
-        
-        return string;
-    }
-//
-    return nil;
-}
-
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    
-    
-    switch (component) {
-        case 0:
-            // 滑动了第 0 列 更新后两列
-            self.apmCurrentIndex = [pickerView selectedRowInComponent:0];
-            [pickerView reloadComponent:1];
-            [pickerView selectRow:0 inComponent:1 animated:YES];
-            self.hourCurrentIndex = 0;
-            [pickerView reloadComponent:2];
-            [pickerView selectRow:0 inComponent:2 animated:YES];
-            break;
-            
-        case 1:
-            // 滑动了第 1 列 更新最后一列
-            self.hourCurrentIndex = [pickerView selectedRowInComponent:1];
-            [pickerView reloadComponent:2];
-            [pickerView selectRow:0 inComponent:2 animated:YES];
-            self.secondCurrenIndex = 0;
-            break;
-            
-        case 2:
-            self.secondCurrenIndex = [pickerView selectedRowInComponent:2];
-            break;
-            
-        default:
-            break;
-    }
-    
-}
-*/
 
 #pragma mark
 #pragma mark - 蒙版弹出效果

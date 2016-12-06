@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ClickDogTypeClock)(DogCategoryModel *model);
 @interface SellerNoInputTableView : UITableView
+
+@property(nonatomic, strong) NSArray *hotArr; /**< 热门 */
+
+@property(nonatomic, strong) ClickDogTypeClock typeBlock; /**< 地啊你回调 */
 
 @end

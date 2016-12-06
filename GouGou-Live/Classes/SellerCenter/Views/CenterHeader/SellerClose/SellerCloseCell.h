@@ -18,4 +18,7 @@ typedef void(^ClickBtnBlock)(NSString *btntitle);
 
 @property(nonatomic, strong) ClickBtnBlock clickBtnBlock; /**< 按钮回调 */
 
+
+@property(nonatomic, strong) SellerOrderModel *model; /**< 模型 */
+
 @end

@@ -63,8 +63,8 @@
         btn.layer.masksToBounds = YES;
         btn.layer.borderWidth = bordW;
         btn.layer.borderColor = [UIColor colorWithHexString:@"#e0e0e0"].CGColor;
-        
-        [btn setTitle:self.datalist[i] forState:UIControlStateNormal];
+        DogCategoryModel *model = self.datalist[i];
+        [btn setTitle:model.name forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];
         
@@ -96,9 +96,14 @@
     [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
     self.lastBtn = button;
     
+
     if (_clickBlcok) {
-        
-        _clickBlcok([button currentTitle]);
+        for (DogCategoryModel *dogType in self.datalist) {
+            if ([dogType.name isEqualToString:[button currentTitle]]) {
+                _clickBlcok(dogType);
+
+            }
+        }
     }
 }
 

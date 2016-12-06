@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserAssetModel.h"
 
 @interface DetailCountViewCell : UITableViewCell
+
+@property(nonatomic, strong) UserAssetModel *model; /**< 模型 */
 
 @end

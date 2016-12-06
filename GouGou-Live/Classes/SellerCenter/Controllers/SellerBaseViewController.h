@@ -15,6 +15,8 @@
 #import "SellerSendViewController.h" // 发货
 #import "SellerOrderDetailProtectPowerViewController.h" // 维权详情
 
+#import "SellerOrderModel.h"
+
 @interface SellerBaseViewController : BaseViewController
 
 @end

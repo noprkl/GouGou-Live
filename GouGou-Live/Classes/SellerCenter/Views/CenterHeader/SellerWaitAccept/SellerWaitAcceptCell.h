@@ -23,4 +23,8 @@ typedef void(^ClickSellerEditBlock)();
 
 @property(nonatomic, strong) ClickSellerEditBlock editBlock; /**< 编辑 */
 
+
+@property(nonatomic, strong) SellerOrderModel *model; /**< 模型 */
+
+
 @end

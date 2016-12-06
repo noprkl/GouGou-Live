@@ -5,9 +5,11 @@
 //  Created by ma c on 16/11/20.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
+#define ImgCount 6
 
 #import "SellerCreateDogMessageViewController.h"
-#import "AddDogPictures.h" // 添加狗狗图片
+#import "AddUpdataImagesView.h" // 添加狗狗图片
+
 
 #import "DogAgeFilter.h" // 年龄
 #import "DogSizeFilter.h" // 体型
@@ -15,6 +17,7 @@
 #import "AddDogColorAlertView.h" // 狗狗颜色
 #import "SellerShipTemplateView.h" // 运费模板
 #import "SellerSearchDogtypeViewController.h" // 狗狗品种
+#import "NSString+CertificateImage.h"
 
 @interface SellerCreateDogMessageViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
@@ -39,6 +42,21 @@
 @property(nonatomic, assign) BOOL isHaveDian; /**< 小数点 */
 
 @property(nonatomic, assign) BOOL isFirstZero; /**< 首位为0 */
+
+@property(nonatomic, strong) UILabel *ageLabel; /**< 年龄 */
+@property(nonatomic, strong) DogCategoryModel *ageModel; /**< 年龄 */
+@property(nonatomic, strong) UILabel *sizeLabel; /**< 体型 */
+@property(nonatomic, strong) DogCategoryModel *sizeModel; /**< 体型 */
+@property(nonatomic, strong) UILabel *colorLabel; /**< 颜色 */
+@property(nonatomic, strong) DogCategoryModel *colorModel; /**< 颜色 */
+@property(nonatomic, strong) UILabel *typeLabel; /**< 品种 */
+@property(nonatomic, strong) DogCategoryModel *typeModel; /**< 品种 */
+@property(nonatomic, strong) UILabel *impressLabel; /**< 印象 */
+@property(nonatomic, strong) NSMutableArray *impressModels; /**< 印象数组 */
+
+@property(nonatomic, strong) NSMutableArray *photoArr; /**< 图片数组 */
+
+@property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
 @end
 
@@ -68,6 +86,33 @@ static NSString *cellid = @"SellerCreateDogMessage";
     }];
     
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDogImpression:) name:@"DogImpress" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDogType:) name:@"DogType" object:nil];
+}
+- (void)changeDogType:(NSNotification *)notification {
+    self.typeModel = (DogCategoryModel *)notification.userInfo[@"Type"];
+    DLog(@"%@", notification.userInfo[@"Type"]);
+    self.typeLabel.attributedText = [self getCellTextWith:self.typeModel.name];
+}
+- (void)changeDogImpression:(NSNotification *)notification {
+
+    DLog(@"%@", notification.userInfo[@"Impress"]);
+    [self.impressModels removeAllObjects];
+    self.impressModels = [notification.userInfo[@"Impress"] mutableCopy];
+    DLog(@"%@", self.impressModels);
+    NSMutableString *impress = [NSMutableString string];
+
+    for (NSInteger i = 0; i < self.impressModels.count; i ++) {
+        DogCategoryModel *model = self.impressModels[i];
+        [impress appendFormat:@"#%@# ", model.name];
+    }
+    
+    self.impressLabel.attributedText = [self getCellTextWith:impress];
+}
 #pragma mark
 #pragma mark - 懒加载
 - (NSMutableArray *)dataArr {
@@ -75,6 +120,24 @@ static NSString *cellid = @"SellerCreateDogMessage";
         _dataArr = [NSMutableArray arrayWithArray:@[@"狗狗名字（最多8个汉字）", @"年龄", @"体型", @"品种", @"颜色", @"¥ 一口价", @"¥ 定金", @"印象", @"补充", @"运费设置"]];
     }
     return _dataArr;
+}
+- (NSMutableArray *)impressModels {
+    if (!_impressModels) {
+        _impressModels = [NSMutableArray array];
+    }
+    return _impressModels;
+}
+- (NSMutableArray *)photoArr {
+    if (!_photoArr) {
+        _photoArr = [NSMutableArray array];
+    }
+    return _photoArr;
+}
+- (NSMutableArray *)photoUrl {
+    if (!_photoUrl) {
+        _photoUrl = [NSMutableArray array];
+    }
+    return _photoUrl;
 }
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -101,7 +164,94 @@ static NSString *cellid = @"SellerCreateDogMessage";
     return _sureBtn;
 }
 - (void)clickSureButtonAction {
-    
+    [self textFieldShouldReturn:self.nameText];
+    [self textFieldShouldReturn:self.priceText];
+    [self textFieldShouldReturn:self.noteText];
+
+    if (self.nameText.text.length == 0) {
+        self.nameText.text = @"(未起名)";
+    }
+    if (self.ageModel.name.length == 0) {
+        [self showAlert:@"请选择狗狗年龄"];
+    }else {
+        if (self.sizeModel.name.length == 0) {
+            [self showAlert:@"请选择狗狗体型"];
+        }else {
+            if (self.typeModel.name.length == 0) {
+                [self showAlert:@"请选择狗狗品种"];
+            }else {
+                if (self.colorModel.name.length == 0) {
+                    [self showAlert:@"请选择狗狗颜色"];
+                }else {
+                    if (![NSString validateNumber:self.priceText.text]) {
+                        [self showAlert:@"请输入狗狗价格"];
+                    }else {
+                        if ([self.impressModels[0] name].length == 0) {
+                            [self showAlert:@"请选择狗狗印象"];
+                        }else {
+                            if (self.photoArr.count == 0) {
+                                [self showAlert:@"请添加狗狗图片"];
+                            }else {
+                                // 印象id字符串
+                                for (NSInteger i = 0; i < self.impressModels.count; i ++) {
+                                    DogCategoryModel *model = self.impressModels[i];
+                                    [self.impressModels replaceObjectAtIndex:i withObject:model.ID];
+                                }
+                                NSString *idStr = [self.impressModels componentsJoinedByString:@"|"];
+                                // 图片地址
+                                for (NSInteger i = 0; i < self.photoArr.count; i ++) {
+                                    NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i]];
+                                    NSDictionary *dict = @{
+                                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                           @"img":base64
+                                                           };
+                                    
+                                    [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+                                        if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                                            
+                                            [self.photoUrl addObject:successJson[@"data"]];
+                                            // 提交商品
+                                            if (self.photoUrl.count == self.photoArr.count) {
+                                                NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
+                                              NSDictionary *dict = @{
+                                                                       @"create_user":@([[UserInfos sharedUser].ID integerValue]),
+                                                                       @"name":self.nameText.text,
+                                                                       @"color_id":@([self.colorModel.ID integerValue]),
+                                                                       @"kind_id":@([self.typeModel.ID integerValue]),
+                                                                       @"size_id":@([self.sizeModel.ID integerValue]),
+                                                                       @"age_id":@([self.ageModel.ID integerValue]),
+                                                                       @"price_old":@"2400.00",
+                                                                       @"price":self.priceText.text,
+                                                                       @"deposit":self.deposit.text,
+                                                                       @"comment":self.noteText.text,
+                                                                       @"impresssion_id":idStr,
+                                                                       @"path_big":imgStr
+                                                                       };
+                                                DLog(@"%@",dict);
+                                                [self postRequestWithPath:API_Add_product params:dict success:^(id successJson) {
+                                                    DLog(@"%@", successJson);
+                                                    [self showAlert:successJson[@"message"]];
+                                                    if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                                                        [self.navigationController popViewControllerAnimated:YES];
+                                                    }
+                                                } error:^(NSError *error) {
+                                                    DLog(@"%@", error);
+                                                }];
+                                            }
+                                        }
+                                        
+                                        DLog(@"%@", successJson);
+                                    } error:^(NSError *error) {
+                                        DLog(@"%@", error);
+                                    }];
+                                }
+                            }
+                        }
+                    }   
+                }
+            }
+        }
+    }
 }
 #pragma mark
 #pragma mark - TableView代理
@@ -114,10 +264,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.attributedText = [[NSAttributedString alloc] initWithString:self.dataArr[indexPath.row] attributes:@{
-                                                                                                                        NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"],
-                                                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:14]
-                                                                                                                        }];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -147,6 +293,44 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [cell.contentView addSubview:nameText];
         }
             break;
+            case 1:
+        {
+            UILabel *ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            ageLabel.attributedText = [self getCellTextWith:self.dataArr[1]];
+            
+            self.ageLabel = ageLabel;
+            [cell.contentView addSubview:ageLabel];
+        }
+            break;
+        case 2:
+        {
+            UILabel *sizeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            sizeLabel.attributedText = [self getCellTextWith:self.dataArr[2]];
+            
+            self.sizeLabel = sizeLabel;
+            [cell.contentView addSubview:sizeLabel];
+        }
+            break;
+        case 3:
+        {
+            
+            UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            typeLabel.attributedText = [self getCellTextWith:self.dataArr[3]];
+            
+            self.typeLabel = typeLabel;
+            [cell.contentView addSubview:typeLabel];
+        }
+            break;
+        case 4:
+        {
+            UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            colorLabel.attributedText = [self getCellTextWith:self.dataArr[4]];
+            
+            self.colorLabel = colorLabel;
+            [cell.contentView addSubview:colorLabel];
+        }
+            break;
+
         case 5:
         {
             // 一口价
@@ -185,6 +369,16 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
         }
             break;
+        case 7:
+        {
+            UILabel *impressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            impressLabel.attributedText = [self getCellTextWith:self.dataArr[7]];
+            
+            self.impressLabel = impressLabel;
+            [cell.contentView addSubview:impressLabel];
+        }
+            break;
+
         case 8:
         {
             // 补充
@@ -231,16 +425,26 @@ static NSString *cellid = @"SellerCreateDogMessage";
         {
             [self textFieldShouldReturn:self.nameText];
             [self textFieldShouldReturn:self.priceText];
-            [self textFieldShouldReturn:self.priceText];
-            
+            [self textFieldShouldReturn:self.noteText];
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
-            ageView.dataPlist = @[@"不限", @"1个月", @"2个月", @"3个月", @"4个月", @"5个月", @"6个月", @"1岁", @"2岁", @"3岁", @"4岁", @"5岁", @"6岁", @"7岁", @"以上"];
+
+            NSDictionary *dict = @{
+                                   @"type":@(1)
+                                   };
+            [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                 ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            
             [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(NSString *minString, NSString *maxString){
-                
+            ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
+                self.ageLabel.attributedText = [self getCellTextWith:minString.name];
+                self.ageModel = minString;
                 DLog(@"%@--%@", minString, maxString);
             };
         }
@@ -249,15 +453,33 @@ static NSString *cellid = @"SellerCreateDogMessage";
         {
             [self textFieldShouldReturn:self.nameText];
             [self textFieldShouldReturn:self.priceText];
-            [self textFieldShouldReturn:self.priceText];
+            [self textFieldShouldReturn:self.noteText];
             
             DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
-            sizeView.dataArr = @[@"体型",@"大型犬", @"中型犬", @"小型犬", @"不限", @"确定"];
-            [sizeView show];
+            sizeView.title = @"体型";
+            
+            NSDictionary *dict = @{
+                                   @"type":@(4)
+                                   };
+                       [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                           if (successJson) {
+                              
+                               sizeView.dataArr = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                               
+                               [sizeView show];
+                           }
+
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+
             
             //            __weak typeof(sizeView) weakView = sizeView;
-            sizeView.bottomBlock = ^(NSString *size){
+            sizeView.bottomBlock = ^(DogCategoryModel *size){
                 DLog(@"%@", size);
+                self.sizeLabel.attributedText = [self getCellTextWith:size.name];
+                self.sizeModel = size;
             };
         }
             break;
@@ -274,12 +496,24 @@ static NSString *cellid = @"SellerCreateDogMessage";
         {
             [self textFieldShouldReturn:self.nameText];
             [self textFieldShouldReturn:self.priceText];
-            [self textFieldShouldReturn:self.priceText];
+            [self textFieldShouldReturn:self.noteText];
 
             
             AddDogColorAlertView *colorView = [[AddDogColorAlertView alloc] init];
-            colorView.colorBlock = ^(NSString *color){
-                DLog(@"%@", color);
+            
+            NSDictionary *dict = @{
+                                   @"type":@(2)
+                                   };
+            [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                colorView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            colorView.colorBlock = ^(DogCategoryModel *color){
+                self.colorLabel.attributedText = [self getCellTextWith:color.name];
+                self.colorModel = color;
             };
             [colorView show];
         }
@@ -288,7 +522,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
         {
             [self textFieldShouldReturn:self.nameText];
             [self textFieldShouldReturn:self.priceText];
-            [self textFieldShouldReturn:self.priceText];
+            [self textFieldShouldReturn:self.noteText];
             
             SellerAddImpressViewController *impressVC = [[SellerAddImpressViewController alloc] init];
             
@@ -312,15 +546,48 @@ static NSString *cellid = @"SellerCreateDogMessage";
 #pragma mark - 头尾
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        AddDogPictures *addPict = [[AddDogPictures alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 105)];
-        addPict.backgroundColor = [UIColor whiteColor];
-        return addPict;
+        __block CGFloat W = 0;
+        if (ImgCount <= kMaxImgCount) {
+            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+        }else{
+            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
+        }
+        AddUpdataImagesView *photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, W + 20)];
+        photoView.maxCount = ImgCount;
+        
+        __weak typeof(self) weakSelf = self;
+        __weak typeof(photoView) weakPhoto = photoView;
+        photoView.addBlock = ^(){
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    [weakPhoto.dataArr addObject:photos[0]];
+                    
+                    [weakPhoto.collectionView reloadData];
+                    weakSelf.photoArr = weakPhoto.dataArr;
+                    CGFloat row = weakPhoto.dataArr.count / kMaxImgCount;
+                    CGRect rect = weakPhoto.frame;
+                    rect.size.height = (row + 1) * (W + 10) + 10;
+                    weakPhoto.frame = rect;
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
+        };
+        photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        return photoView;
     }
     return nil;
 }
 #pragma mark - 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 115;
+    return 60;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -457,7 +724,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
         //键盘高度
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = self.tableView.frame;
-            rect.origin.y = (- 264) + 64;
+            rect.origin.y = (- 264) + 10;
             self.tableView.frame= rect;
         }];
     }
@@ -492,5 +759,16 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                                                                   }];
     return attribut;
 }
-
+- (NSAttributedString *)getCellTextWith:(NSString *)string {
+  NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:string attributes:@{
+                                                                                        NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"],
+                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:14]
+                                                                                        }];
+    return attribute;
+}
+- (void)dealloc {
+    // 释放通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DogImpress" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DogType" object:nil];
+}
 @end

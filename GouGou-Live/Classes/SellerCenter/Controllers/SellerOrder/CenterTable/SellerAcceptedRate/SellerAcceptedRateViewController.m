@@ -9,6 +9,7 @@
 #import "SellerAcceptedRateViewController.h"
 #import "SellerAcceptRateCell.h"
 #import "SellerAcceptRateHeaderView.h"
+#import "SellerAccepeRateModel.h"
 
 @interface SellerAcceptedRateViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -22,14 +23,51 @@
 static NSString *cellid = @"SellerAcceptRateCell";
 
 @implementation SellerAcceptedRateViewController
+
+// 评价
+- (void)getRequestComment {
+    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@(11),
+                           @"page":@(1),
+                           @"pageSize":@(5)
+                           };
+    [self getRequestWithPath:API_My_order_comment params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"message"] isEqualToString:@"请求成功"]) {
+              self.dataArr = [SellerAccepeRateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            [UserInfos sharedUser].commentCount = self.dataArr.count;
+            [self.tableView reloadData];
+
+        }
+            } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestComment];
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getRequestComment];
+        
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
 - (void)initUI{
     [self.view addSubview:self.tableView];
+    
+    // 上下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getRequestComment];
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -50,6 +88,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
         _tableView.showsVerticalScrollIndicator = NO;
 
         [_tableView registerClass:[SellerAcceptRateCell class] forCellReuseIdentifier:cellid];
+        _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;
 }
@@ -57,13 +96,16 @@ static NSString *cellid = @"SellerAcceptRateCell";
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.dataArr.count;
+//    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerAcceptRateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.images = @[@"组-7", @"组-7", @"组-7"];
-
+    SellerAccepeRateModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

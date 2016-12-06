@@ -27,15 +27,18 @@
                            @"user_pwd":pwd,
                            @"code":@([self.codeNumber integerValue])
                            };
+    DLog(@"%@", dict);
     [self getRequestWithPath:API_Register params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
         if ([successJson[@"message"] isEqualToString:@"注册成功"]) {
             
-//            SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
-//            
-//            [self.navigationController pushViewController:sureSuccVC animated:YES];
-            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
+                
+                [self.navigationController pushViewController:sureSuccVC animated:YES];
+                
+            });
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);

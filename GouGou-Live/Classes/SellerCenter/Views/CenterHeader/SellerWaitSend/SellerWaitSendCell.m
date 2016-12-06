@@ -81,6 +81,29 @@
     }];
     
 }
+
+- (void)setModel:(SellerOrderModel *)model {
+    _model = model;
+    
+    self.nickView.nickName.text = model.userName;
+    self.nickView.dateLabel.text = @"14分59秒";
+    
+    if (model.pathSmall != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
+    
+    self.dogCardView.dogNameLabel.text = model.name;
+    self.dogCardView.dogKindLabel.text = model.kindName;
+    self.dogCardView.dogAgeLabel.text = model.ageName;
+    self.dogCardView.dogSizeLabel.text = model.sizeName;
+    self.dogCardView.dogColorLabel.text = model.colorName;
+    self.dogCardView.oldPriceLabel.text = model.priceOld;
+    self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+    
+    self.costView.moneyMessage = model.price;
+
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UIView *)spaceView {

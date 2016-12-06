@@ -10,4 +10,6 @@
 
 @interface SellerOrderDetailNoteView : UIView
 
+@property(nonatomic, strong) NSString *noteStr; /**< 备注信息 */
+
 @end

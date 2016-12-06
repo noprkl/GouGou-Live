@@ -9,9 +9,8 @@
 #import "ChoseShopAdressViewController.h"
 #import "ChoseShopAdressCell.h"
 #import "ChosedAdressView.h" // 地址选择
-#import "ShopAdressModel.h"
-
-#import "EditNewAddressViewController.h"
+#import "MyShopAdressModel.h"
+#import "SellerAdressViewController.h"
 
 @interface ChoseShopAdressViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -28,9 +27,33 @@
 static NSString *cellid = @"ChoseShopAdressCell";
 
 @implementation ChoseShopAdressViewController
+// 所有地址
+- (void)postGetAdressRequest {
+    
+    // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           };
+    [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
+        [self showAlert:successJson[@"message"]];
+        DLog(@"1%@", successJson);
+        if (successJson[@"code"]) {
+            // 数据解析
+            self.dataArr = [[MyShopAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
+            DLog(@"11%@", self.dataArr);
+            // 刷新
+            [self.tableView reloadData];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
+
+
 #pragma mark
 #pragma mark - 生命周期
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavBarItem];
@@ -38,14 +61,15 @@ static NSString *cellid = @"ChoseShopAdressCell";
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.hidesBottomBarWhenPushed = YES;
+    self.hidesBottomBarWhenPushed = YES;
+    [self postGetAdressRequest];
 }
 - (void)addRightBarButtonitem {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBarItemAction)];
 }
 - (void)clickRightBarItemAction {
     // 跳转添加地址界面
-    EditNewAddressViewController *editAdressVC = [[EditNewAddressViewController alloc] init];
+    SellerAdressViewController *editAdressVC = [[SellerAdressViewController alloc] init];
     editAdressVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:editAdressVC animated:YES];
     
@@ -73,7 +97,7 @@ static NSString *cellid = @"ChoseShopAdressCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     ChoseShopAdressCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-
+    cell.acceptAdress = self.dataArr[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -82,15 +106,18 @@ static NSString *cellid = @"ChoseShopAdressCell";
 //    NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:self.dataArr[indexPath.row]];
    
     // 注册
-    NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:@"test"];
+    NSDictionary *info = @{
+                           @"ShopAdress":self.dataArr[indexPath.row]
+                           };
+    NSNotification* notification = [NSNotification notificationWithName:@"ShopAdress" object:nil userInfo:info];
 
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.dataArr.count;
-    return 5;
+    return self.dataArr.count;
+//    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     

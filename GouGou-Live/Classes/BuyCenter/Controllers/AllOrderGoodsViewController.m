@@ -13,6 +13,9 @@
 #import "PayBackMoneyViewController.h"
 #import "PayFontMoneyViewController.h"
 #import "BuyCenterModel.h"
+#import "GotoAssessViewController.h"
+
+#import "SingleChatViewController.h" // 联系卖家
 
 static NSString * waitBackCells = @"waitBackCells";
 
@@ -28,12 +31,12 @@ static NSString * waitBackCells = @"waitBackCells";
 //#pragma mark - 网络请求
 //- (void)postGetAllStateOrderRequest {
 //    
-//    NSDictionary * dict = @{
-//                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-//                            @"status":@(0),
+//    NSDictionary * dict = @{//[[UserInfos sharedUser].ID integerValue]
+//                            @"user_id":@(17),
+//                            @"status":@(2),
 //                            @"page":@(1),
-//                            @"pageSize":@(2),
-//                            @"pageSize":@(3)
+//                            @"pageSize":@(10),
+//                            @"is_right":@(2)
 //                            };
 //    
 //    [self postRequestWithPath:API_List_order params:dict success:^(id successJson) {
@@ -43,19 +46,17 @@ static NSString * waitBackCells = @"waitBackCells";
 //            if (successJson[@"data"][@"info"]) {
 //                
 //                DLog(@"%@",successJson[@"data"][@"info"]);
-//                
-////                self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-//                
-//               
-//            }
 //        
+//        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+//                
+//            }
 //    } error:^(NSError *error) {
 //        
 //        DLog(@"%@",error);
 //        
 //    }];
 //}
-
+//#pragma mark -  生命周期
 //- (void)viewWillAppear:(BOOL)animated {
 //
 //    [super viewWillAppear:animated];
@@ -72,8 +73,7 @@ static NSString * waitBackCells = @"waitBackCells";
 }
 
 - (void)initUI {
-    
-    
+
     [self.view addSubview:self.tableview];
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
@@ -94,6 +94,8 @@ static NSString * waitBackCells = @"waitBackCells";
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT -88- 64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         [_tableview registerClass:[WaitBackMoneyCell class] forCellReuseIdentifier:waitBackCells];
     }
     return _tableview;
@@ -114,6 +116,8 @@ static NSString * waitBackCells = @"waitBackCells";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+//    NSArray * cellNamesArray = @[@"WaitFontMoneyCell",@"WaitBackMoneyCell",@"WaitAllMoneyCell",@"WaitConsignmentCell",@"WaitConsignessCell",@"WaitAssessCell",@"ProtectSuccessCell",@"ProtectingPowerCell",@"ProtectFaliedCell"];
+//
     WaitBackMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitBackCells];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -124,6 +128,7 @@ static NSString * waitBackCells = @"waitBackCells";
         if ([button.titleLabel.text  isEqual:@"删除订单"]) {
             
             [self clickDeleteOrder];
+
             
         } else if ([button.titleLabel.text  isEqual:@"查看评价"]){
             // 跳转至支付全款
@@ -139,6 +144,16 @@ static NSString * waitBackCells = @"waitBackCells";
         } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
             
             [self clickApplyProtectPower];
+            
+        } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
+            
+//            // 跳转至联系卖家
+//            SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+//            viewController.title = EaseTest_Chat3;
+//            viewController.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:viewController animated:YES];
+//            DLog(@"%@--%@",self,button.titleLabel.text);
+
         }
         
     };
@@ -147,9 +162,10 @@ static NSString * waitBackCells = @"waitBackCells";
     
     return cell;
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    GotoAssessViewController * goToAssessVC = [[GotoAssessViewController alloc] init];
+    [self.navigationController pushViewController:goToAssessVC animated:YES];
     
 }
 

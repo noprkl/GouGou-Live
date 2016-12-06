@@ -9,7 +9,9 @@
 #import "BaseModel.h"
 
 @interface WaitAllNickModel : BaseModel
-/** 买家名称 */
+/** 商家图片 */
+@property (copy,nonatomic) NSString *merchantImgl;
+/** 商家名称 */
 @property (copy,nonatomic) NSString *merchantName;
 /** 订单状态 */
 @property (copy,nonatomic) NSString *status;

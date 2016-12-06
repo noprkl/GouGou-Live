@@ -10,6 +10,11 @@
 
 @interface SellerNickNameView : UIView
 
+/** 昵称 */
+@property (strong,nonatomic) UILabel *nickName;
+
+@property(nonatomic, strong) UILabel *dateLabel; /**< 时间 */
+
 /** 订单状态信息 */
 @property (strong,nonatomic) NSString *stateMessage;
 

@@ -49,6 +49,7 @@
     [super viewWillAppear:animated];
     // 请求狗狗数据
     [self GetRequestFavoriteDog];
+    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

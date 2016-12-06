@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  支付定金cell
 
 #import "WaitFontMoneyCell.h"
 #import "NicknameView.h"
@@ -50,8 +50,11 @@
 - (void)setCenterModel:(BuyCenterModel *)centerModel {
     
     _centerModel = centerModel;
+    /*
+     // 模型赋值
     self.nickView.model.merchantName = centerModel.merchantName;
     self.nickView.model.status = centerModel.status;
+    self.nickView.model.merchantImgl = centerModel.merchantImgl;
     
     self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
     self.dogCardView.dogCardModel.colorName = centerModel.colorName;
@@ -61,10 +64,32 @@
     self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
     self.dogCardView.dogCardModel.price = centerModel.price;
     self.dogCardView.dogCardModel.kindName = centerModel.kindName;
+    */
+    // 直接赋值
+//    NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
+//    [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+//    self.nickView.sellerIamge.image = [UIImage imageNamed:centerModel.merchantImgl];
+    self.nickView.nickName.text = centerModel.merchantName;
+    self.nickView.stateLabe.text = centerModel.status;
     
-    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
-    self.costView.costModel.balance = centerModel.balance;
+//    NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
+//    [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+//    self.dogCardView.dogImageView.image = [UIImage imageNamed:centerModel.pathSmall];
+    self.dogCardView.dogNameLabel.text = centerModel.name;
+    self.dogCardView.dogAgeLabel.text = centerModel.ageName;
+    self.dogCardView.dogSizeLabel.text = centerModel.sizeName;
+    self.dogCardView.dogColorLabel.text = centerModel.colorName;
+    self.dogCardView.dogKindLabel.text = centerModel.kindName;
+    self.dogCardView.oldPriceLabel.text = centerModel.priceOld;
+    self.dogCardView.nowPriceLabel.text = centerModel.price;
     
+    
+    self.costView.fontMoney.text = centerModel.productRealDeposit;
+    self.costView.remainderMoeny.text = centerModel.productRealBalance;
+    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.productRealBalance integerValue])];
+//    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
+//    self.costView.costModel.balance = centerModel.balance;
+//    
 }
 #pragma mark
 #pragma mark - 约束
@@ -121,7 +146,7 @@
     
     if (!_nickView) {
         _nickView = [[NicknameView alloc] init];
-        [_nickView setStateMessage:@"待付定金"];
+//        [_nickView setStateMessage:@"待付定金"];
     }
     return _nickView;
 }
@@ -156,7 +181,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"定金:" fontMoney:@"￥500" backMoneyLable:@"尾款:" backMoney:@"￥950"];
+//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"定金:" fontMoney:@"￥500" backMoneyLable:@"尾款:" backMoney:@"￥950"];
     }
     return _costView;
 }

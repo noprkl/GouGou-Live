@@ -10,14 +10,14 @@
 
 @implementation SellerBaseCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
+    NSDictionary *attribtDic = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                 };
+    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+    return attribut;
 }
 
 @end

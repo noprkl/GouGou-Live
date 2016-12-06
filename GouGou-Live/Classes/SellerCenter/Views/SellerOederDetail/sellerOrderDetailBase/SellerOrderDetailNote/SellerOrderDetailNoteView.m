@@ -34,6 +34,10 @@
     self.layer.cornerRadius = 9;
     self.layer.masksToBounds = YES;
 }
+- (void)setNoteStr:(NSString *)noteStr {
+    _noteStr = noteStr;
+    self.noteLabel.text = noteStr;
+}
 - (UILabel *)noteLabel {
     if (!_noteLabel) {
         _noteLabel = [[UILabel alloc] init];

@@ -49,6 +49,15 @@
     [AppDelegate setEaseMobEnterBackground:application];
 }
 
+// NOTE: 9.0以后使用新API接口
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    // 支付宝
+    [AppDelegate setAlipayResult:url];
+
+    return YES;
+}
+
 // APP将要从后台返回
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {

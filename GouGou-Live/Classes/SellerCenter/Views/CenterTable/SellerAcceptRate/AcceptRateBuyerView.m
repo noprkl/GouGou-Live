@@ -11,14 +11,14 @@
 @interface AcceptRateBuyerView ()
 
 
-@property(nonatomic, strong) UIImageView *buyerIcon; /**< 买家头像 */
-
-@property(nonatomic, strong) UILabel *buyerName; /**< 买家名字 */
-
-@property(nonatomic, strong) UILabel *commentTime; /**< 评论时间 */
-
-@property(nonatomic, strong) UILabel *commentContent; /**< 评论内容 */
-@property(nonatomic, strong) UIView *line; /**< 线 */
+//@property(nonatomic, strong) UIImageView *buyerIcon; /**< 买家头像 */
+//
+//@property(nonatomic, strong) UILabel *buyerName; /**< 买家名字 */
+//
+//@property(nonatomic, strong) UILabel *commentTime; /**< 评论时间 */
+//
+//@property(nonatomic, strong) UILabel *commentContent; /**< 评论内容 */
+//@property(nonatomic, strong) UIView *line; /**< 线 */
 
 @end
 
@@ -35,6 +35,13 @@
         [self addSubview:self.line];
     }
     return self;
+}
+- (void)setModel:(AcceptRateBuyerModel *)model {
+    _model = model;
+    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
+    [self.buyerIcon sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.buyerName.text = model.userNickName;
+    self.commentContent.text = model.comment;
 }
 #pragma mark
 #pragma mark - 约束
@@ -68,7 +75,7 @@
 - (UIImageView *)buyerIcon {
     if (!_buyerIcon) {
         _buyerIcon = [[UIImageView alloc] init];
-        _buyerIcon.image = [UIImage imageNamed:@"主播头像"];
+//        _buyerIcon.image = [UIImage imageNamed:@"主播头像"];
         
         // 切圆
         _buyerIcon.layer.cornerRadius = 22;
@@ -83,7 +90,7 @@
 - (UILabel *)buyerName {
     if (!_buyerName) {
         _buyerName = [[UILabel alloc] init];
-        _buyerName.text = @"买家**称";
+//        _buyerName.text = @"买家**称";
         _buyerName.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         _buyerName.font = [UIFont systemFontOfSize:14];
     }
@@ -106,7 +113,7 @@
     if (!_commentContent) {
         _commentContent = [[UILabel alloc] init];
         
-        _commentContent.text = @"狗狗很可爱";
+//        _commentContent.text = @"狗狗很可爱";
         _commentContent.textColor = [UIColor colorWithHexString:@"#000000"];
         _commentContent.font = [UIFont systemFontOfSize:14];
     }

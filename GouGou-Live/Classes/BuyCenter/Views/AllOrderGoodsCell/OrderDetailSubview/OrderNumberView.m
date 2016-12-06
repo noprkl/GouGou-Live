@@ -36,7 +36,36 @@
 @end
 
 @implementation OrderNumberView
+- (void)setBuyUserId:(NSString *)buyUserId {
 
+    _buyUserId = buyUserId;
+    self.orderNumber.text = buyUserId;
+}
+// 订单创建时间
+- (void)setCreateTimes:(NSString *)createTimes {
+    
+    _createTimes = createTimes;
+    self.creatTime.text = createTimes;
+
+}
+// 定金支付时间
+- (void)setDepositTimes:(NSString *)depositTimes {
+
+    _depositTimes = depositTimes;
+    self.fontMoneyTime.text = depositTimes;
+}
+// 尾款支付时间
+- (void)setBalanceTimes:(NSString *)balanceTimes {
+    
+    _balanceTimes = balanceTimes;
+    self.backMoneyTime.text = balanceTimes;
+}
+// 发货时间
+- (void)setDeliveryTimes:(NSString *)deliveryTimes {
+
+    _deliveryTimes = deliveryTimes;
+    self.consignmentTime.text = deliveryTimes;
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

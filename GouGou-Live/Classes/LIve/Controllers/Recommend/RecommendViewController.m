@@ -135,44 +135,74 @@
     if (!_filtView) {
         _filtView = [[LiveFilteView alloc] initWithFrame:CGRectMake(0, 110, SCREEN_WIDTH, 44)];
         _filtView.backgroundColor = [UIColor whiteColor];
+        __weak typeof(self) weakSelf = self;
         _filtView.sizeBlock = ^(){
             
             DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
-            sizeView.dataArr = @[@"体型",@"大型犬", @"中型犬", @"小型犬", @"不限", @"确定"];
-            [sizeView show];
+            sizeView.title = @"体型";
+            
+            NSDictionary *dict = @{
+                                   @"type":@(4)
+                                   };
+            [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                if (successJson) {
+                    
+                    sizeView.dataArr = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                    
+                    [sizeView show];
+                }
+                
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+
             
 //            __weak typeof(sizeView) weakView = sizeView;
-            sizeView.bottomBlock = ^(NSString *size){
-                DLog(@"%@", size);
+            sizeView.bottomBlock = ^(DogCategoryModel *sizeModel){
+                DLog(@"%@", sizeModel);
             };
-            
-        };
+                    };
         _filtView.ageBlock = ^(){
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
-            ageView.dataPlist = @[@"不限", @"1个月", @"2个月", @"3个月", @"4个月", @"5个月", @"6个月", @"1岁", @"2岁", @"3岁", @"4岁", @"5岁", @"6岁", @"7岁", @"以上"];
+            
+            NSDictionary *dict = @{
+                                   @"type":@(1)
+                                   };
+            [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            
             [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(NSString *minString, NSString *maxString){
-
-                DLog(@"%@--%@", minString, maxString);
+            ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
+                
             };
-            
+
         };
+        
         _filtView.priceBlock = ^(){
             DogPriceFilter *priceView = [[DogPriceFilter alloc] init];
-            priceView.dataPlist = @[@"不限", @"50", @"100", @"150", @"200", @"300", @"400", @"500", @"1000", @"2000", @"5000", @"1万", @"以上"];
+            NSDictionary *dict = @{
+                                   @"type":@(8)
+                                   };
+            [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                priceView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            
             [priceView show];
             
-            //            __weak typeof(sizeView) weakView = sizeView;
-            
-            priceView.priceRangeBlock = ^(NSString *minString, NSString *maxString){
+            priceView.priceRangeBlock = ^(DogCategoryModel *minModel, DogCategoryModel *maxModel) {
                 
-                DLog(@"%@--%@", minString, maxString);
             };
-            
-
         };
     }
     return _filtView;

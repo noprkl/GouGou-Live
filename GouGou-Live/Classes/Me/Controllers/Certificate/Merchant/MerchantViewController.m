@@ -29,6 +29,8 @@ static NSString * MedrchantCell = @"MedrchantCell";
 /** 照片 */
 @property (strong,nonatomic) AddUpdataImagesView *photoView;
 
+@property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
+
 @property(nonatomic, strong) NSArray *proviceDataArr; /**< 省数据 */
 @property(nonatomic, strong) NSMutableArray *cityDataArr; /**< 市数据 */
 @property(nonatomic, strong) NSMutableArray *desticDataArr; /**< 县数据 */
@@ -89,7 +91,12 @@ static NSString * MedrchantCell = @"MedrchantCell";
     }
     return _desticDataArr;
 }
-
+- (NSMutableArray *)photoUrl {
+    if (!_photoUrl) {
+        _photoUrl = [NSMutableArray array];
+    }
+    return _photoUrl;
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
   
@@ -138,44 +145,45 @@ static NSString * MedrchantCell = @"MedrchantCell";
                     [self showAlert:@"请添加1-3张图片"];
                 }else{
                     
-                    
-                    for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
-                        NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0]];
-                        NSDictionary *dict = @{
-                                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                               @"img":base64
-                                               };
-                        
-                        [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
-                            if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                        for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
+                            NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0]];
+                            NSDictionary *dict = @{
+                                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                   @"img":base64
+                                                   };
+                            [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+                                if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                                    [self.photoUrl addObject:successJson[@"data"]];
+                                   
+                                    if (self.photoUrl.count == self.photoView.dataArr.count) {
+                                        NSString *str = [self.photoUrl componentsJoinedByString:@"|"];
+                                        DLog(@"%@", str);
+                                        NSDictionary *dict2 = @{
+                                                                @"uid":@([[UserInfos sharedUser].ID integerValue]),
+                                                                @"shop_name":goodsText,
+                                                                @"shop_region":areasText,
+                                                                @"shop_area":adressText,
+                                                                @"shop_photo":str,
+                                                                @"invite_id":@([phoneNumText integerValue])
+                                                                };
+                                        DLog(@"%@", dict2);
+                                        [self postRequestWithPath:API_MerchantAuth params:dict2 success:^(id successJson) {
+                                            [self showAlert:successJson[@"message"]];
+                                            if ([successJson[@"message"] isEqualToString:@"成功"]) { //0：失败 1：成功 2：邀请电话不存在 3: 个人信息未实名  4:已提交，审核中 请勿重复提交
+                                                [UserInfos sharedUser].ismerchant = @"3";
+                                                [UserInfos setUser];
+                                            }
+                                            DLog(@"%@", successJson);
+                                        } error:^(NSError *error) {
+                                            DLog(@"%@", error);
+                                        }];
+                                    }
 
-                                [self.photoView.dataArr replaceObjectAtIndex:i withObject:successJson[@"data"]];
-                            }
-                            
-                            DLog(@"%@", successJson);
-                        } error:^(NSError *error) {
-                            DLog(@"%@", error);
-                        }];
-                        
-                    }
-                    // 请求
-                    NSString *str = [self.photoView.dataArr componentsJoinedByString:@"|"];
-                    DLog(@"%@", str);
-                    NSDictionary *dict2 = @{
-                                            @"uid":@([[UserInfos sharedUser].ID integerValue]),
-                                            @"shop_name":goodsText,
-                                            @"shop_region":areasText,
-                                            @"shop_area":adressText,
-                                            @"shop_photo":str
-                                            };
-                    
-                    [self postRequestWithPath:API_MerchantAuth params:dict2 success:^(id successJson) {
-                        [self showAlert:successJson[@"message"]];
-                        DLog(@"%@", successJson);
-                    } error:^(NSError *error) {
-                        DLog(@"%@", error);
-                    }];
-
+                                }
+                            } error:^(NSError *error) {
+                                DLog(@"%@", error);
+                            }];
+                        }
                 }
             }
         }

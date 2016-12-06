@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/16.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  订单详情（代发货）
 
 #import "WaitSellConsigmentViewContorller.h"
 
@@ -34,8 +34,8 @@
 @property (strong,nonatomic) GoodsPriceView *goodsPriceView;
 /** 详细付款状况 */
 @property (strong,nonatomic) DetailPayMoney *detailPayView;
-/** 付款状态 */
-@property (strong,nonatomic) PayingMoney *payMonyView;
+///** 付款状态 */
+//@property (strong,nonatomic) PayingMoney *payMonyView;
 /** 订单编号 */
 @property (strong,nonatomic) OrderNumberView *orderNumberView;
 /** 按钮 */
@@ -64,7 +64,7 @@
     [self.boomScrollView addSubview:self.dogCardView];
     [self.boomScrollView addSubview:self.goodsPriceView];
     [self.boomScrollView addSubview:self.detailPayView];
-    [self.boomScrollView addSubview:self.payMonyView];
+//    [self.boomScrollView addSubview:self.payMonyView];
     [self.boomScrollView addSubview:self.orderNumberView];
     [self.boomScrollView addSubview:self.bottomButton];
     
@@ -208,14 +208,14 @@
     return _detailPayView;
 }
 
-- (PayingMoney *)payMonyView {
-    
-    if (!_payMonyView) {
-        _payMonyView = [[PayingMoney alloc] init];
-        _payMonyView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
-    return _payMonyView;
-}
+//- (PayingMoney *)payMonyView {
+//    
+//    if (!_payMonyView) {
+//        _payMonyView = [[PayingMoney alloc] init];
+//        _payMonyView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//    }
+//    return _payMonyView;
+//}
 
 - (OrderNumberView *)orderNumberView {
     
@@ -240,7 +240,10 @@
                 [weakself clickApplyProtectPower];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [weakself.navigationController pushViewController:viewController animated:YES];
                 
             } else if ([button.titleLabel.text isEqual:@"提醒发货"]) {
                 
@@ -252,5 +255,7 @@
     }
     return _bottomButton;
 }
+
+
 
 @end

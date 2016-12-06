@@ -7,28 +7,29 @@
 //
 
 #import "AcceptRateDogCardView.h"
+#import "DogDetailInfoModel.h"
 
 @interface AcceptRateDogCardView ()
 
-/** 狗狗图片*/
-@property (strong, nonatomic)  UIImageView *dogImageView;
-/** 狗狗名字 */
-@property (strong, nonatomic)  UILabel *dogNameLabel;
-/** 品种 */
-@property(nonatomic, strong) UILabel *kindLabel;
-/** 狗狗种类 */
-@property (strong, nonatomic)  UILabel *dogKindLabel;
-/** 狗狗年龄*/
-@property (strong, nonatomic)  UILabel *dogAgeLabel;
-/** 狗狗体型*/
-@property (strong, nonatomic)  UILabel *dogSizeLabel;
-/** 狗狗颜色*/
-@property (strong, nonatomic)  UILabel *dogColorLabel;
-/** 狗狗价格*/
-@property (strong, nonatomic)  UILabel *nowPriceLabel;
-/** 狗狗老价格*/
-@property (strong, nonatomic)  UILabel *oldPriceLabel;
-
+///** 狗狗图片*/
+//@property (strong, nonatomic)  UIImageView *dogImageView;
+///** 狗狗名字 */
+//@property (strong, nonatomic)  UILabel *dogNameLabel;
+///** 品种 */
+//@property(nonatomic, strong) UILabel *kindLabel;
+///** 狗狗种类 */
+//@property (strong, nonatomic)  UILabel *dogKindLabel;
+///** 狗狗年龄*/
+//@property (strong, nonatomic)  UILabel *dogAgeLabel;
+///** 狗狗体型*/
+//@property (strong, nonatomic)  UILabel *dogSizeLabel;
+///** 狗狗颜色*/
+//@property (strong, nonatomic)  UILabel *dogColorLabel;
+///** 狗狗价格*/
+//@property (strong, nonatomic)  UILabel *nowPriceLabel;
+///** 狗狗老价格*/
+//@property (strong, nonatomic)  UILabel *oldPriceLabel;
+//
 @end
 
 
@@ -62,11 +63,11 @@
         make.size.equalTo(CGSizeMake(78, 78));
     }];
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.top).offset(10);
+        make.top.equalTo(weakself.top).offset(5);
         make.left.equalTo(weakself.dogImageView.right).offset(20);
     }];
     [_kindLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.dogNameLabel.bottom).offset(10);
+        make.top.equalTo(weakself.dogNameLabel.bottom).offset(15);
         make.left.equalTo(weakself.dogImageView.right).offset(20);
     }];
     
@@ -98,7 +99,18 @@
     }];
     
 }
-
+- (void)setModel:(DogDetailInfoModel *)model {
+    _model = model;
+    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+    [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    self.dogNameLabel.text = model.name;
+    self.dogKindLabel.text = model.kindName;
+    self.dogAgeLabel.text = model.ageName;
+    self.dogSizeLabel.text = model.sizeName;
+    self.dogColorLabel.text = model.colorName;
+    self.oldPriceLabel.text = model.priceOld;
+    self.nowPriceLabel.text = model.price;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UIImageView *)dogImageView {

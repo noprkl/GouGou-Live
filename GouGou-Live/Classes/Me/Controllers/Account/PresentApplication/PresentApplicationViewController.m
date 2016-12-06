@@ -11,13 +11,13 @@
 #import "PresentWaitingViewController.h"
 #import "NSString+MD5Code.h"
 #import "SetPayingPsdViewController.h"
+#import "ForgetPayPsdViewController.h"
 
 @interface PresentApplicationViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *moneyTextfiled;
 
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 
-@property(nonatomic, strong) NSString *userAsset; /**< 用户资产 */
 @property(nonatomic, assign) BOOL isHaveDian; /**< 小数点 */
 
 @property(nonatomic, assign) BOOL isFirstZero; /**< 首位为0 */
@@ -27,29 +27,6 @@
 @implementation PresentApplicationViewController
 #pragma mark
 #pragma mark - 网络请求
-
-// 用户账单
-// 用户账单
-- (void)postGetUserAsset {
-    
-    NSDictionary *dict = @{
-                           @"uid":@([[UserInfos sharedUser].ID integerValue]),
-                           @"page":@1
-                           };
-    
-    [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        if ([successJson[@"message"] isEqualToString:@"请求成功"]) {
-            self.userAsset = successJson[@"data"][@"asset"];
-        }else {
-            self.userAsset = @"0.00";
-        }
-        
-    } error:^(NSError *error) {
-        
-        DLog(@"%@", error);
-    }];
-}
 
 - (IBAction)cilckPresentApplicationBtn:(UIButton *)sender {
     
@@ -62,10 +39,6 @@
         PromptView * prompt = [[PromptView alloc] initWithFrame:self.view.bounds];
         
 //        __weak typeof(self) weakself = self;
-        // 提示框textfiled设置代理
-        prompt.playpsdBlock = ^(UITextField *textfiled) {
-            
-        };
         // 点击提示框确认按钮请求支付密码
         __weak typeof(prompt) weakPrompt = prompt;
         prompt.clickSureBtnBlock = ^(NSString *text){
@@ -84,16 +57,16 @@
                                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                            @"amount":@([moneyNumString integerValue])
                                            };
-                    [self postRequestWithPath:API_RetriveMoney params:dict success:^(id successJson) {
+                    [self getRequestWithPath:API_RetriveMoney params:dict success:^(id successJson) {
                         DLog(@"%@", successJson);
                         // 如果请求正确 跳转
                         PresentWaitingViewController * presentWatiVC = [[PresentWaitingViewController alloc] init];
-                        
+                        presentWatiVC.noteStr = successJson[@"message"];
                         [self.navigationController pushViewController:presentWatiVC animated:YES];
+                        [weakPrompt dismiss];
                     } error:^(NSError *error) {
                         DLog(@"%@", error);
                     }];
-                    [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -102,7 +75,9 @@
         };
         prompt.forgetBlock = ^(){
             //忘记支付密码
-            
+            ForgetPayPsdViewController *forgetVC = [[ForgetPayPsdViewController alloc] init];
+            forgetVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:forgetVC animated:YES];
         };
         // 显示蒙版
         [prompt show];
@@ -119,8 +94,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // 请求用户资产
-    [self postGetUserAsset];
-     self.moneyTextfiled.placeholder = [NSString stringWithFormat:@"请输入要提现的金额(最高￥%@)", self.userAsset];
+     self.moneyTextfiled.placeholder = [NSString stringWithFormat:@"请输入要提现的金额(最高￥%@)", [UserInfos sharedUser].userAsset];
+
 }
 - (void)initUI {
 
@@ -138,8 +113,8 @@
 }
 - (void)editPresentMoneyAction:(UITextField *)textFiled {
     // 最高是当前账号的钱数
-    if (textFiled.text > self.userAsset) {
-        textFiled.text = self.userAsset;
+    if (textFiled.text > [UserInfos sharedUser].userAsset) {
+        textFiled.text = [UserInfos sharedUser].userAsset;
     }
 }
 - (void)inputSomthing:(UITextField *)textFiled {

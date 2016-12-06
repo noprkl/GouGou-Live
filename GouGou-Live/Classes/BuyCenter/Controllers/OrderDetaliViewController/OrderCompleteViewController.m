@@ -4,10 +4,10 @@
 //
 //  Created by ma c on 16/11/16.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//   订单完成（未评价）
 
 #import "OrderCompleteViewController.h"
-
+#import "GotoAssessViewController.h" // 去评价
 #import "StateView.h"  // 订单状态
 #import "ConsigneeView.h"  // (联系)收货人
 #import "SellerDogCardView.h"   // 狗狗详情
@@ -18,6 +18,7 @@
 #import "DetailPayMoney.h"  // 详细价格状况
 #import "BottomButtonView.h"   // 按钮创建
 
+#import "OrderDetailModel.h"
 
 @interface OrderCompleteViewController ()<UIScrollViewDelegate>
 /** 底部scrollView */
@@ -34,17 +35,67 @@
 @property (strong,nonatomic) GoodsPriceView *goodsPriceView;
 /** 详细付款状况 */
 @property (strong,nonatomic) DetailPayMoney *detailPayView;
-/** 付款状态 */
-@property (strong,nonatomic) PayingMoney *payMonyView;
+///** 付款状态 */
+//@property (strong,nonatomic) PayingMoney *payMonyView;
 /** 订单编号 */
 @property (strong,nonatomic) OrderNumberView *orderNumberView;
 /** 按钮 */
 @property (strong,nonatomic) BottomButtonView *bottomButton;
+@property (strong,nonatomic) OrderDetailModel *orderInfo;
 
 @end
 
 @implementation OrderCompleteViewController
 
+#pragma mark - 网络请求
+- (void)getBackMoneyRequest {
+    
+    NSDictionary * dict = @{@"id":@(12)};
+    
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"Message"]);
+        DLog(@"%@",successJson[@"data"]);
+        
+        self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+        self.orderStateView.stateMessage = self.orderInfo.status;
+        self.orderStateView.timeMessage = self.orderInfo.closeTime;
+        
+        self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
+        self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
+        self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
+        
+        
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
+        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        self.dogCardView.dogNameLabel.text = self.orderInfo.name;
+        self.dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
+        self.dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
+        self.dogCardView.dogColorLabel.text = self.orderInfo.colorName;
+        self.dogCardView.dogKindLabel.text = self.orderInfo.kindName;
+        self.dogCardView.oldPriceLabel.text = self.orderInfo.priceOld;
+        self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
+        
+        self.goodsPriceView.totalsMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productBalance integerValue] + [self.orderInfo.productDeposit integerValue]];
+        self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
+        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
+        
+        self.detailPayView.needBackMessage = self.orderInfo.productRealBalance;
+        self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
+        self.detailPayView.realMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productRealDeposit integerValue] + [self.orderInfo.productRealBalance integerValue]];
+        self.detailPayView.balance = self.orderInfo.productRealBalance;
+        
+        self.orderNumberView.buyUserId = self.orderInfo.buyUserId;
+        self.orderNumberView.createTimes = self.orderInfo.createTime;
+        self.orderNumberView.depositTimes = self.orderInfo.depositTime;
+        self.orderNumberView.balanceTimes = self.orderInfo.balanceTime;
+        self.orderNumberView.deliveryTimes = self.orderInfo.deliveryTime;
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -65,7 +116,7 @@
     [self.boomScrollView addSubview:self.dogCardView];
     [self.boomScrollView addSubview:self.goodsPriceView];
     [self.boomScrollView addSubview:self.detailPayView];
-    [self.boomScrollView addSubview:self.payMonyView];
+//    [self.boomScrollView addSubview:self.payMonyView];
     [self.boomScrollView addSubview:self.orderNumberView];
     [self.boomScrollView addSubview:self.bottomButton];
 
@@ -211,14 +262,14 @@
     return _detailPayView;
 }
 
-- (PayingMoney *)payMonyView {
-    
-    if (!_payMonyView) {
-        _payMonyView = [[PayingMoney alloc] init];
-        _payMonyView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
-    return _payMonyView;
-}
+//- (PayingMoney *)payMonyView {
+//    
+//    if (!_payMonyView) {
+//        _payMonyView = [[PayingMoney alloc] init];
+//        _payMonyView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//    }
+//    return _payMonyView;
+//}
 
 - (OrderNumberView *)orderNumberView {
     
@@ -250,11 +301,14 @@
                 [weakself clickApplyProtectPower];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+                viewController.title = EaseTest_Chat3;
+                viewController.hidesBottomBarWhenPushed = YES;
+                [weakself.navigationController pushViewController:viewController animated:YES];
             } else if ([button.titleLabel.text isEqual:@"未评价"]) {
                 
-                //                GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];
-                //                [weakself.navigationController pushViewController:goToVC animated:YES];
+                GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];
+                [weakself.navigationController pushViewController:goToVC animated:YES];
                 
             }
         };

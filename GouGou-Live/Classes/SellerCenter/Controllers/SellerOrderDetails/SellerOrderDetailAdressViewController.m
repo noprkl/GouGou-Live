@@ -30,11 +30,29 @@
 
 @property(nonatomic, strong) SellerOrderDetailStateView *stateView; /**< 状态view */
 
+@property(nonatomic, strong) SellerOrderModel *ordrrInfo; /**< 订单信息 */
+
 @end
 
 @implementation SellerOrderDetailAdressViewController
+
+- (void)getRequestOrderDetail {
+    NSDictionary *dict = @{
+                           @"id":@(11)
+                           };
+    
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestOrderDetail];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -61,6 +79,10 @@
 }
 - (void)setBottomBtns:(NSArray *)bottomBtns {
     _bottomBtns = bottomBtns;
+}
+- (void)setModel:(SellerOrderModel *)model {
+    _model = model;
+    self.stateView.noteStr = model.comment;
 }
 #pragma mark
 #pragma mark - 懒加载

@@ -5,15 +5,24 @@
 //  Created by ma c on 16/11/21.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
+// 最大图片数
+#define ImgCount 15
 
 #import "CreateLiveViewController.h"
+#import "AddUpdataImagesView.h"
 
 @interface CreateLiveViewController ()<UITextFieldDelegate>
-
+{
+    CGFloat W;//图片view高度
+}
 @property (weak, nonatomic) IBOutlet UITextField *editNameText; /**< 名字编辑 */
 @property (weak, nonatomic) IBOutlet UILabel *noteLabel; /**< 提示 */
 @property (weak, nonatomic) IBOutlet UIButton *sellORBtn; /**< 是否出售按钮 */
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel; /**< 城市 */
+
+
+@property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 上传图片 */
+
 @property (strong, nonatomic) UIView *lineView; /**< 横线 */
 
 @property (strong, nonatomic) UILabel *shareLabel; /**< 分享到 */
@@ -29,6 +38,10 @@
 @property(nonatomic, strong) UIButton *TencentShareBtn; /**< 空间 */
 
 @property(nonatomic, strong) UIButton *beginLiveBtn; /**< 开始直播 */
+
+@property(nonatomic, strong) NSMutableArray *photoArr; /**< 图片数组 */
+
+@property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
 @end
 
@@ -54,6 +67,7 @@
 }
 - (void)initUI {
 
+    [self.view addSubview:self.photoView];
     [self.view addSubview:self.lineView];
     [self.view addSubview:self.shareLabel];
     [self.view addSubview:self.QQShareBtn];
@@ -69,19 +83,35 @@
 }
 // 约束
 - (void)makeConstraint {
+    
+  
     if (self.sellORBtn.selected) {
-        [self.lineView remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.sellORBtn.bottom).offset(100);
-            make.centerX.equalTo(self.view.centerX);
-            make.size.equalTo(CGSizeMake(225, 1));
+        if (ImgCount <= kMaxImgCount) {
+            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+        }else{
+            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
+        }
+        CGFloat row = self.photoView.dataArr.count / kMaxImgCount;
+        W = (row + 1) * (W + 10) + 10;
+        [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.top).offset(180);
+            make.left.right.equalTo(self.view);
+            make.height.equalTo(W + 20);
         }];
+        
     }else{
-        [self.lineView remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.sellORBtn.bottom).offset(25);
-            make.centerX.equalTo(self.view.centerX);
-            make.size.equalTo(CGSizeMake(225, 1));
+        [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.top).offset(180);
+            make.left.right.equalTo(self.view);
+            make.height.equalTo(1);
         }];
     }
+    
+    [self.lineView remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.photoView.bottom).offset(10);
+        make.centerX.equalTo(self.view.centerX);
+        make.size.equalTo(CGSizeMake(225, 1));
+    }];
     [self.shareLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.lineView.bottom).offset(10);
         make.centerX.equalTo(self.view.centerX);
@@ -117,8 +147,7 @@
 #pragma mark - Action
 - (IBAction)clickSellORBtnAction:(UIButton *)sender {
     sender.selected = !sender.selected;
-    
-    
+    self.photoView.hidden = !sender.selected;
     [self makeConstraint];
 }
 - (IBAction)clickDeleteBtnAction:(UIButton *)sender {
@@ -127,11 +156,11 @@
 }
 // 微博分享
 - (void)ClickSinaShareAction:(UIButton *)btn{
-    
+    [self SinaShare];
 }
 // 微信分享
 - (void)ClickWXShareAction:(UIButton *)btn{
-    
+    [self WChatShare];
 }
 // QQ分享
 - (void)ClickQQShareAction:(UIButton *)btn{
@@ -146,9 +175,57 @@
     
 }
 // 开始直播
-- (void)ClickBeginLiveBtnAction:(UIButton *)btn{ }
+- (void)ClickBeginLiveBtnAction:(UIButton *)btn{
+    
+
+}
 #pragma mark
 #pragma mark - 懒加载
+- (NSMutableArray *)photoArr {
+    if (!_photoArr) {
+        _photoArr = [NSMutableArray array];
+    }
+    return _photoArr;
+}
+- (NSMutableArray *)photoUrl {
+    if (!_photoUrl) {
+        _photoUrl = [NSMutableArray array];
+    }
+    return _photoUrl;
+}
+- (AddUpdataImagesView *)photoView {
+    if (!_photoView) {
+    
+        _photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectZero];
+        _photoView.maxCount = ImgCount;
+        _photoView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        __weak typeof(_photoView) weakPhoto = _photoView;
+        _photoView.addBlock = ^(){
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    [weakPhoto.dataArr addObject:photos[0]];
+                    
+                    [weakPhoto.collectionView reloadData];
+                    weakSelf.photoArr = weakPhoto.dataArr;
+                    [weakSelf makeConstraint];
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
+        };
+        _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
+    }
+    return _photoView;
+}
 - (UIView *)lineView {
     if (!_lineView) {
         _lineView = [[UIView alloc] init];

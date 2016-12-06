@@ -14,6 +14,8 @@
 		044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */; };
 		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
 		044D3FD51DF6C1C60076672E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D3FD11DF6C1C60076672E /* libWeChatSDK.a */; };
+		044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D3FE81DF6E7890076672E /* MediaStreamingVc.m */; };
+		044D3FEB1DF6E7890076672E /* MediaStreamingVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044D3FE91DF6E7890076672E /* MediaStreamingVc.xib */; };
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
@@ -500,6 +502,9 @@
 		044D3FD21DF6C1C60076672E /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		044D3FD31DF6C1C60076672E /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		044D3FD41DF6C1C60076672E /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		044D3FE71DF6E7890076672E /* MediaStreamingVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingVc.h; sourceTree = "<group>"; };
+		044D3FE81DF6E7890076672E /* MediaStreamingVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingVc.m; sourceTree = "<group>"; };
+		044D3FE91DF6E7890076672E /* MediaStreamingVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaStreamingVc.xib; sourceTree = "<group>"; };
 		044D9B931DF44ED500C56B1D /* ProtectPowerDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerDetailModel.h; sourceTree = "<group>"; };
 		044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerDetailModel.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
@@ -2698,6 +2703,9 @@
 				0479B4CE1DCADC7B00CB288A /* LivingViewController.m */,
 				0479B4CF1DCADC7B00CB288A /* PlayerViewController.h */,
 				0479B4D01DCADC7B00CB288A /* PlayerViewController.m */,
+				044D3FE71DF6E7890076672E /* MediaStreamingVc.h */,
+				044D3FE81DF6E7890076672E /* MediaStreamingVc.m */,
+				044D3FE91DF6E7890076672E /* MediaStreamingVc.xib */,
 			);
 			path = LIving;
 			sourceTree = "<group>";
@@ -4284,6 +4292,7 @@
 				04592ED41DF1674A0095C8EE /* SureForgetPayViewController.xib in Resources */,
 				0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */,
 				046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */,
+				044D3FEB1DF6E7890076672E /* MediaStreamingVc.xib in Resources */,
 				04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */,
 				04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */,
 				0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */,
@@ -4729,6 +4738,7 @@
 				046BEFFA1DE4696600BC32E9 /* UIImage+EMGIF.m in Sources */,
 				04EA2AD31DDDB01B0023D9A8 /* SellerProtectPowerStateView.m in Sources */,
 				046F0BE81DE2AB9E00D50D5C /* PayingAllMoneyViewController.m in Sources */,
+				044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */,
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				046BF00C1DE4696600BC32E9 /* PSTGridLayoutSection.m in Sources */,
 				04CE13E61DDC488100EB8777 /* SellerMyGoodsTopView.m in Sources */,

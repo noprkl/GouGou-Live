@@ -10,6 +10,7 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import "EMSDK.h"
 #import <AlipaySDK/AlipaySDK.h>
+#import "WXApi.h"
 
 @implementation AppDelegate (ThirdFrameDelegate)
 
@@ -29,16 +30,6 @@
             NSLog(@"登陆失败");
         }
     }
-//    [[EMClient sharedClient] loginWithUsername:EaseTest_Login1
-//                                      password:@"1234567"
-//                                    completion:^(NSString *aUsername, EMError *aError) {
-//                                        DLog(@"%@", aUsername);
-//                                        if (!aError) {
-//                                            NSLog(@"登陆成功");
-//                                        } else {
-//                                            NSLog(@"登陆失败");
-//                                        }
-//                                    }];
     // 环信UI调用
     [[EaseSDKHelper shareHelper] hyphenateApplication:application
                         didFinishLaunchingWithOptions:launchOptions
@@ -55,7 +46,6 @@
 + (void)setEaseMobEnterForeground:(UIApplication *)application{
     [[EMClient sharedClient] applicationWillEnterForeground:application];
 }
-
 
 
 /** 友盟 */
@@ -83,31 +73,9 @@
     
     //设置新浪的appKey和appSecret
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"2247552123"  appSecret:@"b8dbc8631b270432bade30f503ebf4c1" redirectURL:@"http://sns.whalecloud.com/sina2/callback"];
-}
-+ (BOOL)setUMengBackResult:(NSURL *)url {
     
-    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
-    if (!result) {
-        // 其他如支付等SDK的回调
-        // 支付宝
-        if ([url.host isEqualToString:@"safepay"]) {
-            //跳转支付宝钱包进行支付，处理支付结果
-            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-                DLog(@"result = %@",resultDic);
-            }];
-        }
-        
-    }
-    return result;
+    // 微信支付
+    [WXApi registerApp:@"wxbef5a0656069e8e2" withDescription:@"demo 2.0"];
 }
 
-+ (void)setAlipayResult:(NSURL *)url {
-    
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            DLog(@"result = %@",resultDic);
-        }];
-    }
-}
 @end

@@ -14,6 +14,7 @@
 #import "MyShopAdressModel.h"
 
 #import <AlipaySDK/AlipaySDK.h>
+#import "WXApi.h"
 
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
@@ -62,17 +63,44 @@
 //        DLog(@"%@", error);
 //    }];
     //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
-    NSDictionary *dit = @{
-                          @"id":@(3333),
-                          @"total_fee":@(1)
-                          };
-    [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
+//    NSDictionary *dit = @{
+//                          @"id":@(3333),
+//                          @"total_fee":@(1)
+//                          };
+//    [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//        [self showAlert:successJson[@"msg"]];
+//        [self aliPayWithOrderString:successJson[@"data"]];
+//    } error:^(NSError *error) {
+//        DLog(@"%@", error);
+//    }];
+    // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
+    NSDictionary *dict = @{
+                           @"order":@(222),
+                           @"total_fee":@(1),
+                           @"mark":@"微信支付"
+                           };
+    [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self showAlert:successJson[@"msg"]];
-        [self aliPayWithOrderString:successJson[@"data"]];
+        PayReq * req = [[PayReq alloc] init];
+        req.partnerId = [successJson objectForKey:@"partnerid"];
+        req.prepayId = [successJson objectForKey:@"prepayid"];
+        req.nonceStr = [successJson objectForKey:@"noncestr"];
+        req.timeStamp = (UInt32)[successJson objectForKey:@"timestamp"];
+        req.package = [successJson objectForKey:@"package"];
+        req.sign = [successJson objectForKey:@"sign"];
+        DLog(@"%@", req);
+        BOOL flag = [WXApi sendReq:req];
+        if (flag) {
+            DLog(@"支付成功");
+        }else{
+            DLog(@"支付失败");
+        }
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
+    
 }
 - (void)aliPayWithOrderString:(NSString *)orderStr {
     if (orderStr != nil) {

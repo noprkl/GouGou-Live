@@ -22,7 +22,6 @@ target 'GouGou-Live' do
     	  pod 'UMengUShare/Social/WeChat'
     	 # 集成QQ
           pod 'UMengUShare/Social/QQ'
-
 	
   # Pods for GouGou-Live
 

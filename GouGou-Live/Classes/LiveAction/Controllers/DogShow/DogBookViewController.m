@@ -63,7 +63,7 @@
 //    }];
     //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
     NSDictionary *dit = @{
-                          @"id":@(111111111111),
+                          @"id":@(2222),
                           @"total_fee":@(1)
                           };
     [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {

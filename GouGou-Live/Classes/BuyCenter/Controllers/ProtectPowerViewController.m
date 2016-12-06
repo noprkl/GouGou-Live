@@ -57,6 +57,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
 - (void)viewWillAppear:(BOOL)animated {
 
     [super viewWillAppear:animated];
+    [self getProtectPowerRequest];
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getProtectPowerRequest];

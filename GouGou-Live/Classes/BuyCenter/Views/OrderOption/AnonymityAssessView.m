@@ -69,8 +69,14 @@
 
     if (!_swichs) {
         _swichs = [[UISwitch alloc] init];
+        [_swichs addTarget:self action:@selector(anonymityCommentAction) forControlEvents:UIControlEventValueChanged];
     }
     return _swichs;
+}
+
+- (void)anonymityCommentAction {
+
+
 }
 
 @end

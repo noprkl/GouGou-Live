@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0400A87A1DF6AF0D007B1A31 /* BuyCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
@@ -231,7 +232,6 @@
 		046BF0621DE5997D00BC32E9 /* MessageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BF0611DE5997D00BC32E9 /* MessageListCell.xib */; };
 		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
 		046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */; };
-		046F0B2B1DE2A8CB00D50D5C /* BuyCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B2A1DE2A8CB00D50D5C /* BuyCenterViewController.m */; };
 		046F0B961DE2AB8B00D50D5C /* PowerOrderStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B4C1DE2AB8A00D50D5C /* PowerOrderStateView.m */; };
 		046F0B971DE2AB8B00D50D5C /* SureApplyRefundview.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B4E1DE2AB8A00D50D5C /* SureApplyRefundview.m */; };
 		046F0B981DE2AB8B00D50D5C /* UpLoadPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B501DE2AB8A00D50D5C /* UpLoadPictureView.m */; };
@@ -484,6 +484,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterViewController.m; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
@@ -944,7 +945,6 @@
 		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
 		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
 		046F0B291DE2A8CB00D50D5C /* BuyCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCenterViewController.h; sourceTree = "<group>"; };
-		046F0B2A1DE2A8CB00D50D5C /* BuyCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterViewController.m; sourceTree = "<group>"; };
 		046F0B4B1DE2AB8A00D50D5C /* PowerOrderStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerOrderStateView.h; sourceTree = "<group>"; };
 		046F0B4C1DE2AB8A00D50D5C /* PowerOrderStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerOrderStateView.m; sourceTree = "<group>"; };
 		046F0B4D1DE2AB8A00D50D5C /* SureApplyRefundview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureApplyRefundview.h; sourceTree = "<group>"; };
@@ -3366,7 +3366,7 @@
 			isa = PBXGroup;
 			children = (
 				046F0B291DE2A8CB00D50D5C /* BuyCenterViewController.h */,
-				046F0B2A1DE2A8CB00D50D5C /* BuyCenterViewController.m */,
+				0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */,
 				0479B5C61DCADC7B00CB288A /* BaseNavigationController.h */,
 				0479B5C71DCADC7B00CB288A /* BaseNavigationController.m */,
 				0479B5C81DCADC7B00CB288A /* BaseTabBarController.h */,
@@ -4226,6 +4226,7 @@
 				TargetAttributes = {
 					0467ACE31DBDEF2200562CC4 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 7PDLABN8WZ;
 					};
 				};
 			};
@@ -4534,7 +4535,6 @@
 				046BF0151DE4696600BC32E9 /* UIViewController+DismissKeyboard.m in Sources */,
 				0479B62B1DCADC7B00CB288A /* WatchHistoryViewController.m in Sources */,
 				0479B5F71DCADC7B00CB288A /* DogMarkView.m in Sources */,
-				046F0B2B1DE2A8CB00D50D5C /* BuyCenterViewController.m in Sources */,
 				0479B5F21DCADC7B00CB288A /* DogShowViewController.m in Sources */,
 				04DAC9911DD21A9A0089236D /* TowButtonView.m in Sources */,
 				04DAC9991DD21A9A0089236D /* AddressChooseView.m in Sources */,
@@ -4621,6 +4621,7 @@
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,
 				046F0B9F1DE2AB8B00D50D5C /* BottomButtonView.m in Sources */,
 				0452A1EB1DE173E0007C1E4F /* SellerAddImpressViewController.m in Sources */,
+				0400A87A1DF6AF0D007B1A31 /* BuyCenterViewController.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
 				0479B5DC1DCADC7B00CB288A /* RecommendViewController.m in Sources */,

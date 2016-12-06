@@ -67,6 +67,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [self getPayStateOrderRequest];
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getPayStateOrderRequest];
@@ -130,8 +131,8 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
    
     BuyCenterModel *model = self.dataArray[indexPath.row];
     
-    if ([model.status integerValue] == 1) {
-        // 代付款cell
+    if ([model.status integerValue] == 5) {
+        // 代付全款cell
         WaitAllMoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAllMoneyCell];
         cell.centerModel = model;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家"] buttonNum:2];
@@ -197,15 +198,13 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         [cell.contentView addSubview:funcBtn];
         
         return cell;
-    }
-    
-    if ([model.status integerValue] == 3) {
+    } else if ([model.status integerValue] == 3) {
         
         WaitBackMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitBackCell];
         cell.centerModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付尾款",@"不想买了",@"联系买家",@"申请维权"] buttonNum:4];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付尾款",@"不想买了",@"联系卖家",@"申请维权"] buttonNum:4];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
 
@@ -220,7 +219,9 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
-            } else if ([button.titleLabel.text  isEqual:@"支付尾款"]){
+            }
+            
+            if ([button.titleLabel.text  isEqual:@"支付尾款"]){
                 // 点击支付尾款
                 [self clickPayBackMoney];
                 
@@ -256,21 +257,18 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
     
     BuyCenterModel * model = self.dataArray[indexPath.row];
    
-    if ([model.status integerValue] == 1) {
-        
+    if ([model.status integerValue] == 5) {
+        // 待付全款
         PayingAllMoneyViewController * allVC = [[PayingAllMoneyViewController alloc] init];
         [self.navigationController pushViewController:allVC animated:YES];
-    }
-    
-    if ([model.status integerValue] == 2) {
-        
+    } else if ([model.status integerValue] == 3) {
+        // 代付尾款
         PayBackMoneyViewController * backVC = [[PayBackMoneyViewController alloc] init];
         
         [self.navigationController pushViewController:backVC animated:YES];
         
-    }
-    
-    if ([model.status integerValue] == 3) {
+    } else if ([model.status integerValue] == 2) {
+        // 代付定金
         PayFontMoneyViewController * fontVC = [[PayFontMoneyViewController alloc] init];
         [self.navigationController pushViewController:fontVC animated:YES];
         

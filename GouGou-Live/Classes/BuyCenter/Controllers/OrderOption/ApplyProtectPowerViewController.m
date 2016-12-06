@@ -44,6 +44,7 @@
 @end
 
 @implementation ApplyProtectPowerViewController
+#pragma mark
 #pragma mark - 网络请求
 - (void)postAddProtectProwerRequest {
 
@@ -52,17 +53,18 @@
                             @"content":@"text",
                             @"has_money":@(1),
                             @"money":@(10),
-                            @"has_photo":@(2),
+                            @"has_photo":@(1),
                             };
-    [self getRequestWithPath:API_Add_activist params:dict success:^(id successJson) {
+    [self postRequestWithPath:API_Add_activist params:dict success:^(id successJson) {
         
-        DLog(@"%@",successJson[@"data"]);
+        DLog(@"%@",successJson[@"code"]);
         DLog(@"%@",successJson[@"message"]);
         
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
 }
+#pragma mark
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
 
@@ -76,29 +78,52 @@
     
     [self setNavBarItem];
     
+    
+    [self addControllers];
+
 }
 
 - (void)initUI {
 
     self.title = @"申请维权";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    
     [self.view addSubview:self.boomScrollView];
+    [self.view addSubview:self.handinApplicationBtn];
+    
     [self.boomScrollView addSubview:self.powerOrderView];
     [self.boomScrollView addSubview:self.sellInfoView];
     [self.boomScrollView addSubview:self.dogDetailView];
     [self.boomScrollView addSubview:self.costView];
     [self.boomScrollView addSubview:self.sureApplyRefundView];
     [self.boomScrollView addSubview:self.photoView];
-    [self.boomScrollView addSubview:self.handinApplicationBtn];
+    
 }
 
+- (void)addControllers {
+
+    [_handinApplicationBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.bottom.left.right.equalTo(self.view);
+        make.height.equalTo(44);
+        
+    }];
+    
+    [_boomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.handinApplicationBtn.top);
+    }];
+}
+
+#pragma mark
+#pragma mark - 懒加载
 - (UIScrollView *)boomScrollView {
     
     if (!_boomScrollView) {
-        _boomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        _boomScrollView = [[UIScrollView alloc] init];
         _boomScrollView.delegate = self;
-        _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 750);
+//        _boomScrollView.bounces = NO;
+        _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT - 64);
         _boomScrollView.showsVerticalScrollIndicator = NO;
     }
     return _boomScrollView;
@@ -197,7 +222,7 @@
     if (!_handinApplicationBtn) {
     
         _handinApplicationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        _handinApplicationBtn.frame = CGRectMake(0, 640, SCREEN_WIDTH, 47);
+//        _handinApplicationBtn.frame = CGRectMake(0, SCREEN_HEIGHT - 44, SCREEN_WIDTH, 44);
         [_handinApplicationBtn setTintColor:[UIColor colorWithHexString:@"#ffffff"]];
         [_handinApplicationBtn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
         [_handinApplicationBtn setTitle:@"提交申请" forState:UIControlStateNormal];
@@ -207,7 +232,7 @@
     }
     return _handinApplicationBtn;
 }
-
+#pragma mark - 按钮点击方法
 - (void)handinAplication:(UIButton *)button {
 
 

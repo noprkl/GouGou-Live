@@ -37,6 +37,9 @@
     [prompt show];
     
 }
+
+//#pragma mark - 钱包支付请求
+
 // 尾金支付 传个值 钱数
 - (void)clickPayBackMoney {
     
@@ -49,6 +52,8 @@
         DLog(@"%@", size);
     };
     payMonery.payCellBlock = ^(NSString *payWay){
+        
+        
         [self payMoneyFroWay:payWay];
     };
     
@@ -89,6 +94,9 @@
 #pragma mark - 支付方式选择
 - (void)payMoneyFroWay:(NSString *)payWay {
     if ([payWay isEqualToString:@"账户余额支付"]) {
+        
+//        [self postGetWalletPayRequest];
+        
         // 支付密码提示框
         PromptView * prompt = [[PromptView alloc] init];
         prompt.backgroundColor = [UIColor whiteColor];
@@ -107,6 +115,23 @@
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
                     // 申请成功
+                    NSDictionary * dict = @{@"user_id":@(TestID),
+                                            @"order_id":@(12),
+                                            @"user_price":@([payWay integerValue]),
+                                            @"user_pwd":[NSString md5WithString:text],
+                                            @"status":@(3)
+                                            };
+                    
+                    [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
+                        
+                        DLog(@"%@",successJson[@"code"]);
+                        DLog(@"%@",successJson[@"message"]);
+                        
+                    } error:^(NSError *error) {
+                        
+                        DLog(@"%@",error);
+                    }];
+
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -159,28 +184,25 @@
         // 点击确定按钮出现的弹框（原因选择）
        CancleOrderAlter  *cancleOrder = [[CancleOrderAlter alloc] init];
       
-        cancleOrder.dataArr =  @[@"请选择原因", @"喜欢其他狗狗",@"不喜欢这只了",@"条件不允许养了",@"运费太贵", @"取消"];
-        [cancleOrder show];
-#pragma mark - 有问题
         __weak typeof(cancleOrder) cancleSelf = cancleOrder;
+        
+        [self getRequestWithPath:API_Cancel_order_reason params:nil success:^(id successJson) {
+            DLog(@"%@",successJson[@"data"]);
+            cancleOrder.dataArr = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            
+            [cancleOrder  show];
 
+        } error:^(NSError *error) {
+            
+            DLog(@"%@",error);
+        }];
+        
         // 点击cell
         cancleOrder.reasonCellBlock = ^(NSString *text) {
-        
-            [self getRequestWithPath:API_Cancel_order_reason params:nil success:^(id successJson) {
-                
-                DLog(@"%@",successJson[@"data"]);
-                
-            } error:^(NSError *error) {
-                
-                DLog(@"%@",error);
-            }];
-            DLog(@"%@", text);
-
+             DLog(@"%@", text);
             [cancleSelf dismiss];
             // 弹框退出，要删除对应cell
         };
-        
     };
     [promptView show];
     

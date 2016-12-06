@@ -26,6 +26,7 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [self getConsigneeRequest];
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getConsigneeRequest];

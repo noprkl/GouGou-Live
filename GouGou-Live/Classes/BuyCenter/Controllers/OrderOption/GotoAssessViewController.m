@@ -23,7 +23,7 @@
 /** 放置TextFiled的view */
 @property (strong,nonatomic) UIView *empyView;
 /** 评论 */
-@property (strong,nonatomic) UITextField *textfiled;
+@property (strong,nonatomic) UITextField *commentTextFiled;
 /** 添加图片 */
 @property (strong,nonatomic) AddPhotosView *addPhotoView;
 /** 匿名评价 */
@@ -44,12 +44,12 @@
                            @"order_id":@(12),
                            @"point":@(5),
                            @"has_photo":@(2),
-                           @"is_anomy":@(2),
+                           @"is_anomy":@(1),
                            @"img":@"image",
                            @"comment":@"text"
                            };
     
-    [self postRequestWithPath:API_My_order_comment params:dict success:^(id successJson) {
+    [self postRequestWithPath:API_Order_evaluation params:dict success:^(id successJson) {
         DLog(@"%@",successJson[@"code"]);
         DLog(@"%@",successJson[@"message"]);
         
@@ -80,7 +80,7 @@
     [self.view addSubview:self.dogCardView];
     [self.view addSubview:self.satisfiedView];
     [self.view addSubview:self.empyView];
-    [self.empyView addSubview:self.textfiled];
+    [self.empyView addSubview:self.commentTextFiled];
     [self.view addSubview:self.addPhotoView];
     [self.view addSubview:self.aninymityView];
     [self.view addSubview:self.handinAssess];
@@ -123,7 +123,7 @@
         
     }];
     
-    [_textfiled mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_commentTextFiled mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.empyView.top).offset(10);
         make.left.equalTo(weakself.empyView.left).offset(10);
@@ -181,15 +181,15 @@
     return _satisfiedView;
 }
 
-- (UITextField *)textfiled {
+- (UITextField *)commentTextFiled {
 
-    if (!_textfiled) {
-        _textfiled = [[UITextField alloc] init];
-        _textfiled.font = [UIFont systemFontOfSize:14];
-        _textfiled.placeholder = @"评论两句呗";
-        _textfiled.delegate = self;
+    if (!_commentTextFiled) {
+        _commentTextFiled = [[UITextField alloc] init];
+        _commentTextFiled.font = [UIFont systemFontOfSize:14];
+        _commentTextFiled.placeholder = @"评论两句呗";
+        _commentTextFiled.delegate = self;
     }
-    return _textfiled;
+    return _commentTextFiled;
 }
 
 - (UIView *)empyView {
@@ -275,6 +275,10 @@
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
+    if (textField == self.commentTextFiled) {
+        
+       
+    }
     
     return YES;
 

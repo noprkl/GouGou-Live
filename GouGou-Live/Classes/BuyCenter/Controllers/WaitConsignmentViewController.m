@@ -28,6 +28,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [self getConsignmentRequest];
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getConsignmentRequest];
@@ -117,7 +118,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"申请维权",@"联系买家",@"提醒发货"] buttonNum:3];
+    FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"申请维权",@"联系卖家",@"提醒发货"] buttonNum:3];
     
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"提醒发货"]) {

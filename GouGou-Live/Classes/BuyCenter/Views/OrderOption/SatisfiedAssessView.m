@@ -74,6 +74,8 @@
         [button setImage:[UIImage imageNamed:@"星星白"] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:@"星星黄"] forState:UIControlStateSelected];
         
+        button.tag = 500 + i;
+        
         [self.startArray addObject:button];
         
         [button addTarget:self action:@selector(clickStartBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -83,19 +85,20 @@
     
 }
 - (void)clickStartBtn:(UIButton *)button {
-
-    for (UIButton *btn in self.startArray) {
-        
-        if (button.selected) {
-         button.selected = !button.selected;
-            if (btn.frame.origin.x < button.frame.origin.x) {
-                
-                btn.selected = YES;
-                [button setImage:[UIImage imageNamed:@"星星黄"] forState:UIControlStateSelected];
-                btn.userInteractionEnabled = NO;
-            } 
-        }
-    }
-
+   
+//    NSInteger idex = button.tag;
+//    
+//    for (UIButton *btn in self.startArray) {
+//        
+//        NSInteger btnIdex = btn.tag;
+//        
+//        if (500 <= btnIdex < idex) {
+//         
+//            btn.selected = YES;
+//            [btn setImage:[UIImage imageNamed:@"星星黄"] forState:UIControlStateSelected];
+//            
+//        }
+//    }
+    button.selected = !button.selected;
 }
 @end

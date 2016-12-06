@@ -27,12 +27,10 @@ static NSString *cellid = @"SellerProtectPowerCell";
 - (void)getRequestProtectPowerOrder {
     NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
                            @"user_id":@(11),
-                           @"status":@(1),
                            @"page":@(1),
                            @"pageSize":@(10),
-                           @"is_right":@(2)
                            };
-    [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
+    [self getRequestWithPath:API_My_activist params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.tableView reloadData];
@@ -89,7 +87,23 @@ static NSString *cellid = @"SellerProtectPowerCell";
     SellerOrderModel *model = self.dataArr[indexPath.row];
     cell.model = model;
     
-    cell.orderState = @"待评价";
+    
+    if ([model.status integerValue] == 1) {
+        
+        cell.orderState = model.status;
+    }
+    
+    if ([model.status integerValue] == 2) {
+        
+        cell.orderState = model.status;
+    }
+    
+    if ([model.status integerValue] == 3) {
+        
+        cell.orderState = model.status;
+    }
+    
+//    cell.orderState = @"待评价";
     cell.btnTitles = @[@"在线客服", @"查看详情"];
     NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
     NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];

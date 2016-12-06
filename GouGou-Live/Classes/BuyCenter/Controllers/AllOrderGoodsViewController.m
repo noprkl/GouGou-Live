@@ -122,7 +122,7 @@ static NSString * waitBackCells = @"waitBackCells";
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     // cell底部按钮
-    FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"查看评价",@"申请维权",@"联系买家",@"删除订单"] buttonNum:4];
+    FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"查看评价",@"申请维权",@"联系卖家",@"删除订单"] buttonNum:4];
     
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"删除订单"]) {
@@ -147,12 +147,12 @@ static NSString * waitBackCells = @"waitBackCells";
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
             
-//            // 跳转至联系卖家
-//            SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
-//            viewController.title = EaseTest_Chat3;
-//            viewController.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:viewController animated:YES];
-//            DLog(@"%@--%@",self,button.titleLabel.text);
+            // 跳转至联系卖家
+            SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
+            viewController.title = EaseTest_Chat3;
+            viewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:viewController animated:YES];
+            DLog(@"%@--%@",self,button.titleLabel.text);
 
         }
         

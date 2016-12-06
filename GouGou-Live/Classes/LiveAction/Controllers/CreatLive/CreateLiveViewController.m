@@ -15,6 +15,8 @@
 {
     CGFloat W;//图片view高度
 }
+
+
 @property (weak, nonatomic) IBOutlet UITextField *editNameText; /**< 名字编辑 */
 @property (weak, nonatomic) IBOutlet UILabel *noteLabel; /**< 提示 */
 @property (weak, nonatomic) IBOutlet UIButton *sellORBtn; /**< 是否出售按钮 */
@@ -54,19 +56,19 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    self.navigationController.navigationBarHidden = YES;
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-
 }
 - (void)initUI {
-
+    self.edgesForExtendedLayout = 0;
     [self.view addSubview:self.photoView];
     [self.view addSubview:self.lineView];
     [self.view addSubview:self.shareLabel];
@@ -84,7 +86,6 @@
 // 约束
 - (void)makeConstraint {
     
-  
     if (self.sellORBtn.selected) {
         if (ImgCount <= kMaxImgCount) {
             W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
@@ -94,14 +95,14 @@
         CGFloat row = self.photoView.dataArr.count / kMaxImgCount;
         W = (row + 1) * (W + 10) + 10;
         [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view.top).offset(180);
+            make.top.equalTo(self.sellORBtn.bottom).offset(10);
             make.left.right.equalTo(self.view);
             make.height.equalTo(W + 20);
         }];
         
     }else{
         [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view.top).offset(180);
+            make.top.equalTo(self.sellORBtn.bottom).offset(10);
             make.left.right.equalTo(self.view);
             make.height.equalTo(1);
         }];

@@ -76,8 +76,8 @@
 //    }];
     // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
     NSDictionary *dict = @{
-                           @"order":@(222),
-                           @"total_fee":@(1),
+                           @"order":@(arc4random_uniform(999)+100),
+                           @"total_fee":@(arc4random_uniform(10) + 1),
                            @"mark":@"微信支付"
                            };
     [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {

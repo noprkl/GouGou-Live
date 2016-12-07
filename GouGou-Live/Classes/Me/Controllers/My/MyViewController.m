@@ -134,7 +134,7 @@
     }else{
         _dataSource =  @[@[@"账户", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
     }
-    
+    //[UserInfos getUser] &&
     if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
         _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
     }else{
@@ -282,8 +282,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
  
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ([UserInfos getUser]) {
-        
+    if ([UserInfos getUser]) { // 如果已经登录
+    
         // 如果已经进行商家认证 就选择已商家认证的数据源
         NSString *controllerName = self.controllerNames[indexPath.section][indexPath.row];
         NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
@@ -301,7 +301,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         if ([UserInfos getUser]) {//判断登录与否
-            
+        
             MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
             messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
                     __weak typeof(self) weakSelf = self;

@@ -53,7 +53,7 @@
         [self showAlert:@"手机号为空"];
     }else{
         NSDictionary *dict = @{
-                               @"tel" : @([self.phoneTextField.text integerValue]),
+                               @"tel" :self.phoneTextField.text,
                                @"type" : @4
                                };
         [self getRequestWithPath:API_Code params:dict success:^(id successJson) {

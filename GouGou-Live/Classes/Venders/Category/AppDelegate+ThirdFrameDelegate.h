@@ -18,10 +18,5 @@
 
 /** 友盟 */
 + (void)setUMengSDK;
-/** 友盟回调 */
-+ (BOOL)setUMengBackResult:(NSURL *)url;
-
-/** 支付宝回调 */
-+ (void)setAlipayResult:(NSURL *)url;
 
 @end

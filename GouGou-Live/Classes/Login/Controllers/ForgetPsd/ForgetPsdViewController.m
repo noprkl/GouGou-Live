@@ -51,7 +51,7 @@
     
     [self freetimeout];
     NSDictionary *dict = @{
-                           @"tel" : @([self.phoneTextField.text integerValue]),
+                           @"tel" : self.phoneTextField.text,
                            @"type" : @1
                            };
     [self getRequestWithPath:API_Code params:dict success:^(id successJson) {

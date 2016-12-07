@@ -13,7 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *countdownBtn;
 
-
 @end
 
 @implementation SurePsdSuccessViewController

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyAlbumsModel.h"
 
 typedef void(^ClickManageButtonBlobk)();
-typedef void(^ClickPictureCellBlobk)();
+typedef void(^ClickPictureCellBlobk)(MyAlbumsModel *model);
 @interface MyPagePictureView : UIView
 
 @property(nonatomic, assign) NSInteger maxCount; /**< 每行图片最大个数 */

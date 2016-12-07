@@ -8,7 +8,6 @@
 
 #import "MyPagePictureView.h"
 #import "ManagePictureaCell.h"
-#import "MyAlbumsModel.h"
 
 @interface MyPagePictureView ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -141,8 +140,9 @@ static NSString *cellid = @"ManagePictureaCell";
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (_pictureBlock) {
-        _pictureBlock();
+        _pictureBlock(self.dataArr[indexPath.row]);
     }
 }
 @end

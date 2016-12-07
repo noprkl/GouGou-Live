@@ -219,7 +219,7 @@
     // 设置直播按钮
     if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
         [self.liveBtn setTitle:@"我要直播" forState:(UIControlStateNormal)];
-    }{
+    }else {
         [self.liveBtn setTitle:@"需要商家认证才能直播" forState:(UIControlStateNormal)];
     }
 }
@@ -376,6 +376,12 @@
         _liveBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
         [_liveBtn setTintColor:[UIColor colorWithHexString:@"#333333"]];
         _liveBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        NSString *title = @"";
+        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+            title = @"我要直播";
+        }else{
+            
+        }
         [_liveBtn setTitle:@"商家认证后才能直播" forState:(UIControlStateNormal)];
         [_liveBtn addTarget:self action:@selector(ClickLiveBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }

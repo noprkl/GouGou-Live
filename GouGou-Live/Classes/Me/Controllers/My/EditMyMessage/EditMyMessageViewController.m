@@ -199,7 +199,6 @@ static NSString *cellid = @"cellid";
         cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         
         return cell;
-
     }else if (tableView == self.bottomTableView){ // 底部tableVIew
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
@@ -208,6 +207,7 @@ static NSString *cellid = @"cellid";
 
         // 添加开关
         UISwitch *switchBtn = [[UISwitch alloc] init];
+        switchBtn.on = NO;
         switchBtn.tag = 50 + indexPath.row;
         if (indexPath.row == 0) {
             if ([UserInfos sharedUser].wxopenid != NULL) {
@@ -380,24 +380,29 @@ static NSString *cellid = @"cellid";
         BOOL isButtonOn = [switc isOn];
         if (isButtonOn) {
             DLog(@"微信绑定");
-            __block  DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
-            WXprommt.message = @"你将要绑定微信!";
-            [WXprommt show];
-            WXprommt.sureBlock = ^(UIButton *btn){
-                NSDictionary *dict = @{
-                                       @"type":@"1",
-                                       @"name":[UserInfos sharedUser].wxopenid,
-                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                       };
-                [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                    DLog(@"%@", successJson);
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
-                WXprommt = nil;
-                [WXprommt dismiss];
-            };
-        
+            // 判断是否用微信登陆过
+            if ([UserInfos sharedUser].qqopenid.length == 0) {
+                [self showAlert:@"未使用过微信账号"];
+            }{
+                __block  DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
+                WXprommt.message = @"你将要绑定微信!";
+                [WXprommt show];
+                WXprommt.sureBlock = ^(UIButton *btn){
+                    NSDictionary *dict = @{
+                                           @"type":@"1",
+                                           @"name":[UserInfos sharedUser].wxopenid,
+                                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                           };
+                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+                    WXprommt = nil;
+                    [WXprommt dismiss];
+                };
+           
+            }
         }else {
            
            __block DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
@@ -421,25 +426,29 @@ static NSString *cellid = @"cellid";
     }else if (index == 1){
         BOOL isButtonOn = [switc isOn];
         if (isButtonOn) {
-            DLog(@"微信绑定");
-            __block  DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
-            QQprommt.message = @"你将要绑定腾讯!";
-            [QQprommt show];
-            QQprommt.sureBlock = ^(UIButton *btn){
-                NSDictionary *dict = @{
-                                       @"type":@"2",
-                                       @"name":[UserInfos sharedUser].qqopenid,
-                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                       };
-                [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                    DLog(@"%@", successJson);
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
-                QQprommt = nil;
-                [QQprommt dismiss];
-            };
-            
+            DLog(@"QQ绑定");
+            // 判断是否用qq登陆过
+            if ([UserInfos sharedUser].qqopenid.length == 0) {
+                [self showAlert:@"未使用过QQ账号"];
+            }{
+                __block  DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
+                QQprommt.message = @"你将要绑定腾讯!";
+                [QQprommt show];
+                QQprommt.sureBlock = ^(UIButton *btn){
+                    NSDictionary *dict = @{
+                                           @"type":@"2",
+                                           @"name":[UserInfos sharedUser].qqopenid,
+                                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                           };
+                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+                    QQprommt = nil;
+                    [QQprommt dismiss];
+                };
+            }
         }else {
             
             __block DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
@@ -464,25 +473,29 @@ static NSString *cellid = @"cellid";
     }else if (index == 2){
         BOOL isButtonOn = [switc isOn];
         if (isButtonOn) {
-            DLog(@"微信微博");
-            __block  DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
-            WBprommt.message = @"你将要绑定微博!";
-            [WBprommt show];
-            WBprommt.sureBlock = ^(UIButton *btn){
-                NSDictionary *dict = @{
-                                       @"type":@"3",
-                                       @"name":[UserInfos sharedUser].wxopenid,
-                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                       };
-                [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                    DLog(@"%@", successJson);
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
-                WBprommt = nil;
-                [WBprommt dismiss];
-            };
-            
+            DLog(@"微博");
+            // 判断是否用qq登陆过
+            if ([UserInfos sharedUser].qqopenid.length == 0) {
+                [self showAlert:@"未使用过微博账号"];
+            }{
+                __block  DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
+                WBprommt.message = @"你将要绑定微博!";
+                [WBprommt show];
+                WBprommt.sureBlock = ^(UIButton *btn){
+                    NSDictionary *dict = @{
+                                           @"type":@"3",
+                                           @"name":[UserInfos sharedUser].wbopenid,
+                                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                           };
+                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+                    WBprommt = nil;
+                    [WBprommt dismiss];
+                };
+            }
         }else {
             
             __block DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
@@ -491,7 +504,7 @@ static NSString *cellid = @"cellid";
             WBprommt.sureBlock = ^(UIButton *btn){
                 NSDictionary *dict = @{
                                        @"type":@"3",
-                                       @"name":[UserInfos sharedUser].wxopenid,
+                                       @"name":[UserInfos sharedUser].wbopenid,
                                        @"user_id":@([[UserInfos sharedUser].ID integerValue])
                                        };
                 [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
@@ -642,43 +655,5 @@ static NSString *cellid = @"cellid";
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)testAFN {
-    //                        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //                      manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"application/x-json",@"text/html", nil];
-    //
-    //                        [manager POST:@"http://gougou.itnuc.com/api/http://gougou.itnuc.com/api/" parameters:json constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-    //
-    //                        } progress:^(NSProgress * _Nonnull uploadProgress) {
-    //
-    //                        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-    //                            DLog(@"%@", responseObject);
-    //                        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-    //
-    //                        }];
-}
-- (void)testAFhttp {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //申明返回的结果是json类型
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];
-    //如果报接受类型不一致请替换一致text/html或别的
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    //传入的参数
-    NSDictionary *dict = @{
-                                 @"user_id":@17,
-                                 @"nickname":@"wuyu"
-                                 };
-    //你的接口地址
-    NSString *url=@"http://gougou.itnuc.com/api/UserService/nickname";
-    NSDictionary *json = [dict mj_JSONObject];
-    //发送请求
-    [manager POST:url parameters:json progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"Error: %@", error);
-    }];
 }
 @end

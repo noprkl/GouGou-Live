@@ -47,12 +47,14 @@
 - (void)addbuttons {
     
     NSInteger cols = 5;
-    CGFloat btnW = 63;
+//    CGFloat btnW = 63;
 
-//    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth)/cols;
-    CGFloat btnH = 25;
-    CGFloat margin = kDogImageWidth;
-    CGFloat btnY = kDogImageWidth;
+    CGFloat space = 5;
+    
+    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * space)/cols;
+    CGFloat btnH = 30;
+    CGFloat margin = space;
+    CGFloat btnY = self.frame.size.height / 2 - btnH / 2;
     CGFloat boardMargin = (SCREEN_WIDTH - cols * btnW - (cols- 1)* margin)/2;
     
     for (NSInteger i = 0; i < cols; i++) {
@@ -62,8 +64,7 @@
         if (i == 0) {
             btn.frame = CGRectMake(boardMargin, btnY, btnW, btnH);
         }
-        
-        btn.frame = CGRectMake(boardMargin + (margin + btnW)*i, btnY, btnW, btnH);
+
         btn.layer.cornerRadius = 5;
         btn.layer.masksToBounds = YES;
         btn.layer.borderWidth = 1;
@@ -71,6 +72,9 @@
         btn.tag = i + 30;
         
         [btn setTitle:self.datalist[i] forState:UIControlStateNormal];
+        
+        btn.frame = CGRectMake(boardMargin + (margin + btnW)*i, btnY, btnW, btnH);
+        
         [btn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];
 
@@ -82,6 +86,7 @@
         
         [btn addTarget:self action:@selector(clickBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     
+        btn.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.buttonsArray addObject:btn];
         [self addSubview:btn];
         

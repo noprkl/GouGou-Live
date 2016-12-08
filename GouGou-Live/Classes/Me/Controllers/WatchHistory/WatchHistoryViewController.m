@@ -47,7 +47,8 @@ static NSString * watchCell = @"watchCellID";
         _tableview.dataSource = self;
         _tableview.backgroundColor = [UIColor whiteColor];
         _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        [_tableview registerClass:[WatchHistoryCell class] forCellReuseIdentifier:watchCell];
+        
+//        [_tableview registerClass:[WatchHistoryCell class] forCellReuseIdentifier:watchCell];
     }
     return _tableview;
 }
@@ -65,6 +66,11 @@ static NSString * watchCell = @"watchCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     WatchHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:watchCell];
+    
+    if (cell == nil) {
+        
+        cell = [[WatchHistoryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:watchCell];
+    }
     
     return cell;
 }

@@ -12,6 +12,8 @@
 #import "AddPhotosView.h"
 #import "AnonymityAssessView.h"
 
+#import "AddUpdataImagesView.h"
+#define ImgCount 7
 
 @interface GotoAssessViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 /** 商家名称 */
@@ -24,8 +26,11 @@
 @property (strong,nonatomic) UIView *empyView;
 /** 评论 */
 @property (strong,nonatomic) UITextField *commentTextFiled;
-/** 添加图片 */
-@property (strong,nonatomic) AddPhotosView *addPhotoView;
+///** 添加图片 */
+//@property (strong,nonatomic) AddPhotosView *addPhotoView;
+
+@property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 添加图片 */
+
 /** 匿名评价 */
 @property (strong,nonatomic) AnonymityAssessView *aninymityView;
 /** 提交评价 */
@@ -81,7 +86,8 @@
     [self.view addSubview:self.satisfiedView];
     [self.view addSubview:self.empyView];
     [self.empyView addSubview:self.commentTextFiled];
-    [self.view addSubview:self.addPhotoView];
+//    [self.view addSubview:self.addPhotoView];
+    [self.view addSubview:self.photoView];
     [self.view addSubview:self.aninymityView];
     [self.view addSubview:self.handinAssess];
     
@@ -130,7 +136,7 @@
         make.centerY.equalTo(weakself.empyView.centerY);
     }];
     
-    [_addPhotoView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_photoView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.empyView.bottom).offset(1);
@@ -139,10 +145,24 @@
     
     [_aninymityView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.addPhotoView.bottom).offset(1);
+        make.top.equalTo(weakself.photoView.bottom).offset(1);
         make.left.right.equalTo(weakself.view);
         make.height.equalTo(44);
     }];
+    
+//    [_addPhotoView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.right.equalTo(weakself.view);
+//        make.top.equalTo(weakself.empyView.bottom).offset(1);
+//        make.height.equalTo(100);
+//    }];
+//
+//    [_aninymityView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.top.equalTo(weakself.addPhotoView.bottom).offset(1);
+//        make.left.right.equalTo(weakself.view);
+//        make.height.equalTo(44);
+//    }];
     
     [_handinAssess mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -201,7 +221,49 @@
     }
     return _empyView;
 }
+- (AddUpdataImagesView *)photoView {
+    
+    if (!_photoView) {
+        __block CGFloat W = 0;
+        if (ImgCount <= kMaxImgCount) {
+            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+        }else{
+            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
+        }
+        _photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(0, 267, SCREEN_WIDTH, W + 20)];
+        _photoView.maxCount = ImgCount;
+        
+        __weak typeof(self) weakSelf = self;
+        __weak typeof(_photoView) weakPhoto = _photoView;
+        _photoView.addBlock = ^(){
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    [weakPhoto.dataArr addObject:photos[0]];
+                    
+                    [weakPhoto.collectionView reloadData];
+                    CGFloat row = weakPhoto.dataArr.count / kMaxImgCount;
+                    CGRect rect = weakPhoto.frame;
+                    rect.size.height = (row + 1) * (W + 10) + 10;
+                    weakPhoto.frame = rect;
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
+        };
+        _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
+    }
+    return _photoView;
+}
 
+/*
 - (AddPhotosView *)addPhotoView {
 
     if (!_addPhotoView) {
@@ -230,14 +292,13 @@
                 //模态显示界面
                 
                 [weakself presentViewController:picker animated:YES completion:^{
-                
                 }];
             }
         };
     }
     return _addPhotoView;
 }
-
+*/
 - (AnonymityAssessView *)aninymityView {
 
     if (!_aninymityView) {

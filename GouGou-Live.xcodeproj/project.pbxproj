@@ -399,6 +399,7 @@
 		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
 		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
 		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
+		049F95D61DF7FD5200A47164 /* AddPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049F95D51DF7FD5200A47164 /* AddPictureView.m */; };
 		04A31F831DED4F4900BE175A /* AddUpdataImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F7F1DED4F4900BE175A /* AddUpdataImagesView.m */; };
 		04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F811DED4F4900BE175A /* AddUpdataImagesCell.m */; };
 		04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */; };
@@ -1261,6 +1262,8 @@
 		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
 		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
 		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
+		049F95D41DF7FD5200A47164 /* AddPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPictureView.h; sourceTree = "<group>"; };
+		049F95D51DF7FD5200A47164 /* AddPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPictureView.m; sourceTree = "<group>"; };
 		04A31F7E1DED4F4900BE175A /* AddUpdataImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUpdataImagesView.h; sourceTree = "<group>"; };
 		04A31F7F1DED4F4900BE175A /* AddUpdataImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUpdataImagesView.m; sourceTree = "<group>"; };
 		04A31F801DED4F4900BE175A /* AddUpdataImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUpdataImagesCell.h; sourceTree = "<group>"; };
@@ -2524,6 +2527,8 @@
 			children = (
 				046F0B891DE2AB8B00D50D5C /* AddPhotosView.h */,
 				046F0B8A1DE2AB8B00D50D5C /* AddPhotosView.m */,
+				049F95D41DF7FD5200A47164 /* AddPictureView.h */,
+				049F95D51DF7FD5200A47164 /* AddPictureView.m */,
 				046F0B8B1DE2AB8B00D50D5C /* AnonymityAssessView.h */,
 				046F0B8C1DE2AB8B00D50D5C /* AnonymityAssessView.m */,
 				046F0B8D1DE2AB8B00D50D5C /* CancleOrderAlter.h */,
@@ -4443,6 +4448,7 @@
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
+				049F95D61DF7FD5200A47164 /* AddPictureView.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */,
 				046BF0281DE4696600BC32E9 /* EaseMessageCell.m in Sources */,

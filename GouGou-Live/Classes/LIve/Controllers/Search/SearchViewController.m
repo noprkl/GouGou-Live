@@ -7,13 +7,16 @@
 //
 
 #import "SearchViewController.h"
+#import "MediaStreamingVc.h"
 
-
-@interface SearchViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SearchViewController ()<UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *tableView; /**< tableView */
 
 @property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
+
+@property(nonatomic, strong) UITextField *titleInputView; /**< 头部输入 */
+
 @end
 
 static NSString *cellid = @"cellid";
@@ -39,6 +42,9 @@ static NSString *cellid = @"cellid";
 - (void)initUI {
     [self.view addSubview:self.tableView];
     [self setNavBarItem];
+    [self.navigationItem setTitleView:self.titleInputView];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSureButtonAction)];
+   
 }
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -50,7 +56,30 @@ static NSString *cellid = @"cellid";
     }
     return _tableView;
 }
+- (UITextField *)titleInputView {
+    if (!_titleInputView) {
+        _titleInputView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 280, 30)];
+        _titleInputView.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"#输入您对狗狗的印象，最多不超过10个字#" attributes:@{
+                                                                                                                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
+                                                                                                                                 NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        _titleInputView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+        _titleInputView.layer.cornerRadius = 5;
+        _titleInputView.layer.masksToBounds = YES;
+        _titleInputView.delegate = self;
+        _titleInputView.font = [UIFont systemFontOfSize:14];
+        [_titleInputView addTarget:self action:@selector(editSearchAction:) forControlEvents:(UIControlEventAllEvents)];
+    }
+    return _titleInputView;
+}
+- (void)clickSureButtonAction {
+    MediaStreamingVc *stream = [[MediaStreamingVc alloc] init];
+    stream.url = self.titleInputView.text;
+    stream.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:stream animated:YES];
+}
+- (void)editSearchAction:(UITextField *)textField {
 
+}
 #pragma mark - Tableview 代理
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

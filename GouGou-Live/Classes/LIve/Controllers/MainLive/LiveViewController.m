@@ -58,16 +58,14 @@
 }
 - (void)LeftBarAction {
     
-//    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
     
 //    UISearchController *searchC = [[UISearchController alloc] initWithSearchResultsController:searchVC];
 //    searchVC.hidesBottomBarWhenPushed = YES;
 //
-//    [self.navigationController pushViewController:searchVC animated:YES];
+    [self.navigationController pushViewController:searchVC animated:YES];
     
-    MediaStreamingVc *stream = [[MediaStreamingVc alloc] init];
-    stream.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:stream animated:YES];
+   
 }
 
 #pragma mark - 添加子控制器

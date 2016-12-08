@@ -11,7 +11,7 @@
 
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
 
-@property (nonatomic, strong) PLCameraStreamingSession *session;
+@property (nonatomic, strong) PLMediaStreamingSession *session;
 
 @end
 
@@ -31,28 +31,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.session.previewView];
     
-    [self.session startWithFeedback:^(PLStreamStartStateFeedback feedback) {
+    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+    PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+    PLStream *stream = [PLStream streamWithJSON:nil];
+    stream.title = @"GouGou_Live";
+    
+    _session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream];
+    [self.session startStreamingWithPushURL:[NSURL URLWithString:_url] feedback:^(PLStreamStartStateFeedback feedback) {
         DLog(@"%lu", feedback);
     }];
-//    self.session.stream = [];
-}
-- (PLCameraStreamingSession *)session {
-    if (!_session) {
-        
-        PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
-        PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
-        PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
-        PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
-        PLStream *stream = [PLStream streamWithJSON:nil];
-        
-        _session = [[PLCameraStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream];
-        
-    }
     
-    return _session;
+    [self.view addSubview:self.session.previewView];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

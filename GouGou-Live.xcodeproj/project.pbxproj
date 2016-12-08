@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0400A87A1DF6AF0D007B1A31 /* BuyCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
+		043CBB581DF90C1D0096C9CE /* UIView+FontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 043CBB571DF90C1D0096C9CE /* UIView+FontSize.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
 		0449F93D1DEBDE620060BC90 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0449F93C1DEBDE620060BC90 /* TimePickerView.m */; };
@@ -492,6 +493,8 @@
 		0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterViewController.m; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
+		043CBB561DF90C1D0096C9CE /* UIView+FontSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FontSize.h"; sourceTree = "<group>"; };
+		043CBB571DF90C1D0096C9CE /* UIView+FontSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FontSize.m"; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		04486AB51DD012C400BC6D15 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		04486ABD1DD015FC00BC6D15 /* BaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseHandler.h; sourceTree = "<group>"; };
@@ -3424,6 +3427,8 @@
 				049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */,
 				046BDE271DE3EBB500BC32E9 /* AppDelegate+ThirdFrameDelegate.h */,
 				046BDE281DE3EBB500BC32E9 /* AppDelegate+ThirdFrameDelegate.m */,
+				043CBB561DF90C1D0096C9CE /* UIView+FontSize.h */,
+				043CBB571DF90C1D0096C9CE /* UIView+FontSize.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -4795,6 +4800,7 @@
 				046F0BF21DE2AB9E00D50D5C /* WaitConsignmentViewController.m in Sources */,
 				0479B5E11DCADC7B00CB288A /* DogPictureCollectionViewCell.m in Sources */,
 				04DAC98E1DD21A9A0089236D /* DetailCountViewCell.m in Sources */,
+				043CBB581DF90C1D0096C9CE /* UIView+FontSize.m in Sources */,
 				045D511C1DD96E58001854A8 /* MyPageMerchant.m in Sources */,
 				04CE13E01DDC488100EB8777 /* SellerWaitSendCell.m in Sources */,
 				047AD60D1DD5CE970025290E /* TopButonView.m in Sources */,

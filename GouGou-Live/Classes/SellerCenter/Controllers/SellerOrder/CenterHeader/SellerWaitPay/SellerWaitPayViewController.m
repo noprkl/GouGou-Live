@@ -94,6 +94,7 @@ static NSString *cellid = @"SellerWaitPayCell";
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.tableFooterView = [[UIView alloc] init];
+        
         [_tableView registerClass:[SellerWaitPayCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;
@@ -137,7 +138,7 @@ static NSString *cellid = @"SellerWaitPayCell";
     __weak typeof(self) weakSelf = self;
 
     cell.clickBtnBlock = ^(NSString *btnText){
-        [weakSelf clickBtnActionWithBtnTitle:btnText];
+        [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
     };
     return cell;
 }
@@ -158,7 +159,7 @@ static NSString *cellid = @"SellerWaitPayCell";
 }
 #pragma mark
 #pragma mark - 点击按钮Action
-- (void)clickBtnActionWithBtnTitle:(NSString *)title {
+- (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
     
     if ([title isEqualToString:@"联系买家"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];

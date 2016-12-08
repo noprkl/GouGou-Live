@@ -114,7 +114,7 @@ static NSString *cellid = @"SellerWaitSendCell";
     [self.btnTitles addObject:cell.btnTitles];
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
-        [weakSelf clickBtnActionWithBtnTitle:btnText];
+        [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
     };
     
 
@@ -135,7 +135,7 @@ static NSString *cellid = @"SellerWaitSendCell";
 }
 #pragma mark
 #pragma mark - 点击按钮Action
-- (void)clickBtnActionWithBtnTitle:(NSString *)title {
+- (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
     
     
     if ([title isEqualToString:@"联系买家"]) {

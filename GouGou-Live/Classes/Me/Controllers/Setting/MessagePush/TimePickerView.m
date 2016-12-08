@@ -22,11 +22,15 @@
 
 // 时间滚轮
 @property (strong,nonatomic) UIDatePicker *datePicker;
-/** 第一列数据 */
-@property (strong,nonatomic) NSArray *firstData;
-@property (assign, nonatomic) NSInteger apmCurrentIndex;// 用来记录‘当前’上下午的下标(地址键盘第 0 列选中 row))
-@property (assign, nonatomic) NSInteger hourCurrentIndex; // 用来记录''当前''的小时的下标(地址键盘第 1 列选中的 row)
-@property (assign, nonatomic) NSInteger secondCurrenIndex; // 记录分
+///** 第一列数据 */
+//@property (strong,nonatomic) NSArray *firstData;
+
+//@property (assign, nonatomic) NSInteger apmCurrentIndex;// 用来记录‘当前’上下午的下标(地址键盘第 0 列选中 row))
+//@property (assign, nonatomic) NSInteger hourCurrentIndex; // 用来记录''当前''的小时的下标(地址键盘第 1 列选中的 row)
+//@property (assign, nonatomic) NSInteger secondCurrenIndex; // 记录分
+
+@property (copy, nonatomic) NSString *timeString; /**< 获取时间信息 */
+
 @end
 
 @implementation TimePickerView
@@ -37,13 +41,13 @@
     self.titleLabel.text = timeLabel;
 }
 
-- (NSArray *)firstData {
-
-    if (!_firstData) {
-        _firstData = @[@"上午",@"下午"];
-    }
-    return _firstData;
-}
+//- (NSArray *)firstData {
+//
+//    if (!_firstData) {
+//        _firstData = @[@"上午",@"下午"];
+//    }
+//    return _firstData;
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -112,8 +116,8 @@
         // 设置UIDatePicker的显示模式
         [_datePicker setDatePickerMode:UIDatePickerModeTime];
         // 当值发生改变的时候调用的方法
-//        [_datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
-//        [_datePicker addTarget:self  action:@selector(hideDateView) forControlEvents:UIControlEventTouchUpInside];
+        [_datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+
     }
     return _datePicker;
 }
@@ -147,21 +151,31 @@
     }
     return _cancelBtn;
 }
-- (void)clickSureBtnAction {
-    if (_timeBlock) {
-        [self dismiss];
-        _timeBlock( @"am", @"pm");
-    }
+#pragma mark - 时间改变
+- (void)datePickerValueChanged:(UIDatePicker *)picker {
     
+    NSDateFormatter * format = [[NSDateFormatter alloc] init];
+    
+    format.dateFormat = @"hh:ss";
+    
+    NSString * string = [format stringFromDate:picker.date];
+    
+    self.timeString = string;
+
+    DLog(@"%@",self.timeString);
+}
+#pragma mark - 按钮点击
+- (void)clickSureBtnAction {
+    
+    if (_timeBlock) {
+        _timeBlock(self.timeString);
+    }
 }
 
 - (void)clickCancelBtnAction {
     
     [self fadeOut];
 }
-
-#pragma mark
-#pragma mark - 级联代理方法
 
 #pragma mark
 #pragma mark - 蒙版弹出效果

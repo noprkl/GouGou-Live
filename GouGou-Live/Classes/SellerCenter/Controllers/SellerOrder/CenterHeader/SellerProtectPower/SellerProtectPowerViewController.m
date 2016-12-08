@@ -112,7 +112,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
 
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
-        [weakSelf clickBtnActionWithBtnTitle:btnText];
+        [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
     };
     cell.editBlock = ^(){
         DLog(@"编辑");
@@ -129,7 +129,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     DLog(@"%ld", indexPath.row);
 }
-- (void)clickBtnActionWithBtnTitle:(NSString *)title {
+- (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
 
     if ([title isEqualToString:@"在线客服"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];

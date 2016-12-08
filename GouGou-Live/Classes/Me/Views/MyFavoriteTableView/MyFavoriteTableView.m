@@ -25,6 +25,7 @@ static NSString * dogCell = @"dogCellID";
         
         self.delegate = self;
         self.dataSource = self;
+        self.showsVerticalScrollIndicator = NO;
 
     }
     return self;

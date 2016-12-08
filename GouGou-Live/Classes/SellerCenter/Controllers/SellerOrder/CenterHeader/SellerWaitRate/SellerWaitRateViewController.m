@@ -97,7 +97,7 @@ static NSString *cellid = @"SellerWaitRateCell";
 
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
-        [weakSelf clickBtnActionWithBtnTitle:btnText];
+        [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
     };
     
     cell.editBlock = ^(){
@@ -123,8 +123,7 @@ static NSString *cellid = @"SellerWaitRateCell";
 
 #pragma mark
 #pragma mark - 点击按钮Action
-- (void)clickBtnActionWithBtnTitle:(NSString *)title {
-    
+- (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
     
     if ([title isEqualToString:@"联系买家"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];

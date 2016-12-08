@@ -39,16 +39,19 @@
     _protectModel = protectModel;
     
     // 直接赋值
-//NSString *urlString1 = [IMAGE_HOST stringByAppendingString:protectModel.merchantImgl];
-//[self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-
-    self.nickView.sellerIamge.image = [UIImage imageNamed:protectModel.merchantImgl];
+    // 昵称
+    if (protectModel.merchantImgl.length != 0) {
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:protectModel.merchantImgl];
+        [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+    }
     self.nickView.nickName.text = protectModel.merchantName;
     self.nickView.stateLabe.text = protectModel.status;
     
-//    NSString *urlString = [IMAGE_HOST stringByAppendingString:protectModel.pathSmall];
-//    [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-//    self.dogCardView.dogImageView.image = [UIImage imageNamed:protectModel.pathSmall];
+    // 狗狗详情
+    if (protectModel.pathSmall.length != 0) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:protectModel.pathSmall];
+        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
     self.dogCardView.dogNameLabel.text = protectModel.name;
     self.dogCardView.dogAgeLabel.text = protectModel.ageName;
     self.dogCardView.dogSizeLabel.text = protectModel.sizeName;
@@ -56,7 +59,7 @@
     self.dogCardView.dogKindLabel.text = protectModel.kindName;
     self.dogCardView.oldPriceLabel.text = protectModel.priceOld;
     self.dogCardView.nowPriceLabel.text = protectModel.price;
-    
+    // 花费状况
     self.costView.fontMoney.text = protectModel.productRealDeposit;
     self.costView.remainderMoeny.text = protectModel.productRealBalance;
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];

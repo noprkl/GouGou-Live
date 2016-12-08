@@ -6,7 +6,10 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //  去评价（订单操作）
 
-#define ImgCount 7
+// 每行个数
+#define ImgCount 5
+// 图片总数
+#define ImgTotalCount 7
 
 #import "GotoAssessViewController.h"
 #import "SellNameView.h"
@@ -15,8 +18,13 @@
 #import "AddPhotosView.h"
 #import "AnonymityAssessView.h"
 #import "AddUpdataImagesView.h"
+#import "AddPictureView.h"
+
 
 @interface GotoAssessViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
+{
+    CGFloat W;//图片view高度
+}
 /** 商家名称 */
 @property (strong,nonatomic) SellNameView *nickNameView;
 /** 狗狗详情 */
@@ -30,7 +38,9 @@
 ///** 添加图片 */
 //@property (strong,nonatomic) AddPhotosView *addPhotoView;
 
-@property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 添加图片 */
+//@property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 添加图片 */
+@property(nonatomic, strong) AddPictureView *photoView; /**< 添加图片 */
+@property(nonatomic, strong) NSMutableArray *photoArr; /**< 图片数组 */
 
 /** 匿名评价 */
 @property (strong,nonatomic) AnonymityAssessView *aninymityView;
@@ -137,13 +147,38 @@
         make.centerY.equalTo(weakself.empyView.centerY);
     }];
     
+    if (self.photoView.addBlock) {
+        
+        if (ImgCount <= kMaxImgCount) {
+            W = (SCREEN_WIDTH - (ImgTotalCount + 1) * 10) / ImgTotalCount;
+        } else{
+            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+        }
+        
+        CGFloat row = self.photoView.dataArr.count / ImgCount;
+        W = (row + 1) * (W + 10) + 10;
+        [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.commentTextFiled.bottom);
+            make.left.right.equalTo(self.view);
+            make.height.equalTo(W + 20);
+        }];
+    } else {
+        
+        [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.commentTextFiled.bottom);
+            make.left.right.equalTo(self.view);
+            make.height.equalTo(1);
+        }];
+    
+    }
+    /*
     [_photoView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.empyView.bottom).offset(1);
         make.height.equalTo(100);
     }];
-    
+    */
     [_aninymityView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.photoView.bottom).offset(1);
@@ -222,18 +257,19 @@
     }
     return _empyView;
 }
-- (AddUpdataImagesView *)photoView {
+- (NSMutableArray *)photoArr {
+
+    if (!_photoArr) {
+        _photoArr = [NSMutableArray array];
+    }
+    return _photoArr;
+}
+- (AddPictureView *)photoView {
     
     if (!_photoView) {
-        __block CGFloat W = 0;
-        if (ImgCount <= kMaxImgCount) {
-            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
-        }else{
-            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
-        }
-        _photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(0, 267, SCREEN_WIDTH, W + 20)];
+        _photoView = [[AddPictureView alloc] initWithFrame:CGRectZero];
         _photoView.maxCount = ImgCount;
-        
+//        _photoView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         __weak typeof(_photoView) weakPhoto = _photoView;
         _photoView.addBlock = ^(){
@@ -248,7 +284,42 @@
                     [weakPhoto.dataArr addObject:photos[0]];
                     
                     [weakPhoto.collectionView reloadData];
-                    CGFloat row = weakPhoto.dataArr.count / kMaxImgCount;
+                    weakSelf.photoArr = weakPhoto.dataArr;
+                    [weakSelf addControllers];
+                }else{
+                    DLog(@"出错了");
+                }
+            }];
+            
+        };
+        _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+
+        /*
+        __block CGFloat W = 0;
+        if (ImgCount <= kMaxImgCount) {
+            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+        }else{
+//            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
+            
+        }
+        _photoView = [[AddPictureView alloc] initWithFrame:CGRectMake(0, 267, SCREEN_WIDTH, W + 20)];
+        _photoView.maxCount = ImgCount;
+        _photoView.maxRow = ImgTotalCount % ImgCount;
+        
+        __weak typeof(self) weakSelf = self;
+        __weak typeof(_photoView) weakPhoto = _photoView;
+        _photoView.addBlock = ^(){
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
+            imagePickerVc.sortAscendingByModificationDate = NO;
+            
+            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+                if (flag) {
+                    [weakPhoto.dataArr addObject:photos[0]];
+                    [weakPhoto.collectionView reloadData];
+                    CGFloat row = weakPhoto.dataArr.count / ImgTotalCount;
                     CGRect rect = weakPhoto.frame;
                     rect.size.height = (row + 1) * (W + 10) + 10;
                     weakPhoto.frame = rect;
@@ -260,6 +331,8 @@
         };
         _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
+    }
+         */
     }
     return _photoView;
 }
@@ -322,9 +395,32 @@
     }
     return _handinAssess;
 }
-
+#pragma mark - 点击提交评价
 - (void)clickHandinAssess:(UIButton *)button {
 
+    NSString * contentStr = self.commentTextFiled.text;
+    
+    BOOL flag = [contentStr isChinese];
+
+    
+    if (contentStr.length == 0) {
+        
+        [self showAlert:@"评价内容不能为空"];
+    } else if (!flag) {
+    
+        [self showAlert:@"评价内容必须中文"];
+    } else {
+    
+        if (self.photoView.dataArr.count == 0) {
+            
+            [self showAlert:@"上传图片不能为空"];
+        } else {
+        
+//            [self popoverPresentationController];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+    }
     
 }
 
@@ -332,16 +428,12 @@
 #pragma mark - TextFiled代理
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 
+    [textField resignFirstResponder];
     return YES;
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
-    if (textField == self.commentTextFiled) {
-        
-       
-    }
-    
     return YES;
 
 }

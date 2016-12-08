@@ -76,7 +76,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     self.edgesForExtendedLayout = 0;
     [self.view addSubview:self.sureBtn];
     [self.view addSubview:self.tableView];
-    
+
     [self.sureBtn makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
         make.height.equalTo(50);
@@ -85,7 +85,17 @@ static NSString *cellid = @"SellerCreateDogMessage";
         make.left.top.right.equalTo(self.view);
         make.bottom.equalTo(self.sureBtn.top);
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDogImpression:) name:@"DogImpress" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDogType:) name:@"DogType" object:nil];
+}
+- (void)setModel:(DogDetailModel *)model {
+    _model = model;
     self.nameText.text = _model.name;
     self.ageModel = _model.age;
     self.ageLabel.attributedText = [self getCellTextWith:_model.age.name];
@@ -118,14 +128,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
         self.noteText.text = _model.comment;
     }
     self.oldPrice.attributedText = [self getCellTextWith:_model.price];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDogImpression:) name:@"DogImpress" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDogType:) name:@"DogType" object:nil];
+    [self.tableView reloadData];
 }
 - (void)changeDogType:(NSNotification *)notification {
     self.typeModel = (DogCategoryModel *)notification.userInfo[@"Type"];
@@ -156,9 +160,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     return _dataArr;
 }
 // 赋值
-- (void)setModel:(DogDetailModel *)model {
-    _model = model;
-    }
+
 - (NSMutableArray *)impressModels {
     if (!_impressModels) {
         _impressModels = [NSMutableArray array];
@@ -313,6 +315,41 @@ static NSString *cellid = @"SellerCreateDogMessage";
     switch (indexPath.row) {
         case 0:
         {
+            /*
+            self.nameText.text = _model.name;
+            self.ageModel = _model.age;
+            self.ageLabel.attributedText = [self getCellTextWith:_model.age.name];
+            
+            self.sizeModel = _model.size;
+            self.sizeLabel.attributedText = [self getCellTextWith:_model.size.name];
+            
+            self.colorModel = _model.color;
+            self.colorLabel.attributedText = [self getCellTextWith:_model.color.name];
+            
+            self.typeModel = _model.kind;
+            self.typeLabel.attributedText = [self getCellTextWith:_model.kind.name];
+            
+            // 图片url
+            NSArray *imsArr = [_model.pathBig componentsSeparatedByString:@","];
+            
+            // 数组转化模型
+            NSArray *impressModels = [DogCategoryModel mj_objectArrayWithKeyValuesArray:_model.impresssion];
+            [self.impressModels removeAllObjects];
+            [self.impressModels addObjectsFromArray:impressModels];
+            
+            NSMutableString *impress = [NSMutableString string];
+            for (NSInteger i = 0; i < self.impressModels.count; i ++) {
+                DogCategoryModel *model = self.impressModels[i];
+                [impress appendFormat:@"#%@# ", model.name];
+            }
+            self.impressLabel.attributedText = [self getCellTextWith:impress];
+            
+            if (_model.comment.length != 0) {
+                self.noteText.text = _model.comment;
+            }
+            self.oldPrice.attributedText = [self getCellTextWith:_model.price];
+            */
+            
             cell.textLabel.text = @"";
             UIButton *noneNameBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
             [noneNameBtn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];

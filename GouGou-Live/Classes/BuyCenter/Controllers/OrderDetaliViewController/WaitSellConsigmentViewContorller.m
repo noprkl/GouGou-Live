@@ -64,9 +64,11 @@
         self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         
-        
-        NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
-        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        // 狗狗详情
+        if (self.orderInfo.pathSmall.length != 0) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
+            [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        }
         self.dogCardView.dogNameLabel.text = self.orderInfo.name;
         self.dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
         self.dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
@@ -265,7 +267,6 @@
     }
     return _detailPayView;
 }
-
 //- (PayingMoney *)payMonyView {
 //    
 //    if (!_payMonyView) {
@@ -274,7 +275,6 @@
 //    }
 //    return _payMonyView;
 //}
-
 - (OrderNumberView *)orderNumberView {
     
     if (!_orderNumberView) {
@@ -307,9 +307,7 @@
                 
                 [weakself clickConsignment:weakself.detailModel];
             }
-            
         };
-
     }
     return _bottomButton;
 }

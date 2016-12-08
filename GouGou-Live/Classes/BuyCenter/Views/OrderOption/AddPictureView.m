@@ -9,9 +9,10 @@
 #import "AddPictureView.h"
 
 #import "AddUpdataImagesCell.h"
-
-static NSInteger maxRowCount = 5;
-
+// 每行个数
+#define ImgCount 5
+// 图片总数
+#define ImgTotalCount 7
 @interface AddPictureView ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 /** 晒晒宝贝 */
 @property (strong,nonatomic) UILabel *textLabel;
@@ -27,23 +28,21 @@ static NSString *cellid = @"AddUpdataImagesCell";
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     [self addSubview:self.collectionView];
     [self addSubview:self.addBtn];
+    [self addSubview:self.textLabel];
     
     [self.collectionView makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.left.top.right.equalTo(self);
     }];
-//    self.frame.size = CGSizeMake(SCREEN_WIDTH, (maxRowCount +1) * (_W + 10 +10));
-
+    //    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, _W + 10);
 }
 - (void)setMaxCount:(NSInteger)maxCount {
-    
     _maxCount = maxCount;
-    if (maxCount <= maxRowCount) {
+    if (maxCount <= kMaxImgCount) {
         _W = (SCREEN_WIDTH - (_maxCount + 1) * 10) / _maxCount;
     }else{
-        _W = (SCREEN_WIDTH - (kDogImageWidth + 1) * 10) / kDogImageWidth;
+        _W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
     }
 }
 - (UICollectionView *)collectionView {
@@ -65,19 +64,6 @@ static NSString *cellid = @"AddUpdataImagesCell";
     }
     return _collectionView;
 }
-
-- (UILabel *)textLabel {
-    
-    if (!_textLabel) {
-        _textLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 + _W + 10, 64, 100, 25)];
-        _textLabel.font = [UIFont systemFontOfSize:14];
-        _textLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-        _textLabel.text = @"晒晒小宝贝";
-    }
-    return _textLabel;
-}
-
-
 - (UIButton *)addBtn {
     if (!_addBtn) {
         _addBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
@@ -89,8 +75,20 @@ static NSString *cellid = @"AddUpdataImagesCell";
     }
     return _addBtn;
 }
+- (UILabel *)textLabel {
+    
+    if (!_textLabel) {
+        _textLabel = [[UILabel alloc] initWithFrame:CGRectMake(89, 64, 100, 25)];
+        _textLabel.font = [UIFont systemFontOfSize:14];
+        _textLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+        _textLabel.text = @"晒晒小宝贝";
+    }
+    return _textLabel;
+}
+
 - (void)ClickAddAction:(UIButton *)btn {
     if (_addBlock) {
+         self.textLabel.hidden = YES;
         _addBlock();
     }
 }
@@ -101,29 +99,40 @@ static NSString *cellid = @"AddUpdataImagesCell";
     return _dataArr;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+   
     // 设置添加按钮 不能放在 cell重用中，row == 0时 不走那个方法
-    if (self.dataArr.count >= _maxCount) {
-        self.addBtn.hidden = YES;
-    }else{
-        self.addBtn.userInteractionEnabled = NO;
-    }
     CGFloat row = self.dataArr.count / kMaxImgCount;
     
     CGFloat col = self.dataArr.count % kMaxImgCount;
     
-    [self.addBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(col * (_W + 10) + 10);
-        make.top.equalTo(row * (_W + 10) + 10);
-        make.size.equalTo(CGSizeMake(_W, _W));
-    }];
-    
-    [self.textLabel remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo((col + 1) * (_W + 10) + 10);
-        make.top.equalTo((row + 1) * (_W + 10));
-        make.size.equalTo(CGSizeMake(69 , 100));
-    }];
-
-    return self.dataArr.count;
+    if (self.dataArr.count < _maxCount) {
+        
+        [self.addBtn remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(col * (_W + 10) + 10);
+            make.top.equalTo(row * (_W + 10) + 10);
+            make.size.equalTo(CGSizeMake(_W, _W));
+        }];
+        
+        [self.textLabel remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo((col + 1) * (_W +10) +10);
+            make.top.equalTo(row * (_W + 10) + 44);
+            make.size.equalTo(CGSizeMake(70, 20));
+            
+        }];
+        
+    } else{
+        
+        [self.addBtn remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(col * (_W + 10) + 10);
+            make.top.equalTo((row + 1) * (_W + 10) + 10);
+            make.size.equalTo(CGSizeMake(_W, _W));
+        }];
+        
+//        self.addBtn.hidden = NO;
+    }
+   
+       return self.dataArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     AddUpdataImagesCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
@@ -140,15 +149,15 @@ static NSString *cellid = @"AddUpdataImagesCell";
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    //    if (indexPath.row == (self.dataArr.count - 1)) {
-    //        if (_addBlock) {
-    //            // 传过去并添加返回的照片
-    //            [self.dataArr insertObject:_addBlock() atIndex:(indexPath.row - 1)];
-    //
-    //            // 刷新数据
-    //            [self.collectionView reloadData];
-    //        }
-    //    }
+//        if (indexPath.row == (self.dataArr.count - 1)) {
+//            if (_addBlock) {
+//                // 传过去并添加返回的照片
+//                [self.dataArr insertObject:_addBlock() atIndex:(indexPath.row - 1)];
+//    
+//                // 刷新数据
+//                [self.collectionView reloadData];
+//            }
+//        }
     NSLog(@"%ld", indexPath.row);
 }
 @end

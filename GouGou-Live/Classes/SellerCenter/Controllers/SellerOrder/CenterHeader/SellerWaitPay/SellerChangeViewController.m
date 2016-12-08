@@ -10,6 +10,7 @@
 #import "PromptView.h" // 弹窗
 #import "SellerChangeShipCostView.h" // 修改运费
 #import "SellerChangePriceAlertView.h" // 修改价格
+#import "ForgetPayPsdViewController.h"// 忘记支付密码
 
 #import "SellerNickNameView.h"
 #import "SellerDogCardView.h"
@@ -276,6 +277,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
                 // 申请成功
                 [weakPrompt dismiss];
             }
+            
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -291,7 +293,9 @@ static NSString *cellid = @"SellerAcceptRateCell";
     };
     // 忘记密码
     prompt.forgetBlock = ^(){
-        
+        ForgetPayPsdViewController *forgetVc = [[ForgetPayPsdViewController alloc] init];
+        forgetVc.hidesBottomBarWhenPushed = YES;
+        [weakself.navigationController pushViewController:forgetVc animated:YES];
     };
     // 显示蒙版
     [prompt show];

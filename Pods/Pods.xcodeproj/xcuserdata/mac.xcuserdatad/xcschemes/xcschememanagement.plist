@@ -2,91 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SchemeUserState</key>
-	<dict>
-		<key>AFNetworking.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>HappyDNS.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>MJExtension.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
-		<key>MJRefresh.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
-		<key>Masonry.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>PLPlayerKit.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>12</integer>
-		</dict>
-		<key>Pods-GouGou-Live.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>7</integer>
-		</dict>
-		<key>SDCycleScrollView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>8</integer>
-		</dict>
-		<key>SDWebImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>9</integer>
-		</dict>
-		<key>TZImagePickerController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>10</integer>
-		</dict>
-		<key>UMengUShare.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>11</integer>
-		</dict>
-		<key>pili-librtmp.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
-	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>04CF549EBEEE7BC87AEAE35397184D94</key>
@@ -99,32 +14,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>123CBBC213DC0200E07BA70075AA6585</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>14917FC7C313BF47CBE746496C2755F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>1DCE856F869E1A470A990DCF18FB1E33</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>40E4B449607C744C85D1AA604EF50B30</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4C36BF17C364C903C67362EC7F018EA0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -144,22 +39,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>70BC44266C6FFE30D2C57129458E070B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>780BAFDC93ED0B608B35A6DBD2255EFF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>9106D9CCDF09D7037FB49DE9B8CF208B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>928353533005A4198EBDA5B700D37B64</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -174,32 +59,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9EAB3E42EF957541E6C3C76D35FD008E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>A316B54C67E947D23CECD230FA5BFAEF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D0EA7BD0DF7B64D1D22AE99C93B3613D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F5FF1C1E1D18FC9F1610A86D5E4F6E5F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F860CC0609F3839F15D2AFFEAA09B0BF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FACE7701F1E490EC623706A7587DDDE8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

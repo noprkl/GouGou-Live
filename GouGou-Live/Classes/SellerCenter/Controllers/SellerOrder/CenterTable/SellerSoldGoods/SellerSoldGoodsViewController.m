@@ -109,7 +109,8 @@ static NSString *closeCell = @"SellerCloseCell";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
-        
+        _tableView.tableFooterView = [[UIView alloc] init];
+
         [_tableView registerClass:[SellerWaitAcceptCell class] forCellReuseIdentifier:waitAcceptCell];
         [_tableView registerClass:[SellerWaitPayCell class] forCellReuseIdentifier:waitPayCell];
         [_tableView registerClass:[SellerWaitRateCell class] forCellReuseIdentifier:waitRateCell];
@@ -136,16 +137,12 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.orderState = @"待发货";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
         cell.costMessage = @[@"全款：¥ 950"];
         
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
-        
-        cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
-        };
 
         return cell;
     }else if ([model.status integerValue] == 1){ // 1：待付款
@@ -164,7 +161,7 @@ static NSString *closeCell = @"SellerCloseCell";
         __weak typeof(self) weakSelf = self;
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
 
         return cell;
@@ -179,7 +176,7 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.states addObject:cell.orderState];
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
 
         return cell;
@@ -194,7 +191,7 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.states addObject:cell.orderState];
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
         return cell;
     }else if ([model.status integerValue] == 4){ // 4：放弃订金，交易结束
@@ -214,7 +211,7 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.states addObject:cell.orderState];
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
         
         return cell;
@@ -237,7 +234,7 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.states addObject:cell.orderState];
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
         return cell;
     }else if ([model.status integerValue] == 8){ // 8：已发货，待收货
@@ -255,7 +252,7 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.states addObject:cell.orderState];
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
         cell.editBlock = ^(){
             DLog(@"编辑");
@@ -277,7 +274,7 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.states addObject:cell.orderState];
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
         
         return cell;
@@ -297,7 +294,7 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.states addObject:cell.orderState];
         
         cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText];
+            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
         };
         
         cell.editBlock = ^(){
@@ -381,8 +378,7 @@ static NSString *closeCell = @"SellerCloseCell";
 #pragma mark
 #pragma mark - 点击按钮Action
 
-- (void)clickBtnActionWithBtnTitle:(NSString *)title {
-    
+- (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
     
     if ([title isEqualToString:@"联系买家"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];

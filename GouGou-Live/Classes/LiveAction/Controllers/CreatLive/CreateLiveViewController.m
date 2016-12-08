@@ -20,7 +20,6 @@
 // 直播采集视图
 @property (nonatomic, strong) PLCameraStreamingSession *session;
 
-
 @property (weak, nonatomic) IBOutlet UITextField *editNameText; /**< 名字编辑 */
 @property (weak, nonatomic) IBOutlet UILabel *noteLabel; /**< 提示 */
 @property (weak, nonatomic) IBOutlet UIButton *sellORBtn; /**< 是否出售按钮 */

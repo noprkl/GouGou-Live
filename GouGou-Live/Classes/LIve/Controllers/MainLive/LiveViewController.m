@@ -9,7 +9,7 @@
 #import "LiveViewController.h"
 #import "LiveTopView.h"
 #import "SearchViewController.h"
-
+#import "MediaStreamingVc.h"
 
 @interface LiveViewController ()<UIScrollViewDelegate>
 
@@ -61,9 +61,11 @@
     SearchViewController *searchVC = [[SearchViewController alloc] init];
     
 //    UISearchController *searchC = [[UISearchController alloc] initWithSearchResultsController:searchVC];
-    searchVC.hidesBottomBarWhenPushed = YES;
-
+//    searchVC.hidesBottomBarWhenPushed = YES;
+//
     [self.navigationController pushViewController:searchVC animated:YES];
+    
+   
 }
 
 #pragma mark - 添加子控制器

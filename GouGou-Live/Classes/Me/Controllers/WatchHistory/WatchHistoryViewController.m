@@ -42,11 +42,13 @@ static NSString * watchCell = @"watchCellID";
 - (UITableView *)tableview {
 
     if (!_tableview) {
-        _tableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.showsVerticalScrollIndicator = NO;
         _tableview.backgroundColor = [UIColor whiteColor];
         _tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        
         [_tableview registerClass:[WatchHistoryCell class] forCellReuseIdentifier:watchCell];
     }
     return _tableview;
@@ -65,6 +67,11 @@ static NSString * watchCell = @"watchCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     WatchHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:watchCell];
+    
+//    if (cell == nil) {
+//        
+//        cell = [[WatchHistoryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:watchCell];
+//    }
     
     return cell;
 }

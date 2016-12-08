@@ -10,11 +10,15 @@
 
 #import "CreateLiveViewController.h"
 #import "AddUpdataImagesView.h"
+#import "MediaStreamingVc.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
-@interface CreateLiveViewController ()<UITextFieldDelegate>
+@interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
 {
     CGFloat W;//图片view高度
 }
+// 直播采集视图
+@property (nonatomic, strong) PLCameraStreamingSession *session;
 
 @property (weak, nonatomic) IBOutlet UITextField *editNameText; /**< 名字编辑 */
 @property (weak, nonatomic) IBOutlet UILabel *noteLabel; /**< 提示 */
@@ -81,6 +85,7 @@
     self.editNameText.delegate = self;
     
     [self makeConstraint];
+
 }
 // 约束
 - (void)makeConstraint {
@@ -176,8 +181,16 @@
 }
 // 开始直播
 - (void)ClickBeginLiveBtnAction:(UIButton *)btn{
-    
-
+//    MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
+//    streamVc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:streamVc animated:YES];
+    [self.view addSubview:self.session.previewView];
+    [self.session startWithPushURL:[NSURL URLWithString:@"rtmp://pili-publish.zhuaxingtech.com/gougoulive/php-sdk-test1480995971?e=1481084024&token=NFwFP_3cqha4JuMAtZTp2CdOHAHiglVY3o9X47by:Kx77k1avGKkz9vLp-JoeSvIleik= "] feedback:^(PLStreamStartStateFeedback feedback) {
+        
+    }];
+//    [self.session startWithFeedback:^(PLStreamStartStateFeedback feedback) {
+//        DLog(@"%lu", feedback);
+//    }];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -299,6 +312,23 @@
     }
     return _beginLiveBtn;
 }
+
+- (PLCameraStreamingSession *)session {
+    if (!_session) {
+        
+        PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+        PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+        PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+        PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+        PLStream *stream = [PLStream streamWithJSON:nil];
+        
+        _session = [[PLCameraStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream];
+        
+    }
+    
+    return _session;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (range.location < 12) {
         return YES;

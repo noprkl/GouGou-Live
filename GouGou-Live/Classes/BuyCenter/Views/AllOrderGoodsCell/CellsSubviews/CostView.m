@@ -77,6 +77,8 @@
         [self addSubview:self.fontMoney];
         [self addSubview:self.remainderMoneylabel];
         [self addSubview:self.remainderMoeny];
+        
+        
     }
     return self;
 }
@@ -159,6 +161,7 @@
         _totalLabel.text = @"合计:";
         _totalLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _totalLabel.font = [UIFont systemFontOfSize:14];
+//        _totalLabel 
     }
     return _totalLabel;
 }

@@ -203,8 +203,8 @@
     if (!_detailPayView) {
         _detailPayView = [[DetailPayMoney alloc] init];
         _detailPayView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        _detailPayView.needBackMessage = @"已付尾款";
-        _detailPayView.fontMoneyMessage = @"已付定金";
+        _detailPayView.needBackMessage = @"￥950";
+        _detailPayView.fontMoneyMessage = @"￥500";
 
     }
     return _detailPayView;

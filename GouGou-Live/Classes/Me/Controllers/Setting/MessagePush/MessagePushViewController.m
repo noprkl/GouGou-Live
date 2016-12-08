@@ -17,6 +17,8 @@ static NSString * messageCell = @"messageCellID";
 /** 数据源 */
 @property (strong,nonatomic) NSArray *dataArray;
 
+@property (copy, nonatomic) NSString *timeStr; /**< 接收时间信息 */
+
 @end
 
 @implementation MessagePushViewController
@@ -88,10 +90,15 @@ static NSString * messageCell = @"messageCellID";
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
     
+    UISwitch * swic = [[UISwitch alloc] init];
+    
+    CGFloat switchW = swic.frame.size.width;
+    
+    CGFloat switchH = swic.frame.size.height;
+
     if (indexPath.section == 0) {
         
-        UISwitch * swic = [[UISwitch alloc] init];
-        swic.frame = CGRectMake(308, 5, swic.frame.size.width, swic.frame.size.height);
+        swic.frame = CGRectMake(SCREEN_WIDTH - switchW - 10, 5, switchW, switchH);
         swic.onTintColor = [UIColor colorWithHexString:@"#99cc33"];
         [cell.contentView addSubview:swic];
         
@@ -104,11 +111,11 @@ static NSString * messageCell = @"messageCellID";
     } else if (indexPath.section == 1) {
         
         cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         if (indexPath.row == 0) {
             
-            UISwitch * swic = [[UISwitch alloc] init];
-            swic.frame = CGRectMake(308, 6, swic.frame.size.width, swic.frame.size.height);
+            swic.frame = CGRectMake(SCREEN_WIDTH - 10 - switchW, 6, switchW, switchH);
             
             swic.onTintColor = [UIColor colorWithHexString:@"#99cc33"];
             
@@ -123,15 +130,17 @@ static NSString * messageCell = @"messageCellID";
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.detailTextLabel.text = @"8:00";
-            
+//            cell.detailTextLabel.text = self.timeStr;
+            DLog(@"%@",cell.detailTextLabel.text);
+
         } else if (indexPath.row == 2) {
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             cell.detailTextLabel.text = @"12:00";
-            
+//            DLog(@"%@",cell.detailTextLabel.text);
+
         }
-        
     }
     
     return cell;
@@ -145,15 +154,32 @@ static NSString * messageCell = @"messageCellID";
             
             TimePickerView * timePick = [[TimePickerView alloc] init];
             timePick.timeLabel = @"开始时间";
-            timePick.hourTime = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12"];
+
+            __weak typeof(timePick) weakPicker = timePick;
+
+            timePick.timeBlock = ^(NSString *timeStr) {
+                
+                [weakPicker dismiss];
+                self.timeStr = timeStr;
+                DLog(@"%@",timeStr);
+
+            };
             [timePick show];
             
         } else if (indexPath.row == 2) {
             
             TimePickerView * timePick = [[TimePickerView alloc] init];
-            timePick.hourTime = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12"];
-            //            timePick.secondTime = @[@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20"];
+
             timePick.timeLabel = @"结束时间";
+            __weak typeof(timePick) weakPicker = timePick;
+            
+            timePick.timeBlock = ^(NSString *timeStr) {
+                
+                [weakPicker dismiss];
+                self.timeStr = timeStr;
+                DLog(@"%@",timeStr);
+                
+            };
             [timePick show];
             
         }

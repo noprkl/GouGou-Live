@@ -76,20 +76,26 @@
 //    }];
     // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
     NSDictionary *dict = @{
-                           @"order":@(222),
-                           @"total_fee":@(1),
-                           @"mark":@"微信支付"
+                           @"order":@(arc4random_uniform(999)+100),
+                           @"total_fee":@(arc4random_uniform(10)+1),
+                           @"mark":@"WXPay"
                            };
+    DLog(@"%@", dict);
     [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         PayReq * req = [[PayReq alloc] init];
         req.partnerId = [successJson objectForKey:@"partnerid"];
         req.prepayId = [successJson objectForKey:@"prepayid"];
         req.nonceStr = [successJson objectForKey:@"noncestr"];
-        req.timeStamp = (UInt32)[successJson objectForKey:@"timestamp"];
+        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"];
+        req.timeStamp = [timeStamp intValue];
+        
         req.package = [successJson objectForKey:@"package"];
         req.sign = [successJson objectForKey:@"sign"];
-        DLog(@"%@", req);
+        req.openID = [successJson objectForKey:@"appid"];
+        
+        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
+        
         BOOL flag = [WXApi sendReq:req];
         if (flag) {
             DLog(@"支付成功");

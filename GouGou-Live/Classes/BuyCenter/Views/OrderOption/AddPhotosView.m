@@ -8,8 +8,6 @@
 
 #import "AddPhotosView.h"
 
-#import "UpLoadPictureView.h"
-
 int counts = 0;
 
 @interface AddPhotosView ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -116,20 +114,8 @@ int counts = 0;
 - (void)clickAddPhoto:(UIButton *)button {
     
     if (_addPhotoBlock) {
-     
-//        UIImagePickerController  * picker = [[UIImagePickerController alloc] init];
-//        
-//        self.picker = picker;
-//        self.picker.delegate = self;
-//        self.picker.allowsEditing = YES;
-       
-//        [self.picker dismissViewControllerAnimated:YES completion:^{
-//      
-//        }];
-    
         
         _addPhotoBlock(button);
-        
     }
     
     counts++;
@@ -227,19 +213,10 @@ int counts = 0;
     [self addSubview:view];
 }
 
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        
-       
-    }];
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    self.acceptImageView.image = image;
-    
-    DLog(@"%@",image);
-   
+- (void)ClickAddAction:(UIButton *)btn {
+    if (_addBlock) {
+        _addBlock();
+    }
 }
 
 @end

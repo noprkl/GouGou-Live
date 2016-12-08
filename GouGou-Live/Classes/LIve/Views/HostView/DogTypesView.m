@@ -55,6 +55,12 @@
     CGFloat btnH = 30;
     CGFloat margin = space;
     CGFloat btnY = self.frame.size.height / 2 - btnH / 2;
+
+//    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth)/cols;
+//    CGFloat btnH = 25;
+//    CGFloat margin = kDogImageWidth;
+//    CGFloat btnY = kDogImageWidth;
+
     CGFloat boardMargin = (SCREEN_WIDTH - cols * btnW - (cols- 1)* margin)/2;
     
     for (NSInteger i = 0; i < cols; i++) {

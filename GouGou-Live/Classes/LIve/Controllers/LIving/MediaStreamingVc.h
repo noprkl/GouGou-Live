@@ -10,4 +10,7 @@
 
 @interface MediaStreamingVc : BaseViewController
 
+
+@property(nonatomic, strong) NSString *url; /**< 地址 */
+
 @end

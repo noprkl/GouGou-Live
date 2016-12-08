@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SelectedTimeBlock)(NSString *amTime,NSString *pmTime);
+typedef void(^SelectedTimeBlock)(NSString *timeString);
 
 @interface TimePickerView : UIView
 /** 时间标题 */

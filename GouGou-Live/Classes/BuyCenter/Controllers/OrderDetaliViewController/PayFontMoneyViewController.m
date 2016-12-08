@@ -48,7 +48,7 @@
 @implementation PayFontMoneyViewController
 
 #pragma mark - 网络请求
-- (void)getBackMoneyRequest {
+- (void)getFontMoneyRequest {
     
     NSDictionary * dict = @{@"id":@(12)};
     
@@ -90,16 +90,18 @@
         self.orderNumberView.depositTimes = self.orderInfo.depositTime;
         self.orderNumberView.balanceTimes = self.orderInfo.balanceTime;
         self.orderNumberView.deliveryTimes = self.orderInfo.deliveryTime;
-        
-        
-        
-        
+ 
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
     
 }
 #pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [self getFontMoneyRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -255,9 +257,10 @@
 
     if (!_detailPayView) {
         _detailPayView = [[DetailPayMoney alloc] init];
-      _detailPayView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        _detailPayView.needBackMessage = @"尾款";
-        _detailPayView.fontMoneyMessage = @"待付定金";
+        _detailPayView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        _detailPayView.needBackMessage = @"￥950";
+        _detailPayView.fontMoneyMessage = @"￥500";
+
     }
     return _detailPayView;
 }

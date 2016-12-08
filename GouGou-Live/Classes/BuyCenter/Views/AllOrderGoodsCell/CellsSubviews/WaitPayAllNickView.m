@@ -82,7 +82,7 @@
     
     [_stateLabe mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.left).offset(295);
+        make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.centerY).offset(10);
         make.size.equalTo(CGSizeMake(70, 20));
         

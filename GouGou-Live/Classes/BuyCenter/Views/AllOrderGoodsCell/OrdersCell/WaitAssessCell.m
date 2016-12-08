@@ -73,16 +73,18 @@
     self.costView.costModel.balance = centerModel.balance;
     */
     // 直接赋值
-//    NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
-//    [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-
-    self.nickView.sellerIamge.image = [UIImage imageNamed:centerModel.merchantImgl];
+    // 昵称
+    if (centerModel.merchantImgl.length == 0) {
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
+        [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+    }
     self.nickView.nickName.text = centerModel.merchantName;
     self.nickView.stateLabe.text = centerModel.status;
-    
-    NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
-    [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-//    self.dogCardView.dogImageView.image = [UIImage imageNamed:centerModel.pathSmall];
+    // 狗狗详情
+    if (centerModel.pathSmall.length != 0) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
+        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
     self.dogCardView.dogNameLabel.text = centerModel.name;
     self.dogCardView.dogAgeLabel.text = centerModel.ageName;
     self.dogCardView.dogSizeLabel.text = centerModel.sizeName;
@@ -90,7 +92,7 @@
     self.dogCardView.dogKindLabel.text = centerModel.kindName;
     self.dogCardView.oldPriceLabel.text = centerModel.priceOld;
     self.dogCardView.nowPriceLabel.text = centerModel.price;
-    
+    // 付款状况
     self.costView.fontMoney.text = centerModel.productRealDeposit;
     self.costView.remainderMoeny.text = centerModel.productRealBalance;
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.productRealBalance integerValue])];

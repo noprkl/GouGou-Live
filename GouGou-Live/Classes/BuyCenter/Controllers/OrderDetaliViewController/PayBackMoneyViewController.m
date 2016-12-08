@@ -68,8 +68,11 @@
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         
         
-        NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
-        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        // 狗狗详情
+        if (self.orderInfo.pathSmall.length != 0) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
+            [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        }
         self.dogCardView.dogNameLabel.text = self.orderInfo.name;
         self.dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
         self.dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;

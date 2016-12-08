@@ -73,7 +73,8 @@ static NSString *cellid = @"SellerProtectPowerCell";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
-        
+        _tableView.tableFooterView = [[UIView alloc] init];
+
         [_tableView registerClass:[SellerProtectPowerCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;

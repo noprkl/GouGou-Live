@@ -29,7 +29,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 - (void)getRequestWaitAcceptOrder {
     NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
                            @"user_id":@(11),
-                           @"status":@(8),
+                           @"status":@(3),
                            @"page":@(1),
                            @"pageSize":@(10),
                            @"is_right":@(1)
@@ -89,7 +89,8 @@ static NSString *cellid = @"SellerWaitAcceptCell";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
-        
+        _tableView.tableFooterView = [[UIView alloc] init];
+
         [_tableView registerClass:[SellerWaitAcceptCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;

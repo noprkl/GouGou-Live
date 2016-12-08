@@ -29,40 +29,40 @@ static NSString * waitBackCells = @"waitBackCells";
 
 @implementation AllOrderGoodsViewController
 //#pragma mark - 网络请求
-//- (void)postGetAllStateOrderRequest {
-//    
-//    NSDictionary * dict = @{//[[UserInfos sharedUser].ID integerValue]
-//                            @"user_id":@(17),
-//                            @"status":@(2),
-//                            @"page":@(1),
-//                            @"pageSize":@(10),
-//                            @"is_right":@(2)
-//                            };
-//    
-//    [self postRequestWithPath:API_List_order params:dict success:^(id successJson) {
-//        
-//        [self showAlert:successJson[@"message"]];
-//  
-//            if (successJson[@"data"][@"info"]) {
-//                
-//                DLog(@"%@",successJson[@"data"][@"info"]);
-//        
-//        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-//                
-//            }
-//    } error:^(NSError *error) {
-//        
-//        DLog(@"%@",error);
-//        
-//    }];
-//}
-//#pragma mark -  生命周期
-//- (void)viewWillAppear:(BOOL)animated {
-//
-//    [super viewWillAppear:animated];
-//    
-//    [self postGetAllStateOrderRequest];
-//}
+- (void)postGetAllStateOrderRequest {
+    
+    NSDictionary * dict = @{//[[UserInfos sharedUser].ID integerValue]
+                            @"user_id":@(17),
+                            @"status":@(2),
+                            @"page":@(1),
+                            @"pageSize":@(10),
+                            @"is_right":@(2)
+                            };
+    
+    [self postRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        
+        [self showAlert:successJson[@"message"]];
+  
+            if (successJson[@"data"][@"info"]) {
+                
+                DLog(@"%@",successJson[@"data"][@"info"]);
+        
+                self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+                [self.tableview reloadData];
+            }
+    } error:^(NSError *error) {
+        
+        DLog(@"%@",error);
+        
+    }];
+}
+#pragma mark -  生命周期
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    
+    [self postGetAllStateOrderRequest];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -127,7 +127,7 @@ static NSString * waitBackCells = @"waitBackCells";
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"删除订单"]) {
             
-            [self clickDeleteOrder];
+            [self clickDeleteOrder:self.detailModel];
 
             
         } else if ([button.titleLabel.text  isEqual:@"查看评价"]){
@@ -143,7 +143,7 @@ static NSString * waitBackCells = @"waitBackCells";
             //            [self.navigationController pushViewController:payFomntVC animated:YES];
         } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
             
-            [self clickApplyProtectPower];
+            [self clickApplyProtectPower:self.detailModel];
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
             

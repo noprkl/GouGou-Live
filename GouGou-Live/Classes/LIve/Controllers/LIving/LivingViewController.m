@@ -26,7 +26,11 @@
 #import "DogShowViewController.h"
 #import "SellerShowViewController.h"
 
-@interface LivingViewController ()<UIScrollViewDelegate>
+#import <PLPlayerKit/PLPlayerKit.h>
+
+@interface LivingViewController ()<UIScrollViewDelegate, PLPlayerDelegate>
+
+@property (nonatomic, strong) PLPlayer *player;
 
 /** 返回按钮 */
 @property (strong, nonatomic) UIButton *backBtn;
@@ -45,9 +49,6 @@
 @property (strong, nonatomic) UIButton *watchLabel;
 /** 全屏 */
 @property (strong, nonatomic) UIButton *screenBtn;
-
-/** 播放器 */
-@property (strong, nonatomic) PlayerViewController *playerVC;
 
 /** 选择按钮 */
 @property (strong, nonatomic) LivingCenterView *centerView;
@@ -125,16 +126,23 @@
     [window addSubview:self.collectBtn];
     [window addSubview:self.watchLabel];
     [window addSubview:self.screenBtn];
+    // 初始化 PLPlayerOption 对象
+    PLPlayerOption *playerOption = [PLPlayerOption defaultOption];
     
-    PlayerViewController *playVC = [[PlayerViewController alloc] init];
-    playVC.view.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
-    [self.view addSubview:playVC.view];
-    UIImageView *imaegview = [[UIImageView alloc] initWithFrame:playVC.view.frame];
-    imaegview.image = [UIImage imageNamed:@"banner"];
-    [playVC.view addSubview:imaegview];
-  
-    self.playerVC = playVC;
-
+    // 更改需要修改的 option 属性键所对应的值
+    [playerOption setOptionValue:@15 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
+    [playerOption setOptionValue:@2000 forKey:PLPlayerOptionKeyMaxL1BufferDuration];
+    [playerOption setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
+    [playerOption setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
+    [playerOption setOptionValue:@(kPLLogNone) forKey:PLPlayerOptionKeyLogLevel];
+    
+    NSURL *url = [NSURL URLWithString:@"rtmp://pili-live-rtmp.zhuaxingtech.com/gougoulive/mytest"];
+    self.player = [PLPlayer playerWithURL:url option:playerOption];
+    self.player.delegate = self;
+    self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
+    // 添加子视图
+    [self.view addSubview:self.player.playerView];
+    [self.player play];
     
     [self.view addSubview:self.centerView];
     [self.view addSubview:self.baseScrollView];
@@ -144,6 +152,17 @@
     
     [self makeConstraint];
     
+}
+// 实现 <PLPlayerDelegate> 来控制流状态的变更
+- (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
+    // 这里会返回流的各种状态，你可以根据状态做 UI 定制及各类其他业务操作
+    // 除了 Error 状态，其他状态都会回调这个方法
+    DLog(@"%@", player);
+}
+
+- (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error {
+    // 当发生错误时，会回调这个方法
+    DLog(@"%@", error);
 }
 - (void)makeConstraint {
     [self.centerView makeConstraints:^(MASConstraintMaker *make) {
@@ -429,9 +448,9 @@
         rect = CGRectMake(SCREEN_WIDTH - 20 - kWidth, 30, kWidth, kWidth);
         self.screenBtn.frame = rect;
         
-        CGRect playRect = self.playerVC.view.frame;
+        CGRect playRect = self.player.playerView.frame;
         playRect = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
-        self.playerVC.view.frame = playRect;
+        self.player.playerView.frame = playRect;
         
     }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
        [self forceOrientation:UIInterfaceOrientationPortrait];
@@ -446,9 +465,9 @@
         rect = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
         self.screenBtn.frame = rect;
         
-        CGRect playRect = self.playerVC.view.frame;
+        CGRect playRect = self.player.playerView.frame;
         playRect = CGRectMake(0, 10, SCREEN_WIDTH, 225);
-        self.playerVC.view.frame = playRect;
+        self.player.playerView.frame = playRect;
         
 //        [self forceOrientation:UIInterfaceOrientationPortrait];
     }

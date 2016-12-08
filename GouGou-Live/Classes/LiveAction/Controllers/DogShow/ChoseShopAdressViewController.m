@@ -20,7 +20,7 @@
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 
-@property(nonatomic, strong) ShopAdressModel *adressModel; /**< 收货地址 */
+@property(nonatomic, strong) MyShopAdressModel *adressModel; /**< 收货地址 */
 
 @end
 
@@ -34,13 +34,14 @@ static NSString *cellid = @"ChoseShopAdressCell";
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue])
                            };
+    
     [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
-        DLog(@"1%@", successJson);
         if (successJson[@"code"]) {
             // 数据解析
             self.dataArr = [[MyShopAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
-            DLog(@"11%@", self.dataArr);
+          
             // 刷新
             [self.tableView reloadData];
         }
@@ -59,10 +60,13 @@ static NSString *cellid = @"ChoseShopAdressCell";
     [self setNavBarItem];
     [self initUI];
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self postGetAdressRequest];
+}
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.hidesBottomBarWhenPushed = YES;
-    [self postGetAdressRequest];
 }
 - (void)addRightBarButtonitem {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBarItemAction)];

@@ -295,7 +295,7 @@
             
             if ([button.titleLabel.text isEqual:@"申请维权"]) {
                 
-                [weakself clickApplyProtectPower];
+                [weakself clickApplyProtectPower:weakself.detailModel];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
@@ -305,7 +305,7 @@
                 
             } else if ([button.titleLabel.text isEqual:@"提醒发货"]) {
                 
-                [weakself clickConsignment];
+                [weakself clickConsignment:weakself.detailModel];
             }
             
         };

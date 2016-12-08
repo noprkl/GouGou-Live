@@ -47,9 +47,9 @@
 - (void)addbuttons {
     
     NSInteger cols = 5;
-//    CGFloat btnW = 63;
+    CGFloat btnW = 63;
 
-    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth)/cols;
+//    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth)/cols;
     CGFloat btnH = 25;
     CGFloat margin = kDogImageWidth;
     CGFloat btnY = kDogImageWidth;

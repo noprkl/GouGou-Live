@@ -33,9 +33,10 @@
     NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", acceptAdress.userProvince, acceptAdress.userCity, acceptAdress.userDistrict, acceptAdress.userAddress];
     self.shopAdress.text = adress;
     if (acceptAdress.isDefault == 1) {
-        self.chosedBtn.selected = YES;
+        self.AdressLabel.text = @"默认地址";
+        self.AdressLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
     }else{
-        self.chosedBtn.selected = NO;
+        self.AdressLabel.text = @"地址";
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

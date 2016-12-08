@@ -124,8 +124,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
         if ([button.titleLabel.text  isEqual:@"提醒发货"]) {
             
             // 跳转至提醒发货
-#warning 不同提示框
-            [self clickConsignment];
+            [self clickConsignment:model];
             DLog(@"%@",button.titleLabel.text);
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
@@ -138,7 +137,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
             
         } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
             // 跳转至申请维权
-            [self clickApplyProtectPower];
+            [self clickApplyProtectPower:model.ID];
             
             DLog(@"%@--%@",self,button.titleLabel.text);
             

@@ -9,7 +9,6 @@
 #import "LiveViewController.h"
 #import "LiveTopView.h"
 #import "SearchViewController.h"
-#import "MediaStreamingVc.h"
 
 @interface LiveViewController ()<UIScrollViewDelegate>
 

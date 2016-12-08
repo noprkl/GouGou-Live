@@ -37,7 +37,6 @@ static NSString * protectFailedCell = @"protectFailedCell";
                             @"pageSize":@(10)
                             };
     
-    
     [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
         
         self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
@@ -195,7 +194,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
                 
                 DLog(@"%@",button.titleLabel.text);
                 
-                [self clickApplyProtectPower];
+                [self clickApplyProtectPower:model.ID];
             }
             
         };

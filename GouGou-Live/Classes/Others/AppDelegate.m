@@ -12,6 +12,7 @@
 #import "WXApi.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+#import <PLPlayerKit/PLPlayerEnv.h>
 
 @interface AppDelegate ()<WXApiDelegate>
 
@@ -44,6 +45,7 @@
    
     // 七牛云
     [PLStreamingEnv initEnv];
+    [PLPlayerEnv initEnv];
     
     return YES;
 }

@@ -24,8 +24,7 @@ target 'GouGou-Live' do
           pod 'UMengUShare/Social/QQ'
         # 七牛云推流
 	 pod 'PLMediaStreamingKit'
-     # 七牛云拉流
- 
+       	 pod 'PLPlayerKit'
   # Pods for GouGou-Live
 
 end

@@ -9,5 +9,4 @@
 #import "BuyCenterViewController.h"
 
 @interface ProtectPowerViewController : BuyCenterViewController
-
 @end

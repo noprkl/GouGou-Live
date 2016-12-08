@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/12/6.
 //  Copyright © 2016年 LXq. All rights reserved.
-//  直播推流端
+//  直播 推流端 主播
 
 #import "BaseViewController.h"
 

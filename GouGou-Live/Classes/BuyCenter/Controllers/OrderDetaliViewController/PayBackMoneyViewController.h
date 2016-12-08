@@ -7,10 +7,11 @@
 //  尾款待支付详情
 
 #import "BuyCenterViewController.h"
-//@class OrderDetailModel;
+
+@class BuyCenterModel;
 
 @interface PayBackMoneyViewController : BuyCenterViewController
 ///** 订单详情模型 */
-//@property (strong,nonatomic) OrderDetailModel *detailModel;
+@property (strong,nonatomic) BuyCenterModel *detailModel;
 
 @end

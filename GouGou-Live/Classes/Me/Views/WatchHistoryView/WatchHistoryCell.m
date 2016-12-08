@@ -24,16 +24,8 @@
 @property (strong,nonatomic) UIView *hudView;
 /** 品种 */
 @property (strong,nonatomic) UILabel *varietyInfo;
-///** 销售情况 */
-//@property (strong,nonatomic) UILabel *sellInfo;
-/** 展播 */
-@property (strong,nonatomic) UILabel *liveLabel;
-/** 展播数量 */
-@property (strong,nonatomic) UILabel *liveCount;
-/** 销售 */
-@property (strong,nonatomic) UILabel *sellLabel;
-/** 销售数量 */
-@property (strong,nonatomic) UILabel *sellCount;
+/** 销售情况 */
+@property (strong,nonatomic) UILabel *sellInfo;
 /** 日期时间 */
 @property (strong,nonatomic) UILabel *dataLabel;
 /** 删除按钮 */
@@ -59,10 +51,7 @@
         [self.contentView addSubview:self.overLabel];
         [self.contentView addSubview:self.hudView];
         [self.hudView addSubview:self.varietyInfo];
-        [self.hudView addSubview:self.sellCount];
-        [self.hudView addSubview:self.sellLabel];
-        [self.hudView addSubview:self.liveCount];
-        [self.hudView addSubview:self.liveLabel];
+        [self.hudView addSubview:self.sellInfo];
         [self.contentView addSubview:self.dataLabel];
         [self.contentView addSubview:self.deleteButton];
         [self.contentView addSubview:self.spaceView];
@@ -111,7 +100,7 @@
     [_overLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.top.equalTo(weakself.top).offset(54);
-        make.right.equalTo(weakself.right).offset(-10);
+        make.left.equalTo(weakself.left).offset(290);
         make.size.equalTo(CGSizeMake(70, 20));
         
     }];
@@ -131,31 +120,9 @@
         
     }];
 
-
-    [_sellCount mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sellInfo mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.right.equalTo(weakself.right).offset(-10);
-        make.centerY.equalTo(weakself.hudView.centerY);
-        
-    }];
-    
-    [_sellLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.right.equalTo(weakself.sellCount.left).offset(-5);
-        make.centerY.equalTo(weakself.hudView.centerY);
-        
-    }];
-    
-    [_liveCount mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.right.equalTo(weakself.sellLabel.left).offset(-5);
-        make.centerY.equalTo(weakself.hudView.centerY);
-        
-    }];
-
-    [_liveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.right.equalTo(weakself.liveCount.left).offset(-5);
+        make.left.equalTo(weakself.varietyInfo.left).offset(285);
         make.centerY.equalTo(weakself.hudView.centerY);
         
     }];
@@ -169,7 +136,7 @@
     
     [_deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.right.equalTo(weakself.right).offset(-10);
+        make.left.equalTo(weakself.dataLabel.right).offset(185);
         make.centerY.equalTo(weakself.dataLabel.centerY);
         make.size.equalTo(CGSizeMake(75, 33));
         
@@ -265,47 +232,15 @@
     return _varietyInfo;
 }
 
-- (UILabel *)sellCount {
+- (UILabel *)sellInfo {
 
-    if (!_sellCount) {
-        _sellCount = [[UILabel alloc] init];
-        _sellCount.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _sellCount.text = @"6";
-        _sellCount.font = [UIFont systemFontOfSize:12];
+    if (!_sellInfo) {
+        _sellInfo = [[UILabel alloc] init];
+        _sellInfo.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _sellInfo.text = @"展播8出售6";
+        _sellInfo.font = [UIFont systemFontOfSize:12];
     }
-    return _sellCount;
-}
-
-- (UILabel *)sellLabel {
-    
-    if (!_sellLabel) {
-        _sellLabel = [[UILabel alloc] init];
-        _sellLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _sellLabel.text = @"出售";
-        _sellLabel.font = [UIFont systemFontOfSize:12];
-    }
-    return _sellLabel;
-}
-
-- (UILabel *)liveCount {
-    
-    if (!_liveCount) {
-        _liveCount = [[UILabel alloc] init];
-        _liveCount.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _liveCount.text = @"8";
-        _liveCount.font = [UIFont systemFontOfSize:12];
-    }
-    return _liveCount;
-}
-- (UILabel *)liveLabel {
-    
-    if (!_liveLabel) {
-        _liveLabel = [[UILabel alloc] init];
-        _liveLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _liveLabel.text = @"展播";
-        _liveLabel.font = [UIFont systemFontOfSize:12];
-    }
-    return _liveLabel;
+    return _sellInfo;
 }
 
 - (UILabel *)dataLabel {

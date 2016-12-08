@@ -40,7 +40,7 @@
     stream.title = @"GouGou_Live";
     
     _session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream];
-    [self.session startStreamingWithPushURL:[NSURL URLWithString:_url] feedback:^(PLStreamStartStateFeedback feedback) {
+    [self.session startStreamingWithPushURL:[NSURL URLWithString:@"rtmp://pili-publish.zhuaxingtech.com/gougoulive/mytest?e=1481181538&token=NFwFP_3cqha4JuMAtZTp2CdOHAHiglVY3o9X47by:rTllK7nvWOvTtfXl09ObDvBFdOI="] feedback:^(PLStreamStartStateFeedback feedback) {
         DLog(@"%lu", feedback);
     }];
     

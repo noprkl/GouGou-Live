@@ -22,7 +22,7 @@
 
 @implementation BuyCenterViewController
 // 删除订单
-- (void)clickDeleteOrder {
+- (void)clickDeleteOrder:(BuyCenterModel *)model {
     
     // 点击删除订单出现的弹框
     DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
@@ -41,7 +41,7 @@
 //#pragma mark - 钱包支付请求
 
 // 尾金支付 传个值 钱数
-- (void)clickPayBackMoney {
+- (void)clickPayBackMoney:(BuyCenterModel *)model {
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
     
@@ -54,12 +54,12 @@
     payMonery.payCellBlock = ^(NSString *payWay){
         
         
-        [self payMoneyFroWay:payWay];
+        [self payMoneyFroWay:payWay model:model];
     };
     
 }
 // 定金支付
-- (void)clickPayFontMoney {
+- (void)clickPayFontMoney:(BuyCenterModel *)model {
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
     
@@ -70,11 +70,11 @@
         DLog(@"%@", payAway);
     };
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay];
+        [self payMoneyFroWay:payWay model:model];
     };
 }
 // 全款支付
-- (void)clickPayAllMoney {
+- (void)clickPayAllMoney:(BuyCenterModel *)model {
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
     
@@ -85,14 +85,13 @@
         DLog(@"%@", size);
     };
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay];
+        [self payMoneyFroWay:payWay model:model];
     };
-    
 }
 
 #pragma mark
 #pragma mark - 支付方式选择
-- (void)payMoneyFroWay:(NSString *)payWay {
+- (void)payMoneyFroWay:(NSString *)payWay model:(BuyCenterModel *)model {
     if ([payWay isEqualToString:@"账户余额支付"]) {
         
 //        [self postGetWalletPayRequest];
@@ -149,11 +148,11 @@
 }
 
 #pragma mark - 取消订单网络请求
-- (void)getCancleOrderRequest {
+- (void)getCancleOrderRequest:(BuyCenterModel *)model {
 
-    NSDictionary * dict = @{@"user_id":@(TestID),
-                            @"order_id":@(12),
-                            @"note":@(23)
+    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"order_id":@(model.ID),
+                            @"note":@"test"
                             };
     
     [self getRequestWithPath:API_Cancel_order params:dict success:^(id successJson) {
@@ -168,9 +167,8 @@
     }];
 }
 // 点击取消订单
-- (void)clickCancleOrder {
+- (void)clickCancleOrder:(BuyCenterModel *)model {
     
-    [self getCancleOrderRequest];
     
     // 点击取消订单出现的弹框
     DeletePrommtView * promptView = [[DeletePrommtView alloc] init];
@@ -200,6 +198,7 @@
         // 点击cell
         cancleOrder.reasonCellBlock = ^(NSString *text) {
              DLog(@"%@", text);
+            [self getCancleOrderRequest:model];
             [cancleSelf dismiss];
             // 弹框退出，要删除对应cell
         };
@@ -208,7 +207,7 @@
     
 }
 // 点击不想买了
-- (void)clickNotBuy {
+- (void)clickNotBuy:(BuyCenterModel *)model {
     // 点击不想买了按钮出现的弹框
     DeletePrommtView * allpyPrompt = [[DeletePrommtView alloc] init];
     allpyPrompt.message = @"放弃定金后，定金将全部打给卖家";
@@ -253,7 +252,7 @@
     
 }
 // 点击申请维权调用
-- (void)clickApplyProtectPower {
+- (void)clickApplyProtectPower:(int)orderID {
     
     // 点击申请维权按钮出现的弹框
     DeletePrommtView * allpyPrompt = [[DeletePrommtView alloc] init];
@@ -284,7 +283,7 @@
     
 }
 // 点击提醒发货
-- (void)clickConsignment {
+- (void)clickConsignment:(BuyCenterModel *)model {
     
     NSDate * firstDate = [NSDate date];
     NSDate * secondDate = [NSDate dateWithTimeInterval:2  sinceDate:firstDate];

@@ -26,7 +26,12 @@
  },
  
  */
+
 @interface BuyCenterModel : BaseModel
+
+/** 订单ID */
+@property (assign,nonatomic) int ID;
+
 /** 商家图片 */
 @property (copy,nonatomic) NSString *merchantImgl;
 /** 商家名称 */

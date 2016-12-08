@@ -9,7 +9,9 @@
 #import "PaySuccessViewController.h"
 #import "PaySuccessView.h"
 #import "OrderDetailModel.h"
+
 @interface PaySuccessViewController ()
+
 /** 支付成功 */
 @property (strong,nonatomic) PaySuccessView *paysuccessView;
 /** 订单详情模型 */

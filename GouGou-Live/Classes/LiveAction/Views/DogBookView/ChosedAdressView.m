@@ -7,7 +7,7 @@
 //
 
 #import "ChosedAdressView.h"
-#import "ShopAdressModel.h"
+#import "MyShopAdressModel.h"
 #import "SellerAdressModel.h"
 
 @interface ChosedAdressView ()
@@ -44,8 +44,34 @@
     }
     return self;
 }
-- (void)setShopAdress:(ShopAdressModel *)shopAdress {
+- (void)setShopAdress:(MyShopAdressModel *)shopAdress {
     _shopAdress = shopAdress;
+    self.ownerNameLaben.text = shopAdress.userName;
+    self.phoneLabel.text = shopAdress.userTel;
+    self.adressDesclabel.text = [NSString stringWithFormat:@"%@%@%@%@", shopAdress.userProvince, shopAdress.userCity, shopAdress.userDistrict, shopAdress.userAddress];
+    if (shopAdress.isDefault) {
+        self.adressLabel.text = @"默认地址:";
+        self.adressLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
+    }else{
+        self.adressLabel.text = @"地址:";
+        self.adressLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    }
+    
+}
+- (void)setSellerAdress:(SellerAdressModel *)sellerAdress {
+    _sellerAdress = sellerAdress;
+  
+    self.ownerNameLaben.text = sellerAdress.merchantName;
+    self.phoneLabel.text = sellerAdress.merchantTel;
+    self.adressDesclabel.text = [NSString stringWithFormat:@"%@%@%@%@", sellerAdress.merchantProvince, sellerAdress.merchantCity, sellerAdress.merchantDistrict, sellerAdress.merchantAddress];
+    if (sellerAdress.isDefault) {
+        self.adressLabel.text = @"默认地址:";
+        self.adressLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
+    }else{
+        self.adressLabel.text = @"地址:";
+        self.adressLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    }
+
 }
 - (void)setIsHid:(BOOL)isHid {
     _isHid = isHid;

@@ -135,7 +135,7 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
             
         } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
             // 跳转至申请维权
-            [self clickApplyProtectPower];
+            [self clickApplyProtectPower:model.ID];
             
             DLog(@"%@--%@",self,button.titleLabel.text);
         }

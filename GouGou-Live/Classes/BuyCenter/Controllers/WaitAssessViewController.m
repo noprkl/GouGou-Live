@@ -137,7 +137,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
-                [self clickDeleteOrder];
+                [self clickDeleteOrder:model];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
@@ -151,7 +151,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
                 // 跳转至申请维权
-                [self clickApplyProtectPower];
+                [self clickApplyProtectPower:model.ID];
                 DLog(@"%@--%@",self,button.titleLabel.text);
             } else if ([button.titleLabel.text isEqual:@"未评价"]) {
                 // 跳转至我要评价
@@ -172,7 +172,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
-                [self clickDeleteOrder];
+                [self clickDeleteOrder:model];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
@@ -187,7 +187,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
                 // 跳转至申请维权
-                [self clickApplyProtectPower];
+                [self clickApplyProtectPower:model.ID ];
                 DLog(@"%@--%@",self,button.titleLabel.text);
             } else if ([button.titleLabel.text isEqual:@"查看评价"]) {
                 // 跳转至查看评价

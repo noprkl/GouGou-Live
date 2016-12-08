@@ -17,6 +17,7 @@
 #import "OrderNumberView.h"  // 订单编号
 #import "DetailPayMoney.h"  // 详细价格状况
 #import "BottomButtonView.h"   // 按钮创建
+#import "BuyCenterModel.h"
 
 @interface SureConsigneedViewController ()<UIScrollViewDelegate>
 /** 底部scrollView */
@@ -239,7 +240,7 @@
             
             if ([button.titleLabel.text isEqual:@"申请维权"]) {
                 
-                [weakself clickApplyProtectPower];
+                [weakself clickApplyProtectPower:weakself.detailModel];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];

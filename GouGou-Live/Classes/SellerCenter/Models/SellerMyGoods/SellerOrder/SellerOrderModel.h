@@ -10,6 +10,7 @@
 
 @interface SellerOrderModel : BaseModel
 
+@property(nonatomic, strong) NSString *ID; /**< 订单ID */
 @property(nonatomic, strong) NSString *status; /**< 订单状态 */
 @property(nonatomic, strong) NSString *userImgUrl; /**< 用户图片 */
 @property(nonatomic, strong) NSString *userName; /**< 用户名字 */

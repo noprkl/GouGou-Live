@@ -9,6 +9,7 @@
 #import "BaseModel.h"
 
 @interface OrderDetailModel : BaseModel
+
 @property (copy, nonatomic) NSString *buyUserId;  /** 买家流水号 */
 @property (copy, nonatomic) NSString *buyUserName; /**< 买家姓名 */
 @property (copy, nonatomic) NSString *buyUserTel; /**< 买家电话 */
@@ -35,12 +36,13 @@
 @property (copy, nonatomic) NSString *deliveryTime; /**< 发货时间 */
 @property (copy, nonatomic) NSString *userName; /**< 用户昵称 */
 
-@property (copy,nonatomic) NSString *name; /**< 商品名称 */
+@property (copy, nonatomic) NSString *name; /**< 商品名称 */
 @property (copy, nonatomic) NSString *pathSmall; /**< 缩略图 */
-@property (copy,nonatomic) NSString *kindName; /**< 品种 */
-@property (copy,nonatomic) NSString *ageName; /**< 狗狗年龄 */
-@property (copy,nonatomic) NSString *sizeName; /**< 狗狗体型 */
-@property (copy,nonatomic) NSString *colorName; /**< 狗狗颜色 */
-@property (copy,nonatomic) NSString *priceOld; /**< 原价 */
-@property (copy,nonatomic) NSString *price;  /**< 现价 */
+@property (copy, nonatomic) NSString *kindName; /**< 品种 */
+@property (copy, nonatomic) NSString *ageName; /**< 狗狗年龄 */
+@property (copy, nonatomic) NSString *sizeName; /**< 狗狗体型 */
+@property (copy, nonatomic) NSString *colorName; /**< 狗狗颜色 */
+@property (copy, nonatomic) NSString *priceOld; /**< 原价 */
+@property (copy, nonatomic) NSString *price;  /**< 现价 */
+
 @end

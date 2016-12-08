@@ -26,7 +26,7 @@ static NSString *cellid = @"SellerWaitRateCell";
 - (void)getRequestWaitRaterder {
     NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
                           @"user_id":@(11),
-                           @"status":@(9),
+                           @"status":@(4),
                            @"page":@(1),
                            @"pageSize":@(10),
                            @"is_right":@(1)
@@ -75,7 +75,8 @@ static NSString *cellid = @"SellerWaitRateCell";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
-        
+        _tableView.tableFooterView = [[UIView alloc] init];
+
         [_tableView registerClass:[SellerWaitRateCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;

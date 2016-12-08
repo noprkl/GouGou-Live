@@ -15,6 +15,7 @@
 
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
+#import "ChosePayStyleView.h"
 
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
@@ -47,67 +48,80 @@
 #pragma mark - 网络请求
 // 结算
 - (void)clickPayBtnAction:(UIButton *)btn {
+  
+    if (![UserInfos getUser]){
+        [self showAlert:@"请登录"];
+    }else {
     
-//    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-//                           @"user_id":@(11),
-//                           @"id":@([_model.ID integerValue]),
-//                           @"address_id":@(_defaultModel.ID)
-//                           };
-//    DLog(@"%@", dict);
-//    [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
-//        DLog(@"%@", successJson);
-//        if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//    } error:^(NSError *error) {
-//        DLog(@"%@", error);
-//    }];
-    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
-//    NSDictionary *dit = @{
-//                          @"id":@(3333),
-//                          @"total_fee":@(1)
-//                          };
-//    [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
-//        DLog(@"%@", successJson);
-//        [self showAlert:successJson[@"msg"]];
-//        [self aliPayWithOrderString:successJson[@"data"]];
-//    } error:^(NSError *error) {
-//        DLog(@"%@", error);
-//    }];
-    // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
-    NSDictionary *dict = @{
-                           @"order":@(arc4random_uniform(999)+100),
-                           @"total_fee":@(arc4random_uniform(10)+1),
-                           @"mark":@"WXPay"
+    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@(11),
+                           @"id":@([_model.ID integerValue]),
+                           @"address_id":@(_defaultModel.ID)
                            };
     DLog(@"%@", dict);
-    [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
+    [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        PayReq * req = [[PayReq alloc] init];
-        req.partnerId = [successJson objectForKey:@"partnerid"];
-        req.prepayId = [successJson objectForKey:@"prepayid"];
-        req.nonceStr = [successJson objectForKey:@"noncestr"];
-        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"];
-        req.timeStamp = [timeStamp intValue];
-        
-        req.package = [successJson objectForKey:@"package"];
-        req.sign = [successJson objectForKey:@"sign"];
-        req.openID = [successJson objectForKey:@"appid"];
-        
-        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
-        
-        BOOL flag = [WXApi sendReq:req];
-        if (flag) {
-            DLog(@"支付成功");
-        }else{
-            DLog(@"支付失败");
+        [self showAlert:successJson[@"message"]];
+        if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
+            int orderID = 0;
+            
+            ChosePayStyleView *choseStyle = [[ChosePayStyleView alloc] init];
+            choseStyle.dataArr = @[@"支付全款", @"支付定金"];
+            choseStyle.bottomBlock = ^(NSString *style){
+                
+               
+                if ([style isEqualToString:@"支付全款"]) {
+                    // 生成待支付全款订单
+                    NSDictionary *typeDict = @{
+                                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                               @"order_id":@(orderID),
+                                               @"type":@(1)
+                                               };
+                    [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                        [self showAlert:successJson[@"message"]];
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+                    
+                }else if ([style isEqualToString:@"支付定金"]) {
+                    // 生成待支付定金订单
+                    NSDictionary *typeDict = @{
+                                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                               @"order_id":@(orderID),
+                                               @"type":@(2)
+                                               };
+                    [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                        [self showAlert:successJson[@"message"]];
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+                }
+                
+            };
+            
+            [choseStyle show];
         }
-
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-    
+    /** 支付宝支付 */
+        //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+//        NSDictionary *dit = @{
+//                              @"id":@(arc4random_uniform(999)+100),
+//                              @"total_fee":@(1)
+//                              };
+//        [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//            [self showAlert:successJson[@"msg"]];
+//            [self aliPayWithOrderString:successJson[@"data"]];
+//        } error:^(NSError *error) {
+//            DLog(@"%@", error);
+//        }];
+    }
 }
+    
 - (void)aliPayWithOrderString:(NSString *)orderStr {
     if (orderStr != nil) {
         
@@ -115,6 +129,9 @@
         
         [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             DLog(@"reslut = %@",resultDic);
+            if ([resultDic[@"ResultStatus"] isEqualToString:@"9000"]) {
+                //支付成功,这里放你们想要的操作
+            }
         }];
     }
 }
@@ -128,7 +145,6 @@
     
     [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
         [self showAlert:successJson[@"message"]];
-        DLog(@"1%@", successJson);
         if (successJson[@"code"]) {
             // 数据解析
             NSArray *adressArr = [NSArray array];
@@ -138,9 +154,9 @@
                     self.defaultModel = model;
                 }
             }
-            DLog(@"11%@", self.dataArr);
+            DLog(@"11%@", self.defaultModel);
             // 刷新
-            [self.tablevView reloadData];
+//            [self.tablevView reloadData];
         }
         
     } error:^(NSError *error) {
@@ -164,15 +180,13 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
     self.hidesBottomBarWhenPushed = YES;
 }
 
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
     self.defaultModel = adress.userInfo[@"ShopAdress"];
     [self.tablevView reloadData];
-    DLog(@"已传");
+    DLog(@"%@",self.defaultModel.userName);
 }
 - (void)initUI {
     self.title = @"订购狗狗";
@@ -195,6 +209,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
 - (void)makeConstraint {
     [self.payCount makeConstraints:^(MASConstraintMaker *make) {
@@ -251,6 +266,7 @@
         {
             if (self.defaultModel.userTel.length > 0) { // 添加地址
                 ChosedAdressView *chosedView = [[ChosedAdressView alloc] init];
+                chosedView.shopAdress = self.defaultModel;
                 chosedView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 85);
                 [cell.contentView addSubview:chosedView];
                
@@ -267,6 +283,20 @@
             cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerAndDogCardView *sellerAnddog = [[SellerAndDogCardView alloc] init];
+
+            if (self.model.pathBig != NULL) {
+                NSString *urlString = [IMAGE_HOST stringByAppendingString:self.model.pathBig];
+                [sellerAnddog.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+            }
+            
+            sellerAnddog.dogNameLabel.text = self.model.name;
+            sellerAnddog.dogKindLabel.text = [self.model.kind name];
+            sellerAnddog.dogAgeLabel.text = [self.model.age name];
+            sellerAnddog.dogSizeLabel.text = [self.model.size name];
+            sellerAnddog.dogColorLabel.text = [self.model.color name];
+            sellerAnddog.oldPriceLabel.attributedText = [self getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.model.price]];
+            sellerAnddog.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.model.price];
+            sellerAnddog.dateLabel.text = self.model.createTime;
             sellerAnddog.backgroundColor = [UIColor whiteColor];
             [cell addSubview:sellerAnddog];
 
@@ -496,5 +526,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
+    NSDictionary *attribtDic = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                 };
+    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+    return attribut;
+}
 @end

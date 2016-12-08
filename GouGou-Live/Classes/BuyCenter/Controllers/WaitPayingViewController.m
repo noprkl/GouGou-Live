@@ -139,8 +139,8 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"支付全款"]) {
-                // 点击支付全乱
-                [self clickPayAllMoney];
+                // 点击支付全款
+                [self clickPayAllMoney:model];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
@@ -174,13 +174,13 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"取消订单"]) {
                 // 点击取消订单
-                [self clickCancleOrder];
+                [self clickCancleOrder:model];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text  isEqual:@"支付定金"]){
                 // 点击支付定金
-                [self clickPayFontMoney];
+                [self clickPayFontMoney:model];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
@@ -210,11 +210,11 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 
             if ([button.titleLabel.text  isEqual:@"支付全款"]) {
                 // 点击支付全款
-                [self clickPayAllMoney];
+                [self clickPayAllMoney:model];
             }
             if ([button.titleLabel.text  isEqual:@"申请维权"]) {
                 // 点击申请维权
-                [self clickApplyProtectPower];
+                [self clickApplyProtectPower:model.ID];
 
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
@@ -223,13 +223,13 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
             
             if ([button.titleLabel.text  isEqual:@"支付尾款"]){
                 // 点击支付尾款
-                [self clickPayBackMoney];
+                [self clickPayBackMoney:model];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"不想买了"]) {
                 // 点击不想买了
-                [self clickNotBuy];
+                [self clickNotBuy:model];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 

@@ -38,7 +38,7 @@
 
 - (void)getRequestOrderDetail {
     NSDictionary *dict = @{
-                           @"id":@(11)
+                           @"id":@([_model.ID intValue])
                            };
     
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {

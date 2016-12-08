@@ -184,6 +184,9 @@
 #define API_List_order @"api/OrderService/list_order"
 /** 买家订单初始化 */
 #define API_Order @"api/OrderService/order"
+/** 订单付款项选择 */
+#define API_Order_second @"api/OrderService/order_second"
+
 /** 订单评价买家 */
 #define API_Order_evaluation @"api/OrderService/order_evaluation"
 /** 钱包支付 */

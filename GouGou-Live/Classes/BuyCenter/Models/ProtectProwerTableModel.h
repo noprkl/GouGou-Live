@@ -9,6 +9,9 @@
 #import "BaseModel.h"
 
 @interface ProtectProwerTableModel : BaseModel
+
+// 商品ID
+@property (nonatomic, assign) int ID;
 /** 商家图片 */
 @property (copy,nonatomic) NSString *merchantImgl;
 /** 商家名称 */

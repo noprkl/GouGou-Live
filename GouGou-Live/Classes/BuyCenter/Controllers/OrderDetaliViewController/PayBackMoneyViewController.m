@@ -340,11 +340,11 @@
         
             if ([button.titleLabel.text isEqual:@"申请维权"]) {
                
-                [weakself clickApplyProtectPower];
+                [weakself clickApplyProtectPower:weakself.detailModel];
         
             } else if ([button.titleLabel.text isEqual:@"不想买了"]) {
             
-                [weakself clickNotBuy];
+                [weakself clickNotBuy:weakself.detailModel];
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat3;
@@ -353,7 +353,7 @@
                 
             } else if ([button.titleLabel.text isEqual:@"支付尾款"]) {
                 
-                [weakself clickPayBackMoney];
+                [weakself clickPayBackMoney:weakself.detailModel];
             }
 
         };

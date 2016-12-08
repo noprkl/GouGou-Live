@@ -484,6 +484,7 @@
 		04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AEA1DDDD8FE0023D9A8 /* SellerSendViewController.m */; };
 		04EA2AEE1DDDDA6C0023D9A8 /* SellerChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AED1DDDDA6C0023D9A8 /* SellerChangeViewController.m */; };
 		04FE7AB81DF11960004E08E9 /* ProtectProwerTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE7AB71DF11960004E08E9 /* ProtectProwerTableModel.m */; };
+		619395301DF828BD00EBC23B /* ChosePayStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6193952F1DF828BD00EBC23B /* ChosePayStyleView.m */; };
 		B1B4669EC9F91A78FC34A39D /* libPods-GouGou-Live.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */; };
 /* End PBXBuildFile section */
 
@@ -1428,6 +1429,8 @@
 		04FE7AB71DF11960004E08E9 /* ProtectProwerTableModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectProwerTableModel.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
+		6193952E1DF828BD00EBC23B /* ChosePayStyleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChosePayStyleView.h; sourceTree = "<group>"; };
+		6193952F1DF828BD00EBC23B /* ChosePayStyleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChosePayStyleView.m; sourceTree = "<group>"; };
 		EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.release.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3452,6 +3455,8 @@
 				044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */,
 				045FE30C1DCC6635001B95B1 /* ChosedAdressView.h */,
 				045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */,
+				6193952E1DF828BD00EBC23B /* ChosePayStyleView.h */,
+				6193952F1DF828BD00EBC23B /* ChosePayStyleView.m */,
 			);
 			path = DogBookView;
 			sourceTree = "<group>";
@@ -4383,7 +4388,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -4755,6 +4760,7 @@
 				046BF0361DE4696600BC32E9 /* EaseFaceView.m in Sources */,
 				0452A2131DE1E782007C1E4F /* SellerChoseAdressViewController.m in Sources */,
 				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,
+				619395301DF828BD00EBC23B /* ChosePayStyleView.m in Sources */,
 				046F0B9C1DE2AB8B00D50D5C /* NicknameView.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
 				04DAC9951DD21A9A0089236D /* MyMessageView.m in Sources */,

@@ -182,13 +182,13 @@
 }
 // 开始直播
 - (void)ClickBeginLiveBtnAction:(UIButton *)btn{
-//    MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
-//    streamVc.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:streamVc animated:YES];
-    [self.view addSubview:self.session.previewView];
-    [self.session startWithPushURL:[NSURL URLWithString:@"rtmp://pili-publish.zhuaxingtech.com/gougoulive/php-sdk-test1480995971?e=1481084024&token=NFwFP_3cqha4JuMAtZTp2CdOHAHiglVY3o9X47by:Kx77k1avGKkz9vLp-JoeSvIleik= "] feedback:^(PLStreamStartStateFeedback feedback) {
-        
-    }];
+    MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
+    streamVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:streamVc animated:YES];
+//    [self.view addSubview:self.session.previewView];
+//    [self.session startWithPushURL:[NSURL URLWithString:@"rtmp://pili-publish.zhuaxingtech.com/gougoulive/php-sdk-test1480995971?e=1481084024&token=NFwFP_3cqha4JuMAtZTp2CdOHAHiglVY3o9X47by:Kx77k1avGKkz9vLp-JoeSvIleik= "] feedback:^(PLStreamStartStateFeedback feedback) {
+//        
+//    }];
 //    [self.session startWithFeedback:^(PLStreamStartStateFeedback feedback) {
 //        DLog(@"%lu", feedback);
 //    }];

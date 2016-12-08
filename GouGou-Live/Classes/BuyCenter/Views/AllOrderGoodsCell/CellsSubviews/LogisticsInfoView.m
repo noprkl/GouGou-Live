@@ -63,7 +63,7 @@
     
     [_copyButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.right.equalTo(weakself.right).offset(-10);
+        make.left.equalTo(weakself.left).offset(315);
         make.centerY.equalTo(weakself.expressNameLabe.centerY);
         make.size.equalTo(CGSizeMake(50, 25));
         

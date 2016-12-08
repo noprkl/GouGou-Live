@@ -10,4 +10,7 @@
 
 @interface SureConsigneedViewController : BuyCenterViewController
 
+// 订单模型
+@property (nonatomic, strong) BuyCenterModel *detailModel;
+
 @end

@@ -293,7 +293,7 @@
             
             if ([button.titleLabel.text isEqual:@"取消订单"]) {
                 
-                [weakself clickCancleOrder];
+                [weakself clickCancleOrder:weakself.detailModel];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
@@ -303,7 +303,7 @@
                 
             } else if ([button.titleLabel.text isEqual:@"支付定金"]) {
                 
-                [weakself clickPayFontMoney];
+                [weakself clickPayFontMoney:weakself.detailModel];
             }
             
         };

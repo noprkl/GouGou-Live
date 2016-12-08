@@ -21,7 +21,7 @@
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 
-@property(nonatomic, strong) ShopAdressModel *adressModel; /**< 收货地址 */
+@property(nonatomic, strong) SellerAdressModel *adressModel; /**< 收货地址 */
 
 @property(nonatomic, assign) BOOL isAdress; /**< 是否选择了地址 */
 

@@ -5,15 +5,16 @@
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
 //  去评价（订单操作）
+
+#define ImgCount 7
+
 #import "GotoAssessViewController.h"
 #import "SellNameView.h"
 #import "SellerDogCardView.h"
 #import "SatisfiedAssessView.h"
 #import "AddPhotosView.h"
 #import "AnonymityAssessView.h"
-
 #import "AddUpdataImagesView.h"
-#define ImgCount 7
 
 @interface GotoAssessViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 /** 商家名称 */

@@ -23,7 +23,7 @@
     // 环信登录
     BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
     if (!isAutoLogin) {
-        EMError *error = [[EMClient sharedClient] loginWithUsername:[UserInfos sharedUser].ID password:[UserInfos sharedUser].userPsd];
+        EMError *error = [[EMClient sharedClient] loginWithUsername:[UserInfos sharedUser].ID password:@"gougoulive"];
         if (!error) {
             NSLog(@"登陆成功");
         } else {

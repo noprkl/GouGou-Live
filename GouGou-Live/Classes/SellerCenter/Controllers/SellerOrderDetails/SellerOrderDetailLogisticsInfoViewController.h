@@ -7,10 +7,14 @@
 //  
 
 #import "BaseViewController.h"
-
+#import "SellerOrderModel.h"
 
 @interface SellerOrderDetailLogisticsInfoViewController : BaseViewController
 
 @property(nonatomic, strong) NSString *orderState; /**< 订单状态 */
+
+@property(nonatomic, strong) NSString *orderID; /**< 订单id */
+
+@property(nonatomic, strong) SellerOrderModel *model; /**< 模型 */
 
 @end

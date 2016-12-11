@@ -188,7 +188,7 @@ static NSString *cellid = @"DogShowCellid";
                 default:
                     break;
             }
-        }];
+        } colCount:4];
         [shareAlert show];
         
     };

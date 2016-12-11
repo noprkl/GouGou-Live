@@ -12,8 +12,10 @@
 #import "AddUpdataImagesView.h"
 #import "MediaStreamingVc.h"
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+#import "HTTPTool.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
+@interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate, CLLocationManagerDelegate>
 {
     CGFloat W;//图片view高度
 }
@@ -24,7 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *noteLabel; /**< 提示 */
 @property (weak, nonatomic) IBOutlet UIButton *sellORBtn; /**< 是否出售按钮 */
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel; /**< 城市 */
+@property(nonatomic, strong) CLLocationManager *manager; /**< 定位 */
 
+@property(nonatomic, assign) BOOL isFirstUpdate; /**< 是否第一时间更新 */
 
 @property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 上传图片 */
 
@@ -59,6 +63,10 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    // 定位
+    [self findCurrentLocation];
+    
     self.navigationController.navigationBarHidden = YES;
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
@@ -150,6 +158,58 @@
 }
 #pragma mark
 #pragma mark - Action
+- (void)findCurrentLocation {
+    self.isFirstUpdate = YES;
+    // 1
+    if (![CLLocationManager locationServicesEnabled]) {
+        [self showAlert:@"未定位服务"];
+        self.cityLabel.text = @"";
+    }
+    // 2
+    else if ([self.manager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.manager requestWhenInUseAuthorization];
+        [self.manager startUpdatingLocation];
+    }
+    // 3
+    else {
+        [self.manager requestAlwaysAuthorization];
+        [self.manager startUpdatingLocation];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    if (self.isFirstUpdate) {
+        // 4
+        self.isFirstUpdate = NO;
+        return;
+    }
+    // 1.获取用户位置的对象
+    CLLocation *location = [locations lastObject];
+    // 编码 获得城市
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (! error) {
+            if ([placemarks count] > 0) {
+                CLPlacemark *placemark = [placemarks firstObject];
+                
+                // 获取城市
+                NSString *city = placemark.locality;
+                if (! city) {
+                    // 6
+                    city = placemark.administrativeArea;
+                }
+                self.cityLabel.text = city;
+            } else if ([placemarks count] == 0) {
+                [self showAlert:@"GPS定位失败"];
+            }
+        } else {
+            [self showAlert:@"网络错误,请检查网络"];
+        }
+    }];
+    
+    // 2.停止定位
+    [manager stopUpdatingLocation];
+}
 - (IBAction)clickSellORBtnAction:(UIButton *)sender {
     sender.selected = !sender.selected;
     self.photoView.hidden = !sender.selected;
@@ -169,28 +229,44 @@
 }
 // QQ分享
 - (void)ClickQQShareAction:(UIButton *)btn{
-    
+    [self QQShare];
 }
 // 空间分享
 - (void)ClickTencentShareAction:(UIButton *)btn{
-    
+    [self TencentShare];
 }
 // 朋友圈分享
 - (void)ClickFriendShareAction:(UIButton *)btn{
-    
+    [self MomentShare];
 }
 // 开始直播
 - (void)ClickBeginLiveBtnAction:(UIButton *)btn{
+    // 创建聊天室
+//    POST 'https:/a1.easemob.com/easemob-demo/chatdemoui/chatrooms' -H 'Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKdRxUTjA9CNiZMnQIgk0LEUE' -d '{"name":"testchatroom","description":"server create chatroom","owner":"jma1","maxusers":300,"members":["ceshia"]}'
+//    NSDictionary *dict = @{@"name":self.editNameText.text,
+//                           @"description":@"server create chatroom",
+//                           @"owner":[UserInfos sharedUser].ID,
+//                           @"maxusers":@(5000),
+//                           };
+//    DLog(@"%@", dict);
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    [self postRequestWithPath:@"gougoulive/chatrooms" params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//    } error:^(NSError *error) {
+//        DLog(@"%@", error);
+//    }];
+//    
+//    [[AFHTTPSessionManager manager] POST:@"https://a1.easemob.com/1161161023178138/gougoulive/chatrooms" parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        DLog(@"%@", responseObject);
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        DLog(@"%@", error);
+//    }];
+    
+    // 跳转到直播页
     MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
+    streamVc.idArr = self.photoArr;
     streamVc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:streamVc animated:YES];
-//    [self.view addSubview:self.session.previewView];
-//    [self.session startWithPushURL:[NSURL URLWithString:@"rtmp://pili-publish.zhuaxingtech.com/gougoulive/php-sdk-test1480995971?e=1481084024&token=NFwFP_3cqha4JuMAtZTp2CdOHAHiglVY3o9X47by:Kx77k1avGKkz9vLp-JoeSvIleik= "] feedback:^(PLStreamStartStateFeedback feedback) {
-//        
-//    }];
-//    [self.session startWithFeedback:^(PLStreamStartStateFeedback feedback) {
-//        DLog(@"%lu", feedback);
-//    }];
+    [self.navigationController pushViewController:streamVc animated:YES];  
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -205,6 +281,14 @@
         _photoUrl = [NSMutableArray array];
     }
     return _photoUrl;
+}
+- (CLLocationManager *)manager {
+    if (!_manager) {
+        _manager = [[CLLocationManager alloc] init];
+        _manager.delegate = self;
+        _manager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    }
+    return _manager;
 }
 - (AddUpdataImagesView *)photoView {
     if (!_photoView) {
@@ -233,6 +317,9 @@
                 }
             }];
             
+        };
+        _photoView.deleImg = ^(){
+            [weakSelf makeConstraint];
         };
         _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         

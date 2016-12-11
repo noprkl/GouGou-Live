@@ -147,6 +147,7 @@ static NSString *cellid = @"SellerWaitSendCell";
         
         SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
         sendVC.hidesBottomBarWhenPushed = YES;
+        sendVC.orderID = orderModel.ID;
         [self.navigationController pushViewController:sendVC animated:YES];
     }
 }

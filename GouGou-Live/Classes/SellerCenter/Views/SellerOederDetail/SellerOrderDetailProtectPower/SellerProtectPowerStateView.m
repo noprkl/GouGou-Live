@@ -38,6 +38,15 @@
         make.right.equalTo(self.right).offset(-10);
     }];
 }
+#pragma mark - 设置
+- (void)setStateMessage:(NSString *)stateMessage {
+    _stateMessage = stateMessage;
+    self.stateLabel.text = stateMessage;
+}
+- (void)setNoteStr:(NSString *)noteStr {
+    _noteStr = noteStr;
+    self.noteLabel.text = noteStr;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UILabel *)stateLabel {

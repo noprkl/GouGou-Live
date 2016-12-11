@@ -15,11 +15,12 @@ typedef void(^CancelBtnBlock)();
 
 @interface ShareAlertView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame alertModels:(NSArray *)btnModelPlist tapView:(MainTopBlock)tapBlock;
+- (instancetype)initWithFrame:(CGRect)frame alertModels:(NSArray *)btnModelPlist tapView:(MainTopBlock)tapBlock colCount:(int)colCount;
+
 
 /** 数据 */
 @property (strong, nonatomic) NSArray *dataPlist;
-
+@property (nonatomic, assign) BOOL isDismiss;
 - (void)show;
 - (void)dismiss;
 @end

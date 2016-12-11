@@ -222,4 +222,11 @@
 /** 系统通知 */
 #define API_System_msg @"api/UserService/system_msg"
 
+#pragma mark - 直播
+/** 添加直播接口 */
+#define API_Live_protect @"api/ProductService/Live_product"
+/** 直播列表接口 */
+#define API_Live_product_list @"api/ProductService/Live_product_list"
+
+
 @end

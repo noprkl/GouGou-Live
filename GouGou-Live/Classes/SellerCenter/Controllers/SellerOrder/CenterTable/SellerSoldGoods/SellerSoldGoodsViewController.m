@@ -15,6 +15,7 @@
 #import "SellerProtectPowerCell.h"
 #import "SellerCloseCell.h"
 #import "SellerOrderModel.h"
+#import "SellerProtectModel.h"
 
 @interface SellerSoldGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -130,22 +131,7 @@ static NSString *closeCell = @"SellerCloseCell";
     __weak typeof(self) weakSelf = self;
     SellerOrderModel *model = self.dataArr[indexPath.row];
     
-    if ([model.status integerValue] == 0) { //
-        
-        SellerWaitAcceptCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAcceptCell];
-
-        cell.orderState = @"待发货";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        cell.clickBtnBlock = ^(NSString *btnText){
-            [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
-        };
-        cell.costMessage = @[@"全款：¥ 950"];
-        
-        [self.btnTitles addObject:cell.btnTitles];
-        [self.states addObject:cell.orderState];
-
-        return cell;
-    }else if ([model.status integerValue] == 1){ // 1：待付款
+    if ([model.status integerValue] == 1){ // 1：待付款
         
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
 
@@ -388,18 +374,22 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
+        changeVC.orderID = orderModel.ID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
+        changeVC.orderID = orderModel.ID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:sendVC animated:YES];
+        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+        changeVC.title = title;
+        changeVC.orderID = orderModel.ID;
+        changeVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeVC animated:YES];
         
     }else if ([title isEqualToString:@"查看评价"]){
         

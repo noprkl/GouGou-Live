@@ -18,8 +18,7 @@
 #import "DeletePrommtView.h" // 举报提示
 #import "TalkingView.h"
 
-// 播放器
-#import "PlayerViewController.h"
+#import "LandscapePlayerVc.h" // 横屏播放
 
 #import "TalkingViewController.h"
 #import "ServiceViewController.h"
@@ -84,13 +83,13 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.backBtn.hidden = NO;
-    self.roomNameLabel.hidden = NO;
-    self.reportBtn.hidden = NO;
-    self.shareBtn.hidden = NO;
-    self.collectBtn.hidden = NO;
-    self.watchLabel.hidden = NO;
-    self.screenBtn.hidden = NO;
+//    self.backBtn.hidden = NO;
+//    self.roomNameLabel.hidden = NO;
+//    self.reportBtn.hidden = NO;
+//    self.shareBtn.hidden = NO;
+//    self.collectBtn.hidden = NO;
+//    self.watchLabel.hidden = NO;
+//    self.screenBtn.hidden = NO;
 
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
@@ -100,13 +99,13 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
    
-    self.backBtn.hidden = YES;
-    self.roomNameLabel.hidden = YES;
-    self.reportBtn.hidden = YES;
-    self.shareBtn.hidden = YES;
-    self.collectBtn.hidden = YES;
-    self.watchLabel.hidden = YES;
-    self.screenBtn.hidden = YES;
+//    self.backBtn.hidden = YES;
+//    self.roomNameLabel.hidden = YES;
+//    self.reportBtn.hidden = YES;
+//    self.shareBtn.hidden = YES;
+//    self.collectBtn.hidden = YES;
+//    self.watchLabel.hidden = YES;
+//    self.screenBtn.hidden = YES;
 
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController.navigationBar setAlpha:1];
@@ -119,13 +118,13 @@
     
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
 
-    [window addSubview:self.backBtn];
-    [window addSubview:self.roomNameLabel];
-    [window addSubview:self.reportBtn];
-    [window addSubview:self.shareBtn];
-    [window addSubview:self.collectBtn];
-    [window addSubview:self.watchLabel];
-    [window addSubview:self.screenBtn];
+//    [window addSubview:self.backBtn];
+//    [window addSubview:self.roomNameLabel];
+//    [window addSubview:self.reportBtn];
+//    [window addSubview:self.shareBtn];
+//    [window addSubview:self.collectBtn];
+//    [window addSubview:self.watchLabel];
+//    [window addSubview:self.screenBtn];
     // 初始化 PLPlayerOption 对象
     PLPlayerOption *playerOption = [PLPlayerOption defaultOption];
     
@@ -136,22 +135,36 @@
     [playerOption setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
     [playerOption setOptionValue:@(kPLLogNone) forKey:PLPlayerOptionKeyLogLevel];
     
-    NSURL *url = [NSURL URLWithString:@"rtmp://pili-live-rtmp.zhuaxingtech.com/gougoulive/mytest"];
+    
+    
+    NSURL *url = [NSURL URLWithString:@"rtmp://pili-live-rtmp.zhuaxingtech.com/gougoulive/helloios"];
     self.player = [PLPlayer playerWithURL:url option:playerOption];
     self.player.delegate = self;
     self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
     // 添加子视图
     [self.view addSubview:self.player.playerView];
+    // 播放
     [self.player play];
+   
+    [self.player.playerView addSubview:self.backBtn];
+    [self.player.playerView addSubview:self.roomNameLabel];
+    [self.player.playerView addSubview:self.reportBtn];
+    [self.player.playerView addSubview:self.shareBtn];
+    [self.player.playerView addSubview:self.collectBtn];
+    [self.player.playerView addSubview:self.watchLabel];
+    [self.player.playerView addSubview:self.screenBtn];
+
+    // 播放控件约束
+    [self makeSubviewConstraint];
+    
+    
     
     [self.view addSubview:self.centerView];
     [self.view addSubview:self.baseScrollView];
-    
+    // 子视图
     [self addChildViewController];
-    
-    
+    // 子视图约束
     [self makeConstraint];
-    
 }
 // 实现 <PLPlayerDelegate> 来控制流状态的变更
 - (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
@@ -164,13 +177,53 @@
     // 当发生错误时，会回调这个方法
     DLog(@"%@", error);
 }
+// 播放控件约束
+- (void)makeSubviewConstraint {
+    [self.player.playerView makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.top).offset(20);
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(225);
+    }];
+    [self.backBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.player.playerView.left).offset(15);
+        make.top.equalTo(self.player.playerView.top).offset(10);
+    }];
+    [self.roomNameLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backBtn.centerY);
+        make.left.equalTo(self.backBtn.right).offset(15);
+    }];
+    [self.shareBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backBtn.centerY);
+        make.right.equalTo(self.player.playerView.right).offset(-10);
+    }];
+    
+    [self.reportBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backBtn.centerY);
+        make.right.equalTo(self.shareBtn.left).offset(-10);
+    }];
+    [self.collectBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.shareBtn.centerX);
+        make.top.equalTo(self.shareBtn.bottom).offset(10);
+    }];
+    [self.watchLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.backBtn.left);
+        make.bottom.equalTo(self.player.playerView.bottom).offset(-10);
+        make.width.equalTo(100);
+    }];
+    [self.screenBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.shareBtn.centerX);
+        make.bottom.equalTo(self.player.playerView.bottom).offset(-10);
+    }];
+}
+
+// 自控制器约束
 - (void)makeConstraint {
-    [self.centerView makeConstraints:^(MASConstraintMaker *make) {
+    [self.centerView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.top).offset(245);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 45));
     }];
     
-    [self.baseScrollView makeConstraints:^(MASConstraintMaker *make) {
+    [self.baseScrollView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.centerView.bottom);
         make.left.right.bottom.equalTo(self.view);
     }];
@@ -424,7 +477,7 @@
                 break;
         }
         
-        }];
+        } colCount:4];
     [shareAlert show];
 }
 - (void)clickCollectBtnAction {
@@ -432,45 +485,36 @@
 }
 - (void)clickScreenBtnAction:(UIButton *)btn {
    
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    
-    if (orientation == UIDeviceOrientationPortrait) {
-      
-        [self forceOrientation:(UIInterfaceOrientationLandscapeLeft)];
-        
-        self.shareBtn.hidden = YES;
-        self.collectBtn.hidden = YES;
-        self.reportBtn.hidden = YES;
-        self.centerView.hidden = YES;
-        self.baseScrollView.hidden = YES;
-        
-        CGRect rect = self.screenBtn.frame;
-        rect = CGRectMake(SCREEN_WIDTH - 20 - kWidth, 30, kWidth, kWidth);
-        self.screenBtn.frame = rect;
-        
-        CGRect playRect = self.player.playerView.frame;
-        playRect = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
-        self.player.playerView.frame = playRect;
-        
-    }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
-       [self forceOrientation:UIInterfaceOrientationPortrait];
-       
-        self.shareBtn.hidden = NO;
-        self.collectBtn.hidden = NO;
-        self.reportBtn.hidden = NO;
-        self.centerView.hidden = NO;
-        self.baseScrollView.hidden = NO;
-
-        CGRect rect = self.screenBtn.frame;
-        rect = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
-        self.screenBtn.frame = rect;
-        
-        CGRect playRect = self.player.playerView.frame;
-        playRect = CGRectMake(0, 10, SCREEN_WIDTH, 225);
-        self.player.playerView.frame = playRect;
-        
-//        [self forceOrientation:UIInterfaceOrientationPortrait];
-    }
+//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+//    
+//    if (orientation == UIDeviceOrientationPortrait) {
+//      
+//        [self forceOrientation:(UIInterfaceOrientationLandscapeLeft)];
+//        
+//        self.shareBtn.hidden = YES;
+//        self.collectBtn.hidden = YES;
+//        self.reportBtn.hidden = YES;
+//        self.centerView.hidden = YES;
+//        self.baseScrollView.hidden = YES;
+//        [self.view remakeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
+//        }];
+//        [self.player.playerView remakeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
+//        }];
+//    }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+//       [self forceOrientation:UIInterfaceOrientationPortrait];
+//       
+//        self.shareBtn.hidden = NO;
+//        self.collectBtn.hidden = NO;
+//        self.reportBtn.hidden = NO;
+//        self.centerView.hidden = NO;
+//        self.baseScrollView.hidden = NO;
+//        [self makeSubviewConstraint];
+//    }
+    LandscapePlayerVc *landscapeVc = [[LandscapePlayerVc alloc] init];
+    landscapeVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:landscapeVc animated:YES];
 }
 // 切换横屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -507,10 +551,10 @@
 - (UIButton *)backBtn {
     if (!_backBtn) {
         _backBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        _backBtn.frame = CGRectMake(20, 30, kWidth, kWidth);
+//        _backBtn.frame = CGRectMake(20, 30, kWidth, kWidth);
         
-        _backBtn.layer.cornerRadius = 3;
-        _backBtn.layer.masksToBounds = YES;
+//        _backBtn.layer.cornerRadius = 3;
+//        _backBtn.layer.masksToBounds = YES;
         
         [_backBtn setImage:[UIImage imageNamed:@"返回"] forState:(UIControlStateNormal)];
         [_backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
@@ -525,11 +569,22 @@
         
         _roomNameLabel.text = @"直播名字";
         _roomNameLabel.backgroundColor = [[UIColor colorWithHexString:@"#333333"] colorWithAlphaComponent:0.5];
-
+        _roomNameLabel.font = [UIFont systemFontOfSize:13];
         _roomNameLabel.textAlignment = NSTextAlignmentCenter;
         _roomNameLabel.textColor = [UIColor whiteColor];
     }
     return _roomNameLabel;
+}
+- (UIButton *)watchLabel {
+    if (!_watchLabel) {
+        _watchLabel = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [_watchLabel setImage:[UIImage imageNamed:@"联系人"] forState:(UIControlStateNormal)];
+        _watchLabel.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_watchLabel setTitle:@"1000" forState:(UIControlStateNormal)];
+        [_watchLabel setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+        _watchLabel.enabled = NO;
+    }
+    return _watchLabel;
 }
 - (UIButton *)reportBtn {
     if (!_reportBtn) {
@@ -570,9 +625,10 @@
         _collectBtn.layer.masksToBounds = YES;
 
         _collectBtn.backgroundColor = [[UIColor colorWithHexString:@"#333333"] colorWithAlphaComponent:0.5];
-        _collectBtn.frame = CGRectMake((SCREEN_WIDTH - kWidth - 10), 30 + kWidth + 10, kWidth, kWidth);
+        UIImage *image = [UIImage imageNamed:@"喜欢icon(点击"];
         
-        [_collectBtn setImage:[UIImage imageNamed:@"喜欢icon(点击"] forState:(UIControlStateNormal)];
+
+        [_collectBtn setImage:image forState:(UIControlStateNormal)];
         [_collectBtn addTarget:self action:@selector(clickCollectBtnAction) forControlEvents:(UIControlEventTouchDown)];
 
     }

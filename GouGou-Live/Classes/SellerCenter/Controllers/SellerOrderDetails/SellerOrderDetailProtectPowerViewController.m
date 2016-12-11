@@ -21,6 +21,7 @@
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
 #import "SellerSendViewController.h"
+#import "SellerProtectModel.h"
 
 @interface SellerOrderDetailProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -30,11 +31,33 @@
 
 @property(nonatomic, strong) SellerOrderDetailBottomView *bottomView; /**< 底部按钮 */
 
+@property(nonatomic, strong) SellerProtectModel *orderInfo; /**< 订单信息 */
+
 @end
 
 static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
 
 @implementation SellerOrderDetailProtectPowerViewController
+#pragma mark - 网络请求
+- (void)getProtectPowerRequest {
+    
+    NSDictionary * dict = @{@"user_id":@(TestID),
+                            @"page":@(1),
+                            @"pageSize":@(10)
+                            };
+    
+    [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
+        
+        self.orderInfo = [SellerProtectModel mj_objectWithKeyValues:successJson[@"data"][@"info"]];
+        
+        [self.tableView reloadData];
+        DLog(@"%@",successJson[@"data"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+}
+
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -108,6 +131,14 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPowerStateView *stateView = [[SellerProtectPowerStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+            if ([self.orderInfo.status intValue] == 1) {
+                stateView.stateMessage = @"维权中";
+            }else  if ([self.orderInfo.status intValue] == 2) {
+                stateView.stateMessage = @"维权成功";
+            }else  if ([self.orderInfo.status intValue] == 3) {
+                stateView.stateMessage = @"维权失败";
+            }
+            stateView.noteStr = self.orderInfo.closeTime;
             [cell.contentView addSubview:stateView];
             return cell;
         }
@@ -135,14 +166,17 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
             }            cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+            
             UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
             backView.backgroundColor = [UIColor whiteColor];
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 10, 44)];
-            label.text = @"买家昵称：慧摩尔";
+            label.text = [NSString stringWithFormat:@"买家名称：%@", self.orderInfo.userNickName];
             label.font = [UIFont systemFontOfSize:16];
-           
+            
             [backView addSubview:label];
+            
+
             [cell.contentView addSubview:backView];
             return cell;
 
@@ -157,6 +191,19 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             }            cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
+            if (self.orderInfo.pathSmall != NULL) {
+                NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
+                [dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+            }
+            
+            dogCardView.dogNameLabel.text = self.orderInfo.name;
+            dogCardView.dogKindLabel.text = self.orderInfo.kindName;
+            dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
+            dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
+            dogCardView.dogColorLabel.text = self.orderInfo.colorName;
+            dogCardView.oldPriceLabel.attributedText = [self getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.orderInfo.priceOld]];
+            dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.orderInfo.price];
+            
             [cell.contentView addSubview:dogCardView];
             return cell;
         }
@@ -170,6 +217,13 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             }            cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerOrderDetailMorePriceView *morePriceView = [[SellerOrderDetailMorePriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
+            morePriceView.allPriceCount.text = self.orderInfo.priceOld;
+            morePriceView.favorablePriceCount.text = self.orderInfo.price;
+            morePriceView.realPriceCount.text = [NSString stringWithFormat:@"%d", [self.orderInfo.priceOld intValue] - [self.orderInfo.price intValue]];
+            morePriceView.templatePriceCount.text = self.orderInfo.traficRealFee;
+            morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance;
+            morePriceView.depositCount.text = self.orderInfo.productRealDeposit;
+            
             [cell.contentView addSubview:morePriceView];
             return cell;
 
@@ -185,6 +239,9 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             
             SellerProtectApplyRefundView *applyRefundView = [[SellerProtectApplyRefundView alloc] initWithFrame:CGRectMake(kDogImageWidth, 0, 356 , 200)];
+            
+            NSArray *imsArr = [self.orderInfo.photoPath componentsSeparatedByString:@","];
+            applyRefundView.pictureArr = imsArr;
             [cell.contentView addSubview:applyRefundView];
             return cell;
 
@@ -270,4 +327,14 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         [self.navigationController pushViewController:viewController animated:YES];
     }
 }
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
+    NSDictionary *attribtDic = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                 };
+    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+    return attribut;
+}
+
 @end

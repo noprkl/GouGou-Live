@@ -96,6 +96,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
 }
 - (void)setModel:(DogDetailModel *)model {
     _model = model;
+    
     self.nameText.text = _model.name;
     self.ageModel = _model.age;
     self.ageLabel.attributedText = [self getCellTextWith:_model.age.name];
@@ -110,7 +111,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     self.typeLabel.attributedText = [self getCellTextWith:_model.kind.name];
     
     // 图片url
-    NSArray *imsArr = [_model.pathBig componentsSeparatedByString:@","];
+//    NSArray *imsArr = [_model.pathBig componentsSeparatedByString:@","];
     
     // 数组转化模型
     NSArray *impressModels = [DogCategoryModel mj_objectArrayWithKeyValuesArray:_model.impresssion];
@@ -316,9 +317,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
         case 0:
         {
             /*
-            self.nameText.text = _model.name;
-            self.ageModel = _model.age;
-            self.ageLabel.attributedText = [self getCellTextWith:_model.age.name];
             
             self.sizeModel = _model.size;
             self.sizeLabel.attributedText = [self getCellTextWith:_model.size.name];
@@ -349,7 +347,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             }
             self.oldPrice.attributedText = [self getCellTextWith:_model.price];
             */
-            
+           
             cell.textLabel.text = @"";
             UIButton *noneNameBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
             [noneNameBtn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];
@@ -369,8 +367,16 @@ static NSString *cellid = @"SellerCreateDogMessage";
             nameText.placeholder = self.dataArr[0];
             nameText.font = [UIFont systemFontOfSize:14];
             nameText.delegate = self;
+            
             self.nameText = nameText;
             [cell.contentView addSubview:nameText];
+           
+            if (_model.name.length == 0) {
+                [self clickNoneNameBtnAction:noneNameBtn];
+            }else{
+                self.nameText.text = _model.name;
+                [self textFieldDidBeginEditing:nameText];
+            }
         }
             break;
         case 1:
@@ -380,6 +386,9 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             self.ageLabel = ageLabel;
             [cell.contentView addSubview:ageLabel];
+            if ([self.ageModel name].length != 0) {
+               ageLabel.attributedText = [self getCellTextWith:_model.age.name];
+            }
         }
             break;
         case 2:
@@ -389,6 +398,9 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             self.sizeLabel = sizeLabel;
             [cell.contentView addSubview:sizeLabel];
+            if ([self.sizeModel name].length != 0) {
+                sizeLabel.attributedText = [self getCellTextWith:_model.size.name];
+            }
         }
             break;
         case 3:
@@ -399,6 +411,9 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             self.typeLabel = typeLabel;
             [cell.contentView addSubview:typeLabel];
+            if ([self.typeModel name].length != 0) {
+                typeLabel.attributedText = [self getCellTextWith:_model.kind.name];
+            }
         }
             break;
         case 4:
@@ -408,12 +423,15 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             self.colorLabel = colorLabel;
             [cell.contentView addSubview:colorLabel];
+            if ([self.colorModel name].length != 0) {
+                colorLabel.attributedText = [self getCellTextWith:_model.color.name];
+            }
         }
             break;
             
         case 5:
         {
-            // 一口价
+            // 新价格
             cell.textLabel.text = @"";
             
             UITextField *pricetext = [[UITextField alloc] initWithFrame:CGRectMake(13, 11 / 2, 80, 44)];
@@ -425,7 +443,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [pricetext addTarget:self action:@selector(pricetextEditAction:) forControlEvents:(UIControlEventEditingChanged)];
             
             [cell.contentView addSubview:pricetext];
-            
         }
             break;
         case 6:
@@ -456,6 +473,14 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             self.impressLabel = impressLabel;
             [cell.contentView addSubview:impressLabel];
+            if (self.impressModels.count != 0) {
+                NSMutableString *impress = [NSMutableString string];
+                for (NSInteger i = 0; i < self.impressModels.count; i ++) {
+                    DogCategoryModel *model = self.impressModels[i];
+                    [impress appendFormat:@"#%@# ", model.name];
+                }
+                impressLabel.attributedText = [self getCellTextWith:impress];
+            }
         }
             break;
             
@@ -472,6 +497,9 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [noteText addTarget:self action:@selector(noteTextEditAction:) forControlEvents:(UIControlEventEditingChanged)];
             self.noteText = noteText;
             [cell.contentView addSubview:noteText];
+            if (self.model.comment.length != 0) {
+                noteText.attributedText = [self getCellTextWith:self.model.comment];
+            }
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 45, 13, 40, 15)];
             label.font = [UIFont systemFontOfSize:12];
@@ -493,7 +521,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 10:
         {
-            cell.textLabel.attributedText = [self getCellTextWith:@"原价：￥2400"];
+            cell.textLabel.attributedText = [self getCellTextWith:[NSString stringWithFormat:@"￥%@", self.model.price]];
            
             // 原价提示
             UILabel *depositabel = [[UILabel alloc] initWithFrame:CGRectMake(130, 11 / 2, 200, 33)];

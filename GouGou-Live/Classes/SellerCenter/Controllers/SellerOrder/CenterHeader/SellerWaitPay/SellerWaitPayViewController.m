@@ -168,41 +168,17 @@ static NSString *cellid = @"SellerWaitPayCell";
         [self.navigationController pushViewController:viewController animated:YES];
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
-        changeVC.changeStyle = title;
+        changeVC.title = title;
+        changeVC.orderID = orderModel.ID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
-        changeVC.changeStyle = title;
+        changeVC.title = title;
+        changeVC.orderID = orderModel.ID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }
     
 }
-- (void)test1:(NSString *)title {
-     if ([title isEqualToString:@"发货"]){
-        
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:sendVC animated:YES];
-        
-    }else if ([title isEqualToString:@"查看评价"]){
-        
-        SellerAcceptedRateViewController *rateVC = [[SellerAcceptedRateViewController alloc] init];
-        rateVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:rateVC animated:YES];
-    }else if ([title isEqualToString:@"未评价"]){
-        DLog(@"%@", title);
-    }else if ([title isEqualToString:@"查看详情"]){
-        
-    }else if ([title isEqualToString:@"在线客服"]){
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat1;
-        viewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:viewController animated:YES];
-        
-        
-    }
-}
-
 @end

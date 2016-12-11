@@ -19,6 +19,8 @@
 #import "SellerChangeViewController.h"
 #import "SellerSendViewController.h"
 
+#import "OrderDetailModel.h"
+
 @interface SellerOrderDetailLogisticsInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
@@ -29,10 +31,25 @@
 
 @property(nonatomic, strong) UIButton *callBuyer; /**< 联系买家 */
 
+@property(nonatomic, strong) OrderDetailModel *orderInfo; /**< 订单信息 */
+
 @end
 static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
 
 @implementation SellerOrderDetailLogisticsInfoViewController
+- (void)getRequestOrderDetail {
+    NSDictionary *dict = @{
+                           @"id":@([_model.ID intValue])
+                           };
+    
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -132,6 +149,8 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             SellerOrderDetailStateView *stateView = [[SellerOrderDetailStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
             // 订单信息
             stateView.stateMessage = self.orderState;
+            stateView.noteStr = self.orderInfo.closeTime;
+
             [cell.contentView addSubview:stateView];
             return cell;
 
@@ -147,6 +166,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerLogisticsInfoView *logisticsView = [[SellerLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
+            
             [cell.contentView addSubview:logisticsView];
             return cell;
 
@@ -162,6 +182,19 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
+            if (self.orderInfo.pathSmall != NULL) {
+                NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
+                [dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+            }
+            
+            dogCardView.dogNameLabel.text = self.orderInfo.name;
+            dogCardView.dogKindLabel.text = self.orderInfo.kindName;
+            dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
+            dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
+            dogCardView.dogColorLabel.text = self.orderInfo.colorName;
+            dogCardView.oldPriceLabel.attributedText = [self getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.orderInfo.priceOld]];
+            dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.orderInfo.price];
+
             [cell.contentView addSubview:dogCardView];
             return cell;
 
@@ -177,6 +210,13 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerOrderDetailMorePriceView *morePriceView = [[SellerOrderDetailMorePriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
+            morePriceView.allPriceCount.text = self.orderInfo.priceOld;
+            morePriceView.favorablePriceCount.text = self.orderInfo.price;
+            morePriceView.realPriceCount.text = [NSString stringWithFormat:@"%d", [self.orderInfo.priceOld intValue] - [self.orderInfo.price intValue]];
+            morePriceView.templatePriceCount.text = self.orderInfo.traficRealFee;
+            morePriceView.finalMoneyCount.text = self.orderInfo.productBalance;
+            morePriceView.depositCount.text = self.orderInfo.productDeposit;
+            
             [cell.contentView addSubview:morePriceView];
             return cell;
 
@@ -192,6 +232,13 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerOrderDetailInfoView *orderInfoView = [[SellerOrderDetailInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 127)];
+            orderInfoView.orderCodeNumber.text = self.orderInfo.createTime;
+            
+            orderInfoView.createTime.text = self.orderInfo.createTime;
+            
+            orderInfoView.depositTime.text = self.orderInfo.depositTime;
+            
+            orderInfoView.finalMoneyTime.text = self.orderInfo.balanceTime;
             [cell.contentView addSubview:orderInfoView];
             return cell;
 
@@ -274,5 +321,14 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         viewController.title = EaseTest_Chat1;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];    }
+}
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
+    NSDictionary *attribtDic = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                 };
+    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+    return attribut;
 }
 @end

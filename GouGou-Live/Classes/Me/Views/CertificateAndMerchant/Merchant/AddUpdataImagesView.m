@@ -108,6 +108,9 @@ static NSString *cellid = @"AddUpdataImagesCell";
     cell.deleteBlock = ^(){
         [self.dataArr removeObject:image];
         [self.collectionView reloadData];
+        if (_deleImg) {
+            _deleImg();
+        }
     };
     
     return cell;

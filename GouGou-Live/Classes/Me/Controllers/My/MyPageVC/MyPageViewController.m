@@ -218,7 +218,7 @@ static NSString *cellid = @"cellid";
                 [cell.contentView addSubview:label];
                 
                 // 根据是否认证 创建认证按钮
-                if (![[UserInfos sharedUser].ismerchant isEqualToString:@"3"]) {
+                if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
                     UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
                     btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
                     btn.frame = CGRectMake(0, 0, 75, 33);

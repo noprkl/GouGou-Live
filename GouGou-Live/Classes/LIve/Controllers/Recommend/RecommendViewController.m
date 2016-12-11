@@ -38,7 +38,8 @@
 @property (strong, nonatomic) LiveTableView *tableView;
 /** 数据源 */
 @property (strong, nonatomic) NSMutableArray *dataSource;
-
+/** 直播列表 */
+@property (nonatomic, strong) NSMutableArray *liveListArray;
 @end
 
 
@@ -46,6 +47,22 @@
 
 #pragma mark
 #pragma mark - 网络请求
+- (void)getRequestLiveList {
+    // 时间戳
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYYMMddHHmmss";
+    NSString *liveId = [formatter stringFromDate:date];
+    
+    NSDictionary *dict = @{
+                           @"live_id":@"helloios"
+                           };
+    [self getRequestWithPath:API_Live_product_list params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
 #pragma mark
 #pragma mark - 生命周期
@@ -69,6 +86,7 @@
     self.edgesForExtendedLayout = 0;
     
     [self makeConstraint];
+    [self getRequestLiveList];
 }
 // 约束
 - (void)makeConstraint {

@@ -20,6 +20,10 @@
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
 #import "SellerSendViewController.h"
+
+#import "SellerOrderDetailModel.h"
+#import "SellerAdressModel.h"
+
 @interface SellerOrderDetailAdressViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
@@ -30,7 +34,7 @@
 
 @property(nonatomic, strong) SellerOrderDetailStateView *stateView; /**< 状态view */
 
-@property(nonatomic, strong) SellerOrderModel *ordrrInfo; /**< 订单信息 */
+@property(nonatomic, strong) SellerOrderDetailModel *orderInfo; /**< 订单信息 */
 
 @end
 
@@ -43,6 +47,8 @@
     
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        self.orderInfo = [SellerOrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -121,6 +127,9 @@
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    if (self.orderInfo.) {
+//        
+//    }
     return 6;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -137,7 +146,8 @@
         
         SellerOrderDetailStateView *stateView = [[SellerOrderDetailStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
         self.stateView = stateView;
-        stateView.stateMessage = self.orderState;
+        stateView.stateMessage = self.orderInfo.status;
+        stateView.noteStr = self.orderInfo.closeTime;
         // 订单信息
         [cell.contentView addSubview:stateView];
         return cell;
@@ -152,6 +162,15 @@
         cell.backgroundView = [[UIView alloc] init];
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         ChosedAdressView *adressView = [[ChosedAdressView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
+        SellerAdressModel *model = [[SellerAdressModel alloc] init];
+        model.merchantName = self.orderInfo.buyUserName;
+        model.merchantTel = self.orderInfo.buyUserTel;
+        model.merchantProvince = self.orderInfo.recevieProvince;
+        model.merchantCity = self.orderInfo.recevieCity;
+        model.merchantDistrict = self.orderInfo.recevieDistrict;
+        model.merchantAddress = self.orderInfo.recevieAddress;
+        
+        adressView.sellerAdress = model;
         adressView.isHid = YES;
         [cell.contentView addSubview:adressView];
         return cell;
@@ -167,6 +186,21 @@
         cell.backgroundView = [[UIView alloc] init];
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
+        
+        if (self.orderInfo.pathSmall != NULL) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
+            [dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        }
+        
+        dogCardView.dogNameLabel.text = self.orderInfo.name;
+        dogCardView.dogKindLabel.text = self.orderInfo.kindName;
+        dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
+        dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
+        dogCardView.dogColorLabel.text = self.orderInfo.colorName;
+        dogCardView.oldPriceLabel.attributedText = [self getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.orderInfo.priceOld]];
+        dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.orderInfo.price];
+        
+        
         [cell.contentView addSubview:dogCardView];
         return cell;
 
@@ -181,6 +215,10 @@
         cell.backgroundView = [[UIView alloc] init];
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerOrderDetailPriceView *priceView = [[SellerOrderDetailPriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+        priceView.allPriceCount.text = self.orderInfo.priceOld;
+        priceView.favorablePriceCount.text = self.orderInfo.price;
+        priceView.realPriceCount.text = [NSString stringWithFormat:@"%d", [self.orderInfo.priceOld intValue] - [self.orderInfo.price intValue]];
+        priceView.templatePriceCount.text = self.orderInfo.traficRealFee;
         [cell.contentView addSubview:priceView];
         return cell;
 
@@ -195,6 +233,15 @@
         cell.backgroundView = [[UIView alloc] init];
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerOrderDetailInfoView *orderInfoView = [[SellerOrderDetailInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 127)];
+        
+        orderInfoView.orderCodeNumber.text = self.orderInfo.createTime;
+        
+        orderInfoView.createTime.text = self.orderInfo.createTime;
+        
+        orderInfoView.depositTime.text = self.orderInfo.depositTime;
+        
+        orderInfoView.finalMoneyTime.text = self.orderInfo.balanceTime;
+        
         [cell.contentView addSubview:orderInfoView];
         return cell;
 
@@ -292,5 +339,14 @@
         [self.navigationController pushViewController:viewController animated:YES];
         
     }
+}
+- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
+    NSDictionary *attribtDic = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                 };
+    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+    return attribut;
 }
 @end

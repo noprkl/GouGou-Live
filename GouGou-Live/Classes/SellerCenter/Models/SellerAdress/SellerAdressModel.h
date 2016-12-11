@@ -9,6 +9,7 @@
 #import "BaseModel.h"
 
 @interface SellerAdressModel : BaseModel
+
 @property(nonatomic, strong) NSString *merchantName; /**< 收货人姓名 */
 @property(nonatomic, assign) NSInteger ID; /**< 商家地址id */
 @property(nonatomic, strong) NSString *merchantAddress; /**< 详细地址 */

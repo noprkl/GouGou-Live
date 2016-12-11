@@ -11,7 +11,7 @@
 #import "TalkingView.h"
 #import "NoneNetWorkingView.h"
 
-@interface TalkingViewController ()<UITextFieldDelegate>
+@interface TalkingViewController ()<UITextFieldDelegate, EMChatroomManagerDelegate>
 
 @property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入view */
 
@@ -43,10 +43,30 @@
         make.left.equalTo(self.view);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
     }];
+    
+    // 加入聊天室
+    EMError *error = nil;
+    [[EMClient sharedClient].roomManager joinChatroom:_roomID completion:^(EMChatroom *aChatroom, EMError *aError) {
+        DLog(@"%@", error);
+    }];
+    //注册聊天室回调
+    [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
 }
 
+- (void)didReceiveUserJoinedChatroom:(EMChatroom *)aChatroom
+                            username:(NSString *)aUsername {
+    [self showAlert:[NSString stringWithFormat:@"%@加入了聊天室", aUsername]];
+}
+
+- (void)didReceiveUserLeavedChatroom:(EMChatroom *)aChatroom
+                            username:(NSString *)aUsername {
+    [self showAlert:[NSString stringWithFormat:@"%@离开了聊天室", aUsername]];
+}
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    // 离开聊天室
+    EMError *error = nil;
+    [[EMClient sharedClient].roomManager leaveChatroom:_roomID error:&error];
 }
 - (void)initUI {
     //注册键盘出现的通知
@@ -66,7 +86,10 @@
 - (void)makeConstraint {
 
 }
-
+- (void)setIsHidText:(BOOL)isHidText {
+    _isHidText = isHidText;
+    self.talkView.hidden = isHidText;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (NoneNetWorkingView *)noneNetView {

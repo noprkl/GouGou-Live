@@ -134,10 +134,19 @@
 //                
 //                [[NSNotificationCenter defaultCenter] postNotification:notification];
                 
-                // 环信登录
-                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:successJson[@"data"][@"user_pwd"]];
-                if (!error2) {
-                    DLog(@"登录成功");
+                // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+                EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
+                if (error==nil) {
+                    DLog(@"注册成功");
+                    EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
+                    if (!error2) {
+                        DLog(@"登录成功");
+                    }
+                }else{
+                    EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
+                    if (!error2) {
+                        DLog(@"登录成功");
+                    }
                 }
                 
                 [self.navigationController popViewControllerAnimated:YES];

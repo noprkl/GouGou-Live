@@ -23,7 +23,27 @@
     
 }
 - (void)showSendAlert {
-   
+  __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+    __weak typeof(self) weakSelf = self;
+    sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
+        // 送货请求，如果成功返回YES 失败返回NO
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                               @"status":@(8),
+                               @"id":@([_orderID intValue])
+                               };
+        [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            if ([successJson[@"message"] isEqualToString:@"订单发送成功"]) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+                sendView = nil;
+                [sendView dismiss];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    };
+    [sendView show];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

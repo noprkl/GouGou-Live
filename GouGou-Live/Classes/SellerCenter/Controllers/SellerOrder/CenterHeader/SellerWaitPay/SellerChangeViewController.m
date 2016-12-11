@@ -11,12 +11,15 @@
 #import "SellerChangeShipCostView.h" // 修改运费
 #import "SellerChangePriceAlertView.h" // 修改价格
 #import "ForgetPayPsdViewController.h"// 忘记支付密码
+#import "SellerSendAlertView.h"// 发货
 
 #import "SellerNickNameView.h"
 #import "SellerDogCardView.h"
 #import "SellerCostView.h"
 #import "ChosedAdressView.h"
 #import "SellerChangePayView.h"
+
+#import "SellerOrderDetailModel.h"
 
 #import "NSString+MD5Code.h"
 @interface SellerChangeViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -26,15 +29,29 @@
 
 @property(nonatomic, strong) UIButton *sureBtn; /**< 确认按钮 */
 
-
 @property(nonatomic, strong) NSString *nowCost; /**< 新的值 */
+
+
+@property(nonatomic, strong) SellerOrderDetailModel *orderInfo; /**< 订单信息 */
 
 @end
 
 static NSString *cellid = @"SellerAcceptRateCell";
 
 @implementation SellerChangeViewController
-
+- (void)getRequestOrderDetail {
+    NSDictionary *dict = @{
+                           @"id":@([_orderID intValue])
+                           };
+    
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.orderInfo = [SellerOrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {

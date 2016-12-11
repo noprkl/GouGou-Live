@@ -7,7 +7,7 @@
 //
 
 #import "SearchViewController.h"
-#import "MediaStreamingVc.h"
+
 
 @interface SearchViewController ()<UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -72,10 +72,7 @@ static NSString *cellid = @"cellid";
     return _titleInputView;
 }
 - (void)clickSureButtonAction {
-    MediaStreamingVc *stream = [[MediaStreamingVc alloc] init];
-    stream.url = self.titleInputView.text;
-    stream.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:stream animated:YES];
+    
 }
 - (void)editSearchAction:(UITextField *)textField {
 

@@ -50,17 +50,23 @@
     _costMessage = costMessage;
     self.costView.messages = costMessage;
 }
-- (void)setModel:(SellerOrderModel *)model {
+- (void)setModel:(SellerProtectModel *)model {
     _model = model;
     
-    self.nickView.nickName.text = model.userName;
+    self.nickView.nickName.text = model.userNickName;
     self.nickView.dateLabel.text = @"14分59秒";
+    if ([model.status intValue] == 1) {
+        self.nickView.stateMessage = @"维权中";
+    }else  if ([model.status intValue] == 2) {
+        self.nickView.stateMessage = @"维权成功";
+    }else  if ([model.status intValue] == 3) {
+        self.nickView.stateMessage = @"维权失败";
+    }
     
     if (model.pathSmall != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
         [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
     }
-    
     self.dogCardView.dogNameLabel.text = model.name;
     self.dogCardView.dogKindLabel.text = model.kindName;
     self.dogCardView.dogAgeLabel.text = model.ageName;
@@ -70,7 +76,7 @@
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     
     self.costView.moneyMessage = model.price;
-    
+   
 }
 #pragma mark
 #pragma mark - 约束

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef BOOL(^ClickBottomBtnBlovk)(NSString *shipStyle, NSString *shipOrder);
+typedef void(^ClickBottomBottonBlovk)(NSString *shipStyle, NSString *shipOrder);
 
 @interface SellerSendAlertView : UIView
 
-@property(nonatomic, strong) ClickBottomBtnBlovk commitBlock; /**< 点击提交按钮回调 */
+@property(nonatomic, strong) ClickBottomBottonBlovk commitBlock; /**< 点击提交按钮回调 */
+
+@property(nonatomic, strong) UILabel *successNote; /**< 成功提示 */
 
 - (void)show;
 - (void)dismiss;

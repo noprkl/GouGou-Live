@@ -22,20 +22,29 @@
 
 /** 蒙版 */
 @property (strong, nonatomic) UIControl *overLayer;
+
+@property(nonatomic, assign) CGFloat height; /**< 高度 */
+
 @end
 
 @implementation ShareAlertView
 
-- (instancetype)initWithFrame:(CGRect)frame alertModels:(NSArray *)btnModelPlist tapView:(MainTopBlock)tapBlock
+- (instancetype)initWithFrame:(CGRect)frame alertModels:(NSArray *)btnModelPlist tapView:(MainTopBlock)tapBlock colCount:(int)colCount
 {
     self = [super initWithFrame:frame];
     if (self) {
 
         self.backgroundColor = [UIColor whiteColor];
 
+        // 高度
+        if (colCount == kCol) {
+            _height = 147;
+        }else if (colCount > kCol) {
+            _height = 75;
+        }
         self.tapBlock = tapBlock;
         
-        int cols = kCol;
+        int cols = colCount;
         int col = 0;
         int row = 0;
         
@@ -107,6 +116,8 @@
 
 - (void)show
 {
+    _isDismiss = NO;
+    
     //获取主window
     UIWindow * keyWindow = [[UIApplication sharedApplication] keyWindow];
     //载入蒙版
@@ -118,7 +129,7 @@
 #pragma mark - 设置当前view的frame
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 147, SCREEN_WIDTH, 147);
+    rect = CGRectMake(0, SCREEN_HEIGHT - _height, SCREEN_WIDTH, _height);
     self.frame = rect;
     
     //渐入动画
@@ -132,6 +143,7 @@
 }
 - (void)fadeIn
 {
+    _isDismiss = YES;
     self.transform = CGAffineTransformMakeScale(0.3, 0.3);
     
     self.overLayer.alpha = 0;

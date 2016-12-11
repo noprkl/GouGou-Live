@@ -35,8 +35,6 @@
 
 @property(nonatomic, strong) UIButton *commitBtn; /**< 提交按钮 */
 
-@property(nonatomic, strong) UILabel *successNote; /**< 成功提示 */
-
 @end
 @implementation SellerSendAlertView
 
@@ -282,8 +280,7 @@
         self.shipOrderNote.hidden = self.shipOrderTextField.text.length > 0 ? YES:NO;
         self.shipStyleNote.hidden = self.shipStyleTextField.text.length > 0 ? YES:NO;
 
-        BOOL flag = _commitBlock(self.shipStyleTextField.text, self.shipOrderTextField.text);
-        self.successNote.hidden = !flag;
+        _commitBlock(self.shipStyleTextField.text, self.shipOrderTextField.text);
     }
 }
 

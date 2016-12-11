@@ -90,7 +90,9 @@
             
         };
         _talkView.sendBlock = ^(NSString *message){
-            [weakSelf sendTextMessage:message];
+            if (message.length != 0) {
+                [weakSelf sendTextMessage:message];
+            }
         };
         _talkView.emojiBlock = ^(){
         
@@ -170,6 +172,7 @@
     if (!_menuView) {
         _menuView = [[MessageMeumView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 130, 64, 130, 176) style:(UITableViewStylePlain)];
         _menuView.hidden = YES;
+        _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
         _menuView.cellBlock = ^(NSString *cellText){
             DLog(@"%@", cellText);
         };

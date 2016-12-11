@@ -8,7 +8,7 @@
 
 #import "SellerProtectPowerViewController.h"
 #import "SellerProtectPowerCell.h"
-
+#import "SellerProtectModel.h"
 
 @interface SellerProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -32,7 +32,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
                            };
     [self getRequestWithPath:API_My_activist params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArr = [SellerProtectModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -85,7 +85,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerProtectPowerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    SellerOrderModel *model = self.dataArr[indexPath.row];
+    SellerProtectModel *model = self.dataArr[indexPath.row];
     cell.model = model;
     
     
@@ -138,6 +138,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
         
     }else if ([title isEqualToString:@"查看详情"]){
         SellerOrderDetailProtectPowerViewController *orderPPVC = [[SellerOrderDetailProtectPowerViewController alloc] init];
+        orderPPVC.orderID = orderModel.ID;
         orderPPVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:orderPPVC animated:YES];
     }

@@ -7,6 +7,7 @@
 //
 
 #import "SellerBaseCell.h"
+#import "SellerProtectModel.h"
 
 typedef void(^ClickBtnBlock)(NSString *btntitle);
 typedef void(^ClickSellerEditBlock)();
@@ -22,6 +23,6 @@ typedef void(^ClickSellerEditBlock)();
 @property(nonatomic, strong) ClickBtnBlock clickBtnBlock; /**< 按钮回调 */
 @property(nonatomic, strong) ClickSellerEditBlock editBlock; /**< 编辑 */
 
-@property(nonatomic, strong) SellerOrderModel *model; /**< 模型 */
+@property(nonatomic, strong) SellerProtectModel *model; /**< 模型 */
 
 @end

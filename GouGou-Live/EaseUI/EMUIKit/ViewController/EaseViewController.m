@@ -43,7 +43,7 @@
 {
     if (_endEditingWhenTap != endEditingWhenTap) {
         _endEditingWhenTap = endEditingWhenTap;
-        
+
         if (_endEditingWhenTap) {
             [self.view addGestureRecognizer:self.tapRecognizer];
         }

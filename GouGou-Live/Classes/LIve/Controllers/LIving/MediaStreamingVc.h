@@ -10,7 +10,8 @@
 
 @interface MediaStreamingVc : BaseViewController
 
+@property(nonatomic, strong) NSString *stremaURL; /**< 推流地址 */
 
-@property(nonatomic, strong) NSString *url; /**< 地址 */
+@property (nonatomic, strong) NSArray *idArr; /**< 商品id数组 */
 
 @end

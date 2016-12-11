@@ -97,6 +97,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
                            };
     [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        self.dataArr = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);

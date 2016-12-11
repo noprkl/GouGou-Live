@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^ClickAddImageBlock)();
+typedef void(^ClickDeleteImageBlock)();
 @interface AddUpdataImagesView : UIView
 
 @property(nonatomic, assign) NSInteger maxCount; /**< 每行图片最大个数 */
@@ -16,6 +17,7 @@ typedef void(^ClickAddImageBlock)();
 @property(nonatomic, assign) NSInteger maxRow; /**< 最大行数 */
 
 @property(nonatomic, strong) ClickAddImageBlock addBlock; /**< 添加按钮 */
+@property(nonatomic, strong) ClickDeleteImageBlock deleImg; /**< 删除按钮 */
 
 @property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 @property(nonatomic, strong) UICollectionView *collectionView; /**< 列表 */

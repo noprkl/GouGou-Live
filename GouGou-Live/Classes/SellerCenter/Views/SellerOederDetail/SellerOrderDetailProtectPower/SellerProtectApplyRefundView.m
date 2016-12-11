@@ -7,17 +7,9 @@
 //
 
 #import "SellerProtectApplyRefundView.h"
-#import "DogImageView.h"
 
 @interface SellerProtectApplyRefundView ()
 
-@property(nonatomic, strong) UILabel *applyRefund; /**< 申请退款 */
-
-@property(nonatomic, strong) UILabel *applyRefundCount; /**< 款数 */
-
-@property(nonatomic, strong) DogImageView *pictures; /**< 图片个数 */
-
-@property(nonatomic, strong) UILabel *reasonLabel; /**< 退款理由 */
 
 @end
 @implementation SellerProtectApplyRefundView

@@ -22,12 +22,6 @@
 
 // 时间滚轮
 @property (strong,nonatomic) UIDatePicker *datePicker;
-///** 第一列数据 */
-//@property (strong,nonatomic) NSArray *firstData;
-
-//@property (assign, nonatomic) NSInteger apmCurrentIndex;// 用来记录‘当前’上下午的下标(地址键盘第 0 列选中 row))
-//@property (assign, nonatomic) NSInteger hourCurrentIndex; // 用来记录''当前''的小时的下标(地址键盘第 1 列选中的 row)
-//@property (assign, nonatomic) NSInteger secondCurrenIndex; // 记录分
 
 @property (copy, nonatomic) NSString *timeString; /**< 获取时间信息 */
 
@@ -40,7 +34,6 @@
     _timeLabel = timeLabel;
     self.titleLabel.text = timeLabel;
 }
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -166,6 +159,7 @@
     
     [self fadeOut];
 }
+
 
 #pragma mark
 #pragma mark - 蒙版弹出效果

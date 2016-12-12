@@ -18,6 +18,10 @@
 #import "DetailPayMoney.h"  // 详细价格状况
 #import "BottomButtonView.h"   // 按钮创建
 
+#import "DeletePrommtView.h" // 提示框View
+#import "PromptView.h"   // 支付弹框
+#import "NSString+MD5Code.h"  // 加密
+
 #import "OrderDetailModel.h"
 @interface PayBackMoneyViewController ()<UIScrollViewDelegate>
 /** 底部scrollView */
@@ -65,7 +69,9 @@
         
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
         self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
-        self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
+//        self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
+        self.consigneeViw.recevieAddress = [NSString stringWithFormat:@"%@,%@,%@",self.orderInfo.recevieProvince,self.orderInfo.recevieCity,self.orderInfo.recevieDistrict];
+//        self.orderInfo.recevieAddress;
         
         
         // 狗狗详情
@@ -314,16 +320,6 @@
     }
     return _detailPayView;
 }
-
-//- (PayingMoney *)payMonyView {
-//    
-//    if (!_payMonyView) {
-//        _payMonyView = [[PayingMoney alloc] init];
-//        _payMonyView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-//    }
-//    return _payMonyView;
-//}
-
 - (OrderNumberView *)orderNumberView {
     
     if (!_orderNumberView) {
@@ -366,4 +362,72 @@
     }
     return _bottomButton;
 }
+/*
+#pragma mark - 不想买了网络请求
+- (void)getNobuyRequest {
+    
+    NSDictionary *dict = @{
+                           @"id":@(12),
+                           @"user_id":@([[UserInfos sharedUser].ID intValue])
+                           };
+    
+    [self getRequestWithPath:API_Order_Nobuy params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        
+        DLog(@"%@",error);
+    }];
+    
+}
+// 点击不想买了
+- (void)clickNotBuy:(BuyCenterModel *)model {
+    // 点击不想买了按钮出现的弹框
+    DeletePrommtView * allpyPrompt = [[DeletePrommtView alloc] init];
+    allpyPrompt.message = @"放弃定金后，定金将全部打给卖家";
+    __weak typeof(allpyPrompt) weakself = allpyPrompt;
+    
+    allpyPrompt.sureBlock = ^(UIButton * btn) {
+        // 不想买了
+        [self getNobuyRequest];
+        
+        [weakself dismiss];
+        
+        PromptView * prompt = [[PromptView alloc] init];
+        prompt.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
+        //        __weak typeof(prompt) weakself = prompt;
+        
+        // 点击提示框确认按钮请求支付密码
+        __weak typeof(prompt) weakPrompt = prompt;
+        prompt.clickSureBtnBlock = ^(NSString *text){
+            
+            // 验证密码
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"pay_password":[NSString md5WithString:text]
+                                   };
+            [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                weakPrompt.noteStr = successJson[@"message"];
+                if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
+                    // 申请成功
+                    [weakPrompt dismiss];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            
+        };
+        
+        [prompt show];
+        
+    };
+    
+    [allpyPrompt show];
+    
+}
+*/
 @end

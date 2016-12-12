@@ -1,12 +1,14 @@
 //
-//  OrderCompleteAssess.m
+//  OrderWaitAssessViewController.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/16.
+//  Created by ma c on 16/11/17.
 //  Copyright © 2016年 LXq. All rights reserved.
-//  订单完成（已评价）
+//  （订单详情）待评价
 
-#import "OrderCompleteAssess.h"
+#import "OrderWaitAssessViewController.h"
+
+#import "GotoAssessViewController.h"
 
 #import "StateView.h"  // 订单状态
 #import "ConsigneeView.h"  // (联系)收货人
@@ -18,9 +20,11 @@
 #import "DetailPayMoney.h"  // 详细价格状况
 #import "BottomButtonView.h"   // 按钮创建
 
+#import "DeletePrommtView.h"   // 点击删除出现的弹框
+
 #import "OrderDetailModel.h"
 
-@interface OrderCompleteAssess ()<UIScrollViewDelegate>
+@interface OrderWaitAssessViewController ()<UIScrollViewDelegate>
 /** 底部scrollView */
 @property (strong,nonatomic) UIScrollView *boomScrollView;
 /** 订单状态View */
@@ -45,7 +49,7 @@
 
 @end
 
-@implementation OrderCompleteAssess
+@implementation OrderWaitAssessViewController
 
 #pragma mark - 网络请求
 - (void)getBackMoneyRequest {
@@ -111,15 +115,17 @@
 - (void)initUI {
     
     [self.view addSubview:self.boomScrollView];
-    //    DLog(@"%@", NSStringFromCGRect(_boomScrollView.frame));
+
     [self.boomScrollView addSubview:self.orderStateView];
     [self.boomScrollView addSubview:self.consigneeViw];
     [self.boomScrollView addSubview:self.sellInfoView];
     [self.boomScrollView addSubview:self.dogCardView];
     [self.boomScrollView addSubview:self.goodsPriceView];
     [self.boomScrollView addSubview:self.detailPayView];
+//    [self.boomScrollView addSubview:self.payMonyView];
     [self.boomScrollView addSubview:self.orderNumberView];
     [self.boomScrollView addSubview:self.bottomButton];
+    
     
 }
 
@@ -185,7 +191,7 @@
         make.top.equalTo(weakself.orderNumberView.bottom).offset(1);
         make.height.equalTo(44);
     }];
-
+    
 }
 
 #pragma mark
@@ -198,7 +204,7 @@
         
         _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 870);
         _boomScrollView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-        _boomScrollView.bounces = NO;
+        //        _boomScrollView.bounces = NO;
     }
     return _boomScrollView;
 }
@@ -207,7 +213,7 @@
     if (!_orderStateView) {
         _orderStateView = [[StateView alloc] init];
         _orderStateView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        _orderStateView.stateMessage = @"订单已完成";
+        _orderStateView.stateMessage = @"等待评价";
         _orderStateView.timeMessage = [NSString stringWithFormat:@"%d天内可评价,已确认收货%d天",30,24];
     }
     return _orderStateView;
@@ -276,14 +282,14 @@
     if (!_orderNumberView) {
         _orderNumberView = [[OrderNumberView alloc] init];
         _orderNumberView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        
     }
     return _orderNumberView;
 }
+
 - (BottomButtonView *)bottomButton {
     
     if (!_bottomButton) {
-        _bottomButton = [[BottomButtonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44) title:@[@"删除订单",@"申请维权",@"联系卖家",@"查看评价"]];
+        _bottomButton = [[BottomButtonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44) title:@[@"删除订单",@"申请维权",@"联系卖家",@"去评价"]];
         _bottomButton.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
         __weak typeof(self) weakself = self;
         
@@ -295,23 +301,60 @@
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
                 
-                [weakself clickApplyProtectPower:weakself.detailModel.ID];
+                [weakself clickApplyProtectPower:weakself.detailModel];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat3;
-                viewController.chatID = EaseTest_Chat3;
+                 viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [weakself.navigationController pushViewController:viewController animated:YES];
-            } else if ([button.titleLabel.text isEqual:@"查看评价"]) {
+            } else if ([button.titleLabel.text isEqual:@"去评价"]) {
                 
-//                GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];
-//                [weakself.navigationController pushViewController:goToVC animated:YES];
+                GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];
+                [weakself.navigationController pushViewController:goToVC animated:YES];
                 
             }
+            
         };
+        
     }
     return _bottomButton;
+}
+
+#pragma mark - 删除订单网络请求
+- (void)getDeleteOrderRequest {
+    
+    NSDictionary * dict = @{
+                            @"id":@(12),
+                            @"user_id":@([[UserInfos sharedUser].ID intValue])
+                            };
+    
+    [self getRequestWithPath:API_Order_Delete params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+// 删除订单
+- (void)clickDeleteOrder:(BuyCenterModel *)model {
+    
+    // 点击删除订单出现的弹框
+    DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
+    prompt.message = @"删除订单后将不能找回";
+    
+    prompt.sureBlock = ^(UIButton * btn) {
+        
+        // 点击确定按钮，删除订单
+        [self getDeleteOrderRequest];
+        
+    };
+    [prompt show];
+    
 }
 
 

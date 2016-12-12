@@ -13,5 +13,7 @@
 @interface SystemNotificationCell : UITableViewCell
 
 @property(nonatomic, strong) SystemPushMessageModel *model; /**< 模型 */
-- (CGFloat)getCellHeightWithModel:(SystemPushMessageModel *)model;
+
+//- (CGFloat)getCellHeightWithModel:(SystemPushMessageModel *)model;
+
 @end

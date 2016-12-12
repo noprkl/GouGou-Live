@@ -217,6 +217,12 @@
 /** 订单维权详情 */
 #define API_My_activist_limit @"api/OrderService/activist_limit"
 
+/** 订单删除 */
+#define API_Order_Delete @"api/OrderService/order_del"
+/** 确认收货 */
+#define API_Order_Confirm @"api/OrderService/order_confirm"
+/** 不想买了 */
+#define API_Order_Nobuy @"api/OrderService/order_nobuy"
 
 #pragma mark - 系统通知
 /** 系统通知 */

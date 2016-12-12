@@ -13,6 +13,23 @@
 		040891B11DFE81DC006DF570 /* HaveCommitCertificateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891B01DFE81DC006DF570 /* HaveCommitCertificateView.m */; };
 		040891B41DFE81FA006DF570 /* CerfificateFaildView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891B31DFE81FA006DF570 /* CerfificateFaildView.m */; };
 		040891B71DFE866D006DF570 /* CerFiticateSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891B61DFE866D006DF570 /* CerFiticateSuccessView.m */; };
+		040891F21DFEB91F006DF570 /* AllOrderGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891CF1DFEB91F006DF570 /* AllOrderGoodsViewController.m */; };
+		040891F31DFEB91F006DF570 /* ProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891D11DFEB91F006DF570 /* ProtectPowerViewController.m */; };
+		040891F41DFEB91F006DF570 /* WaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891D31DFEB91F006DF570 /* WaitAssessViewController.m */; };
+		040891F51DFEB91F006DF570 /* WaitConsignmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891D51DFEB91F006DF570 /* WaitConsignmentViewController.m */; };
+		040891F61DFEB91F006DF570 /* WaitPayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891D71DFEB91F006DF570 /* WaitPayingViewController.m */; };
+		040891F71DFEB91F006DF570 /* WatiConsigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891D91DFEB91F006DF570 /* WatiConsigneeViewController.m */; };
+		040891F81DFEB91F006DF570 /* ApplyProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891DC1DFEB91F006DF570 /* ApplyProtectPowerViewController.m */; };
+		040891F91DFEB91F006DF570 /* GotoAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891DE1DFEB91F006DF570 /* GotoAssessViewController.m */; };
+		040891FA1DFEB91F006DF570 /* PaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E01DFEB91F006DF570 /* PaySuccessViewController.m */; };
+		040891FB1DFEB91F006DF570 /* OrderCompleteAssess.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */; };
+		040891FC1DFEB91F006DF570 /* OrderCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E51DFEB91F006DF570 /* OrderCompleteViewController.m */; };
+		040891FD1DFEB91F006DF570 /* OrderWaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */; };
+		040891FE1DFEB91F006DF570 /* PayBackMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E91DFEB91F006DF570 /* PayBackMoneyViewController.m */; };
+		040891FF1DFEB91F006DF570 /* PayFontMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891EB1DFEB91F006DF570 /* PayFontMoneyViewController.m */; };
+		040892001DFEB91F006DF570 /* PayingAllMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891ED1DFEB91F006DF570 /* PayingAllMoneyViewController.m */; };
+		040892011DFEB91F006DF570 /* SureConsigneedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891EF1DFEB91F006DF570 /* SureConsigneedViewController.m */; };
+		040892021DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891F11DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m */; };
 		0412FE001DFD368F00E84438 /* AddShowDogImgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FDFE1DFD368F00E84438 /* AddShowDogImgCell.m */; };
 		0412FE011DFD368F00E84438 /* AddShowDogImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0412FDFF1DFD368F00E84438 /* AddShowDogImgCell.xib */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
@@ -277,23 +294,6 @@
 		046F0BB51DE2AB8B00D50D5C /* CancleOrderAlter.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B8E1DE2AB8B00D50D5C /* CancleOrderAlter.m */; };
 		046F0BB61DE2AB8B00D50D5C /* PayMoneyPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B901DE2AB8B00D50D5C /* PayMoneyPrompt.m */; };
 		046F0BB71DE2AB8B00D50D5C /* SatisfiedAssessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B921DE2AB8B00D50D5C /* SatisfiedAssessView.m */; };
-		046F0BE21DE2AB9E00D50D5C /* AllOrderGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BBB1DE2AB9E00D50D5C /* AllOrderGoodsViewController.m */; };
-		046F0BE31DE2AB9E00D50D5C /* OrderCompleteAssess.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BBE1DE2AB9E00D50D5C /* OrderCompleteAssess.m */; };
-		046F0BE41DE2AB9E00D50D5C /* OrderCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BC01DE2AB9E00D50D5C /* OrderCompleteViewController.m */; };
-		046F0BE51DE2AB9E00D50D5C /* OrderWaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BC21DE2AB9E00D50D5C /* OrderWaitAssessViewController.m */; };
-		046F0BE61DE2AB9E00D50D5C /* PayBackMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BC41DE2AB9E00D50D5C /* PayBackMoneyViewController.m */; };
-		046F0BE71DE2AB9E00D50D5C /* PayFontMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BC61DE2AB9E00D50D5C /* PayFontMoneyViewController.m */; };
-		046F0BE81DE2AB9E00D50D5C /* PayingAllMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BC81DE2AB9E00D50D5C /* PayingAllMoneyViewController.m */; };
-		046F0BE91DE2AB9E00D50D5C /* SureConsigneedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCA1DE2AB9E00D50D5C /* SureConsigneedViewController.m */; };
-		046F0BEA1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCC1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m */; };
-		046F0BEB1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */; };
-		046F0BEC1DE2AB9E00D50D5C /* GotoAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */; };
-		046F0BEE1DE2AB9E00D50D5C /* PaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */; };
-		046F0BF01DE2AB9E00D50D5C /* ProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD91DE2AB9E00D50D5C /* ProtectPowerViewController.m */; };
-		046F0BF11DE2AB9E00D50D5C /* WaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BDB1DE2AB9E00D50D5C /* WaitAssessViewController.m */; };
-		046F0BF21DE2AB9E00D50D5C /* WaitConsignmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BDD1DE2AB9E00D50D5C /* WaitConsignmentViewController.m */; };
-		046F0BF31DE2AB9E00D50D5C /* WaitPayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BDF1DE2AB9E00D50D5C /* WaitPayingViewController.m */; };
-		046F0BF41DE2AB9E00D50D5C /* WatiConsigneeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BE11DE2AB9E00D50D5C /* WatiConsigneeViewController.m */; };
 		046F0BF71DE2C0AF00D50D5C /* PaySuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BF61DE2C0AF00D50D5C /* PaySuccessView.m */; };
 		046F0BFE1DE2EB1900D50D5C /* ManagePictureaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BFC1DE2EB1900D50D5C /* ManagePictureaCell.m */; };
 		046F0BFF1DE2EB1900D50D5C /* ManagePictureaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0BFD1DE2EB1900D50D5C /* ManagePictureaCell.xib */; };
@@ -400,11 +400,13 @@
 		047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */; };
 		047AD60D1DD5CE970025290E /* TopButonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD6061DD5CE970025290E /* TopButonView.m */; };
 		047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047AD6271DD5E2090025290E /* SurePsdViewController.xib */; };
+		0487DA2C1DFD02BE00BDC54F /* StarsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA291DFD02BE00BDC54F /* StarsView.m */; };
+		0487DA2D1DFD02BE00BDC54F /* StarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA2B1DFD02BE00BDC54F /* StarView.m */; };
+		0487DA301DFD03B700BDC54F /* AddPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA2F1DFD03B700BDC54F /* AddPictureView.m */; };
 		049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */; };
 		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
 		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
 		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
-		049F95D61DF7FD5200A47164 /* AddPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049F95D51DF7FD5200A47164 /* AddPictureView.m */; };
 		04A31F831DED4F4900BE175A /* AddUpdataImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F7F1DED4F4900BE175A /* AddUpdataImagesView.m */; };
 		04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F811DED4F4900BE175A /* AddUpdataImagesCell.m */; };
 		04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */; };
@@ -522,6 +524,40 @@
 		040891B31DFE81FA006DF570 /* CerfificateFaildView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CerfificateFaildView.m; sourceTree = "<group>"; };
 		040891B51DFE866D006DF570 /* CerFiticateSuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CerFiticateSuccessView.h; sourceTree = "<group>"; };
 		040891B61DFE866D006DF570 /* CerFiticateSuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CerFiticateSuccessView.m; sourceTree = "<group>"; };
+		040891CE1DFEB91F006DF570 /* AllOrderGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsViewController.h; sourceTree = "<group>"; };
+		040891CF1DFEB91F006DF570 /* AllOrderGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderGoodsViewController.m; sourceTree = "<group>"; };
+		040891D01DFEB91F006DF570 /* ProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerViewController.h; sourceTree = "<group>"; };
+		040891D11DFEB91F006DF570 /* ProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerViewController.m; sourceTree = "<group>"; };
+		040891D21DFEB91F006DF570 /* WaitAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAssessViewController.h; sourceTree = "<group>"; };
+		040891D31DFEB91F006DF570 /* WaitAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAssessViewController.m; sourceTree = "<group>"; };
+		040891D41DFEB91F006DF570 /* WaitConsignmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitConsignmentViewController.h; sourceTree = "<group>"; };
+		040891D51DFEB91F006DF570 /* WaitConsignmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitConsignmentViewController.m; sourceTree = "<group>"; };
+		040891D61DFEB91F006DF570 /* WaitPayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitPayingViewController.h; sourceTree = "<group>"; };
+		040891D71DFEB91F006DF570 /* WaitPayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitPayingViewController.m; sourceTree = "<group>"; };
+		040891D81DFEB91F006DF570 /* WatiConsigneeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatiConsigneeViewController.h; sourceTree = "<group>"; };
+		040891D91DFEB91F006DF570 /* WatiConsigneeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatiConsigneeViewController.m; sourceTree = "<group>"; };
+		040891DB1DFEB91F006DF570 /* ApplyProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyProtectPowerViewController.h; sourceTree = "<group>"; };
+		040891DC1DFEB91F006DF570 /* ApplyProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyProtectPowerViewController.m; sourceTree = "<group>"; };
+		040891DD1DFEB91F006DF570 /* GotoAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoAssessViewController.h; sourceTree = "<group>"; };
+		040891DE1DFEB91F006DF570 /* GotoAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoAssessViewController.m; sourceTree = "<group>"; };
+		040891DF1DFEB91F006DF570 /* PaySuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySuccessViewController.h; sourceTree = "<group>"; };
+		040891E01DFEB91F006DF570 /* PaySuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessViewController.m; sourceTree = "<group>"; };
+		040891E21DFEB91F006DF570 /* OrderCompleteAssess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCompleteAssess.h; sourceTree = "<group>"; };
+		040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCompleteAssess.m; sourceTree = "<group>"; };
+		040891E41DFEB91F006DF570 /* OrderCompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCompleteViewController.h; sourceTree = "<group>"; };
+		040891E51DFEB91F006DF570 /* OrderCompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCompleteViewController.m; sourceTree = "<group>"; };
+		040891E61DFEB91F006DF570 /* OrderWaitAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderWaitAssessViewController.h; sourceTree = "<group>"; };
+		040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderWaitAssessViewController.m; sourceTree = "<group>"; };
+		040891E81DFEB91F006DF570 /* PayBackMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayBackMoneyViewController.h; sourceTree = "<group>"; };
+		040891E91DFEB91F006DF570 /* PayBackMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayBackMoneyViewController.m; sourceTree = "<group>"; };
+		040891EA1DFEB91F006DF570 /* PayFontMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayFontMoneyViewController.h; sourceTree = "<group>"; };
+		040891EB1DFEB91F006DF570 /* PayFontMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayFontMoneyViewController.m; sourceTree = "<group>"; };
+		040891EC1DFEB91F006DF570 /* PayingAllMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingAllMoneyViewController.h; sourceTree = "<group>"; };
+		040891ED1DFEB91F006DF570 /* PayingAllMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingAllMoneyViewController.m; sourceTree = "<group>"; };
+		040891EE1DFEB91F006DF570 /* SureConsigneedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureConsigneedViewController.h; sourceTree = "<group>"; };
+		040891EF1DFEB91F006DF570 /* SureConsigneedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureConsigneedViewController.m; sourceTree = "<group>"; };
+		040891F01DFEB91F006DF570 /* WaitSellConsigmentViewContorller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitSellConsigmentViewContorller.h; sourceTree = "<group>"; };
+		040891F11DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitSellConsigmentViewContorller.m; sourceTree = "<group>"; };
 		0412FDFD1DFD368F00E84438 /* AddShowDogImgCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddShowDogImgCell.h; sourceTree = "<group>"; };
 		0412FDFE1DFD368F00E84438 /* AddShowDogImgCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddShowDogImgCell.m; sourceTree = "<group>"; };
 		0412FDFF1DFD368F00E84438 /* AddShowDogImgCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddShowDogImgCell.xib; sourceTree = "<group>"; };
@@ -1062,40 +1098,6 @@
 		046F0B901DE2AB8B00D50D5C /* PayMoneyPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMoneyPrompt.m; sourceTree = "<group>"; };
 		046F0B911DE2AB8B00D50D5C /* SatisfiedAssessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SatisfiedAssessView.h; sourceTree = "<group>"; };
 		046F0B921DE2AB8B00D50D5C /* SatisfiedAssessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SatisfiedAssessView.m; sourceTree = "<group>"; };
-		046F0BBA1DE2AB9E00D50D5C /* AllOrderGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderGoodsViewController.h; sourceTree = "<group>"; };
-		046F0BBB1DE2AB9E00D50D5C /* AllOrderGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderGoodsViewController.m; sourceTree = "<group>"; };
-		046F0BBD1DE2AB9E00D50D5C /* OrderCompleteAssess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCompleteAssess.h; sourceTree = "<group>"; };
-		046F0BBE1DE2AB9E00D50D5C /* OrderCompleteAssess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCompleteAssess.m; sourceTree = "<group>"; };
-		046F0BBF1DE2AB9E00D50D5C /* OrderCompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCompleteViewController.h; sourceTree = "<group>"; };
-		046F0BC01DE2AB9E00D50D5C /* OrderCompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCompleteViewController.m; sourceTree = "<group>"; };
-		046F0BC11DE2AB9E00D50D5C /* OrderWaitAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderWaitAssessViewController.h; sourceTree = "<group>"; };
-		046F0BC21DE2AB9E00D50D5C /* OrderWaitAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderWaitAssessViewController.m; sourceTree = "<group>"; };
-		046F0BC31DE2AB9E00D50D5C /* PayBackMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayBackMoneyViewController.h; sourceTree = "<group>"; };
-		046F0BC41DE2AB9E00D50D5C /* PayBackMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayBackMoneyViewController.m; sourceTree = "<group>"; };
-		046F0BC51DE2AB9E00D50D5C /* PayFontMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayFontMoneyViewController.h; sourceTree = "<group>"; };
-		046F0BC61DE2AB9E00D50D5C /* PayFontMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayFontMoneyViewController.m; sourceTree = "<group>"; };
-		046F0BC71DE2AB9E00D50D5C /* PayingAllMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayingAllMoneyViewController.h; sourceTree = "<group>"; };
-		046F0BC81DE2AB9E00D50D5C /* PayingAllMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayingAllMoneyViewController.m; sourceTree = "<group>"; };
-		046F0BC91DE2AB9E00D50D5C /* SureConsigneedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureConsigneedViewController.h; sourceTree = "<group>"; };
-		046F0BCA1DE2AB9E00D50D5C /* SureConsigneedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureConsigneedViewController.m; sourceTree = "<group>"; };
-		046F0BCB1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitSellConsigmentViewContorller.h; sourceTree = "<group>"; };
-		046F0BCC1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitSellConsigmentViewContorller.m; sourceTree = "<group>"; };
-		046F0BCE1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyProtectPowerViewController.h; sourceTree = "<group>"; };
-		046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyProtectPowerViewController.m; sourceTree = "<group>"; };
-		046F0BD01DE2AB9E00D50D5C /* GotoAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoAssessViewController.h; sourceTree = "<group>"; };
-		046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoAssessViewController.m; sourceTree = "<group>"; };
-		046F0BD41DE2AB9E00D50D5C /* PaySuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySuccessViewController.h; sourceTree = "<group>"; };
-		046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessViewController.m; sourceTree = "<group>"; };
-		046F0BD81DE2AB9E00D50D5C /* ProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerViewController.h; sourceTree = "<group>"; };
-		046F0BD91DE2AB9E00D50D5C /* ProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerViewController.m; sourceTree = "<group>"; };
-		046F0BDA1DE2AB9E00D50D5C /* WaitAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitAssessViewController.h; sourceTree = "<group>"; };
-		046F0BDB1DE2AB9E00D50D5C /* WaitAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitAssessViewController.m; sourceTree = "<group>"; };
-		046F0BDC1DE2AB9E00D50D5C /* WaitConsignmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitConsignmentViewController.h; sourceTree = "<group>"; };
-		046F0BDD1DE2AB9E00D50D5C /* WaitConsignmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitConsignmentViewController.m; sourceTree = "<group>"; };
-		046F0BDE1DE2AB9E00D50D5C /* WaitPayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitPayingViewController.h; sourceTree = "<group>"; };
-		046F0BDF1DE2AB9E00D50D5C /* WaitPayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitPayingViewController.m; sourceTree = "<group>"; };
-		046F0BE01DE2AB9E00D50D5C /* WatiConsigneeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatiConsigneeViewController.h; sourceTree = "<group>"; };
-		046F0BE11DE2AB9E00D50D5C /* WatiConsigneeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatiConsigneeViewController.m; sourceTree = "<group>"; };
 		046F0BF51DE2C0AF00D50D5C /* PaySuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySuccessView.h; sourceTree = "<group>"; };
 		046F0BF61DE2C0AF00D50D5C /* PaySuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessView.m; sourceTree = "<group>"; };
 		046F0BFB1DE2EB1900D50D5C /* ManagePictureaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagePictureaCell.h; sourceTree = "<group>"; };
@@ -1288,6 +1290,12 @@
 		047AD6051DD5CE970025290E /* TopButonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopButonView.h; sourceTree = "<group>"; };
 		047AD6061DD5CE970025290E /* TopButonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopButonView.m; sourceTree = "<group>"; };
 		047AD6271DD5E2090025290E /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
+		0487DA281DFD02BE00BDC54F /* StarsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarsView.h; sourceTree = "<group>"; };
+		0487DA291DFD02BE00BDC54F /* StarsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarsView.m; sourceTree = "<group>"; };
+		0487DA2A1DFD02BE00BDC54F /* StarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarView.h; sourceTree = "<group>"; };
+		0487DA2B1DFD02BE00BDC54F /* StarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarView.m; sourceTree = "<group>"; };
+		0487DA2E1DFD03B700BDC54F /* AddPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPictureView.h; sourceTree = "<group>"; };
+		0487DA2F1DFD03B700BDC54F /* AddPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPictureView.m; sourceTree = "<group>"; };
 		049D61051DD06DAA00ED3E76 /* NSString+MD5Code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Code.h"; sourceTree = "<group>"; };
 		049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Code.m"; sourceTree = "<group>"; };
 		049D612B1DD07C6B00ED3E76 /* SureForgetPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureForgetPsdViewController.h; sourceTree = "<group>"; };
@@ -1295,8 +1303,6 @@
 		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
 		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
 		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
-		049F95D41DF7FD5200A47164 /* AddPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPictureView.h; sourceTree = "<group>"; };
-		049F95D51DF7FD5200A47164 /* AddPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPictureView.m; sourceTree = "<group>"; };
 		04A31F7E1DED4F4900BE175A /* AddUpdataImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUpdataImagesView.h; sourceTree = "<group>"; };
 		04A31F7F1DED4F4900BE175A /* AddUpdataImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUpdataImagesView.m; sourceTree = "<group>"; };
 		04A31F801DED4F4900BE175A /* AddUpdataImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUpdataImagesCell.h; sourceTree = "<group>"; };
@@ -1536,6 +1542,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040891CC1DFEB91F006DF570 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				040891CD1DFEB91F006DF570 /* BuyerOrder */,
+				040891DA1DFEB91F006DF570 /* OrderDeal */,
+				040891E11DFEB91F006DF570 /* OrderDetali */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		040891CD1DFEB91F006DF570 /* BuyerOrder */ = {
+			isa = PBXGroup;
+			children = (
+				040891CE1DFEB91F006DF570 /* AllOrderGoodsViewController.h */,
+				040891CF1DFEB91F006DF570 /* AllOrderGoodsViewController.m */,
+				040891D01DFEB91F006DF570 /* ProtectPowerViewController.h */,
+				040891D11DFEB91F006DF570 /* ProtectPowerViewController.m */,
+				040891D21DFEB91F006DF570 /* WaitAssessViewController.h */,
+				040891D31DFEB91F006DF570 /* WaitAssessViewController.m */,
+				040891D41DFEB91F006DF570 /* WaitConsignmentViewController.h */,
+				040891D51DFEB91F006DF570 /* WaitConsignmentViewController.m */,
+				040891D61DFEB91F006DF570 /* WaitPayingViewController.h */,
+				040891D71DFEB91F006DF570 /* WaitPayingViewController.m */,
+				040891D81DFEB91F006DF570 /* WatiConsigneeViewController.h */,
+				040891D91DFEB91F006DF570 /* WatiConsigneeViewController.m */,
+			);
+			path = BuyerOrder;
+			sourceTree = "<group>";
+		};
+		040891DA1DFEB91F006DF570 /* OrderDeal */ = {
+			isa = PBXGroup;
+			children = (
+				040891DB1DFEB91F006DF570 /* ApplyProtectPowerViewController.h */,
+				040891DC1DFEB91F006DF570 /* ApplyProtectPowerViewController.m */,
+				040891DD1DFEB91F006DF570 /* GotoAssessViewController.h */,
+				040891DE1DFEB91F006DF570 /* GotoAssessViewController.m */,
+				040891DF1DFEB91F006DF570 /* PaySuccessViewController.h */,
+				040891E01DFEB91F006DF570 /* PaySuccessViewController.m */,
+			);
+			path = OrderDeal;
+			sourceTree = "<group>";
+		};
+		040891E11DFEB91F006DF570 /* OrderDetali */ = {
+			isa = PBXGroup;
+			children = (
+				040891E21DFEB91F006DF570 /* OrderCompleteAssess.h */,
+				040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */,
+				040891E41DFEB91F006DF570 /* OrderCompleteViewController.h */,
+				040891E51DFEB91F006DF570 /* OrderCompleteViewController.m */,
+				040891E61DFEB91F006DF570 /* OrderWaitAssessViewController.h */,
+				040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */,
+				040891E81DFEB91F006DF570 /* PayBackMoneyViewController.h */,
+				040891E91DFEB91F006DF570 /* PayBackMoneyViewController.m */,
+				040891EA1DFEB91F006DF570 /* PayFontMoneyViewController.h */,
+				040891EB1DFEB91F006DF570 /* PayFontMoneyViewController.m */,
+				040891EC1DFEB91F006DF570 /* PayingAllMoneyViewController.h */,
+				040891ED1DFEB91F006DF570 /* PayingAllMoneyViewController.m */,
+				040891EE1DFEB91F006DF570 /* SureConsigneedViewController.h */,
+				040891EF1DFEB91F006DF570 /* SureConsigneedViewController.m */,
+				040891F01DFEB91F006DF570 /* WaitSellConsigmentViewContorller.h */,
+				040891F11DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m */,
+			);
+			path = OrderDetali;
+			sourceTree = "<group>";
+		};
 		04486AB71DD0159900BC6D15 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
@@ -2608,8 +2679,8 @@
 			children = (
 				046F0B891DE2AB8B00D50D5C /* AddPhotosView.h */,
 				046F0B8A1DE2AB8B00D50D5C /* AddPhotosView.m */,
-				049F95D41DF7FD5200A47164 /* AddPictureView.h */,
-				049F95D51DF7FD5200A47164 /* AddPictureView.m */,
+				0487DA2E1DFD03B700BDC54F /* AddPictureView.h */,
+				0487DA2F1DFD03B700BDC54F /* AddPictureView.m */,
 				046F0B8B1DE2AB8B00D50D5C /* AnonymityAssessView.h */,
 				046F0B8C1DE2AB8B00D50D5C /* AnonymityAssessView.m */,
 				046F0B8D1DE2AB8B00D50D5C /* CancleOrderAlter.h */,
@@ -2618,6 +2689,10 @@
 				046F0B901DE2AB8B00D50D5C /* PayMoneyPrompt.m */,
 				046F0B911DE2AB8B00D50D5C /* SatisfiedAssessView.h */,
 				046F0B921DE2AB8B00D50D5C /* SatisfiedAssessView.m */,
+				0487DA281DFD02BE00BDC54F /* StarsView.h */,
+				0487DA291DFD02BE00BDC54F /* StarsView.m */,
+				0487DA2A1DFD02BE00BDC54F /* StarView.h */,
+				0487DA2B1DFD02BE00BDC54F /* StarView.m */,
 			);
 			path = OrderOption;
 			sourceTree = "<group>";
@@ -2629,63 +2704,6 @@
 				046F0BF61DE2C0AF00D50D5C /* PaySuccessView.m */,
 			);
 			path = PayStateView;
-			sourceTree = "<group>";
-		};
-		046F0BB91DE2AB9E00D50D5C /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				046F0BBA1DE2AB9E00D50D5C /* AllOrderGoodsViewController.h */,
-				046F0BBB1DE2AB9E00D50D5C /* AllOrderGoodsViewController.m */,
-				046F0BBC1DE2AB9E00D50D5C /* OrderDetaliViewController */,
-				046F0BCD1DE2AB9E00D50D5C /* OrderOption */,
-				046F0BD81DE2AB9E00D50D5C /* ProtectPowerViewController.h */,
-				046F0BD91DE2AB9E00D50D5C /* ProtectPowerViewController.m */,
-				046F0BDA1DE2AB9E00D50D5C /* WaitAssessViewController.h */,
-				046F0BDB1DE2AB9E00D50D5C /* WaitAssessViewController.m */,
-				046F0BDC1DE2AB9E00D50D5C /* WaitConsignmentViewController.h */,
-				046F0BDD1DE2AB9E00D50D5C /* WaitConsignmentViewController.m */,
-				046F0BDE1DE2AB9E00D50D5C /* WaitPayingViewController.h */,
-				046F0BDF1DE2AB9E00D50D5C /* WaitPayingViewController.m */,
-				046F0BE01DE2AB9E00D50D5C /* WatiConsigneeViewController.h */,
-				046F0BE11DE2AB9E00D50D5C /* WatiConsigneeViewController.m */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		046F0BBC1DE2AB9E00D50D5C /* OrderDetaliViewController */ = {
-			isa = PBXGroup;
-			children = (
-				046F0BBD1DE2AB9E00D50D5C /* OrderCompleteAssess.h */,
-				046F0BBE1DE2AB9E00D50D5C /* OrderCompleteAssess.m */,
-				046F0BBF1DE2AB9E00D50D5C /* OrderCompleteViewController.h */,
-				046F0BC01DE2AB9E00D50D5C /* OrderCompleteViewController.m */,
-				046F0BC11DE2AB9E00D50D5C /* OrderWaitAssessViewController.h */,
-				046F0BC21DE2AB9E00D50D5C /* OrderWaitAssessViewController.m */,
-				046F0BC31DE2AB9E00D50D5C /* PayBackMoneyViewController.h */,
-				046F0BC41DE2AB9E00D50D5C /* PayBackMoneyViewController.m */,
-				046F0BC51DE2AB9E00D50D5C /* PayFontMoneyViewController.h */,
-				046F0BC61DE2AB9E00D50D5C /* PayFontMoneyViewController.m */,
-				046F0BC71DE2AB9E00D50D5C /* PayingAllMoneyViewController.h */,
-				046F0BC81DE2AB9E00D50D5C /* PayingAllMoneyViewController.m */,
-				046F0BC91DE2AB9E00D50D5C /* SureConsigneedViewController.h */,
-				046F0BCA1DE2AB9E00D50D5C /* SureConsigneedViewController.m */,
-				046F0BCB1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.h */,
-				046F0BCC1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m */,
-			);
-			path = OrderDetaliViewController;
-			sourceTree = "<group>";
-		};
-		046F0BCD1DE2AB9E00D50D5C /* OrderOption */ = {
-			isa = PBXGroup;
-			children = (
-				046F0BCE1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.h */,
-				046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */,
-				046F0BD01DE2AB9E00D50D5C /* GotoAssessViewController.h */,
-				046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */,
-				046F0BD41DE2AB9E00D50D5C /* PaySuccessViewController.h */,
-				046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */,
-			);
-			path = OrderOption;
 			sourceTree = "<group>";
 		};
 		047323EF1DD1DB6F006CCC71 /* FansVC */ = {
@@ -3964,7 +3982,7 @@
 		04D360F81DDB343F009F35A0 /* BuyCenter */ = {
 			isa = PBXGroup;
 			children = (
-				046F0BB91DE2AB9E00D50D5C /* Controllers */,
+				040891CC1DFEB91F006DF570 /* Controllers */,
 				04D361151DDB343F009F35A0 /* Handler */,
 				04D361161DDB343F009F35A0 /* Models */,
 				046F0B481DE2AB8A00D50D5C /* Views */,
@@ -4550,7 +4568,6 @@
 				0479B5E21DCADC7B00CB288A /* DogTypesView.m in Sources */,
 				04CE13CE1DDC488100EB8777 /* SellerCenterViewController.m in Sources */,
 				046BF0041DE4696600BC32E9 /* PSTCollectionViewData.m in Sources */,
-				046F0BE61DE2AB9E00D50D5C /* PayBackMoneyViewController.m in Sources */,
 				046BF0351DE4696600BC32E9 /* EaseTextView.m in Sources */,
 				04CE13DA1DDC488100EB8777 /* SellerSoldGoodsViewController.m in Sources */,
 				046BF0241DE4696600BC32E9 /* EaseViewController.m in Sources */,
@@ -4569,15 +4586,14 @@
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
 				045D51501DD99BEF001854A8 /* DoneCertificateView.m in Sources */,
-				046F0BE91DE2AB9E00D50D5C /* SureConsigneedViewController.m in Sources */,
 				0479B6141DCADC7B00CB288A /* MerchantViewController.m in Sources */,
 				046BEFD21DE4696600BC32E9 /* MBProgressHUD+Add.m in Sources */,
 				046BF0021DE4696600BC32E9 /* PSTCollectionViewCell.m in Sources */,
 				046F0BA81DE2AB8B00D50D5C /* StateView.m in Sources */,
-				046F0BF41DE2AB9E00D50D5C /* WatiConsigneeViewController.m in Sources */,
 				04E7773D1DEC3F1F007B5146 /* NSString+CertificateImage.m in Sources */,
 				045D11A11DF031EF008623E5 /* MyAlbumsModel.m in Sources */,
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
+				040891FF1DFEB91F006DF570 /* PayFontMoneyViewController.m in Sources */,
 				046F0BA61DE2AB8B00D50D5C /* SellinfoView.m in Sources */,
 				046BF0071DE4696600BC32E9 /* PSTCollectionViewLayout.m in Sources */,
 				046F0BB21DE2AB8B00D50D5C /* ProtecePowerPromptView.m in Sources */,
@@ -4596,7 +4612,6 @@
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
-				049F95D61DF7FD5200A47164 /* AddPictureView.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */,
 				046BF0281DE4696600BC32E9 /* EaseMessageCell.m in Sources */,
@@ -4608,6 +4623,7 @@
 				61EF1DBB1DFD20AA0049FBBB /* PersonalPageController.m in Sources */,
 				04592EC41DF14CCB0095C8EE /* UserAssetModel.m in Sources */,
 				046BF0161DE4696600BC32E9 /* UIViewController+HUD.m in Sources */,
+				040891F71DFEB91F006DF570 /* WatiConsigneeViewController.m in Sources */,
 				04CE13DC1DDC488100EB8777 /* SellerProtectPowerCell.m in Sources */,
 				045D514E1DD99BEF001854A8 /* IdentityPictureCell.m in Sources */,
 				049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */,
@@ -4617,12 +4633,12 @@
 				0479B5FB1DCADC7B00CB288A /* PlayBackView.m in Sources */,
 				04CE13D11DDC488100EB8777 /* SellerWaitPayViewController.m in Sources */,
 				0479B6341DCADC7B00CB288A /* AppDelegate.m in Sources */,
+				040891F31DFEB91F006DF570 /* ProtectPowerViewController.m in Sources */,
 				047324001DD1DC18006CCC71 /* MyFansViewController.m in Sources */,
 				04592EDB1DF1830B0095C8EE /* DogImpressionModel.m in Sources */,
 				04EA2ACB1DDDAFE80023D9A8 /* SellerOrderDetailBottomView.m in Sources */,
 				046BEFFD1DE4696600BC32E9 /* UIImageView+EMHighlightedWebCache.m in Sources */,
 				04CE13DF1DDC488100EB8777 /* SellerWaitRateCell.m in Sources */,
-				046F0BF31DE2AB9E00D50D5C /* WaitPayingViewController.m in Sources */,
 				046BF02C1DE4696600BC32E9 /* EaseBubbleView+Image.m in Sources */,
 				04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */,
 				0479B5EF1DCADC7B00CB288A /* ShareAlertView.m in Sources */,
@@ -4636,9 +4652,9 @@
 				04DAC98D1DD21A9A0089236D /* DetailCountTopView.m in Sources */,
 				0479B5F91DCADC7B00CB288A /* PicturesView.m in Sources */,
 				046BEFE91DE4696600BC32E9 /* MWGridViewController.m in Sources */,
-				046F0BF11DE2AB9E00D50D5C /* WaitAssessViewController.m in Sources */,
 				046F0B9E1DE2AB8B00D50D5C /* CloseBusinessCell.m in Sources */,
 				046BF0081DE4696600BC32E9 /* PSTCollectionViewUpdateItem.m in Sources */,
+				040892021DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m in Sources */,
 				046BF01B1DE4696600BC32E9 /* EaseEmojiEmoticons.m in Sources */,
 				04EA2ACE1DDDAFE80023D9A8 /* SellerOrderDetailMorePriceView.m in Sources */,
 				6180CB4D1DFC1823006357B4 /* LiveListStreamModel.m in Sources */,
@@ -4648,6 +4664,7 @@
 				046BE8E31DE4524100BC32E9 /* NotificationMessageCell.m in Sources */,
 				046BF0221DE4696600BC32E9 /* EaseRefreshTableViewController.m in Sources */,
 				040891AB1DFE3A8A006DF570 /* LiveListDogInfoModel.m in Sources */,
+				040891F41DFEB91F006DF570 /* WaitAssessViewController.m in Sources */,
 				046BF0191DE4696600BC32E9 /* EaseMessageReadManager.m in Sources */,
 				0452A1CE1DE0336B007C1E4F /* DogDetailViewController.m in Sources */,
 				0452A1E51DE0B89C007C1E4F /* AddDogColorAlertView.m in Sources */,
@@ -4655,6 +4672,7 @@
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
+				040891FC1DFEB91F006DF570 /* OrderCompleteViewController.m in Sources */,
 				04592ED31DF1674A0095C8EE /* SureForgetPayViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				046F0BA11DE2AB8B00D50D5C /* DetailPayMoney.m in Sources */,
@@ -4664,16 +4682,15 @@
 				046BEFC51DE4696600BC32E9 /* EaseUI.m in Sources */,
 				046BF00E1DE4696600BC32E9 /* EaseSDKHelper.m in Sources */,
 				04DAC9921DD21A9A0089236D /* MyFavoriteTableView.m in Sources */,
-				046F0BEA1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m in Sources */,
 				046F0B961DE2AB8B00D50D5C /* PowerOrderStateView.m in Sources */,
 				046BEFEF1DE4696600BC32E9 /* DACircularProgressView.m in Sources */,
 				04592EF91DF2F2090095C8EE /* SellerAddNewAdressVc.m in Sources */,
 				045D51511DD99BEF001854A8 /* PhotoView.m in Sources */,
 				0479B6411DCAE7F900CB288A /* DogBookViewController.m in Sources */,
 				04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */,
+				040891FB1DFEB91F006DF570 /* OrderCompleteAssess.m in Sources */,
 				046BEFCB1DE4696600BC32E9 /* EMCDDeviceManager+Remind.m in Sources */,
 				04FE7AB81DF11960004E08E9 /* ProtectProwerTableModel.m in Sources */,
-				046F0BE31DE2AB9E00D50D5C /* OrderCompleteAssess.m in Sources */,
 				046BF0311DE4696600BC32E9 /* EaseBubbleView.m in Sources */,
 				04CE13E81DDC488100EB8777 /* SellerNoneShipTemplate.m in Sources */,
 				0479B6291DCADC7B00CB288A /* ShopAddressViewController.m in Sources */,
@@ -4686,6 +4703,7 @@
 				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
 				046F0BAC1DE2AB8B00D50D5C /* WaitAllMoneyCell.m in Sources */,
 				046F0BB51DE2AB8B00D50D5C /* CancleOrderAlter.m in Sources */,
+				040891F81DFEB91F006DF570 /* ApplyProtectPowerViewController.m in Sources */,
 				0479B5DA1DCADC7B00CB288A /* DogTypesViewController.m in Sources */,
 				046BF0391DE4696600BC32E9 /* EaseRecordView.m in Sources */,
 				04EA2ACF1DDDAFE80023D9A8 /* SellerOrderDetailPriceView.m in Sources */,
@@ -4705,12 +4723,10 @@
 				04CE13CF1DDC488100EB8777 /* SellerProtectPowerViewController.m in Sources */,
 				04592EB31DF10D9F0095C8EE /* DogCardModel.m in Sources */,
 				0479B5DE1DCADC7B00CB288A /* DogTypeCellModel.m in Sources */,
-				046F0BE51DE2AB9E00D50D5C /* OrderWaitAssessViewController.m in Sources */,
 				04EA2ADF1DDDC57A0023D9A8 /* SellerOrderDetailAdressViewController.m in Sources */,
 				047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */,
 				046F0B9D1DE2AB8B00D50D5C /* WaitPayAllNickView.m in Sources */,
 				04EDC4B91DFADA22009C972D /* LinvingShowDogView.m in Sources */,
-				046F0BE71DE2AB9E00D50D5C /* PayFontMoneyViewController.m in Sources */,
 				0479B6671DCC1EE700CB288A /* TransformStyleView.m in Sources */,
 				04DAC99A1DD21A9A0089236D /* DeletePrommtView.m in Sources */,
 				046F0B9A1DE2AB8B00D50D5C /* FunctionButtonView.m in Sources */,
@@ -4733,7 +4749,6 @@
 				046BF01E1DE4696600BC32E9 /* FixFopen.c in Sources */,
 				0479B5FE1DCADC7B00CB288A /* TalkingView.m in Sources */,
 				046BF0481DE5319B00BC32E9 /* SingleChatViewController.m in Sources */,
-				046F0BEC1DE2AB9E00D50D5C /* GotoAssessViewController.m in Sources */,
 				044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */,
 				046BF01A1DE4696600BC32E9 /* EaseEmoji.m in Sources */,
 				046BF0261DE4696600BC32E9 /* EaseBaseMessageCell.m in Sources */,
@@ -4778,7 +4793,6 @@
 				0479B6171DCADC7B00CB288A /* FavoriteViewController.m in Sources */,
 				04CE13D41DDC488100EB8777 /* SellerAcceptedRateViewController.m in Sources */,
 				04CE13DE1DDC488100EB8777 /* SellerWaitPayCell.m in Sources */,
-				046F0BE41DE2AB9E00D50D5C /* OrderCompleteViewController.m in Sources */,
 				04592EE11DF194BC0095C8EE /* AddDogImpressionView.m in Sources */,
 				046BF0211DE4696600BC32E9 /* EaseMessageViewController.m in Sources */,
 				046BF0331DE4696600BC32E9 /* EaseChatToolbarItem.m in Sources */,
@@ -4811,6 +4825,7 @@
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,
 				046F0B9F1DE2AB8B00D50D5C /* BottomButtonView.m in Sources */,
 				0452A1EB1DE173E0007C1E4F /* SellerAddImpressViewController.m in Sources */,
+				040891F91DFEB91F006DF570 /* GotoAssessViewController.m in Sources */,
 				0400A87A1DF6AF0D007B1A31 /* BuyCenterViewController.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
@@ -4825,6 +4840,7 @@
 				046BF0171DE4696600BC32E9 /* EaseChineseToPinyin.m in Sources */,
 				046F0C021DE3134A00D50D5C /* AddPicturesViewController.m in Sources */,
 				04EA2ACD1DDDAFE80023D9A8 /* SellerOrderDetailNoteView.m in Sources */,
+				0487DA2D1DFD02BE00BDC54F /* StarView.m in Sources */,
 				046BEFE81DE4696600BC32E9 /* MWGridCell.m in Sources */,
 				0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
@@ -4836,7 +4852,6 @@
 				04DAC9931DD21A9A0089236D /* MyFocusTableCell.m in Sources */,
 				04CE13F51DDC736B00EB8777 /* SellerGoodsBottomView.m in Sources */,
 				04CE13DB1DDC488100EB8777 /* SellerCloseCell.m in Sources */,
-				046F0BF01DE2AB9E00D50D5C /* ProtectPowerViewController.m in Sources */,
 				046BF01F1DE4696600BC32E9 /* EaseConversationListViewController.m in Sources */,
 				045D11BF1DF05C0E008623E5 /* SetPaypsdViewController.m in Sources */,
 				6180CB541DFC2819006357B4 /* LandscapePlayerToolView.m in Sources */,
@@ -4849,6 +4864,7 @@
 				046F0BA91DE2AB8B00D50D5C /* ProtectFaliedCell.m in Sources */,
 				046BF0111DE4696600BC32E9 /* EaseUserModel.m in Sources */,
 				046BEFF31DE4696600BC32E9 /* EMSDWebImageDownloader.m in Sources */,
+				040891F51DFEB91F006DF570 /* WaitConsignmentViewController.m in Sources */,
 				04B161C61DE8457200DABC77 /* MyShopProvinceModel.m in Sources */,
 				04592EB61DF10D9F0095C8EE /* WaitAllNickModel.m in Sources */,
 				04B161B81DE704C200DABC77 /* BaseModel.m in Sources */,
@@ -4860,6 +4876,7 @@
 				04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */,
 				0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */,
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
+				0487DA2C1DFD02BE00BDC54F /* StarsView.m in Sources */,
 				045D11A21DF031EF008623E5 /* MyPictureListModel.m in Sources */,
 				0452A2011DE1A8BB007C1E4F /* SellerDoInputCell.m in Sources */,
 				04DAC9961DD21A9A0089236D /* MyUnLoginView.m in Sources */,
@@ -4876,6 +4893,7 @@
 				04CE13F21DDC6BF400EB8777 /* SellerGoodsBarBtnView.m in Sources */,
 				0452A1EE1DE17E71007C1E4F /* SellerShipTemplateView.m in Sources */,
 				046BEFCA1DE4696600BC32E9 /* EMCDDeviceManager+ProximitySensor.m in Sources */,
+				040891FE1DFEB91F006DF570 /* PayBackMoneyViewController.m in Sources */,
 				046BF0011DE4696600BC32E9 /* PSTCollectionView.m in Sources */,
 				04EDC4B31DFAD9A4009C972D /* LivingToolView.m in Sources */,
 				046F0BA51DE2AB8B00D50D5C /* PayingMoney.m in Sources */,
@@ -4885,6 +4903,7 @@
 				046F0BAA1DE2AB8B00D50D5C /* ProtectingPowerCell.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
 				0479B5E51DCADC7B00CB288A /* LiveTopView.m in Sources */,
+				040891F61DFEB91F006DF570 /* WaitPayingViewController.m in Sources */,
 				046BF0131DE4696600BC32E9 /* NSDateFormatter+Category.m in Sources */,
 				04CE13FB1DDD4D8B00EB8777 /* SellerBaseViewController.m in Sources */,
 				046BF01D1DE4696600BC32E9 /* EaseEmotionManager.m in Sources */,
@@ -4892,6 +4911,7 @@
 				04DAC9971DD21A9A0089236D /* PromptView.m in Sources */,
 				0479B5F51DCADC7B00CB288A /* TalkingViewController.m in Sources */,
 				046BEFEC1DE4696600BC32E9 /* MWTapDetectingImageView.m in Sources */,
+				040891FD1DFEB91F006DF570 /* OrderWaitAssessViewController.m in Sources */,
 				046BF0001DE4696600BC32E9 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				046F0BB01DE2AB8B00D50D5C /* WaitConsignmentCell.m in Sources */,
 				046BF02E1DE4696600BC32E9 /* EaseBubbleView+Text.m in Sources */,
@@ -4900,12 +4920,12 @@
 				046BEFFF1DE4696600BC32E9 /* UIView+EMWebCacheOperation.m in Sources */,
 				0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */,
 				04EA2AB51DDDAE5C0023D9A8 /* SellerOrderDetailProtectPowerViewController.m in Sources */,
+				040892001DFEB91F006DF570 /* PayingAllMoneyViewController.m in Sources */,
 				046BDE291DE3EBB500BC32E9 /* AppDelegate+ThirdFrameDelegate.m in Sources */,
 				04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */,
 				046BF0141DE4696600BC32E9 /* NSString+Valid.m in Sources */,
 				046BEFFA1DE4696600BC32E9 /* UIImage+EMGIF.m in Sources */,
 				04EA2AD31DDDB01B0023D9A8 /* SellerProtectPowerStateView.m in Sources */,
-				046F0BE81DE2AB9E00D50D5C /* PayingAllMoneyViewController.m in Sources */,
 				044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */,
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				046BF00C1DE4696600BC32E9 /* PSTGridLayoutSection.m in Sources */,
@@ -4920,16 +4940,16 @@
 				044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */,
 				619395301DF828BD00EBC23B /* ChosePayStyleView.m in Sources */,
 				046F0B9C1DE2AB8B00D50D5C /* NicknameView.m in Sources */,
+				040891FA1DFEB91F006DF570 /* PaySuccessViewController.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
 				04DAC9951DD21A9A0089236D /* MyMessageView.m in Sources */,
 				04A31F831DED4F4900BE175A /* AddUpdataImagesView.m in Sources */,
+				040892011DFEB91F006DF570 /* SureConsigneedViewController.m in Sources */,
 				0479B5E01DCADC7B00CB288A /* NoneFocusView.m in Sources */,
 				04CE13D61DDC488100EB8777 /* SellerMyGoodsViewController.m in Sources */,
 				0452A1DF1DE0B2E3007C1E4F /* SellerDeleDDetailView.m in Sources */,
-				046F0BEE1DE2AB9E00D50D5C /* PaySuccessViewController.m in Sources */,
 				04EDC4AA1DF98214009C972D /* SellerProtectDetailModel.m in Sources */,
 				04EA2AD61DDDB0510023D9A8 /* SellerProtectPLogisticsInfoView.m in Sources */,
-				046F0BE21DE2AB9E00D50D5C /* AllOrderGoodsViewController.m in Sources */,
 				04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
 				0452A1E81DE173A5007C1E4F /* SellerCreateDogMessageViewController.m in Sources */,
@@ -4938,11 +4958,13 @@
 				046BEFF71DE4696600BC32E9 /* MKAnnotationView+EMWebCache.m in Sources */,
 				0479B5D41DCADC7B00CB288A /* FocusViewController.m in Sources */,
 				04592EC01DF145C10095C8EE /* AcceptRateBuyerModel.m in Sources */,
+				040891F21DFEB91F006DF570 /* AllOrderGoodsViewController.m in Sources */,
 				04592EB51DF10D9F0095C8EE /* OrderDetailModel.m in Sources */,
 				046BEFCE1DE4696600BC32E9 /* wav.mm in Sources */,
 				046BEFCC1DE4696600BC32E9 /* EMCDDeviceManagerBase.m in Sources */,
 				046BF0061DE4696600BC32E9 /* PSTCollectionViewItemKey.m in Sources */,
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
+				0487DA301DFD03B700BDC54F /* AddPictureView.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
 				04CE13EE1DDC488100EB8777 /* SellerLogisticsInfoView.m in Sources */,
 				04EDC4BC1DFAE250009C972D /* LivingShowDogCell.m in Sources */,
@@ -4953,14 +4975,12 @@
 				046F0BA41DE2AB8B00D50D5C /* OrderNumberView.m in Sources */,
 				046BEFEB1DE4696600BC32E9 /* MWPhotoBrowser.m in Sources */,
 				046F0BB11DE2AB8B00D50D5C /* WaitFontMoneyCell.m in Sources */,
-				046F0BF21DE2AB9E00D50D5C /* WaitConsignmentViewController.m in Sources */,
 				0479B5E11DCADC7B00CB288A /* DogPictureCollectionViewCell.m in Sources */,
 				04DAC98E1DD21A9A0089236D /* DetailCountViewCell.m in Sources */,
 				043CBB581DF90C1D0096C9CE /* UIView+FontSize.m in Sources */,
 				045D511C1DD96E58001854A8 /* MyPageMerchant.m in Sources */,
 				04CE13E01DDC488100EB8777 /* SellerWaitSendCell.m in Sources */,
 				047AD60D1DD5CE970025290E /* TopButonView.m in Sources */,
-				046F0BEB1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m in Sources */,
 				61EF1DB71DFD17D40049FBBB /* NSAttributedString+DogOldPrice.m in Sources */,
 				0452A20B1DE1C176007C1E4F /* SellerNoneDogTypeView.m in Sources */,
 				0452A2081DE1B14B007C1E4F /* SellerNoInputHotBtnView.m in Sources */,

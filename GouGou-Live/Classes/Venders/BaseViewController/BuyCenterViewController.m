@@ -21,6 +21,24 @@
 @end
 
 @implementation BuyCenterViewController
+#pragma mark - 删除订单网络请求
+- (void)getDeleteOrderRequest {
+    
+    NSDictionary * dict = @{
+                            @"id":@(12),
+                            @"user_id":@([[UserInfos sharedUser].ID intValue])
+                            };
+    
+    [self getRequestWithPath:API_Order_Delete params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+
+}
 // 删除订单
 - (void)clickDeleteOrder:(BuyCenterModel *)model {
     
@@ -31,9 +49,9 @@
     prompt.sureBlock = ^(UIButton * btn) {
         
         // 点击确定按钮，删除订单
+        [self getDeleteOrderRequest];
         
     };
-    
     [prompt show];
     
 }
@@ -206,6 +224,25 @@
     [promptView show];
     
 }
+#pragma mark - 不想买了网络请求
+- (void)getNobuyRequest {
+
+    NSDictionary *dict = @{
+                           @"id":@(12),
+                           @"user_id":@([[UserInfos sharedUser].ID intValue])
+                           };
+
+    [self getRequestWithPath:API_Order_Nobuy params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        
+        DLog(@"%@",error);
+    }];
+
+}
 // 点击不想买了
 - (void)clickNotBuy:(BuyCenterModel *)model {
     // 点击不想买了按钮出现的弹框
@@ -214,6 +251,8 @@
     __weak typeof(allpyPrompt) weakself = allpyPrompt;
     
     allpyPrompt.sureBlock = ^(UIButton * btn) {
+        // 不想买了
+        [self getNobuyRequest];
         
         [weakself dismiss];
         

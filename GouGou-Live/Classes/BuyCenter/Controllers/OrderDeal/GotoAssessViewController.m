@@ -21,6 +21,12 @@
 #import "AddPictureView.h"
 
 
+#import "StarsView.h"
+// 每行个数
+#define rowImgCount 5
+// 图片总数
+#define ImgTotalCount 7
+
 @interface GotoAssessViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 {
     CGFloat W;//图片view高度
@@ -30,25 +36,20 @@
 /** 狗狗详情 */
 @property (strong,nonatomic) SellerDogCardView *dogCardView;
 /** 交易满意度 */
-@property (strong,nonatomic) SatisfiedAssessView *satisfiedView;
+@property (strong,nonatomic) StarsView *starview;
 /** 放置TextFiled的view */
 @property (strong,nonatomic) UIView *empyView;
 /** 评论 */
 @property (strong,nonatomic) UITextField *commentTextFiled;
-///** 添加图片 */
-//@property (strong,nonatomic) AddPhotosView *addPhotoView;
-
-//@property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 添加图片 */
 @property(nonatomic, strong) AddPictureView *photoView; /**< 添加图片 */
 @property(nonatomic, strong) NSMutableArray *photoArr; /**< 图片数组 */
-
 /** 匿名评价 */
 @property (strong,nonatomic) AnonymityAssessView *aninymityView;
 /** 提交评价 */
 @property (strong,nonatomic) UIButton * handinAssess;
 /** 照片数量 */
 @property (assign,nonatomic) NSInteger imageCount;
-
+@property (assign, nonatomic) NSInteger currentCount; /**< 记录当前数量 */
 @end
 
 @implementation GotoAssessViewController
@@ -56,7 +57,8 @@
 #pragma mark - 网络请求
 - (void)getOrderAssessRequest {
 
-    NSDictionary *dict = @{@"user_id":@(17),
+    NSDictionary *dict = @{//@([[UserInfos sharedUser].ID intValue])
+                           @"user_id":@(17),
                            @"order_id":@(12),
                            @"point":@(5),
                            @"has_photo":@(2),
@@ -94,10 +96,9 @@
     
     [self.view addSubview:self.nickNameView];
     [self.view addSubview:self.dogCardView];
-    [self.view addSubview:self.satisfiedView];
+    [self.view addSubview:self.starview];
     [self.view addSubview:self.empyView];
     [self.empyView addSubview:self.commentTextFiled];
-//    [self.view addSubview:self.addPhotoView];
     [self.view addSubview:self.photoView];
     [self.view addSubview:self.aninymityView];
     [self.view addSubview:self.handinAssess];
@@ -125,16 +126,17 @@
         make.height.equalTo(110);
     }];
     
-    [_satisfiedView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_starview mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.dogCardView.bottom);
         make.height.equalTo(44);
+        
     }];
     
     [_empyView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.satisfiedView.bottom).offset(1);
+        make.top.equalTo(weakself.starview.bottom).offset(1);
         make.left.right.equalTo(weakself.view);
         make.height.equalTo(44);
         
@@ -149,56 +151,46 @@
     
     if (self.photoView.addBlock) {
         
-        if (ImgCount <= kMaxImgCount) {
+        if (ImgTotalCount <= rowImgCount) {
             W = (SCREEN_WIDTH - (ImgTotalCount + 1) * 10) / ImgTotalCount;
         } else{
-            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
+            W = (SCREEN_WIDTH - (rowImgCount + 1) * 10) / rowImgCount;
         }
         
-        CGFloat row = self.photoView.dataArr.count / ImgCount;
+        CGFloat row = self.photoView.dataArr.count / rowImgCount;
         W = (row + 1) * (W + 10) + 10;
         [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.commentTextFiled.bottom);
+            make.top.equalTo(self.empyView.bottom).offset(1);
             make.left.right.equalTo(self.view);
             make.height.equalTo(W + 20);
         }];
-    } else {
         
+    }
+    
+    if(self.photoView.dataArr.count  < rowImgCount) {
+       
+        DLog(@"%ld",self.photoView.pictureCounts);
+        if (ImgTotalCount <= rowImgCount) {
+            W = (SCREEN_WIDTH - (ImgTotalCount + 1) * 10) / ImgTotalCount;
+        } else{
+            W = (SCREEN_WIDTH - (rowImgCount + 1) * 10) / rowImgCount;
+        }
+        CGFloat row = self.photoView.dataArr.count / rowImgCount;
+        W = (row + 1) * (W + 10) + 10;
         [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.commentTextFiled.bottom);
+            make.top.equalTo(self.empyView.bottom).offset(1);
             make.left.right.equalTo(self.view);
-            make.height.equalTo(1);
+            make.height.equalTo(W + 20);
         }];
     
     }
-    /*
-    [_photoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.right.equalTo(weakself.view);
-        make.top.equalTo(weakself.empyView.bottom).offset(1);
-        make.height.equalTo(100);
-    }];
-    */
+
     [_aninymityView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.photoView.bottom).offset(1);
         make.left.right.equalTo(weakself.view);
         make.height.equalTo(44);
     }];
-    
-//    [_addPhotoView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.right.equalTo(weakself.view);
-//        make.top.equalTo(weakself.empyView.bottom).offset(1);
-//        make.height.equalTo(100);
-//    }];
-//
-//    [_aninymityView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.top.equalTo(weakself.addPhotoView.bottom).offset(1);
-//        make.left.right.equalTo(weakself.view);
-//        make.height.equalTo(44);
-//    }];
     
     [_handinAssess mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -228,13 +220,16 @@
     return _dogCardView;
 }
 
-- (SatisfiedAssessView *)satisfiedView {
+- (StarsView *)starview {
 
-    if (!_satisfiedView) {
-        _satisfiedView = [[SatisfiedAssessView alloc] init];
-        _satisfiedView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    if (!_starview) {
+        _starview = [[StarsView alloc] initWithStarSize:CGSizeMake(15, 15) space:5 numberOfStar:5];
+        _starview.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        _starview.score = 0;
+    
     }
-    return _satisfiedView;
+
+    return _starview;
 }
 
 - (UITextField *)commentTextFiled {
@@ -268,10 +263,10 @@
     
     if (!_photoView) {
         _photoView = [[AddPictureView alloc] initWithFrame:CGRectZero];
-        _photoView.maxCount = ImgCount;
-//        _photoView.hidden = YES;
+        _photoView.maxCount = ImgTotalCount;
         __weak typeof(self) weakSelf = self;
         __weak typeof(_photoView) weakPhoto = _photoView;
+        
         _photoView.addBlock = ^(){
             
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
@@ -279,10 +274,11 @@
             
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
             
+            weakPhoto.pictureCounts++;
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
                 if (flag) {
                     [weakPhoto.dataArr addObject:photos[0]];
-                    
+                    weakPhoto.pictureCounts = weakPhoto.dataArr.count;
                     [weakPhoto.collectionView reloadData];
                     weakSelf.photoArr = weakPhoto.dataArr;
                     [weakSelf addControllers];
@@ -292,87 +288,16 @@
             }];
             
         };
-        _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-
-        /*
-        __block CGFloat W = 0;
-        if (ImgCount <= kMaxImgCount) {
-            W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / ImgCount;
-        }else{
-//            W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
-            
-        }
-        _photoView = [[AddPictureView alloc] initWithFrame:CGRectMake(0, 267, SCREEN_WIDTH, W + 20)];
-        _photoView.maxCount = ImgCount;
-        _photoView.maxRow = ImgTotalCount % ImgCount;
+        _photoView.deleteBlock = ^() {
         
-        __weak typeof(self) weakSelf = self;
-        __weak typeof(_photoView) weakPhoto = _photoView;
-        _photoView.addBlock = ^(){
-            
-            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
-            imagePickerVc.sortAscendingByModificationDate = NO;
-            
-            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
-            
-            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
-                if (flag) {
-                    [weakPhoto.dataArr addObject:photos[0]];
-                    [weakPhoto.collectionView reloadData];
-                    CGFloat row = weakPhoto.dataArr.count / ImgTotalCount;
-                    CGRect rect = weakPhoto.frame;
-                    rect.size.height = (row + 1) * (W + 10) + 10;
-                    weakPhoto.frame = rect;
-                }else{
-                    DLog(@"出错了");
-                }
-            }];
-            
+            [weakSelf addControllers];
         };
         _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        
-    }
-         */
+
     }
     return _photoView;
 }
 
-/*
-- (AddPhotosView *)addPhotoView {
-
-    if (!_addPhotoView) {
-        self.imageCount = 0;
-            _addPhotoView = [[AddPhotosView alloc] init];
-        
-        _addPhotoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        
-        __weak typeof(self) weakself = self;
-        __weak typeof(_addPhotoView) addPhotoView = _addPhotoView;
-    
-        _addPhotoView.addPhotoBlock = ^(UIButton *button) {
-        
-            weakself.imageCount ++;
-            UIImagePickerController * picker = [[UIImagePickerController alloc] init];
-            
-            addPhotoView.pickers = picker;
-            
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-               
-                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                // 设置代理
-                picker.delegate = weakself;
-                
-                 picker.allowsEditing = YES;
-                //模态显示界面
-                
-                [weakself presentViewController:picker animated:YES completion:^{
-                }];
-            }
-        };
-    }
-    return _addPhotoView;
-}
-*/
 - (AnonymityAssessView *)aninymityView {
 
     if (!_aninymityView) {
@@ -397,31 +322,38 @@
 }
 #pragma mark - 点击提交评价
 - (void)clickHandinAssess:(UIButton *)button {
-
-    NSString * contentStr = self.commentTextFiled.text;
     
-    BOOL flag = [contentStr isChinese];
-
-    
-    if (contentStr.length == 0) {
-        
-        [self showAlert:@"评价内容不能为空"];
-    } else if (!flag) {
-    
-        [self showAlert:@"评价内容必须中文"];
-    } else {
-    
-        if (self.photoView.dataArr.count == 0) {
-            
-            [self showAlert:@"上传图片不能为空"];
+    if (self.starview.startCount == 0) {
+            [self showAlert:@"您还没有评价哦"];
         } else {
         
-//            [self popoverPresentationController];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
+            NSString * contentStr = self.commentTextFiled.text;
+            
+            BOOL flag = [contentStr isChinese];
+            
+            if (contentStr.length == 0) {
+                
+                [self showAlert:@"评价内容不能为空"];
+                
+            } else if (!flag) {
+                
+                [self showAlert:@"评价内容必须中文"];
+                
+            } else {
+                
+                if (self.photoView.dataArr.count == 0) {
+                    
+                    [self showAlert:@"上传图片不能为空"];
+                } else {
+                    
+                    //            [self popoverPresentationController];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+           
+            }
         
+//        }
     }
-    
 }
 
 #pragma mark

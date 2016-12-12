@@ -53,6 +53,7 @@ static NSString *cellid = @"SellerAddImpresscell";
     [super viewDidLoad];
     [self setNavBarItem];
     [self initUI];
+    
 }
 - (void)initUI {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确认" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSureBtnAction)];
@@ -60,6 +61,7 @@ static NSString *cellid = @"SellerAddImpresscell";
 #pragma mark
 #pragma mark - Action
 - (void)clickSureBtnAction {
+    
     
     self.titleInputView = nil;
     [self.titleInputView removeFromSuperview];

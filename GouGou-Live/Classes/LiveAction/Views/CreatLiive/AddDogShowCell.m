@@ -95,48 +95,31 @@
     __weak typeof(self) weakself = self;
     
     [_dogStateTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(weakself.left).offset(10);
-        
         make.top.equalTo(weakself.top).offset(10);
     }];
     
     [_dogImageView makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.dogStateTitle.bottom).offset(10);
-        
         make.left.equalTo(weakself.left).offset(10);
-        
         make.size.equalTo(CGSizeMake(78, 78));
-        
     }];
     
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.dogStateTitle.bottom).offset(15);
-        
         make.left.equalTo(weakself.dogImageView.right).offset(10);
-        
     }];
     
     [_kindLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.bottom.equalTo(weakself.dogNameLabel.bottom);
-        
         make.left.equalTo(weakself.dogNameLabel.right).offset(10);
-        
     }];
     
     [_dogKindLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.bottom.equalTo(weakself.dogNameLabel.bottom);
-        
         make.left.equalTo(weakself.kindLabel.right).offset(10);
-        
     }];
-    
-    
-    
+
     [_dogAgeLabel makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.dogNameLabel.bottom).offset(5);
@@ -233,6 +216,43 @@
 
     }];
 
+}
+
+- (void)setIsAllSelect:(BOOL)isAllSelect {
+    _isAllSelect = isAllSelect;
+    self.selectButton.selected = isAllSelect;
+}
+- (void)setModel:(SellerMyGoodsModel *)model {
+    _model = model;
+    
+    self.dogAgeLabel.text = model.ageName;
+    if (model.pathSmall != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+        [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
+    
+    self.dogNameLabel.text = model.name;
+    self.dogKindLabel.text = model.kindName;
+    self.dogAgeLabel.text = model.ageName;
+    self.dogSizeLabel.text = model.sizeName;
+    self.dogColorLabel.text = model.colorName;
+    self.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", model.priceOld]];
+    self.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
+    // 判断状态
+    NSString *state = @"";
+    if ([model.status isEqualToString:@"1"]) {// 1：新建商品 2：审核未通过  3：上线 4：下线5：售完
+        state = @"新建商品";
+    }else if ([model.status isEqualToString:@"2"]) {
+        state = @"审核未通过";
+    }else if ([model.status isEqualToString:@"3"]) {
+        state = @"上线";
+    }else if ([model.status isEqualToString:@"4"]) {
+        state = @"下线";
+    }else if ([model.status isEqualToString:@"5"]) {
+        state = @"售完";
+    }
+    self.dogStateMessage.text = state;
+    self.dogStateTitle.text = [NSString stringWithFormat:@"我的%@狗狗", state];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -406,7 +426,7 @@
         
         _oldPriceLabel = [[UILabel alloc] init];
         
-        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
+        _oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:@"¥ 2400"];
         
     }
     
@@ -538,27 +558,9 @@
 
 - (void)cilckDuihaoImageBtn:(UIButton *)button {
     
-    button.selected = !button.selected;
     if (_selectBtnBlock) {
         _selectBtnBlock(button);
     }
 }
 
-- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
-    
-    NSDictionary *attribtDic = @{
-                                 
-                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
-                                 
-                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                 
-                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
-                                 
-                                 };
-    
-    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
-    
-    return attribut;
-    
-}
 @end

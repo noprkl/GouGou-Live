@@ -19,6 +19,7 @@
 #import "DogPriceFilter.h"
 
 #import "LivingViewController.h"
+#import "LiveViewCellModel.h"
 
 @interface RecommendViewController ()<UIScrollViewDelegate, SDCycleScrollViewDelegate>
 
@@ -40,6 +41,8 @@
 @property (strong, nonatomic) NSMutableArray *dataSource;
 /** 直播列表 */
 @property (nonatomic, strong) NSMutableArray *liveListArray;
+
+@property(nonatomic, strong) UILabel *noneLiveLabel; /**< 没有直播 */
 @end
 
 
@@ -48,24 +51,31 @@
 #pragma mark
 #pragma mark - 网络请求
 - (void)getRequestLiveList {
-    // 时间戳
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYYMMddHHmmss";
-    NSString *liveId = [formatter stringFromDate:date];
-    
+
     NSDictionary *dict = @{
-                           @"live_id":@"helloios"
+                           @"page":@(1),
+                           @"pageSize":@(10)
                            };
-    [self getRequestWithPath:API_Live_product_list params:dict success:^(id successJson) {
+    [self getRequestWithPath:API_Live_list params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+//        self.tableView.dataPlist = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        
+        CGRect rect = self.tableView.frame;
+        rect.size.height = self.tableView.dataPlist.count * 357;
+        self.tableView.frame = rect;
+        [self.tableView reloadData];
+        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
-
 #pragma mark
 #pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestLiveList];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -86,7 +96,6 @@
     self.edgesForExtendedLayout = 0;
     
     [self makeConstraint];
-    [self getRequestLiveList];
 }
 // 约束
 - (void)makeConstraint {
@@ -95,8 +104,7 @@
 }
 
 #pragma mark
-#pragma mark - 懒加载 
-
+#pragma mark - 懒加载
 - (UIScrollView *)baseScrollView {
     
     if (!_baseScrollView) {
@@ -110,7 +118,6 @@
 }
 
 // 轮播视图
-
 - (SDCycleScrollView *)cycleScrollView {
     if (!_cycleScrollView) {
         _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 110) delegate:self placeholderImage:[UIImage imageNamed:@"banner"]];
@@ -229,21 +236,27 @@
 // 直播列表
 - (LiveTableView *)tableView {
     if (!_tableView) {
-        _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH, 1000) style:(UITableViewStylePlain)];
+        _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH,1000) style:(UITableViewStylePlain)];
 
         _tableView.bounces = NO;
 
         __weak typeof(self) weakSelf = self;
-        _tableView.cellBlock = ^(){
+        _tableView.cellBlock = ^(LiveViewCellModel *model){
             
-            LivingViewController *livingVC = [[LivingViewController alloc] init];
-            
-            livingVC.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:livingVC animated:YES];
-            
+            [weakSelf pushToLivingVc:model];
+        };
+        _tableView.dogCardBlock = ^(LiveViewCellModel *model){
+            [weakSelf pushToLivingVc:model];
         };
     }
     return _tableView;
+}
+- (void)pushToLivingVc:(LiveViewCellModel *)model{
+    DLog(@"%@", model);
+    LivingViewController *livingVC = [[LivingViewController alloc] init];
+    livingVC.liveID = model.liveId;
+    livingVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:livingVC animated:YES];
 }
 - (NSMutableArray *)dataSource {
     if (!_dataSource) {

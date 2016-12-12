@@ -10,7 +10,9 @@
 
 @interface LivingViewController : BaseViewController
 
-/** 直播的参数 */
-//@property (strong,nonatomic)  *<#name#>
+/** 直播播放地址 */
+@property (strong,nonatomic) NSString *liveID;
+
+@property (nonatomic, assign) BOOL isDogCard; /**< 点击狗狗开案进入 */
 
 @end

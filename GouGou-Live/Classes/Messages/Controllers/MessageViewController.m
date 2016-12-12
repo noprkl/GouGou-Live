@@ -276,6 +276,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
         EMConversation *conversation = [self.arrConversion objectAtIndex:indexPath.row];
         
         SingleChatViewController *singleVC = [[SingleChatViewController alloc] initWithConversationChatter:conversation.conversationId conversationType:(EMConversationTypeChat)];
+        singleVC.chatID = conversation.conversationId;
         singleVC.hidesBottomBarWhenPushed = YES;
         singleVC.title = conversation.conversationId;
         [self.navigationController pushViewController:singleVC animated:YES];

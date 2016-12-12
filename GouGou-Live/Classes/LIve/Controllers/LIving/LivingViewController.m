@@ -27,6 +27,11 @@
 
 #import <PLPlayerKit/PLPlayerKit.h>
 
+
+#import "LiveListDogInfoModel.h"
+#import "LiveListRespModel.h"
+#import "LiveListStreamModel.h"
+#import "LiveListRootModel.h"
 @interface LivingViewController ()<UIScrollViewDelegate, PLPlayerDelegate>
 
 @property (nonatomic, strong) PLPlayer *player;
@@ -68,11 +73,36 @@
 /** 分享弹出框 */
 @property (strong, nonatomic) NSArray *shareAlertBtns;
 
-
 @property(nonatomic, strong) UIViewController *lastVC; /**< 上一个控制器 */
+
+@property(nonatomic, strong) UILabel *notePlayer; /**< 播放提示 */
+
+@property(nonatomic, strong) NSArray *liveInfoArr; /**< 直播信息 */
+
+@property(nonatomic, strong) LiveListRootModel *rootModel; /**< 请求数据 */
+
+@property(nonatomic, strong) LiveListStreamModel *stream; /**< 流对象信息 */
+
+@property(nonatomic, strong) LiveListRespModel *resp; /**< 播放信息 */
+
 @end
 
 @implementation LivingViewController
+- (void)getRequestLiveMessage {
+    NSDictionary *dict = @{
+                           @"live_id":_liveID
+                           };
+    [self getRequestWithPath:API_Live_product_list params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.rootModel = [LiveListRootModel mj_objectWithKeyValues:successJson[@"data"][@"steam"]];
+        LiveListRespModel *resp = [LiveListRespModel mj_objectWithKeyValues:self.rootModel.resp];
+        self.resp = resp;
+        LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:self.rootModel.steam];
+        self.stream = stream;
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
 #pragma mark
 #pragma mark - viewcontroller生命周期
@@ -83,48 +113,59 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.backBtn.hidden = NO;
-//    self.roomNameLabel.hidden = NO;
-//    self.reportBtn.hidden = NO;
-//    self.shareBtn.hidden = NO;
-//    self.collectBtn.hidden = NO;
-//    self.watchLabel.hidden = NO;
-//    self.screenBtn.hidden = NO;
 
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.hidesBottomBarWhenPushed = YES;
+    
+    // 请求播放信息
+    [self getRequestLiveMessage];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-   
-//    self.backBtn.hidden = YES;
-//    self.roomNameLabel.hidden = YES;
-//    self.reportBtn.hidden = YES;
-//    self.shareBtn.hidden = YES;
-//    self.collectBtn.hidden = YES;
-//    self.watchLabel.hidden = YES;
-//    self.screenBtn.hidden = YES;
 
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+}
+#pragma mark
+#pragma mark - 播放回调
+// 实现 <PLPlayerDelegate> 来控制流状态的变更
+- (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
+    // 这里会返回流的各种状态，你可以根据状态做 UI 定制及各类其他业务操作
+    // 除了 Error 状态，其他状态都会回调这个方法
+    // 主播停止播放
+    if (state == PLPlayerStatusStopped) {
+        self.notePlayer.hidden = NO;
+        self.notePlayer.text = @"主播已经停止播放";
+    }
+    // 正常播放状态
+    if (state == PLPlayerStatusPlaying) {
+        self.notePlayer.hidden = YES;
+    }
+//    if (state == PLPlayerStatusPlaying) {
+//        self.notePlayer.hidden = YES;
+//    }
+    DLog(@"%@", player);
+}
+
+- (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error {
+    // 当发生错误时，会回调这个方法
+    if (error) {
+        self.notePlayer.hidden = NO;
+        self.notePlayer.text = @"出错了";
+    }else{
+        self.notePlayer.hidden = YES;
+    }
+    
+    DLog(@"%@", error);
 }
 
 #pragma mark
 #pragma mark - UI
 - (void)initUI {
     
-    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-
-//    [window addSubview:self.backBtn];
-//    [window addSubview:self.roomNameLabel];
-//    [window addSubview:self.reportBtn];
-//    [window addSubview:self.shareBtn];
-//    [window addSubview:self.collectBtn];
-//    [window addSubview:self.watchLabel];
-//    [window addSubview:self.screenBtn];
     // 初始化 PLPlayerOption 对象
     PLPlayerOption *playerOption = [PLPlayerOption defaultOption];
     
@@ -136,16 +177,15 @@
     [playerOption setOptionValue:@(kPLLogNone) forKey:PLPlayerOptionKeyLogLevel];
     
     
-    
-    NSURL *url = [NSURL URLWithString:@"rtmp://pili-live-rtmp.zhuaxingtech.com/gougoulive/helloios"];
+    NSURL *url = [NSURL URLWithString:self.stream.rtmp];
     self.player = [PLPlayer playerWithURL:url option:playerOption];
     self.player.delegate = self;
     self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
     // 添加子视图
     [self.view addSubview:self.player.playerView];
+    
     // 播放
     [self.player play];
-   
     [self.player.playerView addSubview:self.backBtn];
     [self.player.playerView addSubview:self.roomNameLabel];
     [self.player.playerView addSubview:self.reportBtn];
@@ -153,12 +193,11 @@
     [self.player.playerView addSubview:self.collectBtn];
     [self.player.playerView addSubview:self.watchLabel];
     [self.player.playerView addSubview:self.screenBtn];
+    [self.player.playerView addSubview:self.notePlayer];
 
     // 播放控件约束
     [self makeSubviewConstraint];
-    
-    
-    
+ 
     [self.view addSubview:self.centerView];
     [self.view addSubview:self.baseScrollView];
     // 子视图
@@ -166,17 +205,7 @@
     // 子视图约束
     [self makeConstraint];
 }
-// 实现 <PLPlayerDelegate> 来控制流状态的变更
-- (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
-    // 这里会返回流的各种状态，你可以根据状态做 UI 定制及各类其他业务操作
-    // 除了 Error 状态，其他状态都会回调这个方法
-    DLog(@"%@", player);
-}
 
-- (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error {
-    // 当发生错误时，会回调这个方法
-    DLog(@"%@", error);
-}
 // 播放控件约束
 - (void)makeSubviewConstraint {
     [self.player.playerView makeConstraints:^(MASConstraintMaker *make) {
@@ -208,11 +237,14 @@
     [self.watchLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.backBtn.left);
         make.bottom.equalTo(self.player.playerView.bottom).offset(-10);
-        make.width.equalTo(100);
+        make.width.equalTo(70);
     }];
     [self.screenBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.shareBtn.centerX);
         make.bottom.equalTo(self.player.playerView.bottom).offset(-10);
+    }];
+    [self.notePlayer makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.player.playerView.center);
     }];
 }
 
@@ -271,13 +303,16 @@
     [self scrollViewDidEndDecelerating:self.baseScrollView];
 }
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     // 每个子控制器的宽高
     CGFloat width = SCREEN_WIDTH;
     CGFloat height = SCREEN_HEIGHT;
     
     // 偏移量 - x
+    // 如果是通过点击狗狗卡片进入的,滑到狗狗位置
+    if (_isDogCard) {
+        [scrollView setContentOffset:CGPointMake(width, 0)];
+    }
     CGFloat offset = scrollView.contentOffset.x;
     
     // 获取视图的索引
@@ -385,23 +420,6 @@
 #pragma mark
 #pragma mark - Action
 - (void)clickBackBtnAction {
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    // 横屏->竖屏
-    if (orientation == UIInterfaceOrientationLandscapeLeft) {
-        [self forceOrientation:UIInterfaceOrientationPortrait];
-        
-        self.shareBtn.hidden = NO;
-        self.collectBtn.hidden = NO;
-        self.reportBtn.hidden = NO;
-        self.centerView.hidden = NO;
-        self.baseScrollView.hidden = NO;
-        
-        CGRect rect = self.screenBtn.frame;
-        rect = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
-        self.screenBtn.frame = rect;
-        
-        //        [self forceOrientation:UIInterfaceOrientationPortrait];
-    }
     
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -416,14 +434,6 @@
     };
     [report show];
 }
-- (NSAttributedString *)getAttributeString:(NSString *)string {
-    NSDictionary *attributeDict = @{
-                                    NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
-                                    };
-    NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:string attributes:attributeDict];
-
-    return attribute;
-}
 - (void)clickShareBtnAction {
     
     __weak typeof(self) weakSelf = self;
@@ -435,7 +445,7 @@
             case 0:
             {
                 // 朋友圈
-                [weakSelf MomentShare];
+                [weakSelf WechatTimeShare];
                 shareAlert = nil;
                 [shareAlert dismiss];
             }
@@ -480,39 +490,13 @@
         } colCount:4];
     [shareAlert show];
 }
-- (void)clickCollectBtnAction {
-    
+- (void)clickCollectBtnAction:(UIButton *)btn {
+    btn.selected = !btn.selected;
 }
 - (void)clickScreenBtnAction:(UIButton *)btn {
    
-//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-//    
-//    if (orientation == UIDeviceOrientationPortrait) {
-//      
-//        [self forceOrientation:(UIInterfaceOrientationLandscapeLeft)];
-//        
-//        self.shareBtn.hidden = YES;
-//        self.collectBtn.hidden = YES;
-//        self.reportBtn.hidden = YES;
-//        self.centerView.hidden = YES;
-//        self.baseScrollView.hidden = YES;
-//        [self.view remakeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
-//        }];
-//        [self.player.playerView remakeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
-//        }];
-//    }else if (orientation == UIInterfaceOrientationLandscapeLeft) {
-//       [self forceOrientation:UIInterfaceOrientationPortrait];
-//       
-//        self.shareBtn.hidden = NO;
-//        self.collectBtn.hidden = NO;
-//        self.reportBtn.hidden = NO;
-//        self.centerView.hidden = NO;
-//        self.baseScrollView.hidden = NO;
-//        [self makeSubviewConstraint];
-//    }
     LandscapePlayerVc *landscapeVc = [[LandscapePlayerVc alloc] init];
+    landscapeVc.rtmp = self.stream.rtmp;
     landscapeVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:landscapeVc animated:YES];
 }
@@ -530,7 +514,12 @@
 }
 #pragma mark
 #pragma mark - 懒加载
-
+- (NSArray *)liveInfoArr {
+    if (!_liveInfoArr) {
+        _liveInfoArr = [NSArray array];
+    }
+    return _liveInfoArr;
+}
 - (NSArray *)shareAlertBtns {
     if (!_shareAlertBtns) {
         _shareAlertBtns = [NSArray array];
@@ -580,6 +569,7 @@
         _watchLabel = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_watchLabel setImage:[UIImage imageNamed:@"联系人"] forState:(UIControlStateNormal)];
         _watchLabel.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_watchLabel setTintColor:[UIColor colorWithHexString:@"#ffa11a"]];
         [_watchLabel setTitle:@"1000" forState:(UIControlStateNormal)];
         [_watchLabel setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
         _watchLabel.enabled = NO;
@@ -625,11 +615,11 @@
         _collectBtn.layer.masksToBounds = YES;
 
         _collectBtn.backgroundColor = [[UIColor colorWithHexString:@"#333333"] colorWithAlphaComponent:0.5];
-        UIImage *image = [UIImage imageNamed:@"喜欢icon(点击"];
-        
+        UIImage *image = [UIImage imageNamed:@"喜欢"];
 
         [_collectBtn setImage:image forState:(UIControlStateNormal)];
-        [_collectBtn addTarget:self action:@selector(clickCollectBtnAction) forControlEvents:(UIControlEventTouchDown)];
+        [_collectBtn setImage:[UIImage imageNamed:@"喜欢点击"] forState:(UIControlStateSelected)];
+        [_collectBtn addTarget:self action:@selector(clickCollectBtnAction:) forControlEvents:(UIControlEventTouchDown)];
 
     }
     return _collectBtn;
@@ -651,7 +641,16 @@
     }
     return _screenBtn;
 }
-
+- (UILabel *)notePlayer {
+    if (!_notePlayer) {
+        _notePlayer = [[UILabel alloc] init];
+        _notePlayer.text = @"主播已经离开";
+        _notePlayer.hidden = YES;
+        _notePlayer.font = [UIFont systemFontOfSize:16];
+        _notePlayer.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _notePlayer;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

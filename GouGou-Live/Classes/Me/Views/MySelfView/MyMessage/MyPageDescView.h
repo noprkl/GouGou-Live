@@ -13,4 +13,5 @@ typedef void(^ClickEditBlock)();
 
 @property(nonatomic, strong) ClickEditBlock editBlock; /**< 编辑回调 */
 
+@property (nonatomic , assign) BOOL isHidEdit; /**< 是否隐藏编辑 */
 @end

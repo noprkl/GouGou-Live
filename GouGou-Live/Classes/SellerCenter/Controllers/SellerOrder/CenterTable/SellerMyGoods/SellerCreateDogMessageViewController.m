@@ -167,7 +167,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     [self textFieldShouldReturn:self.nameText];
     [self textFieldShouldReturn:self.priceText];
     [self textFieldShouldReturn:self.noteText];
-
+    self.sureBtn.enabled = NO;
     if (self.nameText.text.length == 0) {
         self.nameText.text = @"(未起名)";
     }

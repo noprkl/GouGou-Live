@@ -18,6 +18,9 @@
 #import "MyShopProvinceModel.h"
 #import "NSString+CertificateImage.h"
 
+#import "HaveCommitCertificateView.h"
+#import "CerfificateFaildView.h"
+#import "CerFiticateSuccessView.h"
 
 static NSString * MedrchantCell = @"MedrchantCell";
 
@@ -26,6 +29,12 @@ static NSString * MedrchantCell = @"MedrchantCell";
 @property (strong,nonatomic) UnCertificateVIew *unCertificateVIew;
 /** 已经实名认证 */
 @property (strong,nonatomic) DoneCertificateView *doneCertificateView;
+
+@property (nonatomic, strong) HaveCommitCertificateView *haveCommitView; /**< 审核中 */
+@property (nonatomic, strong) CerfificateFaildView *faildView; /**< 审核失败 */
+@property (nonatomic, strong) CerFiticateSuccessView *successView; /**< 审核成功 */
+
+
 /** 照片 */
 @property (strong,nonatomic) AddUpdataImagesView *photoView;
 
@@ -37,18 +46,79 @@ static NSString * MedrchantCell = @"MedrchantCell";
 
 @property(nonatomic, strong) NSString *provice; /**< 省 */
 @property(nonatomic, strong) NSString *city; /**< 市 */
+
 @property(nonatomic, strong) NSString *district; /**< 县 */
+
 
 @end
 
 @implementation MerchantViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (![[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
+        [self.view addSubview:self.unCertificateVIew];
+        
+    }else{
+        
+        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"1"]) {// 1：非商家 2：商家 3：审核中 4: 审核失败
+            [self initUI];
+        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
+            [self.view addSubview:self.successView];
+        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
+            [self.view addSubview:self.haveCommitView];
+        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
+            [self.view addSubview:self.faildView];
+        }
+    }
+}
+- (HaveCommitCertificateView *)haveCommitView {
+    if (!_haveCommitView) {
+        _haveCommitView = [[HaveCommitCertificateView alloc] initWithFrame:self.view.bounds];
+        __weak typeof(self) weakSelf = self;
+        _haveCommitView.backBlock = ^(){
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        };
+    }
+    return _haveCommitView;
+}
+- (CerfificateFaildView *)faildView {
+    if (!_faildView) {
+        _faildView = [[CerfificateFaildView alloc] initWithFrame:self.view.bounds];
+        
+        __weak typeof(self) weakSelf = self;
+        _faildView.backBlcok = ^(){
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        };
+        _faildView.recommitBlock = ^(){
+            weakSelf.faildView.hidden = YES;
+            [weakSelf initUI];
+        };
+    }
+    return _faildView;
+}
+- (CerFiticateSuccessView *)successView {
+    if (!_successView) {
+        _successView = [[CerFiticateSuccessView alloc] initWithFrame:self.view.bounds];
+        __weak typeof(self) weakSelf = self;
+        _successView.backBlock = ^(){
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        };
+    }
+    return _successView;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setNavBarItem];
     
     [self requestGetAreaData];
+}
+- (void)initUI {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(clickHandinCertitycate)];
+    
+    [self.view addSubview:self.doneCertificateView];
+    [self.view addSubview:self.photoView];
 }
 - (void)requestGetAreaData {
     [self getRequestWithPath:API_Province params:@{@"id":@(0)} success:^(id successJson) {
@@ -97,31 +167,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
     }
     return _photoUrl;
 }
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-  
-    if (![[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
-        [self.view addSubview:self.unCertificateVIew];
 
-    }else{
-   
-        if ([[UserInfos sharedUser].isreal isEqualToString:@"0"]) {// 1：非商家 2：商家 3：审核中 4: 审核失败
-        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
-            
-        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
-            
-        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
-            
-        }
-        
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(clickHandinCertitycate)];
-        
-        [self.view addSubview:self.doneCertificateView];
-        [self.view addSubview:self.photoView];
-    }
-    
-    
-}
 // 点击提交认证
 - (void)clickHandinCertitycate {
     NSString *goodsText = self.doneCertificateView.infoTextfiled.text;

@@ -7,17 +7,8 @@
 //
 
 #import "LiveListRootModel.h"
-#import "LiveListRespModel.h"
-#import "LiveListStreamModel.h"
 
 @implementation LiveListRootModel
 
-+ (NSDictionary *)mj_objectClassInArray{
-    
-    NSDictionary *dict = @{
-                           @"resp":@"LiveListRespModel",
-                           @"steam":@"LiveListStreamModel"
-                           };
-    return dict;
-}
+
 @end

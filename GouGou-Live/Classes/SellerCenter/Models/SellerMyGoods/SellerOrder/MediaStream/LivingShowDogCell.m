@@ -104,7 +104,7 @@
         make.left.equalTo(weakself.dogImageView.right).offset(10);
     }];
     [_oldPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(weakself.nowPriceLabel.bottom).offset(5);
+        make.bottom.equalTo(weakself.nowPriceLabel.bottom);
         make.left.equalTo(weakself.nowPriceLabel.right).offset(10);
     }];
 }
@@ -196,6 +196,7 @@
         _oldPriceLabel = [[UILabel alloc] init];
         
         _oldPriceLabel.text = @"¥ 2400";
+        _oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:@"￥2400"];
         _oldPriceLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         _oldPriceLabel.font = [UIFont systemFontOfSize:12];
         

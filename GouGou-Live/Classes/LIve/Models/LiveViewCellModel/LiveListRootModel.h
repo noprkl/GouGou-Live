@@ -16,4 +16,5 @@
 @property (nonatomic, assign) NSInteger status;
 @property (nonatomic, strong) LiveListRespModel *resp;
 @property (nonatomic, strong) LiveListStreamModel *steam;
+
 @end

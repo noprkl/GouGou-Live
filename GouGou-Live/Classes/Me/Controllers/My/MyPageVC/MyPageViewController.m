@@ -38,6 +38,11 @@
 @end
 
 static NSString *cellid = @"cellid";
+static NSString *cellid0 = @"cellid0";
+static NSString *cellid1 = @"cellid1";
+static NSString *cellid2 = @"cellid2";
+static NSString *cellid3 = @"cellid3";
+static NSString *cellid4 = @"cellid4";
 
 @implementation MyPageViewController
 
@@ -123,6 +128,11 @@ static NSString *cellid = @"cellid";
         _tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid];
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid0];
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid1];
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid2];
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid3];
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid4];
     }
     return _tableView;
 }
@@ -136,22 +146,33 @@ static NSString *cellid = @"cellid";
     return [self.dataArr[section] count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UITableViewCell *rootCell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    rootCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     switch (indexPath.section) {
         case 0:
             if (indexPath.row == 0) { // 头部信息
+                 UITableViewCell *cell0 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid0];
+                cell0.selectionStyle = UITableViewCellSelectionStyleNone;
+
                 MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
                 headerView.fansCount = [UserInfos sharedUser].fansCount;
                 headerView.commentCount = [UserInfos sharedUser].commentCount;
+                headerView.userImg = [UserInfos sharedUser].userimgurl;
+                headerView.userName = [UserInfos sharedUser].username;
+                headerView.isReal = [[UserInfos sharedUser].isreal isEqualToString:@"3"] ? YES:NO;
+                headerView.isMentch = [[UserInfos sharedUser].ismerchant isEqualToString:@"2"] ? YES:NO;
+                
                 headerView.backgroundColor = [UIColor whiteColor];
-                [cell.contentView addSubview:headerView];
+                [cell0.contentView addSubview:headerView];
+                return cell0;
             }
             break;
         case 1:
             if (indexPath.row == 0) { // 简介
+                UITableViewCell *cell1 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid2];
+                cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+                
                 MyPageDescView *descView = [[MyPageDescView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, 73))];
                 
                 descView.backgroundColor = [UIColor whiteColor];
@@ -164,14 +185,19 @@ static NSString *cellid = @"cellid";
                     promit.title = @"简介编辑";
                     [promit show];
                 };
-                   [cell.contentView addSubview:descView];
+                   [cell1.contentView addSubview:descView];
+                return cell1;
             }
             break;
         case 2:
+        {
+            UITableViewCell *cell2 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid2];
+            cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+            
             if (indexPath.row == 0) { // 实名认证
-                cell.textLabel.text = @"实名认证";
-                cell.textLabel.font = [UIFont systemFontOfSize:16];
-                cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+                cell2.textLabel.text = @"实名认证";
+                cell2.textLabel.font = [UIFont systemFontOfSize:16];
+                cell2.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
@@ -179,9 +205,10 @@ static NSString *cellid = @"cellid";
                     label.text = @"未实名";
                 }else{
                     label.text = [UserInfos sharedUser].username;
-                }                label.font = [UIFont systemFontOfSize:14];
+                }
+                label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
-                [cell.contentView addSubview:label];
+                [cell2.contentView addSubview:label];
 
                 // 根据是否认证 创建认证按钮
                 if (![[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
@@ -197,25 +224,25 @@ static NSString *cellid = @"cellid";
 
                     [btn addTarget:self action:@selector(clickRealBtnAction) forControlEvents:(UIControlEventTouchDown)];
 
-                    cell.accessoryView = btn;
+                    cell2.accessoryView = btn;
                 }
                
             }else if (indexPath.row == 1){ // 商家认证
-                cell.textLabel.text = @"商家认证";
-                cell.textLabel.font = [UIFont systemFontOfSize:16];
-                cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+                cell2.textLabel.text = @"商家认证";
+                cell2.textLabel.font = [UIFont systemFontOfSize:16];
+                cell2.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
 
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
-//                if ([UserInfos sharedUser].username.length == 0) {
-//                    label.text = @"未实名";
-//                }else{
-//                    label.text = [UserInfos sharedUser].username;
-//                }
-                label.text = @"未认证";
+              
+                if ([UserInfos sharedUser].username.length == 0) {
+                    label.text = @"未认证";
+                }else{
+                    label.text = @"已认证";
+                }
                 label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
-                [cell.contentView addSubview:label];
+                [cell2.contentView addSubview:label];
                 
                 // 根据是否认证 创建认证按钮
                 if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
@@ -230,13 +257,17 @@ static NSString *cellid = @"cellid";
 
                     [btn addTarget:self action:@selector(clickMerchantBtnAction) forControlEvents:(UIControlEventTouchDown)];
                     
-                    cell.accessoryView = btn;
-
+                    cell2.accessoryView = btn;
                 }
             }
+            return cell2;
+        }
             break;
         case 3:
             if (indexPath.row == 0) {
+                UITableViewCell *cell3 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid3];
+                cell3.selectionStyle = UITableViewCellSelectionStyleNone;
+                
                 CGFloat playbackViewHeight = 0;
                 
                 if (self.dogCardArr.count == 0) {
@@ -275,12 +306,15 @@ static NSString *cellid = @"cellid";
                 }];
                 playbackView.backgroundColor = [UIColor whiteColor];
 //                [cell addSubview:playbackView];
-                [cell.contentView addSubview:playbackView];
+                [cell3.contentView addSubview:playbackView];
+                return cell3;
             }
             break;
         case 4:
             if (indexPath.row == 0) {
-
+                UITableViewCell *cell4 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid4];
+                cell4.selectionStyle = UITableViewCellSelectionStyleNone;
+                
                 NSInteger count = self.picturesArr.count;
                 CGFloat W = 0;
                 if (count == 1) {
@@ -295,7 +329,7 @@ static NSString *cellid = @"cellid";
 //                picture.maxCount = 3;
                 picture.dataPlist = self.picturesArr;
                 picture.backgroundColor = [UIColor whiteColor];
-                [cell.contentView addSubview:picture];
+                [cell4.contentView addSubview:picture];
                
                 __weak typeof(self) weakSelf = self;
                 picture.manageBlock = ^(){
@@ -309,12 +343,13 @@ static NSString *cellid = @"cellid";
                     pictureVC.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:pictureVC animated:YES];
                 };
+                return cell4;
             }
             break;
         default:
             break;
     }
-    return cell;
+    return rootCell;
 }
 - (void)test1 {
     DLog(@"test");

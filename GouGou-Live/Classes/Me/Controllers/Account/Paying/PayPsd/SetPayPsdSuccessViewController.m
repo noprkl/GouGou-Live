@@ -20,7 +20,7 @@
     [super viewDidLoad];
     
     [self initUI];
-    
+    [self setNavBarItem];
 }
 
 - (void)initUI {

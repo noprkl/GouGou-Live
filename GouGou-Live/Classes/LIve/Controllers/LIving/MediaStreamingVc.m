@@ -15,6 +15,12 @@
 #import "TalkingViewController.h" // 弹幕
 #import "ShareAlertView.h" // 分享
 #import "ShareBtnModel.h" // 分享模型
+#import "NSString+MD5Code.h"
+#import "SellerMyGoodsModel.h"
+
+#import "LiveListRootModel.h"
+#import "LiveListRespModel.h"
+#import "LiveListStreamModel.h"
 
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
 
@@ -107,44 +113,65 @@
     
     // 设置音频推流参数
     PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+
+    // 创建流对象
     PLStream *stream = [PLStream streamWithJSON:nil];
 
-    NSString *idStr = [_idArr componentsJoinedByString:@"-"];
+    // 商品id
+    NSString *idStr = @"";
+    if (_idArr.count != 0) {
+        NSMutableArray *idMutableArr = [NSMutableArray array];
+
+        for (SellerMyGoodsModel *model in _idArr) {
+            [idMutableArr addObject:model.ID];
+        }
+        idStr = [idMutableArr componentsJoinedByString:@"|"];
+    }
     
-     // 时间戳
+     // 时间戳+卖家id MD5
      NSDate *date = [NSDate date];
      NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
      formatter.dateFormat = @"YYYYMMddHHmmss";
-     NSString *liveId = [formatter stringFromDate:date];
-     
+    NSString *liveId = [NSString md5WithString:[NSString stringWithFormat:@"%@%@",[formatter stringFromDate:date], [UserInfos sharedUser].ID]];
+    
      DLog(@"%@", liveId);
      NSDictionary *liveDict = @{
                                 @"product_id":idStr,
                                 @"live_id":liveId,
-                                @"user_id":@([[UserInfos sharedUser].ID intValue])
+                                @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                @"area":_city,
+                                @"name":_roomStr
                                 };
     
      DLog(@"%@", liveDict);
     
-     [self getRequestWithPath:API_Live_protect params:liveDict success:^(id successJson) {
+     [self postRequestWithPath:API_Live_product params:liveDict success:^(id successJson) {
          DLog(@"%@", successJson);
          if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-            // 创建流对象
-             stream.streamID = liveId;
-             stream.title = @"111";
-             stream.hubName = successJson[@"data"][@"resp"][@"hub"];
-//             stream.publishKey
-//             stream.publishSecurity
-             stream.disabled = [successJson[@"data"][@"disabledTill"] intValue];
-             stream.profiles = @[];
-             stream.hosts = successJson[@"data"][@"steam"];
+             LiveListRootModel *rootModel = [LiveListRootModel mj_objectWithKeyValues:successJson[@"data"]];
+             
+             LiveListRespModel *respModel = [LiveListRespModel mj_objectWithKeyValues:rootModel.resp];
+             
+             LiveListStreamModel *streamModel = [LiveListStreamModel mj_objectWithKeyValues:rootModel.steam];
+             DLog(@"%@---%@", respModel, streamModel);
+             // 流对象属性
             
-             [self.session startStreamingWithPushURL:[NSURL URLWithString:successJson[@"data"][@"steam"][@"publish"]] feedback:^(PLStreamStartStateFeedback feedback) {
+             stream.streamID = liveId;
+             stream.title = _roomStr;
+             stream.hubName = respModel.hub;
+             stream.disabled = respModel.disabledTill;
+             stream.profiles = @[];
+             stream.hosts = [streamModel mj_keyValues];
+            
+             [self.session startStreamingWithPushURL:[NSURL URLWithString:streamModel.publish] feedback:^(PLStreamStartStateFeedback feedback) {
                  DLog(@"%lu", feedback);
              }];
          }
+//         if ([successJson[@"message"] isEqualToString:@"已经添加过"]) {
+//             [self.navigationController popViewControllerAnimated:YES];
+//         }
      } error:^(NSError *error) {
-     DLog(@"%@", error);
+         DLog(@"%@", error);
      }];
     _session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream];
 
@@ -186,7 +213,7 @@
     [self.watchCount makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.livingImageView.centerY);
         make.left.equalTo(self.livingImageView.right).offset(10);
-        make.width.equalTo(100);
+        make.width.equalTo(70);
     }];
 
     [self.talkingVc.view makeConstraints:^(MASConstraintMaker *make) {
@@ -283,7 +310,7 @@
                     case 0:
                     {
                     // 朋友圈
-                    [weakSelf MomentShare];
+                    [weakSelf WechatTimeShare];
                     shareAlert = nil;
                     [shareAlert dismiss];
                     }

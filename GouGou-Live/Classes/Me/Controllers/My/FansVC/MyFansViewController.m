@@ -9,6 +9,7 @@
 #import "MyFansViewController.h"
 #import "MyFocusTableCell.h"
 #import "FocusAndFansModel.h"
+#import "PersonalPageController.h" // 个人主页
 
 @interface MyFansViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -108,6 +109,14 @@ static NSString *cellid = @"MyFocusCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return 75;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+    FocusAndFansModel *model = self.dataArr[indexPath.row];
+
+    PersonalPageController *personalVc = [[PersonalPageController alloc] init];
+    personalVc.personalID = model.userFanId;
+    [self.navigationController pushViewController:personalVc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

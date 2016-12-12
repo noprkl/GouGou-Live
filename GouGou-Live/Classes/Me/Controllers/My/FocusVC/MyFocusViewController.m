@@ -84,7 +84,7 @@ static NSString *cellid = @"MyFocusCell";
         if (isSelect) {
             
             NSDictionary *dict = @{
-                                   @"user_id":@(11),
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
                                    @"id":@(model.userFanId),
                                    @"type":@(0)
                                    };
@@ -98,7 +98,7 @@ static NSString *cellid = @"MyFocusCell";
         }else {
             
             NSDictionary *dict = @{
-                                   @"user_id":@(11),
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
                                    @"id":@(model.userFanId),
                                    @"type":@(1)
                                    };

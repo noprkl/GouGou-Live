@@ -10,7 +10,7 @@
 
 @interface LandscapePlayerToolView ()
 
-@property(nonatomic, strong) UIButton *backBtn; /**< 发挥按钮 */
+@property(nonatomic, strong) UIButton *backBtn; /**< 返回按钮 */
 
 
 @property(nonatomic, strong) UIImageView *livingImageView; /**< 直播提示图 */
@@ -99,13 +99,12 @@
         _collectBlcok();
     }
 }
-
 #pragma mark
 #pragma mark - 懒加载
 - (UIButton *)backBtn {
     if (!_backBtn) {
         _backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_backBtn setImage:[UIImage imageNamed:@"返回"] forState:(UIControlStateNormal)];
+        [_backBtn setImage:[UIImage imageNamed:@"返回-拷贝"] forState:(UIControlStateNormal)];
         [_backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _backBtn;

@@ -9,6 +9,7 @@
 #import "LiveViewController.h"
 #import "LiveTopView.h"
 #import "SearchViewController.h"
+#import <AlipaySDK/AlipaySDK.h>
 
 @interface LiveViewController ()<UIScrollViewDelegate>
 
@@ -57,16 +58,40 @@
 }
 - (void)LeftBarAction {
     
-    SearchViewController *searchVC = [[SearchViewController alloc] init];
+//    SearchViewController *searchVC = [[SearchViewController alloc] init];
     
 //    UISearchController *searchC = [[UISearchController alloc] initWithSearchResultsController:searchVC];
 //    searchVC.hidesBottomBarWhenPushed = YES;
 //
-    [self.navigationController pushViewController:searchVC animated:YES];
+//    [self.navigationController pushViewController:searchVC animated:YES];
     
-   
+    /** 支付宝支付 */
+    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+    NSDictionary *dit = @{
+                          @"id":@(arc4random_uniform(999)+100),
+                          @"total_fee":@(1)
+                          };
+    [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"msg"]];
+        [self aliPayWithOrderString:successJson[@"data"]];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
-
+- (void)aliPayWithOrderString:(NSString *)orderStr {
+    if (orderStr != nil) {
+        
+        NSString *appScheme = @"ap2016112203105439";
+        
+        [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            DLog(@"reslut = %@",resultDic);
+            if ([resultDic[@"ResultStatus"] isEqualToString:@"9000"]) {
+                //支付成功,这里放你们想要的操作
+            }
+        }];
+    }
+}
 #pragma mark - 添加子控制器
 - (void)createAddChildVC{
   

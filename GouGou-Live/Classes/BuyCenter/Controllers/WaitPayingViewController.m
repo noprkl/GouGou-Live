@@ -152,6 +152,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
                 // 跳转至联系卖家
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat3;
+                 viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
@@ -188,6 +189,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat3;
+                 viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
@@ -236,6 +238,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat3;
+                 viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);

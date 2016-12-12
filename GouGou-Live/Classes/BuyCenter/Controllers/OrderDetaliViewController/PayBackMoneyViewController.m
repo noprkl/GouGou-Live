@@ -343,7 +343,7 @@
         
             if ([button.titleLabel.text isEqual:@"申请维权"]) {
                
-                [weakself clickApplyProtectPower:weakself.detailModel];
+                [weakself clickApplyProtectPower:weakself.detailModel.ID];
         
             } else if ([button.titleLabel.text isEqual:@"不想买了"]) {
             
@@ -351,6 +351,7 @@
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat3;
+                 viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [weakself.navigationController pushViewController:viewController animated:YES];
                 

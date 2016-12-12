@@ -7,7 +7,15 @@
 //
 
 #import "LiveViewCellModel.h"
+#import "LiveListStreamModel.h"
 
 @implementation LiveViewCellModel
++ (NSDictionary *)mj_objectClassInArray{
+    
+    NSDictionary *dict = @{
+                           @"info":@"LiveListDogInfoModel"
+                           };
+    return dict;
+}
 
 @end

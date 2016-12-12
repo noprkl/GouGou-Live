@@ -178,10 +178,10 @@
         _liveTableView.bounces = NO;
         
         __weak typeof(self) weakSelf = self;
-        _liveTableView.cellBlock = ^(){
+        _liveTableView.cellBlock = ^(LiveViewCellModel *model){
             
             LivingViewController *livingVC = [[LivingViewController alloc] init];
-            
+            livingVC.liveID = model.liveId;
             livingVC.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:livingVC animated:YES];
             

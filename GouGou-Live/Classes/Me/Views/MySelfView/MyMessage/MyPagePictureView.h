@@ -20,4 +20,6 @@ typedef void(^ClickPictureCellBlobk)(MyAlbumsModel *model);
 @property(nonatomic, strong) ClickManageButtonBlobk manageBlock; /**< 管理回调 */
 
 @property(nonatomic, strong) ClickPictureCellBlobk pictureBlock; /**< 管理回调 */
+
+@property (nonatomic, assign) BOOL isHidManage;
 @end

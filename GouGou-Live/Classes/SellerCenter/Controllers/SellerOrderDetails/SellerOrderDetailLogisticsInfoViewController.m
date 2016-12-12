@@ -126,6 +126,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     // 跳转至买家
     SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
     viewController.title = EaseTest_Chat2;
+     viewController.chatID = EaseTest_Chat3;
     viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];
 }
@@ -192,7 +193,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             dogCardView.dogAgeLabel.text = self.orderInfo.ageName;
             dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
             dogCardView.dogColorLabel.text = self.orderInfo.colorName;
-            dogCardView.oldPriceLabel.attributedText = [self getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.orderInfo.priceOld]];
+            dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.orderInfo.priceOld]];
             dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.orderInfo.price];
 
             [cell.contentView addSubview:dogCardView];
@@ -287,6 +288,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         // 跳转至买家
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
         viewController.title = EaseTest_Chat2;
+         viewController.chatID = EaseTest_Chat3;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
         
@@ -319,16 +321,8 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         // 跳转至买家
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
         viewController.title = EaseTest_Chat1;
+         viewController.chatID = EaseTest_Chat3;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];    }
-}
-- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
-    NSDictionary *attribtDic = @{
-                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
-                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
-                                 };
-    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
-    return attribut;
 }
 @end

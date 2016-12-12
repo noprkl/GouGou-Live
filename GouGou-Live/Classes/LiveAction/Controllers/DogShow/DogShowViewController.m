@@ -147,7 +147,7 @@ static NSString *cellid = @"DogShowCellid";
                 case 0:
                 {
                     // 朋友圈
-                    [weakSelf MomentShare];
+                    [weakSelf WechatTimeShare];
                     shareAlert = nil;
                     [shareAlert dismiss];
                 }
@@ -194,32 +194,39 @@ static NSString *cellid = @"DogShowCellid";
     };
     // 喜欢
     cell.likeBlock = ^ (){
-        // 添加喜欢
-        NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                               @"user_id":@(11),
-                               @"product_id":@(0),//[dogID integerValue]),
-                               @"type":@(1)
-                               };
-        [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-            [weakSelf showAlert:successJson[@"message"]];
-            if (successJson) {
-            }
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
-
+        if ([UserInfos getUser]) {
+            // 添加喜欢
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"product_id":@(0),//[dogID integerValue]),
+                                   @"type":@(1)
+                                   };
+            [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [weakSelf showAlert:successJson[@"message"]];
+                if (successJson) {
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        }else {
+            [self showAlert:@"请登录"];
+        }
         
     };
     cell.bookBlock = ^ (){
         
-        BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
-        [rulesAlert show];
-        
-        rulesAlert.sureBlock = ^(){
-            [self pushToDogBookVC:self.dogInfo];
+        if ([UserInfos getUser]) {
+            BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
+            [rulesAlert show];
             
-        };
+            rulesAlert.sureBlock = ^(){
+                [self pushToDogBookVC:self.dogInfo];
+                
+            };
+        }else {
+            [self showAlert:@"请登录"];
+        }
     };
     return cell;
 }

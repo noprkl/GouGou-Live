@@ -369,6 +369,7 @@ static NSString *closeCell = @"SellerCloseCell";
     if ([title isEqualToString:@"联系买家"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
         viewController.title = EaseTest_Chat2;
+         viewController.chatID = EaseTest_Chat3;
         [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
@@ -404,6 +405,7 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([title isEqualToString:@"在线客服"]){
         
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
+         viewController.chatID = EaseTest_Chat3;
         viewController.title = EaseTest_Chat2;
         [self.navigationController pushViewController:viewController animated:YES];
     }

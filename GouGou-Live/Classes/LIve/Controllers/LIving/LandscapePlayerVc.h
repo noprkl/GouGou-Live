@@ -10,4 +10,6 @@
 
 @interface LandscapePlayerVc : BaseViewController
 
+@property(nonatomic, strong) NSString *rtmp; /**< 拉流地址 */
+
 @end

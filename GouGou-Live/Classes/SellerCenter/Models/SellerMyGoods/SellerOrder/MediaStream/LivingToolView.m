@@ -58,7 +58,6 @@
     [self.faceOrBack makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.right.equalTo(self.right).offset(-10);
-        make.size.equalTo(CGSizeMake(22, 22));
     }];
     [self.shareBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
@@ -81,7 +80,6 @@
         _shareBlcok(btn);
     }
 }
-
 - (void)clickFaceOrBackAction {
     if (_faceBlcok) {
         _faceBlcok();
@@ -93,7 +91,7 @@
 - (UIButton *)backBtn {
     if (!_backBtn) {
         _backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_backBtn setImage:[UIImage imageNamed:@"返回"] forState:(UIControlStateNormal)];
+        [_backBtn setImage:[UIImage imageNamed:@"返回-拷贝"] forState:(UIControlStateNormal)];
         [_backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _backBtn;
@@ -127,7 +125,7 @@
 - (UIButton *)faceOrBack {
     if (!_faceOrBack) {
         _faceOrBack = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_faceOrBack setImage:[UIImage imageNamed:@"拍照"] forState:(UIControlStateNormal)];
+        [_faceOrBack setImage:[UIImage imageNamed:@"相机翻转"] forState:(UIControlStateNormal)];
         [_faceOrBack addTarget:self action:@selector(clickFaceOrBackAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _faceOrBack;

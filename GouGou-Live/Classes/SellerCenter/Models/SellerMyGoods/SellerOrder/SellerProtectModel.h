@@ -10,6 +10,8 @@
 
 @interface SellerProtectModel : BaseModel
 
+@property (nonatomic, strong) NSString *ID; /**< 维权ID */
+
 @property (copy, nonatomic) NSString *status; /**< 订单状态 */
 @property (copy, nonatomic) NSString *closeTime; /**< 交易关闭时间 */
 

@@ -145,6 +145,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
                 // 跳转至联系卖家
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat1;
+                 viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
@@ -181,6 +182,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
                 // 跳转至联系卖家
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat2;
+                 viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);

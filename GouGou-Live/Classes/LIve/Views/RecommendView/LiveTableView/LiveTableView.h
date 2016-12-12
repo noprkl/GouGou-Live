@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LiveViewCellModel.h"
 
-typedef void(^ClickCellBlock)();
-
+typedef void(^ClickLiveCellBlock)(LiveViewCellModel *model);
+typedef void(^ClickDogCardBlock)(LiveViewCellModel *model);
 @interface LiveTableView : UITableView
 
 /** 点击cell回调 */
-@property (strong, nonatomic) ClickCellBlock cellBlock;
+@property (strong, nonatomic) ClickLiveCellBlock cellBlock;
+/** 点击cell回调 */
+@property (strong, nonatomic) ClickDogCardBlock dogCardBlock;
 
 /** 数据源 */
 @property (strong, nonatomic) NSMutableArray *dataPlist;

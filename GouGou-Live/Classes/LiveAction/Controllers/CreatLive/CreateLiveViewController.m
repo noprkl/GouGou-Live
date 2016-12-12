@@ -9,12 +9,14 @@
 #define ImgCount 15
 
 #import "CreateLiveViewController.h"
-#import "AddUpdataImagesView.h"
+#import "AddShowDogImgView.h"
 #import "MediaStreamingVc.h"
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import "HTTPTool.h"
 #import <CoreLocation/CoreLocation.h>
 
+#import "AddDogShowController.h"
+#import "SellerMyGoodsModel.h"
 @interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate, CLLocationManagerDelegate>
 {
     CGFloat W;//图片view高度
@@ -30,7 +32,7 @@
 
 @property(nonatomic, assign) BOOL isFirstUpdate; /**< 是否第一时间更新 */
 
-@property(nonatomic, strong) AddUpdataImagesView *photoView; /**< 上传图片 */
+@property(nonatomic, strong) AddShowDogImgView *photoView; /**< 上传图片 */
 
 @property (strong, nonatomic) UIView *lineView; /**< 横线 */
 
@@ -47,8 +49,6 @@
 @property(nonatomic, strong) UIButton *TencentShareBtn; /**< 空间 */
 
 @property(nonatomic, strong) UIButton *beginLiveBtn; /**< 开始直播 */
-
-@property(nonatomic, strong) NSMutableArray *photoArr; /**< 图片数组 */
 
 @property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
@@ -71,6 +71,33 @@
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+
+    // 监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLiveShowDog:) name:@"AddLiveShowDog" object:nil];
+}
+// 添加展播狗狗图片
+- (void)addLiveShowDog:(NSNotification *)notification {
+    NSArray *arr = notification.userInfo[@"AddLiveShowDog"];
+    DLog(@"%@", arr);
+//    if (self.photoUrl.count == 0) {
+//        [self.photoUrl addObjectsFromArray:arr];
+//    }else{
+//        for (SellerMyGoodsModel *selectModel in self.photoUrl) {
+//            // 相同id不能添加
+//            for (SellerMyGoodsModel *model in arr) {
+//                if ([selectModel.ID isEqualToString:model.ID]) {
+//                    [self.photoUrl removeObject:model];
+//                }
+//            }
+//        }
+//        [self.photoUrl addObjectsFromArray:arr];
+//    }
+    [self.photoUrl removeAllObjects];
+    [self.photoUrl addObjectsFromArray:arr];
+    DLog(@"%@", self.photoUrl);
+    self.photoView.dataArr = self.photoUrl;
+    [self.photoView.collectionView reloadData];
+    [self makeConstraint];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -237,7 +264,7 @@
 }
 // 朋友圈分享
 - (void)ClickFriendShareAction:(UIButton *)btn{
-    [self MomentShare];
+    [self WechatTimeShare];
 }
 // 开始直播
 - (void)ClickBeginLiveBtnAction:(UIButton *)btn{
@@ -261,21 +288,21 @@
 //    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //        DLog(@"%@", error);
 //    }];
-    
-    // 跳转到直播页
-    MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
-    streamVc.idArr = self.photoArr;
-    streamVc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:streamVc animated:YES];  
+    if (self.editNameText.text.length == 0) {
+        [self showAlert:@"请输入房间名"];
+    }else{
+        // 跳转到直播页
+        MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
+        streamVc.idArr = self.photoUrl;
+        streamVc.city = self.cityLabel.text;
+        streamVc.roomStr = self.editNameText.text;
+        streamVc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:streamVc animated:YES];
+    }
 }
 #pragma mark
 #pragma mark - 懒加载
-- (NSMutableArray *)photoArr {
-    if (!_photoArr) {
-        _photoArr = [NSMutableArray array];
-    }
-    return _photoArr;
-}
+
 - (NSMutableArray *)photoUrl {
     if (!_photoUrl) {
         _photoUrl = [NSMutableArray array];
@@ -290,33 +317,17 @@
     }
     return _manager;
 }
-- (AddUpdataImagesView *)photoView {
+- (AddShowDogImgView *)photoView {
     if (!_photoView) {
     
-        _photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectZero];
+        _photoView = [[AddShowDogImgView alloc] initWithFrame:CGRectZero];
         _photoView.maxCount = ImgCount;
         _photoView.hidden = YES;
         __weak typeof(self) weakSelf = self;
-        __weak typeof(_photoView) weakPhoto = _photoView;
         _photoView.addBlock = ^(){
-            
-            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
-            imagePickerVc.sortAscendingByModificationDate = NO;
-            
-            [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
-            
-            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
-                if (flag) {
-                    [weakPhoto.dataArr addObject:photos[0]];
-                    
-                    [weakPhoto.collectionView reloadData];
-                    weakSelf.photoArr = weakPhoto.dataArr;
-                    [weakSelf makeConstraint];
-                }else{
-                    DLog(@"出错了");
-                }
-            }];
-            
+            AddDogShowController *addVc = [[AddDogShowController alloc] init];
+            addVc.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:addVc animated:YES];
         };
         _photoView.deleImg = ^(){
             [weakSelf makeConstraint];
@@ -440,7 +451,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddLiveShowDog" object:nil];
+}
 /*
 #pragma mark - Navigation
 

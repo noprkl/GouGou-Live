@@ -333,7 +333,6 @@
 
 - (void)cilckDuihaoImageBtn:(UIButton *)button {
     
-    //    button.selected = !button.selected;
     if (_acquiesceBlock) {
         _acquiesceBlock(button);
     }

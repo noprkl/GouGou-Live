@@ -23,6 +23,8 @@
 #define kDogImageWidth 10
 // 添加图片每行最大的数
 #define kMaxImgCount 6
+// 系统版本是否大于8.0
+#define IOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >=8.0 ? YES : NO)
 
 
 #pragma mark - 第三方头文件
@@ -42,12 +44,17 @@
 #import "APIConfig.h"
 // 判断输入的字符串是否符合
 #import "NSString+CheckString.h"
+// 狗狗老价格 富文本
+#import "NSAttributedString+DogOldPrice.h"
+
 // 16进制颜色转RGB
 #import "UIColor+HexString.h"
 // 个人信息
 #import "UserInfos.h"
 // 狗狗品种
 #import "DogCategoryModel.h"
+
+
 
 #import "UIView+FontSize.h"
 

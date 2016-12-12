@@ -6,23 +6,28 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "BaseModel.h"
 
-@interface LiveViewCellModel : NSObject
+@interface LiveViewCellModel : BaseModel
 
 /** 主播头像 */
-@property (strong, nonatomic) NSString *anchorIcon;
+//@property (strong, nonatomic) NSString *userImgUrl;
 
 /** 主播名字 */
-@property (strong, nonatomic) NSString *anchorName;
+//@property (strong, nonatomic) NSString *userName;
+
+//@property(nonatomic, strong) NSString *userId; /**< 用户id */
+
+/** 房间名字 */
+@property (strong, nonatomic) NSString *name;
 
 /** 定位城市 */
-@property (strong, nonatomic) NSString *anchorCity;
+//@property (strong, nonatomic) NSString *area;
 
-/** 直播图 */
-@property (strong, nonatomic) NSString *roomImage;
+//@property (nonatomic, strong) NSString *viewNum; /**< 观看人数 */
 
-/** 房间信息 */
-@property (strong, nonatomic) NSString *roomMessage;
+@property(nonatomic, strong) NSString *liveId; /**< 直播参数 */
+
+@property(nonatomic, strong) NSArray *info; /**< 狗狗信息 */
 
 @end

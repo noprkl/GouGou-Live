@@ -16,7 +16,7 @@
 
 @property(nonatomic, strong) NSMutableArray *cells; /**< cells */
 
-@property(nonatomic, strong) UILabel *lastLabel; /**< 上一个 */
+@property(nonatomic, strong) UITableViewCell *lastcell; /**< 上一个 */
 
 @end
 
@@ -46,7 +46,8 @@ static NSString *cellid = @"MessageMeumView";
 - (void)setDataPlist:(NSArray *)dataPlist {
     _dataPlist = dataPlist;
     self.dataArr = dataPlist;
-    self.dataArr = @[@"关注", @"举报",  @"屏蔽消息", @"个人主页"];
+//    self.dataArr = @[@"关注", @"举报",  @"屏蔽消息", @"个人主页"];
+    [self reloadData];
 }
 - (NSMutableArray *)cells {
     if (!_cells) {
@@ -64,22 +65,17 @@ static NSString *cellid = @"MessageMeumView";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-    label.text = self.dataArr[indexPath.row];
-    label.font = [UIFont systemFontOfSize:16];
-    label.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.text = self.dataArr[indexPath.row];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     
-//    label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    label.backgroundColor = [UIColor redColor];
-    label.textColor = [UIColor colorWithHexString:@"#000000"];
-    [cell.contentView addSubview:label];
-
     if (indexPath.row == 0) {
-        label.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        label.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        self.lastLabel = label;
+        cell.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        self.lastcell = cell;
     }
-    [self.cells addObject:label];
+    [self.cells addObject:cell];
 
     return cell;
 }
@@ -89,13 +85,13 @@ static NSString *cellid = @"MessageMeumView";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    self.lastLabel.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    self.lastLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+    self.lastcell.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    self.lastcell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     
-    UILabel *label = self.cells[indexPath.row];
-    label.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-    label.textColor = [UIColor colorWithHexString:@"#ffffff"];
-    self.lastLabel = label;
+    UITableViewCell *cell = self.cells[indexPath.row];
+    cell.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    self.lastcell = cell;
     
     if (_cellBlock) {
         _cellBlock(self.dataArr[indexPath.row]);

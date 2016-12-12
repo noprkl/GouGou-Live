@@ -6,8 +6,10 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseNavigationController.h"
+#import "BaseViewController.h"
 
-@interface SellerShowViewController : BaseNavigationController
+@interface SellerShowViewController : BaseViewController
+
+@property(nonatomic, strong) NSString *authorId; /**< 主播id */
 
 @end

@@ -10,5 +10,7 @@
 
 @interface SingleChatViewController : EaseMessageViewController
 
+@property (nonatomic, strong) NSString *chatID; /**< 聊天ID */
+
 
 @end

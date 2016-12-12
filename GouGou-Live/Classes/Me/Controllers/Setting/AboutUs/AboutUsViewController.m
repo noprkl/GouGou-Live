@@ -7,7 +7,7 @@
 //
 
 #import "AboutUsViewController.h"
-
+#import "HTTPTool.h"
 @interface AboutUsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -31,7 +31,10 @@
 - (void)initUI {
     
     self.phoneLabel.text = @"服务热线 010-82929292";
-    self.versionLabel.text = @"版本号";
+
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    self.versionLabel.text = [NSString stringWithFormat:@"版本号 %@", currentVersion];
 }
 - (NSArray *)dataArr {
     if (!_dataArr) {
@@ -66,11 +69,17 @@
     NSString *cellText = self.dataArr[indexPath.row];
     
     if ([cellText isEqualToString:@"用户使用协议"]) {
-        
-        NSLog(@"%@", cellText);
+        DLog(@"%@", cellText);
     }else if ([cellText isEqualToString:@"检查更新"]) {
 
-        NSLog(@"%@", cellText);
+        NSDictionary *dict = @{
+                               @"id":@""
+                               };
+        [HTTPTool getRequestWithPath:@"http://itunes.apple.com/cn/lookup" params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
     }
 }
 - (void)didReceiveMemoryWarning {

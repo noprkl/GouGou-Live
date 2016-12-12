@@ -18,7 +18,4 @@
 @interface SellerBaseCell : UITableViewCell
 
 
-// 文字富文本
-- (NSAttributedString *)getCenterLineWithString:(NSString *)text;
-
 @end

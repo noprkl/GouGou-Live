@@ -32,6 +32,7 @@
 @property(nonatomic, strong) SellerGoodsBottomView *bottomView; /**< 选中按钮 */
 
 @property(nonatomic, strong) SellerGoodsBarBtnView *barBtnView; /**< 上边按钮 */
+
 @property(nonatomic, strong) UIButton *allBtn; /**< 全选按钮 */
 
 @end

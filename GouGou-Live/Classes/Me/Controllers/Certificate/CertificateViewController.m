@@ -12,6 +12,10 @@
 #import "NSString+CertificateImage.h"
 #import "NSString+MD5Code.h"
 
+#import "HaveCommitCertificateView.h"
+#import "CerfificateFaildView.h"
+#import "CerFiticateSuccessView.h"
+
 static NSString * identityCell = @"identitiCellID";
 
 @interface CertificateViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -27,6 +31,10 @@ static NSString * identityCell = @"identitiCellID";
 @property(nonatomic, strong) UIImage *faceIdentfityImg; /**< 省份证正面图片 */
 @property(nonatomic, strong) UIImage *backIdentfityImg; /**< 省份证背面图片 */
 
+
+@property (nonatomic, strong) HaveCommitCertificateView *haveCommitView; /**< 审核中 */
+@property (nonatomic, strong) CerfificateFaildView *faildView; /**< 审核失败 */
+@property (nonatomic, strong) CerFiticateSuccessView *successView; /**< 审核成功 */
 @end
 
 @implementation CertificateViewController
@@ -98,26 +106,23 @@ static NSString * identityCell = @"identitiCellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self initUI];
-    
     [self setNavBarItem];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
     if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) { //1.未认证 2.审核 3.已认证 4.认证失败
-        
+            [self initUI];
     }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
-        
+        [self.view addSubview:self.haveCommitView];
     }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
-        
+        [self.view addSubview:self.successView];
     }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
-        
+        [self.view addSubview:self.faildView];
     }
 }
+// UI
 - (void)initUI {
 
     self.title = @"实名认证";
@@ -126,6 +131,41 @@ static NSString * identityCell = @"identitiCellID";
     
     [self.view addSubview:self.identityInfoView];
     [self.view addSubview:self.identityTableView];
+}
+- (HaveCommitCertificateView *)haveCommitView {
+    if (!_haveCommitView) {
+        _haveCommitView = [[HaveCommitCertificateView alloc] initWithFrame:self.view.bounds];
+        __weak typeof(self) weakSelf = self;
+        _haveCommitView.backBlock = ^(){
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        };
+    }
+    return _haveCommitView;
+}
+- (CerfificateFaildView *)faildView {
+    if (!_faildView) {
+        _faildView = [[CerfificateFaildView alloc] initWithFrame:self.view.bounds];
+
+        __weak typeof(self) weakSelf = self;
+        _faildView.backBlcok = ^(){
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        };
+        _faildView.recommitBlock = ^(){
+            weakSelf.faildView.hidden = YES;
+            [weakSelf initUI];
+        };
+    }
+    return _faildView;
+}
+- (CerFiticateSuccessView *)successView {
+    if (!_successView) {
+        _successView = [[CerFiticateSuccessView alloc] initWithFrame:self.view.bounds];
+        __weak typeof(self) weakSelf = self;
+        _successView.backBlock = ^(){
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        };
+    }
+    return _successView;
 }
 #pragma 网络请求
 - (void)requestNameAndIdentiry {

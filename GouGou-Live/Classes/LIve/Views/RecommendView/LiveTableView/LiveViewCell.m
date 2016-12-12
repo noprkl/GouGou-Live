@@ -82,6 +82,19 @@
 - (void)setLiveCellModel:(LiveViewCellModel *)liveCellModel {
     
     _liveCellModel = liveCellModel;
+    self.roomMessageLabel.text = liveCellModel.name;
+//    if (liveCellModel.area.length == 0) {
+//        self.anchorCityLabel.text = liveCellModel.area;
+//    }else{
+//        self.anchorCityLabel.text = @"";
+//    }
+//    self.watchCountLabel.text = liveCellModel.viewNum;
+    
+//    if (liveCellModel.userImgUrl != NULL) {
+//        NSString *urlString = [IMAGE_HOST stringByAppendingString:liveCellModel.userImgUrl];
+//        [self.anchorIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+//    }
+//    self.anchorNameLabel.text = liveCellModel.userName;
     
 }
 

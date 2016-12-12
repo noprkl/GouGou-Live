@@ -87,7 +87,7 @@
 // 请求关注数
 - (void)postRequestGetFocus {
     // [[UserInfos sharedUser].ID integerValue]
-    NSDictionary *dict = @{@"user_id":@(11)
+    NSDictionary *dict = @{@"user_id":@(17)
                            };
     [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
 
@@ -96,9 +96,9 @@
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"MyFocus"];
             // 得到关注人的人
             self.focusArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            // 把关注的人存到本地
-//            [[NSUserDefaults standardUserDefaults] setObject:self.focusArray forKey:@"MyFocus"];
-//            [self.tableView reloadData];
+             //把关注的人存到本地
+            [[NSUserDefaults standardUserDefaults] setObject:self.focusArray forKey:@"MyFocus"];
+            [self.tableView reloadData];
         }
 
     } error:^(NSError *error) {
@@ -111,7 +111,9 @@
     [super viewDidLoad];
     
     [self initUI];
-
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    DLog(@"%@", docDir);
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

@@ -401,7 +401,7 @@
         
         _oldPriceLabel = [[UILabel alloc] init];
         
-        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
+        _oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:@"¥ 2400"];
         
     }
     
@@ -424,24 +424,6 @@
     }
     
     return _spaceView;
-    
-}
-
-- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
-    
-    NSDictionary *attribtDic = @{
-                                 
-                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
-                                 
-                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                 
-                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
-                                 
-                                 };
-    
-    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
-    
-    return attribut;
     
 }
 

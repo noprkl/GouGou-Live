@@ -9,11 +9,12 @@
 #import "LandscapePlayerVc.h"
 
 #import "LandscapePlayerToolView.h" // 顶部view
-#import "LivingSendMessageView.h" // 编辑信息
-
-#import "TalkingViewController.h" // 弹幕
+#import "DeletePrommtView.h"
 #import "ShareAlertView.h" // 分享
 #import "ShareBtnModel.h" // 分享模型
+
+#import "LivingSendMessageView.h" // 编辑弹幕信息
+#import "TalkingViewController.h" // 弹幕控制器
 
 #import <PLPlayerKit/PLPlayerKit.h>
 
@@ -49,7 +50,9 @@
     
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
     self.hidesBottomBarWhenPushed = YES;
     // 进入后横屏
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -103,7 +106,8 @@
     [playerOption setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
     [playerOption setOptionValue:@(kPLLogNone) forKey:PLPlayerOptionKeyLogLevel];
     
-    NSURL *url = [NSURL URLWithString:@"rtmp://pili-live-rtmp.zhuaxingtech.com/gougoulive/helloios"];
+    // 播放
+    NSURL *url = [NSURL URLWithString:_rtmp];
     self.player = [PLPlayer playerWithURL:url option:playerOption];
     self.player.delegate = self;
     self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
@@ -112,10 +116,6 @@
     // 播放
     [self.player play];
    
-    // 设置约束
-//    [self.view remakeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
-//    }];
     [self.player.playerView makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
@@ -125,8 +125,6 @@
 - (void)initUI {
     
     [self.player.playerView addSubview:self.topView];
-    //    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    //    [window addSubview:self.danmuBtn];
     [self.player.playerView addSubview:self.livingImageView];
     [self.player.playerView addSubview:self.watchCount];
     [self addChildViewController:self.talkingVc];
@@ -155,7 +153,6 @@
         make.left.equalTo(self.livingImageView.right).offset(10);
         make.width.equalTo(100);
     }];
-    
     [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left);
         make.top.equalTo(self.view.top).offset(110);
@@ -242,7 +239,7 @@
                     case 0:
                     {
                         // 朋友圈
-                        [weakSelf MomentShare];
+                        [weakSelf WechatTimeShare];
                         shareAlert = nil;
                         [shareAlert dismiss];
                     }
@@ -298,7 +295,13 @@
         };
         // 举报
         _topView.reportBlcok = ^(){
-            
+            // 举报
+            DeletePrommtView *report = [[DeletePrommtView alloc] init];
+            report.message = @"确定举报该用户";
+            report.sureBlock = ^(UIButton *btn){
+                DLog(@"举报");
+            };
+            [report show];
         };
 
     }

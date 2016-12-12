@@ -11,6 +11,9 @@
 
 @interface LiveTableView () <UITableViewDelegate, UITableViewDataSource>
 
+
+@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+
 @end
 
 /** cellid */
@@ -20,7 +23,14 @@ static NSString *cellid = @"RecommentCellid";
 - (void)setDataPlist:(NSMutableArray *)dataPlist {
  
     _dataPlist = dataPlist;
-    
+    self.dataArr = dataPlist;
+    [self reloadData];
+}
+- (NSArray *)dataArr {
+    if (!_dataArr) {
+        _dataArr = [NSArray array];
+    }
+    return _dataArr;
 }
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
 {
@@ -30,34 +40,38 @@ static NSString *cellid = @"RecommentCellid";
         self.dataSource = self;
         
         [self registerNib:[UINib nibWithNibName:@"LiveViewCell" bundle:nil] forCellReuseIdentifier:cellid];
-         
     }
     return self;
 }
 
 // tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //    return self.dataPlist.count;
-    return 2;
+
+    return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LiveViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    LiveViewCellModel *model = self.dataPlist[indexPath.row];
+    cell.liveCellModel = model;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.cardBlcok = ^(UIControl *control){
         DLog(@"第%ld个卡片", indexPath.row);
+        if (_dogCardBlock) {
+            _dogCardBlock(model);
+        }
     };
     
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
+    LiveViewCellModel *model = self.dataPlist[indexPath.row];
     if (_cellBlock) {
-        _cellBlock();
+        _cellBlock(model);
     }
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     return 357;

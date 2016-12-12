@@ -41,14 +41,6 @@
     self.titleLabel.text = timeLabel;
 }
 
-//- (NSArray *)firstData {
-//
-//    if (!_firstData) {
-//        _firstData = @[@"上午",@"下午"];
-//    }
-//    return _firstData;
-//}
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -117,7 +109,11 @@
         [_datePicker setDatePickerMode:UIDatePickerModeTime];
         // 当值发生改变的时候调用的方法
         [_datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
-
+        NSDate *date = [NSDate date];
+        NSDateFormatter * format = [[NSDateFormatter alloc] init];
+        format.dateFormat = @"hh:ss";
+        NSString * string = [format stringFromDate:date];
+        self.timeString = string;
     }
     return _datePicker;
 }
@@ -128,7 +124,6 @@
         _titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
     }
     return _titleLabel;
-    
 }
 
 - (UIButton *)sureBtn {
@@ -155,14 +150,9 @@
 - (void)datePickerValueChanged:(UIDatePicker *)picker {
     
     NSDateFormatter * format = [[NSDateFormatter alloc] init];
-    
     format.dateFormat = @"hh:ss";
-    
     NSString * string = [format stringFromDate:picker.date];
-    
     self.timeString = string;
-
-    DLog(@"%@",self.timeString);
 }
 #pragma mark - 按钮点击
 - (void)clickSureBtnAction {

@@ -135,6 +135,7 @@
 }
 
 - (void)setModel:(SellerMyGoodsModel *)model {
+    _model = model;
     self.dogAgeLabel.text = model.ageName;
     if (model.pathSmall != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
@@ -146,7 +147,7 @@
     self.dogAgeLabel.text = model.ageName;
     self.dogSizeLabel.text = model.sizeName;
     self.dogColorLabel.text = model.colorName;
-    self.oldPriceLabel.attributedText = [self getCenterLineWithString:[NSString stringWithFormat:@"￥%@", model.priceOld]];
+    self.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", model.priceOld]];
     self.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     // 判断状态
     NSString *state = @"";
@@ -269,7 +270,7 @@
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
         
-        _oldPriceLabel.attributedText = [self getCenterLineWithString:@"¥ 2400"];
+        _oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:@"¥ 2400"];
     }
     return _oldPriceLabel;
 }
@@ -285,13 +286,4 @@
     return _stateLabel;
 }
 
-- (NSAttributedString *)getCenterLineWithString:(NSString *)text {
-    NSDictionary *attribtDic = @{
-                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
-                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
-                                 };
-    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
-    return attribut;
-}
 @end

@@ -42,15 +42,16 @@ static NSString *cellid = @"ManagePictureaCell";
     }];
     
     [self.manageAlbum makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.top).offset(10);
+        make.centerY.equalTo(self.albumLabel.centerY);
         make.right.equalTo(self.right).offset(-10);
     }];
     
     [self addSubview:self.collectionView];
 
     [self.collectionView makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.left.right.equalTo(self);
-        make.top.equalTo(self.albumLabel.bottom).offset(10);
+        make.left.right.equalTo(self);
+        make.bottom.equalTo(self.bottom).offset(-5);
+        make.top.equalTo(self.albumLabel.bottom);
     }];
 
 }
@@ -66,6 +67,10 @@ static NSString *cellid = @"ManagePictureaCell";
     _dataPlist = dataPlist;
     self.dataArr = dataPlist;
     [self.collectionView reloadData];
+}
+- (void)setIsHidManage:(BOOL)isHidManage {
+    _isHidManage = isHidManage;
+    self.manageAlbum.hidden = isHidManage;
 }
 - (void)clickManageBtnAction {
     if (_manageBlock) {

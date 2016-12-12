@@ -62,7 +62,7 @@
     self.dogCardView.dogAgeLabel.text = model.ageName;
     self.dogCardView.dogSizeLabel.text = model.sizeName;
     self.dogCardView.dogColorLabel.text = model.colorName;
-    self.dogCardView.oldPriceLabel.attributedText = [self getCenterLineWithString:model.priceOld];
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     
     self.costView.moneyMessage = model.price;

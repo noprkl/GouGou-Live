@@ -76,7 +76,7 @@
         make.top.equalTo(self.top).offset(10);
         make.size.equalTo(CGSizeMake(60, 60));
     }];
-    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
+    if (_isReal) {
         [self.userNameLabel remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.iconView.bottom).offset(15);
             make.centerX.equalTo(self.centerX).offset(-30);
@@ -131,17 +131,17 @@
         make.height.equalTo(self.pleasure.height);
     }];
   
-    if ([UserInfos sharedUser].userimgurl.length > 0) {
-        NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+    if (_userImg.length > 0) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:_userImg];
         
         [self.iconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
     }
-    if ([UserInfos sharedUser].usernickname.length > 0) {
-        self.userNameLabel.text = [UserInfos sharedUser].usernickname;
+    if (_userName.length > 0) {
+        self.userNameLabel.text = _userName;
     }
-    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
+    if (_isReal) {
         self.userNameAuthen.hidden = NO;
-        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+        if (_isMentch) {
             self.sellerAuthen.hidden = NO;
         }else{
             self.sellerAuthen.hidden = YES;
@@ -149,8 +149,6 @@
     }else{
         self.userNameAuthen.hidden = YES;
     }
-
-    
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -177,7 +175,6 @@
         _userNameAuthen.textColor = [UIColor colorWithHexString:@"#ffffff"];
         _userNameAuthen.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];
         _userNameAuthen.textAlignment = NSTextAlignmentCenter;
-        
         _userNameAuthen.layer.cornerRadius = 7.5;
         _userNameAuthen.layer.masksToBounds = YES;
     }

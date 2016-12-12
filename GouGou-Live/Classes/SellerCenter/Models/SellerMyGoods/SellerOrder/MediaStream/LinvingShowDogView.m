@@ -57,8 +57,9 @@ static NSString *cellid = @"LivingShowDogCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
     LivingShowDogCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 #pragma mark 高度
@@ -74,7 +75,6 @@ static NSString *cellid = @"LivingShowDogCell";
     if (section == 0) {
         
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 43)];
-        view.backgroundColor = [UIColor whiteColor];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 43)];
         
@@ -86,7 +86,7 @@ static NSString *cellid = @"LivingShowDogCell";
         [view addSubview:label];
         
         UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        UIImage *image = [UIImage imageNamed:@"返回"];
+        UIImage *image = [UIImage imageNamed:@"返回-拷贝"];
         [backBtn setImage:image forState:(UIControlStateNormal)];
         backBtn.frame = CGRectMake(10, (44 - image.size.height) / 2, image.size.width, image.size.height);
         [backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
@@ -103,23 +103,13 @@ static NSString *cellid = @"LivingShowDogCell";
     
 }
 - (void)clickBackBtnAction {
-    
-//    if (_bottomBlock) {
-//        _bottomBlock(self.lastString);
-//    }
+
     self.hidden = YES;
-    
 }
 
 #pragma mark 选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    DogCategoryModel *text = self.dataPlist[indexPath.row];
-//    self.lastString = text;
-//    if (_sizeCellBlock) {
-//        //        [self dismiss];
-//        _sizeCellBlock(text);
-//    }
 }
 
 @end

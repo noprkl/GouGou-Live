@@ -75,7 +75,7 @@
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_QQ messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
-            DLog(@"************Share fail with error %@*********",error);
+            DLog(@"************QQ分享 fail with error %@*********",error);
         }else{
             DLog(@"response data is %@",data);
         }
@@ -91,7 +91,7 @@
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Sina messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
-            DLog(@"************Share fail with error %@*********",error);
+            DLog(@"************新浪分享 fail with error %@*********",error);
         }else{
             DLog(@"response data is %@",data);
         }
@@ -107,14 +107,14 @@
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatSession messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
-            DLog(@"************Share fail with error %@*********",error);
+            DLog(@"************微信分享 fail with error %@*********",error);
         }else{
             DLog(@"response data is %@",data);
         }
     }];
 }
 /** 朋友圈分享 */
-- (void)MomentShare {
+- (void)WechatTimeShare {
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     //设置文本
@@ -123,7 +123,7 @@
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatTimeLine messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
-            DLog(@"************Share fail with error %@*********",error);
+            DLog(@"************朋友圈分享 fail with error %@*********",error);
         }else{
             DLog(@"response data is %@",data);
         }
@@ -139,7 +139,7 @@
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Qzone messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
-            DLog(@"************Share fail with error %@*********",error);
+            DLog(@"************QQ空间 fail with error %@*********",error);
         }else{
             DLog(@"response data is %@",data);
         }

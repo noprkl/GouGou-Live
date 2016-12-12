@@ -72,10 +72,11 @@
         _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 44) style:(UITableViewStylePlain)];
         
         __weak typeof(self) weakSelf = self;
-        _tableView.cellBlock = ^(){
+        _tableView.cellBlock = ^(LiveViewCellModel *model){
             
         LivingViewController *livingVC = [[LivingViewController alloc] init];
-            livingVC.hidesBottomBarWhenPushed = YES;
+        livingVC.hidesBottomBarWhenPushed = YES;
+        livingVC.liveID = model.liveId;
         [weakSelf.navigationController pushViewController:livingVC animated:YES];
             
         };

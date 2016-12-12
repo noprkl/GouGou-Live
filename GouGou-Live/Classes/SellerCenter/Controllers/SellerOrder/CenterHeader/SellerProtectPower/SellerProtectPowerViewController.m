@@ -90,17 +90,12 @@ static NSString *cellid = @"SellerProtectPowerCell";
     
     
     if ([model.status integerValue] == 1) {
-        
         cell.orderState = model.status;
     }
-    
     if ([model.status integerValue] == 2) {
-        
         cell.orderState = model.status;
     }
-    
     if ([model.status integerValue] == 3) {
-        
         cell.orderState = model.status;
     }
     
@@ -129,11 +124,12 @@ static NSString *cellid = @"SellerProtectPowerCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     DLog(@"%ld", indexPath.row);
 }
-- (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
+- (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerProtectModel *)orderModel {
 
     if ([title isEqualToString:@"在线客服"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
         viewController.title = EaseTest_Chat2;
+         viewController.chatID = EaseTest_Chat3;
         [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"查看详情"]){

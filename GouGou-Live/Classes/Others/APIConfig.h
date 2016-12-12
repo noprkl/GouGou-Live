@@ -223,10 +223,12 @@
 #define API_System_msg @"api/UserService/system_msg"
 
 #pragma mark - 直播
-/** 添加直播接口 */
-#define API_Live_protect @"api/ProductService/Live_product"
-/** 直播列表接口 */
-#define API_Live_product_list @"api/ProductService/Live_product_list"
 
+/** 添加直播接口 */
+#define API_Live_product @"api/ProductService/Live_product"
+/** 商品直播 */
+#define API_Live_product_list @"api/ProductService/Live_product_list"
+/** 直播商品 */
+#define API_Live_list @"api/ProductService/Live_list"
 
 @end

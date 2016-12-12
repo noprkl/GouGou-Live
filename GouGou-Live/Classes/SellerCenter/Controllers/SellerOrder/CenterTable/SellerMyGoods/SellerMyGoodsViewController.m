@@ -30,11 +30,7 @@
 @property(nonatomic, strong) SellerGoodsBottomView *bottomView; /**< 底部按钮 */
 
 #pragma mark - 选中信息
-//@property(nonatomic, strong) NSMutableArray *cells; /**< cell数组 */
-
 @property(nonatomic, strong) NSMutableArray *selectedData; /**< 选中的数据 */
-
-//@property(nonatomic, strong) NSMutableArray *selectedBtns; /**< 选中的按钮 */
 
 @property(nonatomic, strong) UIButton *allBtn; /**< 全选按钮 */
 
@@ -49,7 +45,6 @@ static NSString *cellid = @"SellerMyGoodsCell";
 @implementation SellerMyGoodsViewController
 #pragma mark
 #pragma mark - 网络请求
-
 // 全部商品
 - (void)getRequestSellerDog {
     NSDictionary *dict = @{ //

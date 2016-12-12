@@ -37,7 +37,7 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
 /** 微信分享 */
 - (void)WChatShare;
 /** 朋友圈分享 */
-- (void)MomentShare;
+- (void)WechatTimeShare;
 /** QQ空间分享 */
 - (void)TencentShare;
 

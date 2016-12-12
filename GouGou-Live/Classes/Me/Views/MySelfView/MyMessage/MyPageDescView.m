@@ -43,6 +43,10 @@
         make.right.equalTo(self.right).offset(-10);
     }];
 }
+- (void)setIsHidEdit:(BOOL)isHidEdit {
+    _isHidEdit = isHidEdit;
+    self.editBtn.hidden = isHidEdit;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UILabel *)descLabel {

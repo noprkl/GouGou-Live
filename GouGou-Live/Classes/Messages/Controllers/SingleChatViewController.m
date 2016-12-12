@@ -11,8 +11,12 @@
 #import "MessageMeumView.h" // 菜单
 
 #import <TZImagePickerController.h>
+#import "HttpTool.h"
+#import "EMClient.h"
 
-@interface SingleChatViewController ()<EaseMessageViewControllerDelegate, TZImagePickerControllerDelegate>
+#import "PersonalPageController.h" // 个人主页
+
+@interface SingleChatViewController ()<EaseMessageViewControllerDelegate, TZImagePickerControllerDelegate, EMContactManagerDelegate>
 
 @property(nonatomic, strong) MessageInputView *talkView; /**< 输入框 */
 
@@ -30,7 +34,6 @@
     [self setNavBarItem];
 
     //@property中带有UI_APPEARANCE_SELECTOR，都可以通过set的形式设置样式，具体可以参考EaseBaseMessageCell.h,EaseMessageCell.h
-    
     [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[[UIImage imageNamed:@"圆角矩形-1"] stretchableImageWithLeftCapWidth:5 topCapHeight:30]];//设置发送气泡
     [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@"chat_receiver_bg"] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
     
@@ -172,12 +175,55 @@
     if (!_menuView) {
         _menuView = [[MessageMeumView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 130, 64, 130, 176) style:(UITableViewStylePlain)];
         _menuView.hidden = YES;
+        
         _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
+        __weak typeof(self) weakSelf = self;
         _menuView.cellBlock = ^(NSString *cellText){
-            DLog(@"%@", cellText);
+            [weakSelf clickMenuActionWithText:cellText];
         };
     }
     return _menuView;
+}
+
+- (void)clickMenuActionWithText:(NSString *)text {
+    if ([text isEqualToString:@"关注"]) {
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                               @"id":@([_chatID intValue]),
+                               @"type":@(1)
+                               };
+
+        [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }else if ([text isEqualToString:@"屏蔽"]){
+        EMError *error = nil;
+        NSArray *blackArr = [[EMClient sharedClient].contactManager getBlackListFromServerWithError:&error];
+
+        // 如果已经屏蔽
+        if ([blackArr containsObject:_chatID]) {
+            // 移除和名单
+            EMError *error = [[EMClient sharedClient].contactManager removeUserFromBlackList:_chatID];
+            if (!error) {
+                [self showHint:@"已经解除屏蔽"];
+            }
+        }else{
+            // 加入黑名单
+            EMError *error = [[EMClient sharedClient].contactManager addUserToBlackList:_chatID relationshipBoth:YES];
+            if (!error) {
+                   [self showHint:@"已经屏蔽"];
+            }
+        }
+    }else if ([text isEqualToString:@"举报"]){
+        
+    }else if ([text isEqualToString:@"个人主页"]){
+        PersonalPageController *personalVc = [[PersonalPageController alloc] init];
+        personalVc.hidesBottomBarWhenPushed = YES;
+        personalVc.personalID = [_chatID intValue];
+        [self.navigationController pushViewController:personalVc animated:YES];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

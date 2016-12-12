@@ -221,10 +221,12 @@ static NSString * messageCell = @"messageCellID";
 
     if (swit.isOn) {
         DLog(@"开启通知");
+        // 设置免打扰时段，设置后，在改时间内不收推送
         [[[EMClient sharedClient] pushOptions] setNoDisturbingStartH:[self.startTime.text intValue]];
         [[[EMClient sharedClient] pushOptions] setNoDisturbingEndH:[self.endTime.text intValue]];
     }else{
         DLog(@"关闭通知");
+        // 设置全天免打扰，设置后，您将收不到任何推送
         [[[EMClient sharedClient] pushOptions] setNoDisturbStatus:(EMPushNoDisturbStatusCustom)];
     }
 }

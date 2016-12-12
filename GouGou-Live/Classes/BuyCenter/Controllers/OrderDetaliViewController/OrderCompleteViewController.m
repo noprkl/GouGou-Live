@@ -18,6 +18,8 @@
 #import "DetailPayMoney.h"  // 详细价格状况
 #import "BottomButtonView.h"   // 按钮创建
 
+#import "DeletePrommtView.h"   // 点击删除出现的弹框
+
 #import "OrderDetailModel.h"
 
 @interface OrderCompleteViewController ()<UIScrollViewDelegate>
@@ -318,6 +320,40 @@
 
     }
     return _bottomButton;
+}
+#pragma mark - 删除订单网络请求
+- (void)getDeleteOrderRequest {
+    
+    NSDictionary * dict = @{
+                            @"id":@(12),
+                            @"user_id":@([[UserInfos sharedUser].ID intValue])
+                            };
+    
+    [self getRequestWithPath:API_Order_Delete params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+// 删除订单
+- (void)clickDeleteOrder:(BuyCenterModel *)model {
+    
+    // 点击删除订单出现的弹框
+    DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
+    prompt.message = @"删除订单后将不能找回";
+    
+    prompt.sureBlock = ^(UIButton * btn) {
+        
+        // 点击确定按钮，删除订单
+        [self getDeleteOrderRequest];
+        
+    };
+    [prompt show];
+    
 }
 
 @end

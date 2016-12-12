@@ -22,6 +22,7 @@
 @end
 
 @implementation SureApplyRefundview
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -32,12 +33,24 @@
         [self addSubview:self.refundTextfiled];
         [self addSubview:self.detailLabel];
         [self addSubview:self.detailTextView];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewTextChange:) name:UITextViewTextDidChangeNotification object:self.detailTextView];
     }
     return self;
 }
-#pragma mark
-#pragma mark - 约束
+#pragma mark - setter
+// 描述
+- (void)setTextViewText:(NSString *)textViewText {
 
+    _textViewText = textViewText;
+    self.detailTextView.text = textViewText;
+}
+// 退款金额
+- (void)setMoneyTextfiel:(NSString *)moneyTextfiel {
+
+    _moneyTextfiel = moneyTextfiel;
+    self.refundTextfiled.text = moneyTextfiel;
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
@@ -100,6 +113,10 @@
 
     if (!_swich) {
         _swich = [[UISwitch alloc] init];
+        [_swich setOn:NO];
+        _swich.onTintColor = [UIColor colorWithHexString:@"#99cc33"];
+    
+        [_swich addTarget:self action:@selector(openAction:) forControlEvents:UIControlEventValueChanged];
     }
     return _swich;
 }
@@ -139,9 +156,19 @@
         _detailTextView.font = [UIFont systemFontOfSize:14];
         _detailTextView.layer.cornerRadius = 10;
         _detailTextView.layer.masksToBounds = YES;
+
+
     }
     return _detailTextView;
 }
+
+- (void)openAction:(UISwitch *)swich {
+
+    if (_openBlock) {
+        _openBlock(swich);
+    }
+}
+
 #pragma mark - textfiled点击事件
 - (void)inputRefundMoney:(UITextField *)textfiled {
 
@@ -149,41 +176,9 @@
         _refundBlock(textfiled);
     }
 }
-
-#pragma mark
-#pragma mark - textfiled代理
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-
-    return YES;
+// 通知监听textView内容
+- (void)textViewTextChange:(NSNotification *)notification {
+    self.textViewText = self.detailTextView.text;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    if (textField == self.refundTextfiled) {
-        
-        BOOL flag = [NSString validateNumber:string];
-        
-        if (flag) {
-            return YES;
-        }
-        return NO;
-    }
-    return YES;
-}
-
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-
-     if (textView == _detailTextView) {
-        
-        if ([NSString isChinese:textView.text]) {
-            
-            return YES;
-        }
-        return NO;
-    }
-
-    return YES;
-}
 @end

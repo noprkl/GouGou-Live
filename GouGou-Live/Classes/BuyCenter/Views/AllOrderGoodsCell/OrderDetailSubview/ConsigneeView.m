@@ -46,7 +46,7 @@
     
     recevieAddress = [NSString stringWithFormat:@"%@,%@,%@",self.recevieProvince,self.recevieCity,self.recevieDistrict];
     
-    self.addressLabel.text = recevieAddress;
+    self.detailAddress.text = recevieAddress;
     
 }
 

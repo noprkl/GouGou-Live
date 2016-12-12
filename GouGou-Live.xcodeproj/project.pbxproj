@@ -280,7 +280,6 @@
 		046F0BE91DE2AB9E00D50D5C /* SureConsigneedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCA1DE2AB9E00D50D5C /* SureConsigneedViewController.m */; };
 		046F0BEA1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCC1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m */; };
 		046F0BEB1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */; };
-		046F0BEC1DE2AB9E00D50D5C /* GotoAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */; };
 		046F0BEE1DE2AB9E00D50D5C /* PaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */; };
 		046F0BF01DE2AB9E00D50D5C /* ProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BD91DE2AB9E00D50D5C /* ProtectPowerViewController.m */; };
 		046F0BF11DE2AB9E00D50D5C /* WaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0BDB1DE2AB9E00D50D5C /* WaitAssessViewController.m */; };
@@ -395,11 +394,15 @@
 		047AD5F41DD5CDDD0025290E /* SurePsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD5F21DD5CDDD0025290E /* SurePsdViewController.m */; };
 		047AD60D1DD5CE970025290E /* TopButonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 047AD6061DD5CE970025290E /* TopButonView.m */; };
 		047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 047AD6271DD5E2090025290E /* SurePsdViewController.xib */; };
+		0487DA271DFD006E00BDC54F /* GotoAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA261DFD006E00BDC54F /* GotoAssessViewController.m */; };
+		0487DA2C1DFD02BE00BDC54F /* StarsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA291DFD02BE00BDC54F /* StarsView.m */; };
+		0487DA2D1DFD02BE00BDC54F /* StarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA2B1DFD02BE00BDC54F /* StarView.m */; };
+		0487DA301DFD03B700BDC54F /* AddPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA2F1DFD03B700BDC54F /* AddPictureView.m */; };
+		0487DA331DFD059000BDC54F /* PersonalPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487DA321DFD059000BDC54F /* PersonalPageController.m */; };
 		049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */; };
 		049D612E1DD07C6B00ED3E76 /* SureForgetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D612C1DD07C6B00ED3E76 /* SureForgetPsdViewController.m */; };
 		049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */; };
 		049D61321DD08C8E00ED3E76 /* NoneNetWorkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */; };
-		049F95D61DF7FD5200A47164 /* AddPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049F95D51DF7FD5200A47164 /* AddPictureView.m */; };
 		04A31F831DED4F4900BE175A /* AddUpdataImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F7F1DED4F4900BE175A /* AddUpdataImagesView.m */; };
 		04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F811DED4F4900BE175A /* AddUpdataImagesCell.m */; };
 		04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */; };
@@ -1061,8 +1064,6 @@
 		046F0BCC1DE2AB9E00D50D5C /* WaitSellConsigmentViewContorller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitSellConsigmentViewContorller.m; sourceTree = "<group>"; };
 		046F0BCE1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyProtectPowerViewController.h; sourceTree = "<group>"; };
 		046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyProtectPowerViewController.m; sourceTree = "<group>"; };
-		046F0BD01DE2AB9E00D50D5C /* GotoAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoAssessViewController.h; sourceTree = "<group>"; };
-		046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoAssessViewController.m; sourceTree = "<group>"; };
 		046F0BD41DE2AB9E00D50D5C /* PaySuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySuccessViewController.h; sourceTree = "<group>"; };
 		046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessViewController.m; sourceTree = "<group>"; };
 		046F0BD81DE2AB9E00D50D5C /* ProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerViewController.h; sourceTree = "<group>"; };
@@ -1270,6 +1271,16 @@
 		047AD6051DD5CE970025290E /* TopButonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopButonView.h; sourceTree = "<group>"; };
 		047AD6061DD5CE970025290E /* TopButonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopButonView.m; sourceTree = "<group>"; };
 		047AD6271DD5E2090025290E /* SurePsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurePsdViewController.xib; sourceTree = "<group>"; };
+		0487DA251DFD006E00BDC54F /* GotoAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoAssessViewController.h; sourceTree = "<group>"; };
+		0487DA261DFD006E00BDC54F /* GotoAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoAssessViewController.m; sourceTree = "<group>"; };
+		0487DA281DFD02BE00BDC54F /* StarsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarsView.h; sourceTree = "<group>"; };
+		0487DA291DFD02BE00BDC54F /* StarsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarsView.m; sourceTree = "<group>"; };
+		0487DA2A1DFD02BE00BDC54F /* StarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarView.h; sourceTree = "<group>"; };
+		0487DA2B1DFD02BE00BDC54F /* StarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarView.m; sourceTree = "<group>"; };
+		0487DA2E1DFD03B700BDC54F /* AddPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPictureView.h; sourceTree = "<group>"; };
+		0487DA2F1DFD03B700BDC54F /* AddPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPictureView.m; sourceTree = "<group>"; };
+		0487DA311DFD059000BDC54F /* PersonalPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalPageController.h; sourceTree = "<group>"; };
+		0487DA321DFD059000BDC54F /* PersonalPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalPageController.m; sourceTree = "<group>"; };
 		049D61051DD06DAA00ED3E76 /* NSString+MD5Code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Code.h"; sourceTree = "<group>"; };
 		049D61061DD06DAA00ED3E76 /* NSString+MD5Code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Code.m"; sourceTree = "<group>"; };
 		049D612B1DD07C6B00ED3E76 /* SureForgetPsdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureForgetPsdViewController.h; sourceTree = "<group>"; };
@@ -1277,8 +1288,6 @@
 		049D612D1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureForgetPsdViewController.xib; sourceTree = "<group>"; };
 		049D61301DD08C8E00ED3E76 /* NoneNetWorkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneNetWorkingView.h; sourceTree = "<group>"; };
 		049D61311DD08C8E00ED3E76 /* NoneNetWorkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneNetWorkingView.m; sourceTree = "<group>"; };
-		049F95D41DF7FD5200A47164 /* AddPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPictureView.h; sourceTree = "<group>"; };
-		049F95D51DF7FD5200A47164 /* AddPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPictureView.m; sourceTree = "<group>"; };
 		04A31F7E1DED4F4900BE175A /* AddUpdataImagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUpdataImagesView.h; sourceTree = "<group>"; };
 		04A31F7F1DED4F4900BE175A /* AddUpdataImagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUpdataImagesView.m; sourceTree = "<group>"; };
 		04A31F801DED4F4900BE175A /* AddUpdataImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUpdataImagesCell.h; sourceTree = "<group>"; };
@@ -2578,8 +2587,8 @@
 			children = (
 				046F0B891DE2AB8B00D50D5C /* AddPhotosView.h */,
 				046F0B8A1DE2AB8B00D50D5C /* AddPhotosView.m */,
-				049F95D41DF7FD5200A47164 /* AddPictureView.h */,
-				049F95D51DF7FD5200A47164 /* AddPictureView.m */,
+				0487DA2E1DFD03B700BDC54F /* AddPictureView.h */,
+				0487DA2F1DFD03B700BDC54F /* AddPictureView.m */,
 				046F0B8B1DE2AB8B00D50D5C /* AnonymityAssessView.h */,
 				046F0B8C1DE2AB8B00D50D5C /* AnonymityAssessView.m */,
 				046F0B8D1DE2AB8B00D50D5C /* CancleOrderAlter.h */,
@@ -2588,6 +2597,10 @@
 				046F0B901DE2AB8B00D50D5C /* PayMoneyPrompt.m */,
 				046F0B911DE2AB8B00D50D5C /* SatisfiedAssessView.h */,
 				046F0B921DE2AB8B00D50D5C /* SatisfiedAssessView.m */,
+				0487DA281DFD02BE00BDC54F /* StarsView.h */,
+				0487DA291DFD02BE00BDC54F /* StarsView.m */,
+				0487DA2A1DFD02BE00BDC54F /* StarView.h */,
+				0487DA2B1DFD02BE00BDC54F /* StarView.m */,
 			);
 			path = OrderOption;
 			sourceTree = "<group>";
@@ -2650,8 +2663,8 @@
 			children = (
 				046F0BCE1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.h */,
 				046F0BCF1DE2AB9E00D50D5C /* ApplyProtectPowerViewController.m */,
-				046F0BD01DE2AB9E00D50D5C /* GotoAssessViewController.h */,
-				046F0BD11DE2AB9E00D50D5C /* GotoAssessViewController.m */,
+				0487DA251DFD006E00BDC54F /* GotoAssessViewController.h */,
+				0487DA261DFD006E00BDC54F /* GotoAssessViewController.m */,
 				046F0BD41DE2AB9E00D50D5C /* PaySuccessViewController.h */,
 				046F0BD51DE2AB9E00D50D5C /* PaySuccessViewController.m */,
 			);
@@ -2683,6 +2696,8 @@
 			children = (
 				047323FB1DD1DBFF006CCC71 /* MyPageViewController.h */,
 				047323FC1DD1DBFF006CCC71 /* MyPageViewController.m */,
+				0487DA311DFD059000BDC54F /* PersonalPageController.h */,
+				0487DA321DFD059000BDC54F /* PersonalPageController.m */,
 				045D51201DD9946F001854A8 /* ManagePictureaViewController.h */,
 				045D51211DD9946F001854A8 /* ManagePictureaViewController.m */,
 				046F0C001DE3134A00D50D5C /* AddPicturesViewController.h */,
@@ -4547,7 +4562,6 @@
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
-				049F95D61DF7FD5200A47164 /* AddPictureView.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */,
 				046BF0281DE4696600BC32E9 /* EaseMessageCell.m in Sources */,
@@ -4681,7 +4695,6 @@
 				046BF01E1DE4696600BC32E9 /* FixFopen.c in Sources */,
 				0479B5FE1DCADC7B00CB288A /* TalkingView.m in Sources */,
 				046BF0481DE5319B00BC32E9 /* SingleChatViewController.m in Sources */,
-				046F0BEC1DE2AB9E00D50D5C /* GotoAssessViewController.m in Sources */,
 				044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */,
 				046BF01A1DE4696600BC32E9 /* EaseEmoji.m in Sources */,
 				046BF0261DE4696600BC32E9 /* EaseBaseMessageCell.m in Sources */,
@@ -4771,6 +4784,7 @@
 				046BF0171DE4696600BC32E9 /* EaseChineseToPinyin.m in Sources */,
 				046F0C021DE3134A00D50D5C /* AddPicturesViewController.m in Sources */,
 				04EA2ACD1DDDAFE80023D9A8 /* SellerOrderDetailNoteView.m in Sources */,
+				0487DA2D1DFD02BE00BDC54F /* StarView.m in Sources */,
 				046BEFE81DE4696600BC32E9 /* MWGridCell.m in Sources */,
 				0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
@@ -4806,6 +4820,7 @@
 				04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */,
 				0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */,
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
+				0487DA2C1DFD02BE00BDC54F /* StarsView.m in Sources */,
 				045D11A21DF031EF008623E5 /* MyPictureListModel.m in Sources */,
 				0452A2011DE1A8BB007C1E4F /* SellerDoInputCell.m in Sources */,
 				04DAC9961DD21A9A0089236D /* MyUnLoginView.m in Sources */,
@@ -4814,6 +4829,7 @@
 				0479B60E1DCADC7B00CB288A /* PresentApplicationViewController.m in Sources */,
 				04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */,
 				049D61071DD06DAA00ED3E76 /* NSString+MD5Code.m in Sources */,
+				0487DA331DFD059000BDC54F /* PersonalPageController.m in Sources */,
 				046F0BB31DE2AB8B00D50D5C /* AddPhotosView.m in Sources */,
 				046BEFF11DE4696600BC32E9 /* EMSDWebImageCompat.m in Sources */,
 				0452A1F61DE1A730007C1E4F /* SellerSearchDogtypeViewController.m in Sources */,
@@ -4876,6 +4892,7 @@
 				04EA2AD61DDDB0510023D9A8 /* SellerProtectPLogisticsInfoView.m in Sources */,
 				046F0BE21DE2AB9E00D50D5C /* AllOrderGoodsViewController.m in Sources */,
 				04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */,
+				0487DA271DFD006E00BDC54F /* GotoAssessViewController.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
 				0452A1E81DE173A5007C1E4F /* SellerCreateDogMessageViewController.m in Sources */,
 				046BF0601DE5940900BC32E9 /* SystemNotificationViewController.m in Sources */,
@@ -4888,6 +4905,7 @@
 				046BEFCC1DE4696600BC32E9 /* EMCDDeviceManagerBase.m in Sources */,
 				046BF0061DE4696600BC32E9 /* PSTCollectionViewItemKey.m in Sources */,
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
+				0487DA301DFD03B700BDC54F /* AddPictureView.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
 				04CE13EE1DDC488100EB8777 /* SellerLogisticsInfoView.m in Sources */,
 				04EDC4BC1DFAE250009C972D /* LivingShowDogCell.m in Sources */,

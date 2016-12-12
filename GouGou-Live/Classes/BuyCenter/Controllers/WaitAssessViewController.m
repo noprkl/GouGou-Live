@@ -11,6 +11,8 @@
 #import "FunctionButtonView.h"  // cell底部按钮
 #import "GotoAssessViewController.h"
 
+#import "DeletePrommtView.h"   // 点击删除出现提示框
+
 // 订单详情
 #import "OrderCompleteAssess.h" // 完成评价
 #import "OrderCompleteViewController.h" // 订单完成（未评价）
@@ -115,12 +117,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    UITableViewCell * cellSys = [tableView dequeueReusableCellWithIdentifier:@"cellid"];
-//    
-//    if (!cellSys) {
-//        
-//        cellSys = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellid"];
-//    }
+    // 待评价列表只放置未评价cell（原型）
     
     BuyCenterModel * model = self.dataArray[indexPath.row];
 
@@ -161,8 +158,10 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
             }
         };
         [cell addSubview:funcBtn];
-//        return cell;
-    } else if ([model.status integerValue] == 10) {
+    }
+    
+    /*
+    else if ([model.status integerValue] == 10) {
 //        WaitAssessCell * cell = [tableView equeueReusableCellWithIdentifier:waitsAssessCell];
 
         cell.centerModel = model;
@@ -198,8 +197,10 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 //        return cell;
 
     }
+     */
     return cell;
 }
+// cell选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     BuyCenterModel * model = self.dataArray[indexPath.row];
@@ -216,6 +217,41 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     }
     
 }
+#pragma mark - 删除订单网络请求
+- (void)getDeleteOrderRequest {
+    
+    NSDictionary * dict = @{
+                            @"id":@(12),
+                            @"user_id":@([[UserInfos sharedUser].ID intValue])
+                            };
+    
+    [self getRequestWithPath:API_Order_Delete params:dict success:^(id successJson) {
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+    
+}
+// 删除订单
+- (void)clickDeleteOrder:(BuyCenterModel *)model {
+    
+    // 点击删除订单出现的弹框
+    DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
+    prompt.message = @"删除订单后将不能找回";
+    
+    prompt.sureBlock = ^(UIButton * btn) {
+        
+        // 点击确定按钮，删除订单
+        [self getDeleteOrderRequest];
+        
+    };
+    [prompt show];
+    
+}
+
 
 
 @end

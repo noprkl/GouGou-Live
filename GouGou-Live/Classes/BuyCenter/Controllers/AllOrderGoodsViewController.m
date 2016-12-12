@@ -28,6 +28,7 @@ static NSString * waitBackCells = @"waitBackCells";
 @end
 
 @implementation AllOrderGoodsViewController
+/*
 //#pragma mark - 网络请求
 - (void)postGetAllStateOrderRequest {
     
@@ -56,12 +57,13 @@ static NSString * waitBackCells = @"waitBackCells";
         
     }];
 }
+*/
 #pragma mark -  生命周期
 - (void)viewWillAppear:(BOOL)animated {
 
     [super viewWillAppear:animated];
     
-    [self postGetAllStateOrderRequest];
+//    [self postGetAllStateOrderRequest];
 }
 
 - (void)viewDidLoad {

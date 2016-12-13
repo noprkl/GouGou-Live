@@ -18,4 +18,6 @@ typedef void(^ClickCardBlock)(UIControl *control);
 
 @property(nonatomic, strong) ClickCardBlock cardBlcok; /**< 点击卡片回调 */
 
+@property (nonatomic, strong) NSArray *dogInfos; /**< 狗狗信息 */
+
 @end

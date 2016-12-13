@@ -67,9 +67,9 @@
     self.costView.costModel.balance = centerModel.balance;
     */
     // 直接赋值
-    if (centerModel.merchantImgl.length != 0) {
+    if (centerModel.merchantImg1.length != 0) {
        
-        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImg1];
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     

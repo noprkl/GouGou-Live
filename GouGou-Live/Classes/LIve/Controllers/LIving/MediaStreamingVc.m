@@ -21,6 +21,7 @@
 #import "LiveListRootModel.h"
 #import "LiveListRespModel.h"
 #import "LiveListStreamModel.h"
+#import "LiveRootStreamModel.h"
 
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
 
@@ -41,6 +42,9 @@
 @property(nonatomic, strong) LivingToolView *topView; /**< 头部view */
 
 @property(nonatomic, strong) LivingSendMessageView *sendMessageView; /**< 编辑信息view */
+
+@property (nonatomic, strong) UITextField *sendText; /**< 文本框 */
+
 
 @property(nonatomic, strong) LinvingShowDogView *showDogView; /**< 展示狗狗 */
 
@@ -148,14 +152,14 @@
      [self postRequestWithPath:API_Live_product params:liveDict success:^(id successJson) {
          DLog(@"%@", successJson);
          if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-             LiveListRootModel *rootModel = [LiveListRootModel mj_objectWithKeyValues:successJson[@"data"]];
+             LiveRootStreamModel *rootModel = [LiveRootStreamModel mj_objectWithKeyValues:successJson[@"data"]];
              
              LiveListRespModel *respModel = [LiveListRespModel mj_objectWithKeyValues:rootModel.resp];
              
              LiveListStreamModel *streamModel = [LiveListStreamModel mj_objectWithKeyValues:rootModel.steam];
              DLog(@"%@---%@", respModel, streamModel);
              // 流对象属性
-            
+             DLog(@"%@", streamModel.publish);
              stream.streamID = liveId;
              stream.title = _roomStr;
              stream.hubName = respModel.hub;
@@ -165,6 +169,10 @@
             
              [self.session startStreamingWithPushURL:[NSURL URLWithString:streamModel.publish] feedback:^(PLStreamStartStateFeedback feedback) {
                  DLog(@"%lu", feedback);
+                 if (feedback == 0) { // 开始推流
+                     
+                 }
+                 //
              }];
          }
 //         if ([successJson[@"message"] isEqualToString:@"已经添加过"]) {
@@ -391,6 +399,9 @@
     if (!_sendMessageView) {
         _sendMessageView = [[LivingSendMessageView alloc] init];
         _sendMessageView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+        _sendMessageView.textFieldBlock = ^(UITextField *textField){
+            
+        };
     }
     return _sendMessageView;
 }

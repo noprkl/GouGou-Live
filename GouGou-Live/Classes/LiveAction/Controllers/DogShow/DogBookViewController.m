@@ -16,6 +16,9 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
 #import "ChosePayStyleView.h"
+#import "PayMoneyPrompt.h"
+#import "PromptView.h"
+#import "NSString+MD5Code.h"
 
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
@@ -31,7 +34,7 @@
 
 @property(nonatomic, strong) UITableViewCell *lastMoneyCell5; /**< 剩余金额cell */
 
-@property(nonatomic, strong) UITableViewCell *shopAdressCell1; /**< 收货地址cell */
+@property(nonatomic, strong) ChosedAdressView *chosedView; /**< 收货地址 */
 
 @property(nonatomic, strong) UITableViewCell *transformCell3; /**< 支付运费方式cell */
 
@@ -39,8 +42,9 @@
 
 @property(nonatomic, strong) UILabel *placeLabel; /**< 站位字符 */
 
-
 @property(nonatomic, strong) MyShopAdressModel *defaultModel; /**< 默认地址 */
+
+@property (nonatomic, assign) BOOL requestOrNotifi; /**< 请求 */
 
 @end
 
@@ -51,10 +55,10 @@
     if (![UserInfos getUser]){
         [self showAlert:@"请登录"];
     }else {
-        
-        NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                               @"user_id":@(11),
-                               @"id":@([_model.ID integerValue]),
+
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                               @"id":@([_model.ID intValue]),
                                @"address_id":@(_defaultModel.ID)
                                };
         DLog(@"%@", dict);
@@ -62,8 +66,8 @@
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
-                int orderID = 0;
-                ChosePayStyleView *choseStyle = [[ChosePayStyleView alloc] init];
+                NSString *orderId = successJson[@"data"];
+              __block  ChosePayStyleView *choseStyle = [[ChosePayStyleView alloc] init];
                 choseStyle.dataArr = @[@"支付全款", @"支付定金"];
                 choseStyle.bottomBlock = ^(NSString *style){
                     
@@ -71,46 +75,202 @@
                         // 生成待支付全款订单
                         NSDictionary *typeDict = @{
                                                    @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                                                   @"order_id":@(orderID),
+                                                   @"order_id":@([orderId intValue]),
                                                    @"type":@(1)
                                                    };
                         [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
+                            if ([successJson[@"message"] isEqualToString:@"支付全额"]) {
+                                [self clickPayAllMoney:orderId price:successJson[@"data"]];
+                                choseStyle = nil;
+                                [choseStyle dismiss];
+                            }
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];
-                        
                     }else if ([style isEqualToString:@"支付定金"]) {
                         // 生成待支付定金订单
                         NSDictionary *typeDict = @{
                                                    @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                                                   @"order_id":@(orderID),
+                                                   @"order_id":@([orderId intValue]),
                                                    @"type":@(2)
                                                    };
                         [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
+                            if ([successJson[@"message"] isEqualToString:@"支付订金"]) {
+                                [self clickPayFontMoney:orderId productDeposit:successJson[@"data"]];
+                                choseStyle = nil;
+                                [choseStyle dismiss];
+                            }
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];
                     }
-                    
                 };
-                
                 [choseStyle show];
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
+    }
+}
+/** 定金支付 */
+- (void)clickPayFontMoney:(NSString *)modelID productDeposit:(NSString *)productDeposit {
+    
+    PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
+    payMonery.payMoney = productDeposit;
+    payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
+    [payMonery show];
+    
+    payMonery.bottomBlock = ^(NSString *payAway){
+        DLog(@"%@", payAway);
+    };
+    payMonery.payCellBlock = ^(NSString *payWay){
+        [self payMoneyFroWay:payWay orderID:modelID money:productDeposit];
+    };
+}
+/** 全款支付 */
+- (void)clickPayAllMoney:(NSString *)modelID price:(NSString *)price {
+    
+    PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
+    payMonery.payMoney = price;
+    payMonery.dataArr = @[@"支付全款",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
+    [payMonery show];
+    
+    payMonery.bottomBlock = ^(NSString *size){
+        DLog(@"%@", size);
+    };
+    payMonery.payCellBlock = ^(NSString *payWay){
+        [self payMoneyFroWay:payWay orderID:modelID money:price];
+    };
+}
+
+#pragma mark
+#pragma mark - 支付方式选择
+- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money{
+    if ([payWay isEqualToString:@"账户余额支付"]) {
         
+        //        [self postGetWalletPayRequest];
+        
+        // 支付密码提示框
+        PromptView * prompt = [[PromptView alloc] init];
+        prompt.backgroundColor = [UIColor whiteColor];
+        
+        // 点击提示框确认按钮请求支付密码
+        __weak typeof(prompt) weakPrompt = prompt;
+        prompt.clickSureBtnBlock = ^(NSString *text){
+            
+            // 验证密码
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"pay_password":[NSString md5WithString:text]
+                                   };
+            [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                weakPrompt.noteStr = successJson[@"message"];
+                if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
+                    [self walletPayWithOrderId:[orderID intValue] price:[money intValue] * 100 payPwd:[NSString md5WithString:text] states:3];
+                    [weakPrompt dismiss];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        };
+        [prompt show];
+    }
+    if ([payWay isEqualToString:@"支付宝支付"]) {
+        [self aliPayWithOrderId:[orderID intValue] totalFee:[money intValue] * 100];
+    }
+    if ([payWay isEqualToString:@"微信支付"]) {
+        
+        [self WeChatPayWithOrderID:[orderID intValue] totalFee:[money intValue] * 100];
+    }
+}
+/** 钱包支付 2定金 3全款 */
+- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state {
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                           @"order_id":@(orderID),
+                           @"user_price":@(price),
+                           @"user_pwd":payPwd,
+                           @"status":@(state)
+                           };
+    [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+/** 微信支付 */
+- (void)WeChatPayWithOrderID:(int)orderID totalFee:(int)fee {
+    // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
+    
+    NSDictionary *dict = @{
+                           @"order":@(orderID),
+                           @"total_fee":@(0.01),
+                           @"mark":@"爪行宠物直播"
+                           };
+    DLog(@"%@", dict);
+    [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        PayReq * req = [[PayReq alloc] init];
+        req.partnerId = [successJson objectForKey:@"partnerid"];
+        req.prepayId = [successJson objectForKey:@"prepayid"];
+        req.nonceStr = [successJson objectForKey:@"noncestr"];
+        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"];
+        req.timeStamp = [timeStamp intValue];
+        
+        req.package = [successJson objectForKey:@"package"];
+        req.sign = [successJson objectForKey:@"sign"];
+        req.openID = [successJson objectForKey:@"appid"];
+        
+        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
+        
+        BOOL flag = [WXApi sendReq:req];
+        if (flag) {
+            
+            [self showAlert:successJson[@"支付成功"]];
+        }else{
+            [self showAlert:successJson[@"支付失败"]];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+/** 支付宝支付 */
+- (void)aliPayWithOrderId:(int)orderID totalFee:(int)fee {
+    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+    NSDictionary *dit = @{
+                          @"id":@(orderID),
+                          @"total_fee":@(arc4random_uniform(2)+1)
+                          };
+    DLog(@"%@", dit);
+    [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"msg"]];
+        [self aliPayWithOrderString:successJson[@"data"]];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+- (void)aliPayWithOrderString:(NSString *)orderStr {
+    if (orderStr != nil) {
+        
+        NSString *appScheme = @"ap2016112203105439";
+        
+        [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            DLog(@"reslut = %@",resultDic);
+        }];
     }
 }
 
 // 所有地址
 - (void)postGetAdressRequest {
     
-    // [[UserInfos sharedUser].ID integerValue]
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue])
                            };
@@ -124,9 +284,9 @@
             for (MyShopAdressModel *model in adressArr) {
                 if (model.isDefault == 1) {
                     self.defaultModel = model;
+                    self.chosedView.shopAdress = model;
                 }
             }
-            DLog(@"11%@", self.defaultModel);
             // 刷新
             [self.tablevView reloadData];
         }
@@ -134,7 +294,6 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
 #pragma mark
 #pragma mark - 生命周期
@@ -156,13 +315,15 @@
 }
 
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
+    self.defaultModel = nil;
     MyShopAdressModel *defaultAdress = adress.userInfo[@"ShopAdress"];
     self.defaultModel = defaultAdress;
     DLog(@"%@", defaultAdress);
-    [self.tablevView reloadData];
-    DLog(@"%@",self.defaultModel.userName);
+    self.chosedView.shopAdress = defaultAdress;
+    DLog(@"%@",self.defaultModel.userAddress);
 }
 - (void)initUI {
+
     self.title = @"订购狗狗";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tablevView];
@@ -170,7 +331,6 @@
     [self.view addSubview:self.payCount];
     
     [self makeConstraint];
-    
     
     //注册键盘出现的通知
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -183,6 +343,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+    // 地址通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
 - (void)makeConstraint {
@@ -201,7 +362,7 @@
         make.left.right.equalTo(self.view);
     }];
 }
-- (void)setModel:(DogDetailModel *)model {
+- (void)setModel:(LiveListDogInfoModel *)model {
     _model = model;
 }
 #pragma mark
@@ -244,7 +405,7 @@
                 chosedView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 85);
                 [cell.contentView addSubview:chosedView];
                
-                self.shopAdressCell1 = cell;
+                self.chosedView = chosedView;
             }else{
                 cell.textLabel.text = self.dataArr[indexPath.row];
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -257,17 +418,21 @@
             cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerAndDogCardView *sellerAnddog = [[SellerAndDogCardView alloc] init];
-
-            if (self.model.pathBig != NULL) {
-                NSString *urlString = [IMAGE_HOST stringByAppendingString:self.model.pathBig];
+            if (_liverIcon.length != 0) {
+                NSString *urlString = [IMAGE_HOST stringByAppendingString:_liverIcon];
+                [sellerAnddog.sellerIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+            }
+            sellerAnddog.sellerName.text = _liverName;
+            sellerAnddog.dateLabel.text = [NSString stringFromDateString:self.model.createTime];
+            if (self.model.pathSmall != NULL) {
+                NSString *urlString = [IMAGE_HOST stringByAppendingString:self.model.pathSmall];
                 [sellerAnddog.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
             }
-            
             sellerAnddog.dogNameLabel.text = self.model.name;
-            sellerAnddog.dogKindLabel.text = [self.model.kind name];
-            sellerAnddog.dogAgeLabel.text = [self.model.age name];
-            sellerAnddog.dogSizeLabel.text = [self.model.size name];
-            sellerAnddog.dogColorLabel.text = [self.model.color name];
+            sellerAnddog.dogKindLabel.text = self.model.kindname;
+            sellerAnddog.dogAgeLabel.text = self.model.agename;
+            sellerAnddog.dogSizeLabel.text = self.model.sizename;
+            sellerAnddog.dogColorLabel.text = self.model.colorname;
             sellerAnddog.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.model.price]];
             sellerAnddog.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.model.price];
             sellerAnddog.dateLabel.text = self.model.createTime;
@@ -294,7 +459,7 @@
             break;
         case 3:
         {
-            cell.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[indexPath.row] string2:@"¥ 7700（含运费50元）"];
+            cell.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[indexPath.row] string2:self.model.price];
             cell.detailTextLabel.text = @"直接下单";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
             
@@ -312,7 +477,8 @@
             break;
         case 4:
         {
-            cell.textLabel.attributedText = [self getAttributeWithString1:self.dataArr[indexPath.row] string2:@"¥ 500"];
+        NSString *despot = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] / 10)];
+            cell.textLabel.attributedText = [self getAttributeWithString1:self.dataArr[indexPath.row] string2:despot];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             self.bookMoneyCell4 = cell;
@@ -320,7 +486,8 @@
             break;
         case 5:
         {
-            cell.textLabel.attributedText = [self getAttributeWithString1:self.dataArr[indexPath.row] string2:@"¥ 7200"];
+            NSString *final = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] * 0.9)];
+            cell.textLabel.attributedText = [self getAttributeWithString1:self.dataArr[indexPath.row] string2:final];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             self.lastMoneyCell5 = cell;
@@ -383,8 +550,11 @@
         btn.selected = YES;
         
 #pragma mark 改变字体
-        self.lastMoneyCell5.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[5] string2:@"¥ 7200"];
-        self.bookMoneyCell4.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[4] string2:@"¥ 500"];
+        NSString *final = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] * 0.9)];
+        self.lastMoneyCell5.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[5] string2:final];
+        
+        NSString *despot = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] / 10)];
+        self.bookMoneyCell4.textLabel.attributedText = [self getChoseAttributeString1:self.dataArr[4] string2:despot];
     };
     [transView show];
 }
@@ -393,8 +563,10 @@
 
 - (UILabel *)bookMoneyLabel {
     if (!_bookMoneyLabel) {
+        NSString *despot = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] / 10)];
         _bookMoneyLabel = [[UILabel alloc] init];
-        _bookMoneyLabel.attributedText = [self getAttributeWithString1:@"应付定金：" string2:@"¥ 500"];
+        NSString *final = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] * 0.9)];
+        _bookMoneyLabel.attributedText = [self getAttributeWithString1:@"应付定金：" string2:final];
     }
     return _bookMoneyLabel;
 }

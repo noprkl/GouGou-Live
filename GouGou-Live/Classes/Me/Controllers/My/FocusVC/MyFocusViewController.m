@@ -43,6 +43,7 @@ static NSString *cellid = @"MyFocusCell";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStyleDone) target:self action:@selector(clickAddBtnAction)];
     [self.view addSubview:self.tableView];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
 }
 - (void)clickAddBtnAction {
     SearchFocusViewController *seachFocusVC = [[SearchFocusViewController alloc] init];
@@ -66,6 +67,7 @@ static NSString *cellid = @"MyFocusCell";
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.tableFooterView = [[UIView alloc] init];
         [_tableView registerNib:[UINib nibWithNibName:@"MyFocusTableCell" bundle:nil] forCellReuseIdentifier:cellid];
     }
     return _tableView;

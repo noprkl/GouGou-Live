@@ -72,7 +72,7 @@
         _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 44) style:(UITableViewStylePlain)];
         
         __weak typeof(self) weakSelf = self;
-        _tableView.cellBlock = ^(LiveViewCellModel *model){
+        _tableView.cellBlock = ^(LiveViewCellModel *model, NSArray *dogInfos){
             
         LivingViewController *livingVC = [[LivingViewController alloc] init];
         livingVC.hidesBottomBarWhenPushed = YES;

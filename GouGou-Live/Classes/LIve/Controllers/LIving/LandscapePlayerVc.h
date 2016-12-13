@@ -10,6 +10,6 @@
 
 @interface LandscapePlayerVc : BaseViewController
 
-@property(nonatomic, strong) NSString *rtmp; /**< 拉流地址 */
+@property (nonatomic, strong) NSString *liveID; /**< 直播参数 */
 
 @end

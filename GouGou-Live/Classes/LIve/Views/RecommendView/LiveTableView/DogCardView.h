@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LiveListDogInfoModel.h"
 
 @interface DogCardView : UIControl
 
-@property(nonatomic, strong) NSArray *dogCard; /**< 狗Card */
-
-
 @property(nonatomic, strong) NSString *message; /**< 右下的信息 */
+
+@property (nonatomic, strong) LiveListDogInfoModel *dogInfo; /**< 狗狗信息 */
 
 @end

@@ -26,7 +26,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
 // 请求维权的订单
 - (void)getRequestProtectPowerOrder {
     NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@(11),
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"page":@(1),
                            @"pageSize":@(10),
                            };

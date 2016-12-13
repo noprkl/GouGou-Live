@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickEditBlock)();
+typedef void(^ClickEditBlock)(UILabel *contentLabel);
 @interface MyPageDescView : UIView
 
 @property(nonatomic, strong) ClickEditBlock editBlock; /**< 编辑回调 */
 
 @property (nonatomic , assign) BOOL isHidEdit; /**< 是否隐藏编辑 */
+
+@property (nonatomic, strong) NSString *descStr; /**< 简介 */
+
 @end

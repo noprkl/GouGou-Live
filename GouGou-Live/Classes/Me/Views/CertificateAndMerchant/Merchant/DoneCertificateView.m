@@ -136,6 +136,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
             textField.font = [UIFont systemFontOfSize:16];
             // 添加弹出城市选择
             self.areasTextField = textField;
+            [textField addTarget:self action:@selector(editAreaTextAction:) forControlEvents:(UIControlEventAllEvents)];
             textField.delegate = self;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             [cell.contentView addSubview:textField];
@@ -190,7 +191,9 @@ static NSString * MedrchantCell = @"MedrchantCell";
     }
     return YES;
 }
-
+- (void)editAreaTextAction:(UITextField *)textField {
+    [textField resignFirstResponder];
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];

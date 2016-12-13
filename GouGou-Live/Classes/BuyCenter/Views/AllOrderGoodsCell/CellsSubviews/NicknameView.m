@@ -90,7 +90,7 @@
         
         make.left.equalTo(weakself.left).offset(10);
         make.centerY.equalTo(weakself.centerY).offset(10);
-        
+        make.size.equalTo(CGSizeMake(30, 30));
     }];
     
     [_nickName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -130,7 +130,8 @@
 
     if (!_sellerIamge) {
         _sellerIamge = [[UIImageView alloc] init];
-        
+        _sellerIamge.layer.masksToBounds = YES;
+        _sellerIamge.layer.cornerRadius = 15;
     }
     return _sellerIamge;
 }

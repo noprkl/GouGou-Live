@@ -55,7 +55,7 @@
         make.centerY.equalTo(self.centerY);
         make.left.equalTo(self.left);
         make.top.equalTo(self.top);
-        make.width.equalTo(self.dogImageView.width);
+        make.size.equalTo(CGSizeMake(93, 93));
     }];
     [self.dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(5);
@@ -101,7 +101,9 @@
 - (UIImageView *)dogImageView {
     if (!_dogImageView) {
         _dogImageView = [[UIImageView alloc] init];
-        _dogImageView.image = [UIImage imageNamed:@"品种02"];
+
+        _dogImageView.layer.cornerRadius = 5;
+        _dogImageView.layer.masksToBounds = YES;
     }
     return _dogImageView;
 }
@@ -199,8 +201,22 @@
     }
     return _currentIndexLabel;
 }
-- (void)setDogCard:(NSArray *)dogCard {
-    _dogCard = dogCard;
+
+- (void)setDogInfo:(LiveListDogInfoModel *)dogInfo {
+    _dogInfo = dogInfo;
+    self.dogAgeLabel.text = dogInfo.agename;
+    if (dogInfo.pathSmall != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:dogInfo.pathSmall];
+        [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
+    
+    self.dogNameLabel.text = dogInfo.name;
+    self.dogKindLabel.text = dogInfo.kindname;
+    self.dogAgeLabel.text = dogInfo.agename;
+    self.dogSizeLabel.text = dogInfo.sizename;
+    self.dogColorLabel.text = dogInfo.colorname;
+    self.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", dogInfo.priceOld]];
+    self.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", dogInfo.price];
     
 }
 - (void)setMessage:(NSString *)message {

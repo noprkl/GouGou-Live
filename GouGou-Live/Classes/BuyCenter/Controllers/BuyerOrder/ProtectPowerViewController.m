@@ -32,7 +32,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
 #pragma mark - 网络请求
 - (void)getProtectPowerRequest {
 
-    NSDictionary * dict = @{@"user_id":@(TestID),
+    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
                             @"page":@(1),
                             @"pageSize":@(10)
                             };

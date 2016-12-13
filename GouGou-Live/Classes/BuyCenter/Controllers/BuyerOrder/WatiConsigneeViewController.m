@@ -50,11 +50,10 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
 #pragma mark - 网络请求
 - (void)getConsigneeRequest {
     
-    NSDictionary * dict = @{@"user_id":@(17),
-                            @"status":@(2),
+    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"status":@(3),
                             @"page":@(1),
-                            @"pageSize":@(10),
-                            @"is_right":@(2)
+                            @"pageSize":@(10)
                             };
     
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {

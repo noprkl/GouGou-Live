@@ -178,7 +178,7 @@
         _liveTableView.bounces = NO;
         
         __weak typeof(self) weakSelf = self;
-        _liveTableView.cellBlock = ^(LiveViewCellModel *model){
+        _liveTableView.cellBlock = ^(LiveViewCellModel *model, NSArray *dogInfos){
             
             LivingViewController *livingVC = [[LivingViewController alloc] init];
             livingVC.liveID = model.liveId;

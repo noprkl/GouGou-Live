@@ -180,13 +180,13 @@
 #pragma mark - 订单
 
 #pragma mark - 买家
-/** 买家订单列表 */
-#define API_List_order @"api/OrderService/list_order"
 /** 买家订单初始化 */
 #define API_Order @"api/OrderService/order"
 /** 订单付款项选择 */
 #define API_Order_second @"api/OrderService/order_second"
 
+/** 买家订单列表 */
+#define API_List_order @"api/OrderService/list_order"
 /** 订单评价买家 */
 #define API_Order_evaluation @"api/OrderService/order_evaluation"
 /** 钱包支付 */
@@ -232,9 +232,21 @@
 
 /** 添加直播接口 */
 #define API_Live_product @"api/ProductService/Live_product"
-/** 商品直播 */
+/** 观看直播信息 */
 #define API_Live_product_list @"api/ProductService/Live_product_list"
-/** 直播商品 */
+/** 直播列表 */
 #define API_Live_list @"api/ProductService/Live_list"
+/** 直播列表2 */
+#define API_Old_live_list @"api/ProductService/old_Live_list"
+
+
+/** 直播列表3 */
+#define API_Live_new_list @"api/ProductService/Live_new_list"
+/** 直播商品 */
+#define API_Live_list_product @"api/ProductService/Live_list_product"
+
+
+/** 直播信息 */
+#define API_Live_list_limit @"api/ProductService/Live_list_limit"
 
 @end

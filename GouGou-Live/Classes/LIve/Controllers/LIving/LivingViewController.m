@@ -32,6 +32,8 @@
 #import "LiveListRespModel.h"
 #import "LiveListStreamModel.h"
 #import "LiveListRootModel.h"
+#import "LiveRootStreamModel.h"
+
 @interface LivingViewController ()<UIScrollViewDelegate, PLPlayerDelegate>
 
 @property (nonatomic, strong) PLPlayer *player;
@@ -94,10 +96,11 @@
                            };
     [self getRequestWithPath:API_Live_product_list params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.rootModel = [LiveListRootModel mj_objectWithKeyValues:successJson[@"data"][@"steam"]];
-        LiveListRespModel *resp = [LiveListRespModel mj_objectWithKeyValues:self.rootModel.resp];
+        self.rootModel = [LiveListRootModel mj_objectWithKeyValues:successJson[@"data"]];
+        LiveRootStreamModel *rootSteam = [LiveRootStreamModel mj_objectWithKeyValues:self.rootModel.steam];
+        LiveListRespModel *resp = [LiveListRespModel mj_objectWithKeyValues:rootSteam.resp];
         self.resp = resp;
-        LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:self.rootModel.steam];
+        LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:rootSteam.steam];
         self.stream = stream;
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -118,9 +121,11 @@
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.hidesBottomBarWhenPushed = YES;
-    
     // 请求播放信息
     [self getRequestLiveMessage];
+    // 设置直播参数
+    self.roomNameLabel.text = _liverName;
+    [self.watchLabel setTitle:[@(_watchCount) stringValue] forState:(UIControlStateNormal)];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -281,9 +286,17 @@
     [self.childVCS addObject:talkVC];
     [self addChildViewController:talkVC];
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
+    dogShowVC.liverIcon = self.liverIcon;
+    dogShowVC.liverName = self.liverName;
+    dogShowVC.liverID = _liverId;
+    dogShowVC.dogInfos = self.doginfos;
     [self.childVCS addObject:dogShowVC];
     [self addChildViewController:dogShowVC];
-    ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:@"liver" conversationType:(EMConversationTypeChat)];
+   
+    if (_liverId.length == 0) {
+        _liverId = EaseTest_Liver;
+    }
+    ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
     [self.childVCS addObject:serviceVC];
     [self addChildViewController:serviceVC];
     SellerShowViewController *sellerShowVC = [[SellerShowViewController alloc] init];
@@ -394,17 +407,12 @@
             CGPoint center = CGPointMake(2 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
-            
-
-            
             return YES;
         };
         _centerView.sellerBlock = ^(UIButton *btn){
             CGPoint center = CGPointMake(3 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
-            [weakSelf.baseScrollView setContentOffset:center animated:YES];
-            
-            
+            [weakSelf.baseScrollView setContentOffset:center animated:YES];   
             return YES;
         };
     }
@@ -496,7 +504,7 @@
 - (void)clickScreenBtnAction:(UIButton *)btn {
    
     LandscapePlayerVc *landscapeVc = [[LandscapePlayerVc alloc] init];
-    landscapeVc.rtmp = self.stream.rtmp;
+    landscapeVc.liveID = _liveID;
     landscapeVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:landscapeVc animated:YES];
 }
@@ -569,7 +577,8 @@
         _watchLabel = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_watchLabel setImage:[UIImage imageNamed:@"联系人"] forState:(UIControlStateNormal)];
         _watchLabel.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_watchLabel setTintColor:[UIColor colorWithHexString:@"#ffa11a"]];
+//        [_watchLabel setTintColor:[UIColor colorWithHexString:@"#ffa11a"]];
+        _watchLabel.titleLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         [_watchLabel setTitle:@"1000" forState:(UIControlStateNormal)];
         [_watchLabel setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
         _watchLabel.enabled = NO;

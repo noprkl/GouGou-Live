@@ -147,82 +147,82 @@
 }
 
 /** 钱包支付 2定金 3全款 */
-- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state {
-    NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                           @"order_id":@(orderID),
-                           @"user_price":@(price),
-                           @"user_pwd":payPwd,
-                           @"status":@(state)
-                           };
-    [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-}
-
-/** 微信支付 */
-- (void)WeChatPayWithOrderID:(int)orderID totalFee:(int)fee mark:(NSString *)mark {
-    // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
-
-    NSDictionary *dict = @{
-                           @"order":@(orderID),
-                           @"total_fee":@(fee),
-                           @"mark":mark
-                           };
-    DLog(@"%@", dict);
-    [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        PayReq * req = [[PayReq alloc] init];
-        req.partnerId = [successJson objectForKey:@"partnerid"];
-        req.prepayId = [successJson objectForKey:@"prepayid"];
-        req.nonceStr = [successJson objectForKey:@"noncestr"];
-        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"];
-        req.timeStamp = [timeStamp intValue];
-        
-        req.package = [successJson objectForKey:@"package"];
-        req.sign = [successJson objectForKey:@"sign"];
-        req.openID = [successJson objectForKey:@"appid"];
-        
-        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
-        
-        BOOL flag = [WXApi sendReq:req];
-        if (flag) {
-            DLog(@"支付成功");
-        }else{
-            DLog(@"支付失败");
-        }
-        
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-}
-/** 支付宝支付 */
-- (void)aliPayWithOrderId:(int)orderID totalFee:(int)fee {
-    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
-        NSDictionary *dit = @{
-                              @"id":@(orderID),
-                              @"total_fee":@(fee)
-                              };
-        [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
-            DLog(@"%@", successJson);
-            [self showAlert:successJson[@"msg"]];
-            [self aliPayWithOrderString:successJson[@"data"]];
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
-}
-- (void)aliPayWithOrderString:(NSString *)orderStr {
-    if (orderStr != nil) {
-        
-        NSString *appScheme = @"ap2016112203105439";
-        
-        [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-            DLog(@"reslut = %@",resultDic);
-        }];
-    }
-}
+//- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state {
+//    NSDictionary *dict = @{
+//                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
+//                           @"order_id":@(orderID),
+//                           @"user_price":@(price),
+//                           @"user_pwd":payPwd,
+//                           @"status":@(state)
+//                           };
+//    [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//    } error:^(NSError *error) {
+//        DLog(@"%@", error);
+//    }];
+//}
+//
+///** 微信支付 */
+//- (void)WeChatPayWithOrderID:(int)orderID totalFee:(int)fee mark:(NSString *)mark {
+//    // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
+//
+//    NSDictionary *dict = @{
+//                           @"order":@(orderID),
+//                           @"total_fee":@(fee),
+//                           @"mark":mark
+//                           };
+//    DLog(@"%@", dict);
+//    [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//        PayReq * req = [[PayReq alloc] init];
+//        req.partnerId = [successJson objectForKey:@"partnerid"];
+//        req.prepayId = [successJson objectForKey:@"prepayid"];
+//        req.nonceStr = [successJson objectForKey:@"noncestr"];
+//        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"];
+//        req.timeStamp = [timeStamp intValue];
+//        
+//        req.package = [successJson objectForKey:@"package"];
+//        req.sign = [successJson objectForKey:@"sign"];
+//        req.openID = [successJson objectForKey:@"appid"];
+//        
+//        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
+//        
+//        BOOL flag = [WXApi sendReq:req];
+//        if (flag) {
+//            DLog(@"支付成功");
+//        }else{
+//            DLog(@"支付失败");
+//        }
+//        
+//    } error:^(NSError *error) {
+//        DLog(@"%@", error);
+//    }];
+//}
+///** 支付宝支付 */
+//- (void)aliPayWithOrderId:(int)orderID totalFee:(int)fee {
+//    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+//        NSDictionary *dit = @{
+//                              @"id":@(orderID),
+//                              @"total_fee":@(fee)
+//                              };
+//        [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//            [self showAlert:successJson[@"msg"]];
+//            [self aliPayWithOrderString:successJson[@"data"]];
+//        } error:^(NSError *error) {
+//            DLog(@"%@", error);
+//        }];
+//}
+//- (void)aliPayWithOrderString:(NSString *)orderStr {
+//    if (orderStr != nil) {
+//        
+//        NSString *appScheme = @"ap2016112203105439";
+//        
+//        [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+//            DLog(@"reslut = %@",resultDic);
+//        }];
+//    }
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
 }

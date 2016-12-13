@@ -162,7 +162,6 @@ static NSString *cellid = @"cellid";
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid2];
         }
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if (indexPath.row == 0) { // 第1行设置
@@ -224,7 +223,6 @@ static NSString *cellid = @"cellid";
                 switchBtn.on = YES;
             }
         }
-        
         [switchBtn addTarget:self action:@selector(clickSwitchAction:) forControlEvents:(UIControlEventValueChanged)];
         cell.accessoryView = switchBtn;
         [self.accessosys addObject:switchBtn];

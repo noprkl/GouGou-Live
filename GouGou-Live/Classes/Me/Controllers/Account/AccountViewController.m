@@ -10,6 +10,7 @@
 #import "DetailCountViewController.h"
 
 #import "PresentApplicationViewController.h"
+#import "SingleChatViewController.h"
 
 @interface AccountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -149,6 +150,7 @@
                 cell.detailTextLabel.text = @"";
             }
             if (indexPath.row == 2){
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
             }
         }
@@ -196,7 +198,10 @@
     
 }
 - (void)clickHelpBtnAction {
-    
+    SingleChatViewController *singleVc = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+    singleVc.title = EaseTest_Chat1;
+    singleVc.chatID = EaseTest_Chat1;
+    [self.navigationController pushViewController:singleVc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

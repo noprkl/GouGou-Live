@@ -7,10 +7,14 @@
 //
 
 #import "BaseViewController.h"
-#import "DogDetailModel.h"
+#import "LiveListDogInfoModel.h"
 
 @interface DogBookViewController : BaseViewController
 
-@property(nonatomic, strong) DogDetailModel *model; /**< 模型 */
+@property(nonatomic, strong) LiveListDogInfoModel *model; /**< 模型 */
+@property (nonatomic, strong) NSString *liverID; /**< 直播id */
+@property (nonatomic, strong) NSString *liverIcon; /**< 主播头像 */
+@property (nonatomic, strong) NSString *liverName; /**< 主播名字 */
+@property (nonatomic, strong) NSString *userId; /**< 主播id */
 
 @end

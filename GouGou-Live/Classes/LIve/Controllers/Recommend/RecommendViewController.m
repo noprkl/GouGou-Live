@@ -43,6 +43,9 @@
 @property (nonatomic, strong) NSMutableArray *liveListArray;
 
 @property(nonatomic, strong) UILabel *noneLiveLabel; /**< 没有直播 */
+
+@property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗信息 */
+
 @end
 
 
@@ -56,15 +59,51 @@
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
-    [self getRequestWithPath:API_Live_list params:dict success:^(id successJson) {
+    [self getRequestWithPath:API_Live_new_list params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-//        self.tableView.dataPlist = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        [self.dogInfos removeAllObjects];
         
-        CGRect rect = self.tableView.frame;
-        rect.size.height = self.tableView.dataPlist.count * 357;
-        self.tableView.frame = rect;
-        [self.tableView reloadData];
-        
+        self.tableView.dataPlist = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        // 高度
+       __block CGFloat height = 0;
+        // 请求狗狗信息
+        for (NSInteger i = 0; i < self.tableView.dataPlist.count; i ++) {
+            LiveViewCellModel *model = self.tableView.dataPlist[i];
+            if (model.pNum == 0) {
+                [self.dogInfos addObject:@[]];
+                height += 239;
+                
+            }else{
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                    [self.dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    height += 357;
+                    if (self.dogInfos.count == self.tableView.dataPlist.count) {
+                        CGRect rect = self.tableView.frame;
+                        rect.size.height = height;
+                        self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
+                        self.tableView.frame = rect;
+                        self.tableView.dogInfos = self.dogInfos;
+                        [self.tableView reloadData];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
+            if (self.dogInfos.count == self.tableView.dataPlist.count) {
+                DLog(@"%@", self.dogInfos);
+                DLog(@"%@", self.tableView.dataPlist);
+                CGRect rect = self.tableView.frame;
+                rect.size.height = height;
+                self.baseScrollView.contentSize = CGSizeMake(0, height + 110);
+                self.tableView.frame = rect;
+                self.tableView.dogInfos = self.dogInfos;
+                [self.tableView reloadData];
+            }
+        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -73,6 +112,7 @@
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.tableView.dogInfos = @[];
     [self getRequestLiveList];
 }
 
@@ -100,7 +140,6 @@
 // 约束
 - (void)makeConstraint {
     
-
 }
 
 #pragma mark
@@ -108,7 +147,7 @@
 - (UIScrollView *)baseScrollView {
     
     if (!_baseScrollView) {
-        _baseScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 110)];
         _baseScrollView.contentSize = CGSizeMake(0, 1000);
         _baseScrollView.showsHorizontalScrollIndicator = NO;
         _baseScrollView.showsVerticalScrollIndicator = NO;
@@ -233,6 +272,12 @@
     return _filtView;
 }
 
+- (NSMutableArray *)dogInfos {
+    if (!_dogInfos) {
+        _dogInfos = [NSMutableArray array];
+    }
+    return _dogInfos;
+}
 // 直播列表
 - (LiveTableView *)tableView {
     if (!_tableView) {
@@ -241,20 +286,39 @@
         _tableView.bounces = NO;
 
         __weak typeof(self) weakSelf = self;
-        _tableView.cellBlock = ^(LiveViewCellModel *model){
-            
-            [weakSelf pushToLivingVc:model];
+//        _tableView.dogInfoBlock = ^(LiveViewCellModel *model){
+//            NSDictionary *dict = @{
+//                                   @"live_id":model.liveId
+//                                   };
+//            __block NSArray *arr = [NSArray array];
+//            [weakSelf getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+//                arr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+//                weakSelf.tableView.dogInfos = arr;
+//                DLog(@"%@", successJson);
+//            } error:^(NSError *error) {
+//                DLog(@"%@", error);
+//            }];
+//            return arr;
+//        };
+        
+        _tableView.cellBlock = ^(LiveViewCellModel *model, NSArray *dogInfos){
+            [weakSelf pushToLivingVc:model products:dogInfos];
         };
-        _tableView.dogCardBlock = ^(LiveViewCellModel *model){
-            [weakSelf pushToLivingVc:model];
+        _tableView.dogCardBlock = ^(LiveViewCellModel *model, NSArray *dogInfos){
+            [weakSelf pushToLivingVc:model products:dogInfos];
         };
     }
     return _tableView;
 }
-- (void)pushToLivingVc:(LiveViewCellModel *)model{
+- (void)pushToLivingVc:(LiveViewCellModel *)model products:(NSArray *)dogInfos {
     DLog(@"%@", model);
     LivingViewController *livingVC = [[LivingViewController alloc] init];
     livingVC.liveID = model.liveId;
+    livingVC.liverId = model.ID;
+    livingVC.liverIcon = model.userImgUrl;
+    livingVC.liverName = model.merchantName;
+    livingVC.doginfos = dogInfos;
+    livingVC.watchCount = model.pNum;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }

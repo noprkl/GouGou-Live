@@ -96,6 +96,7 @@
     [self.photoUrl addObjectsFromArray:arr];
     DLog(@"%@", self.photoUrl);
     self.photoView.dataArr = self.photoUrl;
+    [self.sellORBtn setTitle:[NSString stringWithFormat:@"出售(%ld)", self.photoUrl.count] forState:(UIControlStateNormal)];
     [self.photoView.collectionView reloadData];
     [self makeConstraint];
 }

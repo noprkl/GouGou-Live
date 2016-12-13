@@ -62,11 +62,10 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 - (void)getAssessRequest {
     
     NSDictionary * dict = @{
-                            @"user_id":@(17),
-                            @"status":@(2),
+                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"status":@(4),
                             @"page":@(1),
-                            @"pageSize":@(10),
-                            @"is_right":@(2)
+                            @"pageSize":@(10)
                             };
     
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
@@ -220,10 +219,10 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     
 }
 #pragma mark - 删除订单网络请求
-- (void)getDeleteOrderRequest {
+- (void)getDeleteOrderRequest:(BuyCenterModel *)model {
     
     NSDictionary * dict = @{
-                            @"id":@(12),
+                            @"id":@([model.ID intValue]),
                             @"user_id":@([[UserInfos sharedUser].ID intValue])
                             };
     
@@ -247,13 +246,11 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     prompt.sureBlock = ^(UIButton * btn) {
         
         // 点击确定按钮，删除订单
-        [self getDeleteOrderRequest];
+        [self getDeleteOrderRequest:model];
         
     };
     [prompt show];
     
 }
-
-
 
 @end

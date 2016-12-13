@@ -62,11 +62,10 @@
 */
     // 直接赋值
     // 昵称
-    if (centerModel.merchantImgl.length != 0) {
-        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
+    if (centerModel.merchantImg1.length != 0) {
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImg1];
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
-    self.nickView.sellerIamge.image = [UIImage imageNamed:centerModel.merchantImgl];
     self.nickView.nickName.text = centerModel.merchantName;
     self.nickView.stateLabe.text = centerModel.status;
     

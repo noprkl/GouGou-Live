@@ -49,7 +49,7 @@
 - (void)postGetUserAsset {
     
     NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                           @"uid":@(11),
+                           @"uid":@([[UserInfos sharedUser].ID intValue]),
                            };
     
   [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
@@ -69,7 +69,8 @@
 // 请求粉丝数据
 - (void)postRequestGetFans {
     //[[UserInfos sharedUser].ID integerValue]
-    NSDictionary *dict = @{@"user_id":@(11)
+    NSDictionary *dict = @{
+                           @"user_id":@(11)
                            };
     [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
         DLog(@"%@", successJson);

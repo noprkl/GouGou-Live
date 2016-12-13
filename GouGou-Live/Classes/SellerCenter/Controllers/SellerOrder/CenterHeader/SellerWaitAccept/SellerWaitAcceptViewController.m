@@ -28,11 +28,10 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 // 请求待收货的订单
 - (void)getRequestWaitAcceptOrder {
     NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@(11),
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"status":@(3),
                            @"page":@(1),
-                           @"pageSize":@(10),
-                           @"is_right":@(1)
+                           @"pageSize":@(10)
                            };
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);

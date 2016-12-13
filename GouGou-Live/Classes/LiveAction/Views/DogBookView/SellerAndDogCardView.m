@@ -42,6 +42,7 @@
     [self.sellerIconView makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(10);
         make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(30, 30));
     }];
     
     [self.sellerName makeConstraints:^(MASConstraintMaker *make) {
@@ -61,7 +62,7 @@
     [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left).offset(10);
         make.top.equalTo(self.sellerIconView.bottom).offset(10);
-
+        make.size.equalTo(CGSizeMake(93, 93));
     }];
     [self.dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.dogImageView.top);
@@ -131,11 +132,7 @@
 - (UILabel *)dateLabel {
     if (!_dateLabel) {
         _dateLabel = [[UILabel alloc] init];
-        NSDate *date = [NSDate date];
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        format.dateFormat = @"YYYY-MM-dd HH:mm";
-        _dateLabel.text = [format stringFromDate:date];
-        
+        _dateLabel.text = @"111";
         _dateLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _dateLabel.font = [UIFont systemFontOfSize:12];
     }

@@ -41,11 +41,16 @@
     [self.editBtn makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.bottom).offset(-15);
         make.right.equalTo(self.right).offset(-10);
+        make.width.equalTo(70);
     }];
 }
 - (void)setIsHidEdit:(BOOL)isHidEdit {
     _isHidEdit = isHidEdit;
     self.editBtn.hidden = isHidEdit;
+}
+- (void)setDescStr:(NSString *)descStr {
+    _descStr = descStr;
+    self.contentLabel.text = descStr;
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -76,15 +81,14 @@
         
         [_editBtn setTitle:@"编辑" forState:(UIControlStateNormal)];
         [_editBtn setImage:[UIImage imageNamed:@"编辑"] forState:(UIControlStateNormal)];
-        [_editBtn setImageEdgeInsets:(UIEdgeInsetsMake(0, 0, 0, -5))];
-        
+        [_editBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
         [_editBtn addTarget:self action:@selector(editDescBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _editBtn;
 }
 - (void)editDescBtnAction {
     if (_editBlock) {
-        _editBlock();
+        _editBlock(self.contentLabel);
     }
 }
 @end

@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0400A87A1DF6AF0D007B1A31 /* BuyCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */; };
 		040891AB1DFE3A8A006DF570 /* LiveListDogInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891AA1DFE3A8A006DF570 /* LiveListDogInfoModel.m */; };
-		040891AE1DFE3F8C006DF570 /* LiveListRootSteamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891AD1DFE3F8C006DF570 /* LiveListRootSteamModel.m */; };
 		040891B11DFE81DC006DF570 /* HaveCommitCertificateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891B01DFE81DC006DF570 /* HaveCommitCertificateView.m */; };
 		040891B41DFE81FA006DF570 /* CerfificateFaildView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891B31DFE81FA006DF570 /* CerfificateFaildView.m */; };
 		040891B71DFE866D006DF570 /* CerFiticateSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891B61DFE866D006DF570 /* CerFiticateSuccessView.m */; };
@@ -30,6 +28,9 @@
 		040892001DFEB91F006DF570 /* PayingAllMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891ED1DFEB91F006DF570 /* PayingAllMoneyViewController.m */; };
 		040892011DFEB91F006DF570 /* SureConsigneedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891EF1DFEB91F006DF570 /* SureConsigneedViewController.m */; };
 		040892021DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891F11DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m */; };
+		040892051DFFB049006DF570 /* ShowIngDogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040892041DFFB049006DF570 /* ShowIngDogModel.m */; };
+		040892081DFFB152006DF570 /* LiveRootStreamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040892071DFFB152006DF570 /* LiveRootStreamModel.m */; };
+		0408920B1DFFF272006DF570 /* BuyCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040892091DFFF272006DF570 /* BuyCenterViewController.m */; };
 		0412FE001DFD368F00E84438 /* AddShowDogImgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FDFE1DFD368F00E84438 /* AddShowDogImgCell.m */; };
 		0412FE011DFD368F00E84438 /* AddShowDogImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0412FDFF1DFD368F00E84438 /* AddShowDogImgCell.xib */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
@@ -513,11 +514,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterViewController.m; sourceTree = "<group>"; };
 		040891A91DFE3A8A006DF570 /* LiveListDogInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveListDogInfoModel.h; sourceTree = "<group>"; };
 		040891AA1DFE3A8A006DF570 /* LiveListDogInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveListDogInfoModel.m; sourceTree = "<group>"; };
-		040891AC1DFE3F8C006DF570 /* LiveListRootSteamModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveListRootSteamModel.h; sourceTree = "<group>"; };
-		040891AD1DFE3F8C006DF570 /* LiveListRootSteamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveListRootSteamModel.m; sourceTree = "<group>"; };
 		040891AF1DFE81DC006DF570 /* HaveCommitCertificateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HaveCommitCertificateView.h; sourceTree = "<group>"; };
 		040891B01DFE81DC006DF570 /* HaveCommitCertificateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HaveCommitCertificateView.m; sourceTree = "<group>"; };
 		040891B21DFE81FA006DF570 /* CerfificateFaildView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CerfificateFaildView.h; sourceTree = "<group>"; };
@@ -558,6 +556,12 @@
 		040891EF1DFEB91F006DF570 /* SureConsigneedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureConsigneedViewController.m; sourceTree = "<group>"; };
 		040891F01DFEB91F006DF570 /* WaitSellConsigmentViewContorller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitSellConsigmentViewContorller.h; sourceTree = "<group>"; };
 		040891F11DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitSellConsigmentViewContorller.m; sourceTree = "<group>"; };
+		040892031DFFB049006DF570 /* ShowIngDogModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowIngDogModel.h; sourceTree = "<group>"; };
+		040892041DFFB049006DF570 /* ShowIngDogModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowIngDogModel.m; sourceTree = "<group>"; };
+		040892061DFFB152006DF570 /* LiveRootStreamModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveRootStreamModel.h; sourceTree = "<group>"; };
+		040892071DFFB152006DF570 /* LiveRootStreamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveRootStreamModel.m; sourceTree = "<group>"; };
+		040892091DFFF272006DF570 /* BuyCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterViewController.m; sourceTree = "<group>"; };
+		0408920A1DFFF272006DF570 /* BuyCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCenterViewController.h; sourceTree = "<group>"; };
 		0412FDFD1DFD368F00E84438 /* AddShowDogImgCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddShowDogImgCell.h; sourceTree = "<group>"; };
 		0412FDFE1DFD368F00E84438 /* AddShowDogImgCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddShowDogImgCell.m; sourceTree = "<group>"; };
 		0412FDFF1DFD368F00E84438 /* AddShowDogImgCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddShowDogImgCell.xib; sourceTree = "<group>"; };
@@ -1029,7 +1033,6 @@
 		046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLiveViewController.h; sourceTree = "<group>"; };
 		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
 		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
-		046F0B291DE2A8CB00D50D5C /* BuyCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCenterViewController.h; sourceTree = "<group>"; };
 		046F0B4B1DE2AB8A00D50D5C /* PowerOrderStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerOrderStateView.h; sourceTree = "<group>"; };
 		046F0B4C1DE2AB8A00D50D5C /* PowerOrderStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerOrderStateView.m; sourceTree = "<group>"; };
 		046F0B4D1DE2AB8A00D50D5C /* SureApplyRefundview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureApplyRefundview.h; sourceTree = "<group>"; };
@@ -1545,6 +1548,8 @@
 		040891CC1DFEB91F006DF570 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0408920A1DFFF272006DF570 /* BuyCenterViewController.h */,
+				040892091DFFF272006DF570 /* BuyCenterViewController.m */,
 				040891CD1DFEB91F006DF570 /* BuyerOrder */,
 				040891DA1DFEB91F006DF570 /* OrderDeal */,
 				040891E11DFEB91F006DF570 /* OrderDetali */,
@@ -1557,8 +1562,6 @@
 			children = (
 				040891CE1DFEB91F006DF570 /* AllOrderGoodsViewController.h */,
 				040891CF1DFEB91F006DF570 /* AllOrderGoodsViewController.m */,
-				040891D01DFEB91F006DF570 /* ProtectPowerViewController.h */,
-				040891D11DFEB91F006DF570 /* ProtectPowerViewController.m */,
 				040891D21DFEB91F006DF570 /* WaitAssessViewController.h */,
 				040891D31DFEB91F006DF570 /* WaitAssessViewController.m */,
 				040891D41DFEB91F006DF570 /* WaitConsignmentViewController.h */,
@@ -1567,6 +1570,8 @@
 				040891D71DFEB91F006DF570 /* WaitPayingViewController.m */,
 				040891D81DFEB91F006DF570 /* WatiConsigneeViewController.h */,
 				040891D91DFEB91F006DF570 /* WatiConsigneeViewController.m */,
+				040891D01DFEB91F006DF570 /* ProtectPowerViewController.h */,
+				040891D11DFEB91F006DF570 /* ProtectPowerViewController.m */,
 			);
 			path = BuyerOrder;
 			sourceTree = "<group>";
@@ -2880,8 +2885,10 @@
 				040891AA1DFE3A8A006DF570 /* LiveListDogInfoModel.m */,
 				6180CB451DFC17E6006357B4 /* LiveListRootModel.h */,
 				6180CB461DFC17E6006357B4 /* LiveListRootModel.m */,
-				040891AC1DFE3F8C006DF570 /* LiveListRootSteamModel.h */,
-				040891AD1DFE3F8C006DF570 /* LiveListRootSteamModel.m */,
+				040892061DFFB152006DF570 /* LiveRootStreamModel.h */,
+				040892071DFFB152006DF570 /* LiveRootStreamModel.m */,
+				040892031DFFB049006DF570 /* ShowIngDogModel.h */,
+				040892041DFFB049006DF570 /* ShowIngDogModel.m */,
 				6180CB481DFC1808006357B4 /* LiveListRespModel.h */,
 				6180CB491DFC1808006357B4 /* LiveListRespModel.m */,
 				6180CB4B1DFC1823006357B4 /* LiveListStreamModel.h */,
@@ -3506,8 +3513,6 @@
 		0479B5C51DCADC7B00CB288A /* BaseViewController */ = {
 			isa = PBXGroup;
 			children = (
-				046F0B291DE2A8CB00D50D5C /* BuyCenterViewController.h */,
-				0400A8791DF6AF0D007B1A31 /* BuyCenterViewController.m */,
 				0479B5C61DCADC7B00CB288A /* BaseNavigationController.h */,
 				0479B5C71DCADC7B00CB288A /* BaseNavigationController.m */,
 				0479B5C81DCADC7B00CB288A /* BaseTabBarController.h */,
@@ -4612,6 +4617,7 @@
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
+				040892051DFFB049006DF570 /* ShowIngDogModel.m in Sources */,
 				0479B6231DCADC7B00CB288A /* SecurityAccountViewController.m in Sources */,
 				04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */,
 				046BF0281DE4696600BC32E9 /* EaseMessageCell.m in Sources */,
@@ -4697,7 +4703,6 @@
 				046BEFCD1DE4696600BC32E9 /* amrFileCodec.mm in Sources */,
 				046BF0271DE4696600BC32E9 /* EaseCustomMessageCell.m in Sources */,
 				0479B6381DCADC7B00CB288A /* BaseNavigationController.m in Sources */,
-				040891AE1DFE3F8C006DF570 /* LiveListRootSteamModel.m in Sources */,
 				04CE13D31DDC488100EB8777 /* SellerWaitSendViewController.m in Sources */,
 				046BF01C1DE4696600BC32E9 /* EaseEmotionEscape.m in Sources */,
 				0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */,
@@ -4826,7 +4831,6 @@
 				046F0B9F1DE2AB8B00D50D5C /* BottomButtonView.m in Sources */,
 				0452A1EB1DE173E0007C1E4F /* SellerAddImpressViewController.m in Sources */,
 				040891F91DFEB91F006DF570 /* GotoAssessViewController.m in Sources */,
-				0400A87A1DF6AF0D007B1A31 /* BuyCenterViewController.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
 				0479B5DC1DCADC7B00CB288A /* RecommendViewController.m in Sources */,
@@ -4891,6 +4895,7 @@
 				045D514D1DD99BEF001854A8 /* IdentityIfonView.m in Sources */,
 				04CE13ED1DDC488100EB8777 /* SellerFunctionButtonView.m in Sources */,
 				04CE13F21DDC6BF400EB8777 /* SellerGoodsBarBtnView.m in Sources */,
+				040892081DFFB152006DF570 /* LiveRootStreamModel.m in Sources */,
 				0452A1EE1DE17E71007C1E4F /* SellerShipTemplateView.m in Sources */,
 				046BEFCA1DE4696600BC32E9 /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				040891FE1DFEB91F006DF570 /* PayBackMoneyViewController.m in Sources */,
@@ -4927,6 +4932,7 @@
 				046BEFFA1DE4696600BC32E9 /* UIImage+EMGIF.m in Sources */,
 				04EA2AD31DDDB01B0023D9A8 /* SellerProtectPowerStateView.m in Sources */,
 				044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */,
+				0408920B1DFFF272006DF570 /* BuyCenterViewController.m in Sources */,
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				046BF00C1DE4696600BC32E9 /* PSTGridLayoutSection.m in Sources */,
 				040891B41DFE81FA006DF570 /* CerfificateFaildView.m in Sources */,

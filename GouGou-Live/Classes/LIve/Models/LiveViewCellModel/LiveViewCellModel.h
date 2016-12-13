@@ -10,24 +10,22 @@
 
 @interface LiveViewCellModel : BaseModel
 
-/** 主播头像 */
-//@property (strong, nonatomic) NSString *userImgUrl;
+@property (strong, nonatomic) NSString *userImgUrl;/**< 主播头像 */
 
-/** 主播名字 */
-//@property (strong, nonatomic) NSString *userName;
+@property (strong, nonatomic) NSString *merchantName;/**< 主播名字 */
 
-//@property(nonatomic, strong) NSString *userId; /**< 用户id */
+@property(nonatomic, strong) NSString *ID; /**< 用户id */
 
-/** 房间名字 */
-@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *name;/**< 房间名字 */
 
-/** 定位城市 */
-//@property (strong, nonatomic) NSString *area;
+@property (strong, nonatomic) NSString *area;/**< 定位城市 */
 
-//@property (nonatomic, strong) NSString *viewNum; /**< 观看人数 */
+@property (nonatomic, strong) NSString *viewNum; /**< 观看人数 */
 
 @property(nonatomic, strong) NSString *liveId; /**< 直播参数 */
 
-@property(nonatomic, strong) NSArray *info; /**< 狗狗信息 */
+@property (nonatomic, assign) NSInteger pNum; /**< 商品数量 */
+
+@property (nonatomic, strong) NSString *snapshot; /**< 直播图片 */
 
 @end

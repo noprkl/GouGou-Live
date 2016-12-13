@@ -215,9 +215,10 @@ static NSString * MedrchantCell = @"MedrchantCell";
                                         DLog(@"%@", dict2);
                                         [self postRequestWithPath:API_MerchantAuth params:dict2 success:^(id successJson) {
                                             [self showAlert:successJson[@"message"]];
-                                            if ([successJson[@"message"] isEqualToString:@"成功"]) { //0：失败 1：成功 2：邀请电话不存在 3: 个人信息未实名  4:已提交，审核中 请勿重复提交
+                                            if ([successJson[@"message"] isEqualToString:@"信息提交成功"]) { //0：失败 1：成功 2：邀请电话不存在 3: 个人信息未实名  4:已提交，审核中 请勿重复提交
                                                 [UserInfos sharedUser].ismerchant = @"3";
                                                 [UserInfos setUser];
+                                                [self.navigationController popToRootViewControllerAnimated:YES];
                                             }
                                             DLog(@"%@", successJson);
                                         } error:^(NSError *error) {

@@ -16,6 +16,8 @@
 #import "DogDetailModel.h"
 #import "DogImageView.h"
 
+#import "LiveListDogInfoModel.h"
+
 @interface DogShowViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 /** TableView */
@@ -31,34 +33,11 @@
 
 //@property(nonatomic, strong) ShareAlertView *shareAlert; /**< 分享view */
 
-@property(nonatomic, strong) DogDetailModel *dogInfo; /**< 狗狗信息 */
-
 @end
 
 static NSString *cellid = @"DogShowCellid";
 
 @implementation DogShowViewController
-#pragma mark
-#pragma mark - 网络请求
-// 全部商品
-- (void)getGoodsDetail {
-    NSDictionary *dict = @{
-                           @"id":@(50)
-                           };
-    DLog(@"%@", dict);
-    [self getRequestWithPath:API_Product_limit params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        if (successJson) {
-            self.dogInfo = [DogDetailModel mj_objectWithKeyValues:successJson[@"data"]];
-            DLog(@"%@", self.dogInfo);
-            
-            [self.tableView reloadData];
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-    
-}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -69,7 +48,6 @@ static NSString *cellid = @"DogShowCellid";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
-    [self getGoodsDetail];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -81,7 +59,14 @@ static NSString *cellid = @"DogShowCellid";
 - (void)initUI {
     
     [self.view addSubview:self.tableView];
-    
+    [self.tableView makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+}
+- (void)setDogInfos:(NSArray *)dogInfos {
+    _dogInfos = dogInfos;
+    self.dataArr = dogInfos;
+    [self.tableView reloadData];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -94,7 +79,7 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290) style:(UITableViewStylePlain)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsHorizontalScrollIndicator = NO;
@@ -125,15 +110,13 @@ static NSString *cellid = @"DogShowCellid";
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.dataArr.count;
-    return 1;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DogShowMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    SellerMyGoodsModel *model = self.dataArr[indexPath.row];
-//    cell.model = model;
-    cell.model = self.dogInfo;
+    LiveListDogInfoModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
 
     self.cell = cell;
     __weak typeof(self) weakSelf = self;
@@ -198,7 +181,7 @@ static NSString *cellid = @"DogShowCellid";
             // 添加喜欢
             NSDictionary *dict = @{
                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                   @"product_id":@(0),//[dogID integerValue]),
+                                   @"product_id":@([model.ID intValue]),
                                    @"type":@(1)
                                    };
             [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
@@ -221,8 +204,7 @@ static NSString *cellid = @"DogShowCellid";
             [rulesAlert show];
             
             rulesAlert.sureBlock = ^(){
-                [self pushToDogBookVC:self.dogInfo];
-                
+                [self pushToDogBookVC:model];
             };
         }else {
             [self showAlert:@"请登录"];
@@ -235,25 +217,35 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
    
-    DogShowMessageCell *cell = (DogShowMessageCell *)self.cell;
-   
-    NSArray *imsArr = [self.dogInfo.pathBig componentsSeparatedByString:@","];
+    LiveListDogInfoModel *model = self.dataArr[indexPath.row];
+    NSArray *imgsArr = [model.dataPhoto componentsSeparatedByString:@"|"];
     DogImageView *dogimageView = [[DogImageView alloc] init];
-    CGFloat height = [dogimageView getCellHeightWithImages:imsArr];
-    
-    return [cell getCellHeight] + height;
+    CGFloat height = [dogimageView getCellHeightWithImages:imgsArr];
+    return 278 + height;
 }
-- (void)pushToDogBookVC:(DogDetailModel *)model {
+- (void)pushToDogBookVC:(LiveListDogInfoModel *)model {
    
     DogBookViewController *dogBookVC = [[DogBookViewController alloc] init];
     dogBookVC.hidesBottomBarWhenPushed = YES;
     dogBookVC.model = model;
+    dogBookVC.liverID = _liverID;
+    dogBookVC.liverIcon = _liverIcon;
+    dogBookVC.liverName = _liverName;
+
     [self.navigationController pushViewController:dogBookVC animated:YES];
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+    label.text = @"没有更多商品";
+    label.textColor = [UIColor colorWithHexString:@"#666666"];
+    label.font = [UIFont systemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentCenter;
+    return label;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 500;
+    return 250;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

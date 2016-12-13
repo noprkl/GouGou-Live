@@ -16,6 +16,13 @@
 #import "LivingSendMessageView.h" // 编辑弹幕信息
 #import "TalkingViewController.h" // 弹幕控制器
 
+
+#import "LiveListRespModel.h"
+#import "LiveListStreamModel.h"
+#import "LiveListRootModel.h"
+#import "LiveRootStreamModel.h"
+#import "ShowIngDogModel.h"
+
 #import <PLPlayerKit/PLPlayerKit.h>
 
 @interface LandscapePlayerVc ()<PLPlayerDelegate>
@@ -42,9 +49,40 @@
 
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
 
+@property(nonatomic, strong) LiveListRootModel *rootModel; /**< 请求数据 */
+
+@property(nonatomic, strong) LiveListStreamModel *stream; /**< 流对象信息 */
+
+@property(nonatomic, strong) LiveListRespModel *resp; /**< 播放信息 */
+
 @end
 
 @implementation LandscapePlayerVc
+
+- (void)getRequestLiveMessage {
+    NSDictionary *dict = @{
+                           @"live_id":_liveID
+                           };
+    [self getRequestWithPath:API_Live_product_list params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.rootModel = [LiveListRootModel mj_objectWithKeyValues:successJson[@"data"]];
+        if (self.rootModel.info.count != 0) {
+            ShowIngDogModel *showIngDog = [self.rootModel.info lastObject];
+            if (showIngDog.pathSmall.length != 0) {
+                NSString *urlString = [IMAGE_HOST stringByAppendingString:showIngDog.pathSmall];
+                [self.showingImg sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+            }
+            self.showingPrice.text = showIngDog.price;
+        }
+        LiveRootStreamModel *rootSteam = [LiveRootStreamModel mj_objectWithKeyValues:self.rootModel.steam];
+        LiveListRespModel *resp = [LiveListRespModel mj_objectWithKeyValues:rootSteam.resp];
+        self.resp = resp;
+        LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:rootSteam.steam];
+        self.stream = stream;
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -60,7 +98,7 @@
         [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
     }
     [self playerLiveMedia];
-
+    [self getRequestLiveMessage];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -107,7 +145,7 @@
     [playerOption setOptionValue:@(kPLLogNone) forKey:PLPlayerOptionKeyLogLevel];
     
     // 播放
-    NSURL *url = [NSURL URLWithString:_rtmp];
+    NSURL *url = [NSURL URLWithString:self.stream.rtmp];
     self.player = [PLPlayer playerWithURL:url option:playerOption];
     self.player.delegate = self;
     self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);

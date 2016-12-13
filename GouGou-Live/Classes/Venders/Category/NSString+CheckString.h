@@ -23,4 +23,7 @@
 
 /** 判断是否为身份证号 */
 - (BOOL)judgeIdentityStringValid:(NSString *)identityString;
+
+/** 时间戳转时间 */
++ (NSString *)stringFromDateString:(NSString *)dateStr;
 @end

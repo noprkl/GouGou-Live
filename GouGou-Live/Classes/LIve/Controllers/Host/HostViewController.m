@@ -194,12 +194,9 @@ static NSString * reuseIdentifier = @"headerID";
         _typeBlock(indexPath.row);
     
     }
-    
-        LivingViewController *livingVC = [[LivingViewController alloc] init];
-        livingVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:livingVC animated:YES];
-        
-    
+//        LivingViewController *livingVC = [[LivingViewController alloc] init];
+//        livingVC.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:livingVC animated:YES];
 }
 
 

@@ -38,6 +38,7 @@ static NSString *cellid = @"MyFocusCell";
     
     [self.navigationItem setTitleView:self.titleInputView];
     [self.view addSubview:self.tableView];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
 }
 // 只有点击搜索才能点击搜索
 - (void)clickSearchBottonAction {
@@ -88,7 +89,7 @@ static NSString *cellid = @"MyFocusCell";
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        
+        _tableView.tableFooterView = [[UIView alloc] init];
         [_tableView registerNib:[UINib nibWithNibName:@"MyFocusTableCell" bundle:nil] forCellReuseIdentifier:cellid];
     }
     return _tableView;

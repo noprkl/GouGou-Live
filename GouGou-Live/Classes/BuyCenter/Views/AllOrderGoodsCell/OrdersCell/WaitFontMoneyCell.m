@@ -50,37 +50,32 @@
 - (void)setCenterModel:(BuyCenterModel *)centerModel {
     
     _centerModel = centerModel;
-    /*
-     // 模型赋值
-    self.nickView.model.merchantName = centerModel.merchantName;
-    self.nickView.model.status = centerModel.status;
-    self.nickView.model.merchantImgl = centerModel.merchantImgl;
-    
-    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
-    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
-    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
-    self.dogCardView.dogCardModel.name = centerModel.name;
-    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
-    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
-    self.dogCardView.dogCardModel.price = centerModel.price;
-    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
-    */
-    // 直接赋值
+        // 直接赋值
     // 昵称
-    if (centerModel.merchantImgl.length != 0) {
-       
-        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImgl];
+    if (centerModel.merchantImg1.length != 0) {
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImg1];
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = centerModel.merchantName;
-    self.nickView.stateLabe.text = centerModel.status;
+    NSString *state = @"";
+    if ([centerModel.status isEqualToString:@"1"]) {
+        state = @"待付款";
+    }else if ([centerModel.status isEqualToString:@"2"]){
+        state = @"待付定金";
+    }else if ([centerModel.status isEqualToString:@"3"]){
+        state = @"已付定金，代付尾款";
+    }else if ([centerModel.status isEqualToString:@"5"]){
+        state = @"待付全款";
+    }
+    self.nickView.stateLabe.text = state;
+    
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
         [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
         
     }
-    self.dogCardView.dogImageView.image = [UIImage imageNamed:centerModel.pathSmall];
+
     self.dogCardView.dogNameLabel.text = centerModel.name;
     self.dogCardView.dogAgeLabel.text = centerModel.ageName;
     self.dogCardView.dogSizeLabel.text = centerModel.sizeName;
@@ -140,7 +135,6 @@
         make.height.equalTo(1);
         
     }];
-    
 }
 
 #pragma mark
@@ -165,7 +159,6 @@
 }
 
 - (SellerDogCardView *)dogCardView {
-    
     if (!_dogCardView) {
         _dogCardView = [[SellerDogCardView alloc] init];
     }

@@ -41,16 +41,16 @@ static NSString *closeCell = @"SellerCloseCell";
 // 请求所有的订单
 - (void)getRequestAllOrder {
     NSDictionary *dict = @{
-                           @"user_id":@(11),
-                           @"status":@(1),
+                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                           @"status":@(0),
                            @"page":@(1),
-                           @"pageSize":@(10),
-                           @"is_right":@(1)
+                           @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -135,15 +135,14 @@ static NSString *closeCell = @"SellerCloseCell";
         
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
 
-        cell.orderState = @"待付定金";
-        cell.btnTitles = @[@"联系买家"];
-        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
-        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
-        cell.costMessage = @[finalMoney, depositMoney];
+        cell.orderState = @"待付宽";
+        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+//        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
+//        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
+//        cell.costMessage = @[finalMoney, depositMoney];
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
-        [self.btnTitles addObject:cell.btnTitles];
-        [self.states addObject:cell.orderState];
+
         __weak typeof(self) weakSelf = self;
         
         cell.clickBtnBlock = ^(NSString *btnText){
@@ -154,7 +153,7 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 2){ // 2：待付定金
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
         
-        cell.orderState = @"待付全款";
+        cell.orderState = @"待付定金";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
         NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
         cell.costMessage = @[allMoney];
@@ -188,7 +187,7 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 5){ // 5：待付全款
         
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
-        cell.orderState = @"待付定金";
+        cell.orderState = @"待付全款";
         cell.btnTitles = @[@"联系买家"];
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];

@@ -78,6 +78,8 @@ static NSString *cellid = @"cellid";
 - (void)initUI {
     [self.view addSubview:self.centerView];
     [self.view addSubview:self.tableView];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+    self.title = @"收支明细";
     
     self.edgesForExtendedLayout = 0;
     

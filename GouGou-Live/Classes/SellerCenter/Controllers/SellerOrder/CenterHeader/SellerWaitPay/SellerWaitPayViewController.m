@@ -28,12 +28,11 @@ static NSString *cellid = @"SellerWaitPayCell";
 #pragma mark - 网络请求
 // 请求待支付的订单
 - (void)getRequestWaitPayOrder {
-    NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@(11),
+    NSDictionary *dict = @{
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"status":@(1),
                            @"page":@(1),
-                           @"pageSize":@(10),
-                           @"is_right":@(1)
+                           @"pageSize":@(10)
                            };
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -110,11 +109,11 @@ static NSString *cellid = @"SellerWaitPayCell";
     SellerOrderModel *model = self.dataArr[indexPath.row];
     cell.model = model;
     if ([model.status isEqualToString:@"1"]) {
-        cell.orderState = @"待付定金";
-        cell.btnTitles = @[@"联系买家"];
-        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
-        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
-        cell.costMessage = @[finalMoney, depositMoney];
+        cell.orderState = @"待付宽";
+        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+//        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
+//        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
+//        cell.costMessage = @[finalMoney, depositMoney];
     }else if ([model.status isEqualToString:@"2"]) {
         cell.orderState = @"待付全款";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];

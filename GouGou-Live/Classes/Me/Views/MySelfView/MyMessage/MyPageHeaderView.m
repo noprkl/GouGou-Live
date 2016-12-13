@@ -67,6 +67,11 @@
     _pleasureCount = pleasureCount;
     self.startSource.startCount = pleasureCount;
 }
+- (void)setIsMentch:(BOOL)isMentch {
+    _isMentch = isMentch;
+    self.pleasure.hidden = isMentch;
+    self.startSource.hidden = YES;
+}
 // 约束
 - (void)layoutSubviews {
     [super layoutSubviews];

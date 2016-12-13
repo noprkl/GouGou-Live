@@ -29,50 +29,12 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        
-//        CGFloat w = 600;
-//        CGFloat h = 93;
-//        CGFloat x = 0;
-//        CGFloat y = 10;
-//
-//        for (NSInteger i = 0; i < 5; i ++) {
-//            x = i * (w + 10);
-//            
-//            DogCardView *cardView = [[DogCardView alloc] init];
-//            cardView.frame = CGRectMake(x, y, w, h);
-//            [self.dogCardScrollView addSubview:cardView];
-//        }
         self.dogCardScrollView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     }
     return self;
 }
 - (void)awakeFromNib {
     // Initialization code
-    self.dogCardScrollView.contentSize = CGSizeMake(5 * (300 + 10), 0);
-    
-    CGFloat w = 300;
-    
-    CGFloat h = 93;
-    
-    CGFloat x = 10;
-    
-    CGFloat y = 10;
-    
-    
-    for (NSInteger i = 0; i < 5; i ++) {
-        
-        x = i * (w + 10);
-        
-        DogCardView *cardView = [[DogCardView alloc] init];
-        cardView.message = [NSString stringWithFormat:@"%ld/5", i + 1];
-        cardView.backgroundColor = [UIColor whiteColor];
-        cardView.frame = CGRectMake(x, y, w, h);
-        
-        cardView.tag = i + 50;
-        [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
-        [self.dogCardScrollView addSubview:cardView];
-    }
-    
 }
 - (void)clickCardViewAction:(UIControl *)control {
     if (_cardBlcok) {
@@ -83,21 +45,53 @@
     
     _liveCellModel = liveCellModel;
     self.roomMessageLabel.text = liveCellModel.name;
-//    if (liveCellModel.area.length == 0) {
-//        self.anchorCityLabel.text = liveCellModel.area;
-//    }else{
-//        self.anchorCityLabel.text = @"";
-//    }
-//    self.watchCountLabel.text = liveCellModel.viewNum;
+    if (liveCellModel.area.length != 0) {
+        self.anchorCityLabel.text = liveCellModel.area;
+    }else{
+        self.anchorCityLabel.text = @"";
+    }
     
-//    if (liveCellModel.userImgUrl != NULL) {
-//        NSString *urlString = [IMAGE_HOST stringByAppendingString:liveCellModel.userImgUrl];
-//        [self.anchorIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-//    }
-//    self.anchorNameLabel.text = liveCellModel.userName;
+    self.watchCountLabel.text = liveCellModel.viewNum;
     
+    if (liveCellModel.userImgUrl != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:liveCellModel.userImgUrl];
+        [self.anchorIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
+    self.anchorNameLabel.text = liveCellModel.merchantName;
+    if (liveCellModel.snapshot.length != 0) {
+        [self.roomImageView sd_setImageWithURL:[NSURL URLWithString:liveCellModel.snapshot] placeholderImage:[UIImage imageNamed:@"直播图"]];
+    }
 }
+- (void)setDogInfos:(NSArray *)dogInfos {
+    _dogInfos = dogInfos;
+    if (_dogInfos.count == 0) {
+        self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0);
+    }else {
+        NSInteger count = dogInfos.count;
+        self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 10), 0);
 
+        CGFloat w = 300;
+        CGFloat h = 93;
+        CGFloat x = 10;
+        CGFloat y = 10;
+        
+        for (NSInteger i = 0; i < count; i ++) {
+            x = i * (w + 10);
+            
+            DogCardView *cardView = [[DogCardView alloc] init];
+            cardView.dogInfo = dogInfos[i];
+            cardView.message = [NSString stringWithFormat:@"%ld/%ld", i + 1, count];
+            cardView.backgroundColor = [UIColor whiteColor];
+            cardView.frame = CGRectMake(x, y, w, h);
+            
+            cardView.tag = i + 50;
+            cardView.layer.cornerRadius = 5;
+            cardView.layer.masksToBounds = YES;
+            [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
+            [self.dogCardScrollView addSubview:cardView];
+        }
+    }
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

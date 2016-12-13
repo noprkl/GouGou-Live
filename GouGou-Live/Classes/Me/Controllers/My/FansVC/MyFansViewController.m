@@ -38,6 +38,7 @@ static NSString *cellid = @"MyFocusCell";
     [self setNavBarItem];
     self.title = @"我的粉丝";
     [self.view addSubview:self.tableView];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
 }
 - (void)setFansArr:(NSArray *)fansArr {
     _fansArr = fansArr;
@@ -56,7 +57,7 @@ static NSString *cellid = @"MyFocusCell";
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        
+        _tableView.tableFooterView = [[UIView alloc] init];
         [_tableView registerNib:[UINib nibWithNibName:@"MyFocusTableCell" bundle:nil] forCellReuseIdentifier:cellid];
     }
     return _tableView;

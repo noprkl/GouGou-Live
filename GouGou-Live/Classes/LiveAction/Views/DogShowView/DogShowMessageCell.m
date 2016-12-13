@@ -212,31 +212,30 @@
 - (CGFloat)getCellHeight {
     return CGRectGetMaxY(self.line5.frame);
 }
-- (void)setModel:(DogDetailModel *)model {
+- (void)setModel:(LiveListDogInfoModel *)model {
     _model = model;
-    self.dogAgeLaebl.text = model.age.name;
-    self.dogColorLaebl.text = model.color.name;
-    self.dogKindLabel.text = model.kind.name;
+    self.dogAgeLaebl.text = model.agename;
+    self.dogColorLaebl.text = model.colorname;
+    self.dogKindLabel.text = model.kindname;
     self.dogNameLabel.text = model.name;
-    self.dogSizeLabel.text = model.size.name;
+    self.dogSizeLabel.text = model.sizename;
     
     self.dogPriceLaebl.text = model.price;
     
     self.descLabel.text = model.comment;
-    self.promulgateTimeLabel.text = model.createTime;
+
+    // 时间戳转时间
+    self.promulgateTimeLabel.text = [NSString stringFromDateString:model.createTime];
     
-    NSArray *imsArr = [model.pathBig componentsSeparatedByString:@","];
+    NSArray *imgArr = [model.dataPhoto componentsSeparatedByString:@"|"];
+    CGFloat height = [self.dogImageView getCellHeightWithImages:imgArr];
+    self.dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
+
+//    [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
+//        make.top
+//    }];
     
-    CGFloat height = [_dogImageView getCellHeightWithImages:imsArr];
-    _dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
-    
-    // 数组转化模型
-    NSArray *impressModels = [DogCategoryModel mj_objectArrayWithKeyValuesArray:model.impresssion];
-    
-    NSMutableArray *impressArr = [NSMutableArray array];
-    for (DogCategoryModel *impress in impressModels) {
-        [impressArr addObject:impress.name];
-    }
+    NSArray *impressArr = [model.impresssionId componentsSeparatedByString:@"|"];
     [self.markView creatDogMarksWithMark:impressArr];
     
     NSString *state = @"";
@@ -278,7 +277,6 @@
 - (DogImageView *)dogImageView {
     if (!_dogImageView) {
         _dogImageView = [[DogImageView alloc] init];
-      
     }
     return _dogImageView;
 }

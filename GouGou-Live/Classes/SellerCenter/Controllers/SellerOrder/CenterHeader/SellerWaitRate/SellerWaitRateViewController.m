@@ -25,11 +25,10 @@ static NSString *cellid = @"SellerWaitRateCell";
 // 请求待评价的订单
 - (void)getRequestWaitRaterder {
     NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
-                          @"user_id":@(11),
+                          @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"status":@(4),
                            @"page":@(1),
-                           @"pageSize":@(10),
-                           @"is_right":@(1)
+                           @"pageSize":@(10)
                            };
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);

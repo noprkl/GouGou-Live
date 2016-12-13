@@ -10,7 +10,7 @@
 
 typedef void(^ClickEmojiButtonBlock)();
 typedef void(^ClickSendButtonBlock)(NSString *string);
-typedef void(^ClickEditTextFieldBlock)();
+typedef void(^ClickEditTextFieldBlock)(UITextField *textField);
 @interface LivingSendMessageView : UIView
 
 @property(nonatomic, strong) ClickEmojiButtonBlock emojiBlock; /**< 点击表情回调 */

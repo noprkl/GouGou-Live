@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DogDetailModel.h"
+#import "LiveListDogInfoModel.h"
 
 typedef void(^ClidkShareBtnBlock)();
 typedef void(^ClidkLikeBtnBlock)();
@@ -19,7 +19,7 @@ typedef void(^ClidkBookBtnBlock)();
 @property(nonatomic, strong) ClidkLikeBtnBlock likeBlock; /**< 点击喜欢按钮 */
 @property(nonatomic, strong) ClidkBookBtnBlock bookBlock; /**< 点击订购按钮 */
 
-@property(nonatomic, strong) DogDetailModel *model; /**< 模型 */
+@property(nonatomic, strong) LiveListDogInfoModel *model; /**< 模型 */
 
 
 - (CGFloat)getCellHeight;

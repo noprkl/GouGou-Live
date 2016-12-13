@@ -137,108 +137,56 @@
     
     [super layoutSubviews];
     
-    
-    
     __weak typeof(self) weakself = self;
-    
-    
-    
     [_dogImageView makeConstraints:^(MASConstraintMaker *make) {
-        
         make.centerY.equalTo(weakself.centerY);
-        
         make.left.equalTo(weakself.left).offset(10);
-        
         make.size.equalTo(CGSizeMake(78, 78));
-        
-        
-        
     }];
     
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.top).offset(15);
-        
         make.left.equalTo(weakself.dogImageView.right).offset(10);
-        
     }];
     
     [_kindLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.bottom.equalTo(weakself.dogNameLabel.bottom);
-        
         make.left.equalTo(weakself.dogNameLabel.right).offset(10);
-        
     }];
-    
-    
-    
     [_dogKindLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.bottom.equalTo(weakself.dogNameLabel.bottom);
-        
         make.left.equalTo(weakself.kindLabel.right).offset(10);
-        
     }];
-    
-    
-    
     [_dogAgeLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.dogNameLabel.bottom).offset(5);
-        
         make.left.equalTo(weakself.dogImageView.right).offset(10);
-        
     }];
     
     [_dogSizeLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.centerY.equalTo(weakself.dogAgeLabel.centerY);
-        
         make.left.equalTo(weakself.dogAgeLabel.right).offset(10);
-        
     }];
     
     [_dogColorLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.centerY.equalTo(weakself.dogAgeLabel.centerY);
-        
         make.left.equalTo(weakself.dogSizeLabel.right).offset(10);
-        
     }];
-    
-    
     
     [_nowPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.dogAgeLabel.bottom);
-        
         make.left.equalTo(weakself.dogImageView.right).offset(10);
-        
     }];
-    
-    
     
     [_oldPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.nowPriceLabel.bottom);
-        
         make.left.equalTo(weakself.dogImageView.right).offset(10);
-        
     }];
-    
-    
     
     [_spaceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.bottom.equalTo(weakself.bottom);
-        
         make.left.right.equalTo(weakself);
-        
         make.height.equalTo(1);
-        
     }];
-    
 }
 
 

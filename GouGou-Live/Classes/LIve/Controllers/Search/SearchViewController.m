@@ -7,21 +7,79 @@
 //
 
 #import "SearchViewController.h"
+#import "LiveTableView.h"
+#import "LiveViewCellModel.h"
+#import "LiveListDogInfoModel.h"
+#import "LivingViewController.h"
 
+@interface SearchViewController ()
 
-@interface SearchViewController ()<UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
-
-@property(nonatomic, strong) UITableView *tableView; /**< tableView */
+@property(nonatomic, strong) LiveTableView *tableView; /**< tableView */
 
 @property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITextField *titleInputView; /**< 头部输入 */
 
+@property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗信息 */
+
 @end
 
-static NSString *cellid = @"cellid";
+/** cellid */
+static NSString *cellid = @"RecommentCellid";
 
 @implementation SearchViewController
+#pragma mark
+#pragma mark - 网络请求
+- (void)getRequestLiveList {
+    
+    NSDictionary *dict = @{
+                           @"page":@(1),
+                           @"pageSize":@(10)
+                           };
+    [self getRequestWithPath:API_Live_new_list params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.dogInfos removeAllObjects];
+        
+        self.tableView.dataPlist = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        if (self.tableView.dataPlist.count == 0) {
+            
+        }else{
+            // 高度
+            __block CGFloat height = 0;
+            // 请求狗狗信息
+            for (NSInteger i = 0; i < self.tableView.dataPlist.count; i ++) {
+                LiveViewCellModel *model = self.tableView.dataPlist[i];
+                if (model.pNum == 0) {
+                    [self.dogInfos addObject:@[]];
+                    height += 239;
+                    
+                }else{
+                    NSDictionary *dict = @{
+                                           @"live_id":model.liveId
+                                           };
+                    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                        [self.dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                        height += 357;
+                        if (self.dogInfos.count == self.tableView.dataPlist.count) {
+                            self.tableView.dogInfos = self.dogInfos;
+                            [self.tableView reloadData];
+                        }
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
+                }
+                if (self.dogInfos.count == self.tableView.dataPlist.count) {
+                    self.tableView.dogInfos = self.dogInfos;
+                    [self.tableView reloadData];
+                }
+            }
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -31,7 +89,7 @@ static NSString *cellid = @"cellid";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    self.tableView.dogInfos = @[];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
     
 }
@@ -41,27 +99,50 @@ static NSString *cellid = @"cellid";
 
 - (void)initUI {
     [self.view addSubview:self.tableView];
+    [self.tableView makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 64, 0));
+    }];
     [self setNavBarItem];
     [self.navigationItem setTitleView:self.titleInputView];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSureButtonAction)];
    
 }
-- (UITableView *)tableView {
+// 直播列表
+- (LiveTableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
+        _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH,1000) style:(UITableViewStylePlain)];
         
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid];
+        _tableView.bounces = NO;
+        
+        __weak typeof(self) weakSelf = self;
+        
+        _tableView.cellBlock = ^(LiveViewCellModel *model, NSArray *dogInfos){
+            [weakSelf pushToLivingVc:model products:dogInfos];
+        };
+        _tableView.dogCardBlock = ^(LiveViewCellModel *model, NSArray *dogInfos){
+            [weakSelf pushToLivingVc:model products:dogInfos];
+        };
     }
     return _tableView;
 }
+- (void)pushToLivingVc:(LiveViewCellModel *)model products:(NSArray *)dogInfos {
+    DLog(@"%@", model);
+    LivingViewController *livingVC = [[LivingViewController alloc] init];
+    livingVC.liveID = model.liveId;
+    livingVC.liverId = model.ID;
+    livingVC.liverIcon = model.userImgUrl;
+    livingVC.liverName = model.merchantName;
+    livingVC.doginfos = dogInfos;
+    livingVC.watchCount = model.pNum;
+    livingVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:livingVC animated:YES];
+}
+
 - (UITextField *)titleInputView {
     if (!_titleInputView) {
         _titleInputView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 280, 30)];
-        _titleInputView.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"#输入您对狗狗的印象，最多不超过10个字#" attributes:@{
-                                                                                                                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
-                                                                                                                                 NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        _titleInputView.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入搜索的用户账号" attributes:@{
+                                                                                                                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],                                                                                    NSFontAttributeName:[UIFont systemFontOfSize:14]}];
         _titleInputView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
         _titleInputView.layer.cornerRadius = 5;
         _titleInputView.layer.masksToBounds = YES;
@@ -79,26 +160,7 @@ static NSString *cellid = @"cellid";
 }
 #pragma mark - Tableview 代理
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-//    return self.dataArr.count;
-    return 30;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"test-%ld", indexPath.row];
-    
-    return cell;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

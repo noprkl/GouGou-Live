@@ -13,6 +13,7 @@
 #import "DogTypeCellModel.h"
 #import "MyPagePictureView.h"
 #import "PromptView.h"
+#import "EditNikeNameAlert.h"
 
 #import "CertificateViewController.h"
 #import "MerchantViewController.h"
@@ -174,16 +175,43 @@ static NSString *cellid4 = @"cellid4";
                 cell1.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 MyPageDescView *descView = [[MyPageDescView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, 73))];
-                
+                if ([UserInfos sharedUser].usermotto.length != 0) {
+                    descView.descStr = [UserInfos sharedUser].usermotto;
+                }else{
+                    descView.descStr = @"暂无简介";
+                }
                 descView.backgroundColor = [UIColor whiteColor];
-                descView.editBlock = ^(){
-                    PromptView *promit = [[PromptView alloc] init];
-                    promit.hidForGet = YES;
-                    promit.hidNote = YES;
-                    promit.placeHolder = @"编辑个人简介";
+                descView.editBlock = ^(UILabel *contentLabel){
+                    EditNikeNameAlert *editSignAlert = [[EditNikeNameAlert alloc] init];
                     
-                    promit.title = @"简介编辑";
-                    [promit show];
+                    [editSignAlert show];
+                    editSignAlert.sureBlock = ^(NSString *signaue){
+                        if (![signaue isEqualToString:@""]) {
+                            DLog(@"%@", signaue);
+#pragma mark  上传个人签名
+                            
+                            NSDictionary *dict = @{
+                                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                   @"user_motto":signaue
+                                                   };
+                            [self postRequestWithPath:API_Signature params:dict success:^(id successJson) {
+                                [self showAlert:successJson[@"message"]];
+                                DLog(@"%@", successJson);
+                                if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                                    
+                                    contentLabel.text = signaue;
+                                    // 修改本地存储
+                                    [UserInfos sharedUser].usermotto = signaue;
+                                    [UserInfos setUser];
+                                }
+                            } error:^(NSError *error) {
+                                DLog(@"%@", error);
+                            }];
+                        }
+                    };
+                    editSignAlert.title = @"请输入个性签名";
+                    editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
+                    editSignAlert.noteString = @"";
                 };
                    [cell1.contentView addSubview:descView];
                 return cell1;

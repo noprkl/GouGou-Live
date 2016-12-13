@@ -8,13 +8,11 @@
 
 #import "BaseModel.h"
 
-@class LiveListRespModel;
-@class LiveListStreamModel;
+@class LiveRootStreamModel;
 @interface LiveListRootModel : NSObject
 
-@property (nonatomic, assign) NSInteger liveStatus;
-@property (nonatomic, assign) NSInteger status;
-@property (nonatomic, strong) LiveListRespModel *resp;
-@property (nonatomic, strong) LiveListStreamModel *steam;
+@property (nonatomic, strong) NSArray *info; /**< 直播中狗狗信息 */
+
+@property (nonatomic, strong) LiveRootStreamModel *steam; /**<  */
 
 @end

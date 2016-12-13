@@ -53,7 +53,7 @@
                                 };
         label.text = marks[i];
         CGSize size=[label.text sizeWithAttributes:attrs];
-        w = size.width + 10;
+        w = size.width + 5;
         
         label.frame = CGRectMake(i * (w + magrin), 0, w, h);
         label.font = [UIFont systemFontOfSize:12];

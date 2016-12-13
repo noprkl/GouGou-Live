@@ -26,6 +26,11 @@ static NSString *cellid = @"RecommentCellid";
     self.dataArr = dataPlist;
     [self reloadData];
 }
+- (void)setDogInfos:(NSArray *)dogInfos {
+    _dogInfos = dogInfos;
+//    [self reloadData];
+    DLog(@"%@", dogInfos);
+}
 - (NSArray *)dataArr {
     if (!_dataArr) {
         _dataArr = [NSArray array];
@@ -46,34 +51,55 @@ static NSString *cellid = @"RecommentCellid";
 
 // tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+   
     return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LiveViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+   __block LiveViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     LiveViewCellModel *model = self.dataPlist[indexPath.row];
     cell.liveCellModel = model;
+    
+    if (self.dogInfos.count != 0) {
+        NSArray *arr = self.dogInfos[indexPath.row];
+        cell.dogInfos = arr;
+        cell.cardBlcok = ^(UIControl *control){
+            DLog(@"第%ld个卡片", indexPath.row);
+            if (_dogCardBlock) {
+                _dogCardBlock(model, arr);
+            }
+        };
+    }
+    
+    DLog(@"%@", cell.dogInfos);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.cardBlcok = ^(UIControl *control){
-        DLog(@"第%ld个卡片", indexPath.row);
-        if (_dogCardBlock) {
-            _dogCardBlock(model);
-        }
-    };
+
     
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    LiveViewCellModel *model = self.dataPlist[indexPath.row];
-    if (_cellBlock) {
-        _cellBlock(model);
+  
+    if (self.dogInfos.count != 0) {
+        NSArray *arr = self.dogInfos[indexPath.row];
+        LiveViewCellModel *model = self.dataPlist[indexPath.row];
+        DLog(@"%@", model);
+        if (_cellBlock) {
+            _cellBlock(model, arr);
+        }
     }
+   
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    return 357;
+    if (self.dogInfos.count != 0) {
+        NSArray *arr = self.dogInfos[indexPath.row];
+        
+        if (arr.count == 0){
+            return 240;
+        }else{
+            return 357;
+        }
+    }
+    return 240;
 }
 @end

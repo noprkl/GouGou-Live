@@ -125,5 +125,12 @@
     }
     return YES;
 }
-
++ (NSString *)stringFromDateString:(NSString *)dateStr {
+    // 时间戳转时间
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[dateStr intValue]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYY-MM-dd";
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    return confromTimespStr;
+}
 @end

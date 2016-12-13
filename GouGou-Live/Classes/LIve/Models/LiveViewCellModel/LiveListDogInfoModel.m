@@ -9,5 +9,16 @@
 #import "LiveListDogInfoModel.h"
 
 @implementation LiveListDogInfoModel
-
+// 驼峰
++ (NSString *)mj_replacedKeyFromPropertyName121:(NSString *)propertyName
+{
+    // nickName -> nick_name
+    if ([propertyName isEqualToString:@"impresssionId"]) {
+        return @"impresssionId";
+    }else if ([propertyName isEqualToString:@"ID"]){
+        return @"ID";
+    }else{
+        return [propertyName mj_underlineFromCamel];
+    }
+}
 @end

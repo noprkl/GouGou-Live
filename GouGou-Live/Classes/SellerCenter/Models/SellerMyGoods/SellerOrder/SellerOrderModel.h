@@ -12,8 +12,9 @@
 
 @property (nonatomic, strong) NSString *ID; /**< 订单ID */
 @property (nonatomic, strong) NSString *status; /**< 订单状态 */
-@property (nonatomic, strong) NSString *userImgUrl; /**< 用户图片 */
-@property (nonatomic, strong) NSString *userName; /**< 用户名字 */
+@property (nonatomic, strong) NSString *userImgUrl; /**< 买家图片 */
+@property (nonatomic, strong) NSString *userName; /**< 买家名字 */
+@property (nonatomic, strong) NSString *buyUserId; /**< 买家ID */
 @property (nonatomic, strong) NSString *comment; /**< 备注 */
 
 @property (nonatomic, strong) NSString *ageName; /**< 狗狗年龄 */

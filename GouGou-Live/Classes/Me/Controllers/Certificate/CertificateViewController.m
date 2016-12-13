@@ -113,7 +113,14 @@ static NSString * identityCell = @"identitiCellID";
     [super viewWillAppear:animated];
 
     if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) { //1.未认证 2.审核 3.已认证 4.认证失败
-            [self initUI];
+
+        self.title = @"实名认证";
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(requestNameAndIdentiry)];
+        self.view.backgroundColor = [UIColor whiteColor];
+        
+        [self.view addSubview:self.identityInfoView];
+        [self.view addSubview:self.identityTableView];
+
     }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
         [self.view addSubview:self.haveCommitView];
     }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
@@ -160,6 +167,7 @@ static NSString * identityCell = @"identitiCellID";
 - (CerFiticateSuccessView *)successView {
     if (!_successView) {
         _successView = [[CerFiticateSuccessView alloc] initWithFrame:self.view.bounds];
+        _successView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
         __weak typeof(self) weakSelf = self;
         _successView.backBlock = ^(){
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];

@@ -70,16 +70,17 @@
                     </variation>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZf-ck-HGb">
-                    <rect key="frame" x="97" y="119" width="70" height="17"/>
+                    <rect key="frame" x="77" y="119" width="90" height="17"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="70" id="gIt-ie-kvk"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="eg1-wZ-jvS"/>
+                        <constraint firstAttribute="width" constant="90" id="gIt-ie-kvk"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="不出售" image="不售出-拷贝">
+                    <state key="normal" title="出售(0)" image="不售出-拷贝">
                         <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
-                    <state key="selected" title="出售(0)" image="已售出"/>
+                    <state key="selected" title="不出售" image="已售出"/>
                     <connections>
                         <action selector="clickSellORBtnAction:" destination="-1" eventType="touchUpInside" id="tyX-Vu-8IR"/>
                     </connections>
@@ -107,7 +108,7 @@
                 <constraint firstItem="dmj-6P-Zf8" firstAttribute="centerY" secondItem="Nry-Ng-0Lt" secondAttribute="centerY" id="v1n-Ji-Luo"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="757.5" y="158.5"/>
+            <point key="canvasLocation" x="647.5" y="69.5"/>
         </view>
     </objects>
     <resources>

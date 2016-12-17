@@ -11,7 +11,6 @@
 
 @interface LiveTableView () <UITableViewDelegate, UITableViewDataSource>
 
-
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @end
@@ -26,10 +25,9 @@ static NSString *cellid = @"RecommentCellid";
     self.dataArr = dataPlist;
     [self reloadData];
 }
-- (void)setDogInfos:(NSArray *)dogInfos {
+- (void)setDogInfos:(NSMutableArray *)dogInfos {
     _dogInfos = dogInfos;
-//    [self reloadData];
-    DLog(@"%@", dogInfos);
+    [self reloadData];
 }
 - (NSArray *)dataArr {
     if (!_dataArr) {
@@ -43,7 +41,8 @@ static NSString *cellid = @"RecommentCellid";
     if (self) {
         self.delegate = self;
         self.dataSource = self;
-        
+        self.showsVerticalScrollIndicator = NO;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self registerNib:[UINib nibWithNibName:@"LiveViewCell" bundle:nil] forCellReuseIdentifier:cellid];
     }
     return self;
@@ -57,9 +56,9 @@ static NSString *cellid = @"RecommentCellid";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
    __block LiveViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    LiveViewCellModel *model = self.dataPlist[indexPath.row];
+    LiveViewCellModel *model = self.dataArr[indexPath.row];
     cell.liveCellModel = model;
-    
+//    cell.dogInfos = self.dogInfos[indexPath.row];
     if (self.dogInfos.count != 0) {
         NSArray *arr = self.dogInfos[indexPath.row];
         cell.dogInfos = arr;
@@ -70,11 +69,8 @@ static NSString *cellid = @"RecommentCellid";
             }
         };
     }
-    
-    DLog(@"%@", cell.dogInfos);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,24 +78,18 @@ static NSString *cellid = @"RecommentCellid";
   
     if (self.dogInfos.count != 0) {
         NSArray *arr = self.dogInfos[indexPath.row];
-        LiveViewCellModel *model = self.dataPlist[indexPath.row];
-        DLog(@"%@", model);
+        LiveViewCellModel *model = self.dataArr[indexPath.row];
         if (_cellBlock) {
             _cellBlock(model, arr);
         }
     }
-   
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.dogInfos.count != 0) {
-        NSArray *arr = self.dogInfos[indexPath.row];
-        
-        if (arr.count == 0){
-            return 240;
-        }else{
-            return 357;
-        }
+    LiveViewCellModel *model = self.dataArr[indexPath.row];
+    if (model.pNum == 0){
+        return 250;
+    }else{
+        return 357;
     }
-    return 240;
 }
 @end

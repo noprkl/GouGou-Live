@@ -21,7 +21,7 @@
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
 #import "SellerSendViewController.h"
-#import "SellerProtectModel.h"
+#import "SellerProtectDetailModel.h"
 
 @interface SellerOrderDetailProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -30,8 +30,7 @@
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
 @property(nonatomic, strong) SellerOrderDetailBottomView *bottomView; /**< 底部按钮 */
-
-@property(nonatomic, strong) SellerProtectModel *orderInfo; /**< 订单信息 */
+@property(nonatomic, strong) SellerProtectDetailModel *orderInfo; /**< 订单信息 */
 
 @end
 
@@ -41,18 +40,14 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
 #pragma mark - 网络请求
 - (void)getProtectPowerRequest {
     
-    NSDictionary * dict = @{@"user_id":@(TestID),
-                            @"page":@(1),
-                            @"pageSize":@(10)
+    NSDictionary * dict = @{@"id":@([_orderID intValue])
                             };
-    
-    [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
-        
-        self.orderInfo = [SellerProtectModel mj_objectWithKeyValues:successJson[@"data"][@"info"]];
-        
+    DLog(@"%@", dict);
+    [self getRequestWithPath:API_Activist_limit params:dict success:^(id successJson) {
+        DLog(@"%@",successJson);        
+        NSArray *arr = [SellerProtectDetailModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        self.orderInfo = [arr lastObject];
         [self.tableView reloadData];
-        DLog(@"%@",successJson[@"data"]);
-        
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -60,6 +55,10 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
 
 #pragma mark
 #pragma mark - 生命周期
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getProtectPowerRequest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -96,7 +95,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.showsVerticalScrollIndicator = NO;
-        
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid];
     }
     return _tableView;
@@ -138,7 +137,38 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             }else  if ([self.orderInfo.status intValue] == 3) {
                 stateView.stateMessage = @"维权失败";
             }
-            stateView.noteStr = self.orderInfo.closeTime;
+        NSString *state = @"";
+        
+        if ([self.orderInfo.status isEqualToString:@"3"]) {
+            
+            state = @"待付尾款";
+            NSString *date = [NSString stringFromDateString:self.orderInfo.deposittime];
+            state = [NSString stringWithFormat:@"买家于%@付定金,未付尾款", date];
+            
+        }else if ([self.orderInfo.status isEqualToString:@"7"]) {
+            
+            NSString *date = [NSString stringFromDateString:self.orderInfo.balancetime];
+            state = [NSString stringWithFormat:@"买家于%@付款,未发货", date];
+        }else if ([self.orderInfo.status isEqualToString:@"8"]) {
+            
+            
+            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
+            state = [NSString stringWithFormat:@"卖家于%@发货,未收货", date];
+        }else if ([self.orderInfo.status isEqualToString:@"9"]) {
+            
+            state = @"已评价"; // 评价时间
+            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
+            state = [NSString stringWithFormat:@"卖家于%@评价,订单已完成", date];
+            
+        }else if ([self.orderInfo.status isEqualToString:@"10"]) {
+            
+
+        state = @"待评价";
+            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
+            state = [NSString stringWithFormat:@"卖家于%@收货,未评价", date];
+        }
+        
+            stateView.noteStr = state;
             [cell.contentView addSubview:stateView];
             return cell;
         }
@@ -153,6 +183,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPLogisticsInfoView *logisticsInfoView = [[SellerProtectPLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
+            logisticsInfoView.orderCode = self.orderInfo.ID;
             [cell.contentView addSubview:logisticsInfoView];
             return cell;
 
@@ -220,6 +251,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             morePriceView.allPriceCount.text = self.orderInfo.priceOld;
             morePriceView.favorablePriceCount.text = self.orderInfo.price;
             morePriceView.realPriceCount.text = [NSString stringWithFormat:@"%d", [self.orderInfo.priceOld intValue] - [self.orderInfo.price intValue]];
+
             morePriceView.templatePriceCount.text = self.orderInfo.traficRealFee;
             morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance;
             morePriceView.depositCount.text = self.orderInfo.productRealDeposit;
@@ -237,11 +269,14 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
             }            cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-            
-            SellerProtectApplyRefundView *applyRefundView = [[SellerProtectApplyRefundView alloc] initWithFrame:CGRectMake(kDogImageWidth, 0, 356 , 200)];
-            
-            NSArray *imsArr = [self.orderInfo.photoPath componentsSeparatedByString:@","];
+            NSArray *imsArr = [self.orderInfo.photoPath componentsSeparatedByString:@"|"];
+            DogImageView *imageV = [[DogImageView alloc] init];
+            CGFloat height = [imageV getCellHeightWithImages:imsArr];
+
+            SellerProtectApplyRefundView *applyRefundView = [[SellerProtectApplyRefundView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH , height + 90)];
             applyRefundView.pictureArr = imsArr;
+            applyRefundView.applyRefundCount.text = self.orderInfo.money;
+            applyRefundView.reasonLabel.text = self.orderInfo.comment;
             [cell.contentView addSubview:applyRefundView];
             return cell;
 
@@ -271,7 +306,13 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             return 300;
             break;
         case 5:
-            return 210;
+        {
+            NSArray *imsArr = [self.orderInfo.photoPath componentsSeparatedByString:@"|"];
+            DogImageView *imageV = [[DogImageView alloc] init];
+            CGFloat height = [imageV getCellHeightWithImages:imsArr];
+            return height + 90;
+        }
+
             break;
         default:
             break;

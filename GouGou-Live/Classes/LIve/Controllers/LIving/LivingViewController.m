@@ -102,6 +102,8 @@
         self.resp = resp;
         LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:rootSteam.steam];
         self.stream = stream;
+        
+        [self initUI];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -112,7 +114,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self initUI];
+//    [self initUI];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -175,15 +177,15 @@
     PLPlayerOption *playerOption = [PLPlayerOption defaultOption];
     
     // 更改需要修改的 option 属性键所对应的值
-    [playerOption setOptionValue:@15 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
+    [playerOption setOptionValue:@10 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
     [playerOption setOptionValue:@2000 forKey:PLPlayerOptionKeyMaxL1BufferDuration];
     [playerOption setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
     [playerOption setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
     [playerOption setOptionValue:@(kPLLogNone) forKey:PLPlayerOptionKeyLogLevel];
-    
-    
+
     NSURL *url = [NSURL URLWithString:self.stream.rtmp];
-    self.player = [PLPlayer playerWithURL:url option:playerOption];
+    DLog(@"%@", url);
+    self.player = [[PLPlayer alloc] initWithURL:url option:playerOption];
     self.player.delegate = self;
     self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
     // 添加子视图
@@ -553,7 +555,7 @@
 //        _backBtn.layer.cornerRadius = 3;
 //        _backBtn.layer.masksToBounds = YES;
         
-        [_backBtn setImage:[UIImage imageNamed:@"返回"] forState:(UIControlStateNormal)];
+        [_backBtn setImage:[UIImage imageNamed:@"返回-拷贝"] forState:(UIControlStateNormal)];
         [_backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _backBtn;

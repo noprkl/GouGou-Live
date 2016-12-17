@@ -105,7 +105,7 @@
     
     [_phoneTextfiled mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.userName.right).offset(5);
+        make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.relationLabel.centerY);
         make.height.equalTo(15);
         
@@ -149,19 +149,15 @@
         make.left.equalTo(weakself.duihaoImageBtn.right).offset(10);
         
     }];
-    
-    [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.centerY.equalTo(weakself.duihaoImageBtn.centerY);
-        make.left.equalTo(weakself.acquiesceAddressLabel.right).offset(150);
-        
-    }];
-    
     [_deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.centerY.equalTo(weakself.duihaoImageBtn.centerY);
-        make.left.equalTo(weakself.editBtn.right).offset(10);
+        make.right.equalTo(weakself.right).offset(-10);
         
+    }];
+    [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(weakself.duihaoImageBtn.centerY);
+        make.right.equalTo(weakself.deleteBtn.left).offset(-10);
     }];
     
 }

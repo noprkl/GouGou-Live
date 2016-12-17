@@ -44,10 +44,9 @@
 
     _recevieAddress = recevieAddress;
     
-    recevieAddress = [NSString stringWithFormat:@"%@,%@,%@",self.recevieProvince,self.recevieCity,self.recevieDistrict];
+    NSString *address = [NSString stringWithFormat:@"%@,%@,%@, %@",self.recevieProvince,self.recevieCity,self.recevieDistrict, recevieAddress];
     
-    self.detailAddress.text = recevieAddress;
-    
+    self.detailAddress.text = address;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -170,9 +169,9 @@
     
     if (!_acquiesceLabel) {
         _acquiesceLabel = [[UILabel alloc] init];
-        _acquiesceLabel.text = @"默认";
-        _acquiesceLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
-        _acquiesceLabel.font = [UIFont systemFontOfSize:16];
+        _acquiesceLabel.text = @"收货";
+        _acquiesceLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+        _acquiesceLabel.font = [UIFont systemFontOfSize:14];
         
     }
     return _acquiesceLabel;

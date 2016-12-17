@@ -12,4 +12,6 @@
 /** 订单状态 */
 @property (strong,nonatomic) NSString *orderStateMessage;
 
+@property (nonatomic, strong) NSString *orderCode; /**< 订单编号 */
+
 @end

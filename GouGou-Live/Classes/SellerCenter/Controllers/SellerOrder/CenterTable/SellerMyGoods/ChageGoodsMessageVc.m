@@ -263,7 +263,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                                        @"kind_id":@([self.typeModel.ID integerValue]),
                                                                        @"size_id":@([self.sizeModel.ID integerValue]),
                                                                        @"age_id":@([self.ageModel.ID integerValue]),
-                                                                       @"price_old":@"2400.00",
+                                                                       @"price_old":_model.price,
                                                                        @"price":self.priceText.text,
                                                                        @"deposit":self.deposit.text,
                                                                        @"comment":self.noteText.text,

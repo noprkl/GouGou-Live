@@ -194,9 +194,7 @@ static NSString *cellid = @"SizeFilterCellID";
         
         return button;
     }
-    
     return nil;
-    
 }
 
 - (void)clickFooterBtnAction {

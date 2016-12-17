@@ -72,8 +72,11 @@
         make.height.equalTo(1);
     }];
 }
-
-#pragma mark
+- (void)setTransformNumber:(NSString *)transformNumber {
+    _transformNumber = transformNumber;
+    self.numLabel.text = transformNumber;
+}
+#pragma markc
 #pragma mark - 懒加载
 - (UILabel *)logisticInfoLabel {
     

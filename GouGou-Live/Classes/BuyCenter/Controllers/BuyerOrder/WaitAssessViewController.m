@@ -15,7 +15,7 @@
 
 // 订单详情
 #import "OrderCompleteAssess.h" // 完成评价
-#import "OrderCompleteViewController.h" // 订单完成（未评价）
+
 #import "OrderWaitAssessViewController.h" // 待评价
 
 static NSString * waitsAssessCell = @"waitsAssessCell";
@@ -32,6 +32,26 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 @end
 
 @implementation WaitAssessViewController
+#pragma mark - 网络请求
+- (void)getAssessRequest {
+    
+    NSDictionary * dict = @{
+                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"status":@(4),
+                            @"page":@(1),
+                            @"pageSize":@(10)
+                            };
+    
+    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        
+        [self.tableview reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+}
+
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -57,28 +77,6 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     
     [self.view addSubview:self.tableview];
     
-}
-#pragma mark - 网络请求
-- (void)getAssessRequest {
-    
-    NSDictionary * dict = @{
-                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                            @"status":@(4),
-                            @"page":@(1),
-                            @"pageSize":@(10)
-                            };
-    
-    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
-        
-        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-        DLog(@"%@",successJson[@"code"]);
-        DLog(@"%@",successJson[@"message"]);
-        DLog(@"%@",successJson[@"data"]);
-        DLog(@"%@",successJson[@"data"][@"info"]);
-        [self.tableview reloadData];
-    } error:^(NSError *error) {
-        DLog(@"%@",error);
-    }];
 }
 #pragma mark
 #pragma mark - 初始化
@@ -124,7 +122,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    if ([model.status integerValue] == 9) {
+//    if ([model.status integerValue] == 9) {
         cell.centerModel = model;
     
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -139,9 +137,9 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 // 跳转至联系卖家
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-                viewController.title = EaseTest_Chat1;
-                 viewController.chatID = EaseTest_Chat3;
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:model.saleUserId conversationType:(EMConversationTypeChat)];
+                viewController.title = model.saleUserId;
+                 viewController.chatID = model.saleUserId;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
@@ -153,66 +151,28 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
             } else if ([button.titleLabel.text isEqual:@"未评价"]) {
                 // 跳转至我要评价
                 GotoAssessViewController * goToAssessVC = [[GotoAssessViewController alloc] init];
+                goToAssessVC.orderID = model.ID;
                 [self.navigationController pushViewController:goToAssessVC animated:YES];
                 DLog(@"%@",button.titleLabel.text);
             }
         };
         [cell addSubview:funcBtn];
-    }
-    
-    /*
-    else if ([model.status integerValue] == 10) {
-//        WaitAssessCell * cell = [tableView equeueReusableCellWithIdentifier:waitsAssessCell];
-
-        cell.centerModel = model;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"查看评价",@"申请维权",@"联系卖家",@"删除订单"] buttonNum:4];
-        
-        funcBtn.difFuncBlock = ^(UIButton * button) {
-            if ([button.titleLabel.text  isEqual:@"删除订单"]) {
-                // 跳转删除订单
-                [self clickDeleteOrder:model];
-                
-                DLog(@"%@--%@",self,button.titleLabel.text);
-                
-            } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                
-                // 跳转至联系卖家
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-                viewController.title = EaseTest_Chat2;
-                 viewController.chatID = EaseTest_Chat3;
-                viewController.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:viewController animated:YES];
-                DLog(@"%@--%@",self,button.titleLabel.text);
-                
-            } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
-                // 跳转至申请维权
-                [self clickApplyProtectPower:model.ID ];
-                DLog(@"%@--%@",self,button.titleLabel.text);
-            } else if ([button.titleLabel.text isEqual:@"查看评价"]) {
-                // 跳转至查看评价
-                DLog(@"%@",button.titleLabel.text);
-            }
-        };
-        [cell addSubview:funcBtn];
-//        return cell;
-
-    }
-     */
-    return cell;
+//    }
+     return cell;
 }
 // cell选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     BuyCenterModel * model = self.dataArray[indexPath.row];
     if ([model.status integerValue] == 9) {
-        OrderCompleteViewController * OrderVC = [[OrderCompleteViewController alloc] init];
+        OrderWaitAssessViewController * OrderVC = [[OrderWaitAssessViewController alloc] init];
+        OrderVC.detailModel = model;
         [self.navigationController pushViewController:OrderVC animated:YES];
         
     } else if ([model.status integerValue] == 10) {
         
         OrderCompleteAssess * orderAssessVc = [[OrderCompleteAssess alloc] init];
-        
+        orderAssessVc.detailModel = model;
         [self.navigationController pushViewController:orderAssessVc animated:YES];
      
     }

@@ -21,7 +21,6 @@
 		040891F91DFEB91F006DF570 /* GotoAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891DE1DFEB91F006DF570 /* GotoAssessViewController.m */; };
 		040891FA1DFEB91F006DF570 /* PaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E01DFEB91F006DF570 /* PaySuccessViewController.m */; };
 		040891FB1DFEB91F006DF570 /* OrderCompleteAssess.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */; };
-		040891FC1DFEB91F006DF570 /* OrderCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E51DFEB91F006DF570 /* OrderCompleteViewController.m */; };
 		040891FD1DFEB91F006DF570 /* OrderWaitAssessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */; };
 		040891FE1DFEB91F006DF570 /* PayBackMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891E91DFEB91F006DF570 /* PayBackMoneyViewController.m */; };
 		040891FF1DFEB91F006DF570 /* PayFontMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040891EB1DFEB91F006DF570 /* PayFontMoneyViewController.m */; };
@@ -40,6 +39,7 @@
 		0449F93D1DEBDE620060BC90 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0449F93C1DEBDE620060BC90 /* TimePickerView.m */; };
 		044C82ED1DCC411A00B62575 /* ChoseShopAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */; };
 		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
+		044C8D801E025391004BCA52 /* BuyerCloseOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C8D7E1E025391004BCA52 /* BuyerCloseOrderCell.m */; };
 		044D3FD51DF6C1C60076672E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D3FD11DF6C1C60076672E /* libWeChatSDK.a */; };
 		044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D3FE81DF6E7890076672E /* MediaStreamingVc.m */; };
 		044D3FEB1DF6E7890076672E /* MediaStreamingVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044D3FE91DF6E7890076672E /* MediaStreamingVc.xib */; };
@@ -542,8 +542,6 @@
 		040891E01DFEB91F006DF570 /* PaySuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySuccessViewController.m; sourceTree = "<group>"; };
 		040891E21DFEB91F006DF570 /* OrderCompleteAssess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCompleteAssess.h; sourceTree = "<group>"; };
 		040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCompleteAssess.m; sourceTree = "<group>"; };
-		040891E41DFEB91F006DF570 /* OrderCompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCompleteViewController.h; sourceTree = "<group>"; };
-		040891E51DFEB91F006DF570 /* OrderCompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCompleteViewController.m; sourceTree = "<group>"; };
 		040891E61DFEB91F006DF570 /* OrderWaitAssessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderWaitAssessViewController.h; sourceTree = "<group>"; };
 		040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderWaitAssessViewController.m; sourceTree = "<group>"; };
 		040891E81DFEB91F006DF570 /* PayBackMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayBackMoneyViewController.h; sourceTree = "<group>"; };
@@ -578,6 +576,8 @@
 		044C82EA1DCC411A00B62575 /* ChoseShopAdressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressCell.h; sourceTree = "<group>"; };
 		044C82EB1DCC411A00B62575 /* ChoseShopAdressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressCell.m; sourceTree = "<group>"; };
 		044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoseShopAdressCell.xib; sourceTree = "<group>"; };
+		044C8D7D1E025391004BCA52 /* BuyerCloseOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyerCloseOrderCell.h; sourceTree = "<group>"; };
+		044C8D7E1E025391004BCA52 /* BuyerCloseOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyerCloseOrderCell.m; sourceTree = "<group>"; };
 		044D3FD11DF6C1C60076672E /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		044D3FD21DF6C1C60076672E /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		044D3FD31DF6C1C60076672E /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -1562,14 +1562,14 @@
 			children = (
 				040891CE1DFEB91F006DF570 /* AllOrderGoodsViewController.h */,
 				040891CF1DFEB91F006DF570 /* AllOrderGoodsViewController.m */,
-				040891D21DFEB91F006DF570 /* WaitAssessViewController.h */,
-				040891D31DFEB91F006DF570 /* WaitAssessViewController.m */,
-				040891D41DFEB91F006DF570 /* WaitConsignmentViewController.h */,
-				040891D51DFEB91F006DF570 /* WaitConsignmentViewController.m */,
 				040891D61DFEB91F006DF570 /* WaitPayingViewController.h */,
 				040891D71DFEB91F006DF570 /* WaitPayingViewController.m */,
+				040891D41DFEB91F006DF570 /* WaitConsignmentViewController.h */,
+				040891D51DFEB91F006DF570 /* WaitConsignmentViewController.m */,
 				040891D81DFEB91F006DF570 /* WatiConsigneeViewController.h */,
 				040891D91DFEB91F006DF570 /* WatiConsigneeViewController.m */,
+				040891D21DFEB91F006DF570 /* WaitAssessViewController.h */,
+				040891D31DFEB91F006DF570 /* WaitAssessViewController.m */,
 				040891D01DFEB91F006DF570 /* ProtectPowerViewController.h */,
 				040891D11DFEB91F006DF570 /* ProtectPowerViewController.m */,
 			);
@@ -1594,8 +1594,6 @@
 			children = (
 				040891E21DFEB91F006DF570 /* OrderCompleteAssess.h */,
 				040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */,
-				040891E41DFEB91F006DF570 /* OrderCompleteViewController.h */,
-				040891E51DFEB91F006DF570 /* OrderCompleteViewController.m */,
 				040891E61DFEB91F006DF570 /* OrderWaitAssessViewController.h */,
 				040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */,
 				040891E81DFEB91F006DF570 /* PayBackMoneyViewController.h */,
@@ -2675,6 +2673,8 @@
 				046F0B831DE2AB8B00D50D5C /* WaitConsignmentCell.m */,
 				046F0B841DE2AB8B00D50D5C /* WaitFontMoneyCell.h */,
 				046F0B851DE2AB8B00D50D5C /* WaitFontMoneyCell.m */,
+				044C8D7D1E025391004BCA52 /* BuyerCloseOrderCell.h */,
+				044C8D7E1E025391004BCA52 /* BuyerCloseOrderCell.m */,
 			);
 			path = OrdersCell;
 			sourceTree = "<group>";
@@ -4612,6 +4612,7 @@
 				04CE13E41DDC488100EB8777 /* SellerAcceptRateHeaderView.m in Sources */,
 				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
+				044C8D801E025391004BCA52 /* BuyerCloseOrderCell.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
 				04592EE41DF199390095C8EE /* DogCategoryModel.m in Sources */,
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
@@ -4678,7 +4679,6 @@
 				045D511F1DD98601001854A8 /* MyPagePictureView.m in Sources */,
 				04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */,
 				0479B6011DCADC7B00CB288A /* ForgetPsdViewController.m in Sources */,
-				040891FC1DFEB91F006DF570 /* OrderCompleteViewController.m in Sources */,
 				04592ED31DF1674A0095C8EE /* SureForgetPayViewController.m in Sources */,
 				045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */,
 				046F0BA11DE2AB8B00D50D5C /* DetailPayMoney.m in Sources */,

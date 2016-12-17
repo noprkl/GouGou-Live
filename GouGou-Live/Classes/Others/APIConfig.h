@@ -182,7 +182,7 @@
 #pragma mark - 买家
 /** 买家订单初始化 */
 #define API_Order @"api/OrderService/order"
-/** 订单付款项选择 */
+/** 订单付款项选择生成价格 */
 #define API_Order_second @"api/OrderService/order_second"
 
 /** 买家订单列表 */
@@ -215,7 +215,7 @@
 /** 订单维权卖家列表 */
 #define API_My_activist @"api/OrderService/my_activist"
 /** 订单维权详情 */
-#define API_My_activist_limit @"api/OrderService/activist_limit"
+#define API_Activist_limit @"api/OrderService/activist_limit"
 
 /** 订单删除 */
 #define API_Order_Delete @"api/OrderService/order_del"

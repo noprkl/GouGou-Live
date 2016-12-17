@@ -9,24 +9,8 @@
 #import "DogDetailCardView.h"
 
 @interface DogDetailCardView ()
-/** 狗狗图片*/
-@property (strong, nonatomic)  UIImageView *dogImageView;
-/** 狗狗名字 */
-@property (strong, nonatomic)  UILabel *dogNameLabel;
 /** 品种 */
 @property(nonatomic, strong) UILabel *kindLabel;
-/** 狗狗种类 */
-@property (strong, nonatomic)  UILabel *dogKindLabel;
-/** 狗狗年龄*/
-@property (strong, nonatomic)  UILabel *dogAgeLabel;
-/** 狗狗体型*/
-@property (strong, nonatomic)  UILabel *dogSizeLabel;
-/** 狗狗颜色*/
-@property (strong, nonatomic)  UILabel *dogColorLabel;
-/** 狗狗价格*/
-@property (strong, nonatomic)  UILabel *nowPriceLabel;
-/** 狗狗老价格*/
-@property (strong, nonatomic)  UILabel *oldPriceLabel;
 
 @end
 
@@ -59,8 +43,7 @@
     [_dogImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.centerY);
         make.left.equalTo(weakself.left).offset(10);
-        make.top.equalTo(weakself.top).offset(10);
-        
+        make.size.equalTo(CGSizeMake(93, 93));
     }];
     
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {

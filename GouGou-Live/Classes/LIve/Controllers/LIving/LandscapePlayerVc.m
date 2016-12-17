@@ -55,6 +55,8 @@
 
 @property(nonatomic, strong) LiveListRespModel *resp; /**< 播放信息 */
 
+@property(nonatomic, strong) UILabel *notePlayer; /**< 播放提示 */
+
 @end
 
 @implementation LandscapePlayerVc
@@ -67,7 +69,8 @@
         DLog(@"%@", successJson);
         self.rootModel = [LiveListRootModel mj_objectWithKeyValues:successJson[@"data"]];
         if (self.rootModel.info.count != 0) {
-            ShowIngDogModel *showIngDog = [self.rootModel.info lastObject];
+            NSArray *showIngDogs = self.rootModel.info;
+            ShowIngDogModel *showIngDog = [showIngDogs lastObject];
             if (showIngDog.pathSmall.length != 0) {
                 NSString *urlString = [IMAGE_HOST stringByAppendingString:showIngDog.pathSmall];
                 [self.showingImg sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
@@ -79,6 +82,7 @@
         self.resp = resp;
         LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:rootSteam.steam];
         self.stream = stream;
+        [self playerLiveMedia];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -90,20 +94,21 @@
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    
+    self.navigationController.navigationBarHidden = YES;
     self.hidesBottomBarWhenPushed = YES;
     // 进入后横屏
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (orientation == UIDeviceOrientationPortrait) {
         [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
     }
-    [self playerLiveMedia];
     [self getRequestLiveMessage];
+//    [self playerLiveMedia];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
 //    self.hidesBottomBarWhenPushed = YES;
+//    self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     // 取消横屏
@@ -148,7 +153,7 @@
     NSURL *url = [NSURL URLWithString:self.stream.rtmp];
     self.player = [PLPlayer playerWithURL:url option:playerOption];
     self.player.delegate = self;
-    self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
+    self.player.playerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 225);
     // 添加子视图
     [self.view addSubview:self.player.playerView];
     // 播放
@@ -158,6 +163,38 @@
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
     [self initUI];
+}
+#pragma mark
+#pragma mark - 播放回调
+// 实现 <PLPlayerDelegate> 来控制流状态的变更
+- (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
+    // 这里会返回流的各种状态，你可以根据状态做 UI 定制及各类其他业务操作
+    // 除了 Error 状态，其他状态都会回调这个方法
+    // 主播停止播放
+    if (state == PLPlayerStatusStopped) {
+        self.notePlayer.hidden = NO;
+        self.notePlayer.text = @"主播已经停止播放";
+    }
+    // 正常播放状态
+    if (state == PLPlayerStatusPlaying) {
+        self.notePlayer.hidden = YES;
+    }
+    //    if (state == PLPlayerStatusPlaying) {
+    //        self.notePlayer.hidden = YES;
+    //    }
+    DLog(@"%@", player);
+}
+
+- (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error {
+    // 当发生错误时，会回调这个方法
+    if (error) {
+        self.notePlayer.hidden = NO;
+        self.notePlayer.text = @"出错了";
+    }else{
+        self.notePlayer.hidden = YES;
+    }
+    
+    DLog(@"%@", error);
 }
 // 设置Ui
 - (void)initUI {
@@ -216,6 +253,7 @@
         make.centerX.equalTo(self.showingImg.centerX);
         make.top.equalTo(self.showingImg.bottom).offset(10);
     }];
+
 }
 
 #pragma mark
@@ -234,6 +272,16 @@
 }
 #pragma mark
 #pragma mark - 懒加载
+- (UILabel *)notePlayer {
+    if (!_notePlayer) {
+        _notePlayer = [[UILabel alloc] init];
+        _notePlayer.text = @"主播已经离开";
+        _notePlayer.hidden = YES;
+        _notePlayer.font = [UIFont systemFontOfSize:16];
+        _notePlayer.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _notePlayer;
+}
 - (UIButton *)danmuBtn {
     if (!_danmuBtn) {
         _danmuBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
@@ -267,7 +315,7 @@
         _topView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _topView.backBlcok = ^(){
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
         };
         _topView.shareBlcok = ^(UIButton *btn){
             __block ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, weakSelf.view.bounds.size.height - 150, weakSelf.view.bounds.size.width, 150) alertModels:weakSelf.shareAlertBtns tapView:^(NSInteger btnTag) {

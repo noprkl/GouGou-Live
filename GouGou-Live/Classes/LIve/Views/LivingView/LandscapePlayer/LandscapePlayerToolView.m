@@ -148,7 +148,7 @@
 - (UIButton *)collectBtn {
     if (!_collectBtn) {
         _collectBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_collectBtn setImage:[UIImage imageNamed:@"喜欢icon(点击"] forState:(UIControlStateNormal)];
+        [_collectBtn setImage:[UIImage imageNamed:@"喜欢"] forState:(UIControlStateNormal)];
         [_collectBtn setImage:[UIImage imageNamed:@"喜欢点击"] forState:(UIControlStateSelected)];
         [_collectBtn addTarget:self action:@selector(clickcollectBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }

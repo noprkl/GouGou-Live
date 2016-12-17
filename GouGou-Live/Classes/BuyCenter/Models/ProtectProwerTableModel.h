@@ -10,10 +10,10 @@
 
 @interface ProtectProwerTableModel : BaseModel
 
-// 商品ID
-@property (nonatomic, assign) int ID;
+// 订单ID
+@property (nonatomic, strong) NSString *ID;
 /** 商家图片 */
-@property (copy,nonatomic) NSString *merchantImgl;
+@property (copy,nonatomic) NSString *userImgUrl;
 /** 商家名称 */
 @property (copy,nonatomic) NSString *merchantName;
 /** 订单状态 */
@@ -38,9 +38,9 @@
 
 /** 商品实际价格 */
 @property (copy,nonatomic) NSString *productPrice;
-/** 实付定金 */
+/** 实付实收定金 */
 @property (copy,nonatomic) NSString *productRealDeposit;
-/** 商品尾款 */
+/** 商品实收尾款 */
 @property (copy,nonatomic) NSString *productRealBalance;
 /** 运费 */
 @property (copy,nonatomic) NSString *traficRealFee;

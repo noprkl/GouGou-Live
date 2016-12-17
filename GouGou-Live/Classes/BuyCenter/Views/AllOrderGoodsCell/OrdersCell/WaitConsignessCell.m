@@ -46,7 +46,7 @@
         [self.contentView addSubview:self.lineview2];
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.lineview3];
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
@@ -54,30 +54,12 @@
 #pragma mark - 模型
 - (void)setCenterModel:(BuyCenterModel *)centerModel {
 
-    /*
-    self.nickView.model.merchantName = centerModel.merchantName;
-    self.nickView.model.status = centerModel.status;
-    
-    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
-    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
-    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
-    self.dogCardView.dogCardModel.name = centerModel.name;
-    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
-    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
-    self.dogCardView.dogCardModel.price = centerModel.price;
-    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
-    
-    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
-    self.costView.costModel.balance = centerModel.balance;
-*/
-    // 直接赋值
     // 昵称
     if (centerModel.merchantImg1.length != 0) {
         NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImg1];
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = centerModel.merchantName;
-    self.nickView.stateLabe.text = centerModel.status;
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
@@ -88,12 +70,16 @@
     self.dogCardView.dogSizeLabel.text = centerModel.sizeName;
     self.dogCardView.dogColorLabel.text = centerModel.colorName;
     self.dogCardView.dogKindLabel.text = centerModel.kindName;
-    self.dogCardView.oldPriceLabel.text = centerModel.priceOld;
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:centerModel.priceOld];
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     // 付款状况
-    self.costView.fontMoney.text = centerModel.productRealDeposit;
-    self.costView.remainderMoeny.text = centerModel.productRealBalance;
-    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.productRealBalance integerValue])];
+    self.dogCardView.nowPriceLabel.text = centerModel.price;
+    // 付款状况
+    self.costView.fontMoney.text = centerModel.productDeposit;
+    self.costView.remainderMoeny.text = centerModel.productBalance;
+    self.costView.totalMoney.text = centerModel.price;
+
+    self.logisticView.orderCode = centerModel.ID;
 }
 
 #pragma mark
@@ -105,46 +91,28 @@
     
     
     [_nickView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.left.right.equalTo(weakself);
         make.height.equalTo(54);
-        
     }];
     
     [_lineview1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.nickView.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(1);
-        
     }];
     
     [_dogCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.lineview1.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(110);
-        
     }];
-
-    [_logisticView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+    [_lineview2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.dogCardView.bottom);
         make.left.right.equalTo(weakself);
-        make.height.equalTo(88);
-        
-    }];
-    
-    [_lineview2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(weakself.logisticView.bottom);
-        make.left.right.equalTo(weakself);
         make.height.equalTo(1);
-        
     }];
     
     [_costView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.lineview2.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(44);
@@ -155,9 +123,12 @@
         make.top.equalTo(weakself.costView.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(1);
-        
     }];
-    
+    [_logisticView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakself.lineview2.bottom).offset(46);
+        make.left.right.equalTo(weakself);
+        make.height.equalTo(88);
+    }];
 }
 
 #pragma mark

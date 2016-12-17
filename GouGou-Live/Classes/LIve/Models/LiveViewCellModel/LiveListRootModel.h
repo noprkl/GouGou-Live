@@ -9,7 +9,7 @@
 #import "BaseModel.h"
 
 @class LiveRootStreamModel;
-@interface LiveListRootModel : NSObject
+@interface LiveListRootModel : BaseModel
 
 @property (nonatomic, strong) NSArray *info; /**< 直播中狗狗信息 */
 

@@ -18,7 +18,8 @@
 @property (copy, nonatomic) NSString *recevieDistrict; /**< 买家所在区、县 */
 @property (copy, nonatomic) NSString *recevieAddress; /**< 买家地址 */
 
-@property (copy, nonatomic) NSString *status; /**< 订单状态 */
+@property (copy, nonatomic) NSString *status; /**< 维权状态 */
+@property (copy, nonatomic) NSString *statusWq; /**< 订单状态 */
 @property (copy, nonatomic) NSString *closeTime; /**< 交易关闭时间 */
 
 @property (copy, nonatomic) NSString *finalTime; /**< 维权截止时间 */

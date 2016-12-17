@@ -20,7 +20,7 @@ typedef void(^ClickDogCardBlock)(LiveViewCellModel *model, NSArray *dogInfos);
 /** 点击cell回调 */
 @property (strong, nonatomic) ClickDogCardBlock dogCardBlock;
 
-@property (nonatomic, strong) NSArray *dogInfos; /**< 狗狗信息 */
+@property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗信息 */
 
 /** 数据源 */
 @property (strong, nonatomic) NSMutableArray *dataPlist;

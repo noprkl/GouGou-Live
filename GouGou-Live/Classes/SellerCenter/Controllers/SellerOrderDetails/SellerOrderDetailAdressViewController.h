@@ -15,7 +15,6 @@
 
 @property(nonatomic, strong) NSArray *bottomBtns; /**< 底部按钮数组 */
 
-
 @property(nonatomic, strong) SellerOrderModel *model; /**< 模型 */
 
 @property(nonatomic, strong) NSString *orderID; /**< 订单id */

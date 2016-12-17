@@ -100,7 +100,7 @@
     [_overLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.top.equalTo(weakself.top).offset(54);
-        make.left.equalTo(weakself.left).offset(290);
+        make.right.equalTo(weakself.right).offset(-10);
         make.size.equalTo(CGSizeMake(70, 20));
         
     }];
@@ -122,7 +122,7 @@
 
     [_sellInfo mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.varietyInfo.left).offset(285);
+        make.right.equalTo(weakself.hudView.right).offset(-10);
         make.centerY.equalTo(weakself.hudView.centerY);
         
     }];
@@ -136,7 +136,7 @@
     
     [_deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.dataLabel.right).offset(185);
+        make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.dataLabel.centerY);
         make.size.equalTo(CGSizeMake(75, 33));
         

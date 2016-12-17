@@ -54,20 +54,28 @@
 #pragma mark - 网络请求
 - (void)getBackMoneyRequest {
     
-    NSDictionary * dict = @{@"id":@(12)};
+    NSDictionary * dict = @{@"id":@([_detailModel.ID intValue])};
     
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         
-        DLog(@"%@",successJson[@"Message"]);
-        DLog(@"%@",successJson[@"data"]);
+        DLog(@"%@",successJson);
         
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
-        self.orderStateView.stateMessage = self.orderInfo.status;
-        self.orderStateView.timeMessage = self.orderInfo.closeTime;
+        self.orderStateView.stateMessage = @"待评价";
+        self.orderStateView.timeMessage = [NSString stringWithFormat:@"30天内可评价,将在%@关闭订单", [NSString stringFromDateString:self.orderInfo.closeTime]];
+        
         
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
         self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
+        self.consigneeViw.recevieProvince = self.orderInfo.recevieProvince;
+        self.consigneeViw.recevieCity = self.orderInfo.recevieCity;
+        self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
+        
+        
+        self.sellInfoView.currentTime = self.orderInfo.createTime;
+        self.sellInfoView.buynessName = self.orderInfo.userName;
+        self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
         
         // 狗狗详情
         if (self.orderInfo.pathSmall.length != 0) {
@@ -79,28 +87,32 @@
         self.dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
         self.dogCardView.dogColorLabel.text = self.orderInfo.colorName;
         self.dogCardView.dogKindLabel.text = self.orderInfo.kindName;
-        self.dogCardView.oldPriceLabel.text = self.orderInfo.priceOld;
+        self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
         
-        self.goodsPriceView.totalsMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productBalance integerValue] + [self.orderInfo.productDeposit integerValue]];
+        self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
         
-        self.detailPayView.needBackMessage = self.orderInfo.productRealBalance;
-        self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
-        self.detailPayView.realMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productRealDeposit integerValue] + [self.orderInfo.productRealBalance integerValue]];
+        self.detailPayView.needBackMessage = self.orderInfo.productBalance;
+        self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
+        self.detailPayView.realMoney = self.orderInfo.price;
         self.detailPayView.balance = self.orderInfo.productRealBalance;
         
-        self.orderNumberView.buyUserId = self.orderInfo.buyUserId;
-        self.orderNumberView.createTimes = self.orderInfo.createTime;
-        self.orderNumberView.depositTimes = self.orderInfo.depositTime;
-        self.orderNumberView.balanceTimes = self.orderInfo.balanceTime;
-        self.orderNumberView.deliveryTimes = self.orderInfo.deliveryTime;
+        self.orderNumberView.buyUserId = self.orderInfo.ID;
+        self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
+        self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
+        self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
+        self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
         
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
     
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getBackMoneyRequest];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -201,7 +213,7 @@
     if (!_boomScrollView) {
         _boomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
         _boomScrollView.delegate = self;
-        
+        _boomScrollView.showsVerticalScrollIndicator = NO;
         _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 870);
         _boomScrollView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         //        _boomScrollView.bounces = NO;
@@ -301,7 +313,7 @@
                 
             } else if ([button.titleLabel.text isEqual:@"申请维权"]) {
                 
-                [weakself clickApplyProtectPower:weakself.detailModel];
+                [weakself clickApplyProtectPower:weakself.detailModel.ID];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
@@ -312,6 +324,7 @@
             } else if ([button.titleLabel.text isEqual:@"去评价"]) {
                 
                 GotoAssessViewController * goToVC = [[GotoAssessViewController alloc] init];
+                goToVC.orderID = weakself.orderInfo.ID;
                 [weakself.navigationController pushViewController:goToVC animated:YES];
                 
             }

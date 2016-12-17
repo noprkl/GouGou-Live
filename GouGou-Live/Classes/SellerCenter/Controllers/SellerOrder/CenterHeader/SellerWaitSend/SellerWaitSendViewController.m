@@ -121,15 +121,17 @@ static NSString *cellid = @"SellerWaitSendCell";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 245;
+    return 255;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    SellerOrderModel *model = self.dataArr[indexPath.row];
     SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
     adressVC.hidesBottomBarWhenPushed = YES;
     adressVC.bottomBtns = self.btnTitles[indexPath.row];
     adressVC.orderState = @"待发货";
+    adressVC.orderID = model.ID;
     [self.navigationController pushViewController:adressVC animated:YES];
 }
 #pragma mark
@@ -138,9 +140,9 @@ static NSString *cellid = @"SellerWaitSendCell";
     
     
     if ([title isEqualToString:@"联系买家"]) {
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat2;
-         viewController.chatID = EaseTest_Chat3;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:orderModel.buyUserId conversationType:(EMConversationTypeChat)];
+        viewController.title = orderModel.buyUserId;
+         viewController.chatID = orderModel.buyUserId;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }else if ([title isEqualToString:@"发货"]){

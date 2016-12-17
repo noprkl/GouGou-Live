@@ -19,7 +19,6 @@
 /** 实名认证按钮 */
 @property (strong,nonatomic) UIButton *certificateButton;
 
-
 @end
 @implementation UnCertificateVIew
 - (instancetype)initWithFrame:(CGRect)frame
@@ -137,13 +136,13 @@
 - (void)freetimeout {
     __block NSInteger time = 3;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
-    dispatch_source_set_event_handler(timer, ^{
+     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(self.timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(self.timer, ^{
         
         if (time < 1) {
             //取消计时
-            dispatch_source_cancel(timer);
+            dispatch_source_cancel(self.timer);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -163,7 +162,7 @@
         }
         
     });
-    dispatch_resume(timer);
+    dispatch_resume(self.timer);
     
 }
 

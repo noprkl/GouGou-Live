@@ -42,7 +42,7 @@
 - (void)setCutMoney:(NSString *)cutMoney {
 
     _cutMoney = cutMoney;
-    self.preferentialMoney.text = [NSString stringWithFormat:@"%ld",([self.totalMoney.text integerValue] - [self.productRealDeposit integerValue] - [self.productRealBalance integerValue] - [self.freightMoney.text integerValue])];
+    self.preferentialMoney.text = cutMoney;
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {

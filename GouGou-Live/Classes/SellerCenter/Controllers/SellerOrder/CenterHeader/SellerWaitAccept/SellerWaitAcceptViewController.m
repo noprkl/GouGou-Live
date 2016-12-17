@@ -102,7 +102,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     SellerOrderModel *model = self.dataArr[indexPath.row];
     cell.model = model;
     
-    cell.orderState = @"待发货";
+    cell.orderState = @"待收货";
     cell.btnTitles = @[@"联系买家"];
     NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.price];
 
@@ -123,13 +123,14 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 330;
+    return 345;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
     logisticsInfoVC.orderState = @"已完成";
-
+    SellerOrderModel *model = self.dataArr[indexPath.row];
+    logisticsInfoVC.orderID = model.ID;
     logisticsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:logisticsInfoVC animated:YES];
     
@@ -142,10 +143,9 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     
     
     if ([title isEqualToString:@"联系买家"]) {
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat2;
-         viewController.chatID = EaseTest_Chat3;
-        viewController.hidesBottomBarWhenPushed = YES;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:orderModel.buyUserId conversationType:(EMConversationTypeChat)];
+        viewController.title = orderModel.buyUserId;
+        viewController.chatID = orderModel.buyUserId;
         [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
@@ -176,7 +176,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     }else if ([title isEqualToString:@"在线客服"]){
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
         viewController.title = EaseTest_Chat1;
-         viewController.chatID = EaseTest_Chat3;
+         viewController.chatID = EaseTest_Chat1;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
         

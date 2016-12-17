@@ -81,12 +81,12 @@ static NSString *cellid = @"LivingShowDogCell";
         label.text = @"狗狗";
         label.userInteractionEnabled = YES;
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorWithHexString:@"#666666"];
+        label.textColor = [UIColor colorWithHexString:@"#ffffff"];
         label.font = [UIFont systemFontOfSize:13];
         [view addSubview:label];
         
         UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        UIImage *image = [UIImage imageNamed:@"返回-拷贝"];
+        UIImage *image = [UIImage imageNamed:@"返回fan"];
         [backBtn setImage:image forState:(UIControlStateNormal)];
         backBtn.frame = CGRectMake(10, (44 - image.size.height) / 2, image.size.width, image.size.height);
         [backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];

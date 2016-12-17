@@ -68,9 +68,9 @@
             if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
                 NSString *orderId = successJson[@"data"];
               __block  ChosePayStyleView *choseStyle = [[ChosePayStyleView alloc] init];
+                choseStyle.title = @"请选择付款额度方式";
                 choseStyle.dataArr = @[@"支付全款", @"支付定金"];
                 choseStyle.bottomBlock = ^(NSString *style){
-                    
                     if ([style isEqualToString:@"支付全款"]) {
                         // 生成待支付全款订单
                         NSDictionary *typeDict = @{
@@ -82,7 +82,8 @@
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
                             if ([successJson[@"message"] isEqualToString:@"支付全额"]) {
-                                [self clickPayAllMoney:orderId price:successJson[@"data"]];
+                                NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                                [self clickPayAllMoney:orderId price:price];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
                             }
@@ -100,7 +101,8 @@
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
                             if ([successJson[@"message"] isEqualToString:@"支付订金"]) {
-                                [self clickPayFontMoney:orderId productDeposit:successJson[@"data"]];
+                                NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                                [self clickPayFontMoney:orderId productDeposit:price];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
                             }
@@ -120,7 +122,7 @@
 - (void)clickPayFontMoney:(NSString *)modelID productDeposit:(NSString *)productDeposit {
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
-    payMonery.payMoney = productDeposit;
+    payMonery.payMoney = [NSString stringWithFormat:@"%.2lf", [productDeposit floatValue] / 100];
     payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
     [payMonery show];
     
@@ -171,7 +173,7 @@
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:[orderID intValue] price:[money intValue] * 100 payPwd:[NSString md5WithString:text] states:3];
+                    [self walletPayWithOrderId:[orderID intValue] price:[money intValue] payPwd:[NSString md5WithString:text] states:3];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -181,11 +183,11 @@
         [prompt show];
     }
     if ([payWay isEqualToString:@"支付宝支付"]) {
-        [self aliPayWithOrderId:[orderID intValue] totalFee:[money intValue] * 100];
+        [self aliPayWithOrderId:[orderID intValue] totalFee:[money intValue]];
     }
     if ([payWay isEqualToString:@"微信支付"]) {
         
-        [self WeChatPayWithOrderID:[orderID intValue] totalFee:[money intValue] * 100];
+        [self WeChatPayWithOrderID:[orderID intValue] totalFee:[money intValue]];
     }
 }
 /** 钱包支付 2定金 3全款 */
@@ -210,22 +212,22 @@
     
     NSDictionary *dict = @{
                            @"order":@(orderID),
-                           @"total_fee":@(0.01),
+                           @"total_fee":@(fee),
                            @"mark":@"爪行宠物直播"
                            };
     DLog(@"%@", dict);
     [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         PayReq * req = [[PayReq alloc] init];
-        req.partnerId = [successJson objectForKey:@"partnerid"];
-        req.prepayId = [successJson objectForKey:@"prepayid"];
-        req.nonceStr = [successJson objectForKey:@"noncestr"];
-        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"];
+        req.partnerId = [successJson objectForKey:@"partnerid"] != [NSNull null] ? successJson[@"partnerid"]:@"";
+        req.prepayId = [successJson objectForKey:@"prepayid"] != [NSNull null] ?successJson[@"prepayid"]:@"";
+        req.nonceStr = [successJson objectForKey:@"noncestr"] != [NSNull null] ?successJson[@"noncestr"]:@"";
+        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"] != [NSNull null] ?successJson[@"timestamp"]:@"";
         req.timeStamp = [timeStamp intValue];
         
-        req.package = [successJson objectForKey:@"package"];
-        req.sign = [successJson objectForKey:@"sign"];
-        req.openID = [successJson objectForKey:@"appid"];
+        req.package = [successJson objectForKey:@"package"] != [NSNull null] ?successJson[@"package"]:@"";
+        req.sign = [successJson objectForKey:@"sign"] != [NSNull null] ?successJson[@"sign"]:@"";
+        req.openID = [successJson objectForKey:@"appid"] != [NSNull null] ?successJson[@"appid"]:@"";
         
         DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
         
@@ -246,7 +248,7 @@
     //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
     NSDictionary *dit = @{
                           @"id":@(orderID),
-                          @"total_fee":@(arc4random_uniform(2)+1)
+                          @"total_fee":@(fee)
                           };
     DLog(@"%@", dit);
     [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
@@ -264,6 +266,9 @@
         
         [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             DLog(@"reslut = %@",resultDic);
+            
+            //
+            [self.navigationController popViewControllerAnimated:YES];
         }];
     }
 }
@@ -563,7 +568,6 @@
 
 - (UILabel *)bookMoneyLabel {
     if (!_bookMoneyLabel) {
-        NSString *despot = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] / 10)];
         _bookMoneyLabel = [[UILabel alloc] init];
         NSString *final = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] * 0.9)];
         _bookMoneyLabel.attributedText = [self getAttributeWithString1:@"应付定金：" string2:final];

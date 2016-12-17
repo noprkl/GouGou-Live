@@ -10,6 +10,9 @@
 
 @interface SellerProtectDetailModel : BaseModel
 
+/** 订单ID */
+@property (copy,nonatomic) NSString *ID;
+
 /** 买家昵称 */
 @property (copy,nonatomic) NSString *userNickName;
 /** 维权状态 */
@@ -40,9 +43,16 @@
 @property (copy,nonatomic) NSString *productRealBalance;
 /** 商品实付运费 */
 @property (copy,nonatomic) NSString *traficRealFee;
-/**< 评价内容 */
+/** 维权描述内容 */
 @property (copy, nonatomic) NSString *comment;
-/**< 照片URL评价 */
+/** 照片URL评价 */
 @property (copy, nonatomic) NSString *photoPath;
+
+@property (nonatomic, strong) NSString *money; /**< 赔偿金额 */
+@property (nonatomic, strong) NSString *closeTime; /**< 关闭时间 */
+@property (nonatomic, strong) NSString *createtime; /**< 创建时间 */
+@property (nonatomic, strong) NSString *deliverytime; /**< 发货时间 */
+@property (nonatomic, strong) NSString *deposittime; /**< 定金支付时间 */
+@property (nonatomic, strong) NSString *balancetime; /**< 尾款支付时间 */
 
 @end

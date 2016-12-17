@@ -13,5 +13,4 @@
 @property (strong,nonatomic) NSString *stateMessage;
 /** 时间信息 */
 @property (strong,nonatomic) NSString *timeMessage;
-
 @end

@@ -50,7 +50,8 @@
     }else{
         self.anchorCityLabel.text = @"";
     }
-    
+    self.layer.cornerRadius = 5;
+    self.layer.masksToBounds = YES;
     self.watchCountLabel.text = liveCellModel.viewNum;
     
     if (liveCellModel.userImgUrl != NULL) {
@@ -65,7 +66,7 @@
 - (void)setDogInfos:(NSArray *)dogInfos {
     _dogInfos = dogInfos;
     if (_dogInfos.count == 0) {
-        self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0);
+        self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
     }else {
         NSInteger count = dogInfos.count;
         self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 10), 0);

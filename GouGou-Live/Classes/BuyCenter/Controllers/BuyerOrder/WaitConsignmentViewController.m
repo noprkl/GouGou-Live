@@ -24,6 +24,26 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 @end
 
 @implementation WaitConsignmentViewController
+#pragma mark - 网络请求
+- (void)getConsignmentRequest {
+    
+    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"status":@(3),
+                            @"page":@(1),
+                            @"pageSize":@(10)
+                            };
+    
+    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        
+        [self.tableview reloadData];
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+}
+
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -47,28 +67,6 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
     [self.view addSubview:self.tableview];
 }
 
-#pragma mark - 网络请求
-- (void)getConsignmentRequest {
-
-    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
-                            @"status":@(3),
-                            @"page":@(1),
-                            @"pageSize":@(10)
-                            };
-    
-    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
-        
-        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-    
-        DLog(@"%@",successJson[@"message"]);
-        DLog(@"%@",successJson[@"data"][@"info"]);
-        
-        [self.tableview reloadData];
-        
-    } error:^(NSError *error) {
-        DLog(@"%@",error);
-    }];
-}
 #pragma mark
 #pragma mark - 初始化
 - (NSArray *)dataArray {
@@ -112,7 +110,6 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
         if ([model.status integerValue] == 7) {
             
             cell.centerModel = model;
-        
         }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -128,9 +125,9 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
             // 跳转至联系卖家
-            SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-            viewController.title = EaseTest_Chat2;
-             viewController.chatID = EaseTest_Chat3;
+            SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:model.saleUserId conversationType:(EMConversationTypeChat)];
+            viewController.title = model.saleUserId;
+             viewController.chatID = model.saleUserId;
             viewController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:viewController animated:YES];
             DLog(@"%@--%@",self,button.titleLabel.text);
@@ -140,7 +137,6 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
             [self clickApplyProtectPower:model.ID];
             
             DLog(@"%@--%@",self,button.titleLabel.text);
-            
         }
     };
     
@@ -149,9 +145,9 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    BuyCenterModel *model = self.dataArray[indexPath.row];
     WaitSellConsigmentViewContorller * waitSelllVC = [[WaitSellConsigmentViewContorller alloc] init];
-    
+    waitSelllVC.detailModel = model;
     [self.navigationController pushViewController:waitSelllVC animated:YES];
 }
 

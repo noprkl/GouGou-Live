@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^AnonymityAssessBlock)(BOOL isReal);
 @interface AnonymityAssessView : UIView
+
+@property (nonatomic, strong) AnonymityAssessBlock realBlock; /**< 是否匿名 */
 
 @end

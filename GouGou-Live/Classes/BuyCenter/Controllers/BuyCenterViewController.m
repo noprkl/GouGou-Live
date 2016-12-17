@@ -51,62 +51,91 @@
     
 }
 
-//#pragma mark - 钱包支付请求
+#pragma mark - 支付
+/** 根据支付状态请求支付金额 */
+- (void)payMoneyWithOrderID:(NSString *)orderID payStyle:(NSString *)payStyle {
+    
+    if ([payStyle isEqualToString:@"支付全款"]) {
+        // 生成待支付全款订单
+        NSDictionary *typeDict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"order_id":orderID,
+                                   @"type":@(1)
+                                   };
+        [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"支付全额"]) {
+                if ([successJson[@"data"] isEqualToString:@"0"]) {
+                    [self showAlert:@"支付金额不能为0"];
+                }else{
+                    NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                    [self chosePayStyleWIthOrderID:orderID protductPrice:price];
+                }
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
+    if ([payStyle isEqualToString:@"支付订金"]) {
+        // 生成待支付订金订单
+        NSDictionary *typeDict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"order_id":orderID,
+                                   @"type":@(2)
+                                   };
+        [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"支付订金"]) {
+                if ([successJson[@"data"] isEqualToString:@"0"]) {
+                    [self showAlert:@"支付金额不能为0"];
+                }else{
+                    NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                    [self chosePayStyleWIthOrderID:orderID protductPrice:price];
+                }
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
+    if ([payStyle isEqualToString:@"支付尾款"]) {
+        // 生成待支付尾款订单
+        NSString *finalID = [NSString stringWithFormat:@"%@wk", orderID];
+        NSDictionary *typeDict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"order_id":finalID,
+                                   @"type":@(3)
+                                   };
+        [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"支付尾款"]) {
+                if ([successJson[@"data"] isEqualToString:@"0"]) {
+                    [self showAlert:@"支付金额不能为0"];
+                }else{
+                    NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                    [self chosePayStyleWIthOrderID:finalID protductPrice:price];
+                }
 
-// 尾金支付 传个值 钱数
-- (void)clickPayBackMoney:(BuyCenterModel *)model {
-    
-    PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
-    payMonery.payMoney = model.productBalance;
-    payMonery.dataArr = @[@"支付尾金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
-    [payMonery show];
-    
-    payMonery.bottomBlock = ^(NSString *size){
-        DLog(@"%@", size);
-    };
-    payMonery.payCellBlock = ^(NSString *payWay){
-        
-        [self payMoneyFroWay:payWay model:model money:model.price];
-    };
-    
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
-// 定金支付
-- (void)clickPayFontMoney:(BuyCenterModel *)model {
-    
+/** 根据选择支付方式进行支付 */
+- (void)chosePayStyleWIthOrderID:(NSString *)orderID protductPrice:(NSString *)price {
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
-    payMonery.payMoney = model.productDeposit;
+    payMonery.payMoney = [NSString stringWithFormat:@"%0.2lf",[price floatValue] / 100];
     payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
     [payMonery show];
-    
-    payMonery.bottomBlock = ^(NSString *payAway){
-        DLog(@"%@", payAway);
-    };
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay model:model money:model.price];
+        [self payMoneyFroWay:payWay orderID:orderID money:price];
     };
 }
-// 全款支付
-- (void)clickPayAllMoney:(BuyCenterModel *)model {
-    
-    PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
-    payMonery.payMoney = model.price;
-    payMonery.dataArr = @[@"支付全款",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
-    [payMonery show];
-    
-    payMonery.bottomBlock = ^(NSString *size){
-        DLog(@"%@", size);
-    };
-    payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay model:model money:model.price];
-    };
-}
-
-#pragma mark
-#pragma mark - 支付方式选择
-- (void)payMoneyFroWay:(NSString *)payWay model:(BuyCenterModel *)model money:(NSString *)money{
+- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money{
     if ([payWay isEqualToString:@"账户余额支付"]) {
-        
-//        [self postGetWalletPayRequest];
         
         // 支付密码提示框
         PromptView * prompt = [[PromptView alloc] init];
@@ -125,7 +154,7 @@
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:[model.ID intValue] price:[money intValue] * 100 payPwd:[NSString md5WithString:text] states:3];
+                    [self walletPayWithOrderId:[orderID intValue] price:[money intValue] * 100 payPwd:[NSString md5WithString:text] states:3];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -135,11 +164,11 @@
         [prompt show];
     }
     if ([payWay isEqualToString:@"支付宝支付"]) {
-        [self aliPayWithOrderId:[model.ID intValue] totalFee:[money intValue] * 100];
+        [self aliPayWithOrderId:orderID totalFee:money];
     }
     if ([payWay isEqualToString:@"微信支付"]) {
-
-    [self WeChatPayWithOrderID:[model.ID intValue] totalFee:[money intValue] * 100 mark:model.name];
+        
+        [self WeChatPayWithOrderID:orderID totalFee:money];
     }
 }
 /** 钱包支付 2定金 3全款 */
@@ -159,48 +188,43 @@
     }];
 }
 /** 微信支付 */
-- (void)WeChatPayWithOrderID:(int)orderID totalFee:(int)fee mark:(NSString *)mark {
-    // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
+- (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(NSString *)fee {
     
     NSDictionary *dict = @{
-                           @"order":@(orderID),
-                           @"total_fee":@(0.01),
-                           @"mark":mark
+                           @"order":orderID,
+                           @"total_fee":fee,
+                           @"mark":@"gougou"
                            };
     DLog(@"%@", dict);
     [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         PayReq * req = [[PayReq alloc] init];
-        req.partnerId = [successJson objectForKey:@"partnerid"];
-        req.prepayId = [successJson objectForKey:@"prepayid"];
-        req.nonceStr = [successJson objectForKey:@"noncestr"];
-        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"];
+        req.partnerId = [successJson objectForKey:@"partnerid"] != [NSNull null] ?successJson[@"partnerid"]:@"";
+        req.prepayId = [successJson objectForKey:@"prepayid"] != [NSNull null] ?successJson[@"prepayid"]:@"";
+        req.nonceStr = [successJson objectForKey:@"noncestr"] != [NSNull null] ?successJson[@"noncestr"]:@"";
+        NSNumber *timeStamp = [successJson objectForKey:@"timestamp"] != [NSNull null] ?successJson[@"timestamp"]:@"";
         req.timeStamp = [timeStamp intValue];
-        
-        req.package = [successJson objectForKey:@"package"];
-        req.sign = [successJson objectForKey:@"sign"];
-        req.openID = [successJson objectForKey:@"appid"];
+        req.package = [successJson objectForKey:@"package"] != [NSNull null] ?successJson[@"package"]:@"";
+        req.sign = [successJson objectForKey:@"sign"] != [NSNull null] ?successJson[@"sign"]:@"";
+        req.openID = [successJson objectForKey:@"appid"] != [NSNull null] ?successJson[@"appid"]:@"";
         
         DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
         
         BOOL flag = [WXApi sendReq:req];
         if (flag) {
-            
             [self showAlert:successJson[@"支付成功"]];
         }else{
             [self showAlert:successJson[@"支付失败"]];
         }
-        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
 /** 支付宝支付 */
-- (void)aliPayWithOrderId:(int)orderID totalFee:(int)fee {
-    //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+- (void)aliPayWithOrderId:(NSString *)orderID totalFee:(NSString *)fee {
     NSDictionary *dit = @{
-                          @"id":@(orderID),
-                          @"total_fee":@(arc4random_uniform(2)+1)
+                          @"id":orderID,
+                          @"total_fee":fee
                           };
     DLog(@"%@", dit);
     [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
@@ -221,6 +245,7 @@
         }];
     }
 }
+
 #pragma mark - 取消订单网络请求
 - (void)getCancleOrderRequest:(BuyCenterModel *)model {
 
@@ -347,7 +372,7 @@
     
 }
 // 点击申请维权调用
-- (void)clickApplyProtectPower:(int)orderID {
+- (void)clickApplyProtectPower:(NSString *)orderID {
     
     // 点击申请维权按钮出现的弹框
     DeletePrommtView * allpyPrompt = [[DeletePrommtView alloc] init];
@@ -359,13 +384,14 @@
         
         // 点击弹框内确认按钮出现的弹框
         ProtecePowerPromptView * pppView = [[ProtecePowerPromptView alloc] init];
-        pppView.message = @"请保持电话通畅，\n如有疑问请拨打热线电话010-0928928";
+        pppView.message =[NSString stringWithFormat:@"请保持电话通畅，\n如有疑问请拨打热线电话%@", ServicePhone];
         [weakself dismiss];
         
         pppView.sureApplyBtnBlock = ^(UIButton * btn) {
             
             // 跳转至申请维权
             ApplyProtectPowerViewController * allpyProVC = [[ApplyProtectPowerViewController alloc] init];
+            allpyProVC.orderID = orderID;
             [self.navigationController pushViewController:allpyProVC animated:YES];
             
         };

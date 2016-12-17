@@ -137,9 +137,7 @@ static NSString *closeCell = @"SellerCloseCell";
 
         cell.orderState = @"待付宽";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-//        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
-//        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
-//        cell.costMessage = @[finalMoney, depositMoney];
+
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
 
@@ -203,7 +201,7 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 6){ // 
         
         SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
-
+        cell.model = model;
         cell.orderState = @"交易关闭";
         return cell;
     }else if ([model.status integerValue] == 7){ // 7：已付清款，待发货
@@ -270,7 +268,7 @@ static NSString *closeCell = @"SellerCloseCell";
         SellerOrderModel *model = self.dataArr[indexPath.row];
         cell.model = model;
         
-        cell.orderState = @"待评价";
+        cell.orderState = @"已评价";
         cell.btnTitles = @[@"联系买家"];
         NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
         NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
@@ -291,11 +289,13 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 20){ //   20：订单取消
         
         SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
+        cell.model = model;
         cell.orderState = @"交易关闭";
         return cell;
     }else if ([model.status integerValue] == 21){ // 21：交易关闭
         
         SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
+        cell.model = model;
         cell.orderState = @"交易关闭";
         return cell;
     }
@@ -341,7 +341,7 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 6){ //
         height = 230;
     }else if ([model.status integerValue] == 7){ // 7：已付清款，待发货
-        height = 230;
+        height = 245;
     }else if ([model.status integerValue] == 8){ // 8：已发货，待收货
         height = 330;
     }else if ([model.status integerValue] == 9){ // 9: 已收货，待评价
@@ -349,16 +349,17 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 10){ // 10：已评价
         height = 330;
     }else if ([model.status integerValue] == 20){ //   20：订单取消
-        height = 230;
+        height = 220;
     }else if ([model.status integerValue] == 21){ // 21：交易关闭
-        height = 230;
+        height = 220;
     }
     return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
 }
 #pragma mark
 #pragma mark - 点击按钮Action
@@ -366,9 +367,9 @@ static NSString *closeCell = @"SellerCloseCell";
 - (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
     
     if ([title isEqualToString:@"联系买家"]) {
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat2;
-         viewController.chatID = EaseTest_Chat3;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:orderModel.buyUserId conversationType:(EMConversationTypeChat)];
+        viewController.title = orderModel.buyUserId;
+         viewController.chatID = orderModel.buyUserId;
         [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
@@ -385,12 +386,10 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
-        changeVC.title = title;
-        changeVC.orderID = orderModel.ID;
-        changeVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:changeVC animated:YES];
-        
+        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
+        sendVC.hidesBottomBarWhenPushed = YES;
+        sendVC.orderID = orderModel.ID;
+        [self.navigationController pushViewController:sendVC animated:YES];
     }else if ([title isEqualToString:@"查看评价"]){
         
         SellerAcceptedRateViewController *rateVC = [[SellerAcceptedRateViewController alloc] init];
@@ -403,9 +402,9 @@ static NSString *closeCell = @"SellerCloseCell";
 
     }else if ([title isEqualToString:@"在线客服"]){
         
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-         viewController.chatID = EaseTest_Chat3;
-        viewController.title = EaseTest_Chat2;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+         viewController.chatID = EaseTest_Chat1;
+        viewController.title = EaseTest_Chat1;
         [self.navigationController pushViewController:viewController animated:YES];
     }
 }

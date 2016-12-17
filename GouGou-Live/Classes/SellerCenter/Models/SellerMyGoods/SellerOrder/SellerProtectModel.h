@@ -22,6 +22,7 @@
 
 @property (copy, nonatomic) NSString *userNickName; /**< 用户昵称 */
 @property (copy, nonatomic) NSString *userImgUrl; /**< 用户头像 */
+@property (copy, nonatomic) NSString *buyUserId; /**< 用户id */
 
 @property (copy, nonatomic) NSString *name; /**< 商品名称 */
 @property (copy, nonatomic) NSString *pathSmall; /**< 缩略图 */

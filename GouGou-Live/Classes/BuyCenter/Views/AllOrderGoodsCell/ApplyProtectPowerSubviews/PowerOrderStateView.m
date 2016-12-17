@@ -24,7 +24,10 @@
     _orderStateMessage = orderStateMessage;
     self.orderState.text = orderStateMessage;
 }
-
+- (void)setOrderCode:(NSString *)orderCode {
+    _orderCode = orderCode;
+    self.orderNumber.text = orderCode;
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -51,14 +54,10 @@
         
         make.left.equalTo(weakself.left).offset(10);
         make.centerY.equalTo(weakself.centerY);
-        
     }];
-    
     [_orderNumber mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.centerY);
-        
     }];
     
     [_orderNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {

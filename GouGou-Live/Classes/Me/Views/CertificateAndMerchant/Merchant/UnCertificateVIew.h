@@ -14,4 +14,6 @@ typedef void(^ClickCertificateBtnBlock)();
 /** 点击实名认证回调 */
 @property (strong,nonatomic) ClickCertificateBtnBlock certificateBlack;
 
+@property (nonatomic, strong) dispatch_source_t timer; /**< 倒计时 */
+
 @end

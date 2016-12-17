@@ -76,6 +76,10 @@
     }
     return self;
 }
+- (void)setOrderID:(NSString *)orderID {
+    _orderID = orderID;
+    self.orderCodeNumber.text = orderID;
+}
 // 约束
 - (void)setUP {
     // 订单

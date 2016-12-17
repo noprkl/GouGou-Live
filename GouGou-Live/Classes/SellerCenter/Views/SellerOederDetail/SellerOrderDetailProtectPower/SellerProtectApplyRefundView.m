@@ -39,7 +39,7 @@
         make.right.equalTo(self.right).offset(-10);
     }];
 
-    CGFloat height = [self.pictures getCellHeightWithImages:@[@"组-7", @"组-7", @"组-7"]];
+    CGFloat height = [self.pictures getCellHeightWithImages:self.pictureArr];
     [self.pictures makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.applyRefund.bottom).offset(20);
         make.left.width.equalTo(self);

@@ -137,7 +137,6 @@ NSString * const CSToastPositionBottom          = @"bottom";
                      }];
 }
 
-
 - (void)hideToast:(UIView *)toast {
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0

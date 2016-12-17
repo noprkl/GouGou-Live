@@ -68,7 +68,7 @@
     self.dogCardView.dogColorLabel.text = model.colorName;
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    
+    self.logisticsView.transformNumber = model.ID;
     self.costView.moneyMessage = model.price;
     
 }

@@ -294,7 +294,7 @@
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(10, SCREEN_HEIGHT - 264 - 180, SCREEN_WIDTH - 20, 170);
+    rect = CGRectMake(10, SCREEN_HEIGHT - 290 - 180, SCREEN_WIDTH - 20, 170);
     self.frame = rect;
     
     [self.editngtextfiled becomeFirstResponder];

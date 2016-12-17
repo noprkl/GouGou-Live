@@ -112,7 +112,7 @@ static NSString * identityCell = @"identitiCellID";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) { //1.未认证 2.审核 3.已认证 4.认证失败
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"0"]) { //0.未认证 2.审核 3.已认证 4.认证失败
 
         self.title = @"实名认证";
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(requestNameAndIdentiry)];

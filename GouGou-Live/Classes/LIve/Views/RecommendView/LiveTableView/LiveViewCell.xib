@@ -27,19 +27,19 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="定位" translatesAutoresizingMaskIntoConstraints="NO" id="cHv-LB-W2o">
-                                <rect key="frame" x="50" y="23" width="16" height="19"/>
+                                <rect key="frame" x="50" y="27" width="8" height="10"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Dk-vy-yB2">
-                                <rect key="frame" x="71" y="25" width="24" height="15"/>
+                                <rect key="frame" x="63" y="24" width="24" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="小联系人（辅助）" translatesAutoresizingMaskIntoConstraints="NO" id="Iif-XZ-Y5h">
-                                <rect key="frame" x="309" y="28" width="9" height="10"/>
+                                <rect key="frame" x="309" y="27" width="9" height="10"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYn-9X-pW2">
-                                <rect key="frame" x="323" y="24" width="42" height="17"/>
+                                <rect key="frame" x="323" y="23" width="42" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -50,7 +50,25 @@
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="认证商家" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxJ-be-F6x">
+                                <rect key="frame" x="102" y="5" width="60" height="16"/>
+                                <color key="backgroundColor" red="1" green="0.63137254901960782" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="CvE-hW-43S"/>
+                                    <constraint firstAttribute="width" constant="60" id="b3n-JQ-pJ0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
                         </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="cHv-LB-W2o" firstAttribute="leading" secondItem="0G7-Fa-fRX" secondAttribute="leading" id="0U2-64-oGo"/>
                             <constraint firstItem="iYn-9X-pW2" firstAttribute="leading" secondItem="Iif-XZ-Y5h" secondAttribute="trailing" constant="5" id="0aG-98-HDz"/>
@@ -62,8 +80,10 @@
                             <constraint firstItem="0G7-Fa-fRX" firstAttribute="leading" secondItem="4wv-5f-ASs" secondAttribute="trailing" constant="10" id="KYY-vZ-lMC"/>
                             <constraint firstAttribute="height" constant="44" id="Kjg-6w-C08"/>
                             <constraint firstItem="4wv-5f-ASs" firstAttribute="centerY" secondItem="oQg-NJ-ho3" secondAttribute="centerY" id="Kwi-GQ-kxQ"/>
+                            <constraint firstItem="vxJ-be-F6x" firstAttribute="leading" secondItem="0G7-Fa-fRX" secondAttribute="trailing" constant="10" id="ONW-B5-44j"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="XZq-Sw-Woo"/>
                             <constraint firstItem="Iif-XZ-Y5h" firstAttribute="centerY" secondItem="iYn-9X-pW2" secondAttribute="centerY" id="hgZ-Hd-X78"/>
+                            <constraint firstItem="vxJ-be-F6x" firstAttribute="centerY" secondItem="0G7-Fa-fRX" secondAttribute="centerY" id="lgp-OX-gv0"/>
                             <constraint firstItem="iYn-9X-pW2" firstAttribute="centerY" secondItem="cHv-LB-W2o" secondAttribute="centerY" id="usK-2P-ZsN"/>
                             <constraint firstItem="7Dk-vy-yB2" firstAttribute="leading" secondItem="cHv-LB-W2o" secondAttribute="trailing" constant="5" id="wOf-IO-qoc"/>
                         </constraints>
@@ -73,6 +93,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="200" id="UKT-uK-dst"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="pSx-CT-Aq3"/>
+                            <constraint firstAttribute="height" constant="200" id="uWL-t2-1HW"/>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="yYz-MV-Wqw"/>
                         </constraints>
                         <variation key="default">
@@ -157,7 +178,7 @@
     <resources>
         <image name="banner" width="375" height="110"/>
         <image name="主播头像" width="29" height="29"/>
-        <image name="定位" width="16" height="19"/>
+        <image name="定位" width="8" height="10"/>
         <image name="小联系人（辅助）" width="9" height="10"/>
         <image name="直播中" width="49" height="17"/>
     </resources>

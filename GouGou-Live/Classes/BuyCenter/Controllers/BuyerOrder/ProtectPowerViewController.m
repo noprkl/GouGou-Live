@@ -16,6 +16,8 @@
 
 #import "ProtectProwerTableModel.h"
 
+#import "SellerOrderDetailProtectPowerViewController.h"
+
 static NSString * protectingCell = @"protectingCell";
 static NSString * protectSuccessCell = @"protectSuccessCell";
 static NSString * protectFailedCell = @"protectFailedCell";
@@ -38,16 +40,9 @@ static NSString * protectFailedCell = @"protectFailedCell";
                             };
     
     [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
-        
+        DLog(@"%@", successJson);
         self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-        
         [self.tableview reloadData];
-        
-        DLog(@"%@",successJson[@"code"]);
-        DLog(@"%@",successJson[@"message"]);
-        DLog(@"%@",successJson[@"data"]);
-        DLog(@"%@",self.dataArray);
-
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -62,12 +57,10 @@ static NSString * protectFailedCell = @"protectFailedCell";
         [self getProtectPowerRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-//    [self.tableview.mj_header beginRefreshing];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initUI];
     
     [self setNavBarItem];
@@ -89,7 +82,6 @@ static NSString * protectFailedCell = @"protectFailedCell";
 }
 
 - (UITableView *)tableview {
-    
     if (!_tableview) {
         _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 88 -64) style:UITableViewStylePlain];
         _tableview.delegate = self;
@@ -135,7 +127,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
                 // 跳转至在线客服
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
                 viewController.title = EaseTest_Chat1;
-                 viewController.chatID = EaseTest_Chat3;
+                 viewController.chatID = EaseTest_Chat1;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
             }
@@ -162,15 +154,11 @@ static NSString * protectFailedCell = @"protectFailedCell";
                  viewController.chatID = EaseTest_Chat3;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
-                
             }
-            
         };
         
         [cell addSubview:funcBtn];
-        
         return cell;
-
     }
     
     if ([model.status integerValue] == 3) {
@@ -199,14 +187,17 @@ static NSString * protectFailedCell = @"protectFailedCell";
                 
                 [self clickApplyProtectPower:model.ID];
             }
-            
         };
-        
         [cell addSubview:funcBtn];
         
         return cell;
     }
     return cell1;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProtectProwerTableModel * model = self.dataArray[indexPath.row];
+    SellerOrderDetailProtectPowerViewController *protcetVc = [[SellerOrderDetailProtectPowerViewController alloc] init];
+    protcetVc.orderID = model.ID;
+    [self.navigationController pushViewController:protcetVc animated:YES];
+}
 @end

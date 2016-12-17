@@ -17,6 +17,8 @@
 #import "SureApplyRefundview.h"  // 是否申请退款
 #import "UpLoadPictureView.h"    // 上传照片
 #import "AddUpdataImagesView.h"  // 图片
+#import "OrderDetailModel.h" //模型
+#import "NSString+CertificateImage.h"
 
 @interface ApplyProtectPowerViewController ()<UIScrollViewDelegate,UITextViewDelegate,UITextFieldDelegate>
 /** 底部scrollView */
@@ -35,38 +37,142 @@
 @property(nonatomic, strong) AddUpdataImagesView *photoView;
 /** 提交申请 */
 @property (strong,nonatomic) UIButton * handinApplicationBtn;
+
+@property (nonatomic, assign) BOOL isMoney; /**< 是否需要金钱 */
+
 ///** 接受view */
 //@property (strong,nonatomic) UIImageView *acceptImageView;
-@property (strong, nonatomic) UITextField *refunMoneyText; /**< 接收退款 */
-@property (strong, nonatomic) UITextField *textViewText;   /**< 接收描述 */
+@property (strong, nonatomic) NSString *refunMoney; /**< 接收退款 */
+@property (strong, nonatomic) NSString *descContent;   /**< 接收描述 */
+
+@property (nonatomic, strong) OrderDetailModel *detailModel; /**< 详情信息 */
+
+
+@property (nonatomic, strong) NSMutableArray *photoArr; /**< 图片路径 */
+
 @end
 
 @implementation ApplyProtectPowerViewController
 #pragma mark
 #pragma mark - 网络请求
 - (void)postAddProtectProwerRequest {
- 
-    NSDictionary * dict = @{@"user_id":@(17),
-                            @"order_id":@(12),
-                            @"content":@"text",
-                            @"has_money":@(1),
-                            @"money":@(10),
-                            @"has_photo":@(1),
-                            };
-    [self postRequestWithPath:API_Add_activist params:dict success:^(id successJson) {
+    NSInteger hasMoney = 1;
+    if (!_isMoney){ // 无需金钱
+        self.refunMoney = @"";
+        hasMoney = 2;
+    }
+    for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
+        NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0]];
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                               @"img":base64
+                               };
+        [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+            if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                [self.photoArr addObject:successJson[@"data"]];
+                
+                if (self.photoArr.count == self.photoView.dataArr.count) {
+                    // 图片base64字符串
+                    NSString *str = [self.photoArr componentsJoinedByString:@"|"];
+                    DLog(@"%@", str);
+                    DLog(@"%@", self.refunMoney);
+                    NSDictionary * dict = @{
+                                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                            @"order_id":_orderID,
+                                            @"content":self.descContent,
+                                            @"has_money":@(hasMoney),
+                                            @"money":self.refunMoney,
+                                            @"has_photo":@(2),
+                                            @"img":str
+                                            };
+                    DLog(@"%@", dict);
+                    [self postRequestWithPath:API_Add_activist params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                        [self showAlert:successJson[@"message"]];
+                        if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }
+                        
+                    } error:^(NSError *error) {
+                        DLog(@"%@",error);
+                    }];
+                }
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
+
+}
+- (void)getOrderDetailWithOrderID:(NSString *)orderId {
+    NSDictionary *dict = @{
+                           @"id":orderId
+                           };
+    [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.detailModel = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+        // 设置订单状态
+        NSString *state = @"";
+        if ([self.detailModel.status isEqualToString:@"1"]) {
+            state = @"待付款";
+        }else if ([self.detailModel.status isEqualToString:@"2"]) {
+            state = @"待付定金";
+        }else if ([self.detailModel.status isEqualToString:@"3"]) {
+            state = @"待付尾款";
+        }else if ([self.detailModel.status isEqualToString:@"4"]) {
+            state = @"";
+        }else if ([self.detailModel.status isEqualToString:@"5"]) {
+            state = @"待付全款";
+        }else if ([self.detailModel.status isEqualToString:@"6"]) {
+            state = @"";
+        }else if ([self.detailModel.status isEqualToString:@"7"]) {
+            state = @"待发货";
+        }else if ([self.detailModel.status isEqualToString:@"8"]) {
+            state = @"待收货";
+        }else if ([self.detailModel.status isEqualToString:@"9"]) {
+            state = @"已评价";
+        }else if ([self.detailModel.status isEqualToString:@"10"]) {
+            state = @"待评价";
+        }else if ([self.detailModel.status isEqualToString:@"20"]) {
+            state = @"订单取消";
+        }
+        self.powerOrderView.orderStateMessage = state;
+        self.powerOrderView.orderCode = _orderID;
+      
+        self.sellInfoView.currentTime = self.detailModel.createTime;
+        self.sellInfoView.buynessName = self.detailModel.userName;
+        self.sellInfoView.buynessImg = self.detailModel.userImgUrl;
         
-        DLog(@"%@",successJson[@"code"]);
-        DLog(@"%@",successJson[@"message"]);
+        // 狗狗详情
+        if (self.detailModel.pathSmall.length != 0) {
+            
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.detailModel.pathSmall];
+            [self.dogDetailView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+        }
+        self.dogDetailView.dogNameLabel.text = self.detailModel.name;
+        self.dogDetailView.dogAgeLabel.text = self.detailModel.ageName;
+        self.dogDetailView.dogSizeLabel.text = self.detailModel.sizeName;
+        self.dogDetailView.dogColorLabel.text = self.detailModel.colorName;
+        self.dogDetailView.dogKindLabel.text = self.detailModel.kindName;
+        self.dogDetailView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.detailModel.priceOld];
+        self.dogDetailView.nowPriceLabel.text = self.detailModel.price;
         
+        // 付款状况
+        self.costView.fontMoney.text = self.detailModel.productDeposit;
+        self.costView.remainderMoeny.text = self.detailModel.productBalance;
+        self.costView.totalMoney.text = self.detailModel.price;
+        
+        self.sureApplyRefundView.realMoney = self.detailModel.price;
     } error:^(NSError *error) {
-        DLog(@"%@",error);
+        DLog(@"%@", error);
     }];
 }
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self postAddProtectProwerRequest];
+    _isMoney = NO;
+    [self getOrderDetailWithOrderID:_orderID];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,9 +191,21 @@
     [self.boomScrollView addSubview:self.costView];
     [self.boomScrollView addSubview:self.sureApplyRefundView];
     [self.boomScrollView addSubview:self.photoView];
+    
+    //注册键盘出现的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    //注册键盘消失的通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
 }
-
 - (void)addControllers {
+    // 底部按钮
     [_handinApplicationBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.left.right.equalTo(self.view);
         make.height.equalTo(44);
@@ -109,7 +227,13 @@
     }
     return _boomScrollView;
 }
-
+- (NSMutableArray *)photoArr {
+    
+    if (!_photoArr) {
+        _photoArr = [NSMutableArray array];
+    }
+    return _photoArr;
+}
 - (PowerOrderStateView *)powerOrderView {
     if (!_powerOrderView) {
         _powerOrderView = [[PowerOrderStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
@@ -122,7 +246,7 @@
     if (!_sellInfoView) {
         _sellInfoView = [[SellinfoView alloc] initWithFrame:CGRectMake(0, 54, SCREEN_WIDTH, 44)];
         _sellInfoView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
-        // 设置当前时间
+
     }
     return _sellInfoView;
 }
@@ -148,10 +272,14 @@
         _sureApplyRefundView = [[SureApplyRefundview alloc] initWithFrame:CGRectMake(0, 264, SCREEN_WIDTH, 216)];
         _sureApplyRefundView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         __weak typeof(self) weakself = self;
-        
-        _sureApplyRefundView.refundBlock = ^(UITextField * textfiled) {
-            weakself.refunMoneyText = textfiled;
-            textfiled.delegate = weakself;
+        _sureApplyRefundView.refundBlock = ^(NSString * money) {
+            weakself.refunMoney = money;
+        };
+        _sureApplyRefundView.openBlock = ^(BOOL isMoney) {
+            _isMoney = isMoney;
+        };
+        _sureApplyRefundView.descBlock = ^(NSString *desc){
+            weakself.descContent = desc;
         };
     }
     return _sureApplyRefundView;
@@ -187,184 +315,84 @@
                     DLog(@"出错了");
                 }
             }];
-            
         };
         _photoView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        
     }
     return _photoView;
 }
 
 - (UIButton *)handinApplicationBtn {
-
     if (!_handinApplicationBtn) {
-    
         _handinApplicationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         [_handinApplicationBtn setTintColor:[UIColor colorWithHexString:@"#ffffff"]];
         [_handinApplicationBtn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
         [_handinApplicationBtn setTitle:@"提交申请" forState:UIControlStateNormal];
         _handinApplicationBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         _handinApplicationBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        __weak typeof(self) weakself = self;
-        self.sureApplyRefundView.openBlock = ^(UISwitch * swich) {
-            if (swich.isOn) {
-                [weakself.handinApplicationBtn addTarget:weakself action:@selector(handinOPenAplication) forControlEvents:UIControlEventTouchUpInside];
-            } else  {
-                [weakself.handinApplicationBtn addTarget:weakself action:@selector(handinCloseAplication) forControlEvents:UIControlEventTouchUpInside];
-            }
-        };
+        [_handinApplicationBtn addTarget:self action:@selector(handinOPenAplication) forControlEvents:(UIControlEventTouchDown)];
     }
     return _handinApplicationBtn;
 }
+#pragma mark - 提交按钮点击方法
 - (void)handinOPenAplication {
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTextViewText:) name:@"textView" object:nil];
-    
-    __weak typeof(self) weakself = self;
-    NSString * refunMoneYStr = self.refunMoneyText.text;
-        
-    BOOL flag = [NSString validateNumber:refunMoneYStr];
-    
-    if (refunMoneYStr.length == 0 ) {
-        
-        [self showAlert:@"退款金额不能为空"];
-        
-    } else if (!flag) {
-        
-        [self showAlert:@"你输入的格式错误"];
-        
-    } else {
-        
-        NSInteger money = [refunMoneYStr integerValue];
-                
-        if (money > [self.costView.moneyMessage integerValue]) {
-                        
-                [self showAlert:@"退款金额不能大于交易金额"];
-                
-            } else {
-                
-                NSString * string = weakself.sureApplyRefundView.textViewText;
-                
-                if (string.length == 0) {
-                    
-                    [weakself showAlert:@"描述内容不能为空"];
-                    
-                } else {
-                    
-                    if (weakself.photoView.dataArr.count == 0) {
-                        
-                        [weakself showAlert:@"上传图片不能为空"];
-                        
-                    } else {
-                        // 跳转
-                    
-                    }
-                }
-            }
-    }
-}
-
-- (void)handinCloseAplication {
-    
-    NSString * string = self.sureApplyRefundView.textViewText;
-    if (string.length == 0) {
-        [self showAlert:@"描述内容不能为空"];
-    } else {
-        if (self.photoView.dataArr.count == 0) {
-            [self showAlert:@"上传图片不能为空"];
-        } else {
-            // 跳转
-        }
-    }
-}
-
-//- (void)getTextViewText:(NSNotification *)notication {
-//
-//    self.textViewText = [notication valueForKey:@"textView"];
-//    self.textViewText.delegate = self;
-//}
-
-/*
-#pragma mark - 按钮点击方法
-- (void)handinAplication:(UIButton *)button {
-    __weak typeof(self) weakself = self;
-    NSString * refunMoneYStr = self.refunMoneyText.text;
-    weakself.sureApplyRefundView.openBlock = ^(UISwitch *swich) {
-
-        BOOL flag = [NSString validateNumber:refunMoneYStr];
-        if (flag) {
-
-        if (swich.isOn) {
-            if (refunMoneYStr.length == 0 ) {
-                
-                [self showAlert:@"退款金额不能为0"];
-                
-            } else if (!flag) {
-                
-                [self showAlert:@"你输入的格式错误"];
-                
-            } else {
-                
-                NSInteger money = [refunMoneYStr integerValue];
+    if (self.isMoney) {
+        NSString * refunMoneYStr = self.refunMoney;
+        if (refunMoneYStr.length == 0 ) {
+            [self showAlert:@"退款金额不能为空"];
+        }else{
             
-                if (money > [self.costView.moneyMessage integerValue]) {
-                    
-                    [self showAlert:@"退款金额不能大于交易金额"];
-           
-                } else {
-              
-                    NSString * string = weakself.sureApplyRefundView.textViewText;
-                
-                    if (string.length == 0) {
-                    
-                        [weakself showAlert:@"描述内容不能为空"];
-                        
-                    } else {
-                        
-                        if (weakself.photoView.dataArr.count == 0) {
-                        
-                            [weakself showAlert:@"上传图片不能为空"];
-                            
-                        } else {
-                            // 跳转
-                        }
-                    }
-                }
-            }
-        } else {
-            NSString * string = weakself.sureApplyRefundView.textViewText;
-            if (string.length == 0) {
-                [weakself showAlert:@"描述内容不能为空"];
+            if (self.descContent.length == 0) {
+                [self showAlert:@"描述内容不能为空"];
             } else {
-                if (weakself.photoView.dataArr.count == 0) {
-                    [weakself showAlert:@"上传图片不能为空"];
+                if (self.photoView.dataArr.count == 0) {
+                    [self showAlert:@"上传图片不能为空"];
                 } else {
-                    // 跳转
+                    [self postAddProtectProwerRequest];
                 }
             }
         }
-    };
-
-    };
-    //    };
-    
-}
-*/
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    if (textField == self.refunMoneyText) {
-        
-        if (range.location < 4) {
-            return YES;
+    }else{ // 无需金钱
+        if (self.descContent.length == 0) {
+            [self showAlert:@"描述内容不能为空"];
+        } else {
+            if (self.photoView.dataArr.count == 0) {
+                [self showAlert:@"上传图片不能为空"];
+            } else {
+                [self postAddProtectProwerRequest];
+            }
         }
-        return NO;
     }
-    return YES;
 }
 
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    //键盘高度
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat h = keyBoardFrame.size.height;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.boomScrollView setContentOffset:CGPointMake(0, h)animated:YES];
+//        [self.handinApplicationBtn remakeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(self.view.bottom).offset(-h - 50);
+//            make.left.right.equalTo(self.view);
+//            make.height.equalTo(50);
+//        }];
+    }];
+}
+
+-(void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.boomScrollView setContentOffset:CGPointMake(0, 0)animated:YES];
+//        [self.handinApplicationBtn remakeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(self.view.bottom).offset(-50);
+//            make.left.right.equalTo(self.view);
+//            make.height.equalTo(50);
+//        }];
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
 }
 
 @end

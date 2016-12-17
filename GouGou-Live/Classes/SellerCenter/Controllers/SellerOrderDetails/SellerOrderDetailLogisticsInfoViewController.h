@@ -15,6 +15,4 @@
 
 @property(nonatomic, strong) NSString *orderID; /**< 订单id */
 
-@property(nonatomic, strong) SellerOrderModel *model; /**< 模型 */
-
 @end

@@ -25,7 +25,8 @@
 #define kMaxImgCount 6
 // 系统版本是否大于8.0
 #define IOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >=8.0 ? YES : NO)
-
+// 客服电话
+#define ServicePhone @"010-0928928"
 
 #pragma mark - 第三方头文件
 #define MAS_SHORTHAND
@@ -51,10 +52,8 @@
 #import "UIColor+HexString.h"
 // 个人信息
 #import "UserInfos.h"
-// 狗狗品种
+// 商品品种
 #import "DogCategoryModel.h"
-
-
 
 #import "UIView+FontSize.h"
 

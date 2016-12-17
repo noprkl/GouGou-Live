@@ -40,12 +40,12 @@
     
     // 直接赋值
     // 昵称
-    if (protectModel.merchantImgl.length != 0) {
-        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:protectModel.merchantImgl];
+    if (protectModel.userImgUrl.length != 0) {
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:protectModel.userImgUrl];
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = protectModel.merchantName;
-    self.nickView.stateLabe.text = protectModel.status;
+    self.nickView.stateLabe.text = @"维权中";
     
     // 狗狗详情
     if (protectModel.pathSmall.length != 0) {
@@ -57,32 +57,13 @@
     self.dogCardView.dogSizeLabel.text = protectModel.sizeName;
     self.dogCardView.dogColorLabel.text = protectModel.colorName;
     self.dogCardView.dogKindLabel.text = protectModel.kindName;
-    self.dogCardView.oldPriceLabel.text = protectModel.priceOld;
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:protectModel.priceOld];
     self.dogCardView.nowPriceLabel.text = protectModel.price;
     // 花费状况
     self.costView.fontMoney.text = protectModel.productRealDeposit;
     self.costView.remainderMoeny.text = protectModel.productRealBalance;
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];
-    /*
-    // 名称
-    self.nickView.model.merchantName = protectModel.name;
-    self.nickView.model.status = protectModel.status;
-    self.nickView.model.merchantImgl = protectModel.merchantImgl;
-    // 狗狗卡片
-    self.dogCardView.dogCardModel.sizeName = protectModel.sizeName;
-    self.dogCardView.dogCardModel.colorName = protectModel.colorName;
-    self.dogCardView.dogCardModel.ageName = protectModel.ageName;
-    self.dogCardView.dogCardModel.name = protectModel.name;
-    self.dogCardView.dogCardModel.pathSmall = protectModel.pathSmall;
-    self.dogCardView.dogCardModel.priceOld = protectModel.priceOld;
-    self.dogCardView.dogCardModel.price = protectModel.price;
-    self.dogCardView.dogCardModel.kindName = protectModel.kindName;
-     // 商品价格
-    self.costView.costModel.productRealDeposit = protectModel.productPrice;
-    self.costView.costModel.traficRealFee = protectModel.traficRealFee;
-    self.costView.costModel.balance = protectModel.productRealBalance;
-     */
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -97,7 +78,7 @@
         [self.contentView addSubview:self.lineview2];
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.lineview3];
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;        
     }
     return self;
 }

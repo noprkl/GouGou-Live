@@ -87,18 +87,7 @@ static NSString *cellid = @"SellerProtectPowerCell";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SellerProtectModel *model = self.dataArr[indexPath.row];
     cell.model = model;
-    
-    
-    if ([model.status integerValue] == 1) {
-        cell.orderState = model.status;
-    }
-    if ([model.status integerValue] == 2) {
-        cell.orderState = model.status;
-    }
-    if ([model.status integerValue] == 3) {
-        cell.orderState = model.status;
-    }
-    
+
 //    cell.orderState = @"待评价";
     cell.btnTitles = @[@"在线客服", @"查看详情"];
     NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
@@ -127,9 +116,9 @@ static NSString *cellid = @"SellerProtectPowerCell";
 - (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerProtectModel *)orderModel {
 
     if ([title isEqualToString:@"在线客服"]) {
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat2;
-         viewController.chatID = EaseTest_Chat3;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+        viewController.title = EaseTest_Chat1;
+         viewController.chatID = EaseTest_Chat1;
         [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"查看详情"]){

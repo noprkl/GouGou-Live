@@ -10,6 +10,6 @@
 
 @interface SellerSendViewController : BaseViewController
 
-@property(nonatomic, strong) NSString *orderID; /**< 名单ID */
+@property(nonatomic, strong) NSString *orderID; /**< 订单ID */
 
 @end

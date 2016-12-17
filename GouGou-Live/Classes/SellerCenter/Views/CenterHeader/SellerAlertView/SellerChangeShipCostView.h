@@ -13,6 +13,7 @@ typedef void(^ClickBottomBtnBlovk)(NSString *newPrice);
 @interface SellerChangeShipCostView : UIView
 
 @property(nonatomic, strong) ClickBottomBtnBlovk commitBlock; /**< 点击提交按钮回调 */
+@property (nonatomic, strong) NSString *orderID; /**< 订单编号 */
 
 - (void)show;
 - (void)dismiss;

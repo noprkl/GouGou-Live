@@ -17,6 +17,13 @@
 
 #import "AddDogShowController.h"
 #import "SellerMyGoodsModel.h"
+#import "NSString+MD5Code.h"
+
+#import "LiveListRootModel.h"
+#import "LiveListRespModel.h"
+#import "LiveListStreamModel.h"
+#import "LiveRootStreamModel.h"
+
 @interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate, CLLocationManagerDelegate>
 {
     CGFloat W;//图片view高度
@@ -292,13 +299,67 @@
     if (self.editNameText.text.length == 0) {
         [self showAlert:@"请输入房间名"];
     }else{
-        // 跳转到直播页
-        MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
-        streamVc.idArr = self.photoUrl;
-        streamVc.city = self.cityLabel.text;
-        streamVc.roomStr = self.editNameText.text;
-        streamVc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:streamVc animated:YES];
+        // 商品id
+        NSString *idStr = @"";
+        if (self.photoUrl.count != 0) {
+            NSMutableArray *idMutableArr = [NSMutableArray array];
+            
+            for (SellerMyGoodsModel *model in self.photoUrl) {
+                [idMutableArr addObject:model.ID];
+            }
+            idStr = [idMutableArr componentsJoinedByString:@"|"];
+        }
+        
+        // 时间戳+卖家id MD5
+        NSDate *date = [NSDate date];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"YYYYMMddHHmmss";
+        NSString *liveId = [NSString md5WithString:[NSString stringWithFormat:@"%@%@",[formatter stringFromDate:date], [UserInfos sharedUser].ID]];
+        
+        NSInteger count = self.photoUrl.count;
+        NSDictionary *liveDict = @{
+                                   @"product_id":idStr,
+                                   @"live_id":liveId,
+                                   @"p_num":@(count),
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"area":self.cityLabel.text,
+                                   @"name":self.editNameText.text
+                                   };
+        
+        DLog(@"%@", liveDict);
+        
+        [self postRequestWithPath:API_Live_product params:liveDict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                LiveRootStreamModel *rootModel = [LiveRootStreamModel mj_objectWithKeyValues:successJson[@"data"]];
+                LiveListRespModel *respModel = [LiveListRespModel mj_objectWithKeyValues:rootModel.resp];
+                LiveListStreamModel *streamModel = [LiveListStreamModel mj_objectWithKeyValues:rootModel.steam];
+                DLog(@"%@---%@", respModel, streamModel);
+                // 流对象属性
+                DLog(@"%@", streamModel.publish);
+                // 创建流对象
+                PLStream *stream = [PLStream streamWithJSON:nil];
+                stream.streamID = liveId;
+                stream.title = self.editNameText.text;
+                stream.hubName = respModel.hub;
+                stream.disabled = respModel.disabledTill;
+                stream.profiles = @[];
+                [stream.hosts setValue:streamModel.publish forKey:@"publish"];
+                [stream.hosts setValue:streamModel.rtmp forKey:@"rtmp"];
+                // 跳转到直播页
+                MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
+            
+                streamVc.stream = stream;
+                streamVc.streamPublish = streamModel.publish;
+                streamVc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:streamVc animated:YES];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+
+        
+        
     }
 }
 #pragma mark

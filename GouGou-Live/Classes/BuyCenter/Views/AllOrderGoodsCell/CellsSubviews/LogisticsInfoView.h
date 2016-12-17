@@ -10,4 +10,6 @@
 
 @interface LogisticsInfoView : UIView
 
+@property (nonatomic, strong) NSString *orderCode; /**< 订单编号 */
+
 @end

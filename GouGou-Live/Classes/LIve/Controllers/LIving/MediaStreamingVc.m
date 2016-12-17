@@ -7,7 +7,6 @@
 //
 
 #import "MediaStreamingVc.h"
-#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import "LivingToolView.h" // 顶部view
 #import "LivingSendMessageView.h" // 编辑信息
 #import "LinvingShowDogView.h" // 表格
@@ -44,7 +43,6 @@
 @property(nonatomic, strong) LivingSendMessageView *sendMessageView; /**< 编辑信息view */
 
 @property (nonatomic, strong) UITextField *sendText; /**< 文本框 */
-
 
 @property(nonatomic, strong) LinvingShowDogView *showDogView; /**< 展示狗狗 */
 
@@ -106,7 +104,6 @@
     videoCaptureConfiguration.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
     // 采集时画面 默认640
     videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset640x480;
-    
     // 设置采集音频参数
     PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
     // 采集时声道 默认1
@@ -114,81 +111,25 @@
     
     // 设置视频推流参数
     PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
-    
+    PLStream *stream = _stream;
+    DLog(@"%@", stream);
     // 设置音频推流参数
     PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
-
-    // 创建流对象
-    PLStream *stream = [PLStream streamWithJSON:nil];
-
-    // 商品id
-    NSString *idStr = @"";
-    if (_idArr.count != 0) {
-        NSMutableArray *idMutableArr = [NSMutableArray array];
-
-        for (SellerMyGoodsModel *model in _idArr) {
-            [idMutableArr addObject:model.ID];
-        }
-        idStr = [idMutableArr componentsJoinedByString:@"|"];
-    }
     
-     // 时间戳+卖家id MD5
-     NSDate *date = [NSDate date];
-     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-     formatter.dateFormat = @"YYYYMMddHHmmss";
-    NSString *liveId = [NSString md5WithString:[NSString stringWithFormat:@"%@%@",[formatter stringFromDate:date], [UserInfos sharedUser].ID]];
+    _session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:_stream];
     
-     DLog(@"%@", liveId);
-     NSDictionary *liveDict = @{
-                                @"product_id":idStr,
-                                @"live_id":liveId,
-                                @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                                @"area":_city,
-                                @"name":_roomStr
-                                };
-    
-     DLog(@"%@", liveDict);
-    
-     [self postRequestWithPath:API_Live_product params:liveDict success:^(id successJson) {
-         DLog(@"%@", successJson);
-         if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-             LiveRootStreamModel *rootModel = [LiveRootStreamModel mj_objectWithKeyValues:successJson[@"data"]];
-             
-             LiveListRespModel *respModel = [LiveListRespModel mj_objectWithKeyValues:rootModel.resp];
-             
-             LiveListStreamModel *streamModel = [LiveListStreamModel mj_objectWithKeyValues:rootModel.steam];
-             DLog(@"%@---%@", respModel, streamModel);
-             // 流对象属性
-             DLog(@"%@", streamModel.publish);
-             stream.streamID = liveId;
-             stream.title = _roomStr;
-             stream.hubName = respModel.hub;
-             stream.disabled = respModel.disabledTill;
-             stream.profiles = @[];
-             stream.hosts = [streamModel mj_keyValues];
+    [self.session startStreamingWithPushURL:[NSURL URLWithString:_streamPublish] feedback:^(PLStreamStartStateFeedback feedback) {
+        DLog(@"%lu", feedback);
+        if (feedback == 0) { // 开始推流
             
-             [self.session startStreamingWithPushURL:[NSURL URLWithString:streamModel.publish] feedback:^(PLStreamStartStateFeedback feedback) {
-                 DLog(@"%lu", feedback);
-                 if (feedback == 0) { // 开始推流
-                     
-                 }
-                 //
-             }];
-         }
-//         if ([successJson[@"message"] isEqualToString:@"已经添加过"]) {
-//             [self.navigationController popViewControllerAnimated:YES];
-//         }
-     } error:^(NSError *error) {
-         DLog(@"%@", error);
-     }];
-    _session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream];
-
+        }
+    }];
+    
     [self.view addSubview:self.session.previewView];
     [self.session.previewView makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
     [self initUI];
-
 }
 // 设置Ui
 - (void)initUI {
@@ -210,46 +151,46 @@
 }
 // 约束
 - (void)makeConstraint {
-    [self.topView makeConstraints:^(MASConstraintMaker *make) {
+    [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
         make.height.equalTo(64);
     }];
-    [self.livingImageView makeConstraints:^(MASConstraintMaker *make) {
+    [self.livingImageView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left).offset(10);
         make.top.equalTo(self.view.top).offset(10);
     }];
-    [self.watchCount makeConstraints:^(MASConstraintMaker *make) {
+    [self.watchCount remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.livingImageView.centerY);
         make.left.equalTo(self.livingImageView.right).offset(10);
         make.width.equalTo(70);
     }];
 
-    [self.talkingVc.view makeConstraints:^(MASConstraintMaker *make) {
+    [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left);
         make.top.equalTo(self.view.top).offset(110);
         make.bottom.equalTo(self.danmuBtn.top).offset(-10);
         make.width.equalTo(270);
     }];
-    [self.sendMessageView makeConstraints:^(MASConstraintMaker *make) {
+    [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(50);
     }];
-    [self.showingBtn makeConstraints:^(MASConstraintMaker *make) {
+    [self.showingBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.view.centerY);
         make.right.equalTo(self.view.right).offset(-10);
         make.size.equalTo(CGSizeMake(30, 30));
     }];
-    [self.showingPrice makeConstraints:^(MASConstraintMaker *make) {
+    [self.showingPrice remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.showingBtn.centerX);
         make.top.equalTo(self.showingBtn.bottom).offset(10);
     }];
-    [self.showDogView makeConstraints:^(MASConstraintMaker *make) {
+    [self.showDogView remakeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.right);
         make.top.equalTo(self.view.top);
         make.bottom.equalTo(self.view.bottom);
         make.width.equalTo(270);
     }];
-    [self.danmuBtn makeConstraints:^(MASConstraintMaker *make) {
+    [self.danmuBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left).offset(12);
         make.bottom.equalTo(self.view.bottom).offset(-12);
         make.size.equalTo(CGSizeMake(26, 26));
@@ -262,7 +203,6 @@
     self.livingImageView.hidden = !self.livingImageView.hidden;
     self.watchCount.hidden = !self.watchCount.hidden;
     self.topView.hidden = !self.topView.hidden;
-    
     
 }
 - (void)clickDanmuAction:(UIButton *)btn {

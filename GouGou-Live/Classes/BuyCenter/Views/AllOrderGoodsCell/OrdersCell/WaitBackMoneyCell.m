@@ -38,7 +38,7 @@
         [self.contentView addSubview:self.dogCardView];
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.lineview2];
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
@@ -46,25 +46,6 @@
 - (void)setCenterModel:(BuyCenterModel *)centerModel {
     
     _centerModel = centerModel;
-    /*
-     // 模型赋值
-    self.nickView.model.merchantName = centerModel.merchantName;
-    self.nickView.model.status = centerModel.status;
-    self.nickView.model.merchantImgl = centerModel.merchantImgl;
-
-//    self.nickView.stateMessage = centerModel.status;
-//    self.nickView.merchantName = centerModel.merchantName;
-//    self.nickView.merchantImagl = centerModel.merchantImgl;
-    
-    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
-    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
-    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
-    self.dogCardView.dogCardModel.name = centerModel.name;
-    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
-    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
-    self.dogCardView.dogCardModel.price = centerModel.price;
-    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
-    */
     
     
     // 直接赋值
@@ -75,27 +56,26 @@
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = centerModel.merchantName;
-    self.nickView.stateLabe.text = centerModel.status;
+    self.nickView.stateLabe.text = @"待付尾款";
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
         [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-        
     }
-    self.dogCardView.dogImageView.image = [UIImage imageNamed:centerModel.pathSmall];
     self.dogCardView.dogNameLabel.text = centerModel.name;
     self.dogCardView.dogAgeLabel.text = centerModel.ageName;
     self.dogCardView.dogSizeLabel.text = centerModel.sizeName;
     self.dogCardView.dogColorLabel.text = centerModel.colorName;
     self.dogCardView.dogKindLabel.text = centerModel.kindName;
-    self.dogCardView.oldPriceLabel.text = centerModel.priceOld;
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:centerModel.priceOld];
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     
     // 付款状况（缺少运费）
-    self.costView.fontMoney.text = centerModel.productRealDeposit;
-    self.costView.remainderMoeny.text = centerModel.productRealBalance;
-    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.productRealBalance integerValue])];
-    
+    self.dogCardView.nowPriceLabel.text = centerModel.price;
+    // 付款状况
+    self.costView.fontMoney.text = centerModel.productDeposit;
+    self.costView.remainderMoeny.text = centerModel.productBalance;
+    self.costView.totalMoney.text = centerModel.price;    
     
 }
 #pragma mark

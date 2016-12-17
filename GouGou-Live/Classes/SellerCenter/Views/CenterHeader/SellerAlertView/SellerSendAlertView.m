@@ -66,6 +66,10 @@
     }
     return self;
 }
+- (void)setOrderID:(NSString *)orderID {
+    _orderID = orderID;
+    self.orderCodeNumber.text = orderID;
+}
 // 约束
 - (void)setUP {
     [self.backView makeConstraints:^(MASConstraintMaker *make) {
@@ -211,7 +215,7 @@
 - (UILabel *)shipOrder {
     if (!_shipOrder) {
         _shipOrder = [[UILabel alloc] init];
-        _shipOrder.text = @"运单方式";
+        _shipOrder.text = @"运单编号";
         _shipOrder.textColor = [UIColor colorWithHexString:@"#000000"];
         _shipOrder.font = [UIFont systemFontOfSize:16];
     }
@@ -358,6 +362,9 @@
 - (void)dismiss {
     //返回时调用
     [self fadeOut];
+    if (_dismissBlock) {
+        _dismissBlock();
+    }
 }
 - (void)fadeIn {
     self.transform = CGAffineTransformMakeScale(0.3, 0.3);

@@ -72,6 +72,13 @@ static NSString * MedrchantCell = @"MedrchantCell";
         }
     }
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    // 释放
+    self.unCertificateVIew.timer = nil;
+//    dispatch_source_cancel(self.unCertificateVIew.timer);
+}
 - (HaveCommitCertificateView *)haveCommitView {
     if (!_haveCommitView) {
         _haveCommitView = [[HaveCommitCertificateView alloc] initWithFrame:self.view.bounds];
@@ -253,6 +260,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
     }
     return _unCertificateVIew;
 }
+
 - (DoneCertificateView *)doneCertificateView {
     if (!_doneCertificateView) {
         _doneCertificateView = [[DoneCertificateView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64))];

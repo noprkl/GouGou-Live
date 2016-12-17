@@ -22,6 +22,31 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
 @end
 
 @implementation WatiConsigneeViewController
+#pragma mark - 网络请求
+- (void)getConsigneeRequest {
+    // 待收货
+    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"status":@(2),
+                            @"page":@(1),
+                            @"pageSize":@(10)
+                            };
+    
+    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        
+        DLog(@"%@",successJson[@"code"]);
+        DLog(@"%@",successJson[@"message"]);
+        DLog(@"%@",successJson[@"data"]);
+        DLog(@"%@",successJson[@"data"][@"info"]);
+        
+        [self.tableview reloadData];
+        
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+    }];
+}
+
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -46,30 +71,6 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
     
     [self.view addSubview:self.tableview];
     
-}
-#pragma mark - 网络请求
-- (void)getConsigneeRequest {
-    
-    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
-                            @"status":@(3),
-                            @"page":@(1),
-                            @"pageSize":@(10)
-                            };
-    
-    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
-        
-        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-        
-        DLog(@"%@",successJson[@"code"]);
-        DLog(@"%@",successJson[@"message"]);
-        DLog(@"%@",successJson[@"data"]);
-        DLog(@"%@",successJson[@"data"][@"info"]);
-        
-        [self.tableview reloadData];
-
-    } error:^(NSError *error) {
-        DLog(@"%@",error);
-    }];
 }
 #pragma mark
 #pragma mark - 初始化
@@ -121,7 +122,18 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
     funcBtn.difFuncBlock = ^(UIButton * button) {
         if ([button.titleLabel.text  isEqual:@"确认收货"]) {
             
-            DLog(@"%@--%@",self,button.titleLabel.text);
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID  intValue]),
+                                   @"status":@(9),
+                                   @"id":model.ID
+                                   };
+            [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
             // 跳转至联系卖家
@@ -145,9 +157,10 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BuyCenterModel *model = self.dataArray[indexPath.row];
 
     SureConsigneedViewController * congisnee = [[SureConsigneedViewController alloc] init];
-    
+    congisnee.detailModel = model;
     [self.navigationController pushViewController:congisnee animated:YES];
 }
 

@@ -112,12 +112,15 @@ static NSString *cellid = @"SellerWaitRateCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     logisticsInfoVC.orderState = @"待评价";
-    
+    SellerOrderModel *model = self.dataArr[indexPath.row];
+    logisticsInfoVC.orderID = model.ID;
+
     logisticsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:logisticsInfoVC animated:YES];
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark
@@ -125,9 +128,9 @@ static NSString *cellid = @"SellerWaitRateCell";
 - (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
     
     if ([title isEqualToString:@"联系买家"]) {
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat2;
-         viewController.chatID = EaseTest_Chat3;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:orderModel.buyUserId conversationType:(EMConversationTypeChat)];
+        viewController.title = orderModel.buyUserId;
+         viewController.chatID = orderModel.buyUserId;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
         
@@ -159,7 +162,7 @@ static NSString *cellid = @"SellerWaitRateCell";
     }else if ([title isEqualToString:@"在线客服"]){
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
         viewController.title = EaseTest_Chat1;
-         viewController.chatID = EaseTest_Chat3;
+         viewController.chatID = EaseTest_Chat1;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
         

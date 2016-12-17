@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BuyCenterModel.h"
 
-
 @interface WaitAllMoneyCell : UITableViewCell
 
 @property (copy, nonatomic) BuyCenterModel *centerModel; /**< 模型 */

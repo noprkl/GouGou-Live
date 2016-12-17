@@ -109,13 +109,11 @@ static NSString *cellid = @"SellerWaitPayCell";
     SellerOrderModel *model = self.dataArr[indexPath.row];
     cell.model = model;
     if ([model.status isEqualToString:@"1"]) {
-        cell.orderState = @"待付宽";
+        cell.orderState = @"待付款";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-//        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
-//        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
-//        cell.costMessage = @[finalMoney, depositMoney];
+
     }else if ([model.status isEqualToString:@"2"]) {
-        cell.orderState = @"待付全款";
+        cell.orderState = @"待付定金";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
         NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
         cell.costMessage = @[allMoney];
@@ -125,7 +123,7 @@ static NSString *cellid = @"SellerWaitPayCell";
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         cell.costMessage = @[finalMoney];
     }else if ([model.status isEqualToString:@"5"]) {
-        cell.orderState = @"待付定金";
+        cell.orderState = @"待付全款";
         cell.btnTitles = @[@"联系买家"];
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
@@ -135,7 +133,6 @@ static NSString *cellid = @"SellerWaitPayCell";
     [self.btnTitles addObject:cell.btnTitles];
     [self.states addObject:cell.orderState];
     __weak typeof(self) weakSelf = self;
-
     cell.clickBtnBlock = ^(NSString *btnText){
         [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
     };
@@ -143,17 +140,18 @@ static NSString *cellid = @"SellerWaitPayCell";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 245;
+    return 255;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    SellerOrderModel *model = self.dataArr[indexPath.row];
     SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
     adressVC.hidesBottomBarWhenPushed = YES;
     adressVC.bottomBtns = self.btnTitles[indexPath.row];
     adressVC.orderState = self.states[indexPath.row];
+    adressVC.orderID = model.ID;
     [self.navigationController pushViewController:adressVC animated:YES];
 }
 #pragma mark
@@ -161,9 +159,9 @@ static NSString *cellid = @"SellerWaitPayCell";
 - (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
     
     if ([title isEqualToString:@"联系买家"]) {
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat2;
-         viewController.chatID = EaseTest_Chat3;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:orderModel.buyUserId conversationType:(EMConversationTypeChat)];
+        viewController.title = orderModel.buyUserId;
+         viewController.chatID = orderModel.buyUserId;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }else if ([title isEqualToString:@"修改运费"]){

@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ClickDifFuncBtn)(UIButton *btn);
+typedef void(^ClickDiffentFuncBtn)(UIButton *btn);
 
 @interface FunctionButtonView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame title:(NSArray *)titleArray buttonNum:(NSInteger)buttonNum;
 
 /** 点击按钮回调 */
-@property (strong,nonatomic) ClickDifFuncBtn difFuncBlock;
+@property (strong,nonatomic) ClickDiffentFuncBtn difFuncBlock;
 
 @end

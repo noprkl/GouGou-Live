@@ -50,7 +50,7 @@
 #pragma mark - 网络请求
 - (void)getFontMoneyRequest {
     
-    NSDictionary * dict = @{@"id":@(12)};
+    NSDictionary * dict = @{@"id":@([_detailModel.ID intValue])};
     
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         
@@ -58,12 +58,16 @@
         DLog(@"%@",successJson[@"data"]);
         
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
-        self.orderStateView.stateMessage = self.orderInfo.status;
-        self.orderStateView.timeMessage = self.orderInfo.closeTime;
+        self.orderStateView.stateMessage = @"待付定金";
+        self.orderStateView.timeMessage = [NSString stringFromDateString:self.orderInfo.createTime];
         
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
         self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
+        self.consigneeViw.recevieProvince = self.orderInfo.recevieProvince;
+        self.consigneeViw.recevieCity = self.orderInfo.recevieCity;
+        self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
+        
         
         // 狗狗详情
         if (self.orderInfo.pathSmall.length != 0) {
@@ -75,23 +79,23 @@
         self.dogCardView.dogSizeLabel.text = self.orderInfo.sizeName;
         self.dogCardView.dogColorLabel.text = self.orderInfo.colorName;
         self.dogCardView.dogKindLabel.text = self.orderInfo.kindName;
-        self.dogCardView.oldPriceLabel.text = self.orderInfo.priceOld;
+        self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
         
-        self.goodsPriceView.totalsMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productBalance integerValue] + [self.orderInfo.productDeposit integerValue]];
+        self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
         
-        self.detailPayView.needBackMessage = self.orderInfo.productRealBalance;
-        self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
-        self.detailPayView.realMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productRealDeposit integerValue] + [self.orderInfo.productRealBalance integerValue]];
+        self.detailPayView.needBackMessage = self.orderInfo.productBalance;
+        self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
+        self.detailPayView.realMoney = self.orderInfo.price;
         self.detailPayView.balance = self.orderInfo.productRealBalance;
         
-        self.orderNumberView.buyUserId = self.orderInfo.buyUserId;
-        self.orderNumberView.createTimes = self.orderInfo.createTime;
-        self.orderNumberView.depositTimes = self.orderInfo.depositTime;
-        self.orderNumberView.balanceTimes = self.orderInfo.balanceTime;
-        self.orderNumberView.deliveryTimes = self.orderInfo.deliveryTime;
+        self.orderNumberView.buyUserId = self.orderInfo.ID;
+        self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
+        self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
+        self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
+        self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
  
     } error:^(NSError *error) {
         DLog(@"%@",error);
@@ -201,7 +205,8 @@
     if (!_boomScrollView) {
         _boomScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
         _boomScrollView.delegate = self;
-       
+        _boomScrollView.showsVerticalScrollIndicator = NO;
+
         _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, 870);
         _boomScrollView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         _boomScrollView.bounces = NO;
@@ -287,7 +292,7 @@
 - (BottomButtonView *)bottomButton {
     
     if (!_bottomButton) {
-        _bottomButton = [[BottomButtonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44) title:@[@"取消订单",@"联系卖家",@"支付定金"]];
+        _bottomButton = [[BottomButtonView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44) title:@[@"取消订单",@"联系卖家",@"支付订金"]];
         _bottomButton.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
         __weak typeof(self) weakself = self;
         
@@ -304,9 +309,9 @@
                 viewController.hidesBottomBarWhenPushed = YES;
                 [weakself.navigationController pushViewController:viewController animated:YES];
                 
-            } else if ([button.titleLabel.text isEqual:@"支付定金"]) {
+            } else if ([button.titleLabel.text isEqual:@"支付订金"]) {
                 
-                [weakself clickPayFontMoney:weakself.detailModel];
+                [self payMoneyWithOrderID:weakself.detailModel.ID payStyle:button.titleLabel.text];
             }
             
         };

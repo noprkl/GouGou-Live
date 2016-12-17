@@ -7,15 +7,12 @@
 //
 
 #import "LiveListRootModel.h"
-#import "LiveRootStreamModel.h"
-
+#import "ShowIngDogModel.h"
 @implementation LiveListRootModel
-+ (NSDictionary *)mj_objectClassInArray{
-    
-    NSDictionary *dict = @{
-                           @"info":@"LiveRootStreamModel"
-                           };
-    return dict;
++ (NSDictionary *)mj_objectClassInArray {
+    return @{
+             @"info":@"ShowIngDogModel"
+             };
 }
 
 @end

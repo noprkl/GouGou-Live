@@ -27,16 +27,21 @@
 - (void)setCurrentTime:(NSString *)currentTime {
 
     _currentTime = currentTime;
-    self.timeLabel.text = currentTime;
+    self.timeLabel.text = [NSString stringFromDateString:currentTime];
 }
 
 - (void)setBuynessName:(NSString *)buynessName {
-
     _buynessName = buynessName;
     self.MedrchantName.text = buynessName;
-    
 }
-
+- (void)setBuynessImg:(NSString *)buynessImg {
+    _buynessImg = buynessImg;
+    if (buynessImg.length != 0) {
+        NSString *str = [IMAGE_HOST stringByAppendingString:buynessImg];
+        NSURL *url = [NSURL URLWithString:str];
+        [self.userImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"主播头像"]];
+    }
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -63,7 +68,7 @@
         
         make.left.equalTo(weakself.left).offset(10);
         make.centerY.equalTo(weakself.centerY);
-        
+        make.size.equalTo(CGSizeMake(30, 30));
     }];
     
     [_MedrchantName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -83,13 +88,11 @@
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.certityLabel.right).offset(10);
+        make.right.equalTo(weakself.right).offset(-30);
         make.centerY.equalTo(weakself.centerY);
-        
     }];
     
     [_arrowImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.centerY);
         

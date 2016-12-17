@@ -26,19 +26,7 @@
     _orderState = orderState;
     self.stateLabe.text = orderState;
 }
-/*
-- (void)setModel:(WaitAllNickModel *)model {
 
-    _model = model;
-    self.sellerIamge.image = [UIImage imageNamed:model.merchantImgl];
-    self.nickName.text = model.merchantName;
-    self.stateLabe.text = model.status;
-    
-    DLog(@"%@",self.nickName.text);
-    DLog(@"%@",self.stateLabe.text);
-
-}
-*/
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -70,7 +58,7 @@
         
         make.left.equalTo(weakself.left).offset(10);
         make.centerY.equalTo(weakself.centerY).offset(10);
-        
+        make.size.equalTo(CGSizeMake(30, 30));
     }];
     
     [_nickName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -82,7 +70,7 @@
     
     [_stateLabe mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.left).offset(295);
+        make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.centerY).offset(10);
         make.size.equalTo(CGSizeMake(70, 20));
         
@@ -105,7 +93,8 @@
     
     if (!_sellerIamge) {
         _sellerIamge= [[UIImageView alloc] init];
-      
+        _sellerIamge.layer.masksToBounds = YES;
+        _sellerIamge.layer.cornerRadius = 15;
     }
     return _sellerIamge;
 }

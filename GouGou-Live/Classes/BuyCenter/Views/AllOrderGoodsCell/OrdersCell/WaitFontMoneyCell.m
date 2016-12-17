@@ -41,7 +41,7 @@
         [self.contentView addSubview:self.dogCardView];
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.lineview2];
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
@@ -57,17 +57,6 @@
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = centerModel.merchantName;
-    NSString *state = @"";
-    if ([centerModel.status isEqualToString:@"1"]) {
-        state = @"待付款";
-    }else if ([centerModel.status isEqualToString:@"2"]){
-        state = @"待付定金";
-    }else if ([centerModel.status isEqualToString:@"3"]){
-        state = @"已付定金，代付尾款";
-    }else if ([centerModel.status isEqualToString:@"5"]){
-        state = @"待付全款";
-    }
-    self.nickView.stateLabe.text = state;
     
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
@@ -81,13 +70,15 @@
     self.dogCardView.dogSizeLabel.text = centerModel.sizeName;
     self.dogCardView.dogColorLabel.text = centerModel.colorName;
     self.dogCardView.dogKindLabel.text = centerModel.kindName;
-    self.dogCardView.oldPriceLabel.text = centerModel.priceOld;
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:centerModel.priceOld];
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     
     // 付款状况（缺少运费）
-    self.costView.fontMoney.text = centerModel.productRealDeposit;
-    self.costView.remainderMoeny.text = centerModel.productRealBalance;
-    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([centerModel.productRealDeposit integerValue] +[centerModel.productRealBalance integerValue])];
+    self.dogCardView.nowPriceLabel.text = centerModel.price;
+    // 付款状况
+    self.costView.fontMoney.text = centerModel.productDeposit;
+    self.costView.remainderMoeny.text = centerModel.productBalance;
+    self.costView.totalMoney.text = centerModel.price;
     
 }
 #pragma mark

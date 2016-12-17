@@ -42,10 +42,10 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
 - (void)TencentShare;
 
 /** 钱包支付 */
-- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state;
-/** 微信支付 */
-- (void)WeChatPayWithOrderID:(int)orderID totalFee:(int)fee mark:(NSString *)mark;
-/** 支付宝支付 */
-- (void)aliPayWithOrderId:(int)orderID totalFee:(int)fee;
+//- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state;
+///** 微信支付 */
+//- (void)WeChatPayWithOrderID:(int)orderID totalFee:(int)fee mark:(NSString *)mark;
+///** 支付宝支付 */
+//- (void)aliPayWithOrderId:(int)orderID totalFee:(int)fee;
 
 @end

@@ -68,7 +68,7 @@ static NSString *cellid = @"ChosePayStyleView";
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 44 * (self.dataArr.count + 2), SCREEN_WIDTH, 44 * (self.dataArr.count + 2));
+    rect = CGRectMake(0, SCREEN_HEIGHT - 50 * (self.dataArr.count + 2), SCREEN_WIDTH, 50 * (self.dataArr.count + 2));
     self.frame = rect;
     //渐入动画
     [self fadeIn];
@@ -122,7 +122,7 @@ static NSString *cellid = @"ChosePayStyleView";
     _dataArr = dataArr;
     _dataPlist = dataArr;
     [self reloadData];
-    self.lastString = self.dataArr[0];
+//    self.lastString = self.dataArr[0];
     
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -138,7 +138,6 @@ static NSString *cellid = @"ChosePayStyleView";
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
     }
     
-    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     label.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor whiteColor];
@@ -153,27 +152,27 @@ static NSString *cellid = @"ChosePayStyleView";
 }
 #pragma mark 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    return 50;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44;
+    return 50;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
-    return 44;
+    return 50;
 }
 #pragma mark 头尾
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
         
         label.text = self.title;
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor colorWithHexString:@"#666666"];
         label.font = [UIFont systemFontOfSize:16];
         // 线
-        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 49, SCREEN_WIDTH, 1)];
         line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         [label addSubview:line];
         
@@ -187,7 +186,7 @@ static NSString *cellid = @"ChosePayStyleView";
     if (section == 0) {
         
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+        button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
         [button setTitle:@"确定" forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         
@@ -213,7 +212,6 @@ static NSString *cellid = @"ChosePayStyleView";
     
     self.lastString = self.dataPlist[indexPath.row];
     if (_sizeCellBlock) {
-        //        [self dismiss];
         _sizeCellBlock(self.lastString);
     }
 }

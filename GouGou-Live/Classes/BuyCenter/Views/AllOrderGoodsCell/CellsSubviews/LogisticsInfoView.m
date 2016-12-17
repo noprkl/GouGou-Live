@@ -70,7 +70,10 @@
     }];
     
 }
-
+- (void)setOrderCode:(NSString *)orderCode {
+    _orderCode = orderCode;
+    self.numLabel.text = orderCode;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UILabel *)logisticInfoLabel {

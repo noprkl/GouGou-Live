@@ -13,4 +13,7 @@
 @property (strong,nonatomic) NSString *currentTime;
 /** 商家名 */
 @property (strong,nonatomic) NSString *buynessName;
+/** 商家头像 */
+@property (strong,nonatomic) NSString *buynessImg;
+
 @end

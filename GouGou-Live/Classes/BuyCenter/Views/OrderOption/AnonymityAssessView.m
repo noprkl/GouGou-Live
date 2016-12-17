@@ -69,14 +69,16 @@
 
     if (!_swichs) {
         _swichs = [[UISwitch alloc] init];
-        [_swichs addTarget:self action:@selector(anonymityCommentAction) forControlEvents:UIControlEventValueChanged];
+        [_swichs addTarget:self action:@selector(anonymityCommentAction:) forControlEvents:UIControlEventValueChanged];
     }
     return _swichs;
 }
 
-- (void)anonymityCommentAction {
+- (void)anonymityCommentAction:(UISwitch *)sender {
 
-
+    if (_realBlock) {
+        _realBlock(sender.isOn);
+    }
 }
 
 @end

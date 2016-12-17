@@ -40,12 +40,12 @@
     _protectModel = protectModel;
     // 直接赋值
     // 昵称
-    if (protectModel.merchantImgl.length != 0) {
-        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:protectModel.merchantImgl];
+    if (protectModel.userImgUrl.length != 0) {
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:protectModel.userImgUrl];
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = protectModel.merchantName;
-    self.nickView.stateLabe.text = protectModel.status;
+    self.nickView.stateLabe.text = @"维权成功";
     
     // 狗狗详情
     if (protectModel.pathSmall.length != 0) {
@@ -57,7 +57,7 @@
     self.dogCardView.dogSizeLabel.text = protectModel.sizeName;
     self.dogCardView.dogColorLabel.text = protectModel.colorName;
     self.dogCardView.dogKindLabel.text = protectModel.kindName;
-    self.dogCardView.oldPriceLabel.text = protectModel.priceOld;
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:protectModel.priceOld];
     self.dogCardView.nowPriceLabel.text = protectModel.price;
     // 花费信息
     self.costView.fontMoney.text = protectModel.productRealDeposit;
@@ -98,7 +98,7 @@
         [self.contentView addSubview:self.lineview2];
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.lineview3];
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;        
     }
     return self;
 }

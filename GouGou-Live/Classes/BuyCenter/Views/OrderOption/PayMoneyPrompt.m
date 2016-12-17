@@ -151,7 +151,7 @@ static NSString *cellid = @"SizeFilterCellID";
         cell.textLabel.font = [UIFont systemFontOfSize:16];
     } else if (indexPath.row == 2) {
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"可用余额: %@",[UserInfos sharedUser].userAsset];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"可用余额: ￥%@",[UserInfos sharedUser].userAsset];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         

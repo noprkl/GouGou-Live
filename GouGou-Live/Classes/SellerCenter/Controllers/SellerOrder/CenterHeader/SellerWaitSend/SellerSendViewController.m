@@ -19,12 +19,11 @@
     [super viewDidLoad];
     [self setNavBarItem];
     [self showSendAlert];
-    
-    
 }
 - (void)showSendAlert {
   __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
     __weak typeof(self) weakSelf = self;
+    
     sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
         // 送货请求，如果成功返回YES 失败返回NO
         NSDictionary *dict = @{
@@ -34,7 +33,7 @@
                                };
         [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
-            if ([successJson[@"message"] isEqualToString:@"订单发送成功"]) {
+            if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
                 sendView = nil;
                 [sendView dismiss];
@@ -42,6 +41,9 @@
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
+    };
+    sendView.dismissBlock = ^(){
+        [weakSelf.navigationController popViewControllerAnimated:YES];
     };
     [sendView show];
 }

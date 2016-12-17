@@ -7,13 +7,21 @@
 //  直播 推流端 主播
 
 #import "BaseViewController.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+
 
 @interface MediaStreamingVc : BaseViewController
 
-@property (nonatomic, strong) NSArray *idArr; /**< 商品id数组 */
+//@property (nonatomic, strong) NSArray *idArr; /**< 商品id数组 */
+//
+//@property(nonatomic, strong) NSString *roomStr; /**< 房间名 */
+//
+//@property(nonatomic, strong) NSString *city; /**< 主播城市 */
+//
 
-@property(nonatomic, strong) NSString *roomStr; /**< 房间名 */
+@property (nonatomic, strong) NSString *streamPublish; /**< 推流地址 */
 
-@property(nonatomic, strong) NSString *city; /**< 主播城市 */
+@property (nonatomic, strong) PLStream *stream; /**< 流对象 */
+
 
 @end

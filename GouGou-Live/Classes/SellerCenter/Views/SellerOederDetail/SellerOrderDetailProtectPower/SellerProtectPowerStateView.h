@@ -14,4 +14,6 @@
 
 @property(nonatomic, strong) NSString *noteStr; /**< 提示文字 */
 
+@property (nonatomic, strong) NSString *closeTime; /**< 订单关闭时间 */
+
 @end

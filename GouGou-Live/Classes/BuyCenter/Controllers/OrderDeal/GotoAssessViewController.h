@@ -8,9 +8,8 @@
 
 #import "BaseViewController.h"
 
-
-
 @interface GotoAssessViewController : BaseViewController
 
+@property (nonatomic, strong) NSString *orderID; /**< 订单id */
 
 @end

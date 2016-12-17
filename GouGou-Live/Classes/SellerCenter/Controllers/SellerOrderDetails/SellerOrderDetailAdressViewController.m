@@ -41,17 +41,16 @@
 @implementation SellerOrderDetailAdressViewController
 
 - (void)getRequestOrderDetail {
-    NSDictionary *dict = @{
-                           @"id":@([_model.ID intValue])
-                           };
-    
+    NSDictionary * dict = @{@"id":@([_orderID intValue])};
+    DLog(@"%@", dict);
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.orderInfo = [SellerOrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         [self.tableView reloadData];
     } error:^(NSError *error) {
-        DLog(@"%@", error);
+        DLog(@"%@",error);
     }];
+
 }
 #pragma mark
 #pragma mark - 生命周期
@@ -146,8 +145,35 @@
         
         SellerOrderDetailStateView *stateView = [[SellerOrderDetailStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
         self.stateView = stateView;
-        stateView.stateMessage = self.orderInfo.status;
-        stateView.noteStr = self.orderInfo.closeTime;
+        // 设置订单状态
+        NSString *state = @"";
+        
+        if ([self.orderInfo.status isEqualToString:@"1"]) {
+            state = @"待付款";
+        }else if ([self.orderInfo.status isEqualToString:@"2"]) {
+            state = @"待付定金";
+        }else if ([self.orderInfo.status isEqualToString:@"3"]) {
+            state = @"待付尾款";
+        }else if ([self.orderInfo.status isEqualToString:@"4"]) {
+            state = @"";
+        }else if ([self.orderInfo.status isEqualToString:@"5"]) {
+            state = @"待付全款";
+        }else if ([self.orderInfo.status isEqualToString:@"6"]) {
+            state = @"";
+        }else if ([self.orderInfo.status isEqualToString:@"7"]) {
+            state = @"待发货";
+        }else if ([self.orderInfo.status isEqualToString:@"8"]) {
+            state = @"待收货";
+        }else if ([self.orderInfo.status isEqualToString:@"9"]) {
+            state = @"已评价";
+        }else if ([self.orderInfo.status isEqualToString:@"10"]) {
+            state = @"待评价";
+        }else if ([self.orderInfo.status isEqualToString:@"20"]) {
+            state = @"订单取消";
+        }
+        stateView.stateMessage = state;
+
+        stateView.noteStr = [NSString stringFromDateString:self.orderInfo.closeTime];
         // 订单信息
         [cell.contentView addSubview:stateView];
         return cell;

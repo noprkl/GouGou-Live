@@ -100,7 +100,7 @@
     self.dogCardView.dogColorLabel.text = model.colorName;
     self.dogCardView.oldPriceLabel.text = model.priceOld;
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    
+
     self.costView.moneyMessage = model.price;
 
 }

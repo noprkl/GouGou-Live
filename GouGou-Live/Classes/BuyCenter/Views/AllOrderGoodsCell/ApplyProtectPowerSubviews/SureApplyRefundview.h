@@ -8,17 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^EditTextfiledBlock)(UITextField *textfiled);
+typedef void(^EditTextfiledBlock)(NSString *money);
 
-typedef void(^SwitchOPenBlock)(UISwitch *swich);
+typedef void(^SwitchOPenBlock)(BOOL isMoney);
+typedef void(^EditDescBlock)(NSString *descContent);
 
 @interface SureApplyRefundview : UIView
 /** 监听textfiled（退款金额） */
 @property (strong,nonatomic) EditTextfiledBlock refundBlock;
+/** 监听秒速内容 */
+@property (strong,nonatomic) EditDescBlock descBlock;
+
 /** 点击'开关'回调 */
 @property (strong,nonatomic) SwitchOPenBlock openBlock;
-@property (copy, nonatomic) NSString *textViewText; /**< textView描述 */
-@property (copy, nonatomic) NSString *moneyTextfiel; /**< 退款金额 */
 
+@property (nonatomic, strong) NSString *realMoney; /**< 实际金额 */
 
 @end

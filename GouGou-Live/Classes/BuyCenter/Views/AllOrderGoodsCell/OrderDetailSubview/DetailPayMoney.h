@@ -13,8 +13,8 @@
 @property (copy, nonatomic) NSString *balance;
 /**< 实付款 */
 @property (copy, nonatomic) NSString *realMoney;
-/** 实付尾款 */
+/** 尾款 */
 @property (strong,nonatomic) NSString *needBackMessage;
-/** 待付定金 */
+/** 定金 */
 @property (strong,nonatomic) NSString *fontMoneyMessage;
 @end

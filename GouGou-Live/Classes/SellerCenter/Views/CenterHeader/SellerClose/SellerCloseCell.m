@@ -18,6 +18,8 @@
 
 @property(nonatomic, strong) SellerCostView *costView; /**< 花费 */
 
+@property (nonatomic, strong) UIButton *deleOrder; /**< 删除订单 */
+
 @end
 
 @implementation SellerCloseCell
@@ -29,6 +31,7 @@
         [self.contentView addSubview:self.nickView];
         [self.contentView addSubview:self.dogCardView];
         [self.contentView addSubview:self.costView];
+//        [self.contentView addSubview:self.deleOrder];
     }
     return self;
 }
@@ -63,6 +66,12 @@
     self.costView.moneyMessage = model.price;
     
 }
+- (void)clickDeleButtonAction:(UIButton *)btn {
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+    if (_deleBlock) {
+        _deleBlock();
+    }
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
@@ -90,6 +99,11 @@
         make.left.width.equalTo(self);
         make.height.equalTo(44);
     }];
+//    [self.deleOrder makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.right).offset(-10);
+//        make.size.equalTo(CGSizeMake(75, 35));
+//        make.top.equalTo(self.costView.bottom).offset(10);
+//    }];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -118,5 +132,20 @@
     }
     return _costView;
 }
-
+- (UIButton *)deleOrder {
+    if (!_deleOrder) {
+        _deleOrder = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        _deleOrder.layer.cornerRadius = 5;
+        _deleOrder.layer.masksToBounds = YES;
+        _deleOrder.layer.borderWidth = 1;
+        _deleOrder.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
+        [_deleOrder setTitle:@"删除订单" forState:(UIControlStateNormal)];
+        [_deleOrder setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:(UIControlStateNormal)];
+        [_deleOrder setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateSelected)];
+        
+        [_deleOrder addTarget:self action:@selector(clickDeleButtonAction:) forControlEvents:(UIControlEventTouchDown)];
+    }
+    return _deleOrder;
+}
 @end

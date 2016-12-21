@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BuyCenterModel.h"
 
-typedef void(^ClickBtnBlock)(NSString *btntitle);
+typedef void(^ClickDeleButtonBlock)();
 
 @interface BuyerCloseOrderCell : UITableViewCell
 
@@ -17,7 +17,7 @@ typedef void(^ClickBtnBlock)(NSString *btntitle);
 
 @property(nonatomic, strong) NSArray *costMessage; /**< 付款情况 */
 
-@property(nonatomic, strong) ClickBtnBlock clickBtnBlock; /**< 按钮回调 */
+@property(nonatomic, strong) ClickDeleButtonBlock deleBlock; /**< 删除回调 */
 
 @property(nonatomic, strong) BuyCenterModel *model; /**< 模型 */
 

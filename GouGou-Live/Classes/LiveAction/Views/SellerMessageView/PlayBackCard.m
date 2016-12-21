@@ -7,7 +7,7 @@
 //
 
 #import "PlayBackCard.h"
-#import "DogTypeCellModel.h"
+#import "PlayBackModel.h"
 
 
 @interface PlayBackCard ()
@@ -50,18 +50,19 @@
     }
     return self;
 }
-- (void)setDogCardModel:(DogTypeCellModel *)dogCardModel {
+- (void)setDogCardModel:(PlayBackModel *)dogCardModel {
     _dogCardModel = dogCardModel;
-    
-    self.dogImageView.image = [UIImage imageNamed:dogCardModel.dogIcon];
+    if (dogCardModel.snapshot != NULL) {
+        [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:dogCardModel.snapshot] placeholderImage:[UIImage imageNamed:@"banner"]];
+    }
 
-    [self.watchCount setTitle:dogCardModel.focusCount forState:(UIControlStateNormal)];
+    [self.watchCount setTitle:dogCardModel.viewNum forState:(UIControlStateNormal)];
 
-    self.dogDescLabel.text = dogCardModel.dogDesc;
+    self.dogDescLabel.text = dogCardModel.name;
 
-    self.showCountLabel.text = dogCardModel.showCount;
+    self.showCountLabel.text = [@(dogCardModel.pNum) stringValue];
 
-    self.onSailCountLabel.text = dogCardModel.onSailCount;
+    self.onSailCountLabel.text = [@(dogCardModel.pNum - dogCardModel.num) stringValue];
 }
 
 - (void)layoutSubviews {
@@ -105,6 +106,7 @@
     if (!_dogImageView) {
         _dogImageView = [[UIImageView alloc] init];
         _dogImageView.image = [UIImage imageNamed:@"banner"];
+        _dogImageView.userInteractionEnabled = YES;
     }
     return _dogImageView;
 }

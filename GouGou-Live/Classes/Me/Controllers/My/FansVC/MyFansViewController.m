@@ -78,7 +78,7 @@ static NSString *cellid = @"MyFocusCell";
         if (isSelect) {
 
             NSDictionary *dict = @{
-                                   @"user_id":@(11),
+                                   @"user_id":[UserInfos sharedUser].ID,
                                    @"id":@(model.userFanId),
                                    @"type":@(0)
                                    };
@@ -93,7 +93,7 @@ static NSString *cellid = @"MyFocusCell";
 
             NSDictionary *dict = @{
                                    @"user_id":@(11),
-                                   @"id":@(model.userFanId),
+                                   @"id":[UserInfos sharedUser].ID,
                                    @"type":@(1)
                                    };
             [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {

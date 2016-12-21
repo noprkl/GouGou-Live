@@ -82,11 +82,37 @@
     }
     return self;
 }
+- (void)setFansCount:(NSInteger)fansCount {
+    _fansCount = fansCount;
+    self.fansCountLabel.text = [@(fansCount) stringValue];
+}
+- (void)setCommentCount:(NSInteger)commentCount {
+    _commentCount = commentCount;
+    self.rateCountLabel.text = [@(commentCount) stringValue];
+}
+- (void)setPleasureCount:(NSInteger)pleasureCount {
+    _pleasureCount = pleasureCount;
+    self.startView.startCount = pleasureCount;
+}
+- (void)setUserImg:(NSString *)userImg {
+    _userImg = userImg;
+    if (userImg.length != 0) {
+        NSString *imgUrl = [IMAGE_HOST stringByAppendingString:userImg];
+        [self.sellerIconView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }
+}
+- (void)setUserName:(NSString *)userName {
+    _userName = userName;
+    self.sellerNameLabel.text = userName;
+    self.certifNameLabel.text = userName;
+    self.sellNameLabel.text = userName;
+}
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self.sellerIconView makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(10);
         make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(30, 30));
     }];
     [self.sellerNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(10);
@@ -172,7 +198,7 @@
 - (void)clickFocusBtnAction {
 
     if (_focusBlock) {
-        _focusBlock();
+        _focusBlock(self.focusBtn);
     }
 
 }
@@ -182,6 +208,8 @@
     if (!_sellerIconView) {
         _sellerIconView = [[UIImageView alloc] init];
         _sellerIconView.image = [UIImage imageNamed:@"主播头像"];
+        _sellerIconView.layer.cornerRadius = 15;
+        _sellerIconView.layer.masksToBounds = YES;
     }
     return _sellerIconView;
     }
@@ -245,7 +273,6 @@
 - (StartSourceView *)startView {
     if (!_startView) {
         _startView = [[StartSourceView alloc] init];
-        _startView.startCount = 4;
         _startView.backgroundColor = [UIColor whiteColor];
     }
     return _startView;

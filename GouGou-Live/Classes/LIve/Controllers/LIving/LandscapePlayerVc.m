@@ -376,8 +376,36 @@
             shareAlert.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         };
         // 收藏
-        _topView.collectBlcok = ^(){
-            
+        _topView.collectBlcok = ^(BOOL isCollection){
+            if (isCollection) { // 删除直播
+                NSDictionary *dict = @{//
+                                       @"user_id":[UserInfos sharedUser].ID,
+                                       @"product_id":weakSelf.liveID,
+                                       @"type":@(2),
+                                       @"state":@(2)
+                                       };
+                [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                    [weakSelf showAlert:successJson[@"message"]];
+                    
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+
+            }else{
+                NSDictionary *dict = @{//添加直播
+                                       @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                       @"product_id":@([weakSelf.liveID integerValue]),
+                                       @"type":@(1),
+                                       @"state":@(2)
+                                       };
+                [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                    [weakSelf showAlert:successJson[@"message"]];
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
         };
         // 举报
         _topView.reportBlcok = ^(){
@@ -385,7 +413,17 @@
             DeletePrommtView *report = [[DeletePrommtView alloc] init];
             report.message = @"确定举报该用户";
             report.sureBlock = ^(UIButton *btn){
-                DLog(@"举报");
+                NSDictionary * dict = @{
+                                        @"id":weakSelf.liverID,
+                                        @"uesr_id":@([[UserInfos sharedUser].ID intValue])
+                                        };
+                [weakSelf getRequestWithPath:API_Report params:dict success:^(id successJson) {
+                    DLog(@"%@",successJson);
+                    [weakSelf showAlert:successJson[@"message"]];
+                } error:^(NSError *error) {
+                    DLog(@"%@",error);
+                    
+                }];
             };
             [report show];
         };

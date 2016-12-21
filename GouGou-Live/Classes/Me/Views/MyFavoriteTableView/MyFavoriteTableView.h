@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^DeleteFavoritDogBlock)(NSString *dogID);
+typedef void(^DeleteFavoriteLiveBlock)(NSString *liveID);
+
+typedef void(^ClickFavoriteDogBlock)(NSString *dogID);
+typedef void(^ClickFavoriteLiveBlock)(NSString *liveID);
 
 @interface MyFavoriteTableView : UITableView
 
@@ -19,6 +23,9 @@ typedef void(^DeleteFavoritDogBlock)(NSString *dogID);
 /** 存放喜欢的狗狗 */
 @property (strong,nonatomic) NSArray *favoriteDogArray;
 
-@property(nonatomic, strong) DeleteFavoritDogBlock deleBlock; /**< 删除block */
+@property(nonatomic, strong) DeleteFavoritDogBlock deleDogBlock; /**< 删除block */
+@property(nonatomic, strong) DeleteFavoriteLiveBlock deleLiveBlock; /**< 删除block */
+@property(nonatomic, strong) ClickFavoriteDogBlock clickDogBlock; /**< 删除block */
+@property(nonatomic, strong) ClickFavoriteLiveBlock clickLiveBlock; /**< 删除block */
 
 @end

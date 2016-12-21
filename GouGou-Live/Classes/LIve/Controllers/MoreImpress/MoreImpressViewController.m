@@ -26,22 +26,45 @@
 static NSString *cellid = @"cellid";
 
 @implementation MoreImpressViewController
+// 印象
+- (void)getRequestImpresion{
+    NSDictionary *dict = @{
+                           @"page":@(1),
+                           @"pageSize":@(10)
+                           };
+    [self getRequestWithPath:API_Impression params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.dataArr = [MoreImpressionModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.view addSubview:self.tableView];
+
+    [self getRequestImpresion];
+
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
+    self.title = @"更多印象";
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self initUI];
     
     [self setNavBarItem];
 }
 
-- (void)initUI {
-    [self.view addSubview:self.tableView];
-}
 - (NSArray *)dataArr {
     if (!_dataArr) {
         _dataArr = [NSArray array];
-        _dataArr = @[@"易驯养", @"不掉毛", @"忠诚", @"可爱", @"漂亮", @"更多印象", @"好玩", @"萌"];
     }
     return _dataArr;
 }
@@ -57,6 +80,7 @@ static NSString *cellid = @"cellid";
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;
 }
@@ -69,19 +93,19 @@ static NSString *cellid = @"cellid";
     if (cell == nil) {
         cell = [[MoreImpressViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
+    MoreImpressionModel *model = self.dataArr[indexPath.row];
+    
+    cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    cell.backgroundView.backgroundColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    
+    cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
 
+    cell.textLabel.text = model.name;
 
-        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-        cell.backgroundView.backgroundColor = [UIColor whiteColor];
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        cell.textLabel.font = [UIFont systemFontOfSize:16];
-        
-        cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
-
-    cell.textLabel.text = self.dataArr[indexPath.row];
-
-    cell.detailTextLabel.text = @"#1000";
+    cell.detailTextLabel.text = @"#1";
 
     [self.cells addObject:cell];
     self.cell = cell; // 默认选中某一个
@@ -118,6 +142,12 @@ static NSString *cellid = @"cellid";
     
     self.cell = cell;
     
+    MoreImpressionModel *model = self.dataArr[indexPath.row];
+
+    DogTypesViewController *dogType = [[DogTypesViewController alloc] init];
+    dogType.dogType = model;
+    dogType.title = model.name;
+    [self.navigationController pushViewController:dogType animated:YES];
 
 }
 - (void)setNavBarItem {
@@ -125,18 +155,7 @@ static NSString *cellid = @"cellid";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
     
 }
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
-    self.title = @"更多印象";
-
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
-
-}
 - (void)leftBackBtnAction {
     
     [self.navigationController popViewControllerAnimated:YES];

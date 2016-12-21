@@ -63,7 +63,12 @@
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = centerModel.merchantName;
-    self.nickView.stateLabe.text = @"已评价";
+    if ([centerModel.status intValue] == 9) {
+        self.nickView.stateLabe.text = @"待评价";
+    }
+    if ([centerModel.status intValue] == 10) {
+        self.nickView.stateLabe.text = @"已评价";
+    }
     
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {

@@ -21,6 +21,7 @@
 #import "LivingViewController.h"
 #import "LiveViewCellModel.h"
 
+#import "NoneFocusView.h"
 @interface RecommendViewController ()<UIScrollViewDelegate, SDCycleScrollViewDelegate>
 
 /** 底部scrollview */
@@ -46,6 +47,9 @@
 
 @property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗信息 */
 
+/** 没搜到直播 */
+@property (strong, nonatomic) NoneFocusView *noneView;
+
 @end
 
 
@@ -63,6 +67,8 @@
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
+        self.tableView.hidden = NO;
+
 //        [self showHudInView:self.view hint:@"刷新中"];
         /** 所有信息 */
         NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
@@ -85,17 +91,14 @@
                     height += 240;
                     [dogInfos addObject:@[]];
                     [liveMutableArr addObject:model];
-                    DLog(@"%ld", i);
                 }else{
                     height += 357;
-                    DLog(@"%ld", i);
                     if (successJson[@"data"]) {
                         [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
                         [liveMutableArr addObject:model];
                     }
                 }
                 if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                    DLog(@"%ld", i);
                     CGRect rect = self.tableView.frame;
                     rect.size.height = height;
                     self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
@@ -110,7 +113,75 @@
             }];
         }
         //                    [self hideHud]
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
+- (void)getRequestFilterLiveListWithSize:(DogCategoryModel *)size {
+    NSDictionary *dict = @{
+                           @"size":@([size.ID intValue])
+                           };
+    [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
+
+        [self.tableView.dataPlist removeAllObjects];
+        [self.tableView.dogInfos removeAllObjects];
+        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneView.hidden = NO;
+            self.tableView.hidden = YES;
+        }else{
+            self.noneView.hidden = YES;
+            self.tableView.hidden = NO;
+            /** 所有信息 */
+            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            /** 直播信息 */
+            NSMutableArray *liveMutableArr = [NSMutableArray array];
+            /** 狗狗信息 */
+            NSMutableArray *dogInfos = [NSMutableArray array];
+            // 高度
+            __block CGFloat height = 0;
+            // 请求狗狗信息
+            for (NSInteger i = 0; i < liveArr.count; i ++) {
+                
+                LiveViewCellModel *model = liveArr[i];
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    //                DLog(@"%@", successJson);
+                    if (model.pNum == 0) {
+                        height += 240;
+                        [dogInfos addObject:@[]];
+                        [liveMutableArr addObject:model];
+                        
+                    }else{
+                        height += 357;
+                        
+                        if (successJson[@"data"]) {
+                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                            [liveMutableArr addObject:model];
+                        }
+                    }
+                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                        
+                        CGRect rect = self.tableView.frame;
+                        rect.size.height = height;
+                        self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
+                        self.tableView.frame = rect;
+                        self.tableView.dogInfos = dogInfos;
+                        self.tableView.dataPlist = liveMutableArr;
+                        [self.tableView reloadData];
+                        //                    [self hideHud];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
+            //                    [self hideHud]
+            [self.tableView reloadData];
+        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -132,19 +203,20 @@
     
     self.urlArray = @[@"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg", @"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg", @"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg"];
     //    [self.view addSubview:self.noneNetView];
-
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.view addSubview:self.baseScrollView];
-    
+    [self.view addSubview:self.noneView];
     [self.baseScrollView addSubview:self.cycleScrollView];
+
     [self.baseScrollView addSubview:self.tableView];
     [self.baseScrollView addSubview:self.filtView];
     
     self.edgesForExtendedLayout = 0;
     
-    [self makeConstraint];
     
     // 上下拉刷新
     self.baseScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.noneView.hidden = YES;
         [self getRequestLiveList];
         [self.baseScrollView.mj_header endRefreshing];
     }];
@@ -153,10 +225,7 @@
         [self.baseScrollView.mj_footer endRefreshing];
     }];
 }
-// 约束
-- (void)makeConstraint {
-    
-}
+
 
 #pragma mark
 #pragma mark - 懒加载
@@ -240,7 +309,8 @@
             
 //            __weak typeof(sizeView) weakView = sizeView;
             sizeView.bottomBlock = ^(DogCategoryModel *sizeModel){
-                DLog(@"%@", sizeModel);
+                
+                [weakSelf getRequestFilterLiveListWithSize:sizeModel];
             };
                     };
         _filtView.ageBlock = ^(){
@@ -321,6 +391,7 @@
     livingVC.liverName = model.merchantName;
     livingVC.doginfos = dogInfos;
     livingVC.watchCount = model.pNum;
+    livingVC.chatRoomID = model.chatroom;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }
@@ -329,6 +400,19 @@
         _dataSource = [NSMutableArray array];
     }
     return _dataSource;
+}
+- (NoneFocusView *)noneView {
+    if (!_noneView) {
+        _noneView = [[NoneFocusView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH, SCREEN_HEIGHT - 154)];
+        _noneView.hidden = YES;
+        _noneView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
+        __weak typeof(self) weakSelf = self;
+        _noneView.requestBlock = ^(NSString *text){
+            weakSelf.noneView.hidden = YES;
+            [weakSelf getRequestLiveList];
+        };
+    }
+    return _noneView;
 }
 #pragma mark
 #pragma mark - 代理方法

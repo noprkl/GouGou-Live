@@ -70,7 +70,7 @@
 - (void)postRequestGetFans {
     //[[UserInfos sharedUser].ID integerValue]
     NSDictionary *dict = @{
-                           @"user_id":@(11)
+                           @"user_id":[UserInfos sharedUser].ID
                            };
     [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -88,7 +88,7 @@
 // 请求关注数
 - (void)postRequestGetFocus {
     // [[UserInfos sharedUser].ID integerValue]
-    NSDictionary *dict = @{@"user_id":@(17)
+    NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID
                            };
     [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
 
@@ -98,7 +98,7 @@
             // 得到关注人的人
             self.focusArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
              //把关注的人存到本地
-            [[NSUserDefaults standardUserDefaults] setObject:self.focusArray forKey:@"MyFocus"];
+//            [[NSUserDefaults standardUserDefaults] setObject:self.focusArray forKey:@"MyFocus"];
             [self.tableView reloadData];
         }
 
@@ -230,8 +230,8 @@
             
             cell.detailTextLabel.text = self.userAsset;
         }
-        if ([cellText isEqualToString:@"实名认证"]) { //  1.未认证 2.审核 3.已认证 4.认证失败
-            if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) {
+        if ([cellText isEqualToString:@"实名认证"]) { //  0.未认证 2.审核 3.已认证 4.认证失败
+            if ([[UserInfos sharedUser].isreal isEqualToString:@"0"]) {
                 cell.detailTextLabel.text = @"未认证";
             }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
                 cell.detailTextLabel.text = @"审核中";
@@ -368,10 +368,8 @@
             
             return unLoginView;
         }
-        
     }
     return nil;
-
 }
 
 - (void)didReceiveMemoryWarning {

@@ -33,9 +33,10 @@
 }
 - (void)setModel:(MyAlbumsModel *)model {
     _model = model;
-    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
-    [self.picturesImage sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-    
+    if (model.pathSmall != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+        [self.picturesImage sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
     self.picturesName.text = [NSString stringWithFormat:@"%@(%@)", model.albumName, model.pNum];
 }
 - (void)awakeFromNib {

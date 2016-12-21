@@ -105,12 +105,13 @@ static NSString *cellid = @"SellerAcceptRateCell";
     DLog(@"sure");
     // 请求
     NSDictionary *dict = @{
-                           @"id":@"订单id",
+                           @"id":_orderID,
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"price":self.nowCost
                            };
     [self getRequestWithPath:API_Order_up params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

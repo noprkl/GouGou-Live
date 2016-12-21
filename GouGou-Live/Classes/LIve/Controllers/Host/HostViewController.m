@@ -16,6 +16,9 @@
 #import "MoreImpressViewController.h"
 
 #import "DogTypesViewController.h"
+#import "HostLiveModel.h"
+#import "LiveListDogInfoModel.h"
+#import "MoreImpressionModel.h"
 
 static NSString * identifer = @"DogPictureCellID";
 static NSString * reuseIdentifier = @"headerID";
@@ -29,32 +32,117 @@ static NSString * reuseIdentifier = @"headerID";
 /** 数据源 */
 @property (strong,nonatomic) NSMutableArray *dataArray;
 
+@property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗数据 */
+
 @property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
 
 @end
 
 @implementation HostViewController
+// 请求卡片
+- (void)getRequestHostLive{
+    NSDictionary *dict = @{
+                           @"page":@(1),
+                           @"pageSize":@(10)
+                           };
+    [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.dataArray removeAllObjects];
+        [self.dogInfos removeAllObjects];
+        //        [self showHudInView:self.view hint:@"刷新中"];
+        /** 所有信息 */
+        NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        /** 直播信息 */
+        NSMutableArray *liveMutableArr = [NSMutableArray array];
+        /** 狗狗信息数组 */
+        NSMutableArray *dogInfos = [NSMutableArray array];
+        // 请求狗狗信息
+        for (NSInteger i = 0; i < liveArr.count; i ++) {
+            
+            HostLiveModel *model = liveArr[i];
+            NSDictionary *dict = @{
+                                   @"live_id":model.liveId
+                                   };
+            [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                //                DLog(@"%@", successJson);
+                if (model.pNum == 0) {
+                    [dogInfos addObject:@[]];
+                    [liveMutableArr addObject:model];
+                }else{
+                    if (successJson[@"data"]) {
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                        [liveMutableArr addObject:model];
+                    }
+                }
+                if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                    DLog(@"%ld", i);
+                    self.dogInfos = dogInfos;
+                    self.dataArray = liveMutableArr;
+                    [self.collection reloadData];
+                    //                    [self hideHud];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        }
+        //                    [self hideHud]
+//        [self.collection reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+// 印象
+- (void)getRequestImpresion{
+    NSDictionary *dict = @{
+                           @"page":@(1),
+                           @"pageSize":@(5)
+                           };
+    [self getRequestWithPath:API_Impression params:dict success:^(id successJson) {
+        
+        DLog(@"%@", successJson);
+        NSArray *arr = [MoreImpressionModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        NSMutableArray *mutableArr = [NSMutableArray array];
+        for (NSInteger i = 0; i < 5; i ++) {
+            MoreImpressionModel *model = arr[i];
+            [mutableArr addObject:model];
+        }
+        MoreImpressionModel *more = [[MoreImpressionModel alloc] init];
+        more.name = @"更多印象";
+        more.ID = @"0";
+        [mutableArr addObject:more];
+        self.typesView.impressionArr = mutableArr;
 
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self addCollectionview];
+
+    [self getRequestHostLive];
+    [self getRequestImpresion];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initUI];
-    
 }
 
 - (void)initUI {
 
     self.view.backgroundColor = [UIColor colorWithHexString:@"e0e0e0"];
-
     self.edgesForExtendedLayout = 64;
-    [self addCollectionview];
     
+    self.collection.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getRequestHostLive];
+        [self.collection.mj_header endRefreshing];
+    }];
 }
 
 - (void)addCollectionview {
     
-    [self.view addSubview:self.typesView];
     [self.view addSubview:self.collection];
+    [self.view addSubview:self.typesView];
 
     __weak typeof(self) weakself = self;
     
@@ -89,37 +177,20 @@ static NSString * reuseIdentifier = @"headerID";
         _typesView.backgroundColor = [UIColor whiteColor];
         
         __weak typeof(self) weakSelf = self;
-        
-        _typesView.btnBlock = ^(UIButton *btn){
+        _typesView.btnBlock = ^(MoreImpressionModel *model){
+            DLog(@"%@", model);
+            if ([model.name isEqualToString:@"更多印象"]) {
 
-            NSInteger tag = btn.tag - 30;
-            switch (tag) {
-                case 0:
-                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
-                    break;
-                case 1:
-                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
-                    break;
-                case 2:
-                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
-                    break;
-                case 3:
-                    [weakSelf pushDogTypeVC:btn.titleLabel.text];
-                    break;
-                case 4:
-                    {
-                        MoreImpressViewController *moreVC = [[MoreImpressViewController alloc] init];
-                        
-                        [weakSelf.navigationController pushViewController:moreVC animated:YES];
-                
-                    }
-                    break;
-                default:
-                    break;
+                MoreImpressViewController *moreImprsVc = [[MoreImpressViewController alloc] init];
+                [weakSelf.navigationController pushViewController:moreImprsVc animated:YES];
+            }else{
+
+                DogTypesViewController *dogType = [[DogTypesViewController alloc] init];
+                dogType.dogType = model;
+                dogType.title = model.name;
+                [weakSelf.navigationController pushViewController:dogType animated:YES];
             }
-        
         };
-
     }
     return _typesView;
 }
@@ -138,6 +209,12 @@ static NSString * reuseIdentifier = @"headerID";
         _dataArray = [NSMutableArray array];
     }
     return _dataArray;
+}
+- (NSMutableArray *)dogInfos {
+    if (!_dogInfos) {
+        _dogInfos = [NSMutableArray array];
+    }
+    return _dogInfos;
 }
 - (UICollectionView *)collection {
 
@@ -159,7 +236,7 @@ static NSString * reuseIdentifier = @"headerID";
         
         _collection.delegate  = self;
         _collection.dataSource = self;
-        _collection.showsHorizontalScrollIndicator = NO;
+        _collection.showsVerticalScrollIndicator = NO;
         
         _collection.backgroundColor = [UIColor colorWithHexString:@"e0e0e0"];
         
@@ -174,13 +251,13 @@ static NSString * reuseIdentifier = @"headerID";
 #pragma mark - collection代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-//    return self.dataArray.count;
-    return 4;
+    return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     DogPictureCollectionViewCell * dogpictureCell = [collectionView dequeueReusableCellWithReuseIdentifier:identifer forIndexPath:indexPath];
+    dogpictureCell.model = self.dataArray[indexPath.row];
     
     dogpictureCell.backgroundColor = [UIColor whiteColor];
     
@@ -188,15 +265,15 @@ static NSString * reuseIdentifier = @"headerID";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-   
-    if (_typeBlock) {
-        
-        _typeBlock(indexPath.row);
-    
-    }
-//        LivingViewController *livingVC = [[LivingViewController alloc] init];
-//        livingVC.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:livingVC animated:YES];
+    NSArray *dogArr = self.dogInfos[indexPath.row];
+    HostLiveModel *model = self.dataArray[indexPath.row];
+    LivingViewController *livingVC = [[LivingViewController alloc] init];
+    livingVC.liveID = model.liveId;
+    livingVC.liverName = model.userNickName;
+    livingVC.doginfos = dogArr;
+    livingVC.chatRoomID = model.chatroom;
+    livingVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:livingVC animated:YES];
 }
 
 

@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSString *liveID; /**< 直播参数 */
 
+@property (nonatomic, strong) NSString *liverID; /**< 主播id */
+
 @end

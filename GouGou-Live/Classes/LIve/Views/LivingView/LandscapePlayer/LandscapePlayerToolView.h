@@ -10,7 +10,7 @@
 
 typedef void(^ClickBlackButtonAction)();
 typedef void(^ClickShareButtonAction)(UIButton *btn);
-typedef void(^ClickcollectionButtonAction)();
+typedef void(^ClickcollectionButtonAction)(BOOL isCollection);
 typedef void(^ClickReportButtonAction)();
 
 @interface LandscapePlayerToolView : UIView
@@ -18,7 +18,6 @@ typedef void(^ClickReportButtonAction)();
 @property(nonatomic, strong) ClickBlackButtonAction backBlcok; /**< 返回bloak */
 @property(nonatomic, strong) ClickShareButtonAction shareBlcok; /**< 分享bloak */
 @property(nonatomic, strong) ClickReportButtonAction reportBlcok; /**< 举报bloak */
-
 @property(nonatomic, strong) ClickcollectionButtonAction collectBlcok; /**< 收藏bloak */
 
 @end

@@ -20,7 +20,18 @@
 static NSString *cellid = @"SellerMyLiveCell";
 
 @implementation SellerMyLiveViewController
-
+- (void)getRequestMyLiveList {
+    NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
+    [self getRequestWithPath:API_Seller_live params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getRequestMyLiveList];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -30,7 +41,7 @@ static NSString *cellid = @"SellerMyLiveCell";
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-//        [self getRequestAllOrder];
+        [self getRequestMyLiveList];
         
         [self.tableView.mj_header endRefreshing];
     }];

@@ -67,11 +67,7 @@
     _pleasureCount = pleasureCount;
     self.startSource.startCount = pleasureCount;
 }
-- (void)setIsMentch:(BOOL)isMentch {
-    _isMentch = isMentch;
-    self.pleasure.hidden = isMentch;
-    self.startSource.hidden = YES;
-}
+
 // 约束
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -148,8 +144,12 @@
         self.userNameAuthen.hidden = NO;
         if (_isMentch) {
             self.sellerAuthen.hidden = NO;
+            self.pleasure.hidden = NO;
+            self.startSource.hidden = NO;
         }else{
             self.sellerAuthen.hidden = YES;
+            self.pleasure.hidden = YES;
+            self.startSource.hidden = YES;
         }
     }else{
         self.userNameAuthen.hidden = YES;
@@ -257,7 +257,7 @@
 - (StartSourceView *)startSource {
     if (!_startSource) {
         _startSource = [[StartSourceView alloc] init];
-        _startSource.startCount = 4;
+        _startSource.startCount = self.pleasureCount;
         _startSource.backgroundColor = [UIColor whiteColor];
     }
     return _startSource;

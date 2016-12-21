@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self createAddChildVC];
     [self setNavView];
 }
@@ -132,7 +132,6 @@
     // 传的调用这个代理方法的scrollview
     [self scrollViewDidEndScrollingAnimation:scrollView];
 }
-
 
 #pragma mark
 #pragma mark - 懒加载

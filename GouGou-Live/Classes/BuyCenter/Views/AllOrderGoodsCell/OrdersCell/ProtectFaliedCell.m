@@ -68,25 +68,8 @@
   
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];
-    /*
-    // 名称
-    self.nickView.model.merchantName = protectModel.name;
-    self.nickView.model.status = protectModel.status;
-    self.nickView.model.merchantImgl = protectModel.merchantImgl;
-    // 狗狗卡片
-    self.dogCardView.dogCardModel.sizeName = protectModel.sizeName;
-    self.dogCardView.dogCardModel.colorName = protectModel.colorName;
-    self.dogCardView.dogCardModel.ageName = protectModel.ageName;
-    self.dogCardView.dogCardModel.name = protectModel.name;
-    self.dogCardView.dogCardModel.pathSmall = protectModel.pathSmall;
-    self.dogCardView.dogCardModel.priceOld = protectModel.priceOld;
-    self.dogCardView.dogCardModel.price = protectModel.price;
-    self.dogCardView.dogCardModel.kindName = protectModel.kindName;
-    // 商品价格
-    self.costView.costModel.productRealDeposit = protectModel.productPrice;
-    self.costView.costModel.traficRealFee = protectModel.traficRealFee;
-    self.costView.costModel.balance = protectModel.productRealBalance;
-     */
+    self.logisticView.orderCode = protectModel.ID;
+   
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

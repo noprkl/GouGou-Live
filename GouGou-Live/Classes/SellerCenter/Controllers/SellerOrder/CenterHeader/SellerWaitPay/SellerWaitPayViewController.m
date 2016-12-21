@@ -165,11 +165,12 @@ static NSString *cellid = @"SellerWaitPayCell";
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }else if ([title isEqualToString:@"修改运费"]){
-        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
-        changeVC.title = title;
-        changeVC.orderID = orderModel.ID;
-        changeVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:changeVC animated:YES];
+//        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+//        changeVC.title = title;
+//        changeVC.orderID = orderModel.ID;
+//        changeVC.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:changeVC animated:YES];
+        [self showAlert:@"暂无运费，无法修改"];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;

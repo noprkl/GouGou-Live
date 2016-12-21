@@ -30,12 +30,19 @@
     model.avatarImage = [UIImage imageNamed:@"头像"];//默认头像
     
     if (model.isSender) {
-        NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
-        model.avatarURLPath = urlString;//头像网络地址
-        model.nickname = [UserInfos sharedUser].usernickname;//用户昵称
+        if ([UserInfos getUser]) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+            model.avatarURLPath = urlString;//头像网络地址
+            model.nickname = [UserInfos sharedUser].usernickname;//用户昵称
+        }else{
+           model.nickname = @"ME";//用户昵称
+        }
     }else{
-        model.avatarURLPath = message.ext[@"avatarURL"];//头像网络地址
-        model.nickname = message.ext[@"nickname"];//用户昵称
+        if (_liverImgUrl.length != 0) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:_liverImgUrl];
+            model.avatarURLPath = urlString;//头像网络地址
+        }
+            model.nickname = _liverName;//用户昵称
     }
     
     return model;
@@ -68,11 +75,11 @@
     
     // 隐藏输入框 自定义输入框
     self.chatToolbar.hidden = YES;
-    [self.view addSubview:self.talkView];
-    [self.talkView makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.right.equalTo(self.view);
-        make.height.equalTo(44);
-    }];
+//    [self.view addSubview:self.talkView];
+//    [self.talkView makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.bottom.right.equalTo(self.view);
+//        make.height.equalTo(44);
+//    }];
 }
 - (void)initUI {
     

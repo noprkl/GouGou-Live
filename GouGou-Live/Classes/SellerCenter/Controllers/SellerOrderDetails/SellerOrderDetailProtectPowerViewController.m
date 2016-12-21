@@ -139,35 +139,30 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             }
         NSString *state = @"";
         
-        if ([self.orderInfo.status isEqualToString:@"3"]) {
+        if ([self.orderInfo.statusWq isEqualToString:@"3"]) {
             
             state = @"待付尾款";
             NSString *date = [NSString stringFromDateString:self.orderInfo.deposittime];
             state = [NSString stringWithFormat:@"买家于%@付定金,未付尾款", date];
             
-        }else if ([self.orderInfo.status isEqualToString:@"7"]) {
+        }else if ([self.orderInfo.statusWq isEqualToString:@"7"]) {
             
             NSString *date = [NSString stringFromDateString:self.orderInfo.balancetime];
             state = [NSString stringWithFormat:@"买家于%@付款,未发货", date];
-        }else if ([self.orderInfo.status isEqualToString:@"8"]) {
-            
+        }else if ([self.orderInfo.statusWq isEqualToString:@"8"]) {
             
             NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
             state = [NSString stringWithFormat:@"卖家于%@发货,未收货", date];
-        }else if ([self.orderInfo.status isEqualToString:@"9"]) {
+        }else if ([self.orderInfo.statusWq isEqualToString:@"9"]) {
+            state = @"待评价";
+            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
+            state = [NSString stringWithFormat:@"卖家于%@收货,未评价", date];
             
+        }else if ([self.orderInfo.statusWq isEqualToString:@"10"]) {
             state = @"已评价"; // 评价时间
             NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
             state = [NSString stringWithFormat:@"卖家于%@评价,订单已完成", date];
-            
-        }else if ([self.orderInfo.status isEqualToString:@"10"]) {
-            
-
-        state = @"待评价";
-            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
-            state = [NSString stringWithFormat:@"卖家于%@收货,未评价", date];
         }
-        
             stateView.noteStr = state;
             [cell.contentView addSubview:stateView];
             return cell;

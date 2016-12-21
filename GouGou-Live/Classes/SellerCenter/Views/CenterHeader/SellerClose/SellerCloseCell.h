@@ -8,7 +8,7 @@
 
 #import "SellerBaseCell.h"
 
-typedef void(^ClickBtnBlock)(NSString *btntitle);
+typedef void(^ClickDeleBtnBlock)();
 
 @interface SellerCloseCell : SellerBaseCell
 
@@ -16,7 +16,7 @@ typedef void(^ClickBtnBlock)(NSString *btntitle);
 
 @property(nonatomic, strong) NSArray *costMessage; /**< 付款情况 */
 
-@property(nonatomic, strong) ClickBtnBlock clickBtnBlock; /**< 按钮回调 */
+@property(nonatomic, strong) ClickDeleBtnBlock deleBlock; /**< 删除回调 */
 
 @property(nonatomic, strong) SellerOrderModel *model; /**< 模型 */
 

@@ -17,6 +17,9 @@
 @property (copy,nonatomic) NSString *userNickName;
 /** 维权状态 */
 @property (copy,nonatomic) NSString *status;
+/** 订单状态 */
+@property (copy,nonatomic) NSString *statusWq;
+
 
 /** 商品名称 */
 @property (copy,nonatomic) NSString *name;

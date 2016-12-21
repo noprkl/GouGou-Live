@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PlayBackModel.h"
 
-typedef void(^ClickPlayBackBtnBlcok)(UIControl *control);
+typedef void(^ClickPlayBackCellBlock)(PlayBackModel *model);
+@interface PlayBackView : UITableView
 
-@interface PlayBackView : UIView
-
-- (instancetype)initWithFrame:(CGRect)frame withPlayBackMessage:(NSArray *)playbackMessages clickPlaybackBtn:(ClickPlayBackBtnBlcok)playbackBlock;
+@property (nonatomic, strong) ClickPlayBackCellBlock playBackBlock; /**< 点击回调 */
+@property (nonatomic, strong) NSArray *AVArray; /**< 播放数组 */
 
 @end

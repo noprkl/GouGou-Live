@@ -75,6 +75,7 @@
     [_dogImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.centerY).offset(-5);
         make.left.equalTo(weakself.left).offset(10);
+        make.size.equalTo(CGSizeMake(93, 93));
     }];
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.top).offset(15);

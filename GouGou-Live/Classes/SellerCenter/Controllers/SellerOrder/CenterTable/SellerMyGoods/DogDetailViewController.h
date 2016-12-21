@@ -11,7 +11,6 @@
 
 @interface DogDetailViewController : BaseViewController
 
-
 @property(nonatomic, strong) SellerMyGoodsModel *model; /**< 商品ID */
 
 @end

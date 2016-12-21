@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef void(^ClickBtnBlock)(UIButton *addButton);
+#import "MoreImpressionModel.h"
+typedef void(^ClickBtnBlock)(MoreImpressionModel *model);
 
 @interface DogTypesView : UIView
 
 /** 点击Button回调方法 */
 @property (copy,nonatomic) ClickBtnBlock btnBlock;
+
+@property (copy, nonatomic) NSArray *impressionArr; /**< 印象数组 */
 
 @end

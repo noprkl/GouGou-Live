@@ -11,20 +11,22 @@
 @implementation NSAttributedString (DogOldPrice)
 
 + (NSAttributedString *)getCenterLineWithString:(NSString *)text {
-    
-    NSDictionary *attribtDic = @{
-                                 
-                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
-                                 
-                                 NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                 
-                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
-                                 
-                                 };
-    
-    NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
-    
-    return attribut;
-    
+    if (text.length == 0) {
+        return nil;
+    }else{
+        NSDictionary *attribtDic = @{
+                                     
+                                     NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
+                                     
+                                     NSFontAttributeName:[UIFont systemFontOfSize:12],
+                                     
+                                     NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
+                                     
+                                     };
+        
+        NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
+        
+        return attribut;
+    }
 }
 @end

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DogDetailInfoModel.h"
+#import "LiveListDogInfoModel.h"
 
 @interface LivingShowDogCell : UITableViewCell
 
-@property(nonatomic, strong) DogDetailInfoModel *model; /**< 模型 */
+@property(nonatomic, strong) LiveListDogInfoModel *model; /**< 模型 */
 @end

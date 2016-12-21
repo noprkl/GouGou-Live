@@ -217,7 +217,17 @@
             }
         }
     }else if ([text isEqualToString:@"举报"]){
-        
+        NSDictionary * dict = @{
+                                @"id":self.chatID,
+                                @"uesr_id":@([[UserInfos sharedUser].ID intValue])
+                                };
+        [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/report"  params:dict success:^(id successJson) {
+            DLog(@"%@",successJson);
+            [self showHint:successJson[@"message"]];
+        } error:^(NSError *error) {
+            DLog(@"%@",error);
+            
+        }];
     }else if ([text isEqualToString:@"个人主页"]){
         PersonalPageController *personalVc = [[PersonalPageController alloc] init];
         personalVc.hidesBottomBarWhenPushed = YES;

@@ -26,4 +26,6 @@
 
 /** 时间戳转时间 */
 + (NSString *)stringFromDateString:(NSString *)dateStr;
+/** 播放时间转换 */
++ (NSString *)convertTime:(CGFloat)second;
 @end

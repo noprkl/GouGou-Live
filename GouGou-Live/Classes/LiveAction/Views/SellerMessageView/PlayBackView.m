@@ -8,89 +8,95 @@
 
 #import "PlayBackView.h"
 #import "PlayBackCard.h"
+#import "PlayBackCell.h"
 
-@interface PlayBackView ()
+@interface PlayBackView ()<UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic, strong) UILabel *playBcakLabel; /**< 回放 */
+@property (nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
-
-@property(nonatomic, strong) ClickPlayBackBtnBlcok playBackBlock; /**< 点击卡片回调 */
-
-
-@property(nonatomic, strong) UILabel *alertLabel; /**< 如果没有回放提示 */
+@property (nonatomic, strong) UITableView *tableView; /**< tableView */
 
 @end
-
+static NSString *cellid = @"Cellid";
 @implementation PlayBackView
-- (instancetype)initWithFrame:(CGRect)frame withPlayBackMessage:(NSArray *)playbackMessages clickPlaybackBtn:(ClickPlayBackBtnBlcok)playbackBlock {
-    if (self = [super init]) {
-        
-        self.playBackBlock = playbackBlock;
-        
-        [self addSubview:self.playBcakLabel];
-       
-        if (playbackMessages.count == 0) {
-            [self addSubview:self.alertLabel];
-            [self.alertLabel makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self.centerX);
-                make.top.equalTo(self.playBcakLabel.bottom).offset(10);
-            }];
-            
-        }else{
-            CGFloat x = 0;
-            CGFloat h = 125;
-            CGFloat y = 43;
-            CGFloat margin = kDogImageWidth;
-            
-            for (NSInteger i = 0; i < playbackMessages.count; i ++) {
-                
-                y += i * (h + margin);
-                
-                PlayBackCard *card = [[PlayBackCard alloc] initWithFrame:CGRectMake(x, y, SCREEN_WIDTH, h)];
-                card.dogCardModel = playbackMessages[i];
-                
-                card.tag = i + 40;
-                [card addTarget:self action:@selector(clickPlayBackCardAction:) forControlEvents:(UIControlEventTouchUpInside)];
-                
-                [self addSubview:card];
-            }
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style {
+    if (self = [super initWithFrame:frame style:style]) {
+        self.bounces = NO;
+        self.delegate = self;
+        self.dataSource = self;
+        self.showsVerticalScrollIndicator = NO;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
+        if (_AVArray.count == 0) {
+            self.tableFooterView = [[UIView alloc] init];
         }
+        [self registerClass:[PlayBackCell class] forCellReuseIdentifier:cellid];
     }
     return self;
 }
-- (void)clickPlayBackCardAction:(UIControl *)btn {
-
-    if (_playBackBlock) {
-        _playBackBlock(btn);
-    }
-}
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    [self.playBcakLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.left).offset(10);
-        make.top.equalTo(self.top).offset(10);
-    }];
+- (void)setAVArray:(NSArray *)AVArray {
+    _AVArray = AVArray;
+    self.dataArr = AVArray;
+    [self.tableView reloadData];
 }
 #pragma mark
 #pragma mark - 懒加载
-- (UILabel *)playBcakLabel {
-    if (!_playBcakLabel) {
-        _playBcakLabel = [[UILabel alloc] init];
-        _playBcakLabel.text = @"回放";
-        _playBcakLabel.font = [UIFont systemFontOfSize:16];
-        _playBcakLabel.textColor = [UIColor colorWithHexString:@"#000000"];
-    }
-    return _playBcakLabel;
-}
-- (UILabel *)alertLabel {
-    if (!_alertLabel) {
-        _alertLabel = [[UILabel alloc] init];
-        _alertLabel.text = @"暂时没有回放";
-        _alertLabel.font = [UIFont systemFontOfSize:16];
-        _alertLabel.textColor = [UIColor colorWithHexString:@"#666666"];
 
+- (NSArray *)dataArr {
+    if (!_dataArr) {
+        _dataArr = [NSArray array];
     }
-    return _alertLabel;
+    return _dataArr;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataArr.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PlayBackCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.dogCardModel = self.dataArr[indexPath.row];
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PlayBackModel *model = self.dataArr[indexPath.row];
+    if (_playBackBlock) {
+        _playBackBlock(model);
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 135;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 10, 44)];
+    label.text = @"回放";
+    label.font = [UIFont systemFontOfSize:16];
+    label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    label.textColor = [UIColor colorWithHexString:@"#000000"];
+    return label;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (self.dataArr.count == 0) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+        label.text = @"暂时没有回放";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = [UIFont systemFontOfSize:16];
+        label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        label.textColor = [UIColor colorWithHexString:@"#666666"];
+
+        return label;
+    }else{
+        return nil;
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 44;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (self.dataArr.count == 0) {
+        return 44;
+    }
+    return 0;
 }
 @end
+

@@ -8,7 +8,7 @@
 
 #import "DogPictureCollectionViewCell.h"
 
-#import "DogTypeCellModel.h"
+#import "HostLiveModel.h"
 
 @interface DogPictureCollectionViewCell ()
 
@@ -46,10 +46,16 @@
     }
     return self;
 }
-- (void)setTypeModel:(DogTypeCellModel *)typeModel {
+- (void)setModel:(HostLiveModel *)model {
     
-    _typeModel = typeModel;
-    
+    _model = model;
+    if (model.snapshot != NULL) {
+        [self.liveDogPicture sd_setImageWithURL:[NSURL URLWithString:model.snapshot] placeholderImage:[UIImage imageNamed:@"品种"]];
+    }
+    self.titlelable.text = model.userNickName;
+    self.degistLable.text = model.name;
+    self.salesvolumeLable.text = [NSString stringWithFormat:@"在售%ld/%ld", model.num, model.pNum];
+
 }
 #pragma mark
 #pragma mark - 约束
@@ -65,7 +71,6 @@
     }];
     
     [_hudView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.liveDogPicture);
         make.bottom.equalTo(weakself.liveDogPicture);
         make.height.equalTo(20);
@@ -86,10 +91,8 @@
     
     [_titlelable mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.liveDogPicture.bottom).offset(10);
+        make.top.equalTo(weakself.liveDogPicture.bottom).offset(5);
         make.left.equalTo(weakself.liveDogPicture.left);
-        make.bottom.equalTo(weakself.bottom).offset(-10);
-
     }];
     
     [_personNumLable mas_makeConstraints:^(MASConstraintMaker *make) {

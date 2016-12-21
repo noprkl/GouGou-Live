@@ -8,17 +8,33 @@
 
 #import "WatchHistoryViewController.h"
 #import "WatchHistoryCell.h"
-#import "LivingViewController.h"
+#import "FavoriteLivePlayerVc.h"
+#import "PlayBackModel.h"
 
 static NSString * watchCell = @"watchCellID";
 @interface WatchHistoryViewController ()<UITableViewDelegate,UITableViewDataSource>
 /** tableview */
 @property (strong,nonatomic) UITableView *tableview;
 
+@property (nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+
 @end
 
 @implementation WatchHistoryViewController
-
+- (void)getRequestWatchHiostory {
+    NSDictionary *dict = @{
+                           @"user_id":[UserInfos sharedUser].ID,
+                           @"page":@(1),
+                           @"pageSize":@(10)
+                           };
+    [self getRequestWithPath:API_List_view_history params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        [self.tableview reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -30,15 +46,24 @@ static NSString * watchCell = @"watchCellID";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self getRequestWatchHiostory];
 }
 - (void)initUI {
 
     [self.view addSubview:self.tableview];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     self.title = @"观看历史";
-
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getRequestWatchHiostory];
+        [self.tableview.mj_header endRefreshing];
+    }];
 }
-
+- (NSArray *)dataArr {
+    if (!_dataArr) {
+        _dataArr = [NSArray array];
+    }
+    return _dataArr;
+}
 - (UITableView *)tableview {
 
     if (!_tableview) {
@@ -55,7 +80,7 @@ static NSString * watchCell = @"watchCellID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 2;
+    return self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,19 +91,32 @@ static NSString * watchCell = @"watchCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     WatchHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:watchCell];
-
-    
+    PlayBackModel *model = self.dataArr[indexPath.row];
+    cell.model = model;
+    cell.deleBlock = ^(){
+        NSDictionary *dict = @{
+                               @"id":model.liveId
+                               };
+        DLog(@"%@", dict);
+        [self getRequestWithPath:API_Del_view_history params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            [self getRequestWatchHiostory];
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    };
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    LivingViewController * livingVC = [[LivingViewController alloc] init];
-    
-    [self.navigationController pushViewController:livingVC animated:YES];
-    
+    // 回放界面
+    FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
+//    playerVc.liveID = liveID;
+    playerVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:playerVc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

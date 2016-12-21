@@ -6,9 +6,9 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "EaseMessageViewController.h"
 
-@interface TalkingViewController : BaseViewController
+@interface TalkingViewController : EaseMessageViewController
 
 @property(nonatomic, strong) UITextField *textField; /**< 输入框 */
 

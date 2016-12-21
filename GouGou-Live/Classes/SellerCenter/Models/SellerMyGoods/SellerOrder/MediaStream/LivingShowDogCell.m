@@ -50,16 +50,19 @@
     }
     return self;
 }
-- (void)setModel:(DogDetailInfoModel *)model {
+- (void)setModel:(LiveListDogInfoModel *)model {
     _model = model;
-    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
-    [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    if (model.pathSmall != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+        [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }
+    
     self.dogNameLabel.text = model.name;
-    self.dogKindLabel.text = model.kindName;
-    self.dogAgeLabel.text = model.ageName;
-    self.dogSizeLabel.text = model.sizeName;
-    self.dogColorLabel.text = model.colorName;
-    self.oldPriceLabel.text = model.priceOld;
+    self.dogKindLabel.text = model.kindname;
+    self.dogAgeLabel.text = model.agename;
+    self.dogSizeLabel.text = model.sizename;
+    self.dogColorLabel.text = model.colorname;
+    self.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
     self.nowPriceLabel.text = model.price;
 }
 - (void)layoutSubviews {
@@ -68,13 +71,13 @@
     __weak typeof(self) weakself = self;
     
     [_dogImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weakself.centerY).offset(-5);
+        make.centerY.equalTo(weakself.centerY);
         make.left.equalTo(weakself.left).offset(10);
-        make.top.equalTo(weakself.top).offset(10);
-        make.height.equalTo(_dogImageView.width);
+//        make.top.equalTo(weakself.top).offset(10);
+        make.size.equalTo(CGSizeMake(77, 77));
     }];
     [_dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.top).offset(15);
+        make.top.equalTo(weakself.top).offset(5);
         make.left.equalTo(weakself.dogImageView.right).offset(10);
     }];
     [_kindLabel makeConstraints:^(MASConstraintMaker *make) {
@@ -194,8 +197,6 @@
 - (UILabel *)oldPriceLabel {
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
-        
-        _oldPriceLabel.text = @"¥ 2400";
         _oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:@"￥2400"];
         _oldPriceLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         _oldPriceLabel.font = [UIFont systemFontOfSize:12];

@@ -100,13 +100,27 @@
 #define API_Search_nick @"api/UserService/search_nick"
 // 关注/取消关注用户
 #define API_Add_fan @"api/UserService/add_fan"
+/** 举报 */
+#define API_Report @"api/UserService/report"
+/** 意见反馈 */
+#define API_Add_system_msg @"api/UserService/add_system_msg"
+
 
 
 #pragma mark - 收藏
 // 我的喜欢-狗狗
 #define API_My_like_product @"api/UserService/my_like_product"
-// 我的喜欢－－添加/删除
+// 我的喜欢－－添加/删除 狗狗/直播
 #define API_My_add_like @"api/UserService/my_add_like"
+// 我的喜欢-直播
+#define API_User_like @"api/UserService/user_like"
+
+// 观看历史-添加
+#define API_Add_view_history @"api/UserService/add_view_history"
+// 观看历史-列表
+#define API_List_view_history @"api/UserService/list_view_history"
+// 观看历史-删除
+#define API_Del_view_history @"api/UserService/del_view_history"
 
 
 #pragma mark - 个人信息
@@ -116,6 +130,11 @@
 #define API_Signature @"api/UserService/signature"
 /** 个人头像 */
 #define API_Portrait @"api/UserService/portrait"
+/** 满意度 */
+#define API_home @"api/UserService/home"
+/** 我的直播 */
+#define API_Seller_live @"api/UserService/seller_live"
+
 
 #pragma mark - 收货地址
 /** 收货地址 */
@@ -232,21 +251,27 @@
 
 /** 添加直播接口 */
 #define API_Live_product @"api/ProductService/Live_product"
-/** 观看直播信息 */
+/** 直播播放界面信息 */
 #define API_Live_product_list @"api/ProductService/Live_product_list"
-/** 直播列表 */
-#define API_Live_list @"api/ProductService/Live_list"
-/** 直播列表2 */
-#define API_Old_live_list @"api/ProductService/old_Live_list"
-
 
 /** 直播列表3 */
 #define API_Live_new_list @"api/ProductService/Live_new_list"
 /** 直播商品 */
 #define API_Live_list_product @"api/ProductService/Live_list_product"
 
+/** 关注的主播的直播 */
+#define API_Fan_live @"api/ProductService/fan_live"
+/** 主播搜索 */
+#define API_Search_live @"api/ProductService/search_live"
+/** 最新直播卡片 */
+#define API_Look_like @"api/ProductService/look_like"
+/** 体型/印象搜索 */
+#define API_Live_retrieve @"api/ProductService/live_retrieve"
+/** 更多印象 */
+#define API_Impression @"api/ProductService/Impression"
+/** 直播视频保存 */
+#define API_save @"api/ProductService/save"
 
-/** 直播信息 */
-#define API_Live_list_limit @"api/ProductService/Live_list_limit"
+
 
 @end

@@ -12,9 +12,9 @@ typedef void(^ClickAddBtnImageBlock)();
 typedef void(^ClickDeleteBtnImageBlock)();
 @interface AddShowDogImgView : UIView
 
-@property(nonatomic, assign) NSInteger maxCount; /**< 每行图片最大个数 */
+@property(nonatomic, assign) NSInteger maxCount; /**< 图片最大个数 */
 
-@property(nonatomic, assign) NSInteger maxRow; /**< 最大行数 */
+//@property(nonatomic, assign) NSInteger maxRow; /**< 最大行数 */
 
 @property(nonatomic, strong) ClickAddBtnImageBlock addBlock; /**< 添加按钮 */
 

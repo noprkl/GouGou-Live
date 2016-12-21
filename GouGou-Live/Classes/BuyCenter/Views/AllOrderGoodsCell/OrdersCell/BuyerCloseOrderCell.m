@@ -21,6 +21,8 @@
 
 @property(nonatomic, strong) SellerCostView *costView; /**< 花费 */
 
+@property (nonatomic, strong) UIButton *deleOrder; /**< 删除订单 */
+
 @end
 
 @implementation BuyerCloseOrderCell
@@ -32,6 +34,7 @@
         [self.contentView addSubview:self.nickView];
         [self.contentView addSubview:self.dogCardView];
         [self.contentView addSubview:self.costView];
+         [self.contentView addSubview:self.deleOrder];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
@@ -49,8 +52,8 @@
     _model = model;
     
     self.nickView.nickName.text = model.merchantName;
-    self.nickView.dateLabel.text = @"交易关闭";
-    
+    self.nickView.stateMessage = @"交易关闭";
+
     if (model.pathSmall != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
         [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
@@ -64,6 +67,12 @@
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     self.costView.moneyMessage = model.price;
+}
+- (void)clickDeleButtonAction:(UIButton *)btn {
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+    if (_deleBlock) {
+        _deleBlock();
+    }
 }
 #pragma mark
 #pragma mark - 约束
@@ -92,6 +101,12 @@
         make.left.width.equalTo(self);
         make.height.equalTo(44);
     }];
+    [self.deleOrder makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.right).offset(-10);
+        make.size.equalTo(CGSizeMake(75, 35));
+        make.top.equalTo(self.costView.bottom).offset(10);
+    }];
+
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -105,6 +120,7 @@
 - (SellerNickNameView *)nickView {
     if (!_nickView) {
         _nickView = [[SellerNickNameView alloc] init];
+        _nickView.dateIsHid = YES;
     }
     return _nickView;
 }
@@ -119,6 +135,23 @@
         _costView = [[SellerCostView alloc] init];
     }
     return _costView;
+}
+- (UIButton *)deleOrder {
+    if (!_deleOrder) {
+        _deleOrder = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        _deleOrder.layer.cornerRadius = 5;
+        _deleOrder.layer.masksToBounds = YES;
+        _deleOrder.layer.borderWidth = 1;
+        _deleOrder.titleLabel.font = [UIFont systemFontOfSize:13];
+        _deleOrder.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
+        [_deleOrder setTitle:@"删除订单" forState:(UIControlStateNormal)];
+        [_deleOrder setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:(UIControlStateNormal)];
+        [_deleOrder setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateSelected)];
+        
+        [_deleOrder addTarget:self action:@selector(clickDeleButtonAction:) forControlEvents:(UIControlEventTouchDown)];
+    }
+    return _deleOrder;
 }
 
 @end

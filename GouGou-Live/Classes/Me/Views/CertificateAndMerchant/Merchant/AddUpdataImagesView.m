@@ -32,11 +32,17 @@ static NSString *cellid = @"AddUpdataImagesCell";
 }
 - (void)setMaxCount:(NSInteger)maxCount {
     _maxCount = maxCount;
+    // 每行最大个数
+   NSInteger imgCount = maxCount;
+    if (maxCount == 1) {
+        imgCount = 2;
+    }
     if (maxCount <= kMaxImgCount) {
-        _W = (SCREEN_WIDTH - (_maxCount + 1) * 10) / _maxCount;
+        _W = (SCREEN_WIDTH - (imgCount + 1) * 10) / imgCount;
     }else{
         _W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
     }
+    
 }
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
@@ -94,9 +100,6 @@ static NSString *cellid = @"AddUpdataImagesCell";
         make.top.equalTo(row * (_W + 10) + 10);
         make.size.equalTo(CGSizeMake(_W, _W));
     }];
-    
-    
-    
     return self.dataArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

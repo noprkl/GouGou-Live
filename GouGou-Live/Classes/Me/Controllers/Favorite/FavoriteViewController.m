@@ -10,7 +10,9 @@
 #import "TowButtonView.h"
 #import "MyFavoriteTableView.h"
 #import "DogDetailInfoModel.h"
-
+#import "FavoriteDogDetailVc.h"
+#import "FavoriteLivePlayerVc.h"
+#import "PlayBackModel.h"
 @interface FavoriteViewController ()
 /** 两个button View */
 @property (strong,nonatomic) TowButtonView *towBtnView;
@@ -29,26 +31,40 @@
 // 我的喜欢-狗狗
 - (void)GetRequestFavoriteDog{
     NSDictionary *dict = @{
-                           @"user_id":@(11),
+                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
                            @"page":@(1),
-                           @"pageSize":@(1)
+                           @"pageSize":@(10)
                            };
     [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.favoriteDogTable reloadData];
-        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
-
+// 我的喜欢-直播
+- (void)GetRequestFavoriteLive {
+    NSDictionary * dict = @{
+                            @"user_id":@([[UserInfos sharedUser].ID intValue])
+                            };
+    [self getRequestWithPath:API_User_like params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        [self.favotiteLiveTable reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@",error);
+        
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // 请求狗狗数据
     [self GetRequestFavoriteDog];
+    // 请求直播列表
+    [self GetRequestFavoriteLive];
     self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewDidLoad {
@@ -109,7 +125,34 @@
     if (!_favotiteLiveTable) {
         _favotiteLiveTable = [[MyFavoriteTableView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, SCREEN_HEIGHT - 44 - 64) style:UITableViewStylePlain];
         _favotiteLiveTable.isLive = YES;
+        __weak typeof(self) weakSelf = self;
+        _favotiteLiveTable.deleLiveBlock = ^(NSString *liveID){
+            NSDictionary *dict = @{//删除直播
+                                   @"user_id":[UserInfos sharedUser].ID,
+                                   @"product_id":liveID ,
+                                   @"type":@(2),
+                                   @"state":@(2)
+                                   };
+            [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [weakSelf showAlert:successJson[@"message"]];
+                [weakSelf GetRequestFavoriteLive];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
         
+        };
+        _favotiteLiveTable.clickLiveBlock = ^(NSString *liveID){
+            // 回放界面
+            FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
+            playerVc.liveID = liveID;
+            playerVc.hidesBottomBarWhenPushed = YES;
+//            [weakSelf.navigationController pushViewController:playerVc animated:YES];
+//            LivePlayerBackVc *playVc = [[LivePlayerBackVc alloc] init];
+//            playVc.hidesBottomBarWhenPushed = YES;
+//            [weakSelf.navigationController pushViewController:playVc animated:YES];
+            
+        };
     }
     return _favotiteLiveTable;
 }
@@ -121,12 +164,14 @@
         _favoriteDogTable.isLive = NO;
         _favoriteDogTable.tableFooterView = [[UIView alloc] init];
         __weak typeof(self) weakSelf = self;
-        _favoriteDogTable.deleBlock = ^(NSString *dogID){
-            NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                                   @"user_id":@(11),
+        _favoriteDogTable.deleDogBlock = ^(NSString *dogID){
+            NSDictionary *dict = @{//删除狗狗
+                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                    @"product_id":@([dogID integerValue]),
-                                   @"type":@(2)
+                                   @"type":@(2),
+                                   @"state":@(1)
                                    };
+            DLog(@"%@", dict);
             [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [weakSelf showAlert:successJson[@"message"]];
@@ -136,7 +181,13 @@
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
-
+        };
+        _favoriteDogTable.clickDogBlock = ^(NSString *dogID){
+            // 狗狗详情
+            FavoriteDogDetailVc *dogDetailVc = [[FavoriteDogDetailVc alloc] init];
+            dogDetailVc.dogID = dogID;
+            dogDetailVc.hidesBottomBarWhenPushed = YES;
+//            [weakSelf.navigationController pushViewController:dogDetailVc animated:YES];
         };
     }
     return _favoriteDogTable;

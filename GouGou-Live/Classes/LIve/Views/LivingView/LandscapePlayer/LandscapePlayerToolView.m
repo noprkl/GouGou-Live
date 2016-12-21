@@ -96,7 +96,7 @@
 - (void)clickcollectBtnAction:(UIButton *)btn {
     btn.selected = !btn.selected;
     if (_collectBlcok) {
-        _collectBlcok();
+        _collectBlcok(btn.selected);
     }
 }
 #pragma mark

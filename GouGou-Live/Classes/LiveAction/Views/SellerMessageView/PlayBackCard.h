@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class DogTypeCellModel;
+@class PlayBackModel;
 
 @interface PlayBackCard : UIControl
 
-@property(nonatomic, strong) DogTypeCellModel *dogCardModel; /**< 回放信息模型 */
+@property(nonatomic, strong) PlayBackModel *dogCardModel; /**< 回放信息模型 */
 
 @end

@@ -66,7 +66,6 @@
         
         make.top.left.right.equalTo(weakself);
         make.height.equalTo(54);
-        
     }];
     
     [_lineview1 mas_makeConstraints:^(MASConstraintMaker *make) {

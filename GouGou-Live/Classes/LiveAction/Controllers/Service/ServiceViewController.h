@@ -12,4 +12,7 @@
 
 @property(nonatomic, strong) UITextField *textField; /**< 输入框 */
 
+@property(nonatomic, strong) NSString *liverID; /**< 主播id */
+@property(nonatomic, strong) NSString *liverImgUrl; /**< 主播头像 */
+@property(nonatomic, strong) NSString *liverName; /**< 主播昵称 */
 @end

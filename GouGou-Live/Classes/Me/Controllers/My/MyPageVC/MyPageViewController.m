@@ -23,18 +23,22 @@
 #import "MyAlbumsModel.h" // 相册model
 #import "PicturesViewController.h" // 照片列表
 
+#import "FavoriteLivePlayerVc.h"
+#import "PlayBackModel.h"
+
 @interface MyPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
-
 @property(nonatomic, strong) NSArray *commentArr; /**< 评论数 */
 
-@property(nonatomic, strong) NSArray *dogCardArr; /**< 临时数据 */
+@property(nonatomic, strong) NSMutableArray *dogCardArr; /**< 临时数据 */
 
 @property(nonatomic, strong) NSArray *picturesArr; /**< 临时数据 */
+
+@property (nonatomic, assign) NSInteger pleasureCount; /**< 用户满意度 */
 
 @end
 
@@ -49,7 +53,7 @@ static NSString *cellid4 = @"cellid4";
 
 // 相册列表
 - (void)getRequestAlbums {
-    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue])
                                };
     [self getRequestWithPath:API_album params:dict success:^(id successJson) {
@@ -81,6 +85,51 @@ static NSString *cellid4 = @"cellid4";
     }];
     
 }
+// 满意度
+- (void)getUserPleasure {
+    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           };
+    [self getRequestWithPath:API_home params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            // 分数四舍五入
+            CGFloat source = [successJson[@"data"] floatValue];
+            NSInteger count = source * 10;
+            if (count % 10 > 5) {
+                self.pleasureCount = count / 10 + 1;
+            }else{
+                self.pleasureCount = count / 10;
+            }
+            DLog(@"%ld", self.pleasureCount);
+            [self.tableView reloadData];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+// 回放
+- (void)getRequestMyLive {
+    NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
+    [self getRequestWithPath:API_Seller_live params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.dogCardArr removeAllObjects];
+        NSArray *playBackarr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        if (playBackarr.count < 2) {
+            [self.dogCardArr addObjectsFromArray:playBackarr];
+        }else{
+            [self.dogCardArr addObject:playBackarr[0]];
+            [self.dogCardArr addObject:playBackarr[1]];
+        }
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -96,6 +145,10 @@ static NSString *cellid4 = @"cellid4";
     [self getRequestAlbums];
     // 请求评论数
     [self getRequestComment];
+    // 请求满意度
+    [self getUserPleasure];
+    // 请求
+    [self getRequestMyLive];
 }
 
 - (void)initUI {
@@ -163,6 +216,7 @@ static NSString *cellid4 = @"cellid4";
                 headerView.userName = [UserInfos sharedUser].username;
                 headerView.isReal = [[UserInfos sharedUser].isreal isEqualToString:@"3"] ? YES:NO;
                 headerView.isMentch = [[UserInfos sharedUser].ismerchant isEqualToString:@"2"] ? YES:NO;
+                headerView.pleasureCount = self.pleasureCount;
                 
                 headerView.backgroundColor = [UIColor whiteColor];
                 [cell0.contentView addSubview:headerView];
@@ -191,7 +245,7 @@ static NSString *cellid4 = @"cellid4";
 #pragma mark  上传个人签名
                             
                             NSDictionary *dict = @{
-                                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
                                                    @"user_motto":signaue
                                                    };
                             [self postRequestWithPath:API_Signature params:dict success:^(id successJson) {
@@ -299,41 +353,21 @@ static NSString *cellid4 = @"cellid4";
                 CGFloat playbackViewHeight = 0;
                 
                 if (self.dogCardArr.count == 0) {
-                    playbackViewHeight = 33 + 30;;
+                    playbackViewHeight = 88;;
                 }else{
-                    playbackViewHeight = self.dogCardArr.count * 125 + 43;
+                    playbackViewHeight = self.dogCardArr.count * 135 + 44;
                 }
                 
-                PlayBackView *playbackView = [[PlayBackView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, playbackViewHeight) withPlayBackMessage:self.dogCardArr clickPlaybackBtn:^(UIControl *control){
-                    
-                    NSInteger btnTag = control.tag - 40;
-                    if (self.dogCardArr.count == 0) {
-                        
-                    }else{
-                        if (self.dogCardArr.count == 1) {
-                            switch (btnTag) {
-                                case 0:
-                                    DLog(@"第一个回放");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }else if (self.dogCardArr.count == 2){
-                            switch (btnTag) {
-                                case 0:
-                                    DLog(@"第一个回放");
-                                    break;
-                                case 1:
-                                    DLog(@"第二个回放");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }];
+                PlayBackView *playbackView = [[PlayBackView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, playbackViewHeight) style:(UITableViewStylePlain)];
+                playbackView.AVArray = self.dogCardArr;
+                playbackView.playBackBlock = ^(PlayBackModel *model){
+                    FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
+                    //                                playerVc.liveID = liveID;
+                    playerVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:playerVc animated:YES];
+                };
                 playbackView.backgroundColor = [UIColor whiteColor];
-//                [cell addSubview:playbackView];
+
                 [cell3.contentView addSubview:playbackView];
                 return cell3;
             }
@@ -382,14 +416,14 @@ static NSString *cellid4 = @"cellid4";
 - (void)test1 {
     DLog(@"test");
 }
-- (NSArray *)dogCardArr {
+- (NSMutableArray *)dogCardArr {
     if (!_dogCardArr) {
-        _dogCardArr = [NSArray array];
+        _dogCardArr = [NSMutableArray array];
         
-        DogTypeCellModel *cardModel1 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
-        DogTypeCellModel *cardModel2 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
-        
-        _dogCardArr = @[cardModel1, cardModel2];
+//        DogTypeCellModel *cardModel1 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
+//        DogTypeCellModel *cardModel2 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
+//        
+//        _dogCardArr = @[cardModel1, cardModel2];
     }
     return _dogCardArr;
 }
@@ -422,9 +456,9 @@ static NSString *cellid4 = @"cellid4";
         {
             CGFloat playbackViewHeight = 0;
             if (self.dogCardArr.count == 0) {
-                playbackViewHeight = 33 + 30;;
+                playbackViewHeight = 88;;
             }else{
-                playbackViewHeight = self.dogCardArr.count * 125 + 50;
+                playbackViewHeight = self.dogCardArr.count * 135 + 44;
             }
             return playbackViewHeight;
         }

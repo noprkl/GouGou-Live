@@ -290,6 +290,9 @@ static NSString *closeCell = @"SellerCloseCell";
         
         SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
         cell.model = model;
+        cell.deleBlock = ^(){
+//            self 
+        };
         cell.orderState = @"交易关闭";
         return cell;
     }else if ([model.status integerValue] == 21){ // 21：交易关闭
@@ -299,25 +302,7 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.orderState = @"交易关闭";
         return cell;
     }
-//    if ([model.status integerValue] == 5){
-//        
-//        SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
-//        cellid = closeCell;
-//        cell.orderState = @"交易关闭";
-//        return cell;
-//    }else if ([model.status integerValue] == 5){
-//        
-//        SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
-//        cellid = closeCell;
-//        cell.orderState = @"交易关闭";
-//        return cell;
-//    }else if ([model.status integerValue] == 5){
-//        
-//        SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
-//        cellid = closeCell;
-//        cell.orderState = @"交易关闭";
-//        return cell;
-//    }
+
     
     return nil;
 }
@@ -373,11 +358,12 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
-        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
-        changeVC.title = title;
-        changeVC.orderID = orderModel.ID;
-        changeVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:changeVC animated:YES];
+//        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
+//        changeVC.title = title;
+//        changeVC.orderID = orderModel.ID;
+//        changeVC.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:changeVC animated:YES];
+        [self showAlert:@"暂无运费，无法修改"];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;

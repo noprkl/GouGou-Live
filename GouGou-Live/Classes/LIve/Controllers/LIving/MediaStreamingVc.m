@@ -22,6 +22,8 @@
 #import "LiveListStreamModel.h"
 #import "LiveRootStreamModel.h"
 
+#import "LiveListDogInfoModel.h"
+
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
 
 @property (nonatomic, strong) PLMediaStreamingSession *session;
@@ -53,6 +55,18 @@
 @end
 
 @implementation MediaStreamingVc
+- (void)getRequestShowingDog {
+    NSDictionary *dict = @{
+                           @"live_id":_liveID
+                           };
+    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.showDogView.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        [self.showDogView reloadData];
+    } error:^(NSError *error) {
+        
+    }];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBarHidden = YES;
@@ -62,6 +76,7 @@
     if (orientation == UIDeviceOrientationPortrait) {
         [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
     }
+    [self getRequestShowingDog];
     [self streamingVideo];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -70,6 +85,15 @@
     
     // 出去的时候销毁session
     [self.session destroy];
+    // 保存视频
+    NSDictionary *dict =@{
+                          @"live_id":_liveID
+                          };
+    [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
     // 取消横屏
     
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -308,6 +332,10 @@
             [shareAlert show];
             shareAlert.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         };
+        _topView.faceBlcok = ^(){
+            // 前置摄像头
+//            self.session.ca
+        };
     }
     return _topView;
 }
@@ -332,6 +360,16 @@
     if (!_showDogView) {
         _showDogView = [[LinvingShowDogView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
         _showDogView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+        __weak typeof(self) weakSelf = self;
+        _showDogView.cellBlock = ^(LiveListDogInfoModel *model){
+            if (model.pathSmall != NULL) {
+                NSURL *url = [NSURL URLWithString:[IMAGE_HOST stringByAppendingString:model.pathSmall]];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                UIImage *image = [UIImage imageWithData:data];
+                [weakSelf.showingBtn setImage:image forState:(UIControlStateNormal)];
+            }
+            weakSelf.showingPrice.text = model.price;
+        };
     }
     return _showDogView;
 }
@@ -350,6 +388,7 @@
     if (!_talkingVc) {
         _talkingVc = [[TalkingViewController alloc] init];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+        _talkingVc.roomID = _chatRoomID;
         _talkingVc.isHidText = YES;
     }
     return _talkingVc;

@@ -128,6 +128,18 @@
     // 设置直播参数
     self.roomNameLabel.text = _liverName;
     [self.watchLabel setTitle:[@(_watchCount) stringValue] forState:(UIControlStateNormal)];
+    // 添加观看观看历史
+    if ([UserInfos getUser]) {
+        NSDictionary *dictHistory = @{
+                                      @"id":_liveID,
+                                      @"user_id":[UserInfos sharedUser].ID
+                                      };
+        [self getRequestWithPath:API_Add_view_history params:dictHistory success:^(id successJson) {
+            DLog(@"%@", successJson);
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -284,9 +296,17 @@
 //        [self addChildViewController:vc];
 //        [self.childVCS addObject:vc];
 //    }
+    // 聊天
     TalkingViewController *talkVC = [[TalkingViewController alloc] init];
+    talkVC.roomID = _chatRoomID;
+//    talkVC.liverImgUrl = _liverIcon;
+//    talkVC.liverName = _liverName;
+    DLog(@"%@", [talkVC.view subviews]);
+    talkVC.isHidText = NO;
     [self.childVCS addObject:talkVC];
     [self addChildViewController:talkVC];
+   
+    // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
@@ -298,10 +318,17 @@
     if (_liverId.length == 0) {
         _liverId = EaseTest_Liver;
     }
+   // 客服
     ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
+    serviceVC.liverImgUrl = _liverIcon;
+    serviceVC.liverName = _liverName;
     [self.childVCS addObject:serviceVC];
     [self addChildViewController:serviceVC];
+    // 商家
     SellerShowViewController *sellerShowVC = [[SellerShowViewController alloc] init];
+    sellerShowVC.liverIcon = _liverIcon;
+    sellerShowVC.liverName = _liverName;
+    sellerShowVC.authorId = _liverId;
     [self.childVCS addObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
     
@@ -320,8 +347,8 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     // 每个子控制器的宽高
-    CGFloat width = SCREEN_WIDTH;
-    CGFloat height = SCREEN_HEIGHT;
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
     
     // 偏移量 - x
     // 如果是通过点击狗狗卡片进入的,滑到狗狗位置
@@ -357,7 +384,7 @@
     
     // 给没加载过的控制器设置frame
     childVC.view.frame = CGRectMake(offset, 0, width, height - 290);
-    
+    DLog(@"%@", NSStringFromCGRect(childVC.view.frame));
     // 添加控制器视图到contentScrollView上
     [scrollView addSubview:childVC.view];
     
@@ -441,7 +468,17 @@
     report.message = @"确定举报该用户";
     report.sureBlock = ^(UIButton *btn){
         DLog(@"举报");
-    };
+        NSDictionary * dict = @{
+                                @"id":self.liverId,
+                                @"uesr_id":@([[UserInfos sharedUser].ID intValue])
+                                };
+        [self getRequestWithPath:API_Report params:dict success:^(id successJson) {
+            DLog(@"%@",successJson);
+            [self showAlert:successJson[@"message"]];
+        } error:^(NSError *error) {
+            DLog(@"%@",error);
+            
+        }];    };
     [report show];
 }
 - (void)clickShareBtnAction {
@@ -501,12 +538,44 @@
     [shareAlert show];
 }
 - (void)clickCollectBtnAction:(UIButton *)btn {
+    
+    if (btn.selected) { // 如果被选中 删除
+        NSDictionary *dict = @{//
+                               @"user_id":[UserInfos sharedUser].ID,
+                               @"product_id":_liveID,
+                               @"type":@(2),
+                               @"state":@(2)
+                               };
+        [self getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }else{ // 否则添加
+        NSDictionary *dict = @{//
+                               @"user_id":[UserInfos sharedUser].ID,
+                               @"product_id":_liveID ,
+                               @"type":@(1),
+                               @"state":@(2)
+                               };
+        [self getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
+
     btn.selected = !btn.selected;
 }
 - (void)clickScreenBtnAction:(UIButton *)btn {
    
     LandscapePlayerVc *landscapeVc = [[LandscapePlayerVc alloc] init];
     landscapeVc.liveID = _liveID;
+    landscapeVc.liverID = _liverId;
     landscapeVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:landscapeVc animated:YES];
 }
@@ -604,7 +673,7 @@
 }
 - (UIButton *)shareBtn {
     if (!_shareBtn) {
-        _shareBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        _shareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
        
         _shareBtn.layer.cornerRadius = 3;
         _shareBtn.layer.masksToBounds = YES;
@@ -621,7 +690,7 @@
 - (UIButton *)collectBtn {
     if (!_collectBtn) {
         
-        _collectBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        _collectBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         _collectBtn.layer.cornerRadius = 3;
         _collectBtn.layer.masksToBounds = YES;
 

@@ -59,6 +59,21 @@
     }
     return self;
 }
+- (void)setModel:(PlayBackModel *)model {
+    _model = model;
+    if (model.userImgUrl != NULL) {
+        NSString *imgUrl = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
+        [self.photoImage sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+    }
+    if (model.snapshot != NULL) {
+        [self.dogImage sd_setImageWithURL:[NSURL URLWithString:model.snapshot] placeholderImage:[UIImage imageNamed:@"直播图"]];
+    }
+    self.businessName.text = model.merchantName;
+    self.varietyInfo.text = model.name;
+    
+    self.sellInfo.text = [NSString stringWithFormat:@"展%ld售%ld", model.pNum, (model.pNum - model.num)];
+    self.dataLabel.text = [NSString stringFromDateString:model.createTime];
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
@@ -71,7 +86,7 @@
         
         make.left.equalTo(weakself.left).offset(10);
         make.top.equalTo(weakself.top).offset(7);
-        
+        make.size.equalTo(CGSizeMake(30, 30));
     }];
     
     [_businessName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -92,9 +107,8 @@
     [_dogImage mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.top).offset(44);
-        make.left.equalTo(weakself.left);
+        make.left.right.equalTo(weakself);
         make.height.equalTo(175);
-
     }];
 
     [_overLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -129,7 +143,7 @@
 
     [_dataLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(weakself.top).offset(235);
+        make.top.equalTo(weakself.hudView.bottom).offset(15);
         make.left.equalTo(weakself.left).offset(10);
         
     }];
@@ -157,9 +171,8 @@
 
     if (!_photoImage) {
         _photoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"主播头像"]];
-        _photoImage.layer.cornerRadius = 16;
+        _photoImage.layer.cornerRadius = 15;
         _photoImage.layer.masksToBounds = YES;
-        
     }
     return _photoImage;
 }
@@ -192,8 +205,10 @@
 
 - (UIImageView *)dogImage {
 
-    _dogImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"直播图"]];
-
+    if (!_dogImage) {
+        _dogImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"直播图"]];
+        
+    }
     return _dogImage;
 }
 
@@ -288,6 +303,9 @@
          btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
     } else {
         btn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    if (_deleBlock) {
+        _deleBlock();
     }
 }
 

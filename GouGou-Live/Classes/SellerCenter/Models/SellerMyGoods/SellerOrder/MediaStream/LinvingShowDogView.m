@@ -52,12 +52,12 @@ static NSString *cellid = @"LivingShowDogCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-//    return self.dataPlist.count;
-    return 5;
+    return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LivingShowDogCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.model = self.dataPlist[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -81,7 +81,7 @@ static NSString *cellid = @"LivingShowDogCell";
         label.text = @"狗狗";
         label.userInteractionEnabled = YES;
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:13];
         [view addSubview:label];
         
@@ -93,7 +93,7 @@ static NSString *cellid = @"LivingShowDogCell";
         [view addSubview:backBtn];
         // 线
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
-        line.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+        line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         [view addSubview:line];
         
         return view;
@@ -109,7 +109,10 @@ static NSString *cellid = @"LivingShowDogCell";
 
 #pragma mark 选中
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    LiveListDogInfoModel *model = self.dataPlist[indexPath.row];
+    if (_cellBlock) {
+        _cellBlock(model);
+    }
 }
 
 @end

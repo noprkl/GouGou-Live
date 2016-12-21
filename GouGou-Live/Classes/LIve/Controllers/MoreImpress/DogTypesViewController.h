@@ -7,8 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "MoreImpressionModel.h"
 
 @interface DogTypesViewController : BaseViewController
 
+@property (strong, nonatomic) MoreImpressionModel *dogType; /**< 印象 */
 
 @end

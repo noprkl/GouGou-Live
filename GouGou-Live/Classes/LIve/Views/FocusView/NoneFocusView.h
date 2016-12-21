@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ClickRequestBlock)(NSString *text);
+
 @interface NoneFocusView : UIView
+
+@property (nonatomic, strong) ClickRequestBlock requestBlock; /**< 重新加载 */
 
 @end

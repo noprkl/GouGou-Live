@@ -10,6 +10,7 @@
 #import "WatchHistoryCell.h"
 #import "DogDetailInfoCell.h"
 #import "DogDetailInfoModel.h"
+#import "PlayBackModel.h"
 
 static NSString * liveCell = @"liveCellID";
 static NSString * dogCell = @"dogCellID";
@@ -48,8 +49,8 @@ static NSString * dogCell = @"dogCellID";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     if (_isLive) {
-//        return self.favoriteLiveArray.count;
-        return 10;
+        return self.favoriteLiveArray.count;
+//        return 10;
     }else {
         return self.favoriteDogArray.count;
 //        return 5;
@@ -70,10 +71,18 @@ static NSString * dogCell = @"dogCellID";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DLog(@"%ld", indexPath.row);
+    
     if (_isLive) {
-        DLog(@"直播");
+        PlayBackModel *model = self.favoriteLiveArray[indexPath.row];
+        if (_clickLiveBlock) {
+            _clickLiveBlock(model.liveId);
+        }
     }else{
         DLog(@"狗狗");
+        DogDetailInfoModel *model = self.favoriteDogArray[indexPath.row];
+        if (_clickDogBlock) {
+            _clickDogBlock(model.ID);
+        }
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,9 +90,17 @@ static NSString * dogCell = @"dogCellID";
     if (_isLive) {
         
         WatchHistoryCell * cell = [tableView dequeueReusableCellWithIdentifier:liveCell];
+
         if (!cell) {
             cell = [[WatchHistoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:liveCell];
         }
+        PlayBackModel *model = self.favoriteLiveArray[indexPath.row];
+        cell.model = model;
+        cell.deleBlock = ^(){
+            if (_deleLiveBlock) {
+                _deleLiveBlock(model.ID);
+            }
+        };
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -101,17 +118,25 @@ static NSString * dogCell = @"dogCellID";
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // 如果不是直播数据 允许被编辑 侧滑删除
+    if (_isLive) {
+        return NO;
+    }
     return YES;
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
+    if (!_isLive) {
+        return UITableViewCellEditingStyleDelete;
+    }else{
+        return UITableViewCellEditingStyleNone;
+    }
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (!_isLive) {
         DogDetailInfoModel *model = self.favoriteDogArray[indexPath.row];
         if (editingStyle == UITableViewCellEditingStyleDelete) {
-            if (_deleBlock) {
-                _deleBlock(model.ID);
+            if (_deleDogBlock) {
+                _deleDogBlock(model.ID);
             }
         }
     }

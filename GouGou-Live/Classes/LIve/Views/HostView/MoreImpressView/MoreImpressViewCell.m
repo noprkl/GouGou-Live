@@ -29,6 +29,7 @@
     }
     return _markImageView;
 }
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     

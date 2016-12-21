@@ -135,5 +135,7 @@
 	<string>开启定位</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>开启定位</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

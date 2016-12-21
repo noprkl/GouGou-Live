@@ -23,5 +23,8 @@
 
 @property (nonatomic, strong) PLStream *stream; /**< 流对象 */
 
+@property (nonatomic, strong) NSString *liveID; /**< 直播参数 */
+
+@property (nonatomic, strong) NSString *chatRoomID; /**< 直播房间id */
 
 @end

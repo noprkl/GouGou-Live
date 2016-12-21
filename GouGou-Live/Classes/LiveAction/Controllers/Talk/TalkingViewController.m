@@ -10,65 +10,106 @@
 
 #import "TalkingView.h"
 #import "NoneNetWorkingView.h"
+#import "TalkingView.h"
+//#import <HyphenateLite_CN/EMSDK.h>
+#import <TZImagePickerController.h>
 
-@interface TalkingViewController ()<UITextFieldDelegate, EMChatroomManagerDelegate>
+@interface TalkingViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate>
 
-@property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入view */
-
-@property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
+@property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
 
 @end
 
 @implementation TalkingViewController
-
-- (void)viewDidLoad {
+#pragma mark
+#pragma mark - 自定义cell
+// 头像
+- (id<IMessageModel>)messageViewController:(EaseMessageViewController *)viewController
+                           modelForMessage:(EMMessage *)message
+{
+    //用户可以根据自己的用户体系，根据message设置用户昵称和头像
+    id<IMessageModel> model = nil;
+    model = [[EaseMessageModel alloc] initWithMessage:message];
+    model.avatarImage = [UIImage imageNamed:@"头像"];//默认头像
     
-    [super viewDidLoad];
+    if (model.isSender) {
+        if ([UserInfos getUser]) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+            model.avatarURLPath = urlString;//头像网络地址
+            model.nickname = [UserInfos sharedUser].usernickname;//用户昵称
+        }else{
+            model.nickname = @"ME";//用户昵称
+        }
+    }
     
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    
-    [self initUI];
-    
+    return model;
 }
-
+- (void)setIsHidText:(BOOL)isHidText {
+    _isHidText = isHidText;
+    self.talkView.hidden = isHidText;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    [self initUI];
+}
 - (void)viewWillAppear:(BOOL)animated {
-    
     [super viewWillAppear:animated];
-    //    [self.view addSubview:self.noneNetView];
-
     self.navigationController.navigationBarHidden = YES;
+    
     [self.view addSubview:self.talkView];
     [self.talkView makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
-        make.left.equalTo(self.view);
-        make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+        make.left.bottom.right.equalTo(self.view);
+        make.height.equalTo(44);
     }];
     
-    // 加入聊天室
-    EMError *error = nil;
-    [[EMClient sharedClient].roomManager joinChatroom:_roomID completion:^(EMChatroom *aChatroom, EMError *aError) {
-        DLog(@"%@", error);
-    }];
-    //注册聊天室回调
-    [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
-}
-
-- (void)didReceiveUserJoinedChatroom:(EMChatroom *)aChatroom
-                            username:(NSString *)aUsername {
-    [self showAlert:[NSString stringWithFormat:@"%@加入了聊天室", aUsername]];
-}
-
-- (void)didReceiveUserLeavedChatroom:(EMChatroom *)aChatroom
-                            username:(NSString *)aUsername {
-    [self showAlert:[NSString stringWithFormat:@"%@离开了聊天室", aUsername]];
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    // 离开聊天室
-    EMError *error = nil;
-    [[EMClient sharedClient].roomManager leaveChatroom:_roomID error:&error];
+    //@property中带有UI_APPEARANCE_SELECTOR，都可以通过set的形式设置样式，具体可以参考EaseBaseMessageCell.h,EaseMessageCell.h
+    [[EMClient sharedClient].chatManager getConversation:@"liver" type:EMConversationTypeChat createIfNotExist:YES];
+    
+    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[[UIImage imageNamed:@"圆角矩形-1"] stretchableImageWithLeftCapWidth:5 topCapHeight:30]];//设置发送气泡
+    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@"chat_receiver_bg"] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
+    
+    [[EaseBaseMessageCell appearance] setAvatarSize:44.f];//设置头像大小
+    //    [[EaseBaseMessageCell appearance] setAvatarCornerRadius:20.f];//设置头像圆角
+    
+    
+    // 隐藏输入框 自定义输入框
+    self.chatToolbar.hidden = YES;
+    //    [self.view addSubview:self.talkView];
+    //    [self.talkView makeConstraints:^(MASConstraintMaker *make) {
+    //        make.left.bottom.right.equalTo(self.view);
+    //        make.height.equalTo(44);
+    //    }];
 }
 - (void)initUI {
+    
+    [self focusKeyboardShow];
+}
+
+#pragma mark
+#pragma mark - 懒加载
+- (TalkingView *)talkView {
+    if (!_talkView) {
+        _talkView = [[TalkingView alloc] init];
+        _talkView.backgroundColor = [UIColor whiteColor];
+        
+        __weak typeof(self) weakSelf = self;
+        
+        _talkView.sendBlock = ^(NSString *message){
+            [weakSelf sendTextMessage:message];
+        };
+        _talkView.emojiBlock = ^(){
+            
+        };
+        _talkView.textFieldBlock = ^(UITextField *textField){
+            weakSelf.textField = textField;
+        };
+    }
+    return _talkView;
+}
+#pragma mark
+#pragma mark - 监听键盘
+- (void)focusKeyboardShow {
     //注册键盘出现的通知
     [[NSNotificationCenter defaultCenter] addObserver:self
      
@@ -80,34 +121,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    
-}
-
-- (void)makeConstraint {
-
-}
-- (void)setIsHidText:(BOOL)isHidText {
-    _isHidText = isHidText;
-    self.talkView.hidden = isHidText;
-}
-#pragma mark
-#pragma mark - 懒加载
-- (NoneNetWorkingView *)noneNetView {
-    if (!_noneNetView) {
-        _noneNetView = [[NoneNetWorkingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        _noneNetView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];    }
-    return _noneNetView;
-}
-- (TalkingView *)talkView {
-    if (!_talkView) {
-        _talkView = [[TalkingView alloc] init];
-        _talkView.backgroundColor = [UIColor whiteColor];
-        __weak typeof(self) weakSelf = self;
-        _talkView.textFieldBlock = ^(UITextField *textField){
-            weakSelf.textField = textField;
-        };
-    }
-    return _talkView;
 }
 
 - (void)keyboardWasShown:(NSNotification*)aNotification {
@@ -117,8 +130,8 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290 - h);
-            make.left.equalTo(self.view);
+            make.bottom.equalTo(self.view.bottom).offset(-h);
+            make.left.right.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
     }];
@@ -127,14 +140,31 @@
 -(void)keyboardWillBeHidden:(NSNotification*)aNotification {
     [UIView animateWithDuration:0.3 animations:^{
         [self.talkView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.top).offset(SCREEN_HEIGHT - 290);
-            make.left.equalTo(self.view);
+            make.bottom.equalTo(self.view.bottom);
+            make.left.right.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
     }];
 }
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 40;
 }
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    
+    if (section == 0) {
+        UILabel *alertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 20)];
+        alertLabel.text = @"您好，您所发留言将会在主播结束后为您答复";
+        alertLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        alertLabel.font = [UIFont systemFontOfSize:12];
+        alertLabel.textAlignment = NSTextAlignmentCenter;
+        
+        return alertLabel;
+    }
+    return nil;
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 @end

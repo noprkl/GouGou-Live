@@ -11,8 +11,9 @@
 #import "LiveViewCellModel.h"
 #import "LiveListDogInfoModel.h"
 #import "LivingViewController.h"
+#import "HaveNoneLiveView.h"
 
-@interface SearchViewController ()
+@interface SearchViewController ()<UITextFieldDelegate>
 
 @property(nonatomic, strong) LiveTableView *tableView; /**< tableView */
 
@@ -22,6 +23,7 @@
 
 @property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗信息 */
 
+@property(nonatomic, strong) HaveNoneLiveView *noneView; /**< 没人直播 */
 @end
 
 /** cellid */
@@ -33,48 +35,60 @@ static NSString *cellid = @"RecommentCellid";
 - (void)getRequestLiveList {
     
     NSDictionary *dict = @{
-                           @"page":@(1),
-                           @"pageSize":@(10)
+                           @"tel":self.titleInputView.text
                            };
-    [self getRequestWithPath:API_Live_new_list params:dict success:^(id successJson) {
+    [self getRequestWithPath:API_Search_live params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self.dogInfos removeAllObjects];
-        
-        self.tableView.dataPlist = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        if (self.tableView.dataPlist.count == 0) {
-            
+        [self.tableView.dataPlist removeAllObjects];
+        [self.tableView.dogInfos removeAllObjects];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneView.hidden = NO;
+            self.tableView.hidden = YES;
         }else{
-            // 高度
-            __block CGFloat height = 0;
+            self.noneView.hidden = YES;
+            self.tableView.hidden = NO;
+            //        [self showHudInView:self.view hint:@"刷新中"];
+            /** 所有信息 */
+            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            /** 直播信息 */
+            NSMutableArray *liveMutableArr = [NSMutableArray array];
+            /** 狗狗信息 */
+            NSMutableArray *dogInfos = [NSMutableArray array];
+            
             // 请求狗狗信息
-            for (NSInteger i = 0; i < self.tableView.dataPlist.count; i ++) {
-                LiveViewCellModel *model = self.tableView.dataPlist[i];
-                if (model.pNum == 0) {
-                    [self.dogInfos addObject:@[]];
-                    height += 239;
-                    
-                }else{
-                    NSDictionary *dict = @{
-                                           @"live_id":model.liveId
-                                           };
-                    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                        DLog(@"%@", successJson);
-                        [self.dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                        height += 357;
-                        if (self.dogInfos.count == self.tableView.dataPlist.count) {
-                            self.tableView.dogInfos = self.dogInfos;
-                            [self.tableView reloadData];
+            for (NSInteger i = 0; i < liveArr.count; i ++) {
+                
+                LiveViewCellModel *model = liveArr[i];
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    //                DLog(@"%@", successJson);
+                    if (model.pNum == 0) {
+                        [dogInfos addObject:@[]];
+                        [liveMutableArr addObject:model];
+                        DLog(@"%ld", i);
+                    }else{
+                        DLog(@"%ld", i);
+                        if (successJson[@"data"]) {
+                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                            [liveMutableArr addObject:model];
                         }
-                    } error:^(NSError *error) {
-                        DLog(@"%@", error);
-                    }];
-                }
-                if (self.dogInfos.count == self.tableView.dataPlist.count) {
-                    self.tableView.dogInfos = self.dogInfos;
-                    [self.tableView reloadData];
-                }
+                    }
+                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                        DLog(@"%ld", i);
+                        self.tableView.dogInfos = dogInfos;
+                        self.tableView.dataPlist = liveMutableArr;
+                        [self.tableView reloadData];
+                        //                    [self hideHud];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
             }
+            //                    [self hideHud]
         }
+//        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -85,13 +99,13 @@ static NSString *cellid = @"RecommentCellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initUI];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.tableView.dogInfos = @[];
+
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage2"] forBarMetrics:(UIBarMetricsDefault)];
-    
+       [self initUI];
+    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
@@ -99,8 +113,9 @@ static NSString *cellid = @"RecommentCellid";
 
 - (void)initUI {
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.noneView];
     [self.tableView makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 64, 0));
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
     [self setNavBarItem];
     [self.navigationItem setTitleView:self.titleInputView];
@@ -125,6 +140,18 @@ static NSString *cellid = @"RecommentCellid";
     }
     return _tableView;
 }
+- (HaveNoneLiveView *)noneView {
+    if (!_noneView) {
+        _noneView = [[HaveNoneLiveView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _noneView.hidden = YES;
+        _noneView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
+        __weak typeof(self) weakSelf = self;
+        _noneView.backBlock = ^(){
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        };
+    }
+    return _noneView;
+}
 - (void)pushToLivingVc:(LiveViewCellModel *)model products:(NSArray *)dogInfos {
     DLog(@"%@", model);
     LivingViewController *livingVC = [[LivingViewController alloc] init];
@@ -134,6 +161,7 @@ static NSString *cellid = @"RecommentCellid";
     livingVC.liverName = model.merchantName;
     livingVC.doginfos = dogInfos;
     livingVC.watchCount = model.pNum;
+    livingVC.chatRoomID = model.chatroom;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }
@@ -153,13 +181,29 @@ static NSString *cellid = @"RecommentCellid";
     return _titleInputView;
 }
 - (void)clickSureButtonAction {
-    
+
+    if ([NSString valiMobile:self.titleInputView.text]) {
+        [self.titleInputView resignFirstResponder];
+        [self getRequestLiveList];
+    }else{
+        [self showAlert:@"请输入正确的手机号"];
+    }
 }
 - (void)editSearchAction:(UITextField *)textField {
 
 }
 #pragma mark - Tableview 代理
-
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.titleInputView) {
+        BOOL flag = [NSString validateNumber:textField.text];
+        if (flag) {
+            return YES;
+        }
+        return NO;
+    }
+    
+    return YES;
+}
 
 
 - (void)didReceiveMemoryWarning {

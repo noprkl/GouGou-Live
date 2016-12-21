@@ -15,6 +15,7 @@
 #import "LivingViewController.h"
 #import "DogTypesView.h"
 #import "MoreImpressViewController.h"
+#import "NoneFocusView.h"
 
 @interface DogTypesViewController ()<UIScrollViewDelegate>
 
@@ -29,10 +30,146 @@
 ///** 狗狗类型View */
 //@property (strong,nonatomic) DogTypesView *typesView;
 
+/** 没搜到直播 */
+@property (strong, nonatomic) NoneFocusView *noneView;
+
 @end
 
 @implementation DogTypesViewController
+- (void)getRequestImpressionLiveList {
+    NSDictionary *dict = @{
+                           @"impression":@([_dogType.ID intValue])
+                           };
+    [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
+        [self.liveTableView.dataPlist removeAllObjects];
+        [self.liveTableView.dogInfos removeAllObjects];
+        [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneView.hidden = NO;
+            self.liveTableView.hidden = YES;
+        }else{
+            self.noneView.hidden = YES;
+            self.liveTableView.hidden = NO;
+            /** 所有信息 */
+            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            /** 直播信息 */
+            NSMutableArray *liveMutableArr = [NSMutableArray array];
+            /** 狗狗信息 */
+            NSMutableArray *dogInfos = [NSMutableArray array];
+            // 高度
+            __block CGFloat height = 0;
+            // 请求狗狗信息
+            for (NSInteger i = 0; i < liveArr.count; i ++) {
+                
+                LiveViewCellModel *model = liveArr[i];
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    //                DLog(@"%@", successJson);
+                    if (model.pNum == 0) {
+                        height += 240;
+                        [dogInfos addObject:@[]];
+                        [liveMutableArr addObject:model];
+                        
+                    }else{
+                        height += 357;
+                        
+                        if (successJson[@"data"]) {
+                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                            [liveMutableArr addObject:model];
+                        }
+                    }
+                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                        
+                        CGRect rect = self.liveTableView.frame;
+                        rect.size.height = height;
+                        self.bottomScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
+                        self.liveTableView.frame = rect;
+                        self.liveTableView.dogInfos = dogInfos;
+                        self.liveTableView.dataPlist = liveMutableArr;
+                        [self.liveTableView reloadData];
+                        //                    [self hideHud];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
+            //                    [self hideHud]
+            [self.liveTableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 
+- (void)getRequestFilterLiveListWithSize:(DogCategoryModel *)size {
+    NSDictionary *dict = @{
+                           @"impression":@([_dogType.ID intValue]),
+                           @"size":@([size.ID intValue])
+                           };
+    [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
+        [self.liveTableView.dataPlist removeAllObjects];
+        [self.liveTableView.dogInfos removeAllObjects];
+        [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneView.hidden = NO;
+            self.liveTableView.hidden = YES;
+        }else{
+            self.noneView.hidden = YES;
+            self.liveTableView.hidden = NO;
+            /** 所有信息 */
+            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            /** 直播信息 */
+            NSMutableArray *liveMutableArr = [NSMutableArray array];
+            /** 狗狗信息 */
+            NSMutableArray *dogInfos = [NSMutableArray array];
+            // 高度
+            __block CGFloat height = 0;
+            // 请求狗狗信息
+            for (NSInteger i = 0; i < liveArr.count; i ++) {
+                
+                LiveViewCellModel *model = liveArr[i];
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    //                DLog(@"%@", successJson);
+                    if (model.pNum == 0) {
+                        height += 240;
+                        [dogInfos addObject:@[]];
+                        [liveMutableArr addObject:model];
+                        
+                    }else{
+                        height += 357;
+                        
+                        if (successJson[@"data"]) {
+                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                            [liveMutableArr addObject:model];
+                        }
+                    }
+                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                        
+                        CGRect rect = self.liveTableView.frame;
+                        rect.size.height = height;
+                        self.bottomScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
+                        self.liveTableView.frame = rect;
+                        self.liveTableView.dogInfos = dogInfos;
+                        self.liveTableView.dataPlist = liveMutableArr;
+                        [self.liveTableView reloadData];
+                        //                    [self hideHud];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
+            //                    [self hideHud]
+            [self.liveTableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -73,7 +210,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
     self.navigationController.navigationBar.titleTextAttributes =  @{
                                                                      NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],                         NSFontAttributeName:[UIFont systemFontOfSize:18]                              };
-    
+    [self getRequestImpressionLiveList];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -124,6 +261,8 @@
             //            __weak typeof(sizeView) weakView = sizeView;
             sizeView.bottomBlock = ^(DogCategoryModel *sizeModel){
                 DLog(@"%@", sizeModel);
+                weakSelf.noneView.hidden = YES;
+                [weakSelf getRequestFilterLiveListWithSize:sizeModel];
             };
         };
         _filteButtonView.ageBlock = ^(){
@@ -182,6 +321,10 @@
             
             LivingViewController *livingVC = [[LivingViewController alloc] init];
             livingVC.liveID = model.liveId;
+            livingVC.liverName = model.merchantName;
+            livingVC.doginfos = dogInfos;
+            livingVC.chatRoomID = model.chatroom;
+
             livingVC.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:livingVC animated:YES];
             
@@ -190,6 +333,19 @@
     return _liveTableView;
 }
 
+- (NoneFocusView *)noneView {
+    if (!_noneView) {
+        _noneView = [[NoneFocusView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH, SCREEN_HEIGHT - 154)];
+        _noneView.hidden = YES;
+        _noneView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
+        __weak typeof(self) weakSelf = self;
+        _noneView.requestBlock = ^(NSString *text){
+            weakSelf.noneView.hidden = YES;
+            [weakSelf getRequestImpressionLiveList];
+        };
+    }
+    return _noneView;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

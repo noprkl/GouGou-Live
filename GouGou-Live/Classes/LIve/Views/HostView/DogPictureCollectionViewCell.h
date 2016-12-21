@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class DogTypeCellModel;
+@class HostLiveModel;
 
 @interface DogPictureCollectionViewCell : UICollectionViewCell
 
 /** cell模型 */
-@property (strong,nonatomic) DogTypeCellModel *typeModel;
+@property (strong,nonatomic) HostLiveModel *model;
 
 @end

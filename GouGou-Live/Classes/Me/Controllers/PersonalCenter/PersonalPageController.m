@@ -13,13 +13,14 @@
 #import "DogTypeCellModel.h"
 #import "MyPagePictureView.h"
 #import "PromptView.h"
-
+#import "FavoriteLivePlayerVc.h"
 #import "CertificateViewController.h"
 #import "MerchantViewController.h"
 
 #import "ManagePictureaViewController.h"
 
 #import "MyAlbumsModel.h" // 相册model
+#import "FocusAndFansModel.h"
 #import "PicturesViewController.h" // 照片列表
 
 @interface PersonalPageController ()<UITableViewDelegate, UITableViewDataSource>
@@ -28,12 +29,14 @@
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
+@property(nonatomic, strong) NSArray *fansArray; /**< 粉丝数 */
 
 @property(nonatomic, strong) NSArray *commentArr; /**< 评论数 */
 
-@property(nonatomic, strong) NSArray *dogCardArr; /**< 临时数据 */
+@property(nonatomic, strong) NSMutableArray *dogCardArr; /**< 临时数据 */
 
 @property(nonatomic, strong) NSArray *picturesArr; /**< 临时数据 */
+@property (nonatomic, assign) NSInteger pleasureCount; /**< 用户满意度 */
 
 @end
 
@@ -73,13 +76,76 @@ static NSString *cellid4 = @"cellid4";
         }else{
             self.commentArr = successJson[@"data"][@"info"];
         }
-        [UserInfos sharedUser].commentCount = self.commentArr.count;
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
     
 }
+// 请求粉丝数据
+- (void)postRequestGetFans {
+    //[[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
+                           @"user_id":@(_personalID)
+                           };
+    [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        
+        if (successJson) {
+            //            DLog(@"%@", successJson);
+            self.fansArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [UserInfos sharedUser].fansCount = self.fansArray.count;
+            //            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
+// 满意度
+- (void)getUserPleasure {
+    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@(_personalID)
+                           };
+    [self getRequestWithPath:API_home params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            // 分数四舍五入
+            CGFloat source = [successJson[@"data"] floatValue];
+            NSInteger count = source * 10;
+            if (count % 10 > 5) {
+                self.pleasureCount = count / 10 + 1;
+            }else{
+                self.pleasureCount = count / 10;
+            }
+            DLog(@"%ld", self.pleasureCount);
+            [self.tableView reloadData];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+// 回放
+- (void)getRequestMyLive {
+    NSDictionary *dict = @{@"user_id":@(_personalID)};
+    [self getRequestWithPath:API_Seller_live params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.dogCardArr removeAllObjects];
+        NSArray *playBackarr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        if (playBackarr.count < 2) {
+            [self.dogCardArr addObjectsFromArray:playBackarr];
+        }else{
+            [self.dogCardArr addObject:playBackarr[0]];
+            [self.dogCardArr addObject:playBackarr[1]];
+        }
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -95,6 +161,10 @@ static NSString *cellid4 = @"cellid4";
     [self getRequestAlbums];
     // 请求评论数
     [self getRequestComment];
+    // 请求满意度
+    [self getUserPleasure];
+    // 请求
+    [self getRequestMyLive];
 }
 
 - (void)initUI {
@@ -111,6 +181,12 @@ static NSString *cellid4 = @"cellid4";
         _dataArr = @[@[@"头部"], @[@"简介"], @[@"实名认证", @"商家认证"],@[@"回放"],@[@"相册"]];
     }
     return _dataArr;
+}
+- (NSArray *)fansArray {
+    if (!_fansArray) {
+        _fansArray = [NSArray array];
+    }
+    return _fansArray;
 }
 - (NSArray *)commentArr {
     if (!_commentArr) {
@@ -156,9 +232,10 @@ static NSString *cellid4 = @"cellid4";
                 cell0.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
-                headerView.fansCount = [UserInfos sharedUser].fansCount;
-                headerView.commentCount = [UserInfos sharedUser].commentCount;
-               
+                headerView.fansCount = self.fansArray.count;
+                headerView.commentCount = self.commentArr.count;
+                headerView.pleasureCount = self.pleasureCount;
+                
                 headerView.backgroundColor = [UIColor whiteColor];
                 [cell0.contentView addSubview:headerView];
                 return cell0;
@@ -230,34 +307,14 @@ static NSString *cellid4 = @"cellid4";
                     playbackViewHeight = self.dogCardArr.count * 125 + 43;
                 }
                 
-                PlayBackView *playbackView = [[PlayBackView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, playbackViewHeight) withPlayBackMessage:self.dogCardArr clickPlaybackBtn:^(UIControl *control){
-                    
-                    NSInteger btnTag = control.tag - 40;
-                    if (self.dogCardArr.count == 0) {
-                        
-                    }else{
-                        if (self.dogCardArr.count == 1) {
-                            switch (btnTag) {
-                                case 0:
-                                    DLog(@"第一个回放");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }else if (self.dogCardArr.count == 2){
-                            switch (btnTag) {
-                                case 0:
-                                    DLog(@"第一个回放");
-                                    break;
-                                case 1:
-                                    DLog(@"第二个回放");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }];
+                PlayBackView *playbackView = [[PlayBackView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, playbackViewHeight) style:(UITableViewStylePlain)];
+                playbackView.AVArray = self.dogCardArr;
+                playbackView.playBackBlock = ^(PlayBackModel *model){
+                    FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
+                    //                                playerVc.liveID = liveID;
+                    playerVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:playerVc animated:YES];
+                };
                 playbackView.backgroundColor = [UIColor whiteColor];
                 //                [cell addSubview:playbackView];
                 [cell3.contentView addSubview:playbackView];
@@ -304,14 +361,9 @@ static NSString *cellid4 = @"cellid4";
 - (void)test1 {
     DLog(@"test");
 }
-- (NSArray *)dogCardArr {
+- (NSMutableArray *)dogCardArr {
     if (!_dogCardArr) {
-        _dogCardArr = [NSArray array];
-        
-        DogTypeCellModel *cardModel1 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
-        DogTypeCellModel *cardModel2 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
-        
-        _dogCardArr = @[cardModel1, cardModel2];
+        _dogCardArr = [NSMutableArray array];
     }
     return _dogCardArr;
 }

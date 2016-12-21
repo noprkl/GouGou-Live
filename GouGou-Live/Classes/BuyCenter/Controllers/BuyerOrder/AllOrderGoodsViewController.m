@@ -183,7 +183,7 @@ static NSString * closeCell = @"closeCell";
         return 345;
         
     }
-    return 225;
+    return 255;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -504,13 +504,19 @@ static NSString * closeCell = @"closeCell";
             BuyerCloseOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
             cell.model = model;
             cell.orderState = @"交易关闭";
+            cell.deleBlock = ^(){
+                [self clickDeleteOrder:model];
+            };
             return cell;
         }
     if ([model.status integerValue] == 21){ // 21：交易关闭
             
             BuyerCloseOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
-//            cell.model = model;
+            cell.model = model;
             cell.orderState = @"交易关闭";
+        cell.deleBlock = ^(){
+            [self clickDeleteOrder:model];
+        };
             return cell;
         }
     return rootCell;

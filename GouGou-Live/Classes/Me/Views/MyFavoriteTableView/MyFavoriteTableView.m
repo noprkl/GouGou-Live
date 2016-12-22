@@ -98,7 +98,7 @@ static NSString * dogCell = @"dogCellID";
         cell.model = model;
         cell.deleBlock = ^(){
             if (_deleLiveBlock) {
-                _deleLiveBlock(model.ID);
+                _deleLiveBlock(model.liveId);
             }
         };
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

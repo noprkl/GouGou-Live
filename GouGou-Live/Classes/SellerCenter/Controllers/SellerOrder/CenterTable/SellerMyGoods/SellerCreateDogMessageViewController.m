@@ -11,7 +11,7 @@
 #import "AddUpdataImagesView.h" // 添加狗狗图片
 
 
-#import "DogAgeFilter.h" // 年龄
+#import "AddDogAgeAlertView.h" // 年龄
 #import "DogSizeFilter.h" // 体型
 #import "SellerAddImpressViewController.h" //印象
 #import "AddDogColorAlertView.h" // 狗狗颜色
@@ -44,7 +44,7 @@
 @property(nonatomic, assign) BOOL isFirstZero; /**< 首位为0 */
 
 @property(nonatomic, strong) UILabel *ageLabel; /**< 年龄 */
-@property(nonatomic, strong) DogCategoryModel *ageModel; /**< 年龄 */
+@property(nonatomic, assign) NSInteger age; /**< 年龄 */
 @property(nonatomic, strong) UILabel *sizeLabel; /**< 体型 */
 @property(nonatomic, strong) DogCategoryModel *sizeModel; /**< 体型 */
 @property(nonatomic, strong) UILabel *colorLabel; /**< 颜色 */
@@ -171,7 +171,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     if (self.nameText.text.length == 0) {
         self.nameText.text = @"(未起名)";
     }
-    if (self.ageModel.name.length == 0) {
+    if (self.age == 0) {
         [self showAlert:@"请选择狗狗年龄"];
     }else {
         if (self.sizeModel.name.length == 0) {
@@ -200,7 +200,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                 NSString *idStr = [self.impressModels componentsJoinedByString:@"|"];
                                 // 图片地址
                                 for (NSInteger i = 0; i < self.photoArr.count; i ++) {
-                                    NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i]];
+                                    NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
                                     NSDictionary *dict = @{
                                                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                            @"img":base64
@@ -219,7 +219,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                                        @"color_id":@([self.colorModel.ID integerValue]),
                                                                        @"kind_id":@([self.typeModel.ID integerValue]),
                                                                        @"size_id":@([self.sizeModel.ID integerValue]),
-                                                                       @"age_id":@([self.ageModel.ID integerValue]),
+                                                                       @"age_time":@(self.age),
+                                                                       @"age_name":self.ageLabel.text,
                                                                        @"price_old":self.priceText.text,
                                                                        @"price":self.priceText.text,
                                                                        @"deposit":self.deposit.text,
@@ -426,26 +427,16 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [self textFieldShouldReturn:self.nameText];
             [self textFieldShouldReturn:self.priceText];
             [self textFieldShouldReturn:self.noteText];
-            DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
+            AddDogAgeAlertView *ageView = [[AddDogAgeAlertView alloc] init];
 
-            NSDictionary *dict = @{
-                                   @"type":@(1)
-                                   };
-            [self getRequestWithPath:API_Category params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-                 ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
-            }];
-            
             [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
-                self.ageLabel.attributedText = [self getCellTextWith:minString.name];
-                self.ageModel = minString;
-                DLog(@"%@--%@", minString, maxString);
+            ageView.ageBlock = ^(NSInteger age){
+                self.ageLabel.attributedText = [self getCellTextWith:[NSString getAgeFormInt:age]];
+                self.age = age;
+                DLog(@"%ld", age);
             };
         }
             break;

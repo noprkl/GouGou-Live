@@ -20,6 +20,7 @@
 #import "MerchantViewController.h" //商家认证
 #import "CreateLiveViewController.h" // 创建直播
 #import "FocusAndFansModel.h" 
+#import "PersonalMessageModel.h"
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -106,6 +107,24 @@
         DLog(@"%@", error);
     }];
 }
+- (void)getrequestPersonalMessage {
+    NSDictionary *dict = @{
+                           @"id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            PersonalMessageModel *model = [arr lastObject];
+            [UserInfos sharedUser].ismerchant = model.isMerchant;
+            [UserInfos sharedUser].isreal = model.isReal;
+            [UserInfos setUser];
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -128,6 +147,7 @@
         [self postRequestGetFans];
         [self postRequestGetFocus];
         [self postGetUserAsset];
+        [self getrequestPersonalMessage];
     }
 
 
@@ -224,14 +244,15 @@
     cell.textLabel.text = cellText;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+    cell.detailTextLabel.text = @"";
     if ([UserInfos getUser]) { // 如果已经登录
         
         if ([cellText isEqualToString:@"账户"]) {
             
             cell.detailTextLabel.text = self.userAsset;
         }
-        if ([cellText isEqualToString:@"实名认证"]) { //  0.未认证 2.审核 3.已认证 4.认证失败
-            if ([[UserInfos sharedUser].isreal isEqualToString:@"0"]) {
+        if ([cellText isEqualToString:@"实名认证"]) { //  1.未认证 2.审核 3.已认证 4.认证失败
+            if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) {
                 cell.detailTextLabel.text = @"未认证";
             }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
                 cell.detailTextLabel.text = @"审核中";
@@ -264,7 +285,6 @@
             cell.detailTextLabel.text = @"未认证";
         }
     }
-    
     return cell;
 }
 // cell富文本

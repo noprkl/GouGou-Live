@@ -113,8 +113,11 @@ static NSString * watchCell = @"watchCellID";
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // 回放界面
+    
     FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
-//    playerVc.liveID = liveID;
+    PlayBackModel *model = self.dataArr[indexPath.row];
+
+    playerVc.liveID = model.liveId;
     playerVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:playerVc animated:YES];
 }

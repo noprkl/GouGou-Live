@@ -117,11 +117,6 @@
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     
-    self.SinaShareBtn.tag = 900;
-    self.WXShareBtn.tag = 901;
-    self.QQShareBtn.tag = 902;
-    self.TencentShareBtn.tag = 903;
-    self.friendShareBtn.tag = 904;
 }
 - (void)initUI {
     self.edgesForExtendedLayout = 0;
@@ -376,26 +371,33 @@
                 streamVc.chatRoomID = successJson[@"data"][@"chatroom"][@"data"][@"id"];
                 streamVc.hidesBottomBarWhenPushed = YES;
                 NSInteger tag = self.lastBtn.tag;
+                [self.navigationController pushViewController:streamVc animated:YES];
                 DLog(@"%@", streamModel.rtmp);
-                if (tag == 900) {
-                    [CreateLiveViewController SinaShare:streamModel.rtmp];
-                    [self.navigationController pushViewController:streamVc animated:YES];
-                }else if (tag == 901){
-                    [CreateLiveViewController WChatShare:streamModel.rtmp];
-                    [self.navigationController pushViewController:streamVc animated:YES];
-
-                }else if (tag == 902){
-                    [CreateLiveViewController QQShare:streamModel.rtmp];
-                    [self.navigationController pushViewController:streamVc animated:YES];
-
-                }else if (tag == 903){
-                    [CreateLiveViewController TencentShare:streamModel.rtmp];
-                    [self.navigationController pushViewController:streamVc animated:YES];
-
-                }else if (tag == 904){
-                    [CreateLiveViewController WechatTimeShare:streamModel.rtmp];
-                    [self.navigationController pushViewController:streamVc animated:YES];
-                }
+//                if (tag == 900) {
+//                    [CreateLiveViewController SinaShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//                    
+//                }else if (tag == 901){
+//                    [CreateLiveViewController WChatShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//
+//                }else if (tag == 902){
+//                    [CreateLiveViewController QQShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//
+//                }else if (tag == 903){
+//                    [CreateLiveViewController TencentShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//
+//                }else if (tag == 904){
+//                    [CreateLiveViewController WechatTimeShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//                }
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);
@@ -460,8 +462,8 @@
     if (!_QQShareBtn) {
         _QQShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_QQShareBtn setImage:[UIImage imageNamed:@"QQgray"] forState:(UIControlStateNormal)];
-        [_QQShareBtn setImage:[UIImage imageNamed:@"QQ"] forState:(UIControlStateSelected)];
-
+        [_QQShareBtn setImage:[UIImage imageNamed:@"QQ-(1)"] forState:(UIControlStateSelected)];
+        _QQShareBtn.tag = 902;
         [_QQShareBtn addTarget:self action:@selector(ClickQQShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _QQShareBtn;
@@ -471,6 +473,7 @@
         _WXShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_WXShareBtn setImage:[UIImage imageNamed:@"微信未点击"] forState:(UIControlStateNormal)];
         [_WXShareBtn setImage:[UIImage imageNamed:@"微信select"] forState:(UIControlStateSelected)];
+        _WXShareBtn.tag = 901;
 
         [_WXShareBtn addTarget:self action:@selector(ClickWXShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -481,7 +484,9 @@
         _SinaShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_SinaShareBtn setImage:[UIImage imageNamed:@"weibo_btn"] forState:(UIControlStateNormal)];
         [_SinaShareBtn setImage:[UIImage imageNamed:@"新浪微博"] forState:(UIControlStateSelected)];
-        self.lastBtn = _SinaShareBtn;
+//        self.lastBtn = _SinaShareBtn;
+        _SinaShareBtn.tag = 900;
+
         _SinaShareBtn.selected = YES;
         [_SinaShareBtn addTarget:self action:@selector(ClickSinaShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -492,6 +497,7 @@
         _TencentShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_TencentShareBtn setImage:[UIImage imageNamed:@"空间"] forState:(UIControlStateNormal)];
         [_TencentShareBtn setImage:[UIImage imageNamed:@"QQ空间"] forState:(UIControlStateSelected)];
+        _TencentShareBtn.tag = 903;
 
         [_TencentShareBtn addTarget:self action:@selector(ClickTencentShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -502,6 +508,7 @@
         _friendShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_friendShareBtn setImage:[UIImage imageNamed:@"朋友圈"] forState:(UIControlStateNormal)];
         [_friendShareBtn setImage:[UIImage imageNamed:@"朋友圈selected"] forState:(UIControlStateSelected)];
+        _friendShareBtn.tag = 904;
 
         [_friendShareBtn addTarget:self action:@selector(ClickFriendShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }

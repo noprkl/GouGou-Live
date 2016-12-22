@@ -134,6 +134,8 @@
 #define API_home @"api/UserService/home"
 /** 我的直播 */
 #define API_Seller_live @"api/UserService/seller_live"
+/** 个人信息 */
+#define API_Personal @"api/UserService/personal"
 
 
 #pragma mark - 收货地址
@@ -267,10 +269,20 @@
 #define API_Look_like @"api/ProductService/look_like"
 /** 体型/印象搜索 */
 #define API_Live_retrieve @"api/ProductService/live_retrieve"
+/** 年龄搜索 */
+#define API_Age_screening @"api/ProductService/age_screening"
+/** 价格搜索 */
+#define API_Price_screening @"api/ProductService/price_screening"
+/** 印象/年龄、价格搜索 */
+#define API_Live_list_new_im @"api/ProductService/Live_new_list_im"
+
+
 /** 更多印象 */
 #define API_Impression @"api/ProductService/Impression"
 /** 直播视频保存 */
 #define API_save @"api/ProductService/save"
+/** 直播视频回放 */
+#define API_PlayBack @"api/ProductService/playback"
 
 
 

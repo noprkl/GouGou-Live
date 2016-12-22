@@ -11,7 +11,7 @@
 #import "LivingSendMessageView.h" // 编辑信息
 #import "LinvingShowDogView.h" // 表格
 
-#import "TalkingViewController.h" // 弹幕
+#import "MediaStreamChatRoomVcViewController.h" // 弹幕
 #import "ShareAlertView.h" // 分享
 #import "ShareBtnModel.h" // 分享模型
 #import "NSString+MD5Code.h"
@@ -48,7 +48,7 @@
 
 @property(nonatomic, strong) LinvingShowDogView *showDogView; /**< 展示狗狗 */
 
-@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
+@property(nonatomic, strong) MediaStreamChatRoomVcViewController *talkingVc; /**< 弹窗控制器 */
 
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
 
@@ -61,8 +61,14 @@
                            };
     [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.showDogView.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-        [self.showDogView reloadData];
+        if (successJson[@"data"]) {
+            self.showDogView.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [self.showDogView reloadData];
+        }else{
+            self.showDogView.hidden = YES;
+            self.showingBtn.hidden = YES;
+            self.showingPrice.hidden = YES;
+        }
     } error:^(NSError *error) {
         
     }];
@@ -85,6 +91,13 @@
     
     // 出去的时候销毁session
     [self.session destroy];
+
+    // 取消横屏
+    
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+        [self forceOrientation:UIInterfaceOrientationPortrait];
+    }
     // 保存视频
     NSDictionary *dict =@{
                           @"live_id":_liveID
@@ -94,12 +107,7 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-    // 取消横屏
-    
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-        [self forceOrientation:UIInterfaceOrientationPortrait];
-    }
+
 }
 // 切换横竖屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -153,7 +161,20 @@
     [self.session.previewView makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
+    self.session.delegate = self;
     [self initUI];
+}
+// 推流代理
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state {
+    // 推流结束
+    if (state == PLStreamStateDisconnected) {
+        
+    }
+}
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didDisconnectWithError:(NSError *)error {
+    // 非正常断开的情况
+    // 重连
+    
 }
 // 设置Ui
 - (void)initUI {
@@ -384,12 +405,11 @@
     return _sendMessageView;
 }
 
-- (TalkingViewController *)talkingVc {
+- (MediaStreamChatRoomVcViewController *)talkingVc {
     if (!_talkingVc) {
-        _talkingVc = [[TalkingViewController alloc] init];
+        _talkingVc = [[MediaStreamChatRoomVcViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         _talkingVc.roomID = _chatRoomID;
-        _talkingVc.isHidText = YES;
     }
     return _talkingVc;
 }

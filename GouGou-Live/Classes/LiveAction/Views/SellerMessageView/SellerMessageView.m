@@ -302,7 +302,7 @@
 - (UILabel *)certifStateLabel {
     if (!_certifStateLabel) {
         _certifStateLabel = [[UILabel alloc] init];
-        _certifStateLabel.text = @"以人工复查";
+        _certifStateLabel.text = @"已人工复查";
         _certifStateLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         _certifStateLabel.font = [UIFont systemFontOfSize:10];
     }

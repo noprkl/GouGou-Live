@@ -138,7 +138,21 @@
     }];
     
 }
-
+- (void)setModel:(PlayBackModel *)model {
+    _model = model;
+    if (model.userImgUrl != NULL) {
+        NSString *imgUrl = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
+        [self.photoImage sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+    }
+    if (model.snapshot != NULL) {
+        [self.dogImage sd_setImageWithURL:[NSURL URLWithString:model.snapshot] placeholderImage:[UIImage imageNamed:@"直播图"]];
+    }
+    self.businessName.text = model.merchantName;
+    self.descLabel.text = model.name;
+    
+    self.sellLabel.text = [NSString stringWithFormat:@"展%ld售%ld", model.pNum, (model.pNum - model.num)];
+    self.dataLabel.text = [NSString stringFromDateString:model.createTime];
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UIImageView *)photoImage {

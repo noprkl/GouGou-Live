@@ -67,6 +67,10 @@
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
+        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        if (successJson[@"data"][@"num"] == 0) { // 如果为0刷新
+            [self.tableView reloadData];
+        }
         self.tableView.hidden = NO;
 
 //        [self showHudInView:self.view hint:@"刷新中"];
@@ -124,7 +128,149 @@
                            @"size":@([size.ID intValue])
                            };
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
-
+        DLog(@"%@", successJson);
+        [self.tableView.dataPlist removeAllObjects];
+        [self.tableView.dogInfos removeAllObjects];
+        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneView.hidden = NO;
+            self.tableView.hidden = YES;
+        }else{
+            self.noneView.hidden = YES;
+            self.tableView.hidden = NO;
+            /** 所有信息 */
+            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            /** 直播信息 */
+            NSMutableArray *liveMutableArr = [NSMutableArray array];
+            /** 狗狗信息 */
+            NSMutableArray *dogInfos = [NSMutableArray array];
+            // 高度
+            __block CGFloat height = 0;
+            // 请求狗狗信息
+            for (NSInteger i = 0; i < liveArr.count; i ++) {
+                
+                LiveViewCellModel *model = liveArr[i];
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    //                DLog(@"%@", successJson);
+                    if (model.pNum == 0) {
+                        height += 240;
+                        [dogInfos addObject:@[]];
+                        [liveMutableArr addObject:model];
+                        
+                    }else{
+                        height += 357;
+                        
+                        if (successJson[@"data"]) {
+                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                            [liveMutableArr addObject:model];
+                        }
+                    }
+                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                        
+                        CGRect rect = self.tableView.frame;
+                        rect.size.height = height;
+                        self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
+                        self.tableView.frame = rect;
+                        self.tableView.dogInfos = dogInfos;
+                        self.tableView.dataPlist = liveMutableArr;
+                        [self.tableView reloadData];
+                        //                    [self hideHud];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
+            //                    [self hideHud]
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+- (void)getRequestFilterLiveListWithMinAge:(DogCategoryModel *)minAge MaxAge:(DogCategoryModel *)maxAge  {
+    NSDictionary *dict = @{
+//                           @"size":@([size.ID intValue])
+                           @"t":@([minAge.ID intValue]),
+                           @"e":@([maxAge.ID intValue]),
+                           @"page":@(1),
+                           @"pageSize":@(10)
+                           };
+    [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self.tableView.dataPlist removeAllObjects];
+        [self.tableView.dogInfos removeAllObjects];
+        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneView.hidden = NO;
+            self.tableView.hidden = YES;
+        }else{
+            self.noneView.hidden = YES;
+            self.tableView.hidden = NO;
+            /** 所有信息 */
+            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            /** 直播信息 */
+            NSMutableArray *liveMutableArr = [NSMutableArray array];
+            /** 狗狗信息 */
+            NSMutableArray *dogInfos = [NSMutableArray array];
+            // 高度
+            __block CGFloat height = 0;
+            // 请求狗狗信息
+            for (NSInteger i = 0; i < liveArr.count; i ++) {
+                
+                LiveViewCellModel *model = liveArr[i];
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    //                DLog(@"%@", successJson);
+                    if (model.pNum == 0) {
+                        height += 240;
+                        [dogInfos addObject:@[]];
+                        [liveMutableArr addObject:model];
+                        
+                    }else{
+                        height += 357;
+                        
+                        if (successJson[@"data"]) {
+                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                            [liveMutableArr addObject:model];
+                        }
+                    }
+                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                        
+                        CGRect rect = self.tableView.frame;
+                        rect.size.height = height;
+                        self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
+                        self.tableView.frame = rect;
+                        self.tableView.dogInfos = dogInfos;
+                        self.tableView.dataPlist = liveMutableArr;
+                        [self.tableView reloadData];
+                        //                    [self hideHud];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
+            //                    [self hideHud]
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+- (void)getRequestFilterLiveListWithMinPrice:(DogCategoryModel *)minPrice MaxPrice:(DogCategoryModel *)maxPrice  {
+    NSDictionary *dict = @{
+                           //                           @"size":@([size.ID intValue])
+                           @"t":@([minPrice.ID intValue]),
+                           @"e":@([maxPrice.ID intValue]),
+                           @"page":@(1),
+                           @"pageSize":@(10)
+                           };
+    [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
+        
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -331,7 +477,7 @@
             //            __weak typeof(sizeView) weakView = sizeView;
             
             ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
-                
+                [weakSelf getRequestFilterLiveListWithMinAge:minString MaxAge:maxString];
             };
 
         };
@@ -351,7 +497,7 @@
             [priceView show];
             
             priceView.priceRangeBlock = ^(DogCategoryModel *minModel, DogCategoryModel *maxModel) {
-                
+                [weakSelf getRequestFilterLiveListWithMinPrice:minModel MaxPrice:maxModel];
             };
         };
     }

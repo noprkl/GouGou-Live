@@ -135,7 +135,6 @@
                                       @"user_id":[UserInfos sharedUser].ID
                                       };
         [self getRequestWithPath:API_Add_view_history params:dictHistory success:^(id successJson) {
-            DLog(@"%@", successJson);
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -171,6 +170,8 @@
 
 - (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error {
     // 当发生错误时，会回调这个方法
+    // 重连
+    [self.player play];
     if (error) {
         self.notePlayer.hidden = NO;
         self.notePlayer.text = @"出错了";
@@ -184,7 +185,7 @@
 #pragma mark
 #pragma mark - UI
 - (void)initUI {
-    
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     // 初始化 PLPlayerOption 对象
     PLPlayerOption *playerOption = [PLPlayerOption defaultOption];
     
@@ -193,13 +194,15 @@
     [playerOption setOptionValue:@2000 forKey:PLPlayerOptionKeyMaxL1BufferDuration];
     [playerOption setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
     [playerOption setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
-    [playerOption setOptionValue:@(kPLLogNone) forKey:PLPlayerOptionKeyLogLevel];
-
+    [playerOption setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
+    
     NSURL *url = [NSURL URLWithString:self.stream.rtmp];
     DLog(@"%@", url);
     self.player = [[PLPlayer alloc] initWithURL:url option:playerOption];
     self.player.delegate = self;
     self.player.playerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 225);
+
+    self.player.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     // 添加子视图
     [self.view addSubview:self.player.playerView];
     
@@ -235,6 +238,7 @@
     [self.backBtn makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.player.playerView.left).offset(15);
         make.top.equalTo(self.player.playerView.top).offset(10);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
     [self.roomNameLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
@@ -297,12 +301,13 @@
 //        [self.childVCS addObject:vc];
 //    }
     // 聊天
-    TalkingViewController *talkVC = [[TalkingViewController alloc] init];
+    TalkingViewController *talkVC = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
     talkVC.roomID = _chatRoomID;
+    talkVC.liverid = _liverId;
+//    talkVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
 //    talkVC.liverImgUrl = _liverIcon;
 //    talkVC.liverName = _liverName;
     DLog(@"%@", [talkVC.view subviews]);
-    talkVC.isHidText = NO;
     [self.childVCS addObject:talkVC];
     [self addChildViewController:talkVC];
    
@@ -348,13 +353,13 @@
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     // 每个子控制器的宽高
     CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height;
+    CGFloat height = self.view.frame.size.height - 290;
     
     // 偏移量 - x
     // 如果是通过点击狗狗卡片进入的,滑到狗狗位置
-    if (_isDogCard) {
-        [scrollView setContentOffset:CGPointMake(width, 0)];
-    }
+//    if (_isDogCard) {
+//        [scrollView setContentOffset:CGPointMake(width, 0)];
+//    }
     CGFloat offset = scrollView.contentOffset.x;
     
     // 获取视图的索引
@@ -362,12 +367,30 @@
     
     //根据索引返回vc的引用
     UIViewController *childVC = self.childViewControllers[index];
+//    if ([childVC isKindOfClass:[TalkingViewController class]]) {
+//        childVC.view.frame = CGRectMake(offset, 0, width, height);
+//    }
     
+    // 判断当前vc是否加载过
+    if([childVC isKindOfClass:[TalkingViewController class]]) {
+        CGRect rect = childVC.view.frame;
+        
+        rect = CGRectMake(offset, 0, width, height);
+        childVC.view.frame = rect;
+    }
+    if ([childVC isViewLoaded]) return;
+    
+    // 给没加载过的控制器设置frame
+    childVC.view.frame = CGRectMake(offset, 0, width, height);
+    DLog(@"%@", NSStringFromCGRect(childVC.view.frame));
+    // 添加控制器视图到contentScrollView上
+    [scrollView addSubview:childVC.view];
+
 #pragma mark - 隐藏键盘
     if ([self.lastVC isKindOfClass:NSClassFromString(@"TalkingViewController")]) {
         
         TalkingViewController *talkVC = (TalkingViewController *)self.lastVC;
-        
+
         [talkVC.textField resignFirstResponder];
         
     }else if ([self.lastVC isKindOfClass:NSClassFromString(@"ServiceViewController")]){
@@ -378,16 +401,6 @@
     }
     
     self.lastVC = childVC;
-
-    // 判断当前vc是否加载过
-    if ([childVC isViewLoaded]) return;
-    
-    // 给没加载过的控制器设置frame
-    childVC.view.frame = CGRectMake(offset, 0, width, height - 290);
-    DLog(@"%@", NSStringFromCGRect(childVC.view.frame));
-    // 添加控制器视图到contentScrollView上
-    [scrollView addSubview:childVC.view];
-    
 }
 // 减速结束时调用 加载子控制器view的方法
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

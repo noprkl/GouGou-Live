@@ -10,7 +10,6 @@
 
 @interface FavoriteLivePlayerVc : BaseViewController
 
-
 @property (nonatomic, strong) NSString *liveID; /**< 直播id */
 
 @end

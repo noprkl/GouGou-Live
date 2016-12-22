@@ -76,6 +76,9 @@
                 [self.showingImg sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
             }
             self.showingPrice.text = showIngDog.price;
+        }else{
+            self.showingImg.hidden = YES;
+            self.showingPrice.hidden = YES;
         }
         LiveRootStreamModel *rootSteam = [LiveRootStreamModel mj_objectWithKeyValues:self.rootModel.steam];
         LiveListRespModel *resp = [LiveListRespModel mj_objectWithKeyValues:rootSteam.resp];
@@ -83,6 +86,7 @@
         LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:rootSteam.steam];
         self.stream = stream;
         [self playerLiveMedia];
+        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -116,7 +120,7 @@
     if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
-    [self.player stop];
+//    [self.player stop];
 }
 // 切换横竖屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -153,7 +157,9 @@
     NSURL *url = [NSURL URLWithString:self.stream.rtmp];
     self.player = [PLPlayer playerWithURL:url option:playerOption];
     self.player.delegate = self;
-    self.player.playerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 225);
+    self.player.playerView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH - 10);
+    self.player.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+ 
     // 添加子视图
     [self.view addSubview:self.player.playerView];
     // 播放
@@ -461,7 +467,6 @@
     if (!_talkingVc) {
         _talkingVc = [[TalkingViewController alloc] init];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
-        _talkingVc.isHidText = YES;
     }
     return _talkingVc;
 }

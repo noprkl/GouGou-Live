@@ -12,10 +12,7 @@
 #import "PlayerBackDownView.h"
 
 @interface FavoriteLivePlayerVc ()
-
 {
-
-
     BOOL _isSliding; // 是否正在滑动
     NSTimer *_timer;
     id _playTimeObserver; // 观察者
@@ -43,15 +40,26 @@
 // 播放状态
 @property (nonatomic, assign) BOOL isPlaying;
 
-// 是否横屏
-@property (nonatomic, assign) BOOL isLandscape;
+@property (nonatomic, strong) NSString *playBackURL; /**< 回放地址 */
 
-// 是否锁屏
-@property (nonatomic, assign) BOOL isLock;
+@property (nonatomic, strong) UILabel *playAlert; /**< 播放提示 */
+
 @end
 
 @implementation FavoriteLivePlayerVc
-
+- (void)getRequestPlayBackURL {
+    NSDictionary *dict = @{@"live_id":_liveID};
+    DLog(@"%@", dict);
+    [self getRequestWithPath:API_PlayBack params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        
+        self.liveTitleLabel.text = successJson[@"merchant_name"];
+        self.playBackURL = successJson[@"live"];
+        [self play];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // 进入横屏
@@ -59,7 +67,7 @@
     if (orientation == UIDeviceOrientationPortrait) {
         [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
     }
-    
+    [self getRequestPlayBackURL];
     // 设置初始化
     [self initUI];
         // setPortraintLayout
@@ -92,25 +100,17 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    [self updatePlayerWithURL:[NSURL URLWithString:@"http://v1.mukewang.com/19954d8f-e2c2-4c0a-b8c1-a4c826b5ca8b/L.mp4"]];
-////    [self updatePlayerWithURL:[NSURL URLWithString:urlStr]];
-
     self.view.backgroundColor = [UIColor whiteColor];
-    [self play];
 }
 
 #pragma mark
 #pragma mark - Action
 - (AVPlayer *)player{
     if (!_player) {
-        NSURL *url = [NSURL URLWithString:@"http://v1.mukewang.com/19954d8f-e2c2-4c0a-b8c1-a4c826b5ca8b/L.mp4"];
+        NSURL *url = [NSURL URLWithString:@"http://ogzlwdrm8.bkt.clouddn.com/cc22908a24122e6ddd72db68de556540.m3u8"];
         [self updatePlayerWithURL:url];
-        //        _playerItem = [AVPlayerItem playerItemWithURL:url];
-        //
         _player = [AVPlayer playerWithPlayerItem:_playerItem];
         _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-//        _playerLayer.frame = self.view.frame;
         _isSliding = NO;
         DLog(@"%@", NSStringFromCGRect(self.playerView.frame));
         _playerLayer.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
@@ -180,7 +180,6 @@
 - (void)addObserverAndNotification {
     [self.playerItem addObserver:self forKeyPath:@"status" options:(NSKeyValueObservingOptionNew) context:nil]; // 观察status属性， 一共有三种属性
     [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil]; // 观察缓冲进度
-    [self.playerItem addObserver:self forKeyPath:@"currentTime" options:(NSKeyValueObservingOptionNew) context:nil];
     [self addNotification]; // 添加通知
 }
 
@@ -238,10 +237,11 @@
                 [self play];
                 
                 [self monitoringPlayback:self.playerItem]; // 监听播放
-
+                self.playAlert.hidden = YES;
             } else if (status == AVPlayerStatusFailed) {
                 DLog(@"AVPlayerStatusFailed");
                 [self showAlert:@"播放失败"];
+                self.playAlert.hidden = NO;
             } else {
                 DLog(@"AVPlayerStatusUnknown");
             }
@@ -310,7 +310,7 @@
     [self.progressView addSubview:self.progressSlider];
     [self.downView addSubview:self.endTimeLabel];
     [self.downView addSubview:self.screenBtn];
-  
+    [self.playerView addSubview:self.playAlert];
     [self makeConstraints];
 }
 - (void)makeConstraints {
@@ -319,15 +319,15 @@
     }];
     [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.playerView);
-        make.height.equalTo(44);
+        make.height.equalTo(54);
     }];
     [self.backBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY);
+        make.centerY.equalTo(self.topView.centerY).offset(10);
         make.left.equalTo(self.topView.left).offset(20);
     }];
     [self.liveTitleLabel remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY);
-        make.left.equalTo(self.topView.left).offset(30);
+        make.centerY.equalTo(self.topView.centerY).offset(10);
+        make.left.equalTo(self.topView.left).offset(40);
         make.right.equalTo(self.topView.right).offset(-20);
     }];
     [self.downView remakeConstraints:^(MASConstraintMaker *make) {
@@ -360,6 +360,9 @@
         make.centerY.equalTo(self.downView.centerY);
         make.right.equalTo(self.downView.right).offset(-40);
     }];
+    [self.playAlert remakeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.playerView.center);
+    }];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -377,7 +380,7 @@
         _progressSlider = [[UISlider alloc] init];
         _progressSlider.minimumValue = 0;
         _progressSlider.value = 0;
-        [_progressSlider setThumbImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateNormal)];
+        [_progressSlider setThumbImage:[UIImage imageNamed:@"椭圆-7"] forState:(UIControlStateNormal)];
 
         [_progressSlider addTarget:self action:@selector(playerSliderTouchDown:) forControlEvents:(UIControlEventTouchDown)];
         [_progressSlider addTarget:self action:@selector(playerSliderTouchUpInside:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -460,6 +463,16 @@
     }
     return _playerView;
 }
+- (UILabel *)playAlert {
+    if (!_playAlert) {
+        _playAlert = [[UILabel alloc] init];
+        _playAlert.text = @"播放失败";
+        _playAlert.font = [UIFont systemFontOfSize:14];
+        _playAlert.hidden = YES;
+        _playAlert.tintColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _playAlert;
+}
 - (void)dealloc {
     [self removeObserveAndNOtification];
     [_player removeTimeObserver:_playTimeObserver]; // 移除playTimeObserver
@@ -491,4 +504,5 @@
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationNone;
 }
+
 @end

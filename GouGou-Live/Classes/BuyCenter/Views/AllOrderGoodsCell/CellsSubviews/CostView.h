@@ -21,6 +21,12 @@
 @property (strong,nonatomic) UILabel *fontMoney;
 /** 尾款 */
 @property (strong,nonatomic) UILabel *remainderMoeny;
+/** 运费 */
+@property (strong,nonatomic) UILabel *freightLabel;
+/** 已付定金 */
+@property (strong,nonatomic) UILabel *fontMoneyLabel;
+/** 已付尾款 */
+@property (strong,nonatomic) UILabel *remainderMoneylabel;
 
 - (void)costWithFreightPrice:(NSString *)freghtPrice fontMoneyLabel:(NSString *)fontLabel fontMoney:(NSString *)fontMoney backMoneyLable:(NSString *)backLabel backMoney:(NSString *)backMoney;
 ///** 花费模型 */

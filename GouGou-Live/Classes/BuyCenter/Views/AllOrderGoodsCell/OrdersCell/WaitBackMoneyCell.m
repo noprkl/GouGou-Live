@@ -73,7 +73,9 @@
     // 付款状况（缺少运费）
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     // 付款状况
+    self.costView.fontMoneyLabel.text = @"已付定金:";
     self.costView.fontMoney.text = centerModel.productDeposit;
+    self.costView.remainderMoneylabel.text = @"代付尾款";
     self.costView.remainderMoeny.text = centerModel.productBalance;
     self.costView.totalMoney.text = centerModel.price;    
     

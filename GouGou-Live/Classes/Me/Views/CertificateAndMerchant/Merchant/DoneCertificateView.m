@@ -120,6 +120,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
         if (indexPath.row == 0) {
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
             textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
+            textField.font = [UIFont systemFontOfSize:16];
             // 接受商品名称
             self.infoTextfiled = textField;
             textField.delegate = self;
@@ -136,6 +137,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
             textField.font = [UIFont systemFontOfSize:16];
             // 添加弹出城市选择
             self.areasTextField = textField;
+//            [tex]
             [textField addTarget:self action:@selector(editAreaTextAction:) forControlEvents:(UIControlEventAllEvents)];
             textField.delegate = self;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -146,9 +148,9 @@ static NSString * MedrchantCell = @"MedrchantCell";
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
             textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
             self.adressTextField = textField;
+            textField.font = [UIFont systemFontOfSize:16];
             textField.delegate = self;
             [cell.contentView addSubview:textField];
-
         }
     }
     
@@ -164,8 +166,6 @@ static NSString * MedrchantCell = @"MedrchantCell";
             [cell.contentView addSubview:textField];
         }
     }
-    
-    
     return cell;
 }
 
@@ -193,9 +193,12 @@ static NSString * MedrchantCell = @"MedrchantCell";
 }
 - (void)editAreaTextAction:(UITextField *)textField {
     [textField resignFirstResponder];
+    
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
+    if (textField == self.areasTextField) {
+        [textField resignFirstResponder];    
+    }
     [textField resignFirstResponder];
     return YES;
 }
@@ -205,8 +208,8 @@ static NSString * MedrchantCell = @"MedrchantCell";
         [self.adressTextField resignFirstResponder];
         [self.phoneNumTextfiled resignFirstResponder];
         [self.infoTextfiled resignFirstResponder];
-        
         if (_areasBlock) {
+            
             _areasBlock();
         }
     }

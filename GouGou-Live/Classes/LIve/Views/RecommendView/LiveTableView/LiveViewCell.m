@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *watchCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *roomImageView;
 @property (weak, nonatomic) IBOutlet UILabel *roomMessageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *certificateLabel;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *dogCardScrollView;
 
@@ -35,6 +36,10 @@
 }
 - (void)awakeFromNib {
     // Initialization code
+    
+    self.anchorCityLabel.font = [UIFont systemFontOfSize:12];
+    self.anchorNameLabel.font = [UIFont systemFontOfSize:14];
+    self.certificateLabel.font = [UIFont systemFontOfSize:12];
 }
 - (void)clickCardViewAction:(UIControl *)control {
     if (_cardBlcok) {

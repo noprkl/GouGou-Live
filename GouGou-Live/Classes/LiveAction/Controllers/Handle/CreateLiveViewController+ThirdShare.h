@@ -7,18 +7,22 @@
 //
 
 #import "CreateLiveViewController.h"
+#import "LiveListStreamModel.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+
+typedef void(^ShareScuccess)();
 
 @interface CreateLiveViewController (ThirdShare)
 #pragma mark - 分享
 /** QQ分享 */
-+ (void)QQShare:(NSString *)liveUrl;
++ (void)QQShare:(NSString *)liveUrl success:(ShareScuccess)success;
 /** 新浪分享 */
-+ (void)SinaShare:(NSString *)liveUrl;
++ (void)SinaShare:(NSString *)liveUrl success:(ShareScuccess)success;
 /** 微信分享 */
-+ (void)WChatShare:(NSString *)liveUrl;
++ (void)WChatShare:(NSString *)liveUrl success:(ShareScuccess)success;
 /** 朋友圈分享 */
-+ (void)WechatTimeShare:(NSString *)liveUrl;
++ (void)WechatTimeShare:(NSString *)liveUrl success:(ShareScuccess)success;
 /** QQ空间分享 */
-+ (void)TencentShare:(NSString *)liveUrl;
++ (void)TencentShare:(NSString *)liveUrl success:(ShareScuccess)success;
 
 @end

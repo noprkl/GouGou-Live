@@ -12,7 +12,6 @@
 
 + (NSDictionary *)mj_objectClassInArray {
     return @{
-             @"age":@"DogCategoryModel",
              @"color":@"DogCategoryModel",
              @"kind":@"DogCategoryModel",
              @"size":@"DogCategoryModel"

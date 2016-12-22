@@ -41,6 +41,7 @@
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
+        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
         if ([successJson[@"code"] isEqualToString:@"0"]) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;

@@ -16,6 +16,8 @@
 #import "CerfificateFaildView.h"
 #import "CerFiticateSuccessView.h"
 
+#import "PersonalMessageModel.h"
+
 static NSString * identityCell = @"identitiCellID";
 
 @interface CertificateViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -44,7 +46,7 @@ static NSString * identityCell = @"identitiCellID";
 
     // 请求图片
     // 正面
-    NSString *faceBase64 = [NSString imageBase64WithDataURL:self.faceIdentfityImg];
+    NSString *faceBase64 = [NSString imageBase64WithDataURL:self.faceIdentfityImg withSize:CGSizeMake(SCREEN_WIDTH * 2/ 3, SCREEN_WIDTH / 3)];
     
     NSDictionary *faceDict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
@@ -55,7 +57,7 @@ static NSString * identityCell = @"identitiCellID";
         if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
             NSString *faceStr = successJson[@"data"];
            // 背面
-            NSString *backBase64 = [NSString imageBase64WithDataURL:self.backIdentfityImg];
+            NSString *backBase64 = [NSString imageBase64WithDataURL:self.backIdentfityImg withSize:CGSizeMake(SCREEN_WIDTH * 2/ 3, SCREEN_WIDTH / 3)];
             
             NSDictionary *backDict = @{
                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
@@ -85,10 +87,7 @@ static NSString * identityCell = @"identitiCellID";
                     } error:^(NSError *error) {
                         DLog(@"%@", error);
                     }];
-
                 }
-                
-
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
@@ -98,12 +97,42 @@ static NSString * identityCell = @"identitiCellID";
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-    
-
-    
-    
 }
+- (void)getrequestPersonalMessage {
+    NSDictionary *dict = @{
+                           @"id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            PersonalMessageModel *model = [arr lastObject];
+            [UserInfos sharedUser].ismerchant = model.isMerchant;
+            [UserInfos sharedUser].isreal = model.isReal;
+            [UserInfos setUser];
+            
+            if ([[UserInfos sharedUser].isreal isEqualToString:@"1"]) { //1.未认证 2.审核 3.已认证 4.认证失败
+                
+                self.title = @"实名认证";
+                self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(requestNameAndIdentiry)];
+                self.view.backgroundColor = [UIColor whiteColor];
+                
+                [self.view addSubview:self.identityInfoView];
+                [self.view addSubview:self.identityTableView];
+                
+            }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
+                [self.view addSubview:self.haveCommitView];
+            }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
+                [self.view addSubview:self.successView];
+            }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
+                [self.view addSubview:self.faildView];
+            }
 
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavBarItem];
@@ -111,23 +140,7 @@ static NSString * identityCell = @"identitiCellID";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    if ([[UserInfos sharedUser].isreal isEqualToString:@"0"]) { //0.未认证 2.审核 3.已认证 4.认证失败
-
-        self.title = @"实名认证";
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交认证" style:UIBarButtonItemStyleDone target:self action:@selector(requestNameAndIdentiry)];
-        self.view.backgroundColor = [UIColor whiteColor];
-        
-        [self.view addSubview:self.identityInfoView];
-        [self.view addSubview:self.identityTableView];
-
-    }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
-        [self.view addSubview:self.haveCommitView];
-    }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
-        [self.view addSubview:self.successView];
-    }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
-        [self.view addSubview:self.faildView];
-    }
+    [self getrequestPersonalMessage];
 }
 // UI
 - (void)initUI {

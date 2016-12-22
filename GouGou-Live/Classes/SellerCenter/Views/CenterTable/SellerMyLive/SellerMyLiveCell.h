@@ -7,7 +7,10 @@
 //
 
 #import "SellerBaseCell.h"
+#import "PlayBackModel.h"
 
 @interface SellerMyLiveCell : SellerBaseCell
+
+@property (nonatomic, strong) PlayBackModel *model; /**< 模型 */
 
 @end

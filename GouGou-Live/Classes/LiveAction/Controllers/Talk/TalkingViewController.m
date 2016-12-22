@@ -12,65 +12,89 @@
 #import "NoneNetWorkingView.h"
 #import "TalkingView.h"
 //#import <HyphenateLite_CN/EMSDK.h>
-#import <TZImagePickerController.h>
+#import "TalkTableViewCell.h"
+#import "IMessageModel.h"
 
 @interface TalkingViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate>
 
 @property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
 
 @end
-
+static NSString *cellid = @"TalkTableViewCell";
 @implementation TalkingViewController
 #pragma mark
 #pragma mark - 自定义cell
-// 头像
+// 设置
 - (id<IMessageModel>)messageViewController:(EaseMessageViewController *)viewController
                            modelForMessage:(EMMessage *)message
 {
     //用户可以根据自己的用户体系，根据message设置用户昵称和头像
     id<IMessageModel> model = nil;
     model = [[EaseMessageModel alloc] initWithMessage:message];
-    model.avatarImage = [UIImage imageNamed:@"头像"];//默认头像
-    
-    if (model.isSender) {
-        if ([UserInfos getUser]) {
-            NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
-            model.avatarURLPath = urlString;//头像网络地址
-            model.nickname = [UserInfos sharedUser].usernickname;//用户昵称
+    model.avatarURLPath = @"";
+    model.failImageName = @"";
+    // 如果来自主播
+    if ([model.message.from isEqualToString:_liverid]) {
+        model.nickname = @"主播:";
+    }else if ([model.message.from isEqualToString:EaseTest_Chat1]){
+        model.nickname = @"客服:";
+    }else{
+        if (model.isSender) {
+            model.nickname = [NSString stringWithFormat:@"%@:", [UserInfos sharedUser].username];
         }else{
-            model.nickname = @"ME";//用户昵称
+            model.nickname = @"游客:";//用户昵称
         }
     }
     
     return model;
 }
-- (void)setIsHidText:(BOOL)isHidText {
-    _isHidText = isHidText;
-    self.talkView.hidden = isHidText;
+- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)messageModel {
+    TalkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.OwnerLabel.text = messageModel.nickname;
+   
+    // 聊天内容
+    EMMessage *message = messageModel.message;
+    EMMessageBody *msgBody = message.body;
+    EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
+    NSString *txt = textBody.text;
+    cell.contentLabel.text = txt;
+//    cell.contentLabel.text = messageModel.message.
+//    cell.contentLabel.text = messageModel.m;
+    
+    return cell;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+//    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-290);
+    self.tableView.frame = self.view.bounds;
+//    [self.tableView registerNib:[UINib nibWithNibName:cellid bundle:nil] forCellReuseIdentifier:cellid];
     [self initUI];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
-    [self.view addSubview:self.talkView];
+    [self.view insertSubview:self.talkView aboveSubview:self.talkView];
     [self.talkView makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(44);
     }];
+
+    // 提前
+//    [self.view bringSubviewToFront:self.talkView];
     
+
     //@property中带有UI_APPEARANCE_SELECTOR，都可以通过set的形式设置样式，具体可以参考EaseBaseMessageCell.h,EaseMessageCell.h
-    [[EMClient sharedClient].chatManager getConversation:@"liver" type:EMConversationTypeChat createIfNotExist:YES];
-    
-    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[[UIImage imageNamed:@"圆角矩形-1"] stretchableImageWithLeftCapWidth:5 topCapHeight:30]];//设置发送气泡
-    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@"chat_receiver_bg"] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
-    
-    [[EaseBaseMessageCell appearance] setAvatarSize:44.f];//设置头像大小
-    //    [[EaseBaseMessageCell appearance] setAvatarCornerRadius:20.f];//设置头像圆角
+//    [[EMClient sharedClient].chatManager getConversation:@"liver" type:EMConversationTypeChat createIfNotExist:YES];
+//
+//    //设置发送气泡
+//    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[UIImage imageNamed:@""]] ;
+//    
+//    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@""] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
+////
+//    [[EaseBaseMessageCell appearance] setAvatarSize:0];//设置头像大小
+//    [[EaseBaseMessageCell appearance] setAvatarCornerRadius:0];//设置头像圆角
     
     
     // 隐藏输入框 自定义输入框
@@ -80,6 +104,44 @@
     //        make.left.bottom.right.equalTo(self.view);
     //        make.height.equalTo(44);
     //    }];
+    // 加入聊天室
+    EMError *error = nil;
+    [[EMClient sharedClient].roomManager joinChatroom:_roomID error:&error];
+    //注册消息回调
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    
+    // 隐藏
+    [self hideHud];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 退出聊天室
+    EMError *error = nil;
+    [[EMClient sharedClient].roomManager leaveChatroom:_roomID error:&error];
+    //移除消息回调
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+}
+// 接受消息回调
+- (void)didReceiveMessages:(NSArray *)aMessages {
+    for (EMMessage *message in aMessages) {
+        EMMessageBody *msgBody = message.body;
+        switch (msgBody.type) {
+            case EMMessageBodyTypeText:
+            {
+            // 收到的文字消息
+            EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
+            NSString *txt = textBody.text;
+            [self.dataArray addObject:txt];
+//            [self.tableView reloadData];
+            // 刷新
+            NSIndexPath *indexPath = [[NSIndexPath alloc] initWithIndex:(self.dataArray.count - 1)];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationBottom)];
+            }
+                break;
+            default:
+                break;
+        }
+    }
 }
 - (void)initUI {
     
@@ -146,22 +208,7 @@
         }];
     }];
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 40;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    
-    if (section == 0) {
-        UILabel *alertLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 20)];
-        alertLabel.text = @"您好，您所发留言将会在主播结束后为您答复";
-        alertLabel.textColor = [UIColor colorWithHexString:@"#999999"];
-        alertLabel.font = [UIFont systemFontOfSize:12];
-        alertLabel.textAlignment = NSTextAlignmentCenter;
-        
-        return alertLabel;
-    }
-    return nil;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

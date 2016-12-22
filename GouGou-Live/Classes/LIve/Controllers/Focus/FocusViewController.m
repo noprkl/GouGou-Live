@@ -160,6 +160,7 @@
     livingVC.doginfos = dogInfos;
     livingVC.watchCount = model.pNum;
     livingVC.chatRoomID = model.chatroom;
+    livingVC.state = model.status;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }

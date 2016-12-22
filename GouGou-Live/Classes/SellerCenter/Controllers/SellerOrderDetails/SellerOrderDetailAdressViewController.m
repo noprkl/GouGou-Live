@@ -15,7 +15,6 @@
 #import "SellerOrderDetailNoteView.h" // 备注
 #import "SellerOrderDetailBottomView.h" // 底部按钮
 
-
 #import "SingleChatViewController.h"
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"

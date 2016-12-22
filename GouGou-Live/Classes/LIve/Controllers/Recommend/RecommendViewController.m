@@ -90,7 +90,7 @@
                                    @"live_id":model.liveId
                                    };
             [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-//                DLog(@"%@", successJson);
+                DLog(@"%@", successJson);
                 if (model.pNum == 0) {
                     height += 240;
                     [dogInfos addObject:@[]];
@@ -102,7 +102,7 @@
                         [liveMutableArr addObject:model];
                     }
                 }
-                if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                if (dogInfos.count == liveArr.count && liveMutableArr.count == liveArr.count) {
                     CGRect rect = self.tableView.frame;
                     rect.size.height = height;
                     self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
@@ -110,14 +110,14 @@
                     self.tableView.dogInfos = dogInfos;
                     self.tableView.dataPlist = liveMutableArr;
                     [self.tableView reloadData];
-//                    [self hideHud];
+                    [self hideHud];
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
         }
         //                    [self hideHud]
-//        [self.tableView reloadData];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -190,14 +190,15 @@
         DLog(@"%@", error);
     }];
 }
-- (void)getRequestFilterLiveListWithMinAge:(DogCategoryModel *)minAge MaxAge:(DogCategoryModel *)maxAge  {
+- (void)getRequestFilterLiveListWithMinAge:(NSInteger)minAge MaxAge:(NSInteger)maxAge  {
     NSDictionary *dict = @{
 //                           @"size":@([size.ID intValue])
-                           @"t":@([minAge.ID intValue]),
-                           @"e":@([maxAge.ID intValue]),
+                           @"t":@(minAge),
+                           @"e":@(maxAge),
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    DLog(@"%@", dict);
     [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
@@ -269,6 +270,7 @@
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    DLog(@"%@", dict);
     [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
         
         [self.tableView.dataPlist removeAllObjects];
@@ -462,21 +464,11 @@
         _filtView.ageBlock = ^(){
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
             
-            NSDictionary *dict = @{
-                                   @"type":@(1)
-                                   };
-            [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-                ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
-            }];
-            
-            [ageView show];
+                        [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
+            ageView.ageRangeBlock = ^(NSInteger minString, NSInteger maxString){
                 [weakSelf getRequestFilterLiveListWithMinAge:minString MaxAge:maxString];
             };
 
@@ -538,6 +530,7 @@
     livingVC.doginfos = dogInfos;
     livingVC.watchCount = model.pNum;
     livingVC.chatRoomID = model.chatroom;
+    livingVC.state = model.status;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }

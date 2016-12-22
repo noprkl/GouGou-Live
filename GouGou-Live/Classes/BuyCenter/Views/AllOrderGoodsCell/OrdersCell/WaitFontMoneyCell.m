@@ -79,8 +79,8 @@
     self.costView.fontMoneyLabel.text = @"";
     self.costView.fontMoney.text = @"";
     self.costView.remainderMoneylabel.text = @"待付定金:";
-    self.costView.remainderMoeny.text = centerModel.productBalance;
-    self.costView.totalMoney.text = centerModel.productDeposit;
+    self.costView.remainderMoeny.text = centerModel.productDeposit;
+    self.costView.totalMoney.text = centerModel.price;
     
 }
 #pragma mark

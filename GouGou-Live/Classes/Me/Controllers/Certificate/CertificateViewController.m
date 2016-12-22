@@ -248,6 +248,8 @@ static NSString * identityCell = @"identitiCellID";
 
         _identityTableView.delegate = self;
         _identityTableView.dataSource = self;
+        _identityTableView.bounces = NO;
+
         _identityTableView.showsVerticalScrollIndicator = NO;
         [_identityTableView registerClass:[IdentityPictureCell class] forCellReuseIdentifier:identityCell];
     }

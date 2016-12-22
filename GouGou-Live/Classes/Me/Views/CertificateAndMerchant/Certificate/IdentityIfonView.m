@@ -23,6 +23,15 @@
 @property (strong,nonatomic) UITextField *identitiNumTextfiled;
 /** 箭头图片 */
 @property (strong,nonatomic) UIImageView *arrowsImage2;
+
+@property (nonatomic, strong) UIScrollView *scroll; /**< scroll */
+
+@property (nonatomic, strong) UIButton *backImgBtn; /**< 背面图 */
+@property (nonatomic, strong) UIImageView *backImgView; /**< 背面图 */
+@property (nonatomic, strong) UIButton *faceImgBtn; /**< 背面图 */
+@property (nonatomic, strong) UIImageView *faceImgView; /**< 背面图 */
+
+
 @end
 
 @implementation IdentityIfonView
@@ -113,7 +122,6 @@
         _nameLabel.text = @"姓名:";
         _nameLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         _nameLabel.font = [UIFont systemFontOfSize:16];
-        
     }
     return _nameLabel;
 }

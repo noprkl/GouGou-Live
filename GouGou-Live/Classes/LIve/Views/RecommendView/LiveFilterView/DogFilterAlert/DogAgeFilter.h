@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SelectAgeRangeBlock)(DogCategoryModel *minModel, DogCategoryModel *maxModel);
+typedef void(^SelectAgeRangeBlock)(NSInteger minage, NSInteger maxAge);
 
 @interface DogAgeFilter : UIView
 

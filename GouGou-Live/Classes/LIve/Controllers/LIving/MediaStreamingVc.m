@@ -11,7 +11,7 @@
 #import "LivingSendMessageView.h" // 编辑信息
 #import "LinvingShowDogView.h" // 表格
 
-#import "MediaStreamChatRoomVcViewController.h" // 弹幕
+#import "TalkingViewController.h" // 弹幕
 #import "ShareAlertView.h" // 分享
 #import "ShareBtnModel.h" // 分享模型
 #import "NSString+MD5Code.h"
@@ -48,7 +48,7 @@
 
 @property(nonatomic, strong) LinvingShowDogView *showDogView; /**< 展示狗狗 */
 
-@property(nonatomic, strong) MediaStreamChatRoomVcViewController *talkingVc; /**< 弹窗控制器 */
+@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
 
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
 
@@ -75,7 +75,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
     
     // 进入后横屏
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -405,9 +405,9 @@
     return _sendMessageView;
 }
 
-- (MediaStreamChatRoomVcViewController *)talkingVc {
+- (TalkingViewController *)talkingVc {
     if (!_talkingVc) {
-        _talkingVc = [[MediaStreamChatRoomVcViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         _talkingVc.roomID = _chatRoomID;
     }

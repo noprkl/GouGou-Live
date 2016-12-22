@@ -59,7 +59,7 @@ static NSString *cellid = @"RecommentCellid";
     LiveViewCellModel *model = self.dataArr[indexPath.row];
     cell.liveCellModel = model;
 //    cell.dogInfos = self.dogInfos[indexPath.row];
-    if (self.dogInfos.count != 0) {
+//    if (self.dogInfos.count != 0) {
         NSArray *arr = self.dogInfos[indexPath.row];
         cell.dogInfos = arr;
         cell.cardBlcok = ^(UIControl *control){
@@ -68,14 +68,14 @@ static NSString *cellid = @"RecommentCellid";
                 _dogCardBlock(model, arr);
             }
         };
-    }
+//    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-  
+    
     if (self.dogInfos.count != 0) {
         NSArray *arr = self.dogInfos[indexPath.row];
         LiveViewCellModel *model = self.dataArr[indexPath.row];

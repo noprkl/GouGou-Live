@@ -19,13 +19,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GouGou-Live/Classes/LIve/Controllers/LIving/MediaStreamingVc.m"
-            timestampString = "504082369.813475"
+            filePath = "GouGou-Live/Classes/LIve/Controllers/MoreImpress/DogTypesViewController.m"
+            timestampString = "504099907.321132"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
-            landmarkName = "-mediaStreamingSession:streamStateDidChange:"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "-getRequestFilterLiveListWithMinAge:MaxAge:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GouGou-Live/Classes/LIve/Controllers/MoreImpress/DogTypesViewController.m"
+            timestampString = "504099807.935206"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "-getRequestImpressionLiveList"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

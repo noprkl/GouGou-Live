@@ -105,8 +105,10 @@
 
 - (void)getRequestFilterLiveListWithSize:(DogCategoryModel *)size {
     NSDictionary *dict = @{
-                           @"impression":@([_dogType.ID intValue]),
-                           @"size":@([size.ID intValue])
+                           @"im_id":@([_dogType.ID intValue]),
+                           @"size":@([size.ID intValue]),
+                           @"page":@(1),
+                           @"pageSize":@(10)
                            };
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         [self.liveTableView.dataPlist removeAllObjects];
@@ -170,12 +172,12 @@
         DLog(@"%@", error);
     }];
 }
-- (void)getRequestFilterLiveListWithMinAge:(DogCategoryModel *)minAge MaxAge:(DogCategoryModel *)maxAge  {
+- (void)getRequestFilterLiveListWithMinAge:(NSInteger)minAge MaxAge:(NSInteger)maxAge  {
     NSDictionary *dict = @{
                            //                           @"size":@([size.ID intValue])
                            @"im_id":@([_dogType.ID intValue]),
-                           @"start_price":@([minAge.ID intValue]),
-                           @"end_price":@([maxAge.ID intValue]),
+                           @"start_age":@(minAge),
+                           @"end_age":@(maxAge),
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
@@ -418,23 +420,14 @@
         _filteButtonView.ageBlock = ^(){
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
             
-            NSDictionary *dict = @{
-                                   @"type":@(1)
-                                   };
-            [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-                ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
-            }];
-            
             [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
+            ageView.ageRangeBlock = ^(NSInteger minString, NSInteger maxString){
                 [weakSelf getRequestFilterLiveListWithMinAge:minString MaxAge:maxString];
             };
+
             
         };
         
@@ -475,7 +468,7 @@
             livingVC.liverName = model.merchantName;
             livingVC.doginfos = dogInfos;
             livingVC.chatRoomID = model.chatroom;
-
+            livingVC.state = model.status;
             livingVC.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:livingVC animated:YES];
             

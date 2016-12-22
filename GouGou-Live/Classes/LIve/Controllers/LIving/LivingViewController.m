@@ -287,6 +287,10 @@
 - (NSMutableArray *)childVCS {
     if (!_childVCS) {
         _childVCS = [NSMutableArray array];
+        [_childVCS addObject:@"0"];
+        [_childVCS addObject:@"1"];
+        [_childVCS addObject:@"2"];
+        [_childVCS addObject:@"3"];
     }
     return _childVCS;
 }
@@ -301,23 +305,22 @@
 //        [self.childVCS addObject:vc];
 //    }
     // 聊天
-    TalkingViewController *talkVC = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-    talkVC.roomID = _chatRoomID;
-    talkVC.liverid = _liverId;
-//    talkVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-//    talkVC.liverImgUrl = _liverIcon;
-//    talkVC.liverName = _liverName;
-    DLog(@"%@", [talkVC.view subviews]);
-    [self.childVCS addObject:talkVC];
+        TalkingViewController *talkVC = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+        talkVC.roomID = _chatRoomID;
+        talkVC.liverid = _liverId;
+        DLog(@"%@", [talkVC.view subviews]);
+    talkVC.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    [self.childVCS replaceObjectAtIndex:0 withObject:talkVC];
+    
     [self addChildViewController:talkVC];
-   
+    
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    [self.childVCS addObject:dogShowVC];
+    [self.childVCS replaceObjectAtIndex:1 withObject:dogShowVC];
     [self addChildViewController:dogShowVC];
    
     if (_liverId.length == 0) {
@@ -327,14 +330,14 @@
     ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
     serviceVC.liverImgUrl = _liverIcon;
     serviceVC.liverName = _liverName;
-    [self.childVCS addObject:serviceVC];
+    [self.childVCS replaceObjectAtIndex:2 withObject:serviceVC];
     [self addChildViewController:serviceVC];
     // 商家
     SellerShowViewController *sellerShowVC = [[SellerShowViewController alloc] init];
     sellerShowVC.liverIcon = _liverIcon;
     sellerShowVC.liverName = _liverName;
     sellerShowVC.authorId = _liverId;
-    [self.childVCS addObject:sellerShowVC];
+    [self.childVCS replaceObjectAtIndex:3 withObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
     
     // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
@@ -373,11 +376,7 @@
     
     // 判断当前vc是否加载过
     if([childVC isKindOfClass:[TalkingViewController class]]) {
-        CGRect rect = childVC.view.frame;
-        
-        rect = CGRectMake(offset, 0, width, height);
-        childVC.view.frame = rect;
-    }
+        }
     if ([childVC isViewLoaded]) return;
     
     // 给没加载过的控制器设置frame

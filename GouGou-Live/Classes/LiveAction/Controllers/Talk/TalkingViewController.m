@@ -131,11 +131,12 @@ static NSString *cellid = @"TalkTableViewCell";
             // 收到的文字消息
             EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
             NSString *txt = textBody.text;
+            DLog(@"%@", txt);
             [self.dataArray addObject:txt];
-//            [self.tableView reloadData];
+            [self.tableView reloadData];
             // 刷新
             NSIndexPath *indexPath = [[NSIndexPath alloc] initWithIndex:(self.dataArray.count - 1)];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationBottom)];
+//            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationBottom)];
             }
                 break;
             default:

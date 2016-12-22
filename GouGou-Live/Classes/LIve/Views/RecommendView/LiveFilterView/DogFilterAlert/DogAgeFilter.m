@@ -31,9 +31,9 @@
 
 #pragma mark pickerView的值
 /** 最小 */
-@property (strong, nonatomic) DogCategoryModel *minModel;
+@property (assign, nonatomic) NSInteger minModel;
 /** 最大 */
-@property (strong, nonatomic) DogCategoryModel *maxModel;
+@property (assign, nonatomic) NSInteger maxModel;
 /** 记录当前的角标 */
 @property (assign, nonatomic) NSInteger currentminIndex;
 /** 记录当前的角标 */
@@ -44,24 +44,15 @@
 static NSString *cellid = @"SizeFilterCellID";
 
 @implementation DogAgeFilter
-- (void)setDataPlist:(NSArray *)dataPlist {
-
-    _dataPlist = dataPlist;
-    self.ageData = dataPlist;
-    [self.agePicker reloadAllComponents];
-    self.minModel = self.ageData[0];
-    self.maxModel = self.ageData[0];
-}
-
 
 #pragma mark
 #pragma mark - Action + 代理
 - (void)clickSureBtnAction {
     if (_ageRangeBlock) {
         _ageRangeBlock(self.minModel, self.maxModel);
-        
         [self fadeOut];
-    }}
+    }
+}
 - (void)clickCancelBtnAction {
     
     [self fadeOut];
@@ -87,17 +78,13 @@ static NSString *cellid = @"SizeFilterCellID";
     return 2;
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    DogCategoryModel *model = self.dataPlist[row];
     if (component == 0) {
         
-//        self.minString = self.dataPlist[row];
-        return model.name;
+     return self.ageData[row];
     } else {
-        
-//        self.maxString = self.dataPlist[row];
 #pragma mark - 级联菜单越界问题
 
-        return model.name;
+        return self.ageData[row];
     }
     
 }
@@ -121,15 +108,23 @@ static NSString *cellid = @"SizeFilterCellID";
             self.currentminIndex = index;
             self.currentmaxIndex = index;
             [pickerView selectRow:index inComponent:0 animated:YES];
-            
         }
     }
     
-    NSInteger index = [pickerView selectedRowInComponent:1];
-    
-    self.minModel = self.dataPlist[row];
-    self.maxModel = self.dataPlist[index];
-    
+    if (component == 0) {
+        if (self.currentminIndex < 6) {
+            self.minModel = self.currentminIndex += 1;
+        }else if (self.currentminIndex >= 6 && self.currentminIndex < 12){
+            self.minModel = self.currentminIndex * 12;
+        }
+    }
+    if (component == 1) {
+        if (self.currentmaxIndex < 6) {
+            self.maxModel = self.currentmaxIndex += 1;
+        }else{
+            self.maxModel = self.currentmaxIndex * 12;
+        }
+    }
 }
 
 #pragma mark
@@ -187,7 +182,9 @@ static NSString *cellid = @"SizeFilterCellID";
 #pragma mark - 懒加载
 - (NSArray *)ageData {
     if (!_ageData) {
-        _ageData = [NSArray array];
+        _ageData = @[@"1月", @"2月", @"3月", @"4月", @"5月", @"6月", @"1岁", @"2岁", @"3岁", @"4岁", @"5岁", @"6岁", @"7岁", @"不限"];
+        self.minModel = 1;
+        self.maxModel = 1;
     }
     return _ageData;
 }

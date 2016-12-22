@@ -250,7 +250,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         // 代付全款cell
         WaitAllMoneyCell *cell = [[WaitAllMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitAllMoneyCell];
         cell.centerModel = model;
-        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家"] buttonNum:2];
+        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家", @"取消订单"] buttonNum:2];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"支付全款"]) {
@@ -265,6 +265,8 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
                 viewController.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
+            }else if ([button.titleLabel.text isEqualToString:@"取消订单"]) {
+                [self clickCancleOrder:model];
             }
         };
         

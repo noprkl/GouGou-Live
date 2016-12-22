@@ -272,6 +272,7 @@ static NSString * reuseIdentifier = @"headerID";
     livingVC.liverName = model.userNickName;
     livingVC.doginfos = dogArr;
     livingVC.chatRoomID = model.chatroom;
+    
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }

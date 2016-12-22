@@ -489,6 +489,7 @@
 		04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9B91DD40D610089236D /* ResetPsdViewController.m */; };
 		04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */; };
 		04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */; };
+		04E332211E0BFD2C00693957 /* UserProtocolVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E332201E0BFD2C00693957 /* UserProtocolVc.m */; };
 		04E777351DEC2EE6007B5146 /* SystemPushMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */; };
 		04E777391DEC33C2007B5146 /* SystemNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777371DEC33C2007B5146 /* SystemNotificationCell.m */; };
 		04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E777381DEC33C2007B5146 /* SystemNotificationCell.xib */; };
@@ -1481,6 +1482,8 @@
 		04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPsdViewController.xib; sourceTree = "<group>"; };
 		04DAC9BD1DD420610089236D /* ResetPsdAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPsdAlertView.h; sourceTree = "<group>"; };
 		04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPsdAlertView.m; sourceTree = "<group>"; };
+		04E3321F1E0BFD2C00693957 /* UserProtocolVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProtocolVc.h; sourceTree = "<group>"; };
+		04E332201E0BFD2C00693957 /* UserProtocolVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProtocolVc.m; sourceTree = "<group>"; };
 		04E777331DEC2EE6007B5146 /* SystemPushMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPushMessageModel.h; sourceTree = "<group>"; };
 		04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemPushMessageModel.m; sourceTree = "<group>"; };
 		04E777361DEC33C2007B5146 /* SystemNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotificationCell.h; sourceTree = "<group>"; };
@@ -3283,6 +3286,8 @@
 				0479B5471DCADC7B00CB288A /* Login */,
 				0479B54B1DCADC7B00CB288A /* Registe */,
 				0479B54F1DCADC7B00CB288A /* SurePsd */,
+				04E3321F1E0BFD2C00693957 /* UserProtocolVc.h */,
+				04E332201E0BFD2C00693957 /* UserProtocolVc.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5010,6 +5015,7 @@
 				046BF0181DE4696600BC32E9 /* EaseConvertToCommonEmoticonsHelper.m in Sources */,
 				0479B5FF1DCADC7B00CB288A /* CodeLoginViewController.m in Sources */,
 				046BF00B1DE4696600BC32E9 /* PSTGridLayoutRow.m in Sources */,
+				04E332211E0BFD2C00693957 /* UserProtocolVc.m in Sources */,
 				04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */,
 				0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */,
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,

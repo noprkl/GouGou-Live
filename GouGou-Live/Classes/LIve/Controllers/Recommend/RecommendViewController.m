@@ -190,11 +190,11 @@
         DLog(@"%@", error);
     }];
 }
-- (void)getRequestFilterLiveListWithMinAge:(NSInteger)minAge MaxAge:(NSInteger)maxAge  {
+- (void)getRequestFilterLiveListWithMinAge:(DogCategoryModel *)minAge MaxAge:(DogCategoryModel *)maxAge  {
     NSDictionary *dict = @{
 //                           @"size":@([size.ID intValue])
-                           @"t":@(minAge),
-                           @"e":@(maxAge),
+                           @"t":@(minAge.time),
+                           @"e":@(maxAge.time),
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
@@ -463,12 +463,20 @@
                     };
         _filtView.ageBlock = ^(){
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
-            
-                        [ageView show];
+            NSDictionary *dict = @{
+                                   @"type":@(1)
+                                   };
+            [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
             
-            ageView.ageRangeBlock = ^(NSInteger minString, NSInteger maxString){
+            ageView.ageRangeBlock = ^(DogCategoryModel *minString, DogCategoryModel *maxString){
                 [weakSelf getRequestFilterLiveListWithMinAge:minString MaxAge:maxString];
             };
 

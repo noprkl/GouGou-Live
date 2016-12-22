@@ -27,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     
     [self setNavBarItem];
 }
@@ -38,13 +39,13 @@
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 10) style:(UITableViewStylePlain)];
         _tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.bounces = NO;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+//        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
         
     }
     return _tableView;
@@ -59,7 +60,6 @@
     return self.dataArr.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellid = @"cellid";
@@ -70,7 +70,8 @@
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     cell.textLabel.text = self.dataArr[indexPath.row];    
     return cell;
 }
@@ -84,7 +85,6 @@
         resetLoginAlert.noteString = @"原密码不能为空";
         __weak typeof(resetLoginAlert) weakReset = resetLoginAlert;
         resetLoginAlert.sureBlock = ^(NSString *text){
-            
             // 验证密码
             NSDictionary *dict = @{
                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
@@ -147,6 +147,4 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 @end

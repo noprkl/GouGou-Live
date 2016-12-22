@@ -21,17 +21,15 @@
 @end
 
 @implementation RegisteViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self initUI];
     [self setNavBarItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     self.navigationController.navigationBarHidden = NO;
 }
 - (void)initUI {
@@ -62,7 +60,7 @@
         [self freetimeout];
         
         NSDictionary *dict = @{
-                               @"tel" :self.phoneTextField.text,
+                               @"tel" :@([self.phoneTextField.text intValue]),
                                @"type" : @0
                                };
         DLog(@"%@", dict);
@@ -75,31 +73,42 @@
     }
 }
 - (IBAction)clickSureBtnAction:(UIButton *)sender {
-    
     NSString *phoneNumber = self.phoneTextField.text;
     NSString *codeNumber = self.codeTextField.text;
-    
     BOOL flag =  [NSString valiMobile:phoneNumber];
-    
     if (phoneNumber.length == 0) {
-        
         [self showAlert:@"手机号不能为空"];
-        
     }else if(!flag){
-      
         [self showAlert:@"所输入的不是手机号"];
-        
     }else{
         if (codeNumber.length != 6) {
-            
             [self showAlert:@"验证码只能是6位"];
         }else{
-        
-            SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
-            sureVC.title = @"密码确认";
-            sureVC.telNumber = self.phoneTextField.text;
-            sureVC.codeNumber = self.codeTextField.text;
-            [self.navigationController pushViewController:sureVC animated:YES];
+#warning 需要验证码
+            NSDictionary * dict = @{
+                                    @"user_tel":@([self.phoneTextField.text intValue]),
+                                    @"code":@(2)
+                                    };
+            
+            [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+                
+                DLog(@"%@",successJson);
+                
+                if ([successJson[@"code"] isEqual:@"0"]) {
+                    [self showAlert:@"短信不存在"];
+                }
+                if ([successJson[@"code"] isEqual:@"1"]) {
+                   
+                    SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
+                    sureVC.title = @"密码确认";
+                    sureVC.telNumber = self.phoneTextField.text;
+                    sureVC.codeNumber = self.codeTextField.text;
+                    [self.navigationController pushViewController:sureVC animated:YES];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@",error);
+            }];
+            
         }
     }
 }
@@ -116,8 +125,6 @@
     #warning - 协议链接
     
 }
-
-
 #pragma mark - 文本框监听
 - (IBAction)phoneTextFieldEditing:(UITextField *)sender {
     
@@ -136,7 +143,6 @@
 }
 
 - (void)phoneTextFieldChanged:(UITextField *)textField {
-    
     // 判断正则
     BOOL flag =  [NSString valiMobile:textField.text];
     if (!flag) {

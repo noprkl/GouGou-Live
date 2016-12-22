@@ -138,8 +138,6 @@
                              user_status:successJson[@"data"][@"user_status"]
                      ];
                    
-                    
-                    
                     // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
                     EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:successJson[@"data"][@"id"]];
                     if (error==nil) {

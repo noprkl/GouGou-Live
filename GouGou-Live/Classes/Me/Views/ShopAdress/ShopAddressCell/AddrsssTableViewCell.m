@@ -300,13 +300,11 @@
 #pragma mark - Action
 // 点击编辑按钮
 - (void)clickEditBuotton {
-    
     if (_editBtnBlock) {
         _editBtnBlock();
     }
     
 }
-
 - (void)cilckDeleteButton {
     if (_deleteBlock) {
         _deleteBlock(self.deleteBtn);

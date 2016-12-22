@@ -41,25 +41,41 @@
 
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;
+    
+    self.sendCode.layer.cornerRadius = 5;
+    self.sendCode.layer.masksToBounds = YES;
+    self.sureBtn.layer.cornerRadius = 5;
+    self.sureBtn.layer.masksToBounds = YES;
 }
 
 #pragma mark
 #pragma mark - Action
-
-
+- (void)phoneNumberChangeAction:(UITextField *)textFiled {
+    // 判断正则
+    BOOL flag =  [NSString valiMobile:textFiled.text];
+    if (!flag) {
+        
+        [self showAlert:@"请输入正确的手机号"];
+    }
+}
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
-    
-    [self freetimeout];
-    NSDictionary *dict = @{
-                           @"tel" : self.phoneTextField.text,
-                           @"type" : @1
-                           };
-    [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+    BOOL flag =  [NSString valiMobile:self.phoneTextField.text];
+    if (!flag) {
+        [self showAlert:@"请输入正确的手机号"];
+    }else{
+
+        [self freetimeout];
+        NSDictionary *dict = @{
+                               @"tel" : self.phoneTextField.text,
+                               @"type" : @1
+                               };
+        [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 
 - (IBAction)codeTextFieldExiding:(UITextField *)sender {
@@ -83,13 +99,34 @@
         [self showAlert:@"所输入的不是手机号"];
         
     }else{
+#warning 判断验证码
         
-        SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
-        sureVC.title = @"新密码设置";
-        sureVC.telNumber = self.phoneTextField.text;
-        sureVC.codeNumber = self.codeTextField.text;
         
-        [self.navigationController pushViewController:sureVC animated:YES];
+        NSDictionary * dict = @{
+                                @"user_tel":@([self.phoneTextField.text intValue]),
+                                @"code":@(2)
+                                };
+        
+        [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+            
+            DLog(@"%@",successJson);
+            
+            if ([successJson[@"code"] isEqual:@"0"]) {
+                [self showAlert:@"短信不存在"];
+            }
+            if ([successJson[@"code"] isEqual:@"1"]) {
+                
+                SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
+                sureVC.title = @"新密码设置";
+                sureVC.telNumber = self.phoneTextField.text;
+                sureVC.codeNumber = self.codeTextField.text;
+                
+                [self.navigationController pushViewController:sureVC animated:YES];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@",error);
+        }];
+      
     }
 
    

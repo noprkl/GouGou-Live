@@ -68,9 +68,10 @@ static NSString *cellid = @"Cellid";
     return 135;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 20, 40)];
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 20, 44)];
     label.text = @"回放";
     label.font = [UIFont systemFontOfSize:16];
     label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];

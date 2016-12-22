@@ -147,10 +147,12 @@
                 if (textStr.length == 0) {
                     [weakSelf showAlert:@"问题描述不能为空"];
                 } else {
-                    
+
                     if (addImag.dataArr.count != 0) { //有图
+
                         
                         NSString *base64 = [NSString imageBase64WithDataURL:addImag.dataArr[0] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
+
                         NSDictionary *dict = @{
                                                @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                @"img":base64

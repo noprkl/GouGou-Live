@@ -60,6 +60,7 @@
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
     self.nickView.nickName.text = centerModel.merchantName;
+    self.nickView.stateLabe.text = @"待收货";
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
@@ -190,7 +191,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"已付尾款:" backMoney:@"￥950"];
+        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"已付尾款:" backMoney:@"￥950"];
     }
     return _costView;
 }

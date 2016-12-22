@@ -104,6 +104,7 @@
         _editTextField.placeholder = @"请输入原登录密码";
         _editTextField.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         _editTextField.textColor = [UIColor colorWithHexString:@"#666666"];
+        _editTextField.secureTextEntry = YES;
         _editTextField.font = [UIFont systemFontOfSize:14];
         _editTextField.layer.cornerRadius = 5;
         _editTextField.layer.masksToBounds = YES;

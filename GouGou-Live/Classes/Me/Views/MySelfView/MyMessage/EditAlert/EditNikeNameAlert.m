@@ -174,13 +174,12 @@
 #pragma mark
 #pragma mark - UItextview 监听
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
-    _count = 17 - range.length;
-    
+
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
     }
+    
     if (range.location < 17) {
         return YES;
     }

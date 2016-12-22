@@ -27,7 +27,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
 // 评价
 - (void)getRequestComment {
     NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@(11),
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"page":@(1),
                            @"pageSize":@(5)
                            };

@@ -10,6 +10,7 @@
 #import "AddUpdataImagesView.h"
 static NSString * identifer = @"collectionCell";
 #define ImgCount 3
+
 @interface ExperienceProblem ()<UITextViewDelegate>
 /** 数据 */
 @property (strong,nonatomic) NSArray *dataArray;
@@ -25,7 +26,7 @@ static NSString * identifer = @"collectionCell";
 @property (strong,nonatomic) UIButton *lastButton;
 /** 提交 */
 @property (strong,nonatomic) UIButton *handinBtn;
-
+@property (nonatomic, assign) NSInteger count;
 @end
 
 @implementation ExperienceProblem
@@ -103,7 +104,7 @@ static NSString * identifer = @"collectionCell";
         make.left.equalTo(weakself.whilteView.left).offset(10);
     }];
     [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakself.explainLabel.bottom).offset(10);
+        make.top.equalTo(weakself.explainLabel.bottom);
         make.left.equalTo(weakself.whilteView.left).offset(10);
         make.centerX.equalTo(weakself.centerX);
         make.height.equalTo(140);
@@ -200,6 +201,7 @@ static NSString * identifer = @"collectionCell";
         return NO;
     }
     
+    
     if (textView == self.textView) {
         if (range.location < 140) {
             return YES;
@@ -207,6 +209,11 @@ static NSString * identifer = @"collectionCell";
         return NO;
     }
     return YES;
+}
+- (void)textViewDidChange:(UITextView *)textView {
+    
+    self.countLabel.text = [@(140 - textView.text.length) stringValue];
+    
 }
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
 

@@ -209,7 +209,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"已付全款:" backMoney:@"￥1450"];
+        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"已付全款:" backMoney:@"￥1450"];
     }
     return _costView;
 }

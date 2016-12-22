@@ -29,7 +29,8 @@
         _liveBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         _liveBtn.frame = CGRectMake(0, 0, SCREEN_WIDTH/2, 44);
         [_liveBtn setTitle:@"直播" forState:(UIControlStateNormal)];
-        
+        _liveBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+
         [_liveBtn setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:(UIControlStateNormal)];
         [_liveBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateSelected)];
         [_liveBtn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
@@ -43,7 +44,10 @@
         _dogBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         _dogBtn.frame = CGRectMake(SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, 44);
         [_dogBtn setTitle:@"狗狗" forState:(UIControlStateNormal)];
-        [_dogBtn setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:(UIControlStateNormal)];
+        [_dogBtn setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:(UIControlStateNormal)];
+        [_dogBtn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+        _dogBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+
         
         _dogBtn.selected = NO;
     }

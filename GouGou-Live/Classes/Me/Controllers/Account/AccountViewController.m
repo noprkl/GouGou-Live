@@ -34,7 +34,15 @@
 }
 - (void)initUI {
     self.navigationController.navigationBarHidden = NO;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"明细" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickRightBtnAction)];
+    
+    UIButton *right = [UIButton buttonWithType:UIButtonTypeCustom];
+    right.frame = CGRectMake(0, 0, 50, 50);
+    [right addTarget:self action:@selector(clickRightBtnAction)forControlEvents:UIControlEventTouchUpInside];
+    [right setTitle:@"明细" forState:UIControlStateNormal];
+    [right setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    right.titleLabel.font = [UIFont systemFontOfSize:16];
+    UIBarButtonItem *rightBut = [[UIBarButtonItem alloc]initWithCustomView:right];
+    self.navigationItem.rightBarButtonItem = rightBut;
     
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.helpBtn];
@@ -42,7 +50,8 @@
     self.edgesForExtendedLayout = 64;
     
     [self.tableView makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.view);
+        make.top.equalTo(self.view.top).offset(10);
+        make.left.right.equalTo(self.view);
         make.height.equalTo(self.dataArr.count * 44);
     }];
 }
@@ -65,7 +74,7 @@
         _dataArr = [NSArray array];
         if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
             
-            if(![UserInfos sharedUser].useralicode.length == 0) { // 未设置支付密码 需要设置支付密码
+            if(!([UserInfos sharedUser].useralicode.length == 0)) { // 未设置支付密码 需要设置支付密码
                 _dataArr = @[@"余额", @"结算", @"提现支付宝"];
             }else{ // 已经设置了支付密码 不能点击
                 _dataArr = @[@"余额", @"结算", @"提现支付宝"];
@@ -126,6 +135,11 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
+    cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    
     if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
         
         if([UserInfos sharedUser].useralicode.length == 0) { // 未设置支付密码 需要设置支付密码

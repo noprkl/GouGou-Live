@@ -70,7 +70,8 @@
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     cell.textLabel.text = self.dataArr[indexPath.row];    
     return cell;
 }

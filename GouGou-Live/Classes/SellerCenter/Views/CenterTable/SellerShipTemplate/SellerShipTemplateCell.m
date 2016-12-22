@@ -121,7 +121,7 @@
         make.top.equalTo(weakself.detailAddress.bottom).offset(10);
         make.left.equalTo(weakself.left).offset(10);
         make.right.equalTo(weakself.right);
-        make.height.equalTo(1);
+        make.height.equalTo(0.5);
         
     }];
     

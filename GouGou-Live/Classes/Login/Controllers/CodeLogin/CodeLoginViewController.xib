@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1912" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CodeLoginViewController">
@@ -19,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-dianhua" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-bl-0Ko">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-dianhua" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-bl-0Ko">
                     <rect key="frame" x="10" y="26" width="18" height="18"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x59-FO-T2a">
@@ -42,10 +42,10 @@
                     </connections>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="验证码蓝" translatesAutoresizingMaskIntoConstraints="NO" id="3yF-MP-fyQ">
-                    <rect key="frame" x="13" y="81" width="16" height="20"/>
+                    <rect key="frame" x="52" y="81" width="16" height="20"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdo-V5-vfQ">
-                    <rect key="frame" x="39" y="76" width="1" height="30"/>
+                    <rect key="frame" x="78" y="76" width="1" height="30"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="9F8-at-0tR"/>
@@ -53,8 +53,9 @@
                     </constraints>
                 </view>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1MZ-51-lpe">
-                    <rect key="frame" x="50" y="76" width="264" height="30"/>
+                    <rect key="frame" x="89" y="76" width="205" height="30"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="205" id="QMV-bp-k9j"/>
                         <constraint firstAttribute="height" constant="30" id="u0Y-wf-5QG"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -64,7 +65,7 @@
                     </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yhv-W8-FlL">
-                    <rect key="frame" x="324" y="77" width="80" height="29"/>
+                    <rect key="frame" x="302" y="77" width="102" height="29"/>
                     <color key="backgroundColor" red="0.59999999999999998" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="获取验证码">
@@ -155,7 +156,7 @@
                 <constraint firstItem="bbu-JQ-sPE" firstAttribute="centerY" secondItem="OTB-Va-iSD" secondAttribute="centerY" id="9QP-6b-1Cs"/>
                 <constraint firstItem="hdo-V5-vfQ" firstAttribute="centerY" secondItem="1MZ-51-lpe" secondAttribute="centerY" id="ARK-tb-Z6n"/>
                 <constraint firstItem="Heb-nR-3QR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="B3w-MS-Bei"/>
-                <constraint firstAttribute="trailing" secondItem="1MZ-51-lpe" secondAttribute="trailing" constant="100" id="BXW-d3-1q6"/>
+                <constraint firstAttribute="trailing" secondItem="1MZ-51-lpe" secondAttribute="trailing" constant="120" id="BXW-d3-1q6"/>
                 <constraint firstItem="Bbb-wj-mCJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="20" id="C1i-xm-QUS"/>
                 <constraint firstAttribute="trailing" secondItem="ePq-Pd-ej7" secondAttribute="trailing" constant="10" id="CAe-bv-w6m"/>
                 <constraint firstItem="OTB-Va-iSD" firstAttribute="top" secondItem="znJ-No-jcj" secondAttribute="bottom" constant="20" id="Cnl-yD-Qbq"/>
@@ -179,12 +180,11 @@
                 <constraint firstItem="ePq-Pd-ej7" firstAttribute="top" secondItem="Yhv-W8-FlL" secondAttribute="bottom" constant="10" id="rOA-u6-jMN"/>
                 <constraint firstItem="znJ-No-jcj" firstAttribute="width" secondItem="Heb-nR-3QR" secondAttribute="width" id="sES-ZQ-PUL"/>
                 <constraint firstItem="bbu-JQ-sPE" firstAttribute="leading" secondItem="Kfe-qk-DH1" secondAttribute="trailing" id="sRM-aB-pTN"/>
-                <constraint firstItem="Yhv-W8-FlL" firstAttribute="leading" secondItem="1MZ-51-lpe" secondAttribute="trailing" constant="10" id="xjf-Qq-JJB"/>
-                <constraint firstItem="1MZ-51-lpe" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="-25" id="zQO-P4-0Fu"/>
+                <constraint firstItem="Yhv-W8-FlL" firstAttribute="leading" secondItem="1MZ-51-lpe" secondAttribute="trailing" constant="8" symbolic="YES" id="xjf-Qq-JJB"/>
                 <constraint firstAttribute="trailing" secondItem="Yhv-W8-FlL" secondAttribute="trailing" constant="10" id="zyA-w1-U7e"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-            <point key="canvasLocation" x="588" y="38"/>
+            <point key="canvasLocation" x="577" y="35"/>
         </view>
     </objects>
     <resources>

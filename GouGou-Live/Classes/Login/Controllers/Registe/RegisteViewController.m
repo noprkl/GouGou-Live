@@ -62,7 +62,7 @@
         [self freetimeout];
         
         NSDictionary *dict = @{
-                               @"tel" :self.phoneTextField.text,
+                               @"tel" :@([self.phoneTextField.text intValue]),
                                @"type" : @0
                                };
         DLog(@"%@", dict);
@@ -90,11 +90,10 @@
         [self showAlert:@"所输入的不是手机号"];
         
     }else{
+        
         if (codeNumber.length != 6) {
-            
             [self showAlert:@"验证码只能是6位"];
         }else{
-        
             SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
             sureVC.title = @"密码确认";
             sureVC.telNumber = self.phoneTextField.text;
@@ -116,8 +115,6 @@
     #warning - 协议链接
     
 }
-
-
 #pragma mark - 文本框监听
 - (IBAction)phoneTextFieldEditing:(UITextField *)sender {
     
@@ -136,7 +133,6 @@
 }
 
 - (void)phoneTextFieldChanged:(UITextField *)textField {
-    
     // 判断正则
     BOOL flag =  [NSString valiMobile:textField.text];
     if (!flag) {

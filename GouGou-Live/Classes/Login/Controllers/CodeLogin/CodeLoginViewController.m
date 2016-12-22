@@ -8,6 +8,7 @@
 
 #import "CodeLoginViewController.h"
 #import "LoginViewController.h"
+#import "RegisteViewController.h"
 
 @interface CodeLoginViewController ()<UITextFieldDelegate>
 
@@ -20,22 +21,12 @@
 @end
 
 @implementation CodeLoginViewController
-
+#pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initUI];
     [self setNavBarItem];
-}
-- (void)setNavBarItem {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
-    
-    self.title = @"验证码登录";
-    
-}
-- (void)leftBackBtnAction {
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -44,18 +35,55 @@
 }
 
 - (void)initUI {
-    
     self.phoneNumber.delegate = self;
     self.psdNumber.delegate = self;
+    
+    [self.phoneNumber addTarget:self action:@selector(PhoneNumberChangeAction:) forControlEvents:UIControlEventEditingDidEnd];
+}
+#pragma mark - 导航栏和左右按钮
+- (void)setNavBarItem {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"注册" style:UIBarButtonItemStyleDone target:self action:@selector(regiserButtonActio)];
+    
+    self.title = @"验证码登录";
+    
+}
+- (void)regiserButtonActio {
+    
+    RegisteViewController * regiserVC = [[RegisteViewController alloc] init];
+    [self.navigationController pushViewController:regiserVC animated:YES];
+    
+    
+}
+- (void)leftBackBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark
 #pragma mark - Action
 
+- (void)PhoneNumberChangeAction:(UITextField *)textfiled {
+
+    if (textfiled.text.length < 11) {
+        self.sendCode.enabled = NO;
+    } else {
+        
+        self.sendCode.enabled = YES;
+    }
+    // 判断正则
+    BOOL flag =  [NSString valiMobile:textfiled.text];
+    if (!flag) {
+        
+        [self showAlert:@"请输入正确的手机号"];
+    }
+}
+
 - (IBAction)phoneTextfieldEditing:(UITextField *)sender {
+    
     UIButton *button = [sender valueForKey:@"_clearButton"];
     [button setImage:[UIImage imageNamed:@"-单删除"] forState:UIControlStateNormal];
-    
     sender.clearButtonMode = UITextFieldViewModeWhileEditing;
 }
 - (IBAction)codeTextFieldEditing:(UITextField *)sender {
@@ -67,22 +95,27 @@
 
 
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
+    BOOL flag =  [NSString valiMobile:self.phoneNumber.text];
+    if (!flag) {
+        [self showAlert:@"请输入正确的手机号"];
     
-#pragma mark 请求验证码
-    [self freetimeout];
-    
-    NSDictionary *dict = @{
-                           @"tel" : @([self.phoneNumber.text integerValue]),
-                           @"type" : @2
-                           };
-    
-    [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
-        DLog(@"%@", successJson[@"message"]);
-        [self showAlert:successJson[@"message"]];
+    }else{
         
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+        [self freetimeout];
+
+        NSDictionary *dict = @{
+                               @"tel" : @([self.phoneNumber.text integerValue]),
+                               @"type" : @2
+                               };
+
+        [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+            DLog(@"%@", successJson[@"message"]);
+            [self showAlert:successJson[@"message"]];
+            
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 - (IBAction)chickSureBtnAction:(UIButton *)sender {
     NSString *phoneNumber = self.phoneNumber.text;
@@ -104,7 +137,6 @@
                                    @"code":self.psdNumber.text
                                    };
         // 请求之前删掉上一次的信息
-        
         [self getRequestWithPath:API_LoginQuick params:dict success:^(id successJson) {
             
             DLog(@"%@", successJson);
@@ -127,6 +159,8 @@
                           wb_open_id:successJson[@"data"][@"wb_open_id"]
                          user_status:successJson[@"data"][@"user_status"]
                  ];
+                DLog(@"%@",successJson[@"data"][@"user_pay_code"]);
+                DLog(@"%@",successJson[@"data"][@"user_ali_code"]);
 
                 
                 // 通知给所有人 已经登录

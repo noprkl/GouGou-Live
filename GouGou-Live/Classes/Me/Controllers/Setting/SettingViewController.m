@@ -88,11 +88,15 @@ static NSString *cellid = @"SetcellId";
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
     
     cell.textLabel.text = self.dataArr[indexPath.section][indexPath.row];
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.detailTextLabel.text = @"About Us";
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+            cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         }
     }else if (indexPath.section == 2){
         if (indexPath.row == 1) {

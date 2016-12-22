@@ -65,6 +65,8 @@
 		0452A20B1DE1C176007C1E4F /* SellerNoneDogTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A20A1DE1C176007C1E4F /* SellerNoneDogTypeView.m */; };
 		0452A20F1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A20D1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m */; };
 		0452A2131DE1E782007C1E4F /* SellerChoseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */; };
+		045609801E0BD0AA000BF19E /* PaymentDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0456097F1E0BD0A9000BF19E /* PaymentDetailsController.m */; };
+		045609831E0BDC18000BF19E /* PayMentmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045609821E0BDC18000BF19E /* PayMentmodel.m */; };
 		04592EB11DF10D9F0095C8EE /* BuyCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EA61DF10D9F0095C8EE /* BuyCenterModel.m */; };
 		04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EA81DF10D9F0095C8EE /* CostModel.m */; };
 		04592EB31DF10D9F0095C8EE /* DogCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EAA1DF10D9F0095C8EE /* DogCardModel.m */; };
@@ -639,6 +641,10 @@
 		0452A20D1DE1E27A007C1E4F /* SellerAddShipTemplateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerAddShipTemplateViewController.m; sourceTree = "<group>"; };
 		0452A2111DE1E782007C1E4F /* SellerChoseAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChoseAdressViewController.h; sourceTree = "<group>"; };
 		0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChoseAdressViewController.m; sourceTree = "<group>"; };
+		0456097E1E0BD0A9000BF19E /* PaymentDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentDetailsController.h; sourceTree = "<group>"; };
+		0456097F1E0BD0A9000BF19E /* PaymentDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentDetailsController.m; sourceTree = "<group>"; };
+		045609811E0BDC18000BF19E /* PayMentmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayMentmodel.h; sourceTree = "<group>"; };
+		045609821E0BDC18000BF19E /* PayMentmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMentmodel.m; sourceTree = "<group>"; };
 		04592EA51DF10D9F0095C8EE /* BuyCenterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCenterModel.h; sourceTree = "<group>"; };
 		04592EA61DF10D9F0095C8EE /* BuyCenterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterModel.m; sourceTree = "<group>"; };
 		04592EA71DF10D9F0095C8EE /* CostModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostModel.h; sourceTree = "<group>"; };
@@ -1904,6 +1910,8 @@
 			children = (
 				045D51101DD94F9B001854A8 /* DetailCountViewController.h */,
 				045D51111DD94F9B001854A8 /* DetailCountViewController.m */,
+				0456097E1E0BD0A9000BF19E /* PaymentDetailsController.h */,
+				0456097F1E0BD0A9000BF19E /* PaymentDetailsController.m */,
 			);
 			path = DetailCount;
 			sourceTree = "<group>";
@@ -3530,6 +3538,8 @@
 				04B161B21DE7046600DABC77 /* ShopAdress */,
 				046795901E08D8BE0076F517 /* PlayBackModel.h */,
 				046795911E08D8BE0076F517 /* PlayBackModel.m */,
+				045609811E0BDC18000BF19E /* PayMentmodel.h */,
+				045609821E0BDC18000BF19E /* PayMentmodel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4900,6 +4910,7 @@
 				046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */,
 				0479B5E91DCADC7B00CB288A /* FilteButton.m in Sources */,
 				04F936DA1E067BCD0016EFF1 /* MoreImpressionModel.m in Sources */,
+				045609801E0BD0AA000BF19E /* PaymentDetailsController.m in Sources */,
 				0452A1C51DDEA27E007C1E4F /* SellerChangePriceAlertView.m in Sources */,
 				045D51191DD960F7001854A8 /* MyPageDescView.m in Sources */,
 				046BEFF91DE4696600BC32E9 /* UIButton+EMWebCache.m in Sources */,
@@ -4923,6 +4934,7 @@
 				0452A1EB1DE173E0007C1E4F /* SellerAddImpressViewController.m in Sources */,
 				040891F91DFEB91F006DF570 /* GotoAssessViewController.m in Sources */,
 				0479B5E71DCADC7B00CB288A /* DogPriceFilter.m in Sources */,
+				045609831E0BDC18000BF19E /* PayMentmodel.m in Sources */,
 				0479B5EA1DCADC7B00CB288A /* LiveFilteView.m in Sources */,
 				0479B5DC1DCADC7B00CB288A /* RecommendViewController.m in Sources */,
 				045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */,

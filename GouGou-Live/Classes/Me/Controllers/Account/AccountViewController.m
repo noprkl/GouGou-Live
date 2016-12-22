@@ -60,7 +60,7 @@
 #pragma mark - 懒加载
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)]; 
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.bounces = NO;

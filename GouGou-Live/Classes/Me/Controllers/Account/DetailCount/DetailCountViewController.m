@@ -10,6 +10,7 @@
 #import "DetailCountTopView.h"
 #import "DetailCountViewCell.h"
 #import "UserAssetModel.h"
+#import "PaymentDetailsController.h"
 
 @interface DetailCountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -172,13 +173,17 @@ static NSString *cellid = @"cellid";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    PaymentDetailsController * paymentVC = [[PaymentDetailsController alloc] init];
+    paymentVC.title = @"收支详情";
+     
+    [self.navigationController pushViewController:paymentVC animated:YES];
 }
 //每一行的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     return 65;
 }
-
 - (DetailCountTopView *)centerView {
     
     if (!_centerView) {

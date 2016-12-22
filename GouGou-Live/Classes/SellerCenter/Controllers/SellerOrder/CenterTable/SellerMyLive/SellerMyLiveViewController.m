@@ -65,7 +65,7 @@ static NSString *cellid = @"SellerMyLiveCell";
     return _tableView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerMyLiveCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];

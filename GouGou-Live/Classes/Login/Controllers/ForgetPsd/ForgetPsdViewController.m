@@ -101,12 +101,32 @@
     }else{
 #warning 判断验证码
         
-        SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
-        sureVC.title = @"新密码设置";
-        sureVC.telNumber = self.phoneTextField.text;
-        sureVC.codeNumber = self.codeTextField.text;
         
-        [self.navigationController pushViewController:sureVC animated:YES];
+        NSDictionary * dict = @{
+                                @"user_tel":@([self.phoneTextField.text intValue]),
+                                @"code":@(2)
+                                };
+        
+        [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+            
+            DLog(@"%@",successJson);
+            
+            if ([successJson[@"code"] isEqual:@"0"]) {
+                [self showAlert:@"短信不存在"];
+            }
+            if ([successJson[@"code"] isEqual:@"1"]) {
+                
+                SureForgetPsdViewController *sureVC = [[SureForgetPsdViewController alloc] init];
+                sureVC.title = @"新密码设置";
+                sureVC.telNumber = self.phoneTextField.text;
+                sureVC.codeNumber = self.codeTextField.text;
+                
+                [self.navigationController pushViewController:sureVC animated:YES];
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@",error);
+        }];
+      
     }
 
    

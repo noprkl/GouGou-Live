@@ -191,8 +191,6 @@ static NSString * indenifer = @"addressCellID";
     };
     
     return cell;
-
-
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

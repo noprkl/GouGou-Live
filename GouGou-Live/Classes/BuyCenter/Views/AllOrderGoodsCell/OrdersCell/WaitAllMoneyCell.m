@@ -74,8 +74,8 @@
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:centerModel.priceOld];
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     // 付款状况
-    self.costView.fontMoney.text = centerModel.productDeposit;
-    self.costView.remainderMoeny.text = centerModel.productBalance;
+//    self.costView.fontMoney.text = centerModel.productDeposit;
+    self.costView.remainderMoeny.text = centerModel.price;
     self.costView.totalMoney.text = centerModel.price;
      
 }
@@ -169,7 +169,7 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-//        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"全款:" backMoney:@"￥1450"];
+        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:nil fontMoney:nil backMoneyLable:@"全款:" backMoney:@"￥1450"];
     }
     return _costView;
 }

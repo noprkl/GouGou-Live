@@ -113,9 +113,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:MedrchantCell];
-    
     if (indexPath.section == 0 ) {
         if (indexPath.row == 0) {
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
@@ -123,7 +121,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
             // 接受商品名称
             self.infoTextfiled = textField;
             textField.delegate = self;
-            
+
             textField.font = [UIFont systemFontOfSize:16];
             [cell.contentView addSubview:textField];
         }
@@ -138,6 +136,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
             self.areasTextField = textField;
             [textField addTarget:self action:@selector(editAreaTextAction:) forControlEvents:(UIControlEventAllEvents)];
             textField.delegate = self;
+           
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             [cell.contentView addSubview:textField];
 
@@ -147,6 +146,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
             textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
             self.adressTextField = textField;
             textField.delegate = self;
+            textField.font = [UIFont systemFontOfSize:16];
             [cell.contentView addSubview:textField];
 
         }
@@ -164,17 +164,13 @@ static NSString * MedrchantCell = @"MedrchantCell";
             [cell.contentView addSubview:textField];
         }
     }
-    
-    
     return cell;
 }
 
 #pragma mark
 #pragma mark - textfiled代理
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
     if (textField == self.phoneNumTextfiled) {
-        
         BOOL flag = [NSString validateNumber:string];
         if (range.location < 11 && flag) {
             return YES;
@@ -191,9 +187,12 @@ static NSString * MedrchantCell = @"MedrchantCell";
     }
     return YES;
 }
+#pragma mark - textfiled方法
 - (void)editAreaTextAction:(UITextField *)textField {
     [textField resignFirstResponder];
 }
+
+#pragma mark - TextFiled代理
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
@@ -201,16 +200,17 @@ static NSString * MedrchantCell = @"MedrchantCell";
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.areasTextField) {
-        [self.areasTextField resignFirstResponder];
-        [self.adressTextField resignFirstResponder];
-        [self.phoneNumTextfiled resignFirstResponder];
-        [self.infoTextfiled resignFirstResponder];
-        
         if (_areasBlock) {
+            [self.areasTextField resignFirstResponder];
+            [self.adressTextField resignFirstResponder];
+            [self.phoneNumTextfiled resignFirstResponder];
+            [self.infoTextfiled resignFirstResponder];
             _areasBlock();
+            
         }
     }
 }
+
 // 点击提交认证
 - (void)clickHandinCertitycate {
     

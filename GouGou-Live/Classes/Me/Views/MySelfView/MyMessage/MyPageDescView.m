@@ -81,7 +81,7 @@
         
         [_editBtn setTitle:@"编辑" forState:(UIControlStateNormal)];
         [_editBtn setImage:[UIImage imageNamed:@"编辑"] forState:(UIControlStateNormal)];
-        [_editBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
+        [_editBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 5)];
         [_editBtn addTarget:self action:@selector(editDescBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _editBtn;

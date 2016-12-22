@@ -89,7 +89,7 @@ static NSString *cellid = @"SellerShipTemplateCell";
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerShipTemplateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];

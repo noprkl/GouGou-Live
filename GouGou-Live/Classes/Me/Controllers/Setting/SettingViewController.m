@@ -46,7 +46,7 @@ static NSString *cellid = @"SetcellId";
         _tableView.bounces = NO;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+//        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     }
     return _tableView;
 }

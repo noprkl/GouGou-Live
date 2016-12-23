@@ -242,10 +242,26 @@ static NSString *cellid4 = @"cellid4";
                     descView.descStr = @"暂无简介";
                 }
                 descView.backgroundColor = [UIColor whiteColor];
+                
+//                __weak typeof(descView) weakdescView = descView;
+
                 descView.editBlock = ^(UILabel *contentLabel){
                     EditNikeNameAlert *editSignAlert = [[EditNikeNameAlert alloc] init];
                     
                     [editSignAlert show];
+                    if ([UserInfos sharedUser].usermotto.length != 0) {
+                        editSignAlert.easyMessage = [UserInfos sharedUser].usermotto;
+                        editSignAlert.placeHolder = @"";
+                        
+                        NSString * string = [UserInfos sharedUser].usermotto;
+                        
+                        editSignAlert.countText = [NSString stringWithFormat:@"%@",@(17 - string.length)];
+                    }else{
+                        editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
+                        editSignAlert.easyMessage = @"";
+                        editSignAlert.countText = @"17";
+
+                    }
                     editSignAlert.sureBlock = ^(NSString *signaue){
                         if (![signaue isEqualToString:@""]) {
                             DLog(@"%@", signaue);
@@ -271,7 +287,7 @@ static NSString *cellid4 = @"cellid4";
                         }
                     };
                     editSignAlert.title = @"请输入个性签名";
-                    editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
+//                    editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
                     editSignAlert.noteString = @"";
                 };
                    [cell1.contentView addSubview:descView];

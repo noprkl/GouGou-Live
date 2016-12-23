@@ -99,12 +99,10 @@
         [self showAlert:@"所输入的不是手机号"];
         
     }else{
-#warning 判断验证码
-        
-        
         NSDictionary * dict = @{
-                                @"user_tel":@([self.phoneTextField.text intValue]),
-                                @"code":@(2)
+                                @"user_tel":self.phoneTextField.text,
+                                @"code":self.codeTextField.text,
+                                @"type":@1
                                 };
         
         [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
@@ -129,7 +127,6 @@
       
     }
 
-   
 }
 
 #pragma mark

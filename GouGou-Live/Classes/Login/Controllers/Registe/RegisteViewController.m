@@ -60,7 +60,7 @@
         [self freetimeout];
         
         NSDictionary *dict = @{
-                               @"tel" :@([self.phoneTextField.text intValue]),
+                               @"tel" :self.phoneTextField.text ,
                                @"type" : @0
                                };
         DLog(@"%@", dict);
@@ -84,10 +84,11 @@
         if (codeNumber.length != 6) {
             [self showAlert:@"验证码只能是6位"];
         }else{
-#warning 需要验证码
+
             NSDictionary * dict = @{
-                                    @"user_tel":@([self.phoneTextField.text intValue]),
-                                    @"code":@(2)
+                                    @"user_tel":self.phoneTextField.text ,
+                                    @"code":self.codeTextField.text,
+                                    @"type":@0
                                     };
             
             [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
@@ -105,6 +106,10 @@
                     sureVC.codeNumber = self.codeTextField.text;
                     [self.navigationController pushViewController:sureVC animated:YES];
                 }
+                if ([successJson[@"code"] isEqual:@"2"]) {
+                    return ;
+                }
+                
             } error:^(NSError *error) {
                 DLog(@"%@",error);
             }];

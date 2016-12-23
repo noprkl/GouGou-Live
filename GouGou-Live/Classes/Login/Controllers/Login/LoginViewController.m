@@ -117,7 +117,6 @@
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
                
                 [self showAlert:successJson[@"message"]];
-                
                 if ([successJson[@"message"] isEqualToString:@"成功"]) {
                     DLog(@"%@", successJson);
                     
@@ -152,7 +151,6 @@
                             DLog(@"登录成功");
                         }
                     }
-                    
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
             } error:^(NSError *error) {

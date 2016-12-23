@@ -437,7 +437,6 @@
             
             DogSizeFilter *sizeView = [[DogSizeFilter alloc] init];
             sizeView.title = @"体型";
-            
             NSDictionary *dict = @{
                                    @"type":@(4)
                                    };

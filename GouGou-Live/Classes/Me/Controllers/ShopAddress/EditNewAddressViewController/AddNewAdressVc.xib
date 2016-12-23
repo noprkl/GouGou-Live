@@ -65,10 +65,10 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="Wte-g9-R5H">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="Wte-g9-R5H">
                     <rect key="frame" x="355" y="105" width="8" height="15"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="9c4-jL-BNg">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="9c4-jL-BNg">
                     <rect key="frame" x="355" y="150" width="8" height="15"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KL2-rq-fhW">

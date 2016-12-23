@@ -166,7 +166,9 @@
                                            @"user_province":self.provice,
                                            @"user_city":self.city,
                                            @"user_district":self.district,
-                                           @"user_address":adress
+                                           @"user_address":adress,
+                                           @"street":self.roadTextField.text,
+                                           @"code":self.postalcodeTextfiled.text
                                            };
                     NSLog(@"%@", dict);
                     [self postRequestWithPath:API_Add_address params:dict success:^(id successJson) {

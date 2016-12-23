@@ -38,6 +38,8 @@
 
 @implementation EditNewAddressViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -63,7 +65,10 @@
     NSString *adress = [NSString stringWithFormat:@"%@,%@,%@", self.adressModel.userProvince, self.adressModel.userCity, self.adressModel.userDistrict];
     self.phoneTextField.text = self.adressModel.userTel;
     self.areaChooseTextfiled.text = adress;
-    self.detailAddressTextfiled.text = self.adressModel.userDistrict;
+    self.roadTextField.text = self.adressModel.street;
+    self.postalcodeTextfiled.text = self.adressModel.code;
+    self.detailAddressTextfiled.text = self.adressModel.userAddress;
+    
     [self requestGetAreaData];
 }
 - (void)setAdressModel:(MyShopAdressModel *)adressModel {
@@ -170,16 +175,18 @@
                                            @"user_province":_adressModel.userProvince,
                                            @"user_city":_adressModel.userCity,
                                            @"user_district":_adressModel.userDistrict,
-                                           @"user_address":adress
+                                           @"user_address":adress,
+                                           @"street":self.roadTextField.text,
+                                           @"code":self.postalcodeTextfiled.text
                                            };
                     NSLog(@"%@", dict);
 
                     [self postRequestWithPath:API_Up_address params:dict success:^(id successJson) {
                         [self showAlert:successJson[@"message"]];
                         if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
-                            
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                [self.navigationController popViewControllerAnimated:YES];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                
+                              [self.navigationController popViewControllerAnimated:YES];
                             });
                         }
 
@@ -191,7 +198,6 @@
         }
     }
 }
-
 #pragma mark
 #pragma mark - TextFiled代理
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

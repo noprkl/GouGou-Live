@@ -63,6 +63,8 @@ static NSString * reuseIdentifier = @"headerID";
             NSDictionary *dict = @{
                                    @"live_id":model.liveId
                                    };
+            DLog(@"%@",dict);
+            
             [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                 //                DLog(@"%@", successJson);
                 if (model.pNum == 0) {

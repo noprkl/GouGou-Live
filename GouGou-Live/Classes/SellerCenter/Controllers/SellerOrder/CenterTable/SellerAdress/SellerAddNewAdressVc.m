@@ -164,17 +164,17 @@
                                            @"merchant_city":self.city,
                                            @"merchant_district":self.district,
                                            @"merchant_address":adress,
-                                           @"is_default":@(0)
+                                           @"is_default":@(0),
+                                           @"street":self.roadTextField.text,
+                                           @"code":self.postalcodeTextfiled.text
                                            };
                     DLog(@"%@", dict);
                     [self postRequestWithPath:API_Seller_address_add params:dict success:^(id successJson) {
                         [self showAlert:successJson[@"message"]];
                         if ([successJson[@"message"] isEqualToString:@"地址添加成功"]) {
-                            
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                [self.navigationController popViewControllerAnimated:YES];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                 [self.navigationController popViewControllerAnimated:YES];
                             });
-                            
                         }
                         DLog(@"%@", successJson);
                     } error:^(NSError *error) {

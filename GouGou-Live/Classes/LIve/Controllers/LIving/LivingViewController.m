@@ -114,7 +114,6 @@
         DLog(@"%@", error);
     }];
 }
-
 #pragma mark
 #pragma mark - viewcontroller生命周期
 - (void)viewDidLoad {
@@ -131,6 +130,7 @@
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.hidesBottomBarWhenPushed = YES;
+    
     // 请求播放信息
 //    [self getRequestLiveMessage];
     // 设置直播参数
@@ -491,8 +491,10 @@
     report.message = @"确定举报该用户";
     report.sureBlock = ^(UIButton *btn){
         DLog(@"举报");
-        NSDictionary * dict = @{
-                                @"id":self.liverId,
+        
+        NSDictionary * dict = @{// @([self.liverId intValue])
+                                @"id":@([self.liverId integerValue]),
+                                @"live_id":_liveID,
                                 @"user_id":@([[UserInfos sharedUser].ID intValue])
                                 };
         [self getRequestWithPath:API_Report params:dict success:^(id successJson) {
@@ -501,7 +503,8 @@
         } error:^(NSError *error) {
             DLog(@"%@",error);
             
-        }];    };
+        }];
+    };
     [report show];
 }
 - (void)clickShareBtnAction {

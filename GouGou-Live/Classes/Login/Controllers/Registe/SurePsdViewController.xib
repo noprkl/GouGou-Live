@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="U0p-Cj-CFo">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="U0p-Cj-CFo">
                     <rect key="frame" x="28" y="26" width="16" height="18"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faf-JR-isw">
@@ -44,7 +44,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Exo-Wo-aEH">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Exo-Wo-aEH">
                     <rect key="frame" x="28" y="60" width="283" height="1"/>
                     <color key="backgroundColor" white="0.80921052630000001" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -62,7 +62,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pGb-F4-MeV">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pGb-F4-MeV">
                     <rect key="frame" x="28" y="111" width="283" height="1"/>
                     <color key="backgroundColor" white="0.80008737659999996" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -90,7 +90,7 @@
                         <action selector="clickSureBtnAction:" destination="-1" eventType="touchUpInside" id="6mR-wy-Vy2"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="RC6-S6-tbH">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="RC6-S6-tbH">
                     <rect key="frame" x="28" y="77" width="16" height="18"/>
                 </imageView>
             </subviews>

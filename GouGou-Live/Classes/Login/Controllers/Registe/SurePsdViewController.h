@@ -10,7 +10,6 @@
 
 @interface SurePsdViewController : BaseViewController
 
-
 @property(nonatomic, strong) NSString *telNumber; /**< 手机号 */
 
 @property(nonatomic, strong) NSString *codeNumber; /**< 验证码 */

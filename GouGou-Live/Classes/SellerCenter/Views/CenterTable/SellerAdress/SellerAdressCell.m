@@ -34,6 +34,9 @@
 /** 删除 */
 @property (strong,nonatomic) UIButton *deleteBtn;
 
+//@property (copy, nonatomic) UILabel *stree; /**< 街道 */
+//@property (copy, nonatomic) UILabel *code; /**< 验证码 */
+
 @end
 
 @implementation SellerAdressCell
@@ -55,7 +58,7 @@
         [self.contentView addSubview:self.acquiesceAddressLabel];
         [self.contentView addSubview:self.editBtn];
         [self.contentView addSubview:self.deleteBtn];
-        
+
     }
     return self;
 }
@@ -65,6 +68,10 @@
     self.phoneTextfiled.text = adressModel.merchantTel;
     NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", adressModel.merchantProvince, adressModel.merchantCity, adressModel.merchantDistrict, adressModel.merchantAddress];
     self.detailAddress.text = adress;
+    
+//    self.stree.text = adressModel.street;
+//    self.code.text  = adressModel.code;
+    
     if (adressModel.isDefault == 1) {
         self.duihaoImageBtn.selected = YES;
     }else{
@@ -301,6 +308,21 @@
     }
     return _deleteBtn;
 }
+//- (UILabel *)stree {
+//
+//    if (!_stree) {
+//        _stree = [[UILabel alloc] init];
+//    }
+//    return _stree;
+//}
+//
+//- (UILabel *)code {
+//
+//    if (!_code) {
+//        _code = [[UILabel alloc] init];
+//    }
+//    return _code;
+//}
 #pragma mark
 #pragma mark - Action
 // 点击编辑按钮

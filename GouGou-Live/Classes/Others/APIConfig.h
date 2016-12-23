@@ -166,6 +166,7 @@
 /** 发货默认地址 */
 #define API_Seller_address_default @"api/UserService/seller_address_default"
 
+
 #pragma mark - 运费模板
 /** 运费模板列表 */
 #define API_List_freight @"api/UserService/list_freight"
@@ -175,7 +176,6 @@
 #define API_Freight @"api/UserService/freight"
 /** 运费模板删除 */
 //#define API_Seller_address_del @"api/UserService/seller_address_del"
-
 
 #pragma mark
 #pragma mark - 商品

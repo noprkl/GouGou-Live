@@ -37,7 +37,7 @@ static NSString * indenifer = @"addressCellID";
                            @"user_id":@([[UserInfos sharedUser].ID integerValue])
                            };
     [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
-        [self showAlert:successJson[@"message"]];
+//        [self showAlert:successJson[@"message"]];
         DLog(@"1%@", successJson);
         if (successJson[@"code"]) {
             // 数据解析
@@ -63,15 +63,13 @@ static NSString * indenifer = @"addressCellID";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self postGetAdressRequest];
     self.navigationController.navigationBarHidden = NO;
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self postGetAdressRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-    [self.tableview.mj_header beginRefreshing];
-
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

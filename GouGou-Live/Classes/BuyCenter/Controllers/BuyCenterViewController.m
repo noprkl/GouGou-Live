@@ -219,7 +219,6 @@
                 [self showAlert:successJson[@"支付失败"]];
             }
         }
-        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

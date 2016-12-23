@@ -59,6 +59,7 @@ static NSString *cellid4 = @"cellid4";
         DLog(@"%@", successJson);
         NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         self.personalModel = [arr lastObject];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -108,8 +109,7 @@ static NSString *cellid4 = @"cellid4";
         if (successJson) {
             //            DLog(@"%@", successJson);
             self.fansArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            [UserInfos sharedUser].fansCount = self.fansArray.count;
-            //            [self.tableView reloadData];
+            [self.tableView reloadData];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -123,7 +123,6 @@ static NSString *cellid4 = @"cellid4";
                            };
     [self getRequestWithPath:API_home params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
         if ([successJson[@"code"] isEqualToString:@"1"]) {
             // 分数四舍五入
             CGFloat source = [successJson[@"data"] floatValue];
@@ -134,8 +133,10 @@ static NSString *cellid4 = @"cellid4";
                 self.pleasureCount = count / 10;
             }
             DLog(@"%ld", self.pleasureCount);
-            [self.tableView reloadData];
+        }else {
+                self.pleasureCount = 5;
         }
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -245,11 +246,18 @@ static NSString *cellid4 = @"cellid4";
             if (indexPath.row == 0) { // 头部信息
                 UITableViewCell *cell0 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid0];
                 cell0.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+                CGFloat height = 0;
+                if ([self.personalModel.isMerchant isEqualToString:@"2"]) {
+                    height = 200;
+                }else{
+                    height = 160;
+                }
+                MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
                 headerView.fansCount = self.fansArray.count;
                 headerView.commentCount = self.commentArr.count;
                 headerView.pleasureCount = self.pleasureCount;
+                headerView.userImg = self.personalModel.userImgUrl;
+                headerView.userName = self.personalModel.userName;
                 
                 headerView.backgroundColor = [UIColor whiteColor];
                 [cell0.contentView addSubview:headerView];
@@ -400,7 +408,15 @@ static NSString *cellid4 = @"cellid4";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
-            return 200;
+        {
+        CGFloat height = 0;
+        if ([self.personalModel.isMerchant isEqualToString:@"2"]) {
+            height = 200;
+        }else{
+            height = 160;
+        }
+        return height;
+        }
             break;
         case 1:
             return 73;

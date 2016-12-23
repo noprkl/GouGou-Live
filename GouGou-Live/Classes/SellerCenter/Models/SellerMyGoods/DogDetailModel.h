@@ -12,7 +12,7 @@
 
 @property(nonatomic, strong) NSString *name; /**< 名字 */
 @property(nonatomic, strong) NSString *pathBig; /**< 图片 */
-@property(nonatomic, assign) NSInteger age; /**< 年龄 */
+@property(nonatomic, assign) DogCategoryModel *age; /**< 年龄 */
 @property(nonatomic, strong) DogCategoryModel *color; /**< 颜色 */
 @property(nonatomic, strong) DogCategoryModel *kind; /**< 品种 */
 @property(nonatomic, strong) DogCategoryModel *size; /**< 体型 */

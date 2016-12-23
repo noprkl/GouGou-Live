@@ -24,5 +24,5 @@
 @property (nonatomic, strong) NSString *comment; /**< 补充 */
 @property (nonatomic, strong) NSString *createTime; /**< 狗狗创建时间 */
 @property (nonatomic, strong) NSString *impresssionId; /**< 狗狗印象 */
-@property (nonatomic, strong) NSString *status; /**< 状态 */
+@property (nonatomic, strong) NSString *status; /**< 商品状态 */
 @end

@@ -146,7 +146,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
             if ([button.titleLabel.text  isEqual:@"取消订单"]) {
                 // 点击取消订单
                 [self clickCancleOrder:model];
-                
+                [self getPayStateOrderRequest];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text  isEqual:@"待付款"]){
@@ -185,7 +185,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
             if ([button.titleLabel.text  isEqual:@"取消订单"]) {
                 // 点击取消订单
                 [self clickCancleOrder:model];
-                
+                [self getPayStateOrderRequest];
             } else if ([button.titleLabel.text  isEqual:@"支付订金"]){
                 // 点击支付定金
                 [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text];
@@ -267,6 +267,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
                 DLog(@"%@--%@",self,button.titleLabel.text);
             }else if ([button.titleLabel.text isEqualToString:@"取消订单"]) {
                 [self clickCancleOrder:model];
+                [self getPayStateOrderRequest];
             }
         };
         

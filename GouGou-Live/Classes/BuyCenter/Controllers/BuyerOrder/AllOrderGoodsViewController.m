@@ -204,7 +204,7 @@ static NSString * closeCell = @"closeCell";
             if ([button.titleLabel.text  isEqual:@"取消订单"]) {
                 // 点击取消订单
                 [self clickCancleOrder:model];
-                
+                [self postGetAllStateOrderRequest];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text  isEqual:@"待付款"]){
@@ -248,7 +248,7 @@ static NSString * closeCell = @"closeCell";
                 // 点击取消订单
                 [self clickCancleOrder:model];
                 DLog(@"%@--%@",self,button.titleLabel.text);
-                
+                [self postGetAllStateOrderRequest];
             } else if ([button.titleLabel.text  isEqual:@"支付订金"]){
                 // 点击支付定金
                 [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text];
@@ -429,7 +429,7 @@ static NSString * closeCell = @"closeCell";
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
                 [self clickDeleteOrder:model];
-                
+                [self postGetAllStateOrderRequest];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
@@ -597,6 +597,8 @@ static NSString * closeCell = @"closeCell";
         [self showAlert:@"订单已关闭"];
     }
 }
+
+
 - (void)test {
     //    ProtectProwerTableModel * protectModel = self.dataArray[indexPath.row];
     //

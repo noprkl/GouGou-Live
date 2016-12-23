@@ -64,7 +64,8 @@ static NSString *templateNameStr = @"templateNameStr";
 
     if (_isAdress) {
         [self.view addSubview:self.tableView];
-        [self.tableView reloadData];
+        NSIndexPath *index = [NSIndexPath indexPathWithIndex:1];
+        [self.tableView reloadRowsAtIndexPaths:@[index] withRowAnimation:(UITableViewRowAnimationNone)];
     }
     
     SellerAdressModel *model = adress.userInfo[@"ChoseSendAdress"];
@@ -83,7 +84,7 @@ static NSString *templateNameStr = @"templateNameStr";
 - (void)priceSwitchBtnAction:(UISwitch *)switchBtn {
     [self.dataArr removeAllObjects];
     
-    [_dataArr addObject:templateNameStr];
+    [_dataArr addObject:self.templateName.text];
     [_dataArr addObject:@"发货地址(必填)"];
     [_dataArr addObject:@"免运费"];
     [_dataArr addObject:@"默认运费价格"];
@@ -99,8 +100,7 @@ static NSString *templateNameStr = @"templateNameStr";
     if (switchBtn.isOn) {
         [self.dataArr removeAllObjects];
        
-        NSString *name = [[NSUserDefaults standardUserDefaults] valueForKey:templateNameStr];
-        [_dataArr addObject:name];
+        [_dataArr addObject:self.templateName.text];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
         [_dataArr addObject:@"默认运费价格"];
@@ -112,8 +112,7 @@ static NSString *templateNameStr = @"templateNameStr";
     }else{
         [self.dataArr removeAllObjects];
 
-        NSString *name = [[NSUserDefaults standardUserDefaults] valueForKey:templateNameStr];
-        [_dataArr addObject:name];
+        [_dataArr addObject:self.templateName.text];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
         [_dataArr addObject:@"默认运费价格"];
@@ -124,7 +123,6 @@ static NSString *templateNameStr = @"templateNameStr";
 }
 - (void)realCostSwitchBtnAction:(UISwitch *)switchBtn {
    
-    
     self.shipCost.on = NO;
     self.freeCost.on = NO;
     [self.dataArr removeAllObjects];
@@ -330,5 +328,20 @@ static NSString *templateNameStr = @"templateNameStr";
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.templateName) {
+      
+        if (textField.text.length == 0){
+            textField.text = @"";
+        }
+    }
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == self.templateName) {
+        if (textField.text.length == 0){
+        textField.text = @"运费模板一(自定义输入名称)";
+        }
+    }
 }
 @end

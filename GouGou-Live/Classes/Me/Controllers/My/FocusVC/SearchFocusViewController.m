@@ -8,7 +8,8 @@
 
 #import "SearchFocusViewController.h"
 #import "MyFocusTableCell.h"
-#import "FocusAndFansModel.h"
+#import "SearchFanModel.h"
+#import "PersonalPageController.h" // 个人主页
 
 @interface SearchFocusViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
@@ -50,7 +51,7 @@ static NSString *cellid = @"MyFocusCell";
         DLog(@"%@", successJson);
         if (successJson) {
             //            DLog(@"%@", successJson);
-            self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            self.dataArr = [SearchFanModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             
             [self.tableView reloadData];
         }
@@ -103,15 +104,15 @@ static NSString *cellid = @"MyFocusCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    FocusAndFansModel *model = self.dataArr[indexPath.row];
-    cell.model = model;
+    SearchFanModel *model = self.dataArr[indexPath.row];
+    cell.searchModel = model;
     
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {
             
             NSDictionary *dict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
-                                   @"id":@(model.userFanId),
+                                   @"id":model.ID,
                                    @"type":@(0)
                                    };
             [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
@@ -125,7 +126,7 @@ static NSString *cellid = @"MyFocusCell";
             
             NSDictionary *dict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
-                                   @"id":@(model.userFanId),
+                                   @"id":model.ID,
                                    @"type":@(1)
                                    };
             [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
@@ -143,7 +144,13 @@ static NSString *cellid = @"MyFocusCell";
     
     return 75;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    SearchFanModel *model = self.dataArr[indexPath.row];
+    
+    PersonalPageController *personalVc = [[PersonalPageController alloc] init];
+    personalVc.personalID = [model.ID intValue];
+    [self.navigationController pushViewController:personalVc animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

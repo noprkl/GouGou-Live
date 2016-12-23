@@ -492,6 +492,8 @@
 		04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */; };
 		04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */; };
 		04E332211E0BFD2C00693957 /* UserProtocolVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E332201E0BFD2C00693957 /* UserProtocolVc.m */; };
+		04E332241E0C0F0800693957 /* NormalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E332231E0C0F0800693957 /* NormalModel.m */; };
+		04E332271E0D0D4400693957 /* SearchFanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E332261E0D0D4400693957 /* SearchFanModel.m */; };
 		04E777351DEC2EE6007B5146 /* SystemPushMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */; };
 		04E777391DEC33C2007B5146 /* SystemNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777371DEC33C2007B5146 /* SystemNotificationCell.m */; };
 		04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E777381DEC33C2007B5146 /* SystemNotificationCell.xib */; };
@@ -1490,6 +1492,10 @@
 		04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPsdAlertView.m; sourceTree = "<group>"; };
 		04E3321F1E0BFD2C00693957 /* UserProtocolVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProtocolVc.h; sourceTree = "<group>"; };
 		04E332201E0BFD2C00693957 /* UserProtocolVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProtocolVc.m; sourceTree = "<group>"; };
+		04E332221E0C0F0800693957 /* NormalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalModel.h; sourceTree = "<group>"; };
+		04E332231E0C0F0800693957 /* NormalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalModel.m; sourceTree = "<group>"; };
+		04E332251E0D0D4400693957 /* SearchFanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFanModel.h; sourceTree = "<group>"; };
+		04E332261E0D0D4400693957 /* SearchFanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFanModel.m; sourceTree = "<group>"; };
 		04E777331DEC2EE6007B5146 /* SystemPushMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPushMessageModel.h; sourceTree = "<group>"; };
 		04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemPushMessageModel.m; sourceTree = "<group>"; };
 		04E777361DEC33C2007B5146 /* SystemNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotificationCell.h; sourceTree = "<group>"; };
@@ -1874,6 +1880,8 @@
 			children = (
 				045D11981DF031EF008623E5 /* FocusAndFansModel.h */,
 				045D11991DF031EF008623E5 /* FocusAndFansModel.m */,
+				04E332251E0D0D4400693957 /* SearchFanModel.h */,
+				04E332261E0D0D4400693957 /* SearchFanModel.m */,
 			);
 			path = "Focus&Fans";
 			sourceTree = "<group>";
@@ -3359,6 +3367,8 @@
 		0479B5571DCADC7B00CB288A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04E332221E0C0F0800693957 /* NormalModel.h */,
+				04E332231E0C0F0800693957 /* NormalModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4731,6 +4741,7 @@
 				046F0BA81DE2AB8B00D50D5C /* StateView.m in Sources */,
 				04E7773D1DEC3F1F007B5146 /* NSString+CertificateImage.m in Sources */,
 				045D11A11DF031EF008623E5 /* MyAlbumsModel.m in Sources */,
+				04E332271E0D0D4400693957 /* SearchFanModel.m in Sources */,
 				0479B5E61DCADC7B00CB288A /* DogAgeFilter.m in Sources */,
 				040891FF1DFEB91F006DF570 /* PayFontMoneyViewController.m in Sources */,
 				046F0BA61DE2AB8B00D50D5C /* SellinfoView.m in Sources */,
@@ -5059,6 +5070,7 @@
 				046BEFC91DE4696600BC32E9 /* EMCDDeviceManager+Microphone.m in Sources */,
 				046F0BAA1DE2AB8B00D50D5C /* ProtectingPowerCell.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
+				04E332241E0C0F0800693957 /* NormalModel.m in Sources */,
 				0479B5E51DCADC7B00CB288A /* LiveTopView.m in Sources */,
 				040891F61DFEB91F006DF570 /* WaitPayingViewController.m in Sources */,
 				046BF0131DE4696600BC32E9 /* NSDateFormatter+Category.m in Sources */,

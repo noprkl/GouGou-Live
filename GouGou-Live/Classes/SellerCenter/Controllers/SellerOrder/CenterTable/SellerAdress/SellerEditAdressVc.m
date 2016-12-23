@@ -31,8 +31,8 @@
 @property(nonatomic, strong) NSString *district; /**< 县 */
 
 @property(nonatomic, strong) NSArray *proviceDataArr; /**< 省数据 */
-@property(nonatomic, strong) NSMutableArray *cityDataArr; /**< 市数据 */
-@property(nonatomic, strong) NSMutableArray *desticDataArr; /**< 县数据 */
+@property(nonatomic, strong) NSArray *cityDataArr; /**< 市数据 */
+@property(nonatomic, strong) NSArray *desticDataArr; /**< 县数据 */
 
 @end
 
@@ -75,15 +75,15 @@
     }
     return _proviceDataArr;
 }
-- (NSMutableArray *)cityDataArr {
+- (NSArray *)cityDataArr {
     if (!_cityDataArr) {
-        _cityDataArr = [NSMutableArray array];
+        _cityDataArr = [NSArray array];
     }
     return _cityDataArr;
 }
-- (NSMutableArray *)desticDataArr {
+- (NSArray *)desticDataArr {
     if (!_desticDataArr) {
-        _desticDataArr = [NSMutableArray array];
+        _desticDataArr = [NSArray array];
     }
     return _desticDataArr;
 }
@@ -98,7 +98,7 @@
     }];
     [self getRequestWithPath:API_Province params:@{@"id":@(1)} success:^(id successJson) {
         if (successJson) {
-            [self.cityDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+            self.cityDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         }
         //        DLog(@"%@", successJson);
     } error:^(NSError *error) {
@@ -107,7 +107,7 @@
     [self getRequestWithPath:API_Province params:@{@"id":@(36)} success:^(id successJson) {
         if (successJson) {
             //            self.desticDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            [self.desticDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+            self.desticDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             
         }
         //        DLog(@"%@", successJson);
@@ -252,12 +252,15 @@
         __block AddressChooseView * choose = [[AddressChooseView alloc] init];
         
         __weak typeof(choose) weakChose = choose;
-        choose.provinceArr = self.proviceDataArr;
-        choose.cityArr = self.cityDataArr;
-        choose.desticArr = self.desticDataArr;
+        choose.provinceArr = [self.proviceDataArr mutableCopy];
+        choose.cityArr = [self.cityDataArr mutableCopy];
+        choose.desticArr = [self.desticDataArr mutableCopy];
         // 选中第一行 第二行请求
         choose.firstBlock = ^(MyShopProvinceModel *model){
             [self getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
+                [weakChose.cityArr removeAllObjects];
+                [weakChose.desticArr removeAllObjects];
+                [weakChose.areaPicker reloadAllComponents];
                 if (successJson) {
                     weakChose.cityArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                     [weakChose.areaPicker selectRow:0 inComponent:1 animated:YES];
@@ -267,6 +270,8 @@
                     
                     // 请求第3行
                     [self getRequestWithPath:API_Province params:@{@"id":@(cityModel.ID)} success:^(id successJson) {
+                        [weakChose.desticArr removeAllObjects];
+                        [weakChose.areaPicker reloadAllComponents];
                         if (successJson) {
                             weakChose.desticArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                             [weakChose.areaPicker selectRow:0 inComponent:2 animated:YES];
@@ -293,7 +298,6 @@
                 DLog(@"%@", error);
             }];
         };
-        
         
         choose.areaBlock = ^(NSString *province,NSString *city,NSString *district){
             self.areaChooseTextfiled.text = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];

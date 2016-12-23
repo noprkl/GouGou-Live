@@ -18,6 +18,8 @@ static NSString * MedrchantCell = @"MedrchantCell";
 /** 数据 */
 @property (strong,nonatomic) NSArray *dataArray;
 
+@property (nonatomic, strong) UILabel *label; /**< <#注释#> */
+
 @end
 
 @implementation DoneCertificateView
@@ -130,18 +132,29 @@ static NSString * MedrchantCell = @"MedrchantCell";
     
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
-            textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
-            textField.font = [UIFont systemFontOfSize:16];
-            // 添加弹出城市选择
-            self.areasTextField = textField;
-//            [tex]
-            [textField addTarget:self action:@selector(editAreaTextAction:) forControlEvents:(UIControlEventAllEvents)];
-            textField.delegate = self;
-           
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            [cell.contentView addSubview:textField];
-
+//            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
+//            textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
+//            textField.font = [UIFont systemFontOfSize:16];
+//            // 添加弹出城市选择
+//            self.areasTextField = textField;
+////            [tex]
+//            [textField addTarget:self action:@selector(editAreaTextAction:) forControlEvents:(UIControlEventAllEvents)];
+//            textField.delegate = self;
+//           
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//            [cell.contentView addSubview:textField];
+//            UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+//            [btn setTitle:@"省、市、区" forState:(UIControlStateNormal)];
+//            btn.frame = CGRectMake(10, 0, 300, 44);
+//            [btn addTarget:self action:@selector(ClickCityBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+//            btn.titleLabel.font = [UIFont systemFontOfSize:16];
+//            [btn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+//            [cell.contentView addSubview:btn];
+            cell.textLabel.text = @" 省、市、区";
+            cell.textLabel.font = [UIFont systemFontOfSize:16];
+            cell.textLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            self.label = cell.textLabel;
         }
         if (indexPath.row == 1){
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
@@ -179,14 +192,14 @@ static NSString * MedrchantCell = @"MedrchantCell";
         }
         return NO;
     }
-    if (textField == self.areasTextField) {
-        [textField resignFirstResponder];
-        [self.areasTextField resignFirstResponder];
-        [self.adressTextField resignFirstResponder];
-        [self.phoneNumTextfiled resignFirstResponder];
-        [self.infoTextfiled resignFirstResponder];
-        return NO;
-    }
+//    if (textField == self.areasTextField) {
+//        [textField resignFirstResponder];
+//        [self.areasTextField resignFirstResponder];
+//        [self.adressTextField resignFirstResponder];
+//        [self.phoneNumTextfiled resignFirstResponder];
+//        [self.infoTextfiled resignFirstResponder];
+//        return NO;
+//    }
     return YES;
 }
 #pragma mark - textfiled方法
@@ -194,45 +207,46 @@ static NSString * MedrchantCell = @"MedrchantCell";
     [textField resignFirstResponder];
     
 }
-
+- (void)ClickCityBtnAction:(UIButton *)btn {
+    [self.adressTextField resignFirstResponder];
+    [self.phoneNumTextfiled resignFirstResponder];
+    [self.infoTextfiled resignFirstResponder];
+//    if (_areasBlock) {
+//        _areasBlock(btn);
+//    }
+}
 #pragma mark - TextFiled代理
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == self.areasTextField) {
-        [textField resignFirstResponder];    
-    }
+//    if (textField == self.areasTextField) {
+//        [textField resignFirstResponder];    
+//    }
     [textField resignFirstResponder];
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField == self.areasTextField) {
-
-        [self.areasTextField resignFirstResponder];
-        [self.adressTextField resignFirstResponder];
-        [self.phoneNumTextfiled resignFirstResponder];
-        [self.infoTextfiled resignFirstResponder];
-            
-        if (_areasBlock) {
-            [self.areasTextField resignFirstResponder];
-            [self.adressTextField resignFirstResponder];
-            [self.phoneNumTextfiled resignFirstResponder];
-            [self.infoTextfiled resignFirstResponder];
-            _areasBlock();
-        }
-    }
+//    if (textField == self.areasTextField) {
+//
+//        [self.areasTextField resignFirstResponder];
+//        [self.adressTextField resignFirstResponder];
+//        [self.phoneNumTextfiled resignFirstResponder];
+//        [self.infoTextfiled resignFirstResponder];
+//            
+//        if (_areasBlock) {
+//            [self.areasTextField resignFirstResponder];
+//            [self.adressTextField resignFirstResponder];
+//            [self.phoneNumTextfiled resignFirstResponder];
+//            [self.infoTextfiled resignFirstResponder];
+//            _areasBlock();
+//        }
+//    }
 }
 
-// 点击提交认证
-- (void)clickHandinCertitycate {
-    
-    BOOL flag =  [NSString valiMobile:self.phoneNumTextfiled.text];
-    if (!flag) {
-        
-        [self showMessage:@"输入的不是电话号码"];
-    } else {
-        
-        
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        if (_areasBlock) {
+            _areasBlock(self.label);
+        }
     }
-    
 }
 
 - (void)showMessage:(NSString *)string {

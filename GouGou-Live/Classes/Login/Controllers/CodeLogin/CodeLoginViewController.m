@@ -9,6 +9,7 @@
 #import "CodeLoginViewController.h"
 #import "LoginViewController.h"
 #import "RegisteViewController.h"
+#import "UserProtocolVc.h"
 
 @interface CodeLoginViewController ()<UITextFieldDelegate>
 
@@ -200,7 +201,9 @@
     self.sureBtn.enabled = sender.selected;
 }
 - (IBAction)clickProtocolBtnAction:(UIButton *)sender {
-    
+    UserProtocolVc *protocolVc = [[UserProtocolVc alloc] init];
+    protocolVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:protocolVc animated:YES];
     
 }
 - (void)saveUserWithID:(NSString *)ID

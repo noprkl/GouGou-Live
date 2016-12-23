@@ -95,6 +95,9 @@
                         [self postRequestWithPath:API_Order_evaluation params:dict success:^(id successJson) {
                             DLog(@"%@",successJson);
                             [self showAlert:successJson[@"message"]];
+                            if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                                [self.navigationController popViewControllerAnimated:YES];
+                            }
                         } error:^(NSError *error) {
                             DLog(@"%@",error);
                         }];

@@ -228,18 +228,20 @@ static NSString *cellid = @"SellerCreateDogMessage";
                     if (![NSString validateNumber:self.priceText.text]) {
                         [self showAlert:@"请输入狗狗价格"];
                     }else {
-                        if ([self.impressModels[0] name].length == 0) {
+                        if ([self.impressModels count] == 0) {
                             [self showAlert:@"请选择狗狗印象"];
                         }else {
                             if (self.photoArr.count == 0) {
                                 [self showAlert:@"请添加狗狗图片"];
                             }else {
+                                self.sureBtn.enabled = NO;
                                 // 印象id字符串
+                                NSMutableArray *impresArr = [NSMutableArray array];
                                 for (NSInteger i = 0; i < self.impressModels.count; i ++) {
                                     DogCategoryModel *model = self.impressModels[i];
-                                    [self.impressModels replaceObjectAtIndex:i withObject:model.ID];
+                                    [impresArr addObject:model.ID];
                                 }
-                                NSString *idStr = [self.impressModels componentsJoinedByString:@"|"];
+                                NSString *idStr = [impresArr componentsJoinedByString:@"|"];
                                 // 图片地址
                                 for (NSInteger i = 0; i < self.photoArr.count; i ++) {
                                     NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(93, 93)];
@@ -277,6 +279,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                     if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                                                         [self.navigationController popViewControllerAnimated:YES];
                                                     }
+                                                    self.sureBtn.enabled = YES;
+
                                                 } error:^(NSError *error) {
                                                     DLog(@"%@", error);
                                                 }];
@@ -434,7 +438,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             // 新价格
             cell.textLabel.text = @"";
             
-            UITextField *pricetext = [[UITextField alloc] initWithFrame:CGRectMake(13, 11 / 2, 80, 44)];
+            UITextField *pricetext = [[UITextField alloc] initWithFrame:CGRectMake(13, 11 / 2, 200, 44)];
             pricetext.attributedPlaceholder = [self getAttributeWith:self.dataArr[5]];
             pricetext.font = [UIFont systemFontOfSize:14];
             pricetext.delegate = self;

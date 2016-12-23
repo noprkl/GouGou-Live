@@ -52,7 +52,6 @@ static NSString *cellid = @"SizeFilterCellID";
     [self.agePicker reloadAllComponents];
     self.minModel = self.ageData[0];
     self.maxModel = self.ageData[0];
-
 }
 
 
@@ -122,7 +121,7 @@ static NSString *cellid = @"SizeFilterCellID";
             
         case 1:
             if (row < self.currentminIndex) {
-                DLog(@"%ld--%ld", row, component);
+//                DLog(@"%ld--%ld", row, component);
                 self.currentminIndex = [pickerView selectedRowInComponent:1];
                 self.currentmaxIndex = [pickerView selectedRowInComponent:1];;
                 
@@ -133,30 +132,12 @@ static NSString *cellid = @"SizeFilterCellID";
         default:
             break;
     }
-//    if (component == 0) {
-//        if (row > self.currentmaxIndex) {
-//            
-//            self.currentmaxIndex = row;
-//            self.currentminIndex = row;
-//            [pickerView selectRow:row inComponent:1 animated:YES];
-//        }
-//    }else {
-//        NSInteger index = [pickerView selectedRowInComponent:0];
-//        if (index < self.currentminIndex) {
-//            
-//            self.currentminIndex = index;
-//            self.currentmaxIndex = index;
-//            
-//            [pickerView selectRow:index inComponent:0 animated:YES];
-//            
-//        }
-//    }
-    
-    NSInteger index = [pickerView selectedRowInComponent:1];
-    self.minModel = self.dataPlist[row];
-    
-    self.maxModel = self.dataPlist[index];
-    
+    if (component == 0) {
+        self.minModel = self.dataPlist[self.currentminIndex];
+    }
+     if (component == 1){
+        self.maxModel = self.dataPlist[self.currentmaxIndex];
+    }
 }
 
 #pragma mark

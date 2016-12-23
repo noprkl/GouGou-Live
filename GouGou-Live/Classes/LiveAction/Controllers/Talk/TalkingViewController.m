@@ -71,10 +71,19 @@ static NSString *cellid = @"TalkTableViewCell";
 //    [self.tableView registerNib:[UINib nibWithNibName:cellid bundle:nil] forCellReuseIdentifier:cellid];
     [self initUI];
 }
+- (void)showHint:(NSString *)hint {
+    
+}
+- (void)setIshidText:(BOOL)ishidText {
+    _ishidText = ishidText;
+    self.talkView.hidden = YES;
+    self.chatToolbar.hidden = YES;
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
+    // 隐藏
+
     [self.view insertSubview:self.talkView aboveSubview:self.talkView];
     [self.talkView makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
@@ -85,7 +94,7 @@ static NSString *cellid = @"TalkTableViewCell";
 //    [self.view bringSubviewToFront:self.talkView];
     
 
-    //@property中带有UI_APPEARANCE_SELECTOR，都可以通过set的形式设置样式，具体可以参考EaseBaseMessageCell.h,EaseMessageCell.h
+//    @property中带有UI_APPEARANCE_SELECTOR，都可以通过set的形式设置样式，具体可以参考EaseBaseMessageCell.h,EaseMessageCell.h
 //    [[EMClient sharedClient].chatManager getConversation:@"liver" type:EMConversationTypeChat createIfNotExist:YES];
 //
 //    //设置发送气泡
@@ -110,8 +119,6 @@ static NSString *cellid = @"TalkTableViewCell";
     //注册消息回调
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     
-    // 隐藏
-    [self hideHud];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

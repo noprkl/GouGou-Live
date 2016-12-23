@@ -118,6 +118,7 @@
         [_editBtn setImage:[UIImage imageNamed:@"编辑"] forState:(UIControlStateNormal)];
         _editBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         [_editBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+        _editBtn.hidden = YES;
         [_editBtn setTitle:@"编辑" forState:(UIControlStateNormal)];
         [_editBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -5)];
         

@@ -73,6 +73,7 @@
     }else if ([liveCellModel.status isEqualToString:@"3"]){
         self.liveStateIcon.image = [UIImage imageNamed:@"直播结束"];
     }
+    
 }
 - (void)setDogInfos:(NSArray *)dogInfos {
     NSArray *subArr = [self.dogCardScrollView subviews];

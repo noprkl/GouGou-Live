@@ -10,18 +10,41 @@
 #import "MyFocusTableCell.h"
 #import "SearchFocusViewController.h"
 #import "FocusAndFansModel.h"
-
+#import "PersonalPageController.h" // 个人主页
 @interface MyFocusViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
-@property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
+@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+
 
 @end
 
 static NSString *cellid = @"MyFocusCell";
 
 @implementation MyFocusViewController
+- (void)postRequestGetFocus {
+    // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
+        
+        if (successJson) {
+            DLog(@"%@", successJson);
+            // 得到关注人的人
+            self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            //把关注的人存到本地
+            NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+            NSString * fileName = [docDir stringByAppendingPathComponent:FocusFile];
+            [UserInfos sharedUser].focusCount = self.dataArr.count;
+            [self.dataArr writeToFile:fileName atomically:YES];
+            [self.tableView reloadData];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -33,7 +56,11 @@ static NSString *cellid = @"MyFocusCell";
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
-    
+    [self postRequestGetFocus];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self postRequestGetFocus];
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 
 - (void)initUI {
@@ -50,15 +77,11 @@ static NSString *cellid = @"MyFocusCell";
     [self.navigationController pushViewController:seachFocusVC animated:YES];
 }
 
-- (void)setFocusArr:(NSArray *)focusArr {
-    _focusArr = focusArr;
-    [self.dataArr addObjectsFromArray:focusArr];
-}
 #pragma mark
 #pragma mark - TableView
-- (NSMutableArray *)dataArr {
+- (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = [NSMutableArray array];
+        _dataArr = [NSArray array];
     }
     return _dataArr;
 }
@@ -79,7 +102,7 @@ static NSString *cellid = @"MyFocusCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    FocusAndFansModel *model = self.focusArr[indexPath.row];
+    FocusAndFansModel *model = self.dataArr[indexPath.row];
     cell.model = model;
     
     cell.selectBlock = ^(BOOL isSelect){
@@ -118,6 +141,13 @@ static NSString *cellid = @"MyFocusCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     return 75;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FocusAndFansModel *model = self.dataArr[indexPath.row];
+    
+    PersonalPageController *personalVc = [[PersonalPageController alloc] init];
+    personalVc.personalID = model.userFanId;
+    [self.navigationController pushViewController:personalVc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

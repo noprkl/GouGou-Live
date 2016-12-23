@@ -70,16 +70,15 @@
                     if (model.pNum == 0) {
                         height += 240;
                         [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
-                        
                     }else{
                         height += 357;
                         
                         if (successJson[@"data"]) {
                             [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
                         }
                     }
+                    [liveMutableArr addObject:model];
+
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                         
                         CGRect rect = self.liveTableView.frame;
@@ -248,8 +247,8 @@
     NSDictionary *dict = @{
                            //                           @"size":@([size.ID intValue])
                            @"im_id":@([_dogType.ID intValue]),
-                           @"start_price":@([minPrice.ID intValue]),
-                           @"end_price":@([maxPrice.ID intValue]),
+                           @"start_price":@(minPrice.time),
+                           @"end_price":@(maxPrice.time),
                            @"page":@(1),
                            @"pageSize":@(10)
                            };

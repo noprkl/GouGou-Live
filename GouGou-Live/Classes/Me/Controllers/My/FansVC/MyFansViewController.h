@@ -10,6 +10,4 @@
 
 @interface MyFansViewController : BaseViewController
 
-@property(nonatomic, strong) NSArray *fansArr; /**< 粉丝 */
-
 @end

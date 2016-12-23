@@ -87,6 +87,12 @@
 
 @property(nonatomic, strong) LiveListRespModel *resp; /**< 播放信息 */
 
+
+@property (nonatomic, strong) TalkingViewController *talkVc; /**< 消息 */
+@property (nonatomic, strong) ServiceViewController *se; /**< 消息 */
+//@property (nonatomic, strong) TalkingViewController *talkVc; /**< 消息 */
+//@property (nonatomic, strong) TalkingViewController *talkVc; /**< 消息 */
+
 @end
 
 @implementation LivingViewController
@@ -115,6 +121,8 @@
     [super viewDidLoad];
 
 //    [self initUI];
+    [self getRequestLiveMessage];
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -124,7 +132,7 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.hidesBottomBarWhenPushed = YES;
     // 请求播放信息
-    [self getRequestLiveMessage];
+//    [self getRequestLiveMessage];
     // 设置直播参数
     self.roomNameLabel.text = _liverName;
     [self.watchLabel setTitle:[@(_watchCount) stringValue] forState:(UIControlStateNormal)];
@@ -305,6 +313,9 @@
 //        [self.childVCS addObject:vc];
 //    }
     // 聊天
+//    if (_chatRoomID) {
+//        <#statements#>
+//    }
         TalkingViewController *talkVC = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
         talkVC.roomID = _chatRoomID;
         talkVC.liverid = _liverId;
@@ -482,7 +493,7 @@
         DLog(@"举报");
         NSDictionary * dict = @{
                                 @"id":self.liverId,
-                                @"uesr_id":@([[UserInfos sharedUser].ID intValue])
+                                @"user_id":@([[UserInfos sharedUser].ID intValue])
                                 };
         [self getRequestWithPath:API_Report params:dict success:^(id successJson) {
             DLog(@"%@",successJson);

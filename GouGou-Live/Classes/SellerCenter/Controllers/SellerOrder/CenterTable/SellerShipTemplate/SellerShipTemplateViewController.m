@@ -28,6 +28,21 @@
 static NSString *cellid = @"SellerShipTemplateCell";
 
 @implementation SellerShipTemplateViewController
+// 请求运费模板
+- (void)getRequestShipTemplate {
+    NSDictionary *dict = @{
+                    @"user_id":[UserInfos sharedUser].ID,
+                    @"page":@1,
+                    @"pageSize":@10
+                    };
+    [self getRequestWithPath:API_List_freight params:dict
+                     success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -38,18 +53,17 @@ static NSString *cellid = @"SellerShipTemplateCell";
     [super viewWillAppear:animated];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStylePlain) target:self action:@selector(addShipTemplate)];
+    [self getRequestShipTemplate];
     // 判断是否有运费模板
     //
-//    [self.view addSubview:self.noneTemplate];
+    //    [self.view addSubview:self.noneTemplate];
     [self.view addSubview:self.tableView];
-
 }
 - (void)initUI{
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-//        [self getRequestAllOrder];
-        
+        [self getRequestShipTemplate];
         [self.tableView.mj_header endRefreshing];
     }];
 }
@@ -113,7 +127,6 @@ static NSString *cellid = @"SellerShipTemplateCell";
         DeletePrommtView *deleAlert = [[DeletePrommtView alloc] init];
         deleAlert.message = @"确认删除这个运费模板";
         [deleAlert show];
-        
     };
     return cell;
 }

@@ -11,7 +11,7 @@
 
 @interface MyUnLoginView ()
 
-@property(nonatomic, strong) UIImageView *iconView; /**< 头像 */
+@property(nonatomic, strong) UIButton *iconViewBtn; /**< 头像 */
 
 @property(nonatomic, strong) FilteButton *loginBtn; /**< 登录 */
 
@@ -27,7 +27,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self addSubview:self.iconView];
+        [self addSubview:self.iconViewBtn];
         [self addSubview:self.loginBtn];
         [self addSubview:self.line];
         [self addSubview:self.liveBtn];
@@ -40,19 +40,19 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
    
-    [self.iconView makeConstraints:^(MASConstraintMaker *make) {
+    [self.iconViewBtn makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(10);
         make.right.equalTo(self.centerX).offset(-10);
     }];
     
     [self.loginBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.iconView.centerY);
-        make.left.equalTo(self.iconView.right).offset(10);
+        make.centerY.equalTo(self.iconViewBtn.centerY);
+        make.left.equalTo(self.iconViewBtn.right).offset(10);
         make.size.equalTo(CGSizeMake(100, 50));
     }];
     [self.line makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
-        make.top.equalTo(self.iconView.bottom).offset(5);
+        make.top.equalTo(self.iconViewBtn.bottom).offset(5);
         make.height.equalTo(10);
     }];
     [self.liveBtn makeConstraints:^(MASConstraintMaker *make) {
@@ -73,17 +73,16 @@
         _loginBlcok();
     }
 }
-- (void)ClickLiveBtnAction {
-    
-}
+
 #pragma mark
 #pragma mark - 懒加载
-- (UIImageView *)iconView {
-    if (!_iconView) {
-        _iconView = [[UIImageView alloc] init];
-        _iconView.image = [UIImage imageNamed:@"头像"];
+- (UIButton *)iconViewBtn {
+    if (!_iconViewBtn) {
+        _iconViewBtn = [[UIButton alloc] init];
+        [_iconViewBtn setBackgroundImage:[UIImage imageNamed:@"头像"] forState:(UIControlStateNormal)];
+        [_iconViewBtn addTarget:self action:@selector(ClickLoginBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
-    return _iconView;
+    return _iconViewBtn;
 }
 - (FilteButton *)loginBtn {
     if (!_loginBtn) {

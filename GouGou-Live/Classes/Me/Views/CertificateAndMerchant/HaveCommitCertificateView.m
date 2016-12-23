@@ -10,7 +10,6 @@
 
 @interface HaveCommitCertificateView ()
 
-
 @property (nonatomic, strong) UIImageView *iconView; /**< 图片 */
 
 @property (nonatomic, strong) UILabel *noteLabel; /**< 提示 */

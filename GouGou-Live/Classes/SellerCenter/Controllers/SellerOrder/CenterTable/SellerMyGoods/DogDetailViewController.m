@@ -11,6 +11,7 @@
 #import "SellerOrderDetailBottomView.h"
 #import "ChageGoodsMessageVc.h"
 #import "DogDetailModel.h"
+#import "DeletePrommtView.h"
 
 @interface DogDetailViewController ()
 
@@ -50,22 +51,24 @@
 }
 // 删除
 - (void)deleGoods {
- 
-    NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                           @"id":@([_model.ID integerValue])
-                           };
-    [self getRequestWithPath:API_Del_Commodity params:dict success:^(id successJson) {
-        //        DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
-        // 如果成功跳回去
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
-        });
-        
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+    DeletePrommtView *deleView = [[DeletePrommtView alloc] init];
+    [deleView show];
+    deleView.sureBlock = ^(UIButton *btn){
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                               @"id":@([_model.ID integerValue])
+                               };
+        [self getRequestWithPath:API_Del_Commodity params:dict success:^(id successJson) {
+            //        DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
+            // 如果成功跳回去
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    };
 }
 - (void)editGoodsMessage {
     

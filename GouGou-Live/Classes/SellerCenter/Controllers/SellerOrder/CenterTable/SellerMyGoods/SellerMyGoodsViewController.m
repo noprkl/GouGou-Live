@@ -175,14 +175,14 @@ static NSString *cellid = @"SellerMyGoodsCell";
             
             [weakSelf getRequestSellerDog];
         };
-        _headerView.waitSellBlock = ^(){
+        _headerView.waitSellBlock = ^(){ // 待售1
+            [weakSelf GetRequestStateGoods:1];
+        };
+        _headerView.soldBlock = ^(){ // 已售
+            [weakSelf GetRequestStateGoods:2];
+        };
+        _headerView.reviewBlock = ^(){ // 审核
             [weakSelf GetRequestStateGoods:3];
-        };
-        _headerView.soldBlock = ^(){
-            [weakSelf GetRequestStateGoods:5];
-        };
-        _headerView.reviewBlock = ^(){
-            [weakSelf GetRequestStateGoods:4];
         };
 
     }

@@ -27,6 +27,8 @@
 #define IOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >=8.0 ? YES : NO)
 // 客服电话
 #define ServicePhone @"010-0928928"
+// 关注文件名(本地)
+#define FocusFile @"Focus.text"
 
 #pragma mark - 第三方头文件
 #define MAS_SHORTHAND

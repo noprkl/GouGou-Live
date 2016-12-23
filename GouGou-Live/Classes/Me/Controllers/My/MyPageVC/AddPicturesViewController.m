@@ -119,12 +119,10 @@
                                };
         [self postRequestWithPath:API_Albums params:dict success:^(id successJson) {
 //            DLog(@"%@", successJson);
-            [self showAlert:successJson[@"message"]];
+//            [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
                 // 自动调回
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self.navigationController popViewControllerAnimated:YES];
-                });
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);

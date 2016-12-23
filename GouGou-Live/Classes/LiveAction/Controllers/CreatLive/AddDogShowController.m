@@ -35,13 +35,13 @@ static NSString * dogShowCell = @"dogShowCellID";
 @implementation AddDogShowController
 #pragma mark
 #pragma mark - 网络请求
-// 全部商品
+// 全部可添加商品
 - (void)getRequestSellerDog {
     NSDictionary *dict = @{ //
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"page":@(1),
                            @"pageSize":@(10),
-                           @"type":@(0)
+                           @"type":@(1)
                            };
     [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
         DLog(@"%@", successJson);

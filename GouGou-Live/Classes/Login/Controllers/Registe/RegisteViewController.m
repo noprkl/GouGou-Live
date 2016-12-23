@@ -9,7 +9,7 @@
 #import "RegisteViewController.h"
 #import "LoginViewController.h"
 #import "SurePsdViewController.h"
-
+#import "UserProtocolVc.h"
 
 @interface RegisteViewController ()<UITextFieldDelegate>
 
@@ -122,7 +122,9 @@
 }
 - (IBAction)clickProtocolAction:(UIButton *)sender {
 
-    #warning - 协议链接
+    UserProtocolVc *protocolVc = [[UserProtocolVc alloc] init];
+    protocolVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:protocolVc animated:YES];
     
 }
 #pragma mark - 文本框监听

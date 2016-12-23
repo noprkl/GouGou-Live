@@ -10,6 +10,4 @@
 
 @interface MyFocusViewController : BaseViewController
 
-@property(nonatomic, strong) NSArray *focusArr; /**< 关注数据 */
-
 @end

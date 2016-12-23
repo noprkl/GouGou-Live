@@ -251,6 +251,7 @@
     }else if ([model.status isEqualToString:@"5"]) {
         state = @"售完";
     }
+
     self.dogStateMessage.text = state;
     self.dogStateTitle.text = [NSString stringWithFormat:@"我的%@狗狗", state];
 }

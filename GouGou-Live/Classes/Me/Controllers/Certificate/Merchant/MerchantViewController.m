@@ -42,14 +42,17 @@ static NSString * MedrchantCell = @"MedrchantCell";
 @property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
 @property(nonatomic, strong) NSArray *proviceDataArr; /**< 省数据 */
-@property(nonatomic, strong) NSMutableArray *cityDataArr; /**< 市数据 */
-@property(nonatomic, strong) NSMutableArray *desticDataArr; /**< 县数据 */
+@property(nonatomic, strong) NSArray *cityDataArr; /**< 市数据 */
+@property(nonatomic, strong) NSArray *desticDataArr; /**< 县数据 */
 
 @property(nonatomic, strong) NSString *provice; /**< 省 */
 @property(nonatomic, strong) NSString *city; /**< 市 */
 
 @property(nonatomic, strong) NSString *district; /**< 县 */
 
+
+//@property (nonatomic, strong) UIButton *cityAdressBtn; /**< 城市选择按钮 */
+@property (nonatomic, strong) UILabel *cityAdressBtn; /**< 城市选择按钮 */
 
 @end
 
@@ -145,46 +148,51 @@ static NSString * MedrchantCell = @"MedrchantCell";
     [self.view addSubview:self.doneCertificateView];
     [self.view addSubview:self.photoView];
 }
-- (void)requestGetAreaData {
-    [self getRequestWithPath:API_Province params:@{@"id":@(0)} success:^(id successJson) {
-        if (successJson) {
-            self.proviceDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-    [self getRequestWithPath:API_Province params:@{@"id":@(1)} success:^(id successJson) {
-        if (successJson) {
-            [self.cityDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-    [self getRequestWithPath:API_Province params:@{@"id":@(36)} success:^(id successJson) {
-        if (successJson) {
-            [self.desticDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-}
 - (NSArray *)proviceDataArr {
     if (!_proviceDataArr) {
         _proviceDataArr = [NSArray array];
     }
     return _proviceDataArr;
 }
-- (NSMutableArray *)cityDataArr {
+- (NSArray *)cityDataArr {
     if (!_cityDataArr) {
-        _cityDataArr = [NSMutableArray array];
+        _cityDataArr = [NSArray array];
     }
     return _cityDataArr;
 }
-- (NSMutableArray *)desticDataArr {
+- (NSArray *)desticDataArr {
     if (!_desticDataArr) {
-        _desticDataArr = [NSMutableArray array];
+        _desticDataArr = [NSArray array];
     }
     return _desticDataArr;
+}
+- (void)requestGetAreaData {
+    [self getRequestWithPath:API_Province params:@{@"id":@(0)} success:^(id successJson) {
+        if (successJson) {
+            self.proviceDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        }
+        //        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    [self getRequestWithPath:API_Province params:@{@"id":@(1)} success:^(id successJson) {
+        if (successJson) {
+            self.cityDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        }
+        //        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    [self getRequestWithPath:API_Province params:@{@"id":@(36)} success:^(id successJson) {
+        if (successJson) {
+            //            self.desticDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            self.desticDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            
+        }
+        //        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
 - (NSMutableArray *)photoUrl {
     if (!_photoUrl) {
@@ -196,8 +204,8 @@ static NSString * MedrchantCell = @"MedrchantCell";
 // 点击提交认证
 - (void)clickHandinCertitycate {
     NSString *goodsText = self.doneCertificateView.infoTextfiled.text;
-    NSString *adressText = self.doneCertificateView.infoTextfiled.text;
-    NSString *areasText = self.doneCertificateView.areasTextField.text;
+    NSString *adressText = self.doneCertificateView.adressTextField.text;
+    NSString *areasText = self.cityAdressBtn.text;
     NSString *phoneNumText = self.doneCertificateView.phoneNumTextfiled.text;
 
     if (goodsText.length == 0) {
@@ -243,7 +251,9 @@ static NSString * MedrchantCell = @"MedrchantCell";
                                             if ([successJson[@"message"] isEqualToString:@"信息提交成功"]) { //0：失败 1：成功 2：邀请电话不存在 3: 个人信息未实名  4:已提交，审核中 请勿重复提交
                                                 [UserInfos sharedUser].ismerchant = @"3";
                                                 [UserInfos setUser];
-                                                [self.navigationController popToRootViewControllerAnimated:YES];
+                                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                    [self.navigationController popToRootViewControllerAnimated:YES];
+                                                });
                                             }
                                             DLog(@"%@", successJson);
                                         } error:^(NSError *error) {
@@ -285,21 +295,26 @@ static NSString * MedrchantCell = @"MedrchantCell";
         _doneCertificateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         __weak typeof(self) weakSelf = self;
         __weak typeof(_doneCertificateView) weakCertifi = _doneCertificateView;
-        _doneCertificateView.areasBlock = ^(){
+        _doneCertificateView.areasBlock = ^(UILabel *btn){
+            weakSelf.cityAdressBtn = btn;
             [weakCertifi.infoTextfiled resignFirstResponder];
-            [weakCertifi.areasTextField resignFirstResponder];
+//            [weakCertifi.areasTextField resignFirstResponder];
             [weakCertifi.adressTextField resignFirstResponder];
             [weakCertifi.phoneNumTextfiled resignFirstResponder];
             // 省市区级联
             __block AddressChooseView * choose = [[AddressChooseView alloc] init];
             
             __weak typeof(choose) weakChose = choose;
-            choose.provinceArr = weakSelf.proviceDataArr;
-            choose.cityArr = weakSelf.cityDataArr;
-            choose.desticArr = weakSelf.desticDataArr;
+            
+            choose.provinceArr = [weakSelf.proviceDataArr mutableCopy];
+            choose.cityArr = [weakSelf.cityDataArr mutableCopy];
+            choose.desticArr = [weakSelf.desticDataArr mutableCopy];
             // 选中第一行 第二行请求
             choose.firstBlock = ^(MyShopProvinceModel *model){
                 [weakSelf getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
+                    [weakChose.cityArr removeAllObjects];
+                    [weakChose.desticArr removeAllObjects];
+                    [weakChose.areaPicker reloadAllComponents];
                     if (successJson) {
                         weakChose.cityArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                         [weakChose.areaPicker selectRow:0 inComponent:1 animated:YES];
@@ -309,6 +324,8 @@ static NSString * MedrchantCell = @"MedrchantCell";
                         
                         // 请求第3行
                         [weakSelf getRequestWithPath:API_Province params:@{@"id":@(cityModel.ID)} success:^(id successJson) {
+                            [weakChose.desticArr removeAllObjects];
+                            [weakChose.areaPicker reloadAllComponents];
                             if (successJson) {
                                 weakChose.desticArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                                 [weakChose.areaPicker selectRow:0 inComponent:2 animated:YES];
@@ -340,7 +357,9 @@ static NSString * MedrchantCell = @"MedrchantCell";
                 weakSelf.provice = province;
                 weakSelf.city = city;
                 weakSelf.district = district;
-                weakSelf.doneCertificateView.areasTextField.text = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
+               NSString *cityAdress = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
+//                [self.cityAdressBtn setTitle:cityAdress forState:(UIControlStateNormal)];
+                weakSelf.cityAdressBtn.text =cityAdress;
             };
             [choose show];
         };

@@ -99,7 +99,8 @@
 - (void)setDogInfo:(DogDetailModel *)dogInfo {
     _dogInfo = dogInfo;
     
-    self.dogAgeLaebl.text = [NSString getAgeFormInt:dogInfo.age];
+//    self.dogAgeLaebl.text = [NSString getAgeFormInt:dogInfo.age];
+    self.dogAgeLaebl.text = dogInfo.age.name;
     self.dogColorLaebl.text = dogInfo.color.name;
     self.dogKindLabel.text = dogInfo.kind.name;
     self.dogNameLabel.text = dogInfo.name;

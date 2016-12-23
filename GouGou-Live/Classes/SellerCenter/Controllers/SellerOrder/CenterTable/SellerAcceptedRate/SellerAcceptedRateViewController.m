@@ -18,6 +18,8 @@
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 @property(nonatomic, strong) SellerAcceptRateHeaderView *headerView; /**< 头部View */
 
+@property (nonatomic, assign) NSInteger pleasureCount; /**< 满意度 */
+
 @end
 
 static NSString *cellid = @"SellerAcceptRateCell";
@@ -40,6 +42,31 @@ static NSString *cellid = @"SellerAcceptRateCell";
 
         }
             } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+// 满意度
+- (void)getUserPleasure {
+    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           };
+    [self getRequestWithPath:API_home params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            // 分数四舍五入
+            CGFloat source = [successJson[@"data"] floatValue];
+            NSInteger count = source * 10;
+            if (count % 10 > 5) {
+                self.pleasureCount = count / 10 + 1;
+            }else{
+                self.pleasureCount = count / 10;
+            }
+            DLog(@"%ld", self.pleasureCount);
+        }else {
+            self.pleasureCount = 5;
+        }
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
@@ -124,7 +151,9 @@ static NSString *cellid = @"SellerAcceptRateCell";
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
        SellerAcceptRateHeaderView *headerView = [[SellerAcceptRateHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+        
         headerView.backgroundColor = [UIColor whiteColor];
+        headerView.pleasureCount = self.pleasureCount;
         self.headerView = headerView;
         return headerView;
     }

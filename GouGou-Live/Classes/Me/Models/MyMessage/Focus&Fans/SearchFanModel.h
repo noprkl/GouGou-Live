@@ -1,21 +1,19 @@
 //
-//  FocusAndFansModel.h
+//  SearchFanModel.h
 //  GouGou-Live
 //
-//  Created by ma c on 16/11/28.
+//  Created by ma c on 16/12/23.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
 #import "BaseModel.h"
 
-@interface FocusAndFansModel : BaseModel <NSCoding>
-
+@interface SearchFanModel : BaseModel
 @property(nonatomic, strong) NSString *userNickName; /**< 昵称 */
 
 @property(nonatomic, strong) NSString *userMotto; /**< 个性签名 */
 
 @property(nonatomic, strong) NSString *userImgUrl; /**< 头像 */
 
-@property(nonatomic, assign) NSInteger userFanId; /**< 关注ID */
-
+@property(nonatomic, strong) NSString *ID; /**< 关注ID */
 @end

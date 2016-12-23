@@ -95,11 +95,15 @@
 
         if (successJson) {
             DLog(@"%@", successJson);
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"MyFocus"];
             // 得到关注人的人
             self.focusArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-             //把关注的人存到本地
-//            [[NSUserDefaults standardUserDefaults] setObject:self.focusArray forKey:@"MyFocus"];
+            //把关注的人存到本地
+            NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+            NSString * fileName = [docDir stringByAppendingPathComponent:FocusFile];
+            [self.focusArray writeToFile:fileName atomically:YES];
+            
+            [UserInfos sharedUser].focusCount = self.focusArray.count;
+
             [self.tableView reloadData];
         }
 
@@ -339,7 +343,6 @@
                 MyFocusViewController *myfocus =
                 [[MyFocusViewController alloc] init];
                 myfocus.hidesBottomBarWhenPushed = YES;
-                myfocus.focusArr = self.focusArray;
                 [weakSelf.navigationController pushViewController:myfocus animated:YES];
             };
             
@@ -348,7 +351,6 @@
             messageView.fansBlcok = ^(){
                 MyFansViewController *myFansVC =
                 [[MyFansViewController alloc] init];
-                myFansVC.fansArr = self.fansArray;
                 myFansVC.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:myFansVC animated:YES];
             };

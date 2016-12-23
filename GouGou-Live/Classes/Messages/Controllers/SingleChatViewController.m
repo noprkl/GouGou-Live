@@ -15,16 +15,35 @@
 #import "EMClient.h"
 
 #import "PersonalPageController.h" // 个人主页
-
+#import "PersonalMessageModel.h"
 @interface SingleChatViewController ()<EaseMessageViewControllerDelegate, TZImagePickerControllerDelegate, EMContactManagerDelegate>
 
 @property(nonatomic, strong) MessageInputView *talkView; /**< 输入框 */
 
 @property(nonatomic, strong) MessageMeumView *menuView; /**< 菜单 */
 
+@property (nonatomic, strong) PersonalMessageModel *personalModel; /**< 个人信息 */
+
 @end
 
 @implementation SingleChatViewController
+- (void)getrequestPersonalMessage {
+    NSDictionary *dict = @{
+                           @"id":@([_chatID intValue])
+                           };
+    [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/personal" params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        self.personalModel = [arr lastObject];
+        if (self.personalModel.userName != NULL) {
+            self.title = self.personalModel.userName;
+        }else{
+            self.title = _chatID;
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 //#pragma mark
 //#pragma mark - 自定义cell
 
@@ -56,6 +75,9 @@
     }];
     // 进入立即刷新
     [self.tableView.mj_header beginRefreshing];
+    
+    // 用户名
+    [self getrequestPersonalMessage];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -195,6 +217,7 @@
 
         [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
+            [self showHint:successJson[@"message"]];
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -219,7 +242,7 @@
     }else if ([text isEqualToString:@"举报"]){
         NSDictionary * dict = @{
                                 @"id":self.chatID,
-                                @"uesr_id":@([[UserInfos sharedUser].ID intValue])
+                                @"user_id":@([[UserInfos sharedUser].ID intValue])
                                 };
         [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/report"  params:dict success:^(id successJson) {
             DLog(@"%@",successJson);

@@ -100,7 +100,7 @@ static NSString *cellid = @"ChoseShopAdressCell";
 }
 - (void)initUI {
     [self addRightBarButtonitem];
-    self.title = @"选择收货地址";
+    self.title = @"选择发货地址";
     
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     [self.view addSubview:self.tableView];
@@ -138,7 +138,7 @@ static NSString *cellid = @"ChoseShopAdressCell";
     
     
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChoseSendAdress" object:notification];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
     
     [self.navigationController popViewControllerAnimated:YES];
     _isAdress = YES;
@@ -146,10 +146,8 @@ static NSString *cellid = @"ChoseShopAdressCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return self.dataArr.count;
-//    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return 100;
 }
 - (NSArray *)dataArr {

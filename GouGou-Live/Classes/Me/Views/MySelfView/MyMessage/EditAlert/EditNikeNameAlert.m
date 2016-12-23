@@ -46,6 +46,8 @@
         [self addSubview:self.noteLabel];
         [self addSubview:self.sureBtn];
         [self addSubview:self.cancelBtn];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewDidEndEditing:) name:@"UITextFieldTextDidChangeNotification" object:_editTextView];
     }
     return self;
 }

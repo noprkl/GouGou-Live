@@ -14,5 +14,6 @@
 
 @property(nonatomic, strong) NSString *roomID; /**< 聊天房间id */
 
-@property(nonatomic, assign) BOOL isHidText; /**< 隐藏编辑栏 */
+@property (nonatomic, strong) NSString *liverid; /**< 主播id */
+
 @end

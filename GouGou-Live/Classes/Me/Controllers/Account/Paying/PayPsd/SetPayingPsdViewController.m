@@ -40,6 +40,11 @@
     
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;
+    
+    self.sendCode.layer.cornerRadius = 5;
+    self.sendCode.layer.masksToBounds = YES;
+    self.sureBtn.layer.cornerRadius = 5;
+    self.sureBtn.layer.masksToBounds = 5;
 }
 
 #pragma mark
@@ -47,23 +52,27 @@
 
 
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
-    
-    [self freetimeout];
-    if (self.phoneTextField.text.length == 0){
-        [self showAlert:@"手机号为空"];
+    BOOL flag =  [NSString valiMobile:self.phoneTextField.text];
+    if (!flag) {
+        [self showAlert:@"请输入正确的手机号"];
     }else{
-        NSDictionary *dict = @{
-                               @"tel" :self.phoneTextField.text,
-                               @"type" : @3
-                               };
-        [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-            [self showAlert:successJson[@"message"]];
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
+
+        [self freetimeout];
+        if (self.phoneTextField.text.length == 0){
+            [self showAlert:@"手机号为空"];
+        }else{
+            NSDictionary *dict = @{
+                                   @"tel" :self.phoneTextField.text,
+                                   @"type" : @3
+                                   };
+            [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        }
     }
-    
 }
 
 - (IBAction)codeTextFieldExiding:(UITextField *)sender {
@@ -90,11 +99,52 @@
         if (self.codeTextField.text.length == 0) {
             [self showAlert:@"验证码不能为空"];
         }else{
+            NSDictionary * dict = @{
+                                    @"user_tel":self.phoneTextField.text ,
+                                    @"code":self.codeTextField.text,
+                                    @"type":@3
+                                    };
             
-            SetPaypsdViewController *payPsdVC = [[SetPaypsdViewController alloc] init];
-            payPsdVC.codeNumber = self.codeTextField.text;
-            payPsdVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:payPsdVC animated:YES];
+            [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+                
+                DLog(@"%@",successJson);
+                
+                if ([successJson[@"code"] isEqual:@"0"]) {
+                    [self showAlert:@"短信不存在"];
+                }
+                if ([successJson[@"code"] isEqual:@"1"]) {
+                    
+                    SetPaypsdViewController *payPsdVC = [[SetPaypsdViewController alloc] init];
+                    payPsdVC.codeNumber = self.codeTextField.text;
+                    payPsdVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:payPsdVC animated:YES];
+
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@",error);
+            }];
+            
+//            NSDictionary * dict = @{
+//                                    @"user_tel":self.phoneTextField.text,
+//                                    @"code":self.codeTextField.text
+//                                    };
+//            
+//            [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+//                
+//                DLog(@"%@",successJson);
+//                
+//                if ([successJson[@"code"] isEqual:@"0"]) {
+//                    [self showAlert:@"短信不存在"];
+//                }
+//                if ([successJson[@"code"] isEqual:@"1"]) {
+//                    SetPaypsdViewController *payPsdVC = [[SetPaypsdViewController alloc] init];
+//                    payPsdVC.codeNumber = self.codeTextField.text;
+//                    payPsdVC.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:payPsdVC animated:YES];
+//                }
+//            } error:^(NSError *error) {
+//                DLog(@"%@",error);
+//            }];
         }
     }
 }

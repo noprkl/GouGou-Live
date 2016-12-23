@@ -148,4 +148,14 @@
     NSString *showTimeNew = [formatter stringFromDate:date];
     return showTimeNew;
 }
++ (NSString *)getAgeFormInt:(NSInteger)age {
+    NSArray *mouthArr = @[@"0个月", @"1个月", @"2个月", @"3个月", @"4个月", @"5个月", @"6个月", @"7个月", @"8个月", @"9个月", @"10个月", @"11个月", @"12个月"];
+    NSArray *yearArr = @[@"0岁", @"1岁", @"2岁", @"3岁", @"4岁", @"5岁", @"6岁", @"7岁"];
+    NSInteger mouthIndex = age % 12;
+    NSInteger yearIndex = age / 12;
+    NSString *mouth = mouthArr[mouthIndex];
+    NSString *year = yearArr[yearIndex];
+    NSString *ageText = [NSString stringWithFormat:@"%@%@",year, mouth];
+    return ageText;
+}
 @end

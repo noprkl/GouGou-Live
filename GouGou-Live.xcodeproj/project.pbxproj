@@ -44,6 +44,7 @@
 		044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D3FE81DF6E7890076672E /* MediaStreamingVc.m */; };
 		044D3FEB1DF6E7890076672E /* MediaStreamingVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044D3FE91DF6E7890076672E /* MediaStreamingVc.xib */; };
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
+		044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
 		0452A1C51DDEA27E007C1E4F /* SellerChangePriceAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C41DDEA27E007C1E4F /* SellerChangePriceAlertView.m */; };
@@ -143,6 +144,11 @@
 		046795951E090E640076F517 /* PlayBackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046795941E090E640076F517 /* PlayBackCell.m */; };
 		0467959B1E0966D80076F517 /* PlayerBackTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467959A1E0966D80076F517 /* PlayerBackTopView.m */; };
 		0467959E1E0966F80076F517 /* PlayerBackDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467959D1E0966F80076F517 /* PlayerBackDownView.m */; };
+		046795A11E0A31D80076F517 /* PersonalMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046795A01E0A31D80076F517 /* PersonalMessageModel.m */; };
+		046795A51E0A67250076F517 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046795A41E0A67250076F517 /* HelpViewController.m */; };
+		046795A81E0A7B180076F517 /* AddDogAgeAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046795A71E0A7B180076F517 /* AddDogAgeAlertView.m */; };
+		046795AC1E0AA09D0076F517 /* TalkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046795AA1E0AA09D0076F517 /* TalkTableViewCell.m */; };
+		046795AD1E0AA09D0076F517 /* TalkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046795AB1E0AA09D0076F517 /* TalkTableViewCell.xib */; };
 		0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF01DBDEF2200562CC4 /* Main.storyboard */; };
 		0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF31DBDEF2200562CC4 /* Assets.xcassets */; };
 		0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0467ACF51DBDEF2200562CC4 /* LaunchScreen.storyboard */; };
@@ -485,6 +491,7 @@
 		04DAC9BB1DD40D610089236D /* ResetPsdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9B91DD40D610089236D /* ResetPsdViewController.m */; };
 		04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */; };
 		04DAC9BF1DD420610089236D /* ResetPsdAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */; };
+		04E332211E0BFD2C00693957 /* UserProtocolVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E332201E0BFD2C00693957 /* UserProtocolVc.m */; };
 		04E777351DEC2EE6007B5146 /* SystemPushMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */; };
 		04E777391DEC33C2007B5146 /* SystemNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E777371DEC33C2007B5146 /* SystemNotificationCell.m */; };
 		04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E777381DEC33C2007B5146 /* SystemNotificationCell.xib */; };
@@ -600,6 +607,8 @@
 		044D3FE91DF6E7890076672E /* MediaStreamingVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaStreamingVc.xib; sourceTree = "<group>"; };
 		044D9B931DF44ED500C56B1D /* ProtectPowerDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerDetailModel.h; sourceTree = "<group>"; };
 		044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerDetailModel.m; sourceTree = "<group>"; };
+		044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamChatRoomVcViewController.h; sourceTree = "<group>"; };
+		044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamChatRoomVcViewController.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
 		0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerSendAlertView.m; sourceTree = "<group>"; };
 		0452A1C01DDEA260007C1E4F /* SellerChangeShipCostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangeShipCostView.h; sourceTree = "<group>"; };
@@ -775,6 +784,15 @@
 		0467959A1E0966D80076F517 /* PlayerBackTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerBackTopView.m; sourceTree = "<group>"; };
 		0467959C1E0966F80076F517 /* PlayerBackDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerBackDownView.h; sourceTree = "<group>"; };
 		0467959D1E0966F80076F517 /* PlayerBackDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerBackDownView.m; sourceTree = "<group>"; };
+		0467959F1E0A31D70076F517 /* PersonalMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalMessageModel.h; sourceTree = "<group>"; };
+		046795A01E0A31D80076F517 /* PersonalMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalMessageModel.m; sourceTree = "<group>"; };
+		046795A31E0A67250076F517 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		046795A41E0A67250076F517 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		046795A61E0A7B180076F517 /* AddDogAgeAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDogAgeAlertView.h; sourceTree = "<group>"; };
+		046795A71E0A7B180076F517 /* AddDogAgeAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDogAgeAlertView.m; sourceTree = "<group>"; };
+		046795A91E0AA09D0076F517 /* TalkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkTableViewCell.h; sourceTree = "<group>"; };
+		046795AA1E0AA09D0076F517 /* TalkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TalkTableViewCell.m; sourceTree = "<group>"; };
+		046795AB1E0AA09D0076F517 /* TalkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TalkTableViewCell.xib; sourceTree = "<group>"; };
 		0467ACE41DBDEF2200562CC4 /* GouGou-Live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GouGou-Live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0467ACF11DBDEF2200562CC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0467ACF31DBDEF2200562CC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1470,6 +1488,8 @@
 		04DAC9BA1DD40D610089236D /* ResetPsdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPsdViewController.xib; sourceTree = "<group>"; };
 		04DAC9BD1DD420610089236D /* ResetPsdAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPsdAlertView.h; sourceTree = "<group>"; };
 		04DAC9BE1DD420610089236D /* ResetPsdAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPsdAlertView.m; sourceTree = "<group>"; };
+		04E3321F1E0BFD2C00693957 /* UserProtocolVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProtocolVc.h; sourceTree = "<group>"; };
+		04E332201E0BFD2C00693957 /* UserProtocolVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProtocolVc.m; sourceTree = "<group>"; };
 		04E777331DEC2EE6007B5146 /* SystemPushMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemPushMessageModel.h; sourceTree = "<group>"; };
 		04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemPushMessageModel.m; sourceTree = "<group>"; };
 		04E777361DEC33C2007B5146 /* SystemNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotificationCell.h; sourceTree = "<group>"; };
@@ -1731,6 +1751,8 @@
 				0452A1E41DE0B89C007C1E4F /* AddDogColorAlertView.m */,
 				0452A1EC1DE17E71007C1E4F /* SellerShipTemplateView.h */,
 				0452A1ED1DE17E71007C1E4F /* SellerShipTemplateView.m */,
+				046795A61E0A7B180076F517 /* AddDogAgeAlertView.h */,
+				046795A71E0A7B180076F517 /* AddDogAgeAlertView.m */,
 			);
 			path = SellerMyGoodsAlert;
 			sourceTree = "<group>";
@@ -1841,6 +1863,8 @@
 				045D11971DF031EF008623E5 /* Focus&Fans */,
 				045D119A1DF031EF008623E5 /* MyAlbum */,
 				045D119F1DF031EF008623E5 /* MyFavorite */,
+				0467959F1E0A31D70076F517 /* PersonalMessageModel.h */,
+				046795A01E0A31D80076F517 /* PersonalMessageModel.m */,
 			);
 			path = MyMessage;
 			sourceTree = "<group>";
@@ -1995,6 +2019,15 @@
 				0467957B1E07E34A0076F517 /* CreateLiveViewController+ThirdShare.m */,
 			);
 			path = Handle;
+			sourceTree = "<group>";
+		};
+		046795A21E0A66D50076F517 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				046795A31E0A67250076F517 /* HelpViewController.h */,
+				046795A41E0A67250076F517 /* HelpViewController.m */,
+			);
+			path = Help;
 			sourceTree = "<group>";
 		};
 		0467ACDB1DBDEF2200562CC4 = {
@@ -2825,12 +2858,12 @@
 			isa = PBXGroup;
 			children = (
 				0479B4C41DCADC7B00CB288A /* LIve */,
+				0479B5171DCADC7B00CB288A /* LiveAction */,
 				0479B5B41DCADC7B00CB288A /* Messages */,
 				0479B5591DCADC7B00CB288A /* Me */,
-				04D360F81DDB343F009F35A0 /* BuyCenter */,
-				0479B5171DCADC7B00CB288A /* LiveAction */,
-				04CE136B1DDC488100EB8777 /* SellerCenter */,
 				0479B53D1DCADC7B00CB288A /* Login */,
+				04D360F81DDB343F009F35A0 /* BuyCenter */,
+				04CE136B1DDC488100EB8777 /* SellerCenter */,
 				0479B5BB1DCADC7B00CB288A /* Others */,
 				0479B5C41DCADC7B00CB288A /* Venders */,
 			);
@@ -2890,6 +2923,8 @@
 				044D3FE71DF6E7890076672E /* MediaStreamingVc.h */,
 				044D3FE81DF6E7890076672E /* MediaStreamingVc.m */,
 				044D3FE91DF6E7890076672E /* MediaStreamingVc.xib */,
+				044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */,
+				044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */,
 			);
 			path = LIving;
 			sourceTree = "<group>";
@@ -3233,6 +3268,9 @@
 			children = (
 				0479B53B1DCADC7B00CB288A /* TalkingView.h */,
 				0479B53C1DCADC7B00CB288A /* TalkingView.m */,
+				046795A91E0AA09D0076F517 /* TalkTableViewCell.h */,
+				046795AA1E0AA09D0076F517 /* TalkTableViewCell.m */,
+				046795AB1E0AA09D0076F517 /* TalkTableViewCell.xib */,
 			);
 			path = TalkInput;
 			sourceTree = "<group>";
@@ -3256,6 +3294,8 @@
 				0479B5471DCADC7B00CB288A /* Login */,
 				0479B54B1DCADC7B00CB288A /* Registe */,
 				0479B54F1DCADC7B00CB288A /* SurePsd */,
+				04E3321F1E0BFD2C00693957 /* UserProtocolVc.h */,
+				04E332201E0BFD2C00693957 /* UserProtocolVc.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3449,6 +3489,7 @@
 		0479B5821DCADC7B00CB288A /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				046795A21E0A66D50076F517 /* Help */,
 				0479B5831DCADC7B00CB288A /* AboutUs */,
 				0479B5871DCADC7B00CB288A /* MessagePush */,
 				0479B58B1DCADC7B00CB288A /* RemoveCookie */,
@@ -4581,6 +4622,7 @@
 				045C5CBA1DF53E50000B8509 /* AlipaySDK.bundle in Resources */,
 				0479B5EE1DCADC7B00CB288A /* LiveViewCell.xib in Resources */,
 				0467ACF21DBDEF2200562CC4 /* Main.storyboard in Resources */,
+				046795AD1E0AA09D0076F517 /* TalkTableViewCell.xib in Resources */,
 				04DAC9BC1DD40D610089236D /* ResetPsdViewController.xib in Resources */,
 				049D612F1DD07C6B00ED3E76 /* SureForgetPsdViewController.xib in Resources */,
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
@@ -4843,6 +4885,7 @@
 				04DAC9911DD21A9A0089236D /* TowButtonView.m in Sources */,
 				04DAC9991DD21A9A0089236D /* AddressChooseView.m in Sources */,
 				0479B6031DCADC7B00CB288A /* LoginViewController.m in Sources */,
+				046795AC1E0AA09D0076F517 /* TalkTableViewCell.m in Sources */,
 				046F0BA01DE2AB8B00D50D5C /* ConsigneeView.m in Sources */,
 				045D11BB1DF05C0E008623E5 /* SetPayingPsdViewController.m in Sources */,
 				046BF0341DE4696600BC32E9 /* EaseImageView.m in Sources */,
@@ -4879,6 +4922,7 @@
 				045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */,
 				0479B63C1DCADC7B00CB288A /* UIColor+HexString.m in Sources */,
 				046BF0541DE54C4C00BC32E9 /* MessageInputView.m in Sources */,
+				046795A81E0A7B180076F517 /* AddDogAgeAlertView.m in Sources */,
 				045D11BD1DF05C0E008623E5 /* SetPayPsdSuccessViewController.m in Sources */,
 				046F0BA31DE2AB8B00D50D5C /* GoodsPriceView.m in Sources */,
 				0479B65C1DCB44CB00CB288A /* AllCountCell.m in Sources */,
@@ -4924,6 +4968,7 @@
 				04CE13D91DDC488100EB8777 /* SellerShipTemplateViewController.m in Sources */,
 				045FE3241DCC8C66001B95B1 /* EditNewAddressViewController.m in Sources */,
 				04DAC9A01DD2C4E20089236D /* EditMyMessageViewController.m in Sources */,
+				046795A51E0A67250076F517 /* HelpViewController.m in Sources */,
 				04CE13E71DDC488100EB8777 /* SellerMyLiveCell.m in Sources */,
 				046BF0091DE4696600BC32E9 /* PSTGridLayoutInfo.m in Sources */,
 				046F0BAF1DE2AB8B00D50D5C /* WaitConsignessCell.m in Sources */,
@@ -4951,6 +4996,7 @@
 				0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */,
 				0479B5EB1DCADC7B00CB288A /* DogCardView.m in Sources */,
 				04CE13D21DDC488100EB8777 /* SellerWaitRateViewController.m in Sources */,
+				046795A11E0A31D80076F517 /* PersonalMessageModel.m in Sources */,
 				046BF00A1DE4696600BC32E9 /* PSTGridLayoutItem.m in Sources */,
 				046F0BF71DE2C0AF00D50D5C /* PaySuccessView.m in Sources */,
 				046BF02A1DE4696600BC32E9 /* EaseBubbleView+File.m in Sources */,
@@ -4981,6 +5027,7 @@
 				046BF0181DE4696600BC32E9 /* EaseConvertToCommonEmoticonsHelper.m in Sources */,
 				0479B5FF1DCADC7B00CB288A /* CodeLoginViewController.m in Sources */,
 				046BF00B1DE4696600BC32E9 /* PSTGridLayoutRow.m in Sources */,
+				04E332211E0BFD2C00693957 /* UserProtocolVc.m in Sources */,
 				04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */,
 				0452A1E21DE0B30A007C1E4F /* AddDogPictures.m in Sources */,
 				0479B6251DCADC7B00CB288A /* SettingViewController.m in Sources */,
@@ -5023,6 +5070,7 @@
 				046BEFEC1DE4696600BC32E9 /* MWTapDetectingImageView.m in Sources */,
 				040891FD1DFEB91F006DF570 /* OrderWaitAssessViewController.m in Sources */,
 				046BF0001DE4696600BC32E9 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
+				044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */,
 				046F0BB01DE2AB8B00D50D5C /* WaitConsignmentCell.m in Sources */,
 				046BF02E1DE4696600BC32E9 /* EaseBubbleView+Text.m in Sources */,
 				6180CB401DFBDEE4006357B4 /* AddDogShowController.m in Sources */,

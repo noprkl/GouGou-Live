@@ -79,6 +79,7 @@
     }];
 
 }
+#pragma mark - setter
 - (void)setTitle:(NSString *)title {
     _title = title;
     self.titleLabel.text = title;
@@ -91,6 +92,17 @@
     _noteString = noteString;
     self.noteLabel.text = noteString;
 }
+- (void)setEasyMessage:(NSString *)easyMessage {
+
+    _easyMessage = easyMessage;
+    self.editTextView.text = easyMessage;
+}
+
+- (void)setCountText:(NSString *)countText {
+    _countText = countText;
+    self.countLabel.text = countText;
+}
+
 #pragma mark
 #pragma mark - 懒加载
 - (UILabel *)titleLabel {
@@ -113,6 +125,7 @@
         _editTextView.layer.cornerRadius = 5;
         _editTextView.layer.masksToBounds = YES;
         _editTextView.returnKeyType = UIReturnKeyDefault;
+    
         
         UILabel *placeLabel = [[UILabel alloc] init];
         placeLabel.text = @"输入用户昵称";
@@ -130,7 +143,6 @@
         countLabel.frame = CGRectMake(SCREEN_WIDTH - 25, 20, 20, 15);
         [_editTextView addSubview:countLabel];
         self.countLabel = countLabel;
-        
         
     }
     return _editTextView;
@@ -196,7 +208,6 @@
     }
     self.countLabel.text = [@(17 - textView.text.length) stringValue];
 }
-
 #pragma mark
 #pragma mark - 蒙版弹出效果
 - (UIControl *)overLayer

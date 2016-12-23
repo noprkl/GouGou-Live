@@ -59,13 +59,13 @@ static NSString *cellid = @"SetcellId";
 
 - (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = @[@[@"账号安全", @"通知消息提醒"], @[@"关于我们"], @[@"意见反馈", @"清除缓存"]];
+        _dataArr = @[@[@"账号安全", @"通知消息提醒"], @[@"帮助", @"关于我们"], @[@"意见反馈", @"清除缓存"]];
     }
     return _dataArr;
 }
 - (NSArray *)controllerNames {
     if (!_controllerNames) {
-        _controllerNames = @[@[@"SecurityAccountViewController", @"MessagePushViewController"], @[@"AboutUsViewController"], @[@"SuggestViewController", @""]];
+        _controllerNames = @[@[@"SecurityAccountViewController", @"MessagePushViewController"], @[@"HelpViewController", @"AboutUsViewController"], @[@"SuggestViewController", @""]];
     }
     return _controllerNames;
 }
@@ -86,14 +86,15 @@ static NSString *cellid = @"SetcellId";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     
     cell.textLabel.text = self.dataArr[indexPath.section][indexPath.row];
     if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 1) {
             cell.detailTextLabel.text = @"About Us";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#000000"];
@@ -101,7 +102,6 @@ static NSString *cellid = @"SetcellId";
     }else if (indexPath.section == 2){
         if (indexPath.row == 1) {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%.02lf M", [self filePath]] ;
-            cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
         }
     }
     return cell;

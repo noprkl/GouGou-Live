@@ -235,10 +235,26 @@ static NSString *cellid4 = @"cellid4";
                     descView.descStr = @"暂无简介";
                 }
                 descView.backgroundColor = [UIColor whiteColor];
+                
+//                __weak typeof(descView) weakdescView = descView;
+
                 descView.editBlock = ^(UILabel *contentLabel){
                     EditNikeNameAlert *editSignAlert = [[EditNikeNameAlert alloc] init];
                     
                     [editSignAlert show];
+                    if ([UserInfos sharedUser].usermotto.length != 0) {
+                        editSignAlert.easyMessage = [UserInfos sharedUser].usermotto;
+                        editSignAlert.placeHolder = @"";
+                        
+                        NSString * string = [UserInfos sharedUser].usermotto;
+                        
+                        editSignAlert.countText = [NSString stringWithFormat:@"%@",@(17 - string.length)];
+                    }else{
+                        editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
+                        editSignAlert.easyMessage = @"";
+                        editSignAlert.countText = @"17";
+
+                    }
                     editSignAlert.sureBlock = ^(NSString *signaue){
                         if (![signaue isEqualToString:@""]) {
                             DLog(@"%@", signaue);
@@ -264,7 +280,7 @@ static NSString *cellid4 = @"cellid4";
                         }
                     };
                     editSignAlert.title = @"请输入个性签名";
-                    editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
+//                    editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
                     editSignAlert.noteString = @"";
                 };
                    [cell1.contentView addSubview:descView];
@@ -283,10 +299,11 @@ static NSString *cellid4 = @"cellid4";
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
-                if ([UserInfos sharedUser].username.length == 0) {
-                    label.text = @"未实名";
-                }else{
+                if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
+
                     label.text = [UserInfos sharedUser].username;
+                }else{
+                    label.text = @"未实名";                    
                 }
                 label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
@@ -317,10 +334,10 @@ static NSString *cellid4 = @"cellid4";
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
               
-                if ([UserInfos sharedUser].username.length == 0) {
-                    label.text = @"未认证";
+                if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+                    label.text = @"商家";
                 }else{
-                    label.text = @"已认证";
+                    label.text = @"非商家";
                 }
                 label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
@@ -362,7 +379,7 @@ static NSString *cellid4 = @"cellid4";
                 playbackView.AVArray = self.dogCardArr;
                 playbackView.playBackBlock = ^(PlayBackModel *model){
                     FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
-                    //                                playerVc.liveID = liveID;
+                    playerVc.liveID = model.liveId;
                     playerVc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:playerVc animated:YES];
                 };

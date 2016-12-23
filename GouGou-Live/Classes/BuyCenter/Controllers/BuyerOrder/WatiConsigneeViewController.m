@@ -114,8 +114,8 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
     if ([model.status integerValue] == 8) {
        
         cell.centerModel = model;
-        
     }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45)title:@[@"申请维权",@"联系卖家",@"确认收货"] buttonNum:3];
     

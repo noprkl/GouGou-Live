@@ -19,5 +19,9 @@
 @property(nonatomic, assign) NSInteger isDefault; /**< 是否为默认地址 */
 @property(nonatomic, strong) NSString *merchantTel; /**< 收货人手机号 */
 @property(nonatomic, strong) NSString *createUser; /**< 收货人手机号 */
+/** 街道 */
+@property (strong,nonatomic) NSString * street;
+/** 邮编 */
+@property (strong,nonatomic) NSString *code;
 
 @end

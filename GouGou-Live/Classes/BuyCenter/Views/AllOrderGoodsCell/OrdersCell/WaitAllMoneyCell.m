@@ -74,6 +74,13 @@
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:centerModel.priceOld];
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     // 付款状况
+
+    
+    self.costView.fontMoneyLabel.text = @"";
+    self.costView.fontMoney.text = @"";
+    self.costView.remainderMoeny.text = centerModel.price;
+    self.costView.remainderMoneylabel.text = @"代付全款";
+
 //    self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.price;
     self.costView.totalMoney.text = centerModel.price;

@@ -25,7 +25,7 @@
     NSDictionary *dict = @{
                            @"user_tel":self.telNumber,
                            @"user_pwd":pwd,
-                           @"code":@([self.codeNumber integerValue])
+                           @"code":self.codeNumber 
                            };
     DLog(@"%@", dict);
     [self getRequestWithPath:API_Register params:dict success:^(id successJson) {
@@ -38,7 +38,6 @@
                 SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
                 
                 [self.navigationController pushViewController:sureSuccVC animated:YES];
-                
             });
         }
     } error:^(NSError *error) {

@@ -85,6 +85,7 @@
     // 付款状况
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     // 付款状况
+    
     self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.productBalance;
     self.costView.totalMoney.text = centerModel.price;

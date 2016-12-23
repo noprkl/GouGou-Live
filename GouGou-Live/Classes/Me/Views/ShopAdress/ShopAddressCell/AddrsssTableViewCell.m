@@ -61,10 +61,14 @@
 }
 - (void)setAdressModel:(MyShopAdressModel *)adressModel {
     _adressModel = adressModel;
+  
     self.userName.text = adressModel.userName;
     self.phoneTextfiled.text = adressModel.userTel;
     NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", adressModel.userProvince, adressModel.userCity, adressModel.userDistrict, adressModel.userAddress];
     self.detailAddress.text = adress;
+    
+    
+   
     if (adressModel.isDefault == 1) {
         self.duihaoImageBtn.selected = YES;
     }else{

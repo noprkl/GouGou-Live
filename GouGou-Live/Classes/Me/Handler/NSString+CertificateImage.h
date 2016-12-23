@@ -11,6 +11,5 @@
 @interface NSString (CertificateImage)
 
 /** 图片转base64 */
-+ (NSString *)imageBase64WithDataURL:(UIImage *)image;
-
++ (NSString *)imageBase64WithDataURL:(UIImage *)image  withSize:(CGSize)newSize;
 @end

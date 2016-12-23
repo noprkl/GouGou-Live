@@ -170,7 +170,7 @@
                 <constraint firstItem="hxz-RU-NyO" firstAttribute="top" secondItem="QcG-1i-ZVe" secondAttribute="bottom" constant="10" id="zUH-FG-iL1"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="30.5" y="344.5"/>
+            <point key="canvasLocation" x="38.5" y="320.5"/>
         </view>
     </objects>
     <resources>

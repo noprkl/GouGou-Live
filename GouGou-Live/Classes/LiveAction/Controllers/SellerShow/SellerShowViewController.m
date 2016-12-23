@@ -35,7 +35,17 @@ static NSString *cellid2 = @"MyPageViewController2";
 static NSString *cellid3 = @"MyPageViewController3";
 
 @implementation SellerShowViewController
-
+// 主播信息
+- (void)getrequestPersonalMessage {
+    NSDictionary *dict = @{
+                           @"id":_authorId
+                           };
+    [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 // 相册列表
 - (void)getRequestAlbums {
     NSDictionary *dict = @{
@@ -277,16 +287,16 @@ static NSString *cellid3 = @"MyPageViewController3";
                 CGFloat playbackViewHeight = 0;
                 
                 if (self.dogCardArr.count == 0) {
-                    playbackViewHeight = 33 + 30;;
+                    playbackViewHeight = 88;;
                 }else{
-                    playbackViewHeight = self.dogCardArr.count * 125 + 43;
+                    playbackViewHeight = self.dogCardArr.count * 135 + 44;
                 }
                 
         PlayBackView *playbackView = [[PlayBackView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, playbackViewHeight) style:(UITableViewStylePlain)];
         playbackView.AVArray = self.dogCardArr;
         playbackView.playBackBlock = ^(PlayBackModel *model){
             FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
-            //                                playerVc.liveID = liveID;
+            playerVc.liveID = model.liveId;
             playerVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:playerVc animated:YES];
         };
@@ -366,11 +376,11 @@ static NSString *cellid3 = @"MyPageViewController3";
         {
             CGFloat playbackViewHeight = 0;
             if (self.dogCardArr.count == 0) {
-                playbackViewHeight = 33 + 30;;
+                playbackViewHeight = 88;
             }else{
-                playbackViewHeight = self.dogCardArr.count * 125 + 50;
+                playbackViewHeight = self.dogCardArr.count * 135 + 44;
             }
-            return playbackViewHeight + 10;
+            return playbackViewHeight;
         }
             break;
         case 2:

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1912" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SetPaypsdViewController">
@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="QTe-hZ-Sl3">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="QTe-hZ-Sl3">
                     <rect key="frame" x="13" y="26" width="16" height="18"/>
                 </imageView>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="支付密码   请输入6-20位数字或者字母" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="gpD-Vc-6mF">
@@ -33,8 +33,8 @@
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWG-Ub-aXU">
-                    <rect key="frame" x="13" y="60" width="352" height="1"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wWG-Ub-aXU">
+                    <rect key="frame" x="0.0" y="60" width="375" height="1"/>
                     <color key="backgroundColor" white="0.80921052630000001" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="DFv-Px-Zuj"/>
@@ -58,7 +58,7 @@
                         <constraint firstAttribute="height" constant="1" id="aTK-aj-dJK"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-c8-fj1">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-mima" translatesAutoresizingMaskIntoConstraints="NO" id="UeY-c8-fj1">
                     <rect key="frame" x="13" y="82" width="16" height="18"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALa-Nn-brK">
@@ -101,7 +101,7 @@
                 <constraint firstAttribute="trailing" secondItem="gpD-Vc-6mF" secondAttribute="trailing" constant="10" id="AeO-2k-1lV"/>
                 <constraint firstItem="uDf-c0-Wm7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="H6N-nP-k14"/>
                 <constraint firstItem="OiU-wM-699" firstAttribute="leading" secondItem="UeY-c8-fj1" secondAttribute="trailing" constant="10" id="JaK-1n-S1j"/>
-                <constraint firstItem="wWG-Ub-aXU" firstAttribute="trailing" secondItem="gpD-Vc-6mF" secondAttribute="trailing" id="M3h-di-ka1"/>
+                <constraint firstItem="wWG-Ub-aXU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ksy-fS-Fvc"/>
                 <constraint firstItem="h7L-UH-yov" firstAttribute="height" secondItem="gpD-Vc-6mF" secondAttribute="height" id="N5a-Wm-eik"/>
                 <constraint firstItem="h7L-UH-yov" firstAttribute="centerX" secondItem="gpD-Vc-6mF" secondAttribute="centerX" id="NDv-3l-3Xj"/>
                 <constraint firstItem="h7L-UH-yov" firstAttribute="width" secondItem="gpD-Vc-6mF" secondAttribute="width" id="QEU-BT-yIw"/>
@@ -109,9 +109,9 @@
                 <constraint firstItem="UeY-c8-fj1" firstAttribute="centerY" secondItem="h7L-UH-yov" secondAttribute="centerY" id="ZHq-xm-edc"/>
                 <constraint firstItem="uDf-c0-Wm7" firstAttribute="top" secondItem="h7L-UH-yov" secondAttribute="bottom" constant="10" id="b69-tY-eGV"/>
                 <constraint firstItem="uDf-c0-Wm7" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="bmw-P8-a6l"/>
-                <constraint firstItem="wWG-Ub-aXU" firstAttribute="leading" secondItem="QTe-hZ-Sl3" secondAttribute="leading" id="dT5-fY-1Wz"/>
                 <constraint firstItem="gpD-Vc-6mF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="dYB-7Y-7Ha"/>
                 <constraint firstItem="gpD-Vc-6mF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="20" id="e9j-Ei-941"/>
+                <constraint firstAttribute="trailing" secondItem="wWG-Ub-aXU" secondAttribute="trailing" id="fVH-2n-KhA"/>
                 <constraint firstItem="h7L-UH-yov" firstAttribute="top" secondItem="wWG-Ub-aXU" secondAttribute="bottom" constant="15" id="iOt-UW-y17"/>
                 <constraint firstItem="ALa-Nn-brK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mVr-WM-8Hi"/>
                 <constraint firstItem="h7L-UH-yov" firstAttribute="leading" secondItem="OiU-wM-699" secondAttribute="trailing" constant="10" id="pcl-58-WR1"/>

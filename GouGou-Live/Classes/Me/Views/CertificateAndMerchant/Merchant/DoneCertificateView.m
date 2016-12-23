@@ -118,6 +118,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
         if (indexPath.row == 0) {
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
             textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
+            textField.font = [UIFont systemFontOfSize:16];
             // 接受商品名称
             self.infoTextfiled = textField;
             textField.delegate = self;
@@ -134,6 +135,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
             textField.font = [UIFont systemFontOfSize:16];
             // 添加弹出城市选择
             self.areasTextField = textField;
+//            [tex]
             [textField addTarget:self action:@selector(editAreaTextAction:) forControlEvents:(UIControlEventAllEvents)];
             textField.delegate = self;
            
@@ -145,10 +147,10 @@ static NSString * MedrchantCell = @"MedrchantCell";
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
             textField.placeholder = self.dataArray[indexPath.section][indexPath.row];
             self.adressTextField = textField;
+            textField.font = [UIFont systemFontOfSize:16];
             textField.delegate = self;
             textField.font = [UIFont systemFontOfSize:16];
             [cell.contentView addSubview:textField];
-
         }
     }
     
@@ -190,23 +192,31 @@ static NSString * MedrchantCell = @"MedrchantCell";
 #pragma mark - textfiled方法
 - (void)editAreaTextAction:(UITextField *)textField {
     [textField resignFirstResponder];
+    
 }
 
 #pragma mark - TextFiled代理
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
+    if (textField == self.areasTextField) {
+        [textField resignFirstResponder];    
+    }
     [textField resignFirstResponder];
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.areasTextField) {
+
+        [self.areasTextField resignFirstResponder];
+        [self.adressTextField resignFirstResponder];
+        [self.phoneNumTextfiled resignFirstResponder];
+        [self.infoTextfiled resignFirstResponder];
+            
         if (_areasBlock) {
             [self.areasTextField resignFirstResponder];
             [self.adressTextField resignFirstResponder];
             [self.phoneNumTextfiled resignFirstResponder];
             [self.infoTextfiled resignFirstResponder];
             _areasBlock();
-            
         }
     }
 }

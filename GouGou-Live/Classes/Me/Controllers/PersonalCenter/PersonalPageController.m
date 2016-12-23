@@ -22,6 +22,7 @@
 #import "MyAlbumsModel.h" // 相册model
 #import "FocusAndFansModel.h"
 #import "PicturesViewController.h" // 照片列表
+#import "PersonalMessageModel.h"
 
 @interface PersonalPageController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -38,6 +39,8 @@
 @property(nonatomic, strong) NSArray *picturesArr; /**< 临时数据 */
 @property (nonatomic, assign) NSInteger pleasureCount; /**< 用户满意度 */
 
+@property (nonatomic, strong) PersonalMessageModel *personalModel; /**< 个人信息 */
+
 @end
 
 static NSString *cellid = @"cellid";
@@ -48,7 +51,18 @@ static NSString *cellid3 = @"cellid3";
 static NSString *cellid4 = @"cellid4";
 
 @implementation PersonalPageController
-
+- (void)getrequestPersonalMessage {
+    NSDictionary *dict = @{
+                           @"id":@(_personalID)
+                           };
+    [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        self.personalModel = [arr lastObject];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 // 相册列表
 - (void)getRequestAlbums {
     NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
@@ -122,7 +136,6 @@ static NSString *cellid4 = @"cellid4";
             DLog(@"%ld", self.pleasureCount);
             [self.tableView reloadData];
         }
-        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -165,6 +178,8 @@ static NSString *cellid4 = @"cellid4";
     [self getUserPleasure];
     // 请求
     [self getRequestMyLive];
+    // 个人信息
+    [self getrequestPersonalMessage];
 }
 
 - (void)initUI {
@@ -247,6 +262,7 @@ static NSString *cellid4 = @"cellid4";
                 cell1.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 MyPageDescView *descView = [[MyPageDescView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, 73))];
+                descView.descStr = self.personalModel.userMotto;
                 descView.isHidEdit = YES;
                 descView.backgroundColor = [UIColor whiteColor];
                 [cell1.contentView addSubview:descView];
@@ -302,16 +318,16 @@ static NSString *cellid4 = @"cellid4";
                 CGFloat playbackViewHeight = 0;
                 
                 if (self.dogCardArr.count == 0) {
-                    playbackViewHeight = 33 + 30;;
+                    playbackViewHeight = 88;;
                 }else{
-                    playbackViewHeight = self.dogCardArr.count * 125 + 43;
+                    playbackViewHeight = self.dogCardArr.count * 135 + 40;
                 }
                 
                 PlayBackView *playbackView = [[PlayBackView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, playbackViewHeight) style:(UITableViewStylePlain)];
                 playbackView.AVArray = self.dogCardArr;
                 playbackView.playBackBlock = ^(PlayBackModel *model){
                     FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
-                    //                                playerVc.liveID = liveID;
+                    playerVc.liveID = model.liveId;
                     playerVc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:playerVc animated:YES];
                 };
@@ -396,9 +412,9 @@ static NSString *cellid4 = @"cellid4";
         {
             CGFloat playbackViewHeight = 0;
             if (self.dogCardArr.count == 0) {
-                playbackViewHeight = 33 + 30;;
+                playbackViewHeight = 88;;
             }else{
-                playbackViewHeight = self.dogCardArr.count * 125 + 50;
+                playbackViewHeight = self.dogCardArr.count * 135 + 40;
             }
             return playbackViewHeight;
         }

@@ -61,15 +61,21 @@
                            };
     [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.showDogView.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-        [self.showDogView reloadData];
+        if (successJson[@"data"]) {
+            self.showDogView.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [self.showDogView reloadData];
+        }else{
+            self.showDogView.hidden = YES;
+            self.showingBtn.hidden = YES;
+            self.showingPrice.hidden = YES;
+        }
     } error:^(NSError *error) {
         
     }];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
     
     // 进入后横屏
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -85,6 +91,13 @@
     
     // 出去的时候销毁session
     [self.session destroy];
+
+    // 取消横屏
+    
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+        [self forceOrientation:UIInterfaceOrientationPortrait];
+    }
     // 保存视频
     NSDictionary *dict =@{
                           @"live_id":_liveID
@@ -94,12 +107,7 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-    // 取消横屏
-    
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-        [self forceOrientation:UIInterfaceOrientationPortrait];
-    }
+
 }
 // 切换横竖屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -153,7 +161,20 @@
     [self.session.previewView makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
+    self.session.delegate = self;
     [self initUI];
+}
+// 推流代理
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state {
+    // 推流结束
+    if (state == PLStreamStateDisconnected) {
+        
+    }
+}
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didDisconnectWithError:(NSError *)error {
+    // 非正常断开的情况
+    // 重连
+    
 }
 // 设置Ui
 - (void)initUI {
@@ -386,10 +407,9 @@
 
 - (TalkingViewController *)talkingVc {
     if (!_talkingVc) {
-        _talkingVc = [[TalkingViewController alloc] init];
+        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         _talkingVc.roomID = _chatRoomID;
-        _talkingVc.isHidText = YES;
     }
     return _talkingVc;
 }

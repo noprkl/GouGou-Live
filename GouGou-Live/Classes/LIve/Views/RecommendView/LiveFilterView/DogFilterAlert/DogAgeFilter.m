@@ -125,11 +125,12 @@ static NSString *cellid = @"SizeFilterCellID";
         }
     }
     
-    NSInteger index = [pickerView selectedRowInComponent:1];
-    
-    self.minModel = self.dataPlist[row];
-    self.maxModel = self.dataPlist[index];
-    
+    if (component == 0) {
+    self.minModel = self.dataPlist[self.currentminIndex];
+    }
+    if (component == 0) {
+    self.maxModel = self.dataPlist[self.currentmaxIndex];
+    }
 }
 
 #pragma mark

@@ -167,7 +167,7 @@ static NSString *cellid = @"PicturesCell";
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
                 if (flag) {
                     
-                        NSString *base64 = [NSString imageBase64WithDataURL:photos[0]];
+                        NSString *base64 = [NSString imageBase64WithDataURL:photos[0] withSize:CGSizeMake(SCREEN_WIDTH / 3, SCREEN_WIDTH / 3)];
                         NSDictionary *dict = @{
                                                @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                @"img":base64

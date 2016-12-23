@@ -64,6 +64,13 @@
     self.phoneTextField.text = self.adressModel.merchantTel;
     self.areaChooseTextfiled.text = adress;
     self.detailAddressTextfiled.text = self.adressModel.merchantAddress;
+    self.roadTextField.text = self.adressModel.street;
+    self.postalcodeTextfiled.text = self.adressModel.code;
+   
+    
+    DLog(@"%@",self.roadTextField.text);
+    DLog(@"%@",self.postalcodeTextfiled.text);
+    
     [self requestGetAreaData];
 }
 - (void)setAdressModel:(SellerAdressModel *)adressModel {
@@ -170,7 +177,9 @@
                                            @"merchant_district":_adressModel.merchantDistrict,
                                            @"merchant_address":adress,
                                            @"is_default":@(_adressModel.isDefault),
-                                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                           @"street":self.roadTextField.text,
+                                           @"code":self.postalcodeTextfiled.text
                                            };
                     NSLog(@"%@", dict);
                     

@@ -68,16 +68,20 @@ static NSString *cellid = @"Cellid";
     return 135;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 20, 44)];
+
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 44)];
     label.text = @"回放";
     label.font = [UIFont systemFontOfSize:16];
     label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     label.textColor = [UIColor colorWithHexString:@"#000000"];
-    return label;
+    [view addSubview:label];
+    return view;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (self.dataArr.count == 0) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
         label.text = @"暂时没有回放";
         label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont systemFontOfSize:16];
@@ -90,11 +94,11 @@ static NSString *cellid = @"Cellid";
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44;
+    return 40;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (self.dataArr.count == 0) {
-        return 44;
+        return 40;
     }
     return 0;
 }

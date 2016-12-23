@@ -104,7 +104,7 @@
         [self freetimeout];
 
         NSDictionary *dict = @{
-                               @"tel" : @([self.phoneNumber.text integerValue]),
+                               @"tel" : self.phoneNumber.text,
                                @"type" : @2
                                };
 

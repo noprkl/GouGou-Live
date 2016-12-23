@@ -105,7 +105,16 @@
     CGFloat height = SCREEN_HEIGHT;
     
     // 偏移量 - x
+    
     CGFloat offset = scrollView.contentOffset.x;
+
+    if (offset < 0.5 *width){
+        offset = 0;
+    }else if (offset < 1.5 *width && offset > 0.5){
+        offset = 1 * width;
+    }else if (offset < 2.5 *width && offset > 1.5 * width) {
+        offset = 2 * width;
+    }
     
     // 获取视图的索引
     NSInteger index = offset / width;

@@ -19,7 +19,6 @@
                                      NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle],
                                      
                                      NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                     
                                      NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
                                      
                                      };

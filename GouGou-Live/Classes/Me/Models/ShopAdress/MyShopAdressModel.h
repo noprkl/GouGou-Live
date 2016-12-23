@@ -17,5 +17,7 @@
 @property(nonatomic, strong) NSString *userProvince; /**< 所在省份 */
 @property(nonatomic, assign) NSInteger isDefault; /**< 是否为默认地址 */
 @property(nonatomic, strong) NSString *userTel; /**< 收货人手机号 */
+@property (strong, nonatomic) NSString *street; /**< 街道 */
+@property (strong, nonatomic) NSString *code; /**< 邮编 */
 
 @end

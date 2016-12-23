@@ -18,8 +18,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *watchCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *roomImageView;
 @property (weak, nonatomic) IBOutlet UILabel *roomMessageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *certificateLabel;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *dogCardScrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *liveStateIcon;
 
 @end
 
@@ -35,6 +37,10 @@
 }
 - (void)awakeFromNib {
     // Initialization code
+    
+    self.anchorCityLabel.font = [UIFont systemFontOfSize:12];
+    self.anchorNameLabel.font = [UIFont systemFontOfSize:14];
+    self.certificateLabel.font = [UIFont systemFontOfSize:12];
 }
 - (void)clickCardViewAction:(UIControl *)control {
     if (_cardBlcok) {
@@ -61,6 +67,11 @@
     self.anchorNameLabel.text = liveCellModel.merchantName;
     if (liveCellModel.snapshot.length != 0) {
         [self.roomImageView sd_setImageWithURL:[NSURL URLWithString:liveCellModel.snapshot] placeholderImage:[UIImage imageNamed:@"直播图"]];
+    }
+    if ([liveCellModel.status isEqualToString:@"1"]) {
+        self.liveStateIcon.image = [UIImage imageNamed:@"直播中"];
+    }else if ([liveCellModel.status isEqualToString:@"3"]){
+        self.liveStateIcon.image = [UIImage imageNamed:@"直播结束"];
     }
 }
 - (void)setDogInfos:(NSArray *)dogInfos {

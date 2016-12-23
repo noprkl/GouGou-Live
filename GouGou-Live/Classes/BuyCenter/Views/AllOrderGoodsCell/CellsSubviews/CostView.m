@@ -15,15 +15,15 @@
 ///** 总钱数 */
 //@property (strong,nonatomic) UILabel *totalMoney;
 /** 运费 */
-@property (strong,nonatomic) UILabel *freightLabel;
+//@property (strong,nonatomic) UILabel *freightLabel;
 ///** 运费数 */
 //@property (strong,nonatomic) UILabel *freightMoney;
 /** 已付定金 */
-@property (strong,nonatomic) UILabel *fontMoneyLabel;
+//@property (strong,nonatomic) UILabel *fontMoneyLabel;
 ///** 定金 */
 //@property (strong,nonatomic) UILabel *fontMoney;
-/** 已付尾款 */
-@property (strong,nonatomic) UILabel *remainderMoneylabel;
+///** 已付尾款 */
+//@property (strong,nonatomic) UILabel *remainderMoneylabel;
 ///** 尾款 */
 //@property (strong,nonatomic) UILabel *remainderMoeny;
 

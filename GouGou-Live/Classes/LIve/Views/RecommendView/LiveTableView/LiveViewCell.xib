@@ -167,12 +167,14 @@
                 <outlet property="anchorCityLabel" destination="7Dk-vy-yB2" id="dvS-Am-X2R"/>
                 <outlet property="anchorIconView" destination="4wv-5f-ASs" id="Cyr-Qs-th3"/>
                 <outlet property="anchorNameLabel" destination="0G7-Fa-fRX" id="RXy-d9-jzO"/>
+                <outlet property="certificateLabel" destination="vxJ-be-F6x" id="DbA-TI-lH7"/>
                 <outlet property="dogCardScrollView" destination="VrR-9q-xAd" id="NhY-e0-18Z"/>
+                <outlet property="liveStateIcon" destination="mz9-C8-9Pf" id="6hg-s9-vK7"/>
                 <outlet property="roomImageView" destination="duw-Bd-2R2" id="UFh-pL-IKp"/>
                 <outlet property="roomMessageLabel" destination="GaA-2j-YOu" id="g0g-Go-0jo"/>
                 <outlet property="watchCountLabel" destination="iYn-9X-pW2" id="BJT-dw-7we"/>
             </connections>
-            <point key="canvasLocation" x="420.5" y="-385.5"/>
+            <point key="canvasLocation" x="467.5" y="-386.5"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -180,7 +180,7 @@
     
     if (!_needBackLabel) {
         _needBackLabel = [[UILabel alloc] init];
-        _needBackLabel.text = @"尾款:";
+        _needBackLabel.text = @"实付尾款:";
         _needBackLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _needBackLabel.font = [UIFont systemFontOfSize:14];
     }
@@ -200,7 +200,7 @@
     
     if (!_fontMoneyLabel) {
         _fontMoneyLabel = [[UILabel alloc] init];
-        _fontMoneyLabel.text = @"待付定金";
+        _fontMoneyLabel.text = @"实付定金";
         _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _fontMoneyLabel.font = [UIFont systemFontOfSize:14];
     }

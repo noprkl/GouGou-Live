@@ -21,6 +21,7 @@
 #import "HaveCommitCertificateView.h"
 #import "CerfificateFaildView.h"
 #import "CerFiticateSuccessView.h"
+#import "PersonalMessageModel.h"
 
 static NSString * MedrchantCell = @"MedrchantCell";
 
@@ -53,24 +54,41 @@ static NSString * MedrchantCell = @"MedrchantCell";
 @end
 
 @implementation MerchantViewController
+// 机那里进行请求判断当前状态
+- (void)getrequestPersonalMessage {
+    NSDictionary *dict = @{
+                           @"id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            PersonalMessageModel *model = [arr lastObject];
+            [UserInfos sharedUser].ismerchant = model.isMerchant;
+            [UserInfos sharedUser].isreal = model.isReal;
+            [UserInfos setUser];
+            if (![[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
+                [self.view addSubview:self.unCertificateVIew];
+            }else{
+                
+                if ([[UserInfos sharedUser].ismerchant isEqualToString:@"1"] || [[UserInfos sharedUser].ismerchant isEqualToString:@"0"]) {// 1：非商家 2：商家 3：审核中 4: 审核失败
+                    [self initUI];
+                }else if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]){
+                    [self.view addSubview:self.successView];
+                }else if ([[UserInfos sharedUser].ismerchant isEqualToString:@"3"]){
+                    [self.view addSubview:self.haveCommitView];
+                }else if ([[UserInfos sharedUser].ismerchant isEqualToString:@"4"]){
+                    [self.view addSubview:self.faildView];
+                }
+            }
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    if (![[UserInfos sharedUser].isreal isEqualToString:@"3"]) {
-        [self.view addSubview:self.unCertificateVIew];
-        
-    }else{
-        
-        if ([[UserInfos sharedUser].ismerchant isEqualToString:@"1"]) {// 1：非商家 2：商家 3：审核中 4: 审核失败
-            [self initUI];
-        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"2"]){
-            [self.view addSubview:self.successView];
-        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]){
-            [self.view addSubview:self.haveCommitView];
-        }else if ([[UserInfos sharedUser].isreal isEqualToString:@"4"]){
-            [self.view addSubview:self.faildView];
-        }
-    }
+    [self getrequestPersonalMessage];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -199,7 +217,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
                 }else{
                     
                         for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
-                            NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0]];
+                            NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0] withSize:CGSizeMake(SCREEN_WIDTH / 3, SCREEN_WIDTH / 3)];
                             NSDictionary *dict = @{
                                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                    @"img":base64
@@ -266,7 +284,12 @@ static NSString * MedrchantCell = @"MedrchantCell";
         _doneCertificateView = [[DoneCertificateView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64))];
         _doneCertificateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         __weak typeof(self) weakSelf = self;
+        __weak typeof(_doneCertificateView) weakCertifi = _doneCertificateView;
         _doneCertificateView.areasBlock = ^(){
+            [weakCertifi.infoTextfiled resignFirstResponder];
+            [weakCertifi.areasTextField resignFirstResponder];
+            [weakCertifi.adressTextField resignFirstResponder];
+            [weakCertifi.phoneNumTextfiled resignFirstResponder];
             // 省市区级联
             __block AddressChooseView * choose = [[AddressChooseView alloc] init];
             

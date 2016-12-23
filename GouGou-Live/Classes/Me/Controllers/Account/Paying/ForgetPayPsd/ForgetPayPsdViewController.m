@@ -40,6 +40,11 @@
     
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;
+    
+    self.sendCode.layer.cornerRadius = 5;
+    self.sendCode.layer.masksToBounds = YES;
+    self.sureBtn.layer.cornerRadius = 5;
+    self.sureBtn.layer.masksToBounds = YES;
 }
 
 #pragma mark
@@ -90,11 +95,31 @@
         if (self.codeTextField.text.length == 0) {
             [self showAlert:@"验证码不能为空"];
         }else{
+            NSDictionary * dict = @{
+                                    @"user_tel":self.phoneTextField.text ,
+                                    @"code":self.codeTextField.text,
+                                    @"type":@3
+                                    };
             
-            SureForgetPayViewController *payPsdVC = [[SureForgetPayViewController alloc] init];
-            payPsdVC.codeNumber = self.codeTextField.text;
-            payPsdVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:payPsdVC animated:YES];
+            [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+                
+                DLog(@"%@",successJson);
+                
+                if ([successJson[@"code"] isEqual:@"0"]) {
+                    [self showAlert:@"短信不存在"];
+                }
+                if ([successJson[@"code"] isEqual:@"1"]) {
+                    
+                    SureForgetPayViewController *payPsdVC = [[SureForgetPayViewController alloc] init];
+                    payPsdVC.codeNumber = self.codeTextField.text;
+                    payPsdVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:payPsdVC animated:YES];
+                    
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@",error);
+            }];
+            
         }
     }
 }

@@ -28,4 +28,6 @@
 + (NSString *)stringFromDateString:(NSString *)dateStr;
 /** 播放时间转换 */
 + (NSString *)convertTime:(CGFloat)second;
+/** 数字转年龄 */
++ (NSString *)getAgeFormInt:(NSInteger)age;
 @end

@@ -8,6 +8,8 @@
 
 #import "SellerMyLiveViewController.h"
 #import "SellerMyLiveCell.h"
+#import "PlayBackModel.h"
+#import "FavoriteLivePlayerVc.h"
 
 @interface SellerMyLiveViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -24,6 +26,8 @@ static NSString *cellid = @"SellerMyLiveCell";
     NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
     [self getRequestWithPath:API_Seller_live params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -69,7 +73,7 @@ static NSString *cellid = @"SellerMyLiveCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerMyLiveCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    
+    cell.model = self.dataArr[indexPath.row];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -79,6 +83,10 @@ static NSString *cellid = @"SellerMyLiveCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FavoriteLivePlayerVc *playBackVc = [[FavoriteLivePlayerVc alloc] init];
+    PlayBackModel *model = self.dataArr[indexPath.row];
+    playBackVc.liveID = model.liveId;
+    [self.navigationController pushViewController:playBackVc animated:YES];
     DLog(@"%ld", indexPath.row);
 }
 - (void)didReceiveMemoryWarning {

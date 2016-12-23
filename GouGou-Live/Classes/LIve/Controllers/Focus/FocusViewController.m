@@ -41,6 +41,7 @@
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
+        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
         if ([successJson[@"code"] isEqualToString:@"0"]) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
@@ -159,6 +160,7 @@
     livingVC.doginfos = dogInfos;
     livingVC.watchCount = model.pNum;
     livingVC.chatRoomID = model.chatroom;
+    livingVC.state = model.status;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }

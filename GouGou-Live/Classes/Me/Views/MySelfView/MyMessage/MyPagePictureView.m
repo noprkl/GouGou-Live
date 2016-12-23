@@ -113,7 +113,7 @@ static NSString *cellid = @"ManagePictureaCell";
             
             W = (SCREEN_WIDTH - (count + 1) * 10) / count;
         }
-        flowlayout.itemSize = CGSizeMake(W, W + 20);
+        flowlayout.itemSize = CGSizeMake(W, W + 30);
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowlayout];
         _collectionView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];

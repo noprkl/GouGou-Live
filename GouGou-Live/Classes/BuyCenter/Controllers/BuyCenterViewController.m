@@ -209,13 +209,17 @@
         req.openID = [successJson objectForKey:@"appid"] != [NSNull null] ?successJson[@"appid"]:@"";
         
         DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
-        
-        BOOL flag = [WXApi sendReq:req];
-        if (flag) {
-            [self showAlert:successJson[@"支付成功"]];
+        if (req.partnerId.length == 0){
+            [self showAlert:@"partnerId没有值"];
         }else{
-            [self showAlert:successJson[@"支付失败"]];
+            BOOL flag = [WXApi sendReq:req];
+            if (flag) {
+                [self showAlert:successJson[@"支付成功"]];
+            }else{
+                [self showAlert:successJson[@"支付失败"]];
+            }
         }
+        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

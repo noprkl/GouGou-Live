@@ -196,7 +196,6 @@ static NSString *cellid = @"DogShowCellid";
         }
     };
     cell.bookBlock = ^ (){
-        
         if ([UserInfos getUser]) {
             if (![model.status isEqualToString:@"3"]) {
                 [self showAlert:@"狗狗已经被售出了"];
@@ -208,6 +207,7 @@ static NSString *cellid = @"DogShowCellid";
                     NSArray *arr = [NormalModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                     NormalModel *model = arr[0];
                     rulesAlert.ruleContets = model.conent;
+                    DLog(@"%@",rulesAlert.ruleContets);
                     [rulesAlert show];
                 } error:^(NSError *error) {
                     DLog(@"%@", error);

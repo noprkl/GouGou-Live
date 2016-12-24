@@ -166,6 +166,19 @@
     self.roomNameLabel.text = _liverName;
     [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
     
+//    [self collectionBtn];
+    // 设置navigationBar的透明效果
+    [self.navigationController.navigationBar setAlpha:0];
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+    self.hidesBottomBarWhenPushed = YES;
+    
+    // 请求播放信息
+//    [self getRequestLiveMessage];
+    // 设置直播参数
+    self.roomNameLabel.text = _liverName;
+    [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
+    
+    DLog(@"%@",_watchCount);
     // 添加观看观看历史
     if ([UserInfos getUser]) {
         NSDictionary *dictHistory = @{
@@ -548,7 +561,7 @@
         [self getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
-            
+            self.isSelectCollectBtn = NO;
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -562,7 +575,7 @@
         [self getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
-            
+            self.isSelectCollectBtn = YES;
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -579,6 +592,18 @@
         [self forceOrientationLandscapeRight];
     }
 }
+// 喜欢状态
+- (void)collectionBtn {
+
+    if (self.isSelectCollectBtn) {
+        
+        [self.collectBtn setImage:[UIImage imageNamed:@"喜欢点击"] forState:UIControlStateSelected];
+    } else {
+    
+        [self.collectBtn setImage:[UIImage imageNamed:@"喜欢"] forState:UIControlStateNormal];
+    }
+}
+
 
 #pragma mark - 直播控件
 - (UIView *)livePlayerView {

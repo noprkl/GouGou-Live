@@ -56,19 +56,24 @@
         
         DLog(@"%@",successJson[@"Message"]);
         DLog(@"%@",successJson[@"data"]);
-        
+        // 状态信息
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         self.orderStateView.stateMessage = @"待付定金";
         self.orderStateView.timeMessage = [NSString stringFromDateString:self.orderInfo.createTime];
-        
+        // 联系人信息
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
         self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
         self.consigneeViw.recevieProvince = self.orderInfo.recevieProvince;
         self.consigneeViw.recevieCity = self.orderInfo.recevieCity;
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
-        
-        
+        // 商家名称
+        if (self.orderInfo.userImgUrl.length != 0) {
+            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
+            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+        }
+        self.sellInfoView.buynessName = self.orderInfo.merchantName;
+        self.sellInfoView.currentTime = [NSString stringFromDateString:self.orderInfo.createTime];
         // 狗狗详情
         if (self.orderInfo.pathSmall.length != 0) {
             NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
@@ -81,16 +86,16 @@
         self.dogCardView.dogKindLabel.text = self.orderInfo.kindName;
         self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
-        
+        // 商品总价
         self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
-        
+        // 付款信息
         self.detailPayView.needBackMessage = self.orderInfo.productBalance;
         self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
         self.detailPayView.realMoney = self.orderInfo.price;
         self.detailPayView.balance = self.orderInfo.productRealBalance;
-        
+        // 订单编号
         self.orderNumberView.buyUserId = self.orderInfo.ID;
         self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
         self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];

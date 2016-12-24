@@ -48,24 +48,30 @@
 - (void)getAllMoneyRequest {
     
     NSDictionary * dict = @{@"id":@([_detailModel.ID intValue])};
-    
+    DLog(@"%@",dict);
+    DLog(@"%@",[UserInfos sharedUser].ID);
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         
         DLog(@"%@",successJson[@"Message"]);
         DLog(@"%@",successJson[@"data"]);
-        
+        // 详情状态
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
-        self.orderStateView.stateMessage = @"待付定金";
+        self.orderStateView.stateMessage = @"待付全款";
         self.orderStateView.timeMessage = [NSString stringFromDateString:self.orderInfo.createTime];
-        
+        // 联系人地址
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
         self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
         self.consigneeViw.recevieProvince = self.orderInfo.recevieProvince;
         self.consigneeViw.recevieCity = self.orderInfo.recevieCity;
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
-        
-        
+        // 商家
+        if (self.orderInfo.userImgUrl.length != 0) {
+            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
+            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+        }
+        self.sellInfoView.buynessName = self.orderInfo.merchantName;
+        self.sellInfoView.currentTime = [NSString stringFromDateString:self.orderInfo.createTime];
         // 狗狗详情
         if (self.orderInfo.pathSmall.length != 0) {
             NSString *urlString = [IMAGE_HOST stringByAppendingString:self.orderInfo.pathSmall];
@@ -78,16 +84,20 @@
         self.dogCardView.dogKindLabel.text = self.orderInfo.kindName;
         self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
-        
+        // 商品总价
         self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
         
+        // 全款
+        self.payMonyView.totalMoney = self.orderInfo.price;
+        
+        // 订单编号
         self.orderNumberView.buyUserId = self.orderInfo.ID;
         self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
-        self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
-        self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
-        self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
+//        self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
+//        self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
+//        self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
 
         
     } error:^(NSError *error) {
@@ -130,8 +140,7 @@
     [self.boomScrollView addSubview:self.payMonyView];
     [self.boomScrollView addSubview:self.orderNumberView];
     [self.boomScrollView addSubview:self.bottomButton];
-    
-    
+ 
 }
 
 - (void)addcontrollers {

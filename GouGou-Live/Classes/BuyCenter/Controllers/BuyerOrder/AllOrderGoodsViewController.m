@@ -73,7 +73,7 @@ static NSString * closeCell = @"closeCell";
     
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
+//        [self showAlert:successJson[@"message"]];
         
         if (successJson[@"data"][@"info"]) {
             DLog(@"%@",successJson[@"data"][@"info"]);

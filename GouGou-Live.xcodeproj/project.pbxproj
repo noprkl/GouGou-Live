@@ -1979,6 +1979,7 @@
 		045D51161DD953A5001854A8 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				04DAC9701DD21A9A0089236D /* MyFocusTableCell.h */,
 				045D51131DD9539E001854A8 /* MyPageHeaderView.h */,
 				045D51141DD9539E001854A8 /* MyPageHeaderView.m */,
 				045D51171DD960F7001854A8 /* MyPageDescView.h */,
@@ -3441,8 +3442,8 @@
 			isa = PBXGroup;
 			children = (
 				0479B5791DCADC7B00CB288A /* My */,
-				0479B55B1DCADC7B00CB288A /* Account */,
 				0479B57E1DCADC7B00CB288A /* OrderGoods */,
+				0479B55B1DCADC7B00CB288A /* Account */,
 				0479B59A1DCADC7B00CB288A /* ShopAddress */,
 				0479B5751DCADC7B00CB288A /* Favorite */,
 				0479B59E1DCADC7B00CB288A /* WatchHistory */,
@@ -4217,7 +4218,6 @@
 			children = (
 				04DAC96E1DD21A9A0089236D /* MySelfView */,
 				047AD5F61DD5CE970025290E /* OrderGoods */,
-				04DAC95F1DD21A9A0089236D /* DetailCountView */,
 				04DAC9651DD21A9A0089236D /* MyFavoriteTableView */,
 				04DAC97E1DD21A9A0089236D /* ShopAdress */,
 				045D513E1DD99BEF001854A8 /* CertificateAndMerchant */,
@@ -4236,7 +4236,8 @@
 				04DAC9631DD21A9A0089236D /* DetailCountViewCell.m */,
 				04DAC9641DD21A9A0089236D /* DetailCountViewCell.xib */,
 			);
-			path = DetailCountView;
+			name = DetailCountView;
+			path = ../DetailCountView;
 			sourceTree = "<group>";
 		};
 		04DAC9651DD21A9A0089236D /* MyFavoriteTableView */ = {
@@ -4275,6 +4276,7 @@
 		04DAC96E1DD21A9A0089236D /* MySelfView */ = {
 			isa = PBXGroup;
 			children = (
+				04DAC95F1DD21A9A0089236D /* DetailCountView */,
 				04DAC96F1DD21A9A0089236D /* MyMessage */,
 				04DAC9751DD21A9A0089236D /* MyUnLoginView.h */,
 				04DAC9761DD21A9A0089236D /* MyUnLoginView.m */,
@@ -4289,7 +4291,6 @@
 			children = (
 				04DAC9AE1DD3169E0089236D /* EditAlert */,
 				045D51161DD953A5001854A8 /* MyPage */,
-				04DAC9701DD21A9A0089236D /* MyFocusTableCell.h */,
 				04DAC9711DD21A9A0089236D /* MyFocusTableCell.m */,
 				04DAC9721DD21A9A0089236D /* MyFocusTableCell.xib */,
 				04DAC9731DD21A9A0089236D /* MyMessageView.h */,

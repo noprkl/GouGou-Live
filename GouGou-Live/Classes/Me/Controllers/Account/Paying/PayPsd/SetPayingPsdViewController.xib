@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SBA-eX-o3n">
-                    <rect key="frame" x="59" y="76" width="257" height="30"/>
+                    <rect key="frame" x="56" y="76" width="263" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="GWN-yV-cpz"/>
                     </constraints>
@@ -31,7 +31,7 @@
                     </connections>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-dianhua" translatesAutoresizingMaskIntoConstraints="NO" id="dM5-Yh-7uX">
-                    <rect key="frame" x="20" y="26" width="18" height="18"/>
+                    <rect key="frame" x="20" y="26" width="15" height="18"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XSq-na-nUq">
                     <rect key="frame" x="0.0" y="60" width="375" height="1"/>
@@ -58,9 +58,8 @@
                     </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="仅支持中国大陆手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8gi-tt-mFl">
-                    <rect key="frame" x="59" y="20" width="200" height="30"/>
+                    <rect key="frame" x="56" y="20" width="203" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="IdS-rD-Gcv"/>
                         <constraint firstAttribute="height" constant="30" id="rDQ-5J-x2A"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -111,6 +110,7 @@
                 <constraint firstItem="SBA-eX-o3n" firstAttribute="leading" secondItem="8gi-tt-mFl" secondAttribute="leading" id="jPi-2S-Sj4"/>
                 <constraint firstItem="SBA-eX-o3n" firstAttribute="centerX" secondItem="XpJ-GX-W3h" secondAttribute="centerX" id="jpU-OL-yrE"/>
                 <constraint firstItem="IjV-a4-lDD" firstAttribute="top" secondItem="XpJ-GX-W3h" secondAttribute="bottom" constant="20" id="ngi-Vw-e65"/>
+                <constraint firstItem="8gi-tt-mFl" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="-30" id="olL-sk-vfT"/>
                 <constraint firstItem="SBA-eX-o3n" firstAttribute="top" secondItem="XSq-na-nUq" secondAttribute="bottom" constant="15" id="qyb-Ab-7RH"/>
                 <constraint firstItem="XSq-na-nUq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="s2V-Mi-ddT"/>
                 <constraint firstItem="nkX-3g-geu" firstAttribute="leading" secondItem="8gi-tt-mFl" secondAttribute="trailing" constant="10" id="sAK-j4-RbP"/>
@@ -119,7 +119,7 @@
                 <constraint firstAttribute="trailing" secondItem="IjV-a4-lDD" secondAttribute="trailing" constant="40" id="zg3-ym-q7y"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="207.5" y="298.5"/>
+            <point key="canvasLocation" x="260.5" y="263.5"/>
         </view>
     </objects>
     <resources>

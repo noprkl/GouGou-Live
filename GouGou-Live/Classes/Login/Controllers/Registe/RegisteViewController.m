@@ -110,6 +110,10 @@
                     return ;
                 }
                 
+                NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+                NSString *phoneNumStr = [UserInfos sharedUser].usertel;
+                [defaults setObject:phoneNumStr forKey:@"phoneNum"];
+                
             } error:^(NSError *error) {
                 DLog(@"%@",error);
             }];

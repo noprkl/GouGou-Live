@@ -65,10 +65,12 @@
     NSString *adress = [NSString stringWithFormat:@"%@,%@,%@", self.adressModel.userProvince, self.adressModel.userCity, self.adressModel.userDistrict];
     self.phoneTextField.text = self.adressModel.userTel;
     self.areaChooseTextfiled.text = adress;
+    self.detailAddressTextfiled.text = self.adressModel.userAddress;
     self.roadTextField.text = self.adressModel.street;
     self.postalcodeTextfiled.text = self.adressModel.code;
-    self.detailAddressTextfiled.text = self.adressModel.userAddress;
     
+    DLog(@"%@",self.roadTextField.text);
+    DLog(@"%@",self.postalcodeTextfiled.text);
     [self requestGetAreaData];
 }
 - (void)setAdressModel:(MyShopAdressModel *)adressModel {

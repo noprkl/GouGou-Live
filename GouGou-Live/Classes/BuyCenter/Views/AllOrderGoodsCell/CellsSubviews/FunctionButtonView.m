@@ -29,7 +29,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        CGFloat btnW = 75;
+        CGFloat btnW = (SCREEN_WIDTH - 5 * kDogImageWidth) / 4;
         CGFloat btnH = 35;
         
         CGFloat offset =  btnW + kDogImageWidth;

@@ -103,7 +103,7 @@
     [_overLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.top).offset(54);
-        make.left.equalTo(weakself.left).offset(290);
+        make.right.equalTo(weakself.right).offset(-10);
         make.size.equalTo(CGSizeMake(70, 20));
         
     }];

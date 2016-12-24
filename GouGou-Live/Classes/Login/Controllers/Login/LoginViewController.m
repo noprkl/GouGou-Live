@@ -115,7 +115,26 @@
             // 请求之前删掉上一次的信息
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
                
-                [self showAlert:successJson[@"message"]];
+                NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+                
+                NSString * phoneString = [defaults objectForKey:@"phoneNum"];
+                
+                
+                NSUserDefaults *psdDefaults = [NSUserDefaults standardUserDefaults];
+                NSString * psdString = [psdDefaults objectForKey:@"psdString"];
+                
+                if (self.phoneTestField.text != phoneString) {
+                    
+                    [self showAlert:@"手机号未注册"];
+                }else {
+                    if (self.psdTextField.text != psdString) {
+                       
+                        [self showAlert:successJson[@"message"]];
+
+                    }else {
+                    
+                    }
+                }
                 if ([successJson[@"message"] isEqualToString:@"成功"]) {
                     DLog(@"%@", successJson);
                     

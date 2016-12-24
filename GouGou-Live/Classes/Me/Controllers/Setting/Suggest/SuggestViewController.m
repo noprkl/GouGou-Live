@@ -115,11 +115,12 @@
         };
          __block CGFloat W = 0;
          if (ImgCount <= kMaxImgCount) {
-         W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / 2;
+             W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / 2;
          }else{
-         W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / 2;
+             W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / 2;
          }
-        __block AddUpdataImagesView * addImag = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(10, 260, SCREEN_WIDTH - 20, W + 20)];
+
+         AddUpdataImagesView *addImag = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(10, 240, SCREEN_WIDTH - 20, W + 20)];
         
         addImag.layer.cornerRadius = 5;
         addImag.layer.masksToBounds = YES;
@@ -157,19 +158,14 @@
                 if (textStr.length == 0) {
                     [weakSelf showAlert:@"问题描述不能为空"];
                 } else {
-
                     if (addImag.dataArr.count != 0) { //有图
-
-                        
                         NSString *base64 = [NSString imageBase64WithDataURL:addImag.dataArr[0] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
-
                         NSDictionary *dict = @{
                                                @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                @"img":base64
                                                };
                         [weakSelf postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
                             if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
-                                
                                 NSString *str = successJson[@"data"];
                                 NSDictionary *dict2 = @{
                                                         @"type":@(type),

@@ -101,6 +101,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     _model = model;
     
     self.nameText.text = model.name;
+
     self.age = model.age.time;
     self.ageLabel.attributedText = [self getCellTextWith:[NSString getAgeFormInt:model.age.time]];
     
@@ -112,7 +113,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     
     self.typeModel = _model.kind;
     self.typeLabel.attributedText = [self getCellTextWith:_model.kind.name];
-    
+    self.priceText.text = model.price;
     // 图片url
 //    NSArray *imsArr = [_model.pathBig componentsSeparatedByString:@","];
     

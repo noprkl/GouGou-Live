@@ -73,6 +73,7 @@
         _label.font = [UIFont systemFontOfSize:16];
         _label.textColor = [UIColor colorWithHexString:@"#333333"];
         _label.textAlignment = NSTextAlignmentCenter;
+        _label.numberOfLines = 0;
     }
     return _label;
 }

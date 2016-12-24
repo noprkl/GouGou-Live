@@ -32,7 +32,8 @@
 - (void)setTotalMoney:(NSString *)totalMoney {
 
     _totalMoney = totalMoney;
-    self.payMoney.text = [NSString stringWithFormat:@"%ld",[self.realLalance integerValue] + [self.productRealDeposit integerValue]];
+    self.payMoney.text = totalMoney;
+//    self.payMoney.text = [NSString stringWithFormat:@"%ld",[self.realLalance integerValue] + [self.productRealDeposit integerValue]];
 }
 
 #pragma mark
@@ -73,7 +74,7 @@
     if (!_payLabel) {
         _payLabel = [[UILabel alloc] init];
         _payLabel.textColor = [UIColor colorWithHexString:@"#000000"];
-        _payLabel.text = @"应付全款";
+        _payLabel.text = @"应付全款:";
         _payLabel.font = [UIFont systemFontOfSize:16];
     }
     return _payLabel;

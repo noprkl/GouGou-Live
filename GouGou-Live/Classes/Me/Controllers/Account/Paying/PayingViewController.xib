@@ -25,7 +25,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="我的（未点击）" translatesAutoresizingMaskIntoConstraints="NO" id="mjY-TA-ykG">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="我的（未点击）" translatesAutoresizingMaskIntoConstraints="NO" id="mjY-TA-ykG">
                     <rect key="frame" x="20" y="19" width="19" height="22"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YL3-Pv-L23">
@@ -37,16 +37,13 @@
                     </constraints>
                 </view>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="支付宝" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkK-FV-1pK">
-                    <rect key="frame" x="60" y="76" width="190" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="190" id="7Xo-bN-Ur5"/>
-                    </constraints>
+                    <rect key="frame" x="61" y="76" width="189" height="20"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zrU-4f-Ikc">
-                    <rect key="frame" x="49" y="71" width="1" height="30"/>
+                    <rect key="frame" x="50" y="71" width="1" height="30"/>
                     <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="Cmc-pm-daR"/>
@@ -61,7 +58,7 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="组-5" translatesAutoresizingMaskIntoConstraints="NO" id="CbA-Cx-WFL">
-                    <rect key="frame" x="22" y="78" width="17" height="17"/>
+                    <rect key="frame" x="23" y="78" width="17" height="17"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xhr-t7-FW9">
                     <rect key="frame" x="40" y="127" width="295" height="44"/>
@@ -118,6 +115,7 @@
                 <constraint firstItem="GVC-6b-LCG" firstAttribute="top" secondItem="KSS-ay-6W6" secondAttribute="bottom" constant="15" id="NTQ-ox-eIB"/>
                 <constraint firstItem="KSS-ay-6W6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="15" id="Nqk-Wn-2XD"/>
                 <constraint firstItem="Ter-0I-30j" firstAttribute="top" secondItem="hkK-FV-1pK" secondAttribute="bottom" constant="15" id="TMa-Y5-4g6"/>
+                <constraint firstItem="hkK-FV-1pK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="-32" id="aFq-WX-Wza"/>
                 <constraint firstAttribute="trailing" secondItem="Ter-0I-30j" secondAttribute="trailing" constant="10" id="cL7-QC-bRW"/>
                 <constraint firstAttribute="trailing" secondItem="GVC-6b-LCG" secondAttribute="trailing" constant="10" id="fFF-bE-vFS"/>
                 <constraint firstItem="YL3-Pv-L23" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="15" id="fHi-Lw-fzi"/>
@@ -132,7 +130,7 @@
                 <constraint firstItem="KSS-ay-6W6" firstAttribute="leading" secondItem="YL3-Pv-L23" secondAttribute="trailing" constant="10" id="ubr-M9-Cq1"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="560.5" y="102.5"/>
+            <point key="canvasLocation" x="529.5" y="98.5"/>
         </view>
     </objects>
     <resources>

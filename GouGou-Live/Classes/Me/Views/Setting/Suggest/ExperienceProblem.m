@@ -88,7 +88,6 @@ static NSString * identifer = @"collectionCell";
         [self addSubview:button];
     }
 }
-
 #pragma mark - 约束
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -97,7 +96,7 @@ static NSString * identifer = @"collectionCell";
         make.top.equalTo(weakself.top).offset(100);
         make.left.equalTo(weakself.left).offset(10);
         make.centerX.equalTo(weakself.centerX);
-        make.height.equalTo(150);
+        make.height.equalTo(130);
     }];
     [_explainLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.whilteView.top).offset(10);
@@ -107,7 +106,7 @@ static NSString * identifer = @"collectionCell";
         make.top.equalTo(weakself.explainLabel.bottom);
         make.left.equalTo(weakself.whilteView.left).offset(10);
         make.centerX.equalTo(weakself.centerX);
-        make.height.equalTo(140);
+        make.height.equalTo(100);
     }];
     [_countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakself.whilteView.right).offset(-10);

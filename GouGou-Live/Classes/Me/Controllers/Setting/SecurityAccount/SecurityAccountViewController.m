@@ -11,6 +11,7 @@
 #import "ResetPsdAlertView.h"
 #import "SetPayingPsdViewController.h"
 #import "NSString+MD5Code.h"
+#import "ForgetPsdViewController.h"
 
 @interface SecurityAccountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -19,6 +20,10 @@
 
 /** 数据源 */
 @property (strong, nonatomic) NSArray *dataArr;
+
+
+/** 提示框 */
+@property (strong,nonatomic) ResetPsdAlertView *resetAalerView;
 
 @end
 
@@ -109,6 +114,21 @@
         }else{
        
             __block ResetPsdAlertView *resetPayAlert = [[ResetPsdAlertView alloc] init];
+            
+            self.resetAalerView = resetPayAlert;
+            
+            UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+            [button setTitle:@"忘记密码" forState:UIControlStateNormal];
+            
+            button.titleLabel.font = [UIFont systemFontOfSize:16];
+            
+            button.frame = CGRectMake(SCREEN_WIDTH - 70, 90, 70, 20);
+            
+            [button addTarget:self action:@selector(clickForgetPassward) forControlEvents:UIControlEventTouchUpInside];
+            
+            [resetPayAlert addSubview:button];
+            
             [resetPayAlert show];
             resetPayAlert.title = @"支付密码重置";
             resetPayAlert.placeHolder = @"请输入原支付密码";
@@ -136,6 +156,14 @@
     }
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (void)clickForgetPassward {
+    
+    [self.resetAalerView dismiss];
+        
+        ForgetPsdViewController * forgetVC = [[ForgetPsdViewController alloc] init];
+        [self.navigationController pushViewController:forgetVC animated:YES];
+    
 }
 - (void)pushResetPsdVC:(NSString *)title oldPsd:(NSString *)oldPsd {
         ResetPsdViewController *surePsdVC = [[ResetPsdViewController alloc] init];

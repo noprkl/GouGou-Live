@@ -283,7 +283,6 @@ static NSString *cellid = @"cellid";
                                                @"user_id":@17,
                                                @"nickname":nickname
                                                };
-                        
                         // 请求
                         [self postRequestWithPath:API_Nickname params:dict success:^(id successJson) {
 
@@ -300,9 +299,7 @@ static NSString *cellid = @"cellid";
                         } error:^(NSError *error) {
                               DLog(@"%@", error);
                         }];
-                        
                     }
-
                 };
                 self.editAlert = editNikeAlert;
             }
@@ -310,13 +307,25 @@ static NSString *cellid = @"cellid";
             case 2:
             {
                 EditNikeNameAlert *editSignAlert = [[EditNikeNameAlert alloc] init];
-                
+                __weak typeof(editSignAlert) weakSign = editSignAlert;
                 [editSignAlert show];
+                // 上传个性签名
+                if ([UserInfos sharedUser].usermotto.length != 0) {
+                    weakSign.easyMessage = [UserInfos sharedUser].usermotto;
+                    weakSign.placeHolder = @"";
+                    NSString * string = [UserInfos sharedUser].usermotto;
+                    weakSign.countText = [NSString stringWithFormat:@"%@",@(17 - string.length)];
+                }else{
+                    weakSign.placeHolder = @"这个人很懒，他什么也没留下";
+                    weakSign.easyMessage = @"";
+                    weakSign.countText = @"17";
+                    
+                }
                 editSignAlert.sureBlock = ^(NSString *signaue){
                     if (![signaue isEqualToString:@""]) {
                         DLog(@"%@", signaue);
 #pragma mark  上传个人签名
-
+                        
                         NSDictionary *dict = @{
                                                @"user_id":[UserInfos sharedUser].ID,
                                                @"user_motto":signaue
@@ -340,7 +349,7 @@ static NSString *cellid = @"cellid";
                     }
                 };
                 editSignAlert.title = @"请输入个性签名";
-                editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
+//                editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
                 editSignAlert.noteString = @"";
                 self.editAlert = editSignAlert;
             }
@@ -486,7 +495,6 @@ static NSString *cellid = @"cellid";
                 swit.on = !swit.on;
             };
         }else {
-            
             __block DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
             QQprommt.message = @"你确定解绑腾讯？";
             [QQprommt show];
@@ -514,7 +522,6 @@ static NSString *cellid = @"cellid";
                 swit.on = !swit.on;
             };
         }
-    
     }else if (index == 2){
         BOOL isButtonOn = [swit isOn];
         if (isButtonOn) {
@@ -553,12 +560,14 @@ static NSString *cellid = @"cellid";
                     WBprommt = nil;
                     [WBprommt dismiss];
                 };
+
             WBprommt.cancelBlock = ^(){
                 swit.on = !swit.on;
             };
-        }else{
-            __block  DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
-            WBprommt.message = @"你将要解绑微博!";
+        }
+        }else {
+            __block DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
+            WBprommt.message = @"你确定解绑微博？";
             [WBprommt show];
             WBprommt.sureBlock = ^(UIButton *btn){
                 NSDictionary *dict = @{
@@ -584,7 +593,6 @@ static NSString *cellid = @"cellid";
                 swit.on = !swit.on;
             };
         }
-}
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

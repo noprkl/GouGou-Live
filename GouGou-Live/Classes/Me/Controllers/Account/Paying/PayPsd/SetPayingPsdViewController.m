@@ -46,11 +46,8 @@
     self.sureBtn.layer.cornerRadius = 5;
     self.sureBtn.layer.masksToBounds = 5;
 }
-
 #pragma mark
 #pragma mark - Action
-
-
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
     BOOL flag =  [NSString valiMobile:self.phoneTextField.text];
     if (!flag) {
@@ -118,40 +115,16 @@
                     payPsdVC.codeNumber = self.codeTextField.text;
                     payPsdVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:payPsdVC animated:YES];
-
                 }
             } error:^(NSError *error) {
                 DLog(@"%@",error);
             }];
-            
-//            NSDictionary * dict = @{
-//                                    @"user_tel":self.phoneTextField.text,
-//                                    @"code":self.codeTextField.text
-//                                    };
-//            
-//            [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
-//                
-//                DLog(@"%@",successJson);
-//                
-//                if ([successJson[@"code"] isEqual:@"0"]) {
-//                    [self showAlert:@"短信不存在"];
-//                }
-//                if ([successJson[@"code"] isEqual:@"1"]) {
-//                    SetPaypsdViewController *payPsdVC = [[SetPaypsdViewController alloc] init];
-//                    payPsdVC.codeNumber = self.codeTextField.text;
-//                    payPsdVC.hidesBottomBarWhenPushed = YES;
-//                    [self.navigationController pushViewController:payPsdVC animated:YES];
-//                }
-//            } error:^(NSError *error) {
-//                DLog(@"%@",error);
-//            }];
+           
         }
     }
 }
-
 #pragma mark
 #pragma mark - 文本框监听
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if (textField == self.phoneTextField) {

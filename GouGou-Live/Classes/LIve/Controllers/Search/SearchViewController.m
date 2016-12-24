@@ -160,8 +160,9 @@ static NSString *cellid = @"RecommentCellid";
     livingVC.liverIcon = model.userImgUrl;
     livingVC.liverName = model.merchantName;
     livingVC.doginfos = dogInfos;
-    livingVC.watchCount = model.pNum;
+    livingVC.watchCount = model.viewNum;
     livingVC.chatRoomID = model.chatroom;
+    livingVC.state = model.status;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }

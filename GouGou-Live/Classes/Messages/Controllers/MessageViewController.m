@@ -32,12 +32,14 @@ static NSString *cellid2 = @"NotificationMessageCell";
 
 - (void)postRequestGetSystemPush {
     // ([[UserInfos sharedUser].ID integerValue])
-    NSDictionary *dict = @{@"user_id":@(11)};
+    NSDictionary *dict = @{@"user_id":@([[UserInfos sharedUser].ID integerValue])};
     [self getRequestWithPath:API_System_msg params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if ([successJson[@"code"] isEqualToString:@"1"]) {
             self.systemMessageArr = [SystemPushMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            
             [self.tableView reloadData];
+            
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -124,7 +126,13 @@ static NSString *cellid2 = @"NotificationMessageCell";
         NotificationMessageCell *notifiCell = [tableView dequeueReusableCellWithIdentifier:cellid2];
         notifiCell.selectionStyle = UITableViewCellSelectionStyleNone;
         notifiCell.model = [self.systemMessageArr lastObject];
-        notifiCell.unReadCount = self.systemMessageArr.count;
+        NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+        NSString * fileName = [docDir stringByAppendingPathComponent:SystemMessage];
+        DLog(@"%@", fileName);
+//        NSArray * read = [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+        NSArray * read = [NSArray arrayWithContentsOfFile:fileName];
+
+        notifiCell.unReadCount = self.systemMessageArr.count - read.count;
         return notifiCell;
     }
     if (indexPath.section == 1) {
@@ -134,7 +142,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
         
         if (conversation.type == EMConversationTypeChat) {
             if (conversation.latestMessage) {
-                
                 // 昵称
                 if (conversation.latestMessage.ext[@"nickname"]) {
                     cell.nickNameLabel.text = conversation.latestMessage.ext[@"nickname"];

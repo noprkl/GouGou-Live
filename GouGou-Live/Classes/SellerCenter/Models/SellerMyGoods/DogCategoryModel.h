@@ -11,7 +11,6 @@
 @interface DogCategoryModel : BaseModel
 
 @property(nonatomic, strong) NSString *name; /**< 名字 */
-
 @property(nonatomic, strong) NSString *ID; /**< id */
 @property(nonatomic, assign) NSInteger time; /**< 月数 */
 //@property(nonatomic, strong) NSString *createTime; /**< <#注释#> */

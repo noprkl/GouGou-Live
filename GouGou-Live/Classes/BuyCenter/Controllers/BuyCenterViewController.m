@@ -199,7 +199,7 @@
     [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         PayReq * req = [[PayReq alloc] init];
-        req.partnerId = [successJson objectForKey:@"partnerid"] != [NSNull null] ?successJson[@"partnerid"]:@"";
+        req.partnerId = successJson[@"partnerid"];
         req.prepayId = [successJson objectForKey:@"prepayid"] != [NSNull null] ?successJson[@"prepayid"]:@"";
         req.nonceStr = [successJson objectForKey:@"noncestr"] != [NSNull null] ?successJson[@"noncestr"]:@"";
         NSNumber *timeStamp = [successJson objectForKey:@"timestamp"] != [NSNull null] ?successJson[@"timestamp"]:@"";
@@ -209,15 +209,15 @@
         req.openID = [successJson objectForKey:@"appid"] != [NSNull null] ?successJson[@"appid"]:@"";
         
         DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
-        if (req.partnerId.length == 0){
-            [self showAlert:@"partnerId没有值"];
-        }else{
+        if (req.partnerId.length != 0){
             BOOL flag = [WXApi sendReq:req];
             if (flag) {
                 [self showAlert:successJson[@"支付成功"]];
             }else{
                 [self showAlert:successJson[@"支付失败"]];
             }
+        }else{
+            [self showAlert:@"partnerId没有值"];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);

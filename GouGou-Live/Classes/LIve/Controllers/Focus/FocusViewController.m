@@ -33,7 +33,7 @@
 
 #pragma mark - 关注的直播列表
 - (void)getRequestLiveList {
-    
+    [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID intValue])
                            };
@@ -41,7 +41,6 @@
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
-        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
         if ([successJson[@"code"] isEqualToString:@"0"]) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
@@ -123,7 +122,12 @@
         _noneView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
         __weak typeof(self) weakSelf = self;
         _noneView.requestBlock = ^(NSString *text){
-            [weakSelf getRequestLiveList];
+            weakSelf.noneNetView.hidden = YES;
+//            weakSelf.tableView.hidden = NO;
+            [weakSelf.tableView.mj_header beginRefreshingWithCompletionBlock:^{
+                [weakSelf getRequestLiveList];
+                [weakSelf.tableView.mj_header endRefreshing];
+            }];
         };
     }
     return _noneView;
@@ -131,7 +135,8 @@
 - (NoneNetWorkingView *)noneNetView {
     if (!_noneNetView) {
         _noneNetView = [[NoneNetWorkingView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        _noneNetView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];    }
+        _noneNetView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
+    }
     return _noneNetView;
 }
 - (LiveTableView *)tableView {
@@ -157,7 +162,7 @@
     livingVC.liverIcon = model.userImgUrl;
     livingVC.liverName = model.merchantName;
     livingVC.doginfos = dogInfos;
-    livingVC.watchCount = model.pNum;
+    livingVC.watchCount = model.viewNum;
     livingVC.chatRoomID = model.chatroom;
     livingVC.state = model.status;
     livingVC.hidesBottomBarWhenPushed = YES;

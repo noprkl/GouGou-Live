@@ -59,6 +59,9 @@
 
 @property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
+@property(nonatomic, strong) UILabel *shipLabel; /**< 模板名字 */
+@property(nonatomic, strong) SellerShipTemplateModel *shipModel; /**< 模板名字 */
+
 @end
 
 static NSString *cellid = @"SellerCreateDogMessage";
@@ -98,8 +101,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
     _model = model;
     
     self.nameText.text = model.name;
-    self.age = model.age;
-    self.ageLabel.attributedText = [self getCellTextWith:[NSString getAgeFormInt:model.age]];
+    self.age = model.age.time;
+    self.ageLabel.attributedText = [self getCellTextWith:[NSString getAgeFormInt:model.age.time]];
     
     self.sizeModel = _model.size;
     self.sizeLabel.attributedText = [self getCellTextWith:_model.size.name];
@@ -234,7 +237,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                             if (self.photoArr.count == 0) {
                                 [self showAlert:@"请添加狗狗图片"];
                             }else {
-                                self.sureBtn.enabled = NO;
+//                                self.sureBtn.enabled = NO;
                                 // 印象id字符串
                                 NSMutableArray *impresArr = [NSMutableArray array];
                                 for (NSInteger i = 0; i < self.impressModels.count; i ++) {
@@ -279,7 +282,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                     if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                                                         [self.navigationController popViewControllerAnimated:YES];
                                                     }
-                                                    self.sureBtn.enabled = YES;
+//                                                    self.sureBtn.enabled = YES;
 
                                                 } error:^(NSError *error) {
                                                     DLog(@"%@", error);
@@ -320,38 +323,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
     switch (indexPath.row) {
         case 0:
         {
-            /*
-            
-            self.sizeModel = _model.size;
-            self.sizeLabel.attributedText = [self getCellTextWith:_model.size.name];
-            
-            self.colorModel = _model.color;
-            self.colorLabel.attributedText = [self getCellTextWith:_model.color.name];
-            
-            self.typeModel = _model.kind;
-            self.typeLabel.attributedText = [self getCellTextWith:_model.kind.name];
-            
-            // 图片url
-            NSArray *imsArr = [_model.pathBig componentsSeparatedByString:@","];
-            
-            // 数组转化模型
-            NSArray *impressModels = [DogCategoryModel mj_objectArrayWithKeyValuesArray:_model.impresssion];
-            [self.impressModels removeAllObjects];
-            [self.impressModels addObjectsFromArray:impressModels];
-            
-            NSMutableString *impress = [NSMutableString string];
-            for (NSInteger i = 0; i < self.impressModels.count; i ++) {
-                DogCategoryModel *model = self.impressModels[i];
-                [impress appendFormat:@"#%@# ", model.name];
-            }
-            self.impressLabel.attributedText = [self getCellTextWith:impress];
-            
-            if (_model.comment.length != 0) {
-                self.noteText.text = _model.comment;
-            }
-            self.oldPrice.attributedText = [self getCellTextWith:_model.price];
-            */
-           
             cell.textLabel.text = @"";
             UIButton *noneNameBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
             [noneNameBtn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];
@@ -519,8 +490,9 @@ static NSString *cellid = @"SellerCreateDogMessage";
         case 9:
         {
             cell.textLabel.attributedText = [self getCellTextWith:@"运费"];
-            cell.detailTextLabel.text = @"模板-免费运";
+            cell.detailTextLabel.text = @"模板-运费";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+            self.shipLabel = cell.detailTextLabel;
         }
             break;
         case 10:
@@ -648,12 +620,28 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
-            SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
-            shipTemplateView.sureBlock = ^(NSString *templateType){
-                DLog(@"%@", templateType);
-            };
-            shipTemplateView.detailPlist = @[@"免费", @"运费50,按实结算", @"50"];
-            [shipTemplateView show];
+//            SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
+        // 请求运费模板
+//        NSDictionary *dict = @{
+//                               @"user_id":[UserInfos sharedUser].ID,
+//                               @"page":@1,
+//                               @"pageSize":@10
+//                               };
+//        [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//            shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+//            [shipTemplateView reloadData];
+//        } error:^(NSError *error) {
+//            DLog(@"%@", error);
+//        }];
+        
+//        shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
+//            DLog(@"%@", templateType);
+//            self.shipLabel.text = [NSString stringWithFormat:@"%@%@", templateType.name, templateType.money];
+//            self.shipModel = templateType;
+//        };
+//
+//            [shipTemplateView show];
         }
             break;
         default:

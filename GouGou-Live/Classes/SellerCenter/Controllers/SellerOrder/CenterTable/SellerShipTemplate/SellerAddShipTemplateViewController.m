@@ -19,20 +19,26 @@
 
 @property(nonatomic, strong) UITextField *templateName; /**< 模板名字 */
 
+@property (nonatomic, strong) NSString *templateStr; /**< 名字 */
+
 @property(nonatomic, strong) SellerAdressModel *adressModel; /**< 传过来的数据 */
 
-@property(nonatomic, assign) BOOL isAdress; /**< 是地址 */
+//@property(nonatomic, assign) BOOL isAdress; /**< 是地址 */
 
 @property(nonatomic, strong) UISwitch *freeCost; /**< 免费 */
 
 @property(nonatomic, strong) UISwitch *shipCost; /**< 默认运费开关 */
 
+@property (nonatomic, strong) UITextField *costTextField; /**< 花费 */
+
+
 @property(nonatomic, strong) UISwitch *realCost; /**< 按实结算 */
+
+@property (nonatomic, strong) NSString *cost; /**< 花费 */
 
 @end
 
 static NSString *cellid = @"SellerAddShipTemplate";
-static NSString *templateNameStr = @"templateNameStr";
 
 @implementation SellerAddShipTemplateViewController
 #pragma mark
@@ -45,28 +51,18 @@ static NSString *templateNameStr = @"templateNameStr";
 - (void)initUI{
     self.title = @"运费管理";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
-    if (!_isAdress) {
         [self.view addSubview:self.tableView];
-    }
+    _cost = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"SellerShopAderss" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ChoseSendAdress" object:nil];
 
 }
 
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
-    
-    self.isAdress = adress.userInfo[@"ISAdress"];
-
-    if (_isAdress) {
-        [self.view addSubview:self.tableView];
-        NSIndexPath *index = [NSIndexPath indexPathWithIndex:1];
-        [self.tableView reloadRowsAtIndexPaths:@[index] withRowAnimation:(UITableViewRowAnimationNone)];
-    }
     
     SellerAdressModel *model = adress.userInfo[@"ChoseSendAdress"];
     if (model.merchantTel.length != 0) {
@@ -80,6 +76,30 @@ static NSString *templateNameStr = @"templateNameStr";
 #pragma mark - Action 
 - (void)saveBtnAction {
     // 保存
+    if (self.templateStr.length == 0) {
+        [self showAlert:@"请添加模板名称"];
+    }else{
+        if (self.adressModel.merchantName.length == 0) {
+            [self showAlert:@"请选择发货地址"];
+        }else{
+            if (self.cost.length == 0) {
+                [self showAlert:@"请选择一种运费方式"];
+            }else{
+                NSDictionary *dict = @{
+                                       @"user_id":[UserInfos sharedUser].ID,
+                                       @"name":self.templateStr,
+                                       @"money":self.cost,
+                                       @"address_id":@(self.adressModel.ID)
+                                       };
+                [self postRequestWithPath:API_Freight params:dict success:^(id successJson) {
+                    [self showAlert:successJson[@"message"]];
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
+        }
+    }
 }
 - (void)priceSwitchBtnAction:(UISwitch *)switchBtn {
     [self.dataArr removeAllObjects];
@@ -94,6 +114,7 @@ static NSString *templateNameStr = @"templateNameStr";
     if (switchBtn.isOn) {
         self.shipCost.on = NO;
         self.realCost.on = NO;
+        self.cost = @"0";
     }
 }
 - (void)shipCostSwitchBtnAction:(UISwitch *)switchBtn {
@@ -119,24 +140,25 @@ static NSString *templateNameStr = @"templateNameStr";
         [_dataArr addObject:@"按实结算"];
         [self.tableView reloadData];
     }
-    
 }
 - (void)realCostSwitchBtnAction:(UISwitch *)switchBtn {
    
     self.shipCost.on = NO;
     self.freeCost.on = NO;
     [self.dataArr removeAllObjects];
-    NSString *name = [[NSUserDefaults standardUserDefaults] valueForKey:templateNameStr];
-    [_dataArr addObject:name];
+    [_dataArr addObject:self.templateStr];
     [_dataArr addObject:@"发货地址(必填)"];
     [_dataArr addObject:@"免运费"];
     [_dataArr addObject:@"默认运费价格"];
     [_dataArr addObject:@"按实结算"];
     [self.tableView reloadData];
+    self.cost = @"50";
 }
 - (void)editShipTemplateAction:(UITextField *)textField {
-    templateNameStr = textField.text;
-    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:templateNameStr];
+    _templateStr = textField.text;
+}
+- (void)editShipCount:(UITextField *)textField {
+    self.cost = textField.text;
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -204,9 +226,12 @@ static NSString *templateNameStr = @"templateNameStr";
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"templateName"];
 
         UITextField *templateName = [[UITextField alloc] initWithFrame:CGRectMake(13, (44 - 25) / 2, SCREEN_WIDTH, 25)];
-        templateName.text = self.dataArr[indexPath.row];
+        if (self.templateStr.length != 0) {
+            templateName.text = self.templateStr;
+        }
         templateName.font = [UIFont systemFontOfSize:14];
         templateName.textColor = [UIColor colorWithHexString:@"#333333"];
+        templateName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.dataArr[indexPath.row] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}];
         [templateName addTarget:self action:@selector(editShipTemplateAction:) forControlEvents:(UIControlEventEditingChanged)];
         templateName.delegate = self;
         self.templateName = templateName;
@@ -242,7 +267,6 @@ static NSString *templateNameStr = @"templateNameStr";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         cell.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        
         cell.textLabel.text = self.dataArr[indexPath.row];
         
         cell.accessoryView = self.shipCost;
@@ -260,7 +284,7 @@ static NSString *templateNameStr = @"templateNameStr";
         shipCostCount.font = [UIFont systemFontOfSize:16];
         shipCostCount.textColor = [UIColor colorWithHexString:@"#333333"];
         shipCostCount.delegate = self;
-
+        [shipCostCount addTarget:self action:@selector(editShipCount:) forControlEvents:(UIControlEventEditingChanged)];
         [cell.contentView addSubview:shipCostCount];
         return cell;
     }
@@ -284,7 +308,7 @@ static NSString *templateNameStr = @"templateNameStr";
             return 44;
             break;
         case 1:
-            if (_isAdress) {
+            if (self.adressModel.merchantName.length != 0) {
                 return 88;
             }else{
                 return 44;
@@ -316,32 +340,22 @@ static NSString *templateNameStr = @"templateNameStr";
     if ([cellText isEqualToString:@"发货地址(必填)"]) {
         SellerChoseAdressViewController *choseAdressVC = [[SellerChoseAdressViewController alloc] init];
         choseAdressVC.hidesBottomBarWhenPushed = YES;
-        choseAdressVC.adressBlock = ^(BOOL flag){
 
-            _isAdress = flag;
-            DLog(@"%c--%c", flag, _isAdress);
-//            [self.tableView reloadData];
-        };
         [self.navigationController pushViewController:choseAdressVC animated:YES];
     }
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.costTextField) {
+        if ([NSString validateNumber:string]) {
+            return NO;
+        }
+        return YES;
+    }
+    return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField == self.templateName) {
-      
-        if (textField.text.length == 0){
-            textField.text = @"";
-        }
-    }
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == self.templateName) {
-        if (textField.text.length == 0){
-        textField.text = @"运费模板一(自定义输入名称)";
-        }
-    }
-}
+
 @end

@@ -31,6 +31,11 @@ static NSString *cellid = @"SystemNotificationCell";
 - (void)initUI{
     [self.view addSubview:self.tableView];
     self.title = @"系统通知";
+    //把关注的人存到本地
+    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+    NSString * fileName = [docDir stringByAppendingPathComponent:SystemMessage];
+    [self.models writeToFile:fileName atomically:YES];
+//    [NSKeyedArchiver archiveRootObject:self.models toFile:fileName];
 }
 - (void)setModels:(NSArray *)models {
     _models = models;

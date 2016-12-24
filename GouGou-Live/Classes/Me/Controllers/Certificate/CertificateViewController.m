@@ -83,6 +83,7 @@ static NSString * identityCell = @"identitiCellID";
                             [UserInfos sharedUser].isreal = @"2";
                             [UserInfos sharedUser].username = self.acceptName.text;
                             [UserInfos setUser];
+                            [self.navigationController popViewControllerAnimated:YES];
                         }
                     } error:^(NSError *error) {
                         DLog(@"%@", error);

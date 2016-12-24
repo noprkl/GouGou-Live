@@ -13,6 +13,8 @@
 #import "FavoriteDogDetailVc.h"
 #import "FavoriteLivePlayerVc.h"
 #import "PlayBackModel.h"
+#import "FavoriteDogDetailVc.h"
+
 @interface FavoriteViewController ()
 /** 两个button View */
 @property (strong,nonatomic) TowButtonView *towBtnView;
@@ -149,7 +151,7 @@
             FavoriteLivePlayerVc *playerVc = [[FavoriteLivePlayerVc alloc] init];
             playerVc.liveID = liveID;
             playerVc.hidesBottomBarWhenPushed = YES;
-//            [weakSelf.navigationController pushViewController:playerVc animated:YES];
+            [weakSelf.navigationController pushViewController:playerVc animated:YES];
 //            LivePlayerBackVc *playVc = [[LivePlayerBackVc alloc] init];
 //            playVc.hidesBottomBarWhenPushed = YES;
 //            [weakSelf.navigationController pushViewController:playVc animated:YES];
@@ -189,7 +191,7 @@
             FavoriteDogDetailVc *dogDetailVc = [[FavoriteDogDetailVc alloc] init];
             dogDetailVc.dogID = dogID;
             dogDetailVc.hidesBottomBarWhenPushed = YES;
-//            [weakSelf.navigationController pushViewController:dogDetailVc animated:YES];
+            [weakSelf.navigationController pushViewController:dogDetailVc animated:YES];
         };
     }
     return _favoriteDogTable;

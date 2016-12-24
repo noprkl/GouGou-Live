@@ -7,8 +7,9 @@
 //  运费模板选择弹窗
 
 #import <UIKit/UIKit.h>
+#import "SellerShipTemplateModel.h"
 
-typedef void(^ClickSureButtonBlock)(NSString *style);
+typedef void(^ClickSureButtonBlock)(SellerShipTemplateModel *style);
 
 @interface SellerShipTemplateView : UITableView
 

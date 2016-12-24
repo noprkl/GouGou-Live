@@ -65,41 +65,42 @@
 }
 - (void)clickSearchBtnAction {
     
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        //读取数组NSArray类型的数据
-        NSArray *myArray = [[NSArray alloc] initWithArray:[userDefaultes arrayForKey:@"DOGTYPEHISSTORY"]];
-        
-        // NSArray --> NSMutableArray
-        NSMutableArray *searTXT = [NSMutableArray array];
-        searTXT = [myArray mutableCopy];
-        
-        NSString *seaTxt = self.titleInputView.text;
-        if (searTXT.count > 0) {
-            //判断搜索内容是否存在，存在的话放到数组最后一位，不存在的话添加。
-            for (NSString * str in myArray) {
-                if ([seaTxt isEqualToString:str]) {
-                    //获取指定对象的索引
-                    NSUInteger index = [myArray indexOfObject:seaTxt];
-                    [searTXT replaceObjectAtIndex:index withObject:str];
-//                    [searTXT addObject:seaTxt];
-                    break;
-                }
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    //读取数组NSArray类型的数据
+    NSArray *myArray = [[NSArray alloc] initWithArray:[userDefaultes arrayForKey:@"DOGTYPEHISSTORY"]];
+    // NSArray --> NSMutableArray
+    NSMutableArray *historyArr = [myArray mutableCopy];
+    
+    // 可变数组存放一样的数据
+    NSMutableArray *searTXT = [NSMutableArray array];
+    //        searTXT = [myArray mutableCopy];
+    NSString *seaTxt = self.titleInputView.text;
+    if (searTXT.count > 0) {
+        //判断搜索内容是否存在，存在的话放到数组最后一位，不存在的话添加。
+        for (NSString * str in myArray) {
+            if ([seaTxt isEqualToString:str]) {
+                //获取指定对象的索引
+                //                    NSUInteger index = [myArray indexOfObject:seaTxt];
+                //                    [searTXT replaceObjectAtIndex:index withObject:str];
+                //                    [searTXT addObject:seaTxt];
+                [searTXT addObject:seaTxt];
             }
         }
-        
-            [searTXT addObject:seaTxt];
-        
-        if(searTXT.count > 15)
-            {
-            [searTXT removeObjectAtIndex:0];
-            }
-        //将上述数据全部存储到NSUserDefaults中
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setObject:searTXT forKey:@"DOGTYPEHISSTORY"];
+    }
+    // 搜索一样的数据 删除
+    [historyArr removeObjectsInArray:searTXT];
+    // 添加当前搜索的数据
+    [historyArr addObject:seaTxt];
+    // 存放限制 15个
+    if(searTXT.count > 15)
+        {
+        [searTXT removeObjectAtIndex:0];
+        }
+    //将上述数据全部存储到NSUserDefaults中
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:historyArr forKey:@"DOGTYPEHISSTORY"];
     
-//        [[NSUserDefaults standardUserDefaults] setObject:self.titleInputView.text forKey:@"DOGTYPEHISSTORY"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//        [self.noinputView reloadData];
+
     
     NSDictionary *dict = @{
                            @"name":self.titleInputView.text,

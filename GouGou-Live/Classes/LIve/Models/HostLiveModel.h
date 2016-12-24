@@ -28,4 +28,6 @@
 @property (nonatomic, strong) NSString *snapshot; /**< 直播头像 */
 @property (nonatomic, strong) NSString *chatroom; /**< 聊天室id */
 
+@property (nonatomic, strong) NSString *status; /**< 状态 */
+
 @end

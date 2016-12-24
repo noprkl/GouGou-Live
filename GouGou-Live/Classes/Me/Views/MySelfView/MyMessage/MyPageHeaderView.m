@@ -142,6 +142,7 @@
     }
     if (_isReal) {
         self.userNameAuthen.hidden = NO;
+        self.startSource.hidden = YES;
         if (_isMentch) {
             self.sellerAuthen.hidden = NO;
             self.pleasure.hidden = NO;
@@ -153,6 +154,7 @@
         }
     }else{
         self.userNameAuthen.hidden = YES;
+        self.startSource.hidden = YES;
     }
 }
 #pragma mark

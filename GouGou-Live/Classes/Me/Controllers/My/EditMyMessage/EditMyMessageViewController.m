@@ -77,7 +77,6 @@ static NSString *cellid = @"cellid";
         NSString *userImage = @"暂无";
         NSString *userMotto = @"暂无";
         NSString *userNike = @"暂无";
-        DLog(@"%@", [UserInfos sharedUser].usernickname);
         if ([UserInfos sharedUser].userimgurl != NULL) {
             userImage = [UserInfos sharedUser].userimgurl;
         }
@@ -209,17 +208,17 @@ static NSString *cellid = @"cellid";
         switchBtn.on = NO;
         switchBtn.tag = 50 + indexPath.row;
         if (indexPath.row == 0) {
-            if ([UserInfos sharedUser].wxopenid != NULL) {
+            if ([UserInfos sharedUser].wxopenid != NULL && [UserInfos sharedUser].wxopenid.length != 0) {
                 switchBtn.on = YES;
             }
         }
         if (indexPath.row == 1) {
-            if ([UserInfos sharedUser].qqopenid != NULL) {
+            if ([UserInfos sharedUser].qqopenid != NULL && [UserInfos sharedUser].qqopenid.length != 0) {
                 switchBtn.on = YES;
             }
         }
         if (indexPath.row == 2) {
-            if ([UserInfos sharedUser].wbopenid != NULL) {
+            if ([UserInfos sharedUser].wbopenid != NULL && [UserInfos sharedUser].wbopenid.length != 0) {
                 switchBtn.on = YES;
             }
         }
@@ -319,7 +318,7 @@ static NSString *cellid = @"cellid";
 #pragma mark  上传个人签名
 
                         NSDictionary *dict = @{
-                                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                               @"user_id":[UserInfos sharedUser].ID,
                                                @"user_motto":signaue
                                                };
                         [self postRequestWithPath:API_Signature params:dict success:^(id successJson) {
@@ -372,81 +371,120 @@ static NSString *cellid = @"cellid";
 - (void)clickSwitchAction:(UISwitch *)swit {
 
     NSInteger index = swit.tag - 50;
-    UISwitch *switc = (UISwitch *)self.accessosys[index];
-    
+//    UISwitch *switc = (UISwitch *)self.accessosys[index];
     if (index == 0) {
-        BOOL isButtonOn = [switc isOn];
+        
+        BOOL isButtonOn = [swit isOn];
         if (isButtonOn) {
             DLog(@"微信绑定");
             // 判断是否用微信登陆过
-            if ([UserInfos sharedUser].qqopenid.length == 0) {
-                [self showAlert:@"未使用过微信账号"];
-            }{
                 __block  DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
                 WXprommt.message = @"你将要绑定微信!";
                 [WXprommt show];
                 WXprommt.sureBlock = ^(UIButton *btn){
-                    NSDictionary *dict = @{
-                                           @"type":@"1",
-                                           @"name":[UserInfos sharedUser].wxopenid,
-                                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                           };
-                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                        DLog(@"%@", successJson);
-                    } error:^(NSError *error) {
-                        DLog(@"%@", error);
+                    [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_WechatSession currentViewController:self completion:^(id result, NSError *error) {
+                        //        [self.tableView reloadData];
+                        UMSocialAuthResponse *authresponse = result;
+
+                        if (result != nil){
+                            DLog(@"%@", authresponse.uid);
+                            
+                            NSDictionary *dict = @{
+                                                   @"type":@"1",
+                                                   @"name":authresponse.uid,
+                                                   @"user_id":[UserInfos sharedUser].ID
+                                                   };
+                            [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                                DLog(@"%@", successJson);
+                                [self showAlert:successJson[@"message"]];
+                                if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
+                                    [UserInfos sharedUser].wxopenid = authresponse.uid;
+                                    [UserInfos setUser];
+                                    [self.bottomTableView reloadData];
+                                }
+                            } error:^(NSError *error) {
+                                DLog(@"%@", error);
+                            }];
+                        }else{
+                            swit.on = !swit.on;
+                        }
                     }];
+
                     WXprommt = nil;
                     [WXprommt dismiss];
                 };
-           
-            }
-        }else {
-           
-           __block DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
-            WXprommt.message = @"你确定解绑微信？";
-            [WXprommt show];
-            WXprommt.sureBlock = ^(UIButton *btn){
-                NSDictionary *dict = @{
-                                       @"type":@"1",
-                                       @"name":[UserInfos sharedUser].wxopenid,
-                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                       };
-                [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
-                    DLog(@"%@", successJson);
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
-                WXprommt = nil;
-                [WXprommt dismiss];
-            };
-        }
+    }else {
+        
+        __block DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];
+        WXprommt.message = @"你确定解绑微信？";
+        [WXprommt show];
+        WXprommt.sureBlock = ^(UIButton *btn){
+            NSDictionary *dict = @{
+                                   @"type":@"1",
+//                                   @"name":[UserInfos sharedUser].wxopenid,
+                                   @"user_id":[UserInfos sharedUser].ID
+                                   };
+            [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+                if ([successJson[@"message"] isEqualToString:@"解绑成功"]) {
+                    [UserInfos sharedUser].wxopenid = @"";
+                    [UserInfos setUser];
+                    [self.bottomTableView reloadData];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            WXprommt = nil;
+            [WXprommt dismiss];
+        };
+        WXprommt.cancelBlock = ^(){
+            swit.on = !swit.on;
+        };
+    }
+
     }else if (index == 1){
-        BOOL isButtonOn = [switc isOn];
+        BOOL isButtonOn = [swit isOn];
         if (isButtonOn) {
             DLog(@"QQ绑定");
             // 判断是否用qq登陆过
-            if ([UserInfos sharedUser].qqopenid.length == 0) {
-                [self showAlert:@"未使用过QQ账号"];
-            }{
                 __block  DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
                 QQprommt.message = @"你将要绑定腾讯!";
                 [QQprommt show];
                 QQprommt.sureBlock = ^(UIButton *btn){
-                    NSDictionary *dict = @{
-                                           @"type":@"2",
-                                           @"name":[UserInfos sharedUser].qqopenid,
-                                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                           };
-                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                        DLog(@"%@", successJson);
-                    } error:^(NSError *error) {
-                        DLog(@"%@", error);
+                    [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_QQ currentViewController:self completion:^(id result, NSError *error) {
+                        //        [self.tableView reloadData];
+                        UMSocialAuthResponse *authresponse = result;
+                        if (authresponse != nil) {
+                            DLog(@"%@", authresponse.uid);
+                            
+                            NSDictionary *dict = @{
+                                                   @"type":@"2",
+                                                   @"name":authresponse.uid,
+                                                   @"user_id":[UserInfos sharedUser].ID
+                                                   };
+                            [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                                DLog(@"%@", successJson);
+                                [self showAlert:successJson[@"message"]];
+                                if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
+                                    [UserInfos sharedUser].qqopenid = authresponse.uid;
+                                    [UserInfos setUser];
+                                    [self.bottomTableView reloadData];
+                                }
+                            } error:^(NSError *error) {
+                                DLog(@"%@", error);
+                            }];
+                        }else{
+                            swit.on = !swit.on;
+                        }
                     }];
+                    
                     QQprommt = nil;
                     [QQprommt dismiss];
                 };
-            }
+            QQprommt.cancelBlock = ^(){
+                swit.on = !swit.on;
+            };
         }else {
             
             __block DeletePrommtView *QQprommt = [[DeletePrommtView alloc] init];
@@ -455,66 +493,98 @@ static NSString *cellid = @"cellid";
             QQprommt.sureBlock = ^(UIButton *btn){
                 NSDictionary *dict = @{
                                        @"type":@"2",
-                                       @"name":[UserInfos sharedUser].qqopenid,
-                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+//                                       @"name":[UserInfos sharedUser].qqopenid,
+                                       @"user_id":[UserInfos sharedUser].ID
                                        };
                 [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
+                    [self showAlert:successJson[@"message"]];
+                    if ([successJson[@"message"] isEqualToString:@"解绑成功"]) {
+                        [UserInfos sharedUser].qqopenid = @"";
+                        [UserInfos setUser];
+                        [self.bottomTableView reloadData];
+                    }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
                 QQprommt = nil;
                 [QQprommt dismiss];
             };
+            QQprommt.cancelBlock = ^(){
+                swit.on = !swit.on;
+            };
         }
-
+    
     }else if (index == 2){
-        BOOL isButtonOn = [switc isOn];
+        BOOL isButtonOn = [swit isOn];
         if (isButtonOn) {
             DLog(@"微博");
-            // 判断是否用qq登陆过
-            if ([UserInfos sharedUser].qqopenid.length == 0) {
-                [self showAlert:@"未使用过微博账号"];
-            }{
                 __block  DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
                 WBprommt.message = @"你将要绑定微博!";
                 [WBprommt show];
                 WBprommt.sureBlock = ^(UIButton *btn){
-                    NSDictionary *dict = @{
-                                           @"type":@"3",
-                                           @"name":[UserInfos sharedUser].wbopenid,
-                                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                           };
-                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                        DLog(@"%@", successJson);
-                    } error:^(NSError *error) {
-                        DLog(@"%@", error);
+                    [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_Sina currentViewController:self completion:^(id result, NSError *error) {
+                        //        [self.tableView reloadData];
+                        UMSocialAuthResponse *authresponse = result;
+                        if (authresponse != nil) {
+                            DLog(@"%@", authresponse.uid);
+                            
+                            NSDictionary *dict = @{
+                                                   @"type":@"3",
+                                                   @"name":authresponse.uid,
+                                                   @"user_id":[UserInfos sharedUser].ID
+                                                   };
+                            [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                                DLog(@"%@", successJson);
+                                [self showAlert:successJson[@"message"]];
+                                if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
+                                    [UserInfos sharedUser].wbopenid = authresponse.uid;
+                                    [UserInfos setUser];
+                                    [self.bottomTableView reloadData];
+                                }
+                            } error:^(NSError *error) {
+                                DLog(@"%@", error);
+                            }];
+                        }else{
+                            swit.on = !swit.on;
+                        }
                     }];
+                    
                     WBprommt = nil;
                     [WBprommt dismiss];
                 };
-            }
-        }else {
-            
-            __block DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
-            WBprommt.message = @"你确定解绑微博？";
+            WBprommt.cancelBlock = ^(){
+                swit.on = !swit.on;
+            };
+        }else{
+            __block  DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
+            WBprommt.message = @"你将要解绑微博!";
             [WBprommt show];
             WBprommt.sureBlock = ^(UIButton *btn){
                 NSDictionary *dict = @{
-                                       @"type":@"3",
-                                       @"name":[UserInfos sharedUser].wbopenid,
-                                       @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                                       @"type":@(3),
+                                       @"user_id":[UserInfos sharedUser].ID
                                        };
+                
                 [self getRequestWithPath:API_Del_binding params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
+                    [self showAlert:successJson[@"message"]];
+                    if ([successJson[@"message"] isEqualToString:@"解绑成功"]) {
+                        [UserInfos sharedUser].wbopenid = @"";
+                        [UserInfos setUser];
+                        [self.bottomTableView reloadData];
+                    }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
                 WBprommt = nil;
                 [WBprommt dismiss];
             };
+            WBprommt.cancelBlock = ^(){
+                swit.on = !swit.on;
+            };
         }
-    }
+}
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -578,7 +648,7 @@ static NSString *cellid = @"cellid";
     
     NSString *base64 = [self imageBase64WithDataURL:newImage];
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"user_img":base64
                            };
     

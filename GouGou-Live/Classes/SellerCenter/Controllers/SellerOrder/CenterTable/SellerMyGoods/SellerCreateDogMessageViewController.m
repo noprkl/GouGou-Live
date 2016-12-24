@@ -10,12 +10,13 @@
 #import "SellerCreateDogMessageViewController.h"
 #import "AddUpdataImagesView.h" // 添加狗狗图片
 
-
 #import "AddDogAgeAlertView.h" // 年龄
 #import "DogSizeFilter.h" // 体型
 #import "SellerAddImpressViewController.h" //印象
 #import "AddDogColorAlertView.h" // 狗狗颜色
 #import "SellerShipTemplateView.h" // 运费模板
+#import "SellerShipTemplateModel.h"
+
 #import "SellerSearchDogtypeViewController.h" // 狗狗品种
 #import "NSString+CertificateImage.h"
 
@@ -38,7 +39,8 @@
 @property(nonatomic, strong) UITextField *noteText; /**< 补充 */
 
 @property(nonatomic, strong) UILabel *countLabel; /**< 字数 */
-
+@property(nonatomic, strong) UILabel *shipLabel; /**< 模板名字 */
+@property(nonatomic, strong) SellerShipTemplateModel *shipModel; /**< 模板名字 */
 @property(nonatomic, assign) BOOL isHaveDian; /**< 小数点 */
 
 @property(nonatomic, assign) BOOL isFirstZero; /**< 首位为0 */
@@ -192,7 +194,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                             if (self.photoArr.count == 0) {
                                 [self showAlert:@"请添加狗狗图片"];
                             }else {
-                                self.sureBtn.enabled = NO;
+//                                self.sureBtn.enabled = NO;
 
                                 // 印象id字符串
                                 NSMutableArray *impresArr = [NSMutableArray array];
@@ -239,7 +241,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                     if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
                                                         [self.navigationController popViewControllerAnimated:YES];
                                                     }else if ([successJson[@"message"] isEqualToString:@"参数不能为空"]){
-                                                        self.sureBtn.enabled = YES;
+//                                                        self.sureBtn.enabled = YES;
                                                     }
                                                 } error:^(NSError *error) {
                                                     DLog(@"%@", error);
@@ -413,8 +415,10 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
-            cell.detailTextLabel.text = @"模板-免费运";
+            cell.detailTextLabel.text = @"模板-运费";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+        
+            self.shipLabel = cell.detailTextLabel;
         }
             break;
         default:
@@ -528,12 +532,28 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
-            SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
-            shipTemplateView.sureBlock = ^(NSString *templateType){
-                DLog(@"%@", templateType);
-            };
-            shipTemplateView.detailPlist = @[@"免费", @"运费50,按实结算", @"50"];
-            [shipTemplateView show];
+//            SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
+
+        // 请求运费模板
+//            NSDictionary *dict = @{
+//                                   @"user_id":[UserInfos sharedUser].ID,
+//                                   @"page":@1,
+//                                   @"pageSize":@10
+//                                   };
+//            [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
+//                DLog(@"%@", successJson);
+//                shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+//                [shipTemplateView reloadData];
+//            } error:^(NSError *error) {
+//                DLog(@"%@", error);
+//            }];
+        
+//            shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
+//                DLog(@"%@", templateType);
+//                self.shipLabel.text = [NSString stringWithFormat:@"%@%@", templateType.name, templateType.money];
+//                self.shipModel = templateType;
+//            };
+//            [shipTemplateView show];
         }
             break;
         default:

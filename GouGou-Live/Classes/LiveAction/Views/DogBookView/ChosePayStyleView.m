@@ -106,14 +106,12 @@ static NSString *cellid = @"ChosePayStyleView";
 - (void)setTitle:(NSString *)title {
     _title = title;
     [self reloadData];
-    
 }
 #pragma mark
 #pragma mark - TableView 代理
 
 - (NSArray *)dataPlist {
     if (!_dataPlist) {
-        
         _dataPlist = [NSArray array];
     }
     return _dataPlist;
@@ -122,15 +120,12 @@ static NSString *cellid = @"ChosePayStyleView";
     _dataArr = dataArr;
     _dataPlist = dataArr;
     [self reloadData];
-//    self.lastString = self.dataArr[0];
-    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     
@@ -148,7 +143,6 @@ static NSString *cellid = @"ChosePayStyleView";
     [cell.contentView addSubview:label];
     
     return cell;
-    
 }
 #pragma mark 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

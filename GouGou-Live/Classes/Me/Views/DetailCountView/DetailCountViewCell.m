@@ -27,7 +27,6 @@
     _model = model;
     NSString *type = @"";
 
-
     if ([model.assetChangeType isEqualToString:@"-1"]) { //转出，下单扣除
         type = @"转出，下单扣除";
     }else if ([model.assetChangeType isEqualToString:@"-2"]){ //转出，提现

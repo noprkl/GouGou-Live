@@ -19,6 +19,7 @@ typedef void(^ClickFocusBtnBlock)(UIButton *focusBtn);
 
 @property (nonatomic, strong) NSString *userImg; /**< 用户头像 */
 @property (nonatomic, strong) NSString *userName; /**< 用户昵称 */
+@property (nonatomic, strong) NSString *descCommnet; /**< 个人简介 */
 
 
 - (CGFloat)getMessageHeight;

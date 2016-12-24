@@ -98,6 +98,9 @@ static NSString *userAssetKey = @"userAsset";
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].qqopenid forKey:qqopenidKey];
 
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    DLog(@"%@", paths);
 }
 
 

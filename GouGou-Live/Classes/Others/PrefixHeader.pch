@@ -28,7 +28,9 @@
 // 客服电话
 #define ServicePhone @"010-0928928"
 // 关注文件名(本地)
-#define FocusFile @"Focus.text"
+#define FocusFile @"Focus.data"
+// 系统信息文件名(本地)
+#define SystemMessage @"SystemMessage.data"
 
 #pragma mark - 第三方头文件
 #define MAS_SHORTHAND

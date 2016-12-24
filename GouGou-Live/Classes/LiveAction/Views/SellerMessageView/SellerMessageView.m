@@ -101,6 +101,10 @@
         [self.sellerIconView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"头像"]];
     }
 }
+- (void)setDescCommnet:(NSString *)descCommnet {
+    _descCommnet = descCommnet;
+    self.briefContentLabel.text = descCommnet;
+}
 - (void)setUserName:(NSString *)userName {
     _userName = userName;
     self.sellerNameLabel.text = userName;

@@ -15,6 +15,8 @@
 #import "PicturesViewController.h"
 #import "FavoriteLivePlayerVc.h"
 #import "FocusAndFansModel.h"
+#import "PersonalMessageModel.h"
+
 @interface SellerShowViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
@@ -27,6 +29,7 @@
 
 @property(nonatomic, strong) NSArray *picturesArr; /**< 临时数据 */
 @property (nonatomic, assign) NSInteger pleasureCount; /**< 用户满意度 */
+@property (nonatomic, strong) PersonalMessageModel *personalModel; /**< 个人信息 */
 
 @end
 
@@ -42,6 +45,10 @@ static NSString *cellid3 = @"MyPageViewController3";
                            };
     [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        self.personalModel = [arr lastObject];
+        [self.tableView reloadData];
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -106,7 +113,6 @@ static NSString *cellid3 = @"MyPageViewController3";
                            };
     [self getRequestWithPath:API_home params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
         if ([successJson[@"code"] isEqualToString:@"1"]) {
             // 分数四舍五入
             CGFloat source = [successJson[@"data"] floatValue];
@@ -117,9 +123,11 @@ static NSString *cellid3 = @"MyPageViewController3";
                 self.pleasureCount = count / 10;
             }
             DLog(@"%ld", self.pleasureCount);
-            [self.tableView reloadData];
+
+        }else{
+            self.pleasureCount = 5;
         }
-        
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -242,6 +250,7 @@ static NSString *cellid3 = @"MyPageViewController3";
             messageView.pleasureCount = self.pleasureCount;
             messageView.userName = self.liverName;
             messageView.userImg = self.liverIcon;
+            messageView.descCommnet = self.personalModel.userMotto;
             messageView.backgroundColor = [UIColor whiteColor];
             messageView.focusBlock = ^(UIButton *btn){
                 [btn setTitle:@"已关注" forState:(UIControlStateNormal)];

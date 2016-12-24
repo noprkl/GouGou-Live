@@ -73,9 +73,7 @@ static NSString *cellid = @"SellerNoInputcell";
     }
     if (section == 1) {
         NSArray *historyArr = [[NSUserDefaults standardUserDefaults] arrayForKey:@"DOGTYPEHISSTORY"];
-        if (historyArr.count) {
-            [_historyDataArr addObjectsFromArray:historyArr];
-        }
+        _historyDataArr = [historyArr mutableCopy];
         return self.historyDataArr.count;
     }
     return 0;
@@ -135,13 +133,14 @@ static NSString *cellid = @"SellerNoInputcell";
 //}
 - (void)deleAllHistorydata {
     // 删除全部
-    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-    NSArray * myArray = [userDefaultes arrayForKey:@"DOGTYPEHISSTORY"];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSArray * myArray = [userDefaults arrayForKey:@"DOGTYPEHISSTORY"];
     NSMutableArray *searTXT = [myArray mutableCopy];
     [searTXT removeAllObjects];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:searTXT forKey:@"DOGTYPEHISSTORY"];
-    [self reloadData];
+    self.historyArr = [userDefaults arrayForKey:@"DOGTYPEHISSTORY"];
+    NSIndexSet *session = [[NSIndexSet alloc] initWithIndex:1];
+    [self reloadSections:session withRowAnimation:(UITableViewRowAnimationAutomatic)];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {

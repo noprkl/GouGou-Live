@@ -112,7 +112,6 @@
     self.lastBtn.selected = NO;
     self.lastBtn = button;
     
-    
     self.tapBlock(button.tag);
     
     [self scrolling:button.tag];

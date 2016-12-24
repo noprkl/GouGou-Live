@@ -38,6 +38,10 @@ static NSString * MedrchantCell = @"MedrchantCell";
 
 /** 照片 */
 @property (strong,nonatomic) AddUpdataImagesView *photoView;
+/** 上传佐证 */
+@property (strong,nonatomic) UILabel *upLoadlabel;
+
+@property (nonatomic, strong) UILabel *pictureCountLabel; /**< 提示 */
 
 @property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
@@ -147,6 +151,19 @@ static NSString * MedrchantCell = @"MedrchantCell";
     
     [self.view addSubview:self.doneCertificateView];
     [self.view addSubview:self.photoView];
+    [self.view addSubview:self.upLoadlabel];
+    [self.view addSubview:self.pictureCountLabel];
+    [self.upLoadlabel makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.doneCertificateView.bottom).offset(10);
+        make.left.right.equalTo(self.doneCertificateView);
+        make.height.equalTo(44);
+    }];
+    [self.pictureCountLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.photoView.bottom);
+        make.left.right.equalTo(self.doneCertificateView);
+        make.height.equalTo(30);
+    }];
+    
 }
 - (NSArray *)proviceDataArr {
     if (!_proviceDataArr) {
@@ -375,7 +392,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
         }else{
             W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
         }
-        _photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(0, 267, SCREEN_WIDTH, W + 20)];
+        _photoView = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(0, 307, SCREEN_WIDTH, W + 20)];
         _photoView.maxCount = ImgCount;
       
         __weak typeof(self) weakSelf = self;
@@ -406,5 +423,26 @@ static NSString * MedrchantCell = @"MedrchantCell";
 
     }
     return _photoView;
+}
+// 上传佐证label
+- (UILabel *)upLoadlabel {
+    if (!_upLoadlabel) {
+        _upLoadlabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _upLoadlabel.text = @"   上传佐证";
+        _upLoadlabel.textColor = [UIColor colorWithHexString:@"#000000"];
+        _upLoadlabel.font = [UIFont systemFontOfSize:16];
+        _upLoadlabel.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _upLoadlabel;
+}
+- (UILabel *)pictureCountLabel {
+    if (!_pictureCountLabel) {
+        _pictureCountLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _pictureCountLabel.text = [NSString stringWithFormat:@"%@%@",@"   ",@"请上传1-3张展示上家实力的图片"];
+        _pictureCountLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        _pictureCountLabel.font = [UIFont systemFontOfSize:12];
+        _pictureCountLabel.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _pictureCountLabel;
 }
 @end

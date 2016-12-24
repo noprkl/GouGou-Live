@@ -38,6 +38,8 @@ static NSString *cellid = @"SellerShipTemplate";
 }
 - (void)setDetailPlist:(NSArray *)detailPlist {
     _detailPlist = detailPlist;
+    self.dataPlist = detailPlist;
+    [self reloadData];
 }
 - (NSMutableArray *)buttons {
     if (!_buttons) {
@@ -72,20 +74,26 @@ static NSString *cellid = @"SellerShipTemplate";
         btn.selected = YES;
     }
     [cell.contentView addSubview:btn];
-    
+    SellerShipTemplateModel *model = self.dataPlist[indexPath.row];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(image.size.width + 20, 0, 200, 44)];
-    label.text = self.dataPlist[indexPath.row];
+    label.text = model.name;
     label.textColor = [UIColor colorWithHexString:@"#999999"];
     label.font = [UIFont systemFontOfSize:14];
     [cell.contentView addSubview:label];
+    NSString *cost = @"";
+    if ([model.money isEqualToString:@"0"]) {
+        cost = @"免运费";
+    }else if ([model.money isEqualToString:@"50"]){
+        cost = @"默认价格 50";
+    }else{
+        cost = [NSString stringWithFormat:@"%@", model.money];
+    }
     
-    cell.detailTextLabel.attributedText = [self getAttributeWith:self.detailPlist[indexPath.row]];
+    cell.detailTextLabel.attributedText = [self getAttributeWith:cost];
     return cell;
     
 }
 - (void)choseTransformBtn:(UIButton *)btn {
-    
-    
     
 }
 

@@ -18,7 +18,9 @@
 #import "NSString+CertificateImage.h"
 #import "MyPictureListModel.h"
 
-@interface PicturesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+#import "SDPhotoBrowser.h"
+
+@interface PicturesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, SDPhotoBrowserDelegate>
 
 @property(nonatomic, strong) UICollectionView *collectionView; /**< 表格 */
 
@@ -288,7 +290,27 @@ static NSString *cellid = @"PicturesCell";
     
     return cell;
 }
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
+    
+    browser.sourceImagesContainerView = collectionView;
+    
+    browser.imageCount = self.dataArr.count;
+    
+    browser.currentImageIndex = indexPath.row;
+    
+    browser.delegate = self;
+    
+    [browser show]; // 展示图片浏览器
+}
+- (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
+    MyPictureListModel *model = self.dataArr[index];
+    NSString *urlStr = [IMAGE_HOST stringByAppendingString:model.pathBig];
+    return [NSURL URLWithString:urlStr];
+}
+//- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
+//
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

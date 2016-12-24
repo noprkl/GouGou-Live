@@ -285,6 +285,7 @@
         _focusBtn.layer.masksToBounds = YES;
         
         [_focusBtn setTitle:@"关注" forState:(UIControlStateNormal)];
+
         _focusBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         [_focusBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         

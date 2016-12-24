@@ -41,14 +41,17 @@ static NSString *cellid = @"SellerNoInputcell";
     self.hotDataArr = hotArr;
     [self reloadData];
 }
+- (void)setHistoryArr:(NSArray *)historyArr {
+    _historyArr = historyArr;
+    self.historyDataArr = [historyArr mutableCopy];
+    [self reloadData];
+}
 #pragma mark
 #pragma mark - 懒加载
 - (NSMutableArray *)historyDataArr {
     if (!_historyDataArr) {
         _historyDataArr = [NSMutableArray array];
-        [_historyDataArr addObject:@"狗狗铺1"];
-        [_historyDataArr addObject:@"狗狗铺2"];
-        [_historyDataArr addObject:@"狗狗铺3"];
+        
     }
     return _historyDataArr;
 }
@@ -61,6 +64,7 @@ static NSString *cellid = @"SellerNoInputcell";
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -68,10 +72,13 @@ static NSString *cellid = @"SellerNoInputcell";
         return 1;
     }
     if (section == 1) {
+        NSArray *historyArr = [[NSUserDefaults standardUserDefaults] arrayForKey:@"DOGTYPEHISSTORY"];
+        if (historyArr.count) {
+            [_historyDataArr addObjectsFromArray:historyArr];
+        }
         return self.historyDataArr.count;
     }
     return 0;
-    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -103,20 +110,38 @@ static NSString *cellid = @"SellerNoInputcell";
         UIButton *deleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [deleBtn sizeToFit];
         [deleBtn setImage:[UIImage imageNamed:@"-单删除"] forState:(UIControlStateNormal)];
-        [deleBtn addTarget:self action:@selector(deleHistorydata) forControlEvents:(UIControlEventTouchDown)];
+//        [deleBtn addTarget:self action:@selector(deleHistorydata) forControlEvents:(UIControlEventTouchDown)];
         cell.accessoryView = deleBtn;
-//        [cell.accessoryView addSubview:deleBtn];
         
         return cell;
     }
     return nil;
 }
-- (void)deleHistorydata {
-    // 删除搜索历史
-    DLog(@"删除搜索历史");
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    DLog(@"%ld", indexPath.row);
+    NSString *history = self.historyDataArr[indexPath.row];
+    
+    [self.historyDataArr removeObject:history];
+    if (self.historyDataArr.count != 0) {
+        [[NSUserDefaults standardUserDefaults] setObject:self.historyDataArr forKey:@"DOGTYPEHISSTORY"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    [self reloadData];
+//    [self reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationAutomatic)];
 }
+//- (void)deleHistorydata {
+//    // 删除搜索历史
+//    DLog(@"删除搜索历史");
+//}
 - (void)deleAllHistorydata {
     // 删除全部
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    NSArray * myArray = [userDefaultes arrayForKey:@"DOGTYPEHISSTORY"];
+    NSMutableArray *searTXT = [myArray mutableCopy];
+    [searTXT removeAllObjects];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:searTXT forKey:@"DOGTYPEHISSTORY"];
+    [self reloadData];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
@@ -136,7 +161,7 @@ static NSString *cellid = @"SellerNoInputcell";
         view.backgroundColor = [UIColor whiteColor];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 50)];
-        label.text = @"热门搜索";
+        label.text = @"搜索历史";
         label.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         label.font = [UIFont boldSystemFontOfSize:16];
         [view addSubview:label];

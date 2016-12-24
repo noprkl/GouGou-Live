@@ -255,7 +255,7 @@
     
     if (!_fontMoneyTime) {
         _fontMoneyTime = [[UILabel alloc] init];
-        _fontMoneyTime .text = @"2016-11-11 19:00";
+        _fontMoneyTime .text = @"******";
         _fontMoneyTime.textColor = [UIColor colorWithHexString:@"#666666"];
         _fontMoneyTime.font = [UIFont systemFontOfSize:12];
     }
@@ -277,7 +277,7 @@
     
     if (!_backMoneyTime) {
         _backMoneyTime = [[UILabel alloc] init];
-        _backMoneyTime .text = @"2016-11-11 19:00";
+        _backMoneyTime .text = @"******";
         _backMoneyTime.textColor = [UIColor colorWithHexString:@"#666666"];
         _backMoneyTime.font = [UIFont systemFontOfSize:12];
     }
@@ -299,7 +299,7 @@
     
     if (!_consignmentTime) {
         _consignmentTime = [[UILabel alloc] init];
-        _consignmentTime .text = @"2016-11-11 19:00";
+        _consignmentTime .text = @"******";
         _consignmentTime.textColor = [UIColor colorWithHexString:@"#666666"];
         _consignmentTime.font = [UIFont systemFontOfSize:12];
     }

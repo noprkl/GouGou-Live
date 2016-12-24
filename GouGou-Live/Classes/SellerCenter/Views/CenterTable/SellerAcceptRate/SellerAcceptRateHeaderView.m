@@ -117,7 +117,10 @@
         
         [self.sellerIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
     }
-    
+    self.startView.startCount = _pleasureCount;
+    self.sellerNameLabel.text = [UserInfos sharedUser].username;
+    self.fansCountLabel.text = [@([UserInfos sharedUser].fansCount) stringValue];
+    self.rateCountLabel.text = [@([UserInfos sharedUser].commentCount) stringValue];
 }
 #pragma mark
 #pragma mark - 懒加载

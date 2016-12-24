@@ -34,13 +34,15 @@
     _buynessName = buynessName;
     self.MedrchantName.text = buynessName;
 }
-- (void)setBuynessImg:(NSString *)buynessImg {
+- (void)setBuynessImg:(UIImageView *)buynessImg {
     _buynessImg = buynessImg;
-    if (buynessImg.length != 0) {
-        NSString *str = [IMAGE_HOST stringByAppendingString:buynessImg];
-        NSURL *url = [NSURL URLWithString:str];
-        [self.userImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"主播头像"]];
-    }
+    
+    self.userImage = buynessImg;
+//    if (buynessImg.length != 0) {
+//        NSString *str = [IMAGE_HOST stringByAppendingString:buynessImg];
+//        NSURL *url = [NSURL URLWithString:str];
+//        [self.userImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"主播头像"]];
+//    }
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {

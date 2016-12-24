@@ -39,6 +39,19 @@
         self.AdressLabel.text = @"地址";
     }
 }
+- (void)setSendAdress:(SellerAdressModel *)sendAdress {
+    _sendAdress = sendAdress;
+    self.shopOwner.text = sendAdress.merchantName;
+    self.shopPhone.text = sendAdress.merchantTel;
+    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", sendAdress.merchantProvince, sendAdress.merchantCity, sendAdress.merchantDistrict, sendAdress.merchantAddress];
+    self.shopAdress.text = adress;
+    if (sendAdress.isDefault == 1) {
+        self.AdressLabel.text = @"默认地址";
+        self.AdressLabel.textColor = [UIColor colorWithHexString:@"#ffa11a"];
+    }else{
+        self.AdressLabel.text = @"地址";
+    }
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     self.chosedBtn.selected = selected;

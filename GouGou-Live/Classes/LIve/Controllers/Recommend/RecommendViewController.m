@@ -94,14 +94,14 @@
                 if (model.pNum == 0) {
                     height += 240;
                     [dogInfos addObject:@[]];
-                    [liveMutableArr addObject:model];
                 }else{
                     height += 357;
                     if (successJson[@"data"]) {
                         [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                        [liveMutableArr addObject:model];
                     }
                 }
+                [liveMutableArr addObject:model];
+
                 if (dogInfos.count == liveArr.count && liveMutableArr.count == liveArr.count) {
                     CGRect rect = self.tableView.frame;
                     rect.size.height = height;
@@ -117,7 +117,7 @@
             }];
         }
         //                    [self hideHud]
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

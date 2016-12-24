@@ -10,4 +10,6 @@
 
 @interface SellerAcceptRateHeaderView : UIView
 
+@property (nonatomic, assign) NSInteger pleasureCount; /**< 满意度 */
+
 @end

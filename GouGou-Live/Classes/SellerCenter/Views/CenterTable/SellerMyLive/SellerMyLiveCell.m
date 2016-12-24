@@ -72,7 +72,7 @@
         
         make.left.equalTo(weakself.left).offset(10);
         make.top.equalTo(weakself.top).offset(7);
-        
+        make.size.equalTo(CGSizeMake(30, 30));
     }];
     
     [_businessName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -103,7 +103,7 @@
     [_overLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(weakself.top).offset(54);
-        make.left.equalTo(weakself.left).offset(290);
+        make.right.equalTo(weakself.right).offset(-10);
         make.size.equalTo(CGSizeMake(70, 20));
         
     }];
@@ -149,8 +149,8 @@
     }
     self.businessName.text = model.merchantName;
     self.descLabel.text = model.name;
-    
-    self.sellLabel.text = [NSString stringWithFormat:@"展%ld售%ld", model.pNum, (model.pNum - model.num)];
+    self.showLabel.text = [NSString stringWithFormat:@"展%ld", model.pNum];
+    self.sellLabel.text = [NSString stringWithFormat:@"售%ld", model.pNum - model.num];
     self.dataLabel.text = [NSString stringFromDateString:model.createTime];
 }
 #pragma mark
@@ -161,7 +161,6 @@
         _photoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"主播头像"]];
         _photoImage.layer.cornerRadius = 16;
         _photoImage.layer.masksToBounds = YES;
-        
     }
     return _photoImage;
 }
@@ -194,9 +193,12 @@
 
 - (UIImageView *)dogImage {
     
-    _dogImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"直播图"]];
-    
+    if (!_dogImage) {
+        _dogImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"直播图"]];
+
+    }
     return _dogImage;
+    
 }
 
 - (UIView *)hudView {

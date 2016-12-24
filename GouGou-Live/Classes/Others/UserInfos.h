@@ -41,7 +41,7 @@
 
 @property(nonatomic, assign) NSInteger fansCount; /**< 粉丝数 */
 @property(nonatomic, assign) NSInteger commentCount; /**< 评论数 */
-@property(nonatomic, strong) NSArray *focusArr; /**< 关注人数 */
+@property(nonatomic, assign) NSInteger focusCount; /**< 关注人数 */
 @property(nonatomic, strong) NSString *userAsset; /**< 用户资产 */
 + (instancetype)sharedUser;
 

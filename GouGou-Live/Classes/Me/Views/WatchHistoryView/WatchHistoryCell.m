@@ -277,8 +277,8 @@
         _deleteButton.layer.masksToBounds = YES;
         _deleteButton.layer.borderWidth = 1;
         _deleteButton.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
+        _deleteButton.selected = NO;
         [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
-        [_deleteButton setTitle:@"删除" forState:UIControlStateSelected];
         [_deleteButton setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
         [_deleteButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateSelected];
         _deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];

@@ -87,6 +87,12 @@
 
 @property(nonatomic, strong) LiveListRespModel *resp; /**< 播放信息 */
 
+
+@property (nonatomic, strong) TalkingViewController *talkVc; /**< 消息 */
+@property (nonatomic, strong) ServiceViewController *se; /**< 消息 */
+//@property (nonatomic, strong) TalkingViewController *talkVc; /**< 消息 */
+//@property (nonatomic, strong) TalkingViewController *talkVc; /**< 消息 */
+
 @end
 
 @implementation LivingViewController
@@ -114,20 +120,24 @@
     [super viewDidLoad];
 
 //    [self initUI];
+    [self getRequestLiveMessage];
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    [self collectionBtn];
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.hidesBottomBarWhenPushed = YES;
     
     // 请求播放信息
-    [self getRequestLiveMessage];
+//    [self getRequestLiveMessage];
     // 设置直播参数
     self.roomNameLabel.text = _liverName;
     [self.watchLabel setTitle:[@(_watchCount) stringValue] forState:(UIControlStateNormal)];
+    
+    DLog(@"%ld",_watchCount);
     // 添加观看观看历史
     if ([UserInfos getUser]) {
         NSDictionary *dictHistory = @{
@@ -305,6 +315,9 @@
 //        [self.childVCS addObject:vc];
 //    }
     // 聊天
+//    if (_chatRoomID) {
+//        <#statements#>
+//    }
         TalkingViewController *talkVC = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
         talkVC.roomID = _chatRoomID;
         talkVC.liverid = _liverId;
@@ -564,7 +577,7 @@
         [self getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
-            
+            self.isSelectCollectBtn = NO;
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -578,7 +591,7 @@
         [self getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
-            
+            self.isSelectCollectBtn = YES;
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -586,6 +599,18 @@
 
     btn.selected = !btn.selected;
 }
+// 喜欢状态
+- (void)collectionBtn {
+
+    if (self.isSelectCollectBtn) {
+        
+        [self.collectBtn setImage:[UIImage imageNamed:@"喜欢点击"] forState:UIControlStateSelected];
+    } else {
+    
+        [self.collectBtn setImage:[UIImage imageNamed:@"喜欢"] forState:UIControlStateNormal];
+    }
+}
+
 - (void)clickScreenBtnAction:(UIButton *)btn {
    
     LandscapePlayerVc *landscapeVc = [[LandscapePlayerVc alloc] init];

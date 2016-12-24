@@ -89,28 +89,22 @@
 }
 
 - (NSArray *)controllerNames {
-
     if (!_controllerNames) {
         _controllerNames = [NSArray array];
         if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
-            
             if([UserInfos sharedUser].useralicode.length == 0) { // 未绑定支付宝 需要绑定
                 _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
             }else{ // 已经设置了支付宝 不能点击
-
                 _controllerNames = @[@"", @"PresentApplicationViewController",@""];
             }
-            
         }else { // 未实名
             _controllerNames = @[@"",@"CertificateViewController"];
         }
-       
     }
     return _controllerNames;
 }
 
 - (UIButton *)helpBtn {
-
     if (!_helpBtn) {
         _helpBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         _helpBtn.frame = CGRectMake(0, 546, SCREEN_WIDTH, 64);
@@ -129,7 +123,6 @@
     return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     static NSString *cellid = @"cellid";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (cell == nil) {
@@ -139,12 +132,9 @@
     cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
-    
     if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
-        
         if([UserInfos sharedUser].useralicode.length == 0) { // 未设置支付密码 需要设置支付密码
             cell.textLabel.text = self.dataArr[indexPath.row];
-            
             if (indexPath.row == 0) {
                 cell.detailTextLabel.text = [UserInfos sharedUser].userAsset;
             }
@@ -156,7 +146,6 @@
             }
         }else{ // 已经设置了支付密码 不能点击
             cell.textLabel.text = self.dataArr[indexPath.row];
-            
             if (indexPath.row == 0) {
                 cell.detailTextLabel.text = [UserInfos sharedUser].userAsset;
             }
@@ -167,8 +156,7 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.detailTextLabel.text = [UserInfos sharedUser].usertel;
             }
-        }
-        
+        } 
     }else { // 未实名
         if (indexPath.row == 0) {
             cell.textLabel.text = self.dataArr[indexPath.row];

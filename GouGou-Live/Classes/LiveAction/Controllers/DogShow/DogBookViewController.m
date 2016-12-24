@@ -19,7 +19,7 @@
 #import "PayMoneyPrompt.h"
 #import "PromptView.h"
 #import "NSString+MD5Code.h"
-
+#import "ForgetPayPsdViewController.h"
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
 @property(nonatomic, strong) UITableView *tablevView; /**< 表格 */
@@ -181,6 +181,11 @@
             }];
         };
         [prompt show];
+        prompt.forgetBlock = ^(){
+            ForgetPayPsdViewController *forgetVc = [[ForgetPayPsdViewController alloc] init];
+            forgetVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:forgetVc animated:YES];
+        };
     }
     if ([payWay isEqualToString:@"支付宝支付"]) {
         [self aliPayWithOrderId:[orderID intValue] totalFee:[money intValue]];
@@ -569,7 +574,7 @@
 - (UILabel *)bookMoneyLabel {
     if (!_bookMoneyLabel) {
         _bookMoneyLabel = [[UILabel alloc] init];
-        NSString *final = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] * 0.9)];
+        NSString *final = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] * 0.1)];
         _bookMoneyLabel.attributedText = [self getAttributeWithString1:@"应付定金：" string2:final];
     }
     return _bookMoneyLabel;

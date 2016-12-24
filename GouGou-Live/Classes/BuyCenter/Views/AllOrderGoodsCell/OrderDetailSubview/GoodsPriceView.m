@@ -35,8 +35,8 @@
 - (void)setTotalsMoney:(NSString *)totalsMoney {
     
     _totalsMoney = totalsMoney;
-    self.totalMoney.text = [NSString stringWithFormat:@"%ld",[self.productBalance integerValue] + [self.productDeposit integerValue]];
-    
+//    self.totalMoney.text = [NSString stringWithFormat:@"%ld",[self.productBalance integerValue] + [self.productDeposit integerValue]];
+    self.totalMoney.text = totalsMoney;
 }
 
 - (void)setCutMoney:(NSString *)cutMoney {
@@ -154,7 +154,7 @@
     
     if (!_freightMoney) {
         _freightMoney = [[UILabel alloc] init];
-        _freightMoney.text = @"50";
+//        _freightMoney.text = @"50";
         _freightMoney.textColor = [UIColor colorWithHexString:@"#ffa11a"];
         _freightMoney.font = [UIFont systemFontOfSize:16];
     }

@@ -243,8 +243,9 @@ static NSString *cellid3 = @"MyPageViewController3";
             messageView.userName = self.liverName;
             messageView.userImg = self.liverIcon;
             messageView.backgroundColor = [UIColor whiteColor];
+            
             messageView.focusBlock = ^(UIButton *btn){
-                [btn setTitle:@"已关注" forState:(UIControlStateNormal)];
+                
                 if ([UserInfos getUser]) {
                     
                     if (btn.selected) {
@@ -256,6 +257,7 @@ static NSString *cellid3 = @"MyPageViewController3";
                         [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
+                            [btn setTitle:@"已关注" forState:(UIControlStateNormal)];
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];
@@ -268,6 +270,8 @@ static NSString *cellid3 = @"MyPageViewController3";
                         [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
+                             [btn setTitle:@"已关注" forState:(UIControlStateSelected)];
+                            
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];

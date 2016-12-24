@@ -20,5 +20,6 @@
 @property (nonatomic, strong) NSArray *doginfos; /**< 该主播商品所有数据 */
 @property (nonatomic, assign) BOOL isDogCard; /**< 点击狗狗开案进入 */
 @property (nonatomic, strong) NSString *state; /**< 直播状态 */
-
+/** 是否选中 */
+@property (assign,nonatomic) BOOL isSelectCollectBtn;
 @end

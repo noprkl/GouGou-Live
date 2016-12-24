@@ -207,7 +207,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         
         // 点击确定按钮，删除订单
         [self getDeleteOrderRequest:model];
-        
+        [self getAssessRequest];
     };
     [prompt show];
     

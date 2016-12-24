@@ -103,9 +103,11 @@ static NSString *cellid4 = @"cellid4";
                 self.pleasureCount = count / 10;
             }
             DLog(@"%ld", self.pleasureCount);
-            [self.tableView reloadData];
+
+        }else{
+            self.pleasureCount = 5;
         }
-        
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -208,8 +210,13 @@ static NSString *cellid4 = @"cellid4";
             if (indexPath.row == 0) { // 头部信息
                  UITableViewCell *cell0 = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid0];
                 cell0.selectionStyle = UITableViewCellSelectionStyleNone;
-
-                MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+                CGFloat height = 0;
+                if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+                    height = 160;
+                }else{
+                    height = 200;
+                }
+                MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
                 headerView.fansCount = [UserInfos sharedUser].fansCount;
                 headerView.commentCount = [UserInfos sharedUser].commentCount;
                 headerView.userImg = [UserInfos sharedUser].userimgurl;
@@ -461,7 +468,15 @@ static NSString *cellid4 = @"cellid4";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
-            return 200;
+        {
+        CGFloat height = 0;
+        if (![[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+            height = 160;
+        }else{
+            height = 200;
+        }
+            return height;
+        }
             break;
         case 1:
             return 73;

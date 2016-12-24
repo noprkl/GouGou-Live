@@ -16,4 +16,6 @@
 
 @property (nonatomic, strong) NSString *liverid; /**< 主播id */
 
+@property (nonatomic, assign) BOOL ishidText; /**< 隐藏 */
+
 @end

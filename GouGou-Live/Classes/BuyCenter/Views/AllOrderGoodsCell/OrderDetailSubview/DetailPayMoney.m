@@ -39,7 +39,8 @@
 - (void)setRealMoney:(NSString *)realMoney {
     
     _realMoney = realMoney;
-    self.totalMoney.text = [NSString stringWithFormat:@"%ld",[self.needBackMessage integerValue] + [self.fontMoneyMessage integerValue]];
+    self.totalMoney.text = realMoney;
+//    self.totalMoney.text = [NSString stringWithFormat:@"%ld",[self.needBackMessage integerValue] + [self.fontMoneyMessage integerValue]];
 }
 - (void)setNeedBackMessage:(NSString *)needBackMessage {
     
@@ -200,7 +201,7 @@
     
     if (!_fontMoneyLabel) {
         _fontMoneyLabel = [[UILabel alloc] init];
-        _fontMoneyLabel.text = @"实付定金";
+        _fontMoneyLabel.text = @"实付定金:";
         _fontMoneyLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _fontMoneyLabel.font = [UIFont systemFontOfSize:14];
     }

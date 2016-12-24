@@ -24,4 +24,5 @@
 /** 邮编 */
 @property (strong,nonatomic) NSString *code;
 
+
 @end

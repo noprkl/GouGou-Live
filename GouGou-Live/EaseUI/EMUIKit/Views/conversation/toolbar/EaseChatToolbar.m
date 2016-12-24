@@ -514,10 +514,9 @@
     }
 }
 
-- (void)textViewDidEndEditing:( *)textView
+- (void)textViewDidEndEditing:(UITextView *)textView
 {
     [textView resignFirstResponder];
-   
     
 }
 

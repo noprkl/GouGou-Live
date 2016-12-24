@@ -8,7 +8,9 @@
 
 #import "EditNikeNameAlert.h"
 
-@interface EditNikeNameAlert ()<UITextViewDelegate>
+#define MaxLength 17
+
+@interface EditNikeNameAlert ()<UITextViewDelegate,UITextFieldDelegate>
 /** 蒙版 */
 @property (strong, nonatomic) UIControl *overLayer;
 
@@ -47,10 +49,41 @@
         [self addSubview:self.sureBtn];
         [self addSubview:self.cancelBtn];
         
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewDidEndEditing:) name:@"UITextFieldTextDidChangeNotification" object:_editTextView];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewtextDidEndEditing:) name:@"UITextFieldTextDidChangeNotification" object:_editTextView];
     }
     return self;
 }
+
+- (void)textViewtextDidEndEditing:(NSNotification *)obj {
+    
+    UITextView *textView = (UITextView *)obj.object;
+    
+    NSString *toBeString = textView.text;
+    NSString *lang = [[UITextInputMode activeInputModes] accessibilityLanguage]; // 键盘输入模式
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        UITextRange *selectedRange = [textView markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textView positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            if (toBeString.length > MaxLength) {
+                textView.text = [toBeString substringToIndex:MaxLength];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+            
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        if (toBeString.length > MaxLength) {
+            textView.text = [toBeString substringToIndex:MaxLength];
+        }  
+    }
+
+}
+
 - (void)setUP {
     [self.titleLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.centerX);
@@ -270,7 +303,6 @@
 }
 - (void)fadeOut
 {
-    
     [UIView animateWithDuration:0.3 animations:^{
         self.overLayer.alpha = 0;
         self.transform = CGAffineTransformMakeScale(0.3, 0.3);

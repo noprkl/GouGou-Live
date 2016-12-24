@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchFanModel.h"
 
 typedef void(^SelectBtnBlock)(BOOL isSelect);
 
@@ -15,9 +16,8 @@ typedef void(^SelectBtnBlock)(BOOL isSelect);
 
 @property(nonatomic, strong) SelectBtnBlock selectBlock; /**< 后边圆的按钮 */
 
-
 @property(nonatomic, strong) FocusAndFansModel *model; /**< 模型 */
-
+@property(nonatomic, strong) SearchFanModel *searchModel; /**< 搜索模型 */
 
 @property(nonatomic, assign) BOOL isHid; /**< 选中按钮是否隐藏 */
 

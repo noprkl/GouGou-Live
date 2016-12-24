@@ -104,6 +104,8 @@
 #define API_Report @"api/UserService/report"
 /** 意见反馈 */
 #define API_Add_system_msg @"api/UserService/add_system_msg"
+/** 系统内容 */
+#define API_Help @"api/UserService/Help"
 
 
 
@@ -163,6 +165,17 @@
 #define API_Seller_address_del @"api/UserService/seller_address_del"
 /** 发货默认地址 */
 #define API_Seller_address_default @"api/UserService/seller_address_default"
+
+
+#pragma mark - 运费模板
+/** 运费模板列表 */
+#define API_List_freight @"api/UserService/list_freight"
+/** 运费模板修改 */
+#define API_Up_freight @"api/UserService/up_freight"
+/** 运费模板添加 */
+#define API_Freight @"api/UserService/freight"
+/** 运费模板删除 */
+//#define API_Seller_address_del @"api/UserService/seller_address_del"
 
 #pragma mark
 #pragma mark - 商品

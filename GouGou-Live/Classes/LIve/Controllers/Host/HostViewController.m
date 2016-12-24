@@ -69,13 +69,13 @@ static NSString * reuseIdentifier = @"headerID";
                 //                DLog(@"%@", successJson);
                 if (model.pNum == 0) {
                     [dogInfos addObject:@[]];
-                    [liveMutableArr addObject:model];
                 }else{
                     if (successJson[@"data"]) {
                         [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                        [liveMutableArr addObject:model];
                     }
                 }
+                [liveMutableArr addObject:model];
+
                 if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                     DLog(@"%ld", i);
                     self.dogInfos = dogInfos;

@@ -66,16 +66,16 @@ static NSString *cellid = @"RecommentCellid";
                     //                DLog(@"%@", successJson);
                     if (model.pNum == 0) {
                         [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
                         DLog(@"%ld", i);
                     }else{
                         DLog(@"%ld", i);
                         if (successJson[@"data"]) {
                             [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
                         }
                     }
-                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                    [liveMutableArr addObject:model];
+
+                    if (dogInfos.count == liveArr.count && liveMutableArr.count == liveArr.count) {
                         DLog(@"%ld", i);
                         self.tableView.dogInfos = dogInfos;
                         self.tableView.dataPlist = liveMutableArr;

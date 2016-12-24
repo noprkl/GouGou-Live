@@ -42,7 +42,8 @@
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
-                [self.navigationController popViewControllerAnimated:YES];
+                LoginViewController *loginVC = [[LoginViewController alloc] init];
+                [self.navigationController pushViewController:loginVC animated:YES];
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);

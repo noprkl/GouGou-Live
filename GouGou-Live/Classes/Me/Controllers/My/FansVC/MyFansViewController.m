@@ -15,23 +15,43 @@
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
-@property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
+@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @end
 
 static NSString *cellid = @"MyFocusCell";
 
 @implementation MyFansViewController
-
+// 请求粉丝数据
+- (void)postRequestGetFans {
+    //[[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
+                           @"user_id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        
+        if (successJson) {
+            //            DLog(@"%@", successJson);
+            self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [UserInfos sharedUser].fansCount = self.dataArr.count;
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.hidesBottomBarWhenPushed = NO;
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
+    [self postRequestGetFans];
 }
 
 - (void)initUI {
@@ -40,15 +60,12 @@ static NSString *cellid = @"MyFocusCell";
     [self.view addSubview:self.tableView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
 }
-- (void)setFansArr:(NSArray *)fansArr {
-    _fansArr = fansArr;
-    [self.dataArr addObjectsFromArray:fansArr];
-}
+
 #pragma mark
 #pragma mark - 懒加载
-- (NSMutableArray *)dataArr {
+- (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = [NSMutableArray array];
+        _dataArr = [NSArray array];
     }
     return _dataArr;
 }

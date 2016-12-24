@@ -24,6 +24,8 @@
 
 #import "LiveListDogInfoModel.h"
 
+#import <AVFoundation/AVFoundation.h>
+
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
 
 @property (nonatomic, strong) PLMediaStreamingSession *session;
@@ -180,9 +182,7 @@
 - (void)initUI {
 
     [self.session.previewView addSubview:self.topView];
-//    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-//    [window addSubview:self.danmuBtn];
-    [self.session.previewView addSubview:self.livingImageView];    
+    [self.session.previewView addSubview:self.livingImageView];
     [self.session.previewView addSubview:self.watchCount];
     [self addChildViewController:self.talkingVc];
     [self.session.previewView addSubview:self.talkingVc.view];
@@ -193,12 +193,13 @@
     [self.session.previewView addSubview:self.danmuBtn];
 
     [self makeConstraint];
+    [self focusKeyboardShow];
 }
 // 约束
 - (void)makeConstraint {
     [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
-        make.height.equalTo(64);
+        make.height.equalTo(44);
     }];
     [self.livingImageView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left).offset(10);
@@ -209,17 +210,17 @@
         make.left.equalTo(self.livingImageView.right).offset(10);
         make.width.equalTo(70);
     }];
-
-    [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.left);
-        make.top.equalTo(self.view.top).offset(110);
-        make.bottom.equalTo(self.danmuBtn.top).offset(-10);
-        make.width.equalTo(270);
-    }];
     [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(50);
     }];
+    [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.left);
+        make.top.equalTo(self.view.top).offset(110);
+        make.bottom.equalTo(self.sendMessageView.bottom);
+        make.width.equalTo(250);
+    }];
+   
     [self.showingBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.view.centerY);
         make.right.equalTo(self.view.right).offset(-10);
@@ -231,9 +232,9 @@
     }];
     [self.showDogView remakeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.right);
-        make.top.equalTo(self.view.top);
-        make.bottom.equalTo(self.view.bottom);
-        make.width.equalTo(270);
+        make.top.equalTo(self.view.top).offset(44);
+        make.bottom.equalTo(self.sendMessageView.top);
+        make.width.equalTo(250);
     }];
     [self.danmuBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left).offset(12);
@@ -354,8 +355,35 @@
             shareAlert.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         };
         _topView.faceBlcok = ^(){
-            // 前置摄像头
-//            self.session.ca
+            // 摄像头前后切换
+
+            NSArray *inputs = weakSelf.captureSession.inputs;
+            for (AVCaptureDeviceInput *input in inputs ) {
+                AVCaptureDevice *device = input.device;
+                if ( [device hasMediaType:AVMediaTypeVideo] ) {
+                    AVCaptureDevicePosition position = device.position;
+                    AVCaptureDevice *newCamera =nil;
+                    AVCaptureDeviceInput *newInput =nil;
+                    
+                    if (position ==AVCaptureDevicePositionFront){
+                        newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
+                    }
+                    else{
+                        newCamera = [self cameraWithPosition:AVCaptureDevicePositionFront];
+                    }
+                    newInput = [AVCaptureDeviceInput deviceInputWithDevice:newCamera error:nil];
+                    
+                    // beginConfiguration ensures that pending changes are not applied immediately
+                    [weakSelf.captureSession beginConfiguration];
+                    
+                    [weakSelf.captureSession removeInput:input];
+                    [weakSelf.captureSession addInput:newInput];
+                    
+                    // Changes take effect once the outermost commitConfiguration is invoked.
+                    [weakSelf.captureSession commitConfiguration];
+                    break;  
+                }  
+            }
         };
     }
     return _topView;
@@ -409,6 +437,7 @@
     if (!_talkingVc) {
         _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+        _talkingVc.ishidText = YES;
         _talkingVc.roomID = _chatRoomID;
     }
     return _talkingVc;
@@ -440,6 +469,44 @@
         if ( device.position == position )
             return device;
     return nil;
+}
+// 监听键盘
+- (void)focusKeyboardShow {
+    //注册键盘出现的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    //注册键盘消失的通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    //键盘高度
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat h = keyBoardFrame.size.height;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.bottom).offset(-h);
+            make.left.right.equalTo(self.view);
+            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+        }];
+    }];
+}
+
+-(void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.bottom);
+            make.left.right.equalTo(self.view);
+            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+        }];
+    }];
 }
 
 - (void)swapFrontAndBackCameras {

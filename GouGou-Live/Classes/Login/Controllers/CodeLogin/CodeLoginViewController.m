@@ -9,6 +9,7 @@
 #import "CodeLoginViewController.h"
 #import "LoginViewController.h"
 #import "RegisteViewController.h"
+#import "UserProtocolVc.h"
 
 @interface CodeLoginViewController ()<UITextFieldDelegate>
 
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 @property (weak, nonatomic) IBOutlet UIButton *sendCode;
 
+@property (weak, nonatomic) IBOutlet UIButton *duiHao;
 
 @end
 
@@ -162,6 +164,7 @@
                 DLog(@"%@",successJson[@"data"][@"user_pay_code"]);
                 DLog(@"%@",successJson[@"data"][@"user_ali_code"]);
 
+           
                 
                 // 通知给所有人 已经登录
 //                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
@@ -183,7 +186,11 @@
                     }
                 }
                 
-                [self.navigationController popViewControllerAnimated:YES];
+                if (!self.duiHao.selected) {
+                    [self showAlert:@"请勾选用户协议"];
+                } else {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);
@@ -196,11 +203,13 @@
     
     sender.selected = !sender.selected;
     
-    // 已阅读 可以确定
-    self.sureBtn.enabled = sender.selected;
+//    // 已阅读 可以确定
+//    self.sureBtn.enabled = sender.selected;
 }
 - (IBAction)clickProtocolBtnAction:(UIButton *)sender {
-    
+    UserProtocolVc *protocolVc = [[UserProtocolVc alloc] init];
+    protocolVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:protocolVc animated:YES];
     
 }
 - (void)saveUserWithID:(NSString *)ID

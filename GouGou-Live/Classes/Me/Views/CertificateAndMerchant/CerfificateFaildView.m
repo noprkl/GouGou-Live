@@ -47,11 +47,13 @@
         make.top.equalTo(self.noteLabel.bottom).offset(20);
         make.centerX.equalTo(self.centerX);
         make.left.equalTo(self.left).offset(40);
+        make.height.equalTo(40);
     }];
     [self.recommitBtn makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backBtn.bottom).offset(10);
         make.centerX.equalTo(self.centerX);
         make.left.equalTo(self.left).offset(40);
+        make.height.equalTo(40);
     }];
 }
 - (UIImageView *)iconView {
@@ -63,7 +65,7 @@
 - (UILabel *)noteLabel {
     if (!_noteLabel) {
         _noteLabel = [[UILabel alloc] init];
-        _noteLabel.text = @"您的信息正在审核中";
+        _noteLabel.text = @"认证失败,请重新提交认证信息";
         _noteLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _noteLabel.font = [UIFont systemFontOfSize:13];
     }

@@ -12,8 +12,10 @@ typedef void(^ClickSureBtnBlock)();
 
 @interface BuyRuleAlertView : UIView
 
-
 @property(nonatomic, strong) ClickSureBtnBlock sureBlock; /**< 确定回调 */
+
+
+@property (nonatomic, strong) NSString *ruleContets; /**< 规则内容 */
 
 - (void)show;
 

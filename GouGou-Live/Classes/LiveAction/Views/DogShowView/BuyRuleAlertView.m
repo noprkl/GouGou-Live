@@ -26,6 +26,8 @@
 
 @property(nonatomic, strong) UIButton *sureBtn; /**< 确定按钮 */
 
+@property (nonatomic, assign) CGFloat height; /**< 高度 */
+
 @end
 
 @implementation BuyRuleAlertView
@@ -86,7 +88,23 @@
         make.bottom.equalTo(self.ruleAlertLabel.top).offset(-5);
     }];
 }
+- (void)setRuleContets:(NSString *)ruleContets {
+    _ruleContets = ruleContets;
 
+    // 首行
+    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+    CGFloat emptylen = LabelFont * 2;
+    paragraph.firstLineHeadIndent = emptylen;
+    
+    NSDictionary *dict = @{
+                           NSParagraphStyleAttributeName:paragraph,
+                           NSFontAttributeName:[UIFont systemFontOfSize:LabelFont],
+                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"]
+                           };
+    self.ruleContent.attributedText = [[NSAttributedString alloc] initWithString:ruleContets attributes:dict];
+    _height = [ruleContets boundingRectWithSize:CGSizeMake(SCREEN_WIDTH, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dict context:nil].size.height + 50;
+    
+}
 #pragma mark
 #pragma mark - 懒加载
 
@@ -102,7 +120,7 @@
 - (UILabel *)ruleContent {
     if (!_ruleContent) {
         _ruleContent = [[UILabel alloc] init];
-        _ruleContent.text = @"交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则交易规则";
+        _ruleContent.text = @"交规则交易规则";
         _ruleContent.textColor = [UIColor colorWithHexString:@"#666666"];
         _ruleContent.font = [UIFont systemFontOfSize:LabelFont];
         _ruleContent.numberOfLines = 0;
@@ -113,7 +131,7 @@
 
         _ruleContent.attributedText = [[NSAttributedString alloc] initWithString:_ruleContent.text attributes:@{
                                                     NSParagraphStyleAttributeName:paragraph                                                       }];
-        ;
+        
     }
     return _ruleContent;
 }
@@ -185,7 +203,7 @@
 #pragma mark - 设置当前view的frame
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 264, SCREEN_WIDTH, 264);
+    rect = CGRectMake(0, SCREEN_HEIGHT - _height, SCREEN_WIDTH, _height);
     self.frame = rect;
     
     // 约束

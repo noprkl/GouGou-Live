@@ -31,8 +31,8 @@
 @property(nonatomic, strong) NSString *district; /**< 县 */
 
 @property(nonatomic, strong) NSArray *proviceDataArr; /**< 省数据 */
-@property(nonatomic, strong) NSMutableArray *cityDataArr; /**< 市数据 */
-@property(nonatomic, strong) NSMutableArray *desticDataArr; /**< 县数据 */
+@property(nonatomic, strong) NSArray *cityDataArr; /**< 市数据 */
+@property(nonatomic, strong) NSArray *desticDataArr; /**< 县数据 */
 
 @end
 
@@ -55,7 +55,7 @@
     self.detailAddressTextfiled.delegate = self;
     self.phoneTextField.delegate = self;
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSaveButtonAction)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(clickSaveButtonAction:)];
     
     [self.areaChooseTextfiled addTarget:self action:@selector(editAreaChooseTextfiled:) forControlEvents:UIControlEventTouchDown];
     
@@ -69,15 +69,15 @@
     }
     return _proviceDataArr;
 }
-- (NSMutableArray *)cityDataArr {
+- (NSArray *)cityDataArr {
     if (!_cityDataArr) {
-        _cityDataArr = [NSMutableArray array];
+        _cityDataArr = [NSArray array];
     }
     return _cityDataArr;
 }
-- (NSMutableArray *)desticDataArr {
+- (NSArray *)desticDataArr {
     if (!_desticDataArr) {
-        _desticDataArr = [NSMutableArray array];
+        _desticDataArr = [NSArray array];
     }
     return _desticDataArr;
 }
@@ -93,7 +93,7 @@
     [self getRequestWithPath:API_Province params:@{@"id":@(1)} success:^(id successJson) {
         if (successJson) {
             //            self.cityDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            [self.cityDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+            self.cityDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         }
         DLog(@"%@", successJson);
     } error:^(NSError *error) {
@@ -102,8 +102,7 @@
     [self getRequestWithPath:API_Province params:@{@"id":@(36)} success:^(id successJson) {
         if (successJson) {
             //            self.desticDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            [self.desticDataArr addObjectsFromArray:[MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-            
+            self.desticDataArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         }
         DLog(@"%@", successJson);
     } error:^(NSError *error) {
@@ -134,8 +133,8 @@
 }
 
 #pragma mark - 点击保存按钮
-- (void)clickSaveButtonAction {
-    
+- (void)clickSaveButtonAction:(UIBarButtonItem *)btn {
+
     // 判断
     if (self.userNameTextfiled.text.length == 0) {
         [self showAlert:@"收货人不能为空"];
@@ -156,7 +155,7 @@
                 if ([self.detailAddressTextfiled.text isEqualToString:@""]) {
                     [self showAlert:@"详细地址不能为空"];
                 }else{
-                  
+                    btn.enabled = NO;
                     NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
 
                     NSDictionary *dict = @{
@@ -167,18 +166,20 @@
                                            @"user_province":self.provice,
                                            @"user_city":self.city,
                                            @"user_district":self.district,
-                                           @"user_address":adress
+                                           @"user_address":adress,
+                                           @"street":self.roadTextField.text,
+                                           @"code":self.postalcodeTextfiled.text
                                            };
                     NSLog(@"%@", dict);
                     [self postRequestWithPath:API_Add_address params:dict success:^(id successJson) {
-                        [self showAlert:successJson[@"message"]];
+//                        [self showAlert:successJson[@"message"]];
                         if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [self.navigationController popViewControllerAnimated:YES];
-                            });
                             
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }else{
+                            btn.enabled = YES;
                         }
+                        
                         DLog(@"%@", successJson);
                     } error:^(NSError *error) {
                         DLog(@"%@", error);
@@ -188,40 +189,6 @@
         }
     }
 }
-
-// 测试
-//- (void)saveAddAdress {
-//    NSDictionary *dict = @{
-//                           @"user_id":@(11),
-//                           @"user_name":@"哈哈哈",
-//                           @"user_tel":@(1479375185),
-//                           @"is_default":@(0),
-//                           @"user_province":@"北京市",
-//                           @"user_city":@"北京",
-//                           @"user_district":@"海淀",
-//                           @"user_address":@"五道口"
-//                           };
-////    [self getRequestWithPath:API_Add_address params:dict success:^(id successJson) {
-////        [self showAlert:successJson[@"message"]];
-////        DLog(@"%@", successJson);
-////    } error:^(NSError *error) {
-////        DLog(@"%@", error);
-////    }];
-//    [self postRequestWithPath:API_Add_address params:dict success:^(id successJson) {
-//        [self showAlert:successJson[@"message"]];
-//        if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-//            
-//            // 暂停2秒
-//            [NSThread sleepForTimeInterval:2];
-//
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//        DLog(@"%@", successJson);
-//    } error:^(NSError *error) {
-//        DLog(@"%@", error);
-//    }];
-//    
-//}
 
 #pragma mark
 #pragma mark - TextFiled代理
@@ -285,12 +252,17 @@
         __block AddressChooseView * choose = [[AddressChooseView alloc] init];
         
         __weak typeof(choose) weakChose = choose;
-        choose.provinceArr = self.proviceDataArr;
-        choose.cityArr = self.cityDataArr;
-        choose.desticArr = self.desticDataArr;
+        choose.provinceArr = [self.proviceDataArr mutableCopy];
+        choose.cityArr = [self.cityDataArr mutableCopy];
+        choose.desticArr = [self.desticDataArr mutableCopy];
+        [choose show];
         // 选中第一行 第二行请求
         choose.firstBlock = ^(MyShopProvinceModel *model){
+            
             [self getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
+                [weakChose.cityArr removeAllObjects];
+                [weakChose.desticArr removeAllObjects];
+                [weakChose.areaPicker reloadAllComponents];
                 if (successJson) {
                     weakChose.cityArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                     [weakChose.areaPicker selectRow:0 inComponent:1 animated:YES];
@@ -317,6 +289,8 @@
         choose.secondBlock = ^(MyShopProvinceModel *model){
             
             [self getRequestWithPath:API_Province params:@{@"id":@(model.ID)} success:^(id successJson) {
+                [weakChose.desticArr removeAllObjects];
+                [weakChose.areaPicker reloadAllComponents];
                 if (successJson) {
                     weakChose.desticArr = [MyShopProvinceModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                     [weakChose.areaPicker selectRow:0 inComponent:2 animated:YES];
@@ -334,7 +308,6 @@
             self.district = district;
             self.areaChooseTextfiled.text = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
         };
-        [choose show];
         
         return NO;
     }

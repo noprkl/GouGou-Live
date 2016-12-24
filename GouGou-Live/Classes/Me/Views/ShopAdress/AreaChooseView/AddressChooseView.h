@@ -17,9 +17,9 @@ typedef void(^selectSecondCompentBlock)(MyShopProvinceModel *model);
 
 @interface AddressChooseView : UIView
 
-@property(nonatomic, strong) NSArray *provinceArr; /**< <#注释#> */
-@property(nonatomic, strong) NSArray *cityArr; /**< <#注释#> */
-@property(nonatomic, strong) NSArray *desticArr; /**< <#注释#> */
+@property(nonatomic, strong) NSMutableArray *provinceArr; /**< <#注释#> */
+@property(nonatomic, strong) NSMutableArray *cityArr; /**< <#注释#> */
+@property(nonatomic, strong) NSMutableArray *desticArr; /**< <#注释#> */
 
 /** pickerView */
 @property (strong, nonatomic) UIPickerView *areaPicker;

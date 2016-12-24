@@ -12,7 +12,7 @@ typedef void(^ClickDogTypeClock)(DogCategoryModel *model);
 @interface SellerNoInputTableView : UITableView
 
 @property(nonatomic, strong) NSArray *hotArr; /**< 热门 */
-
-@property(nonatomic, strong) ClickDogTypeClock typeBlock; /**< 地啊你回调 */
+@property(nonatomic, strong) NSArray *historyArr; /**< 历史数据 */
+@property(nonatomic, strong) ClickDogTypeClock typeBlock; /**< 点击回调 */
 
 @end

@@ -32,8 +32,16 @@
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
         if ([successJson[@"message"] isEqualToString:@"注册成功"]) {
-            // 同时注册环信
+            NSUserDefaults * phoneDefaults = [NSUserDefaults standardUserDefaults];
+            NSString * phoneText = [phoneDefaults objectForKey:@"phoneNum"];
             
+            if (phoneText == self.telNumber) {
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                NSString * psdString = [UserInfos sharedUser].userPsd;
+                
+                [defaults setObject:psdString forKey:@"psdString"];
+            }
+            // 同时注册环信
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
                 

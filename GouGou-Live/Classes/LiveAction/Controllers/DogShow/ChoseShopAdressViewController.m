@@ -10,7 +10,7 @@
 #import "ChoseShopAdressCell.h"
 #import "ChosedAdressView.h" // 地址选择
 #import "MyShopAdressModel.h"
-#import "SellerAdressViewController.h"
+#import "SellerAddNewAdressVc.h"
 
 @interface ChoseShopAdressViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -73,7 +73,7 @@ static NSString *cellid = @"ChoseShopAdressCell";
 }
 - (void)clickRightBarItemAction {
     // 跳转添加地址界面
-    SellerAdressViewController *editAdressVC = [[SellerAdressViewController alloc] init];
+    SellerAddNewAdressVc *editAdressVC = [[SellerAddNewAdressVc alloc] init];
     editAdressVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:editAdressVC animated:YES];
     

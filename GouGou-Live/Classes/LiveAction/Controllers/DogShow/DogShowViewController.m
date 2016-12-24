@@ -15,6 +15,7 @@
 
 #import "DogDetailModel.h"
 #import "DogImageView.h"
+#import "NormalModel.h"
 
 #import "LiveListDogInfoModel.h"
 
@@ -195,14 +196,26 @@ static NSString *cellid = @"DogShowCellid";
         }
     };
     cell.bookBlock = ^ (){
-        
         if ([UserInfos getUser]) {
-            BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
-            [rulesAlert show];
-            
-            rulesAlert.sureBlock = ^(){
-                [self pushToDogBookVC:model];
-            };
+            if (![model.status isEqualToString:@"3"]) {
+                [self showAlert:@"狗狗已经被售出了"];
+            }else{
+                __block BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
+                NSDictionary *dict2 = @{@"id":@(2)};
+                [self getRequestWithPath:API_Help params:dict2 success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                    NSArray *arr = [NormalModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                    NormalModel *model = arr[0];
+                    rulesAlert.ruleContets = model.conent;
+                    DLog(@"%@",rulesAlert.ruleContets);
+                    [rulesAlert show];
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+                rulesAlert.sureBlock = ^(){
+                    [self pushToDogBookVC:model];
+                };
+            }
         }else {
             [self showAlert:@"请登录"];
         }

@@ -136,16 +136,16 @@
 #pragma mark
 #pragma mark - 级联代理方法
 
-- (void)setProvinceArr:(NSArray *)provinceArr {
+- (void)setProvinceArr:(NSMutableArray *)provinceArr {
     _provinceArr = provinceArr;
     self.province = [provinceArr[0] name];
 }
-- (void)setCityArr:(NSArray *)cityArr {
+- (void)setCityArr:(NSMutableArray *)cityArr {
     _cityArr = cityArr;
     [self.areaPicker selectRow:0 inComponent:1 animated:YES];
     self.city = [cityArr[0] name];
 }
-- (void)setDesticArr:(NSArray *)desticArr {
+- (void)setDesticArr:(NSMutableArray *)desticArr {
     _desticArr = desticArr;
     [self.areaPicker selectRow:0 inComponent:2 animated:YES];
     self.destic = [desticArr[0] name];
@@ -210,18 +210,23 @@
         //第2列选中第几排
         NSInteger index = [self.areaPicker selectedRowInComponent:2];
         MyShopProvinceModel *model = self.desticArr[index];
-     
         self.destic = model.name;
     }
     
-    MyShopProvinceModel *model = self.provinceArr[row];
-    self.province = model.name;
-    NSInteger index = [self.areaPicker selectedRowInComponent:1];
-    MyShopProvinceModel *cityModel = self.cityArr[index];
-    self.city = cityModel.name;
-    NSInteger desticIndex = [self.areaPicker selectedRowInComponent:2];
-    MyShopProvinceModel *desticModel = self.desticArr[desticIndex];
-    self.destic = desticModel.name;
+    if (component == 0) {
+        MyShopProvinceModel *model = self.provinceArr[row];
+        self.province = model.name;
+    }
+    if (component == 1) {
+        NSInteger index = [self.areaPicker selectedRowInComponent:1];
+        MyShopProvinceModel *cityModel = self.cityArr[index];
+        self.city = cityModel.name;
+    }
+    if (component == 2) {
+        NSInteger desticIndex = [self.areaPicker selectedRowInComponent:2];
+        MyShopProvinceModel *desticModel = self.desticArr[desticIndex];
+        self.destic = desticModel.name;
+    }
 }
 
 

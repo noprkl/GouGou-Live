@@ -120,6 +120,7 @@
                 sureVC.codeNumber = self.codeTextField.text;
                 
                 [self.navigationController pushViewController:sureVC animated:YES];
+
             }
         } error:^(NSError *error) {
             DLog(@"%@",error);

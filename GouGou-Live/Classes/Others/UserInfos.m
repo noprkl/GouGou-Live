@@ -24,7 +24,7 @@ static NSString *wbopenidKey = @"wbopenid";
 static NSString *qqopenidKey = @"qqopenid";
 static NSString *fansCountKey = @"fansCount";
 static NSString *commentCountKey = @"commentCount";
-static NSString *focusArrKey = @"focusArr";
+static NSString *focusCountKey = @"focusCountKey";
 static NSString *userAssetKey = @"userAsset";
 
 @implementation UserInfos
@@ -60,7 +60,7 @@ static NSString *userAssetKey = @"userAsset";
         
         _fansCount = (NSInteger)[[NSUserDefaults standardUserDefaults] valueForKey:fansCountKey];
         _commentCount = (NSInteger)[[NSUserDefaults standardUserDefaults] valueForKey:commentCountKey];
-        _focusArr = [[NSUserDefaults standardUserDefaults] objectForKey:focusArrKey];
+        _focusCount = (NSInteger)[[NSUserDefaults standardUserDefaults] valueForKey:focusCountKey];
         _userAsset = [[NSUserDefaults standardUserDefaults] objectForKey:userAssetKey];
 
         }

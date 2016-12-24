@@ -9,7 +9,7 @@
 #import "RegisteViewController.h"
 #import "LoginViewController.h"
 #import "SurePsdViewController.h"
-
+#import "UserProtocolVc.h"
 
 @interface RegisteViewController ()<UITextFieldDelegate>
 
@@ -84,7 +84,7 @@
         if (codeNumber.length != 6) {
             [self showAlert:@"验证码只能是6位"];
         }else{
-#warning 需要验证码
+
             NSDictionary * dict = @{
                                     @"user_tel":self.phoneTextField.text ,
                                     @"code":self.codeTextField.text,
@@ -110,6 +110,10 @@
                     return ;
                 }
                 
+                NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+                NSString *phoneNumStr = [UserInfos sharedUser].usertel;
+                [defaults setObject:phoneNumStr forKey:@"phoneNum"];
+                
             } error:^(NSError *error) {
                 DLog(@"%@",error);
             }];
@@ -127,7 +131,9 @@
 }
 - (IBAction)clickProtocolAction:(UIButton *)sender {
 
-    #warning - 协议链接
+    UserProtocolVc *protocolVc = [[UserProtocolVc alloc] init];
+    protocolVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:protocolVc animated:YES];
     
 }
 #pragma mark - 文本框监听

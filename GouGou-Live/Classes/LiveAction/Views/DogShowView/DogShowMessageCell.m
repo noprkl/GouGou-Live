@@ -243,12 +243,15 @@
         state = @"新建商品";
     }else if ([model.status isEqualToString:@"2"]) {
         state = @"审核未通过";
-    }else if ([model.status isEqualToString:@"3"]) {
+    }else if ([model.status isEqualToString:@"3"]) { // 可以买的
         state = @"上线";
     }else if ([model.status isEqualToString:@"4"]) {
         state = @"下线";
     }else if ([model.status isEqualToString:@"5"]) {
         state = @"售完";
+    }
+    if (![model.status isEqualToString:@"3"]) {
+        [self.bookBtn setBackgroundColor:[UIColor colorWithHexString:@"#999999"]];
     }
     self.liveStateLabel.text = state;
 }

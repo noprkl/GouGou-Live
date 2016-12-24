@@ -27,8 +27,8 @@ static NSString *cellid = @"SellerDoInputCell";
         self.tableFooterView = [[UIView alloc] init];
         self.showsVerticalScrollIndicator = NO;
      
-        [self registerNib:[UINib nibWithNibName:@"SellerDoInputCell" bundle:nil] forCellReuseIdentifier:cellid];;
-
+//        [self registerNib:[UINib nibWithNibName:@"SellerDoInputCell" bundle:nil] forCellReuseIdentifier:cellid];
+        [self registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid];
     }
     return self;
 }
@@ -52,20 +52,28 @@ static NSString *cellid = @"SellerDoInputCell";
     return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SellerDoInputCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    
+//    SellerDoInputCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     DogCategoryModel *model = self.dataArr[indexPath.row];
-    cell.model = model;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.sureAddBlock = ^(){
-        if (_sureAddBlock) {
-            _sureAddBlock(model);
-        }
-    };
+//    cell.model = model;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.sureAddBlock = ^(){
+//        if (_sureAddBlock) {
+//            _sureAddBlock(model);
+//        }
+//    };
+    cell.textLabel.text = model.name;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 130;
+    return 44;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DogCategoryModel *model = self.dataArr[indexPath.row];
+    if (_sureAddBlock) {
+        _sureAddBlock(model);
+    }
+}
 @end

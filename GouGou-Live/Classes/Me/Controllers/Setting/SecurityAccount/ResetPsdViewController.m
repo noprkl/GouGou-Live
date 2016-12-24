@@ -56,9 +56,10 @@
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
-                
-                SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
-                [self.navigationController pushViewController:sureSuccVC animated:YES];
+                    
+                    SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
+                    [self.navigationController pushViewController:sureSuccVC animated:YES];
+               
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);

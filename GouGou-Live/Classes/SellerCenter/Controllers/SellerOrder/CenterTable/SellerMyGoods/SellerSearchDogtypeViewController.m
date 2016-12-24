@@ -64,6 +64,43 @@
     
 }
 - (void)clickSearchBtnAction {
+    
+        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+        //读取数组NSArray类型的数据
+        NSArray *myArray = [[NSArray alloc] initWithArray:[userDefaultes arrayForKey:@"DOGTYPEHISSTORY"]];
+        
+        // NSArray --> NSMutableArray
+        NSMutableArray *searTXT = [NSMutableArray array];
+        searTXT = [myArray mutableCopy];
+        
+        NSString *seaTxt = self.titleInputView.text;
+        if (searTXT.count > 0) {
+            //判断搜索内容是否存在，存在的话放到数组最后一位，不存在的话添加。
+            for (NSString * str in myArray) {
+                if ([seaTxt isEqualToString:str]) {
+                    //获取指定对象的索引
+                    NSUInteger index = [myArray indexOfObject:seaTxt];
+                    [searTXT replaceObjectAtIndex:index withObject:str];
+//                    [searTXT addObject:seaTxt];
+                    break;
+                }
+            }
+        }
+        
+            [searTXT addObject:seaTxt];
+        
+        if(searTXT.count > 15)
+            {
+            [searTXT removeObjectAtIndex:0];
+            }
+        //将上述数据全部存储到NSUserDefaults中
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:searTXT forKey:@"DOGTYPEHISSTORY"];
+    
+//        [[NSUserDefaults standardUserDefaults] setObject:self.titleInputView.text forKey:@"DOGTYPEHISSTORY"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        [self.noinputView reloadData];
+    
     NSDictionary *dict = @{
                            @"name":self.titleInputView.text,
                            @"type":@(3)
@@ -92,7 +129,9 @@
 }
 - (void)editSearchAction:(UITextField *)textField {
     if (textField.text.length == 0) {
+        // 刷新
         self.noinputView.hidden = NO;
+        [self.noinputView reloadData];
         self.doInputView.hidden = YES;
         self.noneDoyType.hidden = YES;
     }
@@ -103,8 +142,7 @@
     if (!_titleInputView) {
         _titleInputView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 280, 30)];
         _titleInputView.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"输入您的狗狗品种" attributes:@{
-                                                                                                                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],
-                                                                                                                                 NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+                                                                                                                                 NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"],                                                                                                      NSFontAttributeName:[UIFont systemFontOfSize:14]}];
         _titleInputView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
         _titleInputView.layer.cornerRadius = 5;
         _titleInputView.layer.masksToBounds = YES;
@@ -166,6 +204,9 @@
             [weakSelf postRequestWithPath:API_Add_varieties params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [weakSelf showAlert:successJson[@"message"]];
+                weakSelf.noneDoyType.hidden = YES;
+                [weakSelf clickSearchBtnAction];
+                
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];

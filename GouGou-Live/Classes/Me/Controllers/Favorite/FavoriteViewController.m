@@ -37,6 +37,7 @@
                            };
     [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
         self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.favoriteDogTable reloadData];
     } error:^(NSError *error) {
@@ -50,6 +51,7 @@
                             };
     [self getRequestWithPath:API_User_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self.favotiteLiveTable setContentOffset:CGPointMake(0, 0) animated:YES];
         self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.favotiteLiveTable reloadData];
     } error:^(NSError *error) {
@@ -79,7 +81,7 @@
     [self setNavBarItem];
     
     self.favotiteLiveTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
+        [self GetRequestFavoriteLive];
         // 取消下拉刷新
         [self.favotiteLiveTable.mj_header endRefreshing];
     }];
@@ -213,7 +215,7 @@
             _favoriteDogTable.frame = tableRect2;
             
         }];
-        
+        [self GetRequestFavoriteLive];
     }else {
         
         button.selected = YES;
@@ -231,6 +233,7 @@
             tableRect2.origin.x = 0;
             _favoriteDogTable.frame = tableRect2;
         }];
+        [self GetRequestFavoriteDog];
     
     }
 

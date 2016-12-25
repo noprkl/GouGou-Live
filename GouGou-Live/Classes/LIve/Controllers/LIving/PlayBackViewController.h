@@ -1,14 +1,14 @@
 //
-//  LivingViewController.h
+//  PlayBackViewController.h
 //  GouGou-Live
 //
-//  Created by ma c on 16/10/27.
+//  Created by ma c on 16/12/25.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
 #import "BaseViewController.h"
 
-@interface LivingViewController : BaseViewController
+@interface PlayBackViewController : BaseViewController
 
 @property (strong,nonatomic) NSString *liveID; /**< 直播播放地址 */
 @property (nonatomic, strong) NSString *liverId; /**< 主播id */
@@ -22,8 +22,4 @@
 @property (nonatomic, strong) NSString *state; /**< 直播状态 */
 
 @property (nonatomic, assign) BOOL isLandscape; /**< 是否为横屏 */
-
-/** 是否选中 */
-@property (assign,nonatomic) BOOL isSelectCollectBtn;
-
 @end

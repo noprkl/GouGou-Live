@@ -53,7 +53,14 @@ static NSString *cellid2 = @"NotificationMessageCell";
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
 
-    self.arrConversion = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+    NSArray *allConversation = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+    // 只要单聊对话
+    for (EMConversation *conversation in allConversation) {
+        if (conversation.type == EMConversationTypeChat) {
+            [self.arrConversion addObject:conversation];
+        }
+    }
+    
     [self postRequestGetSystemPush];
 
     [self.tableView reloadData];
@@ -125,6 +132,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
     if (indexPath.section == 0) {
         NotificationMessageCell *notifiCell = [tableView dequeueReusableCellWithIdentifier:cellid2];
         notifiCell.selectionStyle = UITableViewCellSelectionStyleNone;
+       
         notifiCell.model = [self.systemMessageArr lastObject];
         NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
         NSString * fileName = [docDir stringByAppendingPathComponent:SystemMessage];

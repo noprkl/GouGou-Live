@@ -58,7 +58,7 @@
     if ([payStyle isEqualToString:@"支付全款"]) {
         // 生成待支付全款订单
         NSDictionary *typeDict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"user_id":[UserInfos sharedUser].ID ,
                                    @"order_id":orderID,
                                    @"type":@(1)
                                    };
@@ -69,7 +69,7 @@
                 if ([successJson[@"data"] isEqualToString:@"0"]) {
                     [self showAlert:@"支付金额不能为0"];
                 }else{
-                    NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                    NSString *price = successJson[@"data"];
                     [self chosePayStyleWIthOrderID:orderID protductPrice:price];
                 }
             }
@@ -80,7 +80,7 @@
     if ([payStyle isEqualToString:@"支付订金"]) {
         // 生成待支付订金订单
         NSDictionary *typeDict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"user_id":[UserInfos sharedUser].ID,
                                    @"order_id":orderID,
                                    @"type":@(2)
                                    };
@@ -91,7 +91,7 @@
                 if ([successJson[@"data"] isEqualToString:@"0"]) {
                     [self showAlert:@"支付金额不能为0"];
                 }else{
-                    NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                    NSString *price = successJson[@"data"];
                     [self chosePayStyleWIthOrderID:orderID protductPrice:price];
                 }
             }
@@ -103,7 +103,7 @@
         // 生成待支付尾款订单
         NSString *finalID = [NSString stringWithFormat:@"%@wk", orderID];
         NSDictionary *typeDict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"user_id":[UserInfos sharedUser].ID,
                                    @"order_id":finalID,
                                    @"type":@(3)
                                    };
@@ -114,10 +114,9 @@
                 if ([successJson[@"data"] isEqualToString:@"0"]) {
                     [self showAlert:@"支付金额不能为0"];
                 }else{
-                    NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                    NSString *price = successJson[@"data"];
                     [self chosePayStyleWIthOrderID:finalID protductPrice:price];
                 }
-
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);
@@ -127,7 +126,7 @@
 /** 根据选择支付方式进行支付 */
 - (void)chosePayStyleWIthOrderID:(NSString *)orderID protductPrice:(NSString *)price {
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
-    payMonery.payMoney = [NSString stringWithFormat:@"%0.2lf",[price floatValue] / 100];
+    payMonery.payMoney = [NSString stringWithFormat:@"%0.2lf",[price floatValue]];
     payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
     [payMonery show];
     payMonery.payCellBlock = ^(NSString *payWay){
@@ -136,7 +135,6 @@
 }
 - (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money{
     if ([payWay isEqualToString:@"账户余额支付"]) {
-        
         // 支付密码提示框
         PromptView * prompt = [[PromptView alloc] init];
         prompt.backgroundColor = [UIColor whiteColor];
@@ -144,17 +142,16 @@
         // 点击提示框确认按钮请求支付密码
         __weak typeof(prompt) weakPrompt = prompt;
         prompt.clickSureBtnBlock = ^(NSString *text){
-            
             // 验证密码
             NSDictionary *dict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"user_id":[UserInfos sharedUser].ID,
                                    @"pay_password":[NSString md5WithString:text]
                                    };
             [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:[orderID intValue] price:[money intValue] * 100 payPwd:[NSString md5WithString:text] states:3];
+                    [self walletPayWithOrderId:[orderID intValue] price:money payPwd:[NSString md5WithString:text] states:3];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -172,11 +169,12 @@
     }
 }
 /** 钱包支付 2定金 3全款 */
-- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state {
+- (void)walletPayWithOrderId:(int)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state {
+   NSString *money = [NSString stringWithFormat:@"%d", [price intValue] * 100];
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
                            @"order_id":@(orderID),
-                           @"user_price":@(price),
+                           @"user_price":money,
                            @"user_pwd":payPwd,
                            @"status":@(state)
                            };
@@ -189,10 +187,11 @@
 }
 /** 微信支付 */
 - (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(NSString *)fee {
-    
+    NSString *money = [NSString stringWithFormat:@"%d", [fee intValue] * 100];
+
     NSDictionary *dict = @{
                            @"order":orderID,
-                           @"total_fee":fee,
+                           @"total_fee":money,
                            @"mark":@"gougou"
                            };
     DLog(@"%@", dict);
@@ -225,9 +224,11 @@
 }
 /** 支付宝支付 */
 - (void)aliPayWithOrderId:(NSString *)orderID totalFee:(NSString *)fee {
+
+    NSString *money = [NSString stringWithFormat:@"%d", [fee intValue] * 100];
     NSDictionary *dit = @{
                           @"id":orderID,
-                          @"total_fee":fee
+                          @"total_fee":money
                           };
     DLog(@"%@", dit);
     [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {

@@ -131,6 +131,7 @@
 		045D51501DD99BEF001854A8 /* DoneCertificateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D51481DD99BEF001854A8 /* DoneCertificateView.m */; };
 		045D51511DD99BEF001854A8 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D514A1DD99BEF001854A8 /* PhotoView.m */; };
 		045D51521DD99BEF001854A8 /* UnCertificateVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 045D514C1DD99BEF001854A8 /* UnCertificateVIew.m */; };
+		045E3B4D1E0F894200624CEA /* PlayBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E3B4C1E0F894200624CEA /* PlayBackViewController.m */; };
 		045FE30B1DCC65E5001B95B1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30A1DCC65E5001B95B1 /* AccountViewController.m */; };
 		045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE30D1DCC6635001B95B1 /* ChosedAdressView.m */; };
 		045FE3111DCC6C39001B95B1 /* ShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045FE3101DCC6C39001B95B1 /* ShopAdressModel.m */; };
@@ -771,6 +772,8 @@
 		045D514A1DD99BEF001854A8 /* PhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoView.m; sourceTree = "<group>"; };
 		045D514B1DD99BEF001854A8 /* UnCertificateVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnCertificateVIew.h; sourceTree = "<group>"; };
 		045D514C1DD99BEF001854A8 /* UnCertificateVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnCertificateVIew.m; sourceTree = "<group>"; };
+		045E3B4B1E0F894200624CEA /* PlayBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayBackViewController.h; sourceTree = "<group>"; };
+		045E3B4C1E0F894200624CEA /* PlayBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayBackViewController.m; sourceTree = "<group>"; };
 		045FE3091DCC65E5001B95B1 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		045FE30A1DCC65E5001B95B1 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		045FE30C1DCC6635001B95B1 /* ChosedAdressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChosedAdressView.h; sourceTree = "<group>"; };
@@ -2972,6 +2975,8 @@
 			children = (
 				0479B4CD1DCADC7B00CB288A /* LivingViewController.h */,
 				0479B4CE1DCADC7B00CB288A /* LivingViewController.m */,
+				045E3B4B1E0F894200624CEA /* PlayBackViewController.h */,
+				045E3B4C1E0F894200624CEA /* PlayBackViewController.m */,
 				6180CB4E1DFC26CF006357B4 /* LandscapePlayerVc.h */,
 				6180CB4F1DFC26CF006357B4 /* LandscapePlayerVc.m */,
 				044D3FE71DF6E7890076672E /* MediaStreamingVc.h */,
@@ -5039,6 +5044,7 @@
 				046795A51E0A67250076F517 /* HelpViewController.m in Sources */,
 				04CE13E71DDC488100EB8777 /* SellerMyLiveCell.m in Sources */,
 				046BF0091DE4696600BC32E9 /* PSTGridLayoutInfo.m in Sources */,
+				045E3B4D1E0F894200624CEA /* PlayBackViewController.m in Sources */,
 				046F0BAF1DE2AB8B00D50D5C /* WaitConsignessCell.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
 				046BEFEA1DE4696600BC32E9 /* MWPhoto.m in Sources */,

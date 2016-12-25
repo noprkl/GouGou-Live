@@ -93,6 +93,9 @@ static NSString *cellid4 = @"cellid4";
     [self getRequestWithPath:API_home params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
+        
+        DLog(@"%@",successJson[@"messgae"]);
+        
         if ([successJson[@"code"] isEqualToString:@"1"]) {
             // 分数四舍五入
             CGFloat source = [successJson[@"data"] floatValue];

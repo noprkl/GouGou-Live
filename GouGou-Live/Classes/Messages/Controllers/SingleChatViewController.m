@@ -230,11 +230,11 @@
         if ([blackArr containsObject:_chatID] && [focusArr containsObject:_chatID]) {
             _menuView.dataPlist = @[@"已关注", @"已屏蔽", @"举报", @"个人主页"];
         }else if ([blackArr containsObject:_chatID] && ![focusArr containsObject:_chatID]) {
-            _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
+            _menuView.dataPlist = @[@"关注", @"已屏蔽", @"举报", @"个人主页"];
         }else if (![blackArr containsObject:_chatID] && [focusArr containsObject:_chatID]) {
             _menuView.dataPlist = @[@"已关注", @"屏蔽", @"举报", @"个人主页"];
         }else if (![blackArr containsObject:_chatID] && ![focusArr containsObject:_chatID]) {
-            _menuView.dataPlist = @[@"关注", @"已屏蔽", @"举报", @"个人主页"];
+            _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
         }
         
         __weak typeof(self) weakSelf = self;

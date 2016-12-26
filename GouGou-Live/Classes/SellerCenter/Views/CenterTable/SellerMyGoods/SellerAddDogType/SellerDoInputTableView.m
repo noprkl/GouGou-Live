@@ -54,18 +54,12 @@ static NSString *cellid = @"SellerDoInputCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     
-//    SellerDoInputCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     DogCategoryModel *model = self.dataArr[indexPath.row];
-//    cell.model = model;
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.sureAddBlock = ^(){
-//        if (_sureAddBlock) {
-//            _sureAddBlock(model);
-//        }
-//    };
+
     cell.textLabel.text = model.name;
     return cell;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return 44;

@@ -109,6 +109,10 @@
     self.certifNameLabel.text = userName;
     self.sellNameLabel.text = userName;
 }
+- (void)setIsFocus:(BOOL)isFocus {
+    _isFocus = isFocus;
+    self.focusBtn.selected = isFocus;
+}
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self.sellerIconView makeConstraints:^(MASConstraintMaker *make) {
@@ -197,8 +201,8 @@
 - (CGFloat)getMessageHeight {
     return CGRectGetMaxY(self.briefContentLabel.frame) + 10;;
 }
-- (void)clickFocusBtnAction {
-
+- (void)clickFocusBtnAction:(UIButton *)btn {
+    btn.selected = !btn.selected;
     if (_focusBlock) {
         _focusBlock(self.focusBtn);
     }
@@ -290,7 +294,7 @@
         [_focusBtn setTitle:@"已关注" forState:(UIControlStateSelected)];
         _focusBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         [_focusBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
-        [_focusBtn addTarget:self action:@selector(clickFocusBtnAction) forControlEvents:(UIControlEventTouchDown)];
+        [_focusBtn addTarget:self action:@selector(clickFocusBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _focusBtn;
 }

@@ -95,7 +95,7 @@
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    self.hidesBottomBarWhenPushed = YES;
+//    self.hidesBottomBarWhenPushed = YES;
     
     // 请求播放信息
     //    [self getRequestLiveMessage];
@@ -176,12 +176,7 @@
     }
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-//    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-//        self.livetopView.hidden = !self.livetopView.hidden;
-//        self.livingImageView.hidden = !self.livetopView.hidden;
-//        self.watchLabel.hidden = !self.livetopView.hidden;
-//    }
+
         [UIView animateWithDuration:0.3 animations:^{
             self.topView.hidden = !self.topView.hidden;
             self.downView.hidden = !self.downView.hidden;
@@ -330,14 +325,15 @@
 #pragma mark - 回放约束
 - (void)playbackInitUI {
     self.edgesForExtendedLayout = 0;
-    [self.playerView bringSubviewToFront:self.topView];
-    [self.playerView bringSubviewToFront:self.downView];
-    
+
     [self.view addSubview:self.playerView];
-    [self.playerView addSubview:self.topView];
+//    [self.view addSubview:self.topView];
+    [self.view insertSubview:self.topView atIndex:100];
     [self.topView addSubview:self.playbackBtn];
     [self.topView addSubview:self.liveTitleLabel];
-    [self.playerView addSubview:self.downView];
+    
+    [self.view insertSubview:self.downView atIndex:100];
+    [self.view addSubview:self.downView];
     [self.downView addSubview:self.playBtn];
     [self.downView addSubview:self.beginTimeLabel];
     [self.downView addSubview:self.progressView];
@@ -635,19 +631,28 @@
 }
 - (void)addChildViewControllers {
     
-    self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-    [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
-    [self.view addSubview:self.talkingVc.tableView];
-    [self addChildViewController:_talkingVc];
-    
+//    self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+//    [self.baseScrollView addSubview:self.talkingVc.tableView];
+//    [self addChildViewController:_talkingVc];
+//    [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
+   
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    [self.childVCS replaceObjectAtIndex:1 withObject:dogShowVC];
+    [self.childVCS replaceObjectAtIndex:0 withObject:dogShowVC];
     [self addChildViewController:dogShowVC];
+    
+    TalkingViewController *Vc = [[TalkingViewController alloc] initWithStyle:(UITableViewStylePlain)];
+//    [self.baseScrollView addSubview:self.talkingVc.tableView];
+    Vc.roomID = _chatRoomID;
+    self.talkingVc = Vc;
+    [self.childVCS replaceObjectAtIndex:1 withObject:Vc];
+    [self addChildViewController:Vc];
+    
+
     
     if (_liverId.length == 0) {
         _liverId = EaseTest_Liver;
@@ -666,17 +671,9 @@
     [self.childVCS replaceObjectAtIndex:3 withObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
     
-    // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
-    self.baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childTitles.count, 0);
-    
-    // 设置contentView加载时的位置
-    self.baseScrollView.contentOffset = CGPointMake(0, 0);
-    
-    // 减速结束加载控制器视图 代理
-    self.baseScrollView.delegate = self;
-    
     // 进入后第一次加载hot
-    //    [self scrollViewDidEndDecelerating:self.baseScrollView];
+    self.baseScrollView.contentOffset = CGPointMake(0, 0);
+    [self scrollViewDidEndDecelerating:self.baseScrollView];
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     // 每个子控制器的宽高
@@ -697,12 +694,12 @@
     UIViewController *childVC = self.childVCS[index];
     
     // 判断当前vc是否加载过
-    if ([childVC isViewLoaded]) {
-        if(![childVC isKindOfClass:[TalkingViewController class]]) {
-            [self.talkingVc.tableView reloadData];
-        }
-        return;
-    };
+    if([childVC isKindOfClass:[TalkingViewController class]]) {
+        self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    }
+//    if ([childVC isViewLoaded]) {
+//        return;
+//    };
     
     // 给没加载过的控制器设置frame
     childVC.view.frame = CGRectMake(offset, 0, width, height);
@@ -739,6 +736,16 @@
         _baseScrollView.scrollEnabled = NO;
         _baseScrollView.pagingEnabled = YES;
         _baseScrollView.showsVerticalScrollIndicator = NO;
+        // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
+        _baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childTitles.count, 0);
+        
+        // 设置scroll初始偏移量
+        [_baseScrollView setScrollIndicatorInsets:UIEdgeInsetsMake(0, -1, 0, 0)];
+
+        
+        // 减速结束加载控制器视图 代理
+        _baseScrollView.delegate = self;
+
     }
     return _baseScrollView;
 }
@@ -749,13 +756,13 @@
         
         __weak typeof(self) weakSelf = self;
         _centerView.talkBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
             return YES;
@@ -775,14 +782,16 @@
     }
     return _centerView;
 }
-- (TalkingViewController *)talkingVc {
-    if (!_talkingVc) {
-        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-        _talkingVc.tableView.backgroundColor = [UIColor whiteColor];
-        _talkingVc.roomID = _chatRoomID;
-    }
-    return _talkingVc;
-}
+//- (TalkingViewController *)talkingVc {
+//    if (!_talkingVc) {
+//        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+//        EMError *error = nil;
+//        [[EMClient sharedClient].roomManager joinChatroom:_chatRoomID error:&error];
+//        _talkingVc.tableView.backgroundColor = [UIColor whiteColor];
+//        _talkingVc.roomID = _chatRoomID;
+//    }
+//    return _talkingVc;
+//}
 
 - (NSArray *)childTitles {
     if (!_childTitles) {

@@ -252,7 +252,15 @@ static NSString *cellid3 = @"MyPageViewController3";
             messageView.userImg = self.liverIcon;
             messageView.descCommnet = self.personalModel.userMotto;
             messageView.backgroundColor = [UIColor whiteColor];
-            
+            NSString *filename = [NSString cachePathWithfileName:Focus];
+            NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
+        
+            if ([focusArr containsObject:@([_authorId intValue])]) {
+                messageView.isFocus = YES;
+            }else{
+                messageView.isFocus = NO;
+            }
+        
             messageView.focusBlock = ^(UIButton *btn){
                 
                 if ([UserInfos getUser]) {

@@ -16,7 +16,6 @@
 #import "ShareAlertView.h"
 #import "ShareBtnModel.h"
 #import "DeletePrommtView.h" // 举报提示
-#import "TalkingView.h"
 
 #import "TalkingViewController.h"
 #import "ServiceViewController.h"
@@ -259,13 +258,14 @@
 
 // 播放控件约束
 - (void)makeLiveSubviewConstraint {
+    
     self.backBtn.hidden = NO;
     self.roomNameLabel.hidden = NO;
     self.shareBtn.hidden = NO;
     self.reportBtn.hidden = NO;
     self.collectBtn.hidden = NO;
     self.screenBtn.hidden = NO;
-    self.talkingVc.tableView.hidden = NO;
+//    self.talkingVc.tableView.hidden = NO;
     
     self.livetopView.hidden = YES;
     self.livingImageView.hidden = YES;
@@ -294,10 +294,6 @@
     [self.shareBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
         make.right.equalTo(self.livePlayer.playerView.right).offset(-10);
-    }];
-    [self.talkingVc.tableView remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.bottom.equalTo(self.baseScrollView);
-        make.width.equalTo(SCREEN_WIDTH);
     }];
     [self.reportBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
@@ -356,8 +352,6 @@
     self.reportBtn.hidden = YES;
     self.collectBtn.hidden = YES;
     self.screenBtn.hidden = YES;
-
-    self.talkingVc.tableView.hidden = YES;
     
     [self.livetopView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left);
@@ -388,6 +382,7 @@
         make.bottom.equalTo(self.view.bottom).offset(-15);
         make.size.equalTo(CGSizeMake(26, 26));
     }];
+    
     [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.danmuBtn.centerY);
         make.left.bottom.right.equalTo(self.view);
@@ -572,7 +567,8 @@
         _livePlayer.delegate = self;
         //    [self.livePlayerView addSubview:self.livePlayer.playerView];
         [_livePlayerView insertSubview:self.livePlayer.playerView atIndex:0];
-        _livePlayer.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        _livePlayer.playerView.autoresizingMask = UIViewAutoresizingNone;
+        
         // 添加播放视图
         [self.view addSubview:_livePlayer.playerView];
     }
@@ -721,14 +717,14 @@
     }
     return _notePlayer;
 }
-- (TalkingViewController *)talkingVc {
-    if (!_talkingVc) {
-        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-        _talkingVc.tableView.backgroundColor = [UIColor whiteColor];
-        _talkingVc.roomID = _chatRoomID;
-    }
-    return _talkingVc;
-}
+//- (TalkingViewController *)talkingVc {
+//    if (!_talkingVc) {
+//        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+//        _talkingVc.tableView.backgroundColor = [UIColor whiteColor];
+//        _talkingVc.roomID = _chatRoomID;
+//    }
+//    return _talkingVc;
+//}
 #pragma mark  - 直播全屏
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -901,6 +897,12 @@
         _sendMessageView = [[LivingSendMessageView alloc] init];
         _sendMessageView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         _sendMessageView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _sendMessageView.sendBlock = ^(NSString *text){
+            if (text.length != 0) {
+                [weakSelf.talkingVc sendTextMessage:text];
+            }
+        };
     }
     return _sendMessageView;
 }
@@ -945,8 +947,6 @@
 }
 // 横屏转竖屏
 - (void)forceOrientationPriate {
-//    AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    appDelegate.isLandscape = NO;
     
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
@@ -960,19 +960,35 @@
     _isLandscape = YES;
     self.baseScrollView.hidden = NO;
     self.centerView.hidden = NO;
+   
     [self.talkingVc.tableView removeFromSuperview];
-    [self.baseScrollView addSubview:self.talkingVc.tableView];
+    [self.baseScrollView addSubview:self.talkingVc.view];
+    [self.childVCS replaceObjectAtIndex:1 withObject:self.talkingVc];
+    [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
+    
+//    [self.talkingVc.tableView remakeConstraints:^(MASConstraintMaker *make) {
+//        make.width.equalTo(SCREEN_WIDTH);
+//        make.height.equalTo(self.baseScrollView.height);
+//        make.top.equalTo(self.baseScrollView.top);
+//        make.left.equalTo(self.baseScrollView.left).offset(SCREEN_WIDTH);
+//    }];
+    [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(SCREEN_WIDTH);
+        make.height.equalTo(self.baseScrollView.height);
+        make.top.equalTo(self.baseScrollView.top);
+        make.left.equalTo(self.baseScrollView.left).offset(SCREEN_WIDTH);
+    }];
+
+    self.talkingVc.isNotification = YES;
+
     self.talkingVc.tableView.alpha = 1;
     self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     
-    
     [self makeLiveSubviewConstraint];
-    [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
 }
 // 竖屏转横屏
 - (void)forceOrientationLandscapeRight {
-//    AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    appDelegate.isLandscape = YES;
+
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
@@ -984,15 +1000,18 @@
     }
     [UIViewController attemptRotationToDeviceOrientation];
     _isLandscape = NO;
+    
+    
     [self.talkingVc.tableView removeFromSuperview];
     [self.livePlayer.playerView addSubview:self.talkingVc.tableView];
+    self.talkingVc.isNotification = NO;
     self.talkingVc.tableView.alpha = 0.4;
     self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
 
     [self makeliveLancseConstraint];
     self.baseScrollView.hidden = YES;
     self.centerView.hidden = YES;
-
+    [self focusKeyboardShow];
 }
 // 1. 设置样式
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -1038,19 +1057,21 @@
 }
 - (void)addChildViewControllers {
     
-    self.talkingVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-    [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
-    [self.baseScrollView addSubview:self.talkingVc.tableView];
-    [self addChildViewController:_talkingVc];
-
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    [self.childVCS replaceObjectAtIndex:1 withObject:dogShowVC];
+    [self.childVCS replaceObjectAtIndex:0 withObject:dogShowVC];
     [self addChildViewController:dogShowVC];
+    
+    TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+    //    [self.baseScrollView addSubview:self.talkingVc.tableView];
+    Vc.roomID = _chatRoomID;
+    self.talkingVc = Vc;
+    [self.childVCS replaceObjectAtIndex:1 withObject:Vc];
+    [self addChildViewController:Vc];
     
     if (_liverId.length == 0) {
         _liverId = EaseTest_Liver;
@@ -1152,13 +1173,13 @@
         
         __weak typeof(self) weakSelf = self;
         _centerView.talkBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
             return YES;
@@ -1184,5 +1205,52 @@
     }
     return _childTitles;
 }
+
+// 监听键盘
+- (void)focusKeyboardShow {
+    //注册键盘出现的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    //注册键盘消失的通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+//    //监听是否触发home键挂起程序.
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
+//                                                 name:UIApplicationWillResignActiveNotification object:nil];
+//    //监听是否重新进入程序程序.
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:)
+//                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    //键盘高度
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat h = keyBoardFrame.size.height;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.bottom).offset(-h);
+            make.left.right.equalTo(self.view);
+            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+        }];
+        
+    }];
+}
+
+-(void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view.bottom);
+            make.left.right.equalTo(self.view);
+            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+        }];
+    }];
+}
+
 
 @end

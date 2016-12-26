@@ -108,22 +108,30 @@ static NSString *cellid = @"SellerNoInputcell";
         UIButton *deleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [deleBtn sizeToFit];
         [deleBtn setImage:[UIImage imageNamed:@"-单删除"] forState:(UIControlStateNormal)];
-        [deleBtn addTarget:self action:@selector(deleSingleHistorydata) forControlEvents:(UIControlEventTouchDown)];
+        [deleBtn addTarget:self action:@selector(btnClicked:event:) forControlEvents:(UIControlEventTouchDown)];
         cell.accessoryView = deleBtn;
         
         return cell;
     }
     return nil;
 }
+- (void)btnClicked:(id)sender event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self];
+    NSIndexPath *indexPath = [self indexPathForRowAtPoint:currentTouchPosition];
+    if (indexPath != nil) {
+        [self tableView:self accessoryButtonTappedForRowWithIndexPath:indexPath];
+    }
+}
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     DLog(@"%ld", indexPath.row);
     NSString *history = self.historyDataArr[indexPath.row];
     
     [self.historyDataArr removeObject:history];
-    if (self.historyDataArr.count != 0) {
         [[NSUserDefaults standardUserDefaults] setObject:self.historyDataArr forKey:@"DOGTYPEHISSTORY"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-    }
     [self reloadData];
 //    [self reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationAutomatic)];
 }

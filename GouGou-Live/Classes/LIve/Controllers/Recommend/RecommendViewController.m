@@ -69,7 +69,6 @@
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
-        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
         if (successJson[@"data"][@"num"] == 0) { // 如果为0刷新
             [self.tableView reloadData];
         }
@@ -377,6 +376,7 @@
     
     // 上下拉刷新
     self.baseScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
         self.noneView.hidden = YES;
         [self getRequestLiveList];
         [self.baseScrollView.mj_header endRefreshing];
@@ -473,10 +473,9 @@
             
 //            __weak typeof(sizeView) weakView = sizeView;
             sizeView.bottomBlock = ^(DogCategoryModel *sizeModel){
-                
                 [weakSelf getRequestFilterLiveListWithSize:sizeModel];
             };
-                    };
+        };
         _filtView.ageBlock = ^(){
             DogAgeFilter *ageView = [[DogAgeFilter alloc] init];
             NSDictionary *dict = @{

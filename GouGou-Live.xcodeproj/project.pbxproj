@@ -44,6 +44,7 @@
 		044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D3FE81DF6E7890076672E /* MediaStreamingVc.m */; };
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
 		044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */; };
+		044E86DE1E11392700FD89A2 /* BanaerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DD1E11392600FD89A2 /* BanaerViewController.m */; };
 		044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
@@ -620,6 +621,8 @@
 		044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerDetailModel.m; sourceTree = "<group>"; };
 		044E86D91E0FEA4300FD89A2 /* FMDBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBUser.h; sourceTree = "<group>"; };
 		044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBUser.m; sourceTree = "<group>"; };
+		044E86DC1E11392600FD89A2 /* BanaerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BanaerViewController.h; sourceTree = "<group>"; };
+		044E86DD1E11392600FD89A2 /* BanaerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BanaerViewController.m; sourceTree = "<group>"; };
 		044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamChatRoomVcViewController.h; sourceTree = "<group>"; };
 		044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamChatRoomVcViewController.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
@@ -3015,6 +3018,8 @@
 			children = (
 				0479B4DB1DCADC7B00CB288A /* RecommendViewController.h */,
 				0479B4DC1DCADC7B00CB288A /* RecommendViewController.m */,
+				044E86DC1E11392600FD89A2 /* BanaerViewController.h */,
+				044E86DD1E11392600FD89A2 /* BanaerViewController.m */,
 			);
 			path = Recommend;
 			sourceTree = "<group>";
@@ -5011,6 +5016,7 @@
 				046BEFC71DE4696600BC32E9 /* EMAudioRecorderUtil.m in Sources */,
 				04CE13E31DDC488100EB8777 /* SellerAcceptRateCell.m in Sources */,
 				04EA2ADC1DDDB9530023D9A8 /* SellerProtectApplyRefundView.m in Sources */,
+				044E86DE1E11392700FD89A2 /* BanaerViewController.m in Sources */,
 				046BF02D1DE4696600BC32E9 /* EaseBubbleView+Location.m in Sources */,
 				040891B11DFE81DC006DF570 /* HaveCommitCertificateView.m in Sources */,
 				0471ADB51E0500D800E11DE4 /* HaveNoneLiveView.m in Sources */,

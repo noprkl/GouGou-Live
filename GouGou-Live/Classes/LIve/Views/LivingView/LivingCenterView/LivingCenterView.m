@@ -48,19 +48,20 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    [self.talkBtn makeConstraints:^(MASConstraintMaker *make) {
+    [self.dogBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
         make.left.equalTo(self.left);
         make.width.equalTo(SCREEN_WIDTH / 4);
     }];
     
-    [self.dogBtn makeConstraints:^(MASConstraintMaker *make) {
+    [self.talkBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
         make.right.equalTo(self.centerX);
         make.width.equalTo(SCREEN_WIDTH / 4);
     }];
+    
     [self.serviceBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
@@ -84,10 +85,10 @@
     if (!_talkBtn) {
         _talkBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         
-        _talkBtn.selected = YES;
-        _talkBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        
-        self.lastBtn = _talkBtn;
+//        _talkBtn.selected = YES;
+//        _talkBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+//        
+//        self.lastBtn = _talkBtn;
         
         [_talkBtn addTarget:self action:@selector(clicktalkBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -98,6 +99,10 @@
     if (!_dogBtn) {
         _dogBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         _dogBtn.backgroundColor = [UIColor whiteColor];
+        _dogBtn.selected = YES;
+        _dogBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        
+        self.lastBtn = _dogBtn;
 
         [_dogBtn addTarget:self action:@selector(clickdogBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         

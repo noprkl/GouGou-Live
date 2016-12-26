@@ -21,6 +21,8 @@
 #import "CreateLiveViewController.h" // 创建直播
 #import "FocusAndFansModel.h" 
 #import "PersonalMessageModel.h"
+#import <FMDB.h>
+#import "FMDBUser.h"
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -97,13 +99,54 @@
             DLog(@"%@", successJson);
             // 得到关注人的人
             self.focusArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            //把关注的人存到本地
-            NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
-            NSString * fileName = [docDir stringByAppendingPathComponent:FocusFile];
-            [self.focusArray writeToFile:fileName atomically:YES];
+     
+//            //把关注的人存到本地
+//            // 单例
+//            FMDBUser *fmdbTool = [FMDBUser tool];
+//            // 建表
+//            FMDatabase * database = [fmdbTool getDBWithDBName:Focus];
+//            // 清除表数据
+//            [fmdbTool clearDatabase:database from:Focus];
+//            for (FocusAndFansModel *model in self.focusArray) {
+//                NSDictionary *dict = @{
+//                                       Focus:@(model.userFanId)
+//                                       };
+//                [fmdbTool DataBase:database insertKeyValues:dict intoTable:Focus];
+//            }
+//            
+//            FMDatabase *dataBase = [FMDatabase databaseWithPath:[NSString cachePathWithfileName:Focus]];
+//            if ([dataBase open] ) {
+//                // 创建表
+//                NSString *sql = [NSString stringWithFormat:@"create table if not exists %@ (id integer primary key autoincrement, %@ integer);", Focus, Focus];
+//                [dataBase executeUpdate:sql];
+//                // 删除数据
+//                [dataBase executeUpdate:[NSString stringWithFormat:@"delete from %@;", Focus]];
+//                // 添加数据 把Focus插入到Focus
+//                for (FocusAndFansModel *model in self.focusArray) {
+//                    NSString *add = [NSString stringWithFormat:@"insert into %@ (%@) values (%ld);", Focus, Focus, model.userFanId];
+//                    [dataBase executeStatements:add];
+//                }
+//                [dataBase close];
+//                
+//            }else{
+//                DLog(@"打开失败");
+//            }
+            
+            
+            NSString *filePath = [NSString cachePathWithfileName:Focus];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if (![fileManager fileExistsAtPath:filePath]) {
+                [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+            }
+            
+            NSMutableArray *arr = [NSMutableArray array];
+            for (FocusAndFansModel *model in self.focusArray) {
+                [arr addObject:@(model.userFanId)];
+            }
+            [arr writeToFile:filePath atomically:YES];
             
             [UserInfos sharedUser].focusCount = self.focusArray.count;
-
+            
             [self.tableView reloadData];
         }
 
@@ -130,7 +173,6 @@
     }];
 }
 
-
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -140,6 +182,15 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex:0];
     DLog(@"%@", docDir);
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        if ([UserInfos getUser]) {
+            [self postRequestGetFans];
+            [self postRequestGetFocus];
+            [self postGetUserAsset];
+            [self getrequestPersonalMessage];
+        }
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -155,7 +206,6 @@
         [self postGetUserAsset];
         [self getrequestPersonalMessage];
     }
-
 
     if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
         _dataSource = @[@[@"账户", @"我的订单", @"收货地址", @"卖家中心"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];

@@ -38,7 +38,7 @@
 }
 
 - (void)setSearchModel:(SearchFanModel *)searchModel {
-    self.selectBtn.selected = NO;
+//    self.selectBtn.selected = NO;
     _searchModel = searchModel;
     if (searchModel.userImgUrl != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:searchModel.userImgUrl];
@@ -50,15 +50,21 @@
     self.userNameLabel.text = searchModel.userNickName;
     self.userSignLabel.text = searchModel.userMotto;
     // 判断model的id是否在列表中，如果是就选中，没有就选不中
-    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
-    NSString * fileName = [docDir stringByAppendingPathComponent:FocusFile];
-    NSArray * dataArr = [NSArray arrayWithContentsOfFile:fileName];
-    for (FocusAndFansModel *model in dataArr) {
-        if (model.userFanId == [searchModel.ID intValue]) {
-            self.selectBtn.selected = YES;
-        }else{
-            self.selectBtn.selected = NO;
-        }
+//    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+//    NSString * fileName = [docDir stringByAppendingPathComponent:FocusFile];
+//    NSArray * dataArr = [NSArray arrayWithContentsOfFile:fileName];
+//    for (FocusAndFansModel *model in dataArr) {
+//        if (model.userFanId == [searchModel.ID intValue]) {
+//            self.selectBtn.selected = YES;
+//        }else{
+//            self.selectBtn.selected = NO;
+//        }
+//    }
+    
+    if ([searchModel.state integerValue] == 1) {
+        self.selectBtn.selected = YES;
+    }else if ([searchModel.state integerValue] == 0){
+        self.selectBtn.selected = NO;
     }
 }
 - (IBAction)clickSelectBtn:(UIButton *)sender {
@@ -67,6 +73,10 @@
     if (_selectBlock) {
         _selectBlock(sender.selected);
     }
+}
+- (void)setIsSelect:(BOOL)isSelect {
+    _isSelect = isSelect;
+    self.selectBtn.selected = isSelect;
 }
 - (void)setIsHid:(BOOL)isHid {
   

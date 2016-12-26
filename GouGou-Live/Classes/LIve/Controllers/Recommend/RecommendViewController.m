@@ -18,7 +18,8 @@
 #import "DogAgeFilter.h"
 #import "DogPriceFilter.h"
 
-#import "LivingViewController.h"
+#import "LivingViewController.h"// 直播
+#import "PlayBackViewController.h"// 回放
 #import "LiveViewCellModel.h"
 
 #import "NoneFocusView.h"
@@ -543,18 +544,33 @@
 }
 - (void)pushToLivingVc:(LiveViewCellModel *)model products:(NSArray *)dogInfos {
     DLog(@"%@", model);
-    LivingViewController *livingVC = [[LivingViewController alloc] init];
-    livingVC.liveID = model.liveId;
-    livingVC.liverId = model.ID;
-    livingVC.liverIcon = model.userImgUrl;
-    livingVC.liverName = model.merchantName;
-    livingVC.doginfos = dogInfos;
-    livingVC.watchCount = model.viewNum;
-    livingVC.chatRoomID = model.chatroom;
-    livingVC.state = model.status;
-    livingVC.isLandscape = NO;
-    livingVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:livingVC animated:YES];
+    if ([model.status isEqualToString:@"1"]) {
+        LivingViewController *livingVC = [[LivingViewController alloc] init];
+        livingVC.liveID = model.liveId;
+        livingVC.liverId = model.ID;
+        livingVC.liverIcon = model.userImgUrl;
+        livingVC.liverName = model.merchantName;
+        livingVC.doginfos = dogInfos;
+        livingVC.watchCount = model.viewNum;
+        livingVC.chatRoomID = model.chatroom;
+        livingVC.state = model.status;
+        livingVC.isLandscape = NO;
+        livingVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:livingVC animated:YES];
+    }
+    if ([model.status isEqualToString:@"3"]) {
+        PlayBackViewController *livingVC = [[PlayBackViewController alloc] init];
+        livingVC.liveID = model.liveId;
+        livingVC.liverId = model.ID;
+        livingVC.liverIcon = model.userImgUrl;
+        livingVC.liverName = model.merchantName;
+        livingVC.doginfos = dogInfos;
+        livingVC.watchCount = model.viewNum;
+        livingVC.chatRoomID = model.chatroom;
+        livingVC.isLandscape = NO;
+        livingVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:livingVC animated:YES];
+    }
 }
 - (NSMutableArray *)dataSource {
     if (!_dataSource) {

@@ -64,10 +64,8 @@
   
     self.userName.text = adressModel.userName;
     self.phoneTextfiled.text = adressModel.userTel;
-    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", adressModel.userProvince, adressModel.userCity, adressModel.userDistrict, adressModel.userAddress];
+    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@,%@", adressModel.userProvince, adressModel.userCity, adressModel.userDistrict,adressModel.street, adressModel.userAddress];
     self.detailAddress.text = adress;
-    
-    
    
     if (adressModel.isDefault == 1) {
         self.duihaoImageBtn.selected = YES;
@@ -85,66 +83,51 @@
     __weak typeof(self) weakself = self;
     
     [_spaceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.left.right.equalTo(weakself);
         make.height.equalTo(10);
-        
     }];
     
     [_relationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.spaceView.bottom).offset(10);
         make.left.equalTo(weakself.left).offset(10);
         make.height.equalTo(15);
-        
     }];
     
     [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(weakself.relationLabel.right).offset(10);
         make.centerY.equalTo(weakself.relationLabel.centerY);
         make.size.equalTo(CGSizeMake(200, 15));
-        
     }];
 
     [_phoneTextfiled mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.relationLabel.centerY);
         make.height.equalTo(15);
-        
     }];
 
     [_addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.relationLabel.bottom).offset(10);
         make.left.equalTo(weakself.left).offset(10);
-        make.height.equalTo(15);
-        
+        make.size.equalTo(CGSizeMake(35, 25));
     }];
 
     [_detailAddress mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.centerY.equalTo(weakself.addressLabel.centerY);
         make.left.equalTo(weakself.addressLabel.right).offset(10);
-        make.height.equalTo(15);
-        
+        make.height.equalTo(30);
+        make.right.equalTo(weakself.right).offset(-20);
     }];
 
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.detailAddress.bottom).offset(10);
         make.left.equalTo(weakself.left).offset(10);
         make.right.equalTo(weakself.right).offset(-10);
         make.height.equalTo(1);
-        
     }];
     
     [_duihaoImageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(self.left).offset(10);
         make.bottom.equalTo(self.bottom).offset(-10);
-        
     }];
     
     [_acquiesceAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -221,7 +204,8 @@
         _detailAddress = [[UILabel alloc] init];
         _detailAddress.text = @"北京，北京市，朝阳区，将台将府家园";
         _detailAddress.textColor  = [UIColor colorWithHexString:@"#666666"];
-        _detailAddress.font = [UIFont systemFontOfSize:14];
+        _detailAddress.font = [UIFont systemFontOfSize:12];
+        _detailAddress.numberOfLines = 0;
     }
     return _detailAddress;
 }

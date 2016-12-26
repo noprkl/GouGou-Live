@@ -382,7 +382,6 @@ static NSString *cellid = @"cellid";
     NSInteger index = swit.tag - 50;
 //    UISwitch *switc = (UISwitch *)self.accessosys[index];
     if (index == 0) {
-        
         BOOL isButtonOn = [swit isOn];
         if (isButtonOn) {
             DLog(@"微信绑定");
@@ -391,6 +390,7 @@ static NSString *cellid = @"cellid";
                 WXprommt.message = @"你将要绑定微信!";
                 [WXprommt show];
                 WXprommt.sureBlock = ^(UIButton *btn){
+                    
                     [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_WechatSession currentViewController:self completion:^(id result, NSError *error) {
                         //        [self.tableView reloadData];
                         UMSocialAuthResponse *authresponse = result;
@@ -451,7 +451,6 @@ static NSString *cellid = @"cellid";
             swit.on = !swit.on;
         };
     }
-
     }else if (index == 1){
         BOOL isButtonOn = [swit isOn];
         if (isButtonOn) {
@@ -564,8 +563,7 @@ static NSString *cellid = @"cellid";
             WBprommt.cancelBlock = ^(){
                 swit.on = !swit.on;
             };
-        }
-        }else {
+        } else {
             __block DeletePrommtView *WBprommt = [[DeletePrommtView alloc] init];
             WBprommt.message = @"你确定解绑微博？";
             [WBprommt show];
@@ -593,6 +591,7 @@ static NSString *cellid = @"cellid";
                 swit.on = !swit.on;
             };
         }
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -14,6 +14,9 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - HappyDNS (0.3.10)
   - Masonry (1.0.2)
   - MJExtension (3.0.13)
@@ -67,6 +70,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
+  - FMDB (~> 2.6.2)
   - Masonry (~> 1.0.1)
   - MJExtension (~> 3.0.13)
   - MJRefresh (~> 3.1.12)
@@ -82,6 +86,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
@@ -95,6 +100,6 @@ SPEC CHECKSUMS:
   TZImagePickerController: cbfd57ba947263759b860f74132dd1bc33125afc
   UMengUShare: 418c2eaf7d8ba939916111d622bf5ea86c86285a
 
-PODFILE CHECKSUM: 33894218aa001b7c19b2fb76c0a2126965f9a311
+PODFILE CHECKSUM: e8ea79855c40e7c0a22d8edb384a32d7fd3427ce
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.0.1

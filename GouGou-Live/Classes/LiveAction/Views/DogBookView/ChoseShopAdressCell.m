@@ -30,7 +30,7 @@
     _acceptAdress = acceptAdress;
     self.shopOwner.text = acceptAdress.userName;
     self.shopPhone.text = acceptAdress.userTel;
-    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", acceptAdress.userProvince, acceptAdress.userCity, acceptAdress.userDistrict, acceptAdress.userAddress];
+    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@,%@", acceptAdress.userProvince, acceptAdress.userCity, acceptAdress.userDistrict,acceptAdress.street, acceptAdress.userAddress];
     self.shopAdress.text = adress;
     if (acceptAdress.isDefault == 1) {
         self.AdressLabel.text = @"默认地址";

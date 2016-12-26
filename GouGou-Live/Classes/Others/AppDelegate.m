@@ -18,6 +18,7 @@
 
 /** tabbar */
 @property (strong, nonatomic) UITabBarController *tabBC;
+
 @end
 
 @implementation AppDelegate
@@ -101,5 +102,19 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [AppDelegate setEaseMobEnterForeground:application];
+}
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    if (_isLandscape) {
+        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+        if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+            return UIInterfaceOrientationMaskLandscape;
+        }else { // 横屏后旋转屏幕变为竖屏
+            return UIInterfaceOrientationMaskPortrait;
+        }
+    }
+    else
+        {
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+        }
 }
 @end

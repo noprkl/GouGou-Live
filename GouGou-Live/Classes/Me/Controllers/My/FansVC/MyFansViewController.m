@@ -10,7 +10,7 @@
 #import "MyFocusTableCell.h"
 #import "FocusAndFansModel.h"
 #import "PersonalPageController.h" // 个人主页
-
+#import "FMDBUser.h"
 @interface MyFansViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
@@ -90,6 +90,27 @@ static NSString *cellid = @"MyFocusCell";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FocusAndFansModel *model = self.dataArr[indexPath.row];
     cell.model = model;
+//    FMDatabase *dataBase = [[FMDBUser tool] getDBWithDBName:Focus];
+//    [[FMDBUser tool] DataBase:dataBase selectKeyTypes:@{} fromTable:Focus whereCondition:@{Focus:@(model.userFanId)}];
+    //
+    FMDatabase *dataBase = [FMDatabase databaseWithPath:[NSString cachePathWithfileName:Focus]];
+    if ([dataBase open] ) {
+
+        // 查询数据
+        FMResultSet *reset = [dataBase executeQuery:[NSString stringWithFormat:@"select %@ from %@ where %@ = %ld", Focus, Focus, Focus, model.userFanId]];
+        NSInteger focus = [reset intForColumn:[NSString stringWithFormat:@"%@", Focus]];
+        if (focus) {
+            cell.isSelect = YES;
+        }else{
+            cell.isSelect = NO;
+        }
+        [dataBase close];
+        
+    }else{
+        DLog(@"打开失败");
+    }
+
+    
     
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {

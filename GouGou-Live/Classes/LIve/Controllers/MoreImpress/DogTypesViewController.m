@@ -16,6 +16,7 @@
 #import "DogTypesView.h"
 #import "MoreImpressViewController.h"
 #import "NoneFocusView.h"
+#import "PlayBackViewController.h"
 
 @interface DogTypesViewController ()<UIScrollViewDelegate>
 
@@ -469,20 +470,39 @@
         __weak typeof(self) weakSelf = self;
         _liveTableView.cellBlock = ^(LiveViewCellModel *model, NSArray *dogInfos){
             
-            LivingViewController *livingVC = [[LivingViewController alloc] init];
-            livingVC.liveID = model.liveId;
-            livingVC.liverName = model.merchantName;
-            livingVC.doginfos = dogInfos;
-            livingVC.chatRoomID = model.chatroom;
-            livingVC.state = model.status;
-            livingVC.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:livingVC animated:YES];
+            if ([model.status isEqualToString:@"1"]) {
+                LivingViewController *livingVC = [[LivingViewController alloc] init];
+                livingVC.liveID = model.liveId;
+                livingVC.liverId = model.ID;
+                livingVC.liverIcon = model.userImgUrl;
+                livingVC.liverName = model.merchantName;
+                livingVC.doginfos = dogInfos;
+                livingVC.watchCount = model.viewNum;
+                livingVC.chatRoomID = model.chatroom;
+                livingVC.state = model.status;
+                livingVC.isLandscape = NO;
+                livingVC.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:livingVC animated:YES];
+            }
+            if ([model.status isEqualToString:@"3"]) {
+                PlayBackViewController *livingVC = [[PlayBackViewController alloc] init];
+                livingVC.liveID = model.liveId;
+                livingVC.liverId = model.ID;
+                livingVC.liverIcon = model.userImgUrl;
+                livingVC.liverName = model.merchantName;
+                livingVC.doginfos = dogInfos;
+                livingVC.watchCount = model.viewNum;
+                livingVC.chatRoomID = model.chatroom;
+                livingVC.isLandscape = NO;
+                livingVC.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:livingVC animated:YES];
+            }
             
         };
     }
     return _liveTableView;
 }
-
+   
 - (NoneFocusView *)noneView {
     if (!_noneView) {
         _noneView = [[NoneFocusView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH, SCREEN_HEIGHT - 154)];

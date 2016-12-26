@@ -48,20 +48,37 @@ static NSString *cellid = @"TalkTableViewCell";
     
     return model;
 }
-- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)messageModel {
-    TalkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    cell.OwnerLabel.text = messageModel.nickname;
-   
-    // 聊天内容
-    EMMessage *message = messageModel.message;
-    EMMessageBody *msgBody = message.body;
-    EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
-    NSString *txt = textBody.text;
-    cell.contentLabel.text = txt;
-//    cell.contentLabel.text = messageModel.message.
-//    cell.contentLabel.text = messageModel.m;
-    
-    return cell;
+//- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)messageModel {
+//    TalkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+//    cell.OwnerLabel.text = messageModel.nickname;
+//   
+//    // 聊天内容
+//    EMMessage *message = messageModel.message;
+//    EMMessageBody *msgBody = message.body;
+//    EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
+//    NSString *txt = textBody.text;
+//    cell.contentLabel.text = txt;
+////    cell.contentLabel.text = messageModel.message.
+////    cell.contentLabel.text = messageModel.m;
+//    
+//    return cell;
+//}
+//具体创建自定义Cell的样例：
+- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)model
+{
+    //样例为如果消息是文本消息显示用户自定义cell
+    if (model.bodyType == EMMessageBodyTypeText) {
+        NSString *CellIdentifier = [TalkTableViewCell cellIdentifierWithModel:model];
+        //CustomMessageCell为用户自定义cell,继承了EaseBaseMessageCell
+        TalkTableViewCell *cell = (TalkTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[TalkTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        cell.model = model;
+        return cell;
+    }
+    return nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

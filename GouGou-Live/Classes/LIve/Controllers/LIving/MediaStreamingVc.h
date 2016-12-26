@@ -20,7 +20,7 @@
 //
 
 @property (nonatomic, strong) NSString *streamPublish; /**< 推流地址 */
-
+@property (nonatomic, strong) NSString *streamRtmp; /**< 播放地址 */
 @property (nonatomic, strong) PLStream *stream; /**< 流对象 */
 
 @property (nonatomic, strong) NSString *liveID; /**< 直播参数 */

@@ -43,6 +43,7 @@
 		044D3FD51DF6C1C60076672E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D3FD11DF6C1C60076672E /* libWeChatSDK.a */; };
 		044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D3FE81DF6E7890076672E /* MediaStreamingVc.m */; };
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
+		044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */; };
 		044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
@@ -617,6 +618,8 @@
 		044D3FE81DF6E7890076672E /* MediaStreamingVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingVc.m; sourceTree = "<group>"; };
 		044D9B931DF44ED500C56B1D /* ProtectPowerDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerDetailModel.h; sourceTree = "<group>"; };
 		044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerDetailModel.m; sourceTree = "<group>"; };
+		044E86D91E0FEA4300FD89A2 /* FMDBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBUser.h; sourceTree = "<group>"; };
+		044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBUser.m; sourceTree = "<group>"; };
 		044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamChatRoomVcViewController.h; sourceTree = "<group>"; };
 		044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamChatRoomVcViewController.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
@@ -1609,10 +1612,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045C5CBF1DF53EC3000B8509 /* CoreTelephony.framework in Frameworks */,
+				046BEE9B1DE463A400BC32E9 /* libsqlite3.tbd in Frameworks */,
+				046BEE951DE4637E00BC32E9 /* libc++.tbd in Frameworks */,
 				0467954D1E0781230076F517 /* AVKit.framework in Frameworks */,
 				04EDC4AF1DFA9F64009C972D /* CoreLocation.framework in Frameworks */,
-				045C5CBF1DF53EC3000B8509 /* CoreTelephony.framework in Frameworks */,
-				046BEE951DE4637E00BC32E9 /* libc++.tbd in Frameworks */,
 				046BEE971DE4638A00BC32E9 /* libz.tbd in Frameworks */,
 				045C5CBD1DF53EA9000B8509 /* SystemConfiguration.framework in Frameworks */,
 				045C5CBB1DF53E50000B8509 /* AlipaySDK.framework in Frameworks */,
@@ -1626,7 +1630,6 @@
 				046BF03F1DE46B4E00BC32E9 /* CoreFoundation.framework in Frameworks */,
 				046BEE9D1DE463B100BC32E9 /* libstdc++.6.0.9.tbd in Frameworks */,
 				046BEFD01DE4696600BC32E9 /* libopencore-amrnb.a in Frameworks */,
-				046BEE9B1DE463A400BC32E9 /* libsqlite3.tbd in Frameworks */,
 				046BEFD11DE4696600BC32E9 /* libopencore-amrwb.a in Frameworks */,
 				046BEE931DE4636E00BC32E9 /* ImageIO.framework in Frameworks */,
 				046BEE911DE4636400BC32E9 /* MobileCoreServices.framework in Frameworks */,
@@ -1982,7 +1985,6 @@
 		045D51161DD953A5001854A8 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				04DAC9701DD21A9A0089236D /* MyFocusTableCell.h */,
 				045D51131DD9539E001854A8 /* MyPageHeaderView.h */,
 				045D51141DD9539E001854A8 /* MyPageHeaderView.m */,
 				045D51171DD960F7001854A8 /* MyPageDescView.h */,
@@ -3731,6 +3733,8 @@
 				043CBB571DF90C1D0096C9CE /* UIView+FontSize.m */,
 				61EF1DB51DFD17D40049FBBB /* NSAttributedString+DogOldPrice.h */,
 				61EF1DB61DFD17D40049FBBB /* NSAttributedString+DogOldPrice.m */,
+				044E86D91E0FEA4300FD89A2 /* FMDBUser.h */,
+				044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -4296,6 +4300,7 @@
 			children = (
 				04DAC9AE1DD3169E0089236D /* EditAlert */,
 				045D51161DD953A5001854A8 /* MyPage */,
+				04DAC9701DD21A9A0089236D /* MyFocusTableCell.h */,
 				04DAC9711DD21A9A0089236D /* MyFocusTableCell.m */,
 				04DAC9721DD21A9A0089236D /* MyFocusTableCell.xib */,
 				04DAC9731DD21A9A0089236D /* MyMessageView.h */,
@@ -4753,7 +4758,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -5179,6 +5184,7 @@
 				619395301DF828BD00EBC23B /* ChosePayStyleView.m in Sources */,
 				046F0B9C1DE2AB8B00D50D5C /* NicknameView.m in Sources */,
 				040891FA1DFEB91F006DF570 /* PaySuccessViewController.m in Sources */,
+				044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
 				04DAC9951DD21A9A0089236D /* MyMessageView.m in Sources */,
 				04A31F831DED4F4900BE175A /* AddUpdataImagesView.m in Sources */,

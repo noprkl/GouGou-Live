@@ -48,9 +48,7 @@
 
 @property(nonatomic, strong) UILabel * briefContentLabel; /**< 简介内容 */
 
-
 @property(nonatomic, assign) CGFloat viewHeight; /**< view高度 */
-
 
 @end
 
@@ -289,10 +287,9 @@
         _focusBtn.layer.masksToBounds = YES;
         
         [_focusBtn setTitle:@"关注" forState:(UIControlStateNormal)];
-
+        [_focusBtn setTitle:@"已关注" forState:(UIControlStateSelected)];
         _focusBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         [_focusBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
-        
         [_focusBtn addTarget:self action:@selector(clickFocusBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _focusBtn;

@@ -53,18 +53,57 @@ static NSString *cellid2 = @"NotificationMessageCell";
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
 
-    NSArray *allConversation = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+    NSArray *arr = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+    [self.arrConversion removeAllObjects];
     // 只要单聊对话
-    for (EMConversation *conversation in allConversation) {
+    for (EMConversation *conversation in arr) {
         if (conversation.type == EMConversationTypeChat) {
+//            [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+//                DLog(@"%@", aError);
+//            }];
             [self.arrConversion addObject:conversation];
         }
     }
-    
-    [self postRequestGetSystemPush];
-
     [self.tableView reloadData];
+
+    [self postRequestGetSystemPush];
 }
+//- (id<IConversationModel>)conversationListViewController:(EaseConversationListViewController *)conversationListViewController
+//                                    modelForConversation:(EMConversation *)conversation
+//{
+//    EaseConversationModel *model = [[EaseConversationModel alloc] initWithConversation:conversation];
+//    if (model.conversation.type == EMConversationTypeChat) {
+//        if ([[RobotManager sharedInstance] isRobotWithUsername:conversation.conversationId]) {
+//            model.title = [[RobotManager sharedInstance] getRobotNickWithUsername:conversation.conversationId];
+//        } else {
+//            UserProfileEntity *profileEntity = [[UserProfileManager sharedInstance] getUserProfileByUsername:conversation.conversationId];
+//            if (profileEntity) {
+//                model.title = profileEntity.nickname == nil ? profileEntity.username : profileEntity.nickname;
+//                model.avatarURLPath = profileEntity.imageUrl;
+//            }
+//        }
+//    } else if (model.conversation.type == EMConversationTypeGroupChat) {
+//        NSString *imageName = @"groupPublicHeader";
+//        if (![conversation.ext objectForKey:@"subject"])
+//            {
+//            NSArray *groupArray = [[EMClient sharedClient].groupManager getJoinedGroups];
+//            for (EMGroup *group in groupArray) {
+//                if ([group.groupId isEqualToString:conversation.conversationId]) {
+//                    NSMutableDictionary *ext = [NSMutableDictionary dictionaryWithDictionary:conversation.ext];
+//                    [ext setObject:group.subject forKey:@"subject"];
+//                    [ext setObject:[NSNumber numberWithBool:group.isPublic] forKey:@"isPublic"];
+//                    conversation.ext = ext;
+//                    break;
+//                }
+//            }
+//            }
+//        NSDictionary *ext = conversation.ext;
+//        model.title = [ext objectForKey:@"subject"];
+//        imageName = [[ext objectForKey:@"isPublic"] boolValue] ? @"groupPublicHeader" : @"groupPrivateHeader";
+//        model.avatarImage = [UIImage imageNamed:imageName];
+//    }
+//    return model;
+//}
 
 #pragma mark
 #pragma mark - 生命周期
@@ -85,11 +124,23 @@ static NSString *cellid2 = @"NotificationMessageCell";
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 重新获取数据
-        self.arrConversion = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+//        self.arrConversion = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+        NSArray *arr = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+        [self.arrConversion removeAllObjects];
+        // 只要单聊对话
+        for (EMConversation *conversation in arr) {
+            if (conversation.type == EMConversationTypeChat) {
+                //            [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+                //                DLog(@"%@", aError);
+                //            }];
+                [self.arrConversion addObject:conversation];
+            }
+        }
+        [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
     }];
     // 进入立即刷新
-    [self.tableView.mj_header beginRefreshing];
+//    [self.tableView.mj_header beginRefreshing];
 }
 
 #pragma mark
@@ -99,6 +150,12 @@ static NSString *cellid2 = @"NotificationMessageCell";
         _systemMessageArr = [NSArray array];
     }
     return _systemMessageArr;
+}
+- (NSMutableArray *)arrConversion {
+    if (!_arrConversion) {
+        _arrConversion = [NSMutableArray array];
+    }
+    return _arrConversion;
 }
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -147,6 +204,17 @@ static NSString *cellid2 = @"NotificationMessageCell";
         MessageListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid1];
         
         EMConversation *conversation = [self.arrConversion objectAtIndex:indexPath.row];
+        
+
+        NSString *filename = [NSString cachePathWithfileName:Focus];
+        NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
+        DLog(@"%@", focusArr);
+        DLog(@"%@", conversation.conversationId);
+        if ([focusArr containsObject:@([conversation.conversationId intValue])]) {
+            cell.isFocus.selected = YES;
+        }else{
+            cell.isFocus.selected = NO;
+        }
         
         if (conversation.type == EMConversationTypeChat) {
             if (conversation.latestMessage) {
@@ -314,8 +382,16 @@ static NSString *cellid2 = @"NotificationMessageCell";
             EMConversation *conversation = [self.arrConversion objectAtIndex:indexPath.row];
             
             [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:NO completion:^(NSString *aConversationId, EMError *aError) {
-                // 刷新
+                NSArray *arr = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+                [self.arrConversion removeAllObjects];
+                // 只要单聊对话
+                for (EMConversation *conversation in arr) {
+                    if (conversation.type == EMConversationTypeChat) {
+                        [self.arrConversion addObject:conversation];
+                    }
+                }
                 [self.tableView reloadData];
+
             }];
         }
     }

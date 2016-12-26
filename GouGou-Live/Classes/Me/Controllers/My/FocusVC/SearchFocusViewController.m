@@ -10,7 +10,7 @@
 #import "MyFocusTableCell.h"
 #import "SearchFanModel.h"
 #import "PersonalPageController.h" // 个人主页
-
+#import <FMDB.h>
 @interface SearchFocusViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
@@ -45,7 +45,8 @@ static NSString *cellid = @"MyFocusCell";
 - (void)clickSearchBottonAction {
     [self.titleInputView resignFirstResponder];
     NSDictionary *dict = @{
-                           @"user_nick_name":self.titleInputView.text
+                           @"user_nick_name":self.titleInputView.text,
+                           @"user_id":[UserInfos sharedUser].ID
                            };
     [self postRequestWithPath:API_Search_nick params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -105,7 +106,17 @@ static NSString *cellid = @"MyFocusCell";
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SearchFanModel *model = self.dataArr[indexPath.row];
+//    cell.selected = YES;
     cell.searchModel = model;
+
+//    NSString *filename = [NSString cachePathWithfileName:Focus];
+//    NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
+//    DLog(@"%@", focusArr);
+//    if ([focusArr containsObject:@([model.ID intValue])]) {
+//        cell.isSelect = NO;
+//    }else{
+//        cell.isSelect = YES;
+//    }
     
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {

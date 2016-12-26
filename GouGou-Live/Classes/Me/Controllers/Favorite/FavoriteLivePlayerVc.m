@@ -39,6 +39,8 @@
 
 // 播放状态
 @property (nonatomic, assign) BOOL isPlaying;
+// 播放完毕
+@property (nonatomic, assign) BOOL isFinish;
 
 @property (nonatomic, strong) NSString *playBackURL; /**< 回放地址 */
 
@@ -195,6 +197,7 @@
         if (_isSliding == NO) {
             [WeakSelf updateVideoSlider:currentPlayTime];
         }
+        _isFinish = NO;
     }];
 }
 
@@ -214,9 +217,8 @@
 - (void)playbackFinished:(NSNotification *)notification {
     DLog(@"视频播放完成通知");
     _playerItem = [notification object];
-    // 是否无限循环
-    [_playerItem seekToTime:kCMTimeZero]; // 跳转到初始
-    //    [_player play]; // 是否无限循环
+    _isFinish = YES;
+    self.playBtn.selected = YES;
 }
 
 #pragma mark-
@@ -275,6 +277,9 @@
 #pragma mark 播放 暂停
 - (void)play {
     _isPlaying = YES;
+    if (_isFinish) {
+        [_playerItem seekToTime:kCMTimeZero]; // 跳转到初始
+    }
     [self.player play]; // 调用avplayer 的play方法
     DLog(@"播放");
 }

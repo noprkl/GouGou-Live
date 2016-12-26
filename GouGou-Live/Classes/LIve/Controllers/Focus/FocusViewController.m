@@ -13,6 +13,7 @@
 #import "LiveTableView.h"
 #import "LiveViewCell.h" // 自定义cell
 #import "LivingViewController.h"
+#import "PlayBackViewController.h"
 
 @interface FocusViewController ()
 
@@ -156,17 +157,33 @@
 }
 - (void)pushToLivingVc:(LiveViewCellModel *)model products:(NSArray *)dogInfos {
     DLog(@"%@", model);
-    LivingViewController *livingVC = [[LivingViewController alloc] init];
-    livingVC.liveID = model.liveId;
-    livingVC.liverId = model.ID;
-    livingVC.liverIcon = model.userImgUrl;
-    livingVC.liverName = model.merchantName;
-    livingVC.doginfos = dogInfos;
-    livingVC.watchCount = model.viewNum;
-    livingVC.chatRoomID = model.chatroom;
-    livingVC.state = model.status;
-    livingVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:livingVC animated:YES];
+    if ([model.status isEqualToString:@"1"]) {
+        LivingViewController *livingVC = [[LivingViewController alloc] init];
+        livingVC.liveID = model.liveId;
+        livingVC.liverId = model.ID;
+        livingVC.liverIcon = model.userImgUrl;
+        livingVC.liverName = model.merchantName;
+        livingVC.doginfos = dogInfos;
+        livingVC.watchCount = model.viewNum;
+        livingVC.chatRoomID = model.chatroom;
+        livingVC.state = model.status;
+        livingVC.isLandscape = NO;
+        livingVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:livingVC animated:YES];
+    }
+    if ([model.status isEqualToString:@"3"]) {
+        PlayBackViewController *livingVC = [[PlayBackViewController alloc] init];
+        livingVC.liveID = model.liveId;
+        livingVC.liverId = model.ID;
+        livingVC.liverIcon = model.userImgUrl;
+        livingVC.liverName = model.merchantName;
+        livingVC.doginfos = dogInfos;
+        livingVC.watchCount = model.viewNum;
+        livingVC.chatRoomID = model.chatroom;
+        livingVC.isLandscape = NO;
+        livingVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:livingVC animated:YES];
+    }
 }
 
 - (NSMutableArray *)dataSource {

@@ -101,8 +101,9 @@ static NSString *userAssetKey = @"userAsset";
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     DLog(@"%@", paths);
+    
+//    [EMClient sharedClient].chatManager up
 }
-
 
 + (void)removeUser {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:usertelKey];

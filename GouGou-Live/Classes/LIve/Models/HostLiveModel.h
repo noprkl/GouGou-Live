@@ -20,6 +20,13 @@
 
 /** 主播名字 */
 @property (strong, nonatomic) NSString *userNickName;
+/** 主播头像 */
+@property (strong, nonatomic) NSString *userImgUrl;
+
+
+/** 主播ID */
+@property (strong, nonatomic) NSString *userId;
+
 
 @property (nonatomic, assign) NSInteger pNum; /**< 商品数量 */
 

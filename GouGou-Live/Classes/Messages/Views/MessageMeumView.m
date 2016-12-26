@@ -58,14 +58,14 @@ static NSString *cellid = @"MessageMeumView";
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataArr.count;
+    return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-        cell.textLabel.text = self.dataArr[indexPath.row];
+        cell.textLabel.text = self.dataPlist[indexPath.row];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
@@ -94,7 +94,7 @@ static NSString *cellid = @"MessageMeumView";
     self.lastcell = cell;
     
     if (_cellBlock) {
-        _cellBlock(self.dataArr[indexPath.row]);
+        _cellBlock(self.dataPlist[indexPath.row]);
     }
 }
 @end

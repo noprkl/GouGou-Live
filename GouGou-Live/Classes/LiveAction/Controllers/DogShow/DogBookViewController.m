@@ -325,6 +325,9 @@
     self.navigationController.navigationBarHidden = NO;
     self.hidesBottomBarWhenPushed = YES;
     [self postGetAdressRequest];
+   
+    // 通知监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

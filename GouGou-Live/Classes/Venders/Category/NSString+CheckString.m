@@ -158,4 +158,9 @@
     NSString *ageText = [NSString stringWithFormat:@"%@%@",year, mouth];
     return ageText;
 }
+
++ (NSString *)cachePathWithfileName:(NSString *)filename {
+    
+    return [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", filename]];
+}
 @end

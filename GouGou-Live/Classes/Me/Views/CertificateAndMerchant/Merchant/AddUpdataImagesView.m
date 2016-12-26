@@ -8,10 +8,10 @@
 
 #import "AddUpdataImagesView.h"
 #import "AddUpdataImagesCell.h"
-
+#import "ShareBtn.h"
 @interface AddUpdataImagesView ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property(nonatomic, strong) UIButton *addBtn; /**< 添加按钮 */
+@property(nonatomic, strong) ShareBtn *addBtn; /**< 添加按钮 */
 
 @property(nonatomic, assign) CGFloat W; /**< 宽高 */
 
@@ -63,10 +63,13 @@ static NSString *cellid = @"AddUpdataImagesCell";
     }
     return _collectionView;
 }
-- (UIButton *)addBtn {
+- (ShareBtn *)addBtn {
     if (!_addBtn) {
-        _addBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _addBtn = [ShareBtn buttonWithType:(UIButtonTypeCustom)];
         [_addBtn setImage:[UIImage imageNamed:@"添加照片"] forState:(UIControlStateNormal)];
+        [_addBtn setTitle:@"添加照片" forState:(UIControlStateNormal)];
+        _addBtn.tintColor = [UIColor colorWithHexString:@"#666666"];
+        _addBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         _addBtn.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
         _addBtn.layer.borderWidth = 1;
         _addBtn.frame = CGRectMake(10, 10, _W, _W);

@@ -12,6 +12,7 @@ target 'GouGou-Live' do
 	pod 'SDCycleScrollView', '~> 1.65'
 	pod 'MJRefresh', '~> 3.1.12'
 	pod 'TZImagePickerController'	
+	pod 'FMDB', '~> 2.6.2'
 
 	
 	# U-Share SDK UI模块（分享面板，建议添加）

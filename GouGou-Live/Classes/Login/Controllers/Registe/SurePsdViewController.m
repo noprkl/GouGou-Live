@@ -32,17 +32,18 @@
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
         if ([successJson[@"message"] isEqualToString:@"注册成功"]) {
-            NSUserDefaults * phoneDefaults = [NSUserDefaults standardUserDefaults];
-            NSString * phoneText = [phoneDefaults objectForKey:@"phoneNum"];
+//            // 环信注册
+//            EMError *error = [[EMClient sharedClient] registerWithUsername:_telNumber password:_telNumber];
+//            if (error==nil) {
+//                DLog(@"环信注册成功");
+//                if (!error) {
+//                    //设置是否自动登录
+//                    [[EMClient sharedClient].options setIsAutoLogin:YES];
+//                }
+//            }
             
-            if (phoneText == self.telNumber) {
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                NSString * psdString = [UserInfos sharedUser].userPsd;
-                
-                [defaults setObject:psdString forKey:@"psdString"];
-            }
-            // 同时注册环信
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
                 
                 [self.navigationController pushViewController:sureSuccVC animated:YES];

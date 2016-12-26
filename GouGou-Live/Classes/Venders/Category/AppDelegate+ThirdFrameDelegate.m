@@ -69,7 +69,7 @@
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxbef5a0656069e8e2" appSecret:@"ac07f6f1f055271566e664b5e8927147" redirectURL:@"http://mobile.umeng.com/social"];
     
     //设置分享到QQ互联的appKey和appSecret
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"xbzoAbVrckWipE6W"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105774632"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
     
     //设置新浪的appKey和appSecret
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"2247552123"  appSecret:@"b8dbc8631b270432bade30f503ebf4c1" redirectURL:@"http://sns.whalecloud.com/sina2/callback"];

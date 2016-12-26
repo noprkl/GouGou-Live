@@ -198,6 +198,7 @@ static NSString *cellid = @"SizeFilterCellID";
         _agePicker.backgroundColor = [UIColor whiteColor];
         _agePicker.delegate = self;
         _agePicker.dataSource = self;
+        _agePicker.tintColor = [UIColor colorWithHexString:@"#f6f6f6"];
     }
     return _agePicker;
 }

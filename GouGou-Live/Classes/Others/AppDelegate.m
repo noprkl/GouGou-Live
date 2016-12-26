@@ -29,7 +29,9 @@
     self.window.backgroundColor = [UIColor groupTableViewBackgroundColor];
     BaseTabBarController *tabBC = [[BaseTabBarController alloc] init];
     [tabBC.tabBar setBackgroundColor:[UIColor whiteColor]];
+    
     self.tabBC = tabBC;
+    
     self.window.rootViewController = tabBC;
     
     [self.window makeKeyAndVisible];

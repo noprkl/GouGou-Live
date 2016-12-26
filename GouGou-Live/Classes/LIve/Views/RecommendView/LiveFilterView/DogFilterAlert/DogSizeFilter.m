@@ -145,7 +145,7 @@ static NSString *cellid = @"SizeFilterCellID";
     label.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor whiteColor];
     label.text = model.name;
-    label.textColor = [UIColor colorWithHexString:@"666666"];
+    label.textColor = [UIColor colorWithHexString:@"#666666"];
     label.font = [UIFont systemFontOfSize:14];
     label.textAlignment = NSTextAlignmentCenter;
     [cell.contentView addSubview:label];

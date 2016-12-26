@@ -306,9 +306,8 @@
 }
 
 - (void)changeBtnColor:(UIButton *)btn {
-
+    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
-
 }
 
 - (void)awakeFromNib {

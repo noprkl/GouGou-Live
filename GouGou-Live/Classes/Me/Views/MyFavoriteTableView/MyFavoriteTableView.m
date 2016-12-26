@@ -96,7 +96,8 @@ static NSString * dogCell = @"dogCellID";
         }
         PlayBackModel *model = self.favoriteLiveArray[indexPath.row];
         cell.model = model;
-        cell.deleBlock = ^(){
+        cell.deleBlock = ^(UIButton *btn){
+
             if (_deleLiveBlock) {
                 _deleLiveBlock(model.liveId);
             }

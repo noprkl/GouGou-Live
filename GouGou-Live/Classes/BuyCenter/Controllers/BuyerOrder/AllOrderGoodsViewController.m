@@ -36,7 +36,7 @@
 #import "OrderWaitAssessViewController.h" // 待评价
 #import "PayBackMoneyViewController.h"// 代付尾款
 #import "PayFontMoneyViewController.h"// 代付定金
-#import "PayingAllMoneyViewController.h"// 代付全款
+#import "PayingAllMoneyViewController.h"// 待付全款
 #import "SureConsigneedViewController.h" // 待收货
 #import "WaitSellConsigmentViewContorller.h" // 待发货
 
@@ -311,7 +311,7 @@ static NSString * closeCell = @"closeCell";
         return cell;
     }
     if ([model.status integerValue] == 5) {
-        // 代付全款cell
+        // 待付全款cell
         WaitAllMoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAllMoneyCell];
         cell.centerModel = model;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家"] buttonNum:2];
@@ -598,86 +598,4 @@ static NSString * closeCell = @"closeCell";
     }
 }
 
-
-- (void)test {
-    //    ProtectProwerTableModel * protectModel = self.dataArray[indexPath.row];
-    //
-    //    if ([protectModel.status integerValue] == 1) {
-    //        // 维权中
-    //        ProtectingPowerCell * cell = [tableView dequeueReusableCellWithIdentifier:protectingCell];
-    //        cell.protectModel = protectModel;
-    //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
-    //
-    //        funcBtn.difFuncBlock = ^(UIButton * button) {
-    //            if ([button.titleLabel.text  isEqual:@"在线客服"]) {
-    //                // 跳转至在线客服
-    //                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-    //                viewController.title = EaseTest_Chat1;
-    //                viewController.chatID = EaseTest_Chat3;
-    //                viewController.hidesBottomBarWhenPushed = YES;
-    //                [self.navigationController pushViewController:viewController animated:YES];
-    //            }
-    //        };
-    //        [cell addSubview:funcBtn];
-    //        return cell;
-    //    }
-    //
-    //    if ([protectModel.status integerValue] == 2) {
-    //        // 维权成功
-    //        ProtectSuccessCell * cell = [tableView dequeueReusableCellWithIdentifier:protectSuccessCell];
-    //        cell.protectModel = protectModel;
-    //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"在线客服"] buttonNum:1];
-    //
-    //        funcBtn.difFuncBlock = ^(UIButton * button) {
-    //            if ([button.titleLabel.text  isEqual:@"在线客服"]) {
-    //
-    //                // 跳转至在线客服
-    //                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-    //                viewController.title = EaseTest_Chat1;
-    //                viewController.chatID = EaseTest_Chat3;
-    //                viewController.hidesBottomBarWhenPushed = YES;
-    //                [self.navigationController pushViewController:viewController animated:YES];
-    //            }
-    //        };
-    //        [cell addSubview:funcBtn];
-    //        return cell;
-    //    }
-    //
-    //    if ([protectModel.status integerValue] == 3) {
-    //        // 维权失败
-    //        ProtectFaliedCell * cell = [tableView dequeueReusableCellWithIdentifier:protectFailedCell];
-    //        cell.protectModel = protectModel;
-    //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //        FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45) title:@[@"再次申请",@"在线客服"] buttonNum:2];
-    //
-    //        funcBtn.difFuncBlock = ^(UIButton * button) {
-    //            if ([button.titleLabel.text  isEqual:@"在线客服"]) {
-    //
-    //                // 跳转至在线客服
-    //                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-    //                viewController.title = EaseTest_Chat1;
-    //                viewController.chatID = EaseTest_Chat3;
-    //                viewController.hidesBottomBarWhenPushed = YES;
-    //                [self.navigationController pushViewController:viewController animated:YES];
-    //
-    //                DLog(@"%@",button.titleLabel.text);
-    //
-    //            } else if ([button.titleLabel.text isEqual:@"再次申请"]) {
-    //                // 跳转至再次申请
-    //
-    //                DLog(@"%@",button.titleLabel.text);
-    //                
-    //                [self clickApplyProtectPower:[model.ID intValue]];
-    //            }
-    //            
-    //        };
-    //        
-    //        [cell addSubview:funcBtn];
-    //        
-    //        return cell;
-    //    }
-
-}
 @end

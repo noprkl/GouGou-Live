@@ -114,27 +114,23 @@
                                    };
             // 请求之前删掉上一次的信息
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
-               
+               // 电话号码
                 NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
                 
                 NSString * phoneString = [defaults objectForKey:@"phoneNum"];
                 
-                
+                // 密码
                 NSUserDefaults *psdDefaults = [NSUserDefaults standardUserDefaults];
                 NSString * psdString = [psdDefaults objectForKey:@"psdString"];
                 
                 if (self.phoneTestField.text != phoneString) {
-                    
                     [self showAlert:@"手机号未注册"];
-                }else {
+                } else {
                     if (self.psdTextField.text != psdString) {
-                       
-                        [self showAlert:successJson[@"message"]];
-
-                    }else {
-                    
+                        [self showAlert:successJson[@"账号或密码错误"]];
                     }
                 }
+                
                 if ([successJson[@"message"] isEqualToString:@"成功"]) {
                     DLog(@"%@", successJson);
                     

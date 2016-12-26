@@ -167,6 +167,8 @@ static NSString *cellid2 = @"NotificationMessageCell";
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
         [_tableView registerNib:[UINib nibWithNibName:@"NotificationMessageCell" bundle:nil] forCellReuseIdentifier:cellid2];
         [_tableView registerNib:[UINib nibWithNibName:@"MessageListCell" bundle:nil] forCellReuseIdentifier:cellid1];
 
@@ -255,11 +257,11 @@ static NSString *cellid2 = @"NotificationMessageCell";
     if (indexPath.section == 0) {
         return 75;
     }
-    return 70;
+    return 80;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        return 0;
     }
     return 44;
 }
@@ -275,9 +277,9 @@ static NSString *cellid2 = @"NotificationMessageCell";
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
         view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
-        UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
-        label3.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
-        [view addSubview:label3];
+//        UILabel *label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+//        label3.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+//        [view addSubview:label3];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 1, SCREEN_WIDTH, 42)];
         label.text = @"最近联系";
@@ -285,9 +287,9 @@ static NSString *cellid2 = @"NotificationMessageCell";
         label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         [view addSubview:label];
        
-        UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
-        label2.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
-        [view addSubview:label2];
+//        UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
+//        label2.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+//        [view addSubview:label2];
         
         return view;
     }

@@ -49,7 +49,7 @@
 }
 - (UIImageView *)iconView {
     if (!_iconView) {
-        _iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"矢量智能对象"]];
+        _iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon开心狗"]];
     }
     return _iconView;
 }

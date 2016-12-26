@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1912" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,8 +15,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="369" height="66"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbg-k6-exf">
-                        <rect key="frame" x="10" y="10" width="44" height="44"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbg-k6-exf">
+                        <rect key="frame" x="10" y="11" width="44" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="44" id="4vD-on-skP"/>
                             <constraint firstAttribute="height" constant="44" id="r6v-Wc-4di"/>
@@ -35,25 +34,26 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2016-11-21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLR-oQ-a4m">
-                        <rect key="frame" x="295" y="13" width="64" height="15"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-11-21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLR-oQ-a4m">
+                        <rect key="frame" x="295" y="14" width="64" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="消息消息消息消息消息消息消息消息消息消息消息消息消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bfq-Im-BSK">
-                        <rect key="frame" x="64" y="37" width="265" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="消息消息消息消息消息消息消息消息消息消息消息消息消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bfq-Im-BSK">
+                        <rect key="frame" x="64" y="38" width="265" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUa-16-ZfO">
-                        <rect key="frame" x="338" y="35" width="21" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUa-16-ZfO">
+                        <rect key="frame" x="344" y="39" width="15" height="15"/>
                         <color key="backgroundColor" red="1" green="0.63137254899999995" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="VUa-16-ZfO" secondAttribute="height" multiplier="11:11" id="BjG-kI-Ti5"/>
+                            <constraint firstAttribute="width" constant="15" id="L5H-21-GhL"/>
+                            <constraint firstAttribute="height" constant="15" id="sxA-c0-JH6"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                         <userDefinedRuntimeAttributes>
@@ -81,7 +81,6 @@
                     <constraint firstItem="Dbg-k6-exf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Thx-cx-8f2"/>
                     <constraint firstItem="4O9-FR-TQs" firstAttribute="bottom" secondItem="Dbg-k6-exf" secondAttribute="centerY" constant="-3" id="hPl-qg-dy6"/>
                     <constraint firstAttribute="trailing" secondItem="VUa-16-ZfO" secondAttribute="trailing" constant="10" id="oan-kb-aYl"/>
-                    <constraint firstItem="VUa-16-ZfO" firstAttribute="width" secondItem="VUa-16-ZfO" secondAttribute="height" multiplier="11:11" id="qfQ-Uh-A8H"/>
                     <constraint firstItem="VUa-16-ZfO" firstAttribute="leading" secondItem="Bfq-Im-BSK" secondAttribute="trailing" constant="40" id="svi-ek-UTs"/>
                     <constraint firstAttribute="trailing" secondItem="Bfq-Im-BSK" secondAttribute="trailing" constant="40" id="tY4-ig-aai"/>
                     <constraint firstItem="VUa-16-ZfO" firstAttribute="centerY" secondItem="Bfq-Im-BSK" secondAttribute="centerY" id="vpm-F3-Gfv"/>
@@ -98,7 +97,7 @@
                 <outlet property="messageLabel" destination="4O9-FR-TQs" id="sJM-71-SLc"/>
                 <outlet property="timeLabel" destination="JLR-oQ-a4m" id="JSp-eQ-JD8"/>
             </connections>
-            <point key="canvasLocation" x="321.5" y="165.5"/>
+            <point key="canvasLocation" x="210.5" y="183.5"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -79,11 +79,11 @@ static NSString *cellid = @"SystemNotificationCell";
     CGSize size = [model.conent boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin |
     NSStringDrawingTruncatesLastVisibleLine attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"], NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
     
-    return 50 + size.height;
+    return 50 + size.height + 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        return 0;
     }
     return 0;
 }

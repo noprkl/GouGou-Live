@@ -162,8 +162,8 @@
 
     if (!_hudView) {
         _hudView = [[UIView alloc] init];
-        _hudView.backgroundColor = [UIColor blackColor];
-        _hudView.alpha = 0.3;
+        _hudView.backgroundColor = [UIColor colorWithHexString:@"#333333"];
+        _hudView.alpha = 0.5;
     }
     return _hudView;
 }

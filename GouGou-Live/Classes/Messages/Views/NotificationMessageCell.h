@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/22.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  消息的通知cell
 
 #import <UIKit/UIKit.h>
 

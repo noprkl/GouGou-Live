@@ -29,7 +29,7 @@
 }
 - (void)initUI {
     self.userNameTexfiled.text = [UserInfos sharedUser].username;
-    self.sureButton.layer.cornerRadius = 7.5;
+    self.sureButton.layer.cornerRadius = 9;
     self.sureButton.layer.masksToBounds = YES;
     self.userNameTexfiled.delegate = self;
     self.payingTextfiled.delegate  = self;

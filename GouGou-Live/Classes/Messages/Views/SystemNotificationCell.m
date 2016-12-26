@@ -12,7 +12,6 @@
 @interface SystemNotificationCell ()
 @property (weak, nonatomic) IBOutlet UILabel *notificationType;
 
-
 @property (weak, nonatomic) IBOutlet UILabel *notificationContent;
 @property (weak, nonatomic) IBOutlet UILabel *notificationTime;
 

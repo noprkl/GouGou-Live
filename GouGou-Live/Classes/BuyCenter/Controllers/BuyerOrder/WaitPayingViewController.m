@@ -17,7 +17,7 @@
 // 订单详情
 #import "PayBackMoneyViewController.h" // 代付尾款
 #import "PayFontMoneyViewController.h" // 代付定金
-#import "PayingAllMoneyViewController.h" // 代付全款
+#import "PayingAllMoneyViewController.h" //待付全款
 
 #import "PromptView.h"   // 提示框
 #import "DeletePrommtView.h"
@@ -247,7 +247,7 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
   
     }
     if ([model.status integerValue] == 5) {
-        // 代付全款cell
+        // 待付全款cell
         WaitAllMoneyCell *cell = [[WaitAllMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitAllMoneyCell];
         cell.centerModel = model;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家", @"取消订单"] buttonNum:2];
@@ -280,8 +280,12 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     BuyCenterModel * model = self.dataArray[indexPath.row];
-   
-    if ([model.status integerValue] == 5) {
+    if ([model.status isEqualToString:@"1"]) {
+        
+        //        state = @"待付款";
+        [self showAlert:@"请完成支付"];
+        
+    } else if ([model.status integerValue] == 5) {
         // 待付全款
         PayingAllMoneyViewController * allVC = [[PayingAllMoneyViewController alloc] init];
         allVC.detailModel = model;
@@ -298,7 +302,6 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         fontVC.detailModel = model;
         [self.navigationController pushViewController:fontVC animated:YES];
         
-    }
-}
+    }}
 
 @end

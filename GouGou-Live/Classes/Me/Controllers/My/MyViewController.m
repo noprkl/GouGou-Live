@@ -230,7 +230,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.bounces = NO;
-    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     self.tableView.showsVerticalScrollIndicator = NO;
 }
 
@@ -273,7 +273,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    return 35;
+    return 44;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {

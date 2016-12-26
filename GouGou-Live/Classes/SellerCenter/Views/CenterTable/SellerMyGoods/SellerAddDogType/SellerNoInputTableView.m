@@ -108,7 +108,7 @@ static NSString *cellid = @"SellerNoInputcell";
         UIButton *deleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [deleBtn sizeToFit];
         [deleBtn setImage:[UIImage imageNamed:@"-单删除"] forState:(UIControlStateNormal)];
-//        [deleBtn addTarget:self action:@selector(deleHistorydata) forControlEvents:(UIControlEventTouchDown)];
+        [deleBtn addTarget:self action:@selector(deleSingleHistorydata) forControlEvents:(UIControlEventTouchDown)];
         cell.accessoryView = deleBtn;
         
         return cell;
@@ -127,6 +127,10 @@ static NSString *cellid = @"SellerNoInputcell";
     [self reloadData];
 //    [self reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationAutomatic)];
 }
+- (void)deleSingleHistorydata {
+    
+}
+
 //- (void)deleHistorydata {
 //    // 删除搜索历史
 //    DLog(@"删除搜索历史");

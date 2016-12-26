@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/15.
 //  Copyright © 2016年 LXq. All rights reserved.
-//  代付全款cell
+//  待付全款cell
 
 #import "WaitAllMoneyCell.h"
 
@@ -76,11 +76,9 @@
     // 付款状况
 
     
-    self.costView.fontMoneyLabel.text = @"";
-    self.costView.fontMoney.text = @"";
-    self.costView.remainderMoeny.text = centerModel.price;
-    self.costView.remainderMoneylabel.text = @"代付全款";
-
+//    self.costView.fontMoneyLabel.text = @"";
+//    self.costView.fontMoney.text = @"";
+    self.costView.remainderMoneylabel.text = @"待付全款:";
 //    self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.price;
     self.costView.totalMoney.text = centerModel.price;
@@ -92,44 +90,33 @@
     
     [super layoutSubviews];
     __weak typeof(self) weakself = self;
-    
-    
     [_nickView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.left.right.equalTo(weakself);
         make.height.equalTo(54);
-        
     }];
     
     [_lineview1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.nickView.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(1);
-        
     }];
     
     [_dogCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.lineview1.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(110);
-        
     }];
     
     [_costView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.dogCardView.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(44);
     }];
     
     [_lineview2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.costView.bottom);
         make.left.right.equalTo(weakself);
-        make.height.equalTo(1);
-        
+        make.height.equalTo(1); 
     }];
     
 }

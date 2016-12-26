@@ -320,11 +320,11 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 3){ //3：已付定金，待付尾款
         height = 245;
     }else if ([model.status integerValue] == 4){ // 4：放弃订金，交易结束
-        height = 230;
+        height = 245;
     }else if ([model.status integerValue] == 5){ // 5：待付全款
-        height = 230;
+        height = 245;
     }else if ([model.status integerValue] == 6){ //
-        height = 230;
+        height = 245;
     }else if ([model.status integerValue] == 7){ // 7：已付清款，待发货
         height = 245;
     }else if ([model.status integerValue] == 8){ // 8：已发货，待收货

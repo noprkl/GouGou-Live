@@ -38,8 +38,6 @@
 
 @implementation EditNewAddressViewController
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -158,14 +156,24 @@
     }else if (self.userNameTextfiled.text.length > 4){
         [self showAlert:@"最多四个汉字"];
     }else{
-        if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
-        [self showAlert:@"地址不能为空"];
+        
+        if ([self.phoneTextField.text isEqualToString:@""]) {
+            [self showAlert:@"手机号不能为空"];
+        }else if (![NSString valiMobile:self.phoneTextField.text]){
+            [self showAlert:@"手机号输入有误，请重新输入"];
+            self.phoneTextField.text = @"";
+        
+//        if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
+//        [self showAlert:@"地址不能为空"];
         }else{
-            if ([self.phoneTextField.text isEqualToString:@""]) {
-                [self showAlert:@"手机号不能为空"];
-            }else if (![NSString valiMobile:self.phoneTextField.text]){
-                [self showAlert:@"手机号输入有误，请重新输入"];
-                self.phoneTextField.text = @"";
+            
+            if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
+                [self showAlert:@"地址不能为空"];
+//            if ([self.phoneTextField.text isEqualToString:@""]) {
+//                [self showAlert:@"手机号不能为空"];
+//            }else if (![NSString valiMobile:self.phoneTextField.text]){
+//                [self showAlert:@"手机号输入有误，请重新输入"];
+//                self.phoneTextField.text = @"";
             }else{
                 if ([self.detailAddressTextfiled.text isEqualToString:@""]) {
                     [self showAlert:@"详细地址不能为空"];
@@ -212,12 +220,13 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
+    
     if (textField == self.userNameTextfiled) {
         if ([NSString isChinese:string]) {
             return YES;
         }
         return NO;
-        
+
     }
     if (textField == self.areaChooseTextfiled) {
         [textField resignFirstResponder];

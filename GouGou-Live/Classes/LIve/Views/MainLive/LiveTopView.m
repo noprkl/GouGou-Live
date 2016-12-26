@@ -95,7 +95,7 @@
                 [lineView makeConstraints:^(MASConstraintMaker *make) {
                     make.centerX.equalTo(button.titleLabel.centerX);
                     make.bottom.equalTo(self.bottom);
-                    make.size.equalTo(CGSizeMake(50, 2));
+                    make.size.equalTo(CGSizeMake(50, 1));
                 }];
                 
                 lineView.backgroundColor = [UIColor whiteColor];

@@ -71,7 +71,6 @@
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         
-        
         self.sellInfoView.currentTime = self.orderInfo.createTime;
         self.sellInfoView.buynessName = self.orderInfo.userName;
         self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
@@ -97,7 +96,7 @@
         self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
         self.detailPayView.realMoney = self.orderInfo.price;
         self.detailPayView.balance = self.orderInfo.productRealBalance;
-        
+        // 订单号
         self.orderNumberView.buyUserId = self.orderInfo.ID;
         self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
         self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
@@ -140,68 +139,47 @@
 }
 
 - (void)addcontrollers {
-    
     __weak typeof(self) weakself = self;
-    
     [_orderStateView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.boomScrollView);
         make.height.equalTo(44);
-        
     }];
-    
     [_consigneeViw mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.orderStateView.bottom).offset(10);
         make.height.equalTo(89);
-        
     }];
-    
     [_sellInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.consigneeViw.bottom).offset(10);
         make.height.equalTo(44);
-        
     }];
-    
     [_dogCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.sellInfoView.bottom).offset(1);
         make.height.equalTo(120);
     }];
-    
     [_goodsPriceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.dogCardView.bottom).offset(10);
         make.height.equalTo(147);
     }];
-    
     [_detailPayView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.goodsPriceView.bottom).offset(1);
         make.height.equalTo(132);
     }];
-    
     [_orderNumberView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.detailPayView.bottom).offset(10);
         make.height.equalTo(145);
-        
     }];
-    
     [_bottomButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.right.equalTo(weakself.view);
         make.top.equalTo(weakself.orderNumberView.bottom).offset(1);
         make.height.equalTo(44);
     }];
-
 }
 
 #pragma mark
@@ -230,7 +208,6 @@
 }
 
 - (ConsigneeView *)consigneeViw {
-    
     if (!_consigneeViw) {
         _consigneeViw = [[ConsigneeView alloc] init];
         _consigneeViw.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];

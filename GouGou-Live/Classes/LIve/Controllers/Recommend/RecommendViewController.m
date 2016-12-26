@@ -352,6 +352,8 @@
 
     [self getRequestLiveList];
     [self getRequestBanner];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
 - (void)viewDidLoad {

@@ -60,7 +60,7 @@
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:protectModel.priceOld];
     self.dogCardView.nowPriceLabel.text = protectModel.price;
     // 花费状况
-    self.costView.fontMoney.text = protectModel.productRealDeposit;
+//    self.costView.fontMoney.text = protectModel.productRealDeposit;
     self.costView.remainderMoeny.text = protectModel.productRealBalance;
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];

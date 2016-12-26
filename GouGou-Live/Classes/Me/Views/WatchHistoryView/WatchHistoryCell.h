@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PlayBackModel.h"
 
-typedef void(^ClickDeleBtnBlock)();
+typedef void(^ClickDeleBtnBlock)(UIButton *btn);
 
 @interface WatchHistoryCell : UITableViewCell
 

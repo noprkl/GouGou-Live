@@ -92,10 +92,11 @@ static NSString *cellid4 = @"cellid4";
                            };
     [self getRequestWithPath:API_home params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+
         [self showAlert:successJson[@"message"]];
         
         DLog(@"%@",successJson[@"messgae"]);
-        
+
         if ([successJson[@"code"] isEqualToString:@"1"]) {
             // 分数四舍五入
             CGFloat source = [successJson[@"data"] floatValue];
@@ -447,10 +448,6 @@ static NSString *cellid4 = @"cellid4";
     if (!_dogCardArr) {
         _dogCardArr = [NSMutableArray array];
         
-//        DogTypeCellModel *cardModel1 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
-//        DogTypeCellModel *cardModel2 = [[DogTypeCellModel alloc] initWithDogIcon:@"banner" focusCount:@"1000" dogDesc:@"纯种拉布拉多犬" anchorName:@"逗逼" showCount:@"5" onSailCount:@"8"];
-//        
-//        _dogCardArr = @[cardModel1, cardModel2];
     }
     return _dogCardArr;
 }

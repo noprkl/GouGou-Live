@@ -57,7 +57,7 @@
         DLog(@"%@",successJson[@"data"]);
         // 订单状态
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
-        self.orderStateView.stateMessage = @"待付定金";
+        self.orderStateView.stateMessage = @"待发货";
         self.orderStateView.timeMessage = [NSString stringFromDateString:self.orderInfo.createTime];
         // 联系人信息
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
@@ -67,10 +67,12 @@
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         // 商家名称
-        if (self.orderInfo.userImgUrl.length != 0) {
-            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
-            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-        }
+//        if (self.orderInfo.userImgUrl.length != 0) {
+//            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
+//            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+//        }
+        self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
+
         self.sellInfoView.buynessName = self.orderInfo.merchantName;
         self.sellInfoView.currentTime = [NSString stringFromDateString:self.orderInfo.createTime];
         // 狗狗详情

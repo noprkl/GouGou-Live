@@ -55,22 +55,26 @@
     if (![UserInfos getUser]){
         [self showAlert:@"请登录"];
     }else {
+        __block  ChosePayStyleView *choseStyle = [[ChosePayStyleView alloc] init];
+        choseStyle.title = @"请选择付款额度方式";
+        choseStyle.dataArr = @[@"支付全款", @"支付定金"];
+        choseStyle.bottomBlock = ^(NSString *style){
+            if ([style isEqualToString:@""]) {
+                [self showAlert:@"请选择付款额度方式"];
+            }else{
+            
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"id":@([_model.ID intValue]),
+                                   @"address_id":@(_defaultModel.ID)
+                                   };
+            DLog(@"%@", dict);
 
-        NSDictionary *dict = @{
-                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                               @"id":@([_model.ID intValue]),
-                               @"address_id":@(_defaultModel.ID)
-                               };
-        DLog(@"%@", dict);
-        [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-            [self showAlert:successJson[@"message"]];
-            if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
-                NSString *orderId = successJson[@"data"];
-              __block  ChosePayStyleView *choseStyle = [[ChosePayStyleView alloc] init];
-                choseStyle.title = @"请选择付款额度方式";
-                choseStyle.dataArr = @[@"支付全款", @"支付定金"];
-                choseStyle.bottomBlock = ^(NSString *style){
+            [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+                if ([successJson[@"message"] isEqualToString:@"已加入购物车"]) {
+                    NSString *orderId = successJson[@"data"];
                     if ([style isEqualToString:@"支付全款"]) {
                         // 生成待支付全款订单
                         NSDictionary *typeDict = @{
@@ -110,12 +114,14 @@
                             DLog(@"%@", error);
                         }];
                     }
-                };
-                [choseStyle show];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
             }
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
+            };
+        [choseStyle show];
+      
     }
 }
 /** 定金支付 */
@@ -280,30 +286,33 @@
 
 // 所有地址
 - (void)postGetAdressRequest {
-    
-    NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                           };
-    
-    [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
-        [self showAlert:successJson[@"message"]];
-        if (successJson[@"code"]) {
-            // 数据解析
-            NSArray *adressArr = [NSArray array];
-            adressArr = [[MyShopAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
-            for (MyShopAdressModel *model in adressArr) {
-                if (model.isDefault == 1) {
-                    self.defaultModel = model;
-                    self.chosedView.shopAdress = model;
-                }
-            }
-            // 刷新
-            [self.tablevView reloadData];
-        }
+    if (self.defaultModel.userName.length != 0) {
         
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+    }else{
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                               };
+        
+        [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
+            [self showAlert:successJson[@"message"]];
+            if (successJson[@"code"]) {
+                // 数据解析
+                NSArray *adressArr = [NSArray array];
+                adressArr = [[MyShopAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
+                for (MyShopAdressModel *model in adressArr) {
+                    if (model.isDefault == 1) {
+                        self.defaultModel = model;
+                        self.chosedView.shopAdress = model;
+                    }
+                }
+                // 刷新
+                [self.tablevView reloadData];
+            }
+            
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 #pragma mark
 #pragma mark - 生命周期

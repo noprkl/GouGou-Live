@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addChildViewController];
+    self.tabBar.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
 }
 - (void)addChildViewController {
  
@@ -39,6 +40,7 @@
 - (void)createVC:(UIViewController *)vc title:(NSString *)title unSelectIcon:(UIImage *)unSelectIcon selectIcon:(UIImage *)selectIcon {
     
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+
     // 文字偏移
     vc.tabBarItem.titlePositionAdjustment = UIOffsetMake(3, 0);
     

@@ -12,7 +12,6 @@
 @interface SystemNotificationCell ()
 @property (weak, nonatomic) IBOutlet UILabel *notificationType;
 
-
 @property (weak, nonatomic) IBOutlet UILabel *notificationContent;
 @property (weak, nonatomic) IBOutlet UILabel *notificationTime;
 
@@ -25,7 +24,7 @@
 }
 - (void)setModel:(SystemPushMessageModel *)model {
     _model = model;
-    self.notificationTime.text = model.createTime;
+    self.notificationTime.text = [NSString stringFromDateString:model.createTime];
     self.notificationType.text = model.type;
     self.notificationContent.text = model.conent;
 }

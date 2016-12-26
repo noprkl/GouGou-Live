@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/11/11.
 //  Copyright © 2016年 LXq. All rights reserved.
-//  订单详情（代付全款）
+//  订单详情（待付全款）
 
 #import "PayingAllMoneyViewController.h"
 #import "StateView.h"  // 订单状态
@@ -66,10 +66,12 @@
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         // 商家
-        if (self.orderInfo.userImgUrl.length != 0) {
-            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
-            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-        }
+        self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
+        
+//        if (self.orderInfo.userImgUrl.length != 0) {
+//            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
+//            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+//        }
         self.sellInfoView.buynessName = self.orderInfo.merchantName;
         self.sellInfoView.currentTime = [NSString stringFromDateString:self.orderInfo.createTime];
         // 狗狗详情
@@ -119,9 +121,6 @@
     self.title = @"订单详情";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     [self addcontrollers];
-    
-    
-    
 //    CGFloat maxY = CGRectGetMaxY(rect);
     
     
@@ -228,7 +227,7 @@
     if (!_orderStateView) {
         _orderStateView = [[StateView alloc] init];
         _orderStateView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-        _orderStateView.stateMessage = @"代付全款";
+        _orderStateView.stateMessage = @"代付全款:";
     }
     return _orderStateView;
 }
@@ -315,6 +314,4 @@
     }
     return _bottomButton;
 }
-
-
 @end

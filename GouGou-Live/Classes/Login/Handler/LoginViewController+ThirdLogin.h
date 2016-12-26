@@ -8,9 +8,11 @@
 
 #import "LoginViewController.h"
 
+typedef void(^LoginSuccessBlock)(id success);
+typedef void(^LoginUnBindingBlock)();
 @interface LoginViewController (ThirdLogin)
 
-+ (void)QQLogin;
-+ (void)SinaLogin;
-+ (void)WChatLogin;
++ (void)QQLogin:(LoginSuccessBlock)success unBinding:(LoginUnBindingBlock)unBinding;
++ (void)SinaLogin:(LoginSuccessBlock)success unBinding:(LoginUnBindingBlock)unBinding;
++ (void)WChatLogin:(LoginSuccessBlock)success unBinding:(LoginUnBindingBlock)unBinding;
 @end

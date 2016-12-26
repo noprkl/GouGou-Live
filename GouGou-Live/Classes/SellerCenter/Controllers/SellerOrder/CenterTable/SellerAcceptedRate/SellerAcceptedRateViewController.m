@@ -61,7 +61,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
             }else{
                 self.pleasureCount = count / 10;
             }
-            DLog(@"%ld", self.pleasureCount);
+            DLog(@"%ld", (long)self.pleasureCount);
         }else {
             self.pleasureCount = 5;
         }
@@ -142,7 +142,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
+    DLog(@"%ld", (long)indexPath.row);
 }
 #pragma mark - 头部
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

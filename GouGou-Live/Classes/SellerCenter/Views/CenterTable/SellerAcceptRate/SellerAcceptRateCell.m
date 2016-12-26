@@ -86,6 +86,7 @@
 //    self.buyerView.model.userImgUrl = model.userImgUrl;
 //    self.buyerView.model.userNickName = model.userNickName;
 //    self.buyerView.model.comment = model.comment;
+    // 买家信息
     if (model.userImgUrl.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
         [self.buyerView.buyerIcon sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
@@ -100,7 +101,7 @@
 //    self.dogCardView.model.colorName = model.color;
 //    self.dogCardView.model.pathSmall = model.pathSmall;
 //    self.dogCardView.model.sizeName = model.size;
-    
+    // 狗狗详情 
     NSString *dogUrlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
     [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:dogUrlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
 
@@ -109,7 +110,7 @@
     self.dogCardView.dogAgeLabel.text = model.age;
     self.dogCardView.dogSizeLabel.text = model.size;
     self.dogCardView.dogColorLabel.text = model.color;
-//    self.dogCardView.oldPriceLabel.text = model.;
+//    self.dogCardView.oldPriceLabel.text = model.pri;
 //    self.dogCardView.nowPriceLabel.text = model.price;
     
 }

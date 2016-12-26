@@ -141,15 +141,17 @@
     }else if (self.userNameTextfiled.text.length > 4){
         [self showAlert:@"最多四个汉字"];
     }else{
-        if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
-            [self showAlert:@"地址不能为空"];
+        if ([self.phoneTextField.text isEqualToString:@""]) {
+            [self showAlert:@"手机号不能为空"];
+        }else if (![NSString valiMobile:self.phoneTextField.text]){
+            [self showAlert:@"手机号输入有误，请重新输入"];
+            self.phoneTextField.text = @"";
+
         }else{
-            if ([self.phoneTextField.text isEqualToString:@""]) {
-                [self showAlert:@"收货人不能为空"];
-            }else if (![NSString valiMobile:self.phoneTextField.text]){
-                [self showAlert:@"手机号输入有误，请重新输入"];
-                self.phoneTextField.text = @"";
-            }else{
+            if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
+                [self showAlert:@"地址不能为空"];
+        
+        }else{
                 if ([self.detailAddressTextfiled.text isEqualToString:@""]) {
                     [self showAlert:@"详细地址不能为空"];
                 }else{
@@ -244,11 +246,12 @@
     if (textField == self.phoneTextField) {
         
         if (range.location < 11) {
-            BOOL flag = [NSString validateNumber:textField.text];
-            if (flag) {
-                return YES;
-            }
-            return NO;
+            return YES;
+//            BOOL flag = [NSString validateNumber:textField.text];
+//            if (flag) {
+//                return YES;
+//            }
+//            return NO;
         }
         return NO;
     }

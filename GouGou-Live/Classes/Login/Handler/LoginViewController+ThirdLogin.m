@@ -9,122 +9,56 @@
 #import "LoginViewController+ThirdLogin.h"
 #import <UMSocialCore/UMSocialCore.h>
 #import "HTTPTool.h"
+#import "UIView+Toast.h"
 
 @implementation LoginViewController (ThirdLogin)
-+ (void)WChatLogin {
-    if (![[UserInfos sharedUser].wxopenid isEqual:[NSNull null]]) {
++ (void)WChatLogin:(LoginSuccessBlock)success unBinding:(LoginUnBindingBlock)unBinding{
+    if (![[UserInfos sharedUser].wxopenid isEqual:[NSNull null]] && ![[UserInfos sharedUser].wxopenid isEqualToString:@""]) {
                 NSDictionary *dict = @{
                                        @"type":@"1",
                                        @"name":[UserInfos sharedUser].wxopenid
                                        };
         [HTTPTool getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
-            
+             success(successJson);
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
     }else{
-        [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_WechatSession currentViewController:self completion:^(id result, NSError *error) {
-            //        [self.tableView reloadData];
-            UMSocialAuthResponse *authresponse = result;
-//            NSString *message = [NSString stringWithFormat:@"result: %d\n uid: %@\n accessToken: %@\n",(int)error.code,authresponse.uid,authresponse.accessToken];
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login"
-//                                                            message:message
-//                                                           delegate:nil
-//                                                  cancelButtonTitle:NSLocalizedString(@"确定", nil)
-//                                                  otherButtonTitles:nil];
-//            [alert show];
-            NSDictionary *dict = @{
-                                   @"type":@"1",
-                                   @"name":authresponse.uid,
-                                   @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                   };
-            [HTTPTool getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
-            }];
-        }];
-        
+               unBinding();
     }
 }
-+ (void)QQLogin {
-    if (![[UserInfos sharedUser].qqopenid isEqual:[NSNull null]]) {
++ (void)QQLogin:(LoginSuccessBlock)success unBinding:(LoginUnBindingBlock)unBinding{
+    if (![[UserInfos sharedUser].qqopenid isEqual:[NSNull null]] && ![[UserInfos sharedUser].qqopenid isEqualToString:@""]) {
         NSDictionary *dict = @{
                                @"type":@"2",
                                @"name":[UserInfos sharedUser].qqopenid
                                };
         [HTTPTool getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
-            
+            success(successJson);
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
 
     }else{
-        [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_QQ currentViewController:self completion:^(id result, NSError *error) {
-            //        [self.tableView reloadData];
-            UMSocialAuthResponse *authresponse = result;
-//            NSString *message = [NSString stringWithFormat:@"result: %d\n uid: %@\n accessToken: %@\n",(int)error.code,authresponse.uid,authresponse.accessToken];
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login"
-//                                                            message:message
-//                                                           delegate:nil
-//                                                  cancelButtonTitle:NSLocalizedString(@"确定", nil)
-//                                                  otherButtonTitles:nil];
-//            [alert show];
-            // 绑定QQ
-            NSDictionary *dict = @{
-                                   @"type":@"2",
-                                   @"name":authresponse.uid,
-                                   @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                   };
-            [HTTPTool getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
-            }];
-        }];
-    
+                   unBinding();
     }
 }
-+ (void)SinaLogin {
-    if (![[UserInfos sharedUser].wbopenid isEqual:[NSNull null]]) {
++ (void)SinaLogin:(LoginSuccessBlock)success unBinding:(LoginUnBindingBlock)unBinding{
+    if (![[UserInfos sharedUser].wbopenid isEqual:[NSNull null]] && ![[UserInfos sharedUser].wbopenid isEqualToString:@""]) {
         NSDictionary *dict = @{
                                @"type":@"3",
                                @"name":[UserInfos sharedUser].wbopenid
                                };
         [HTTPTool getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-            
+            success(successJson);
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
 
     }else{
-        [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_Sina currentViewController:self completion:^(id result, NSError *error) {
-            //        [self.tableView reloadData];
-            UMSocialAuthResponse *authresponse = result;
-//            NSString *message = [NSString stringWithFormat:@"result: %d\n uid: %@\n accessToken: %@\n",(int)error.code,authresponse.uid,authresponse.accessToken];
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login"
-//                                                            message:message
-//                                                           delegate:nil
-//                                                  cancelButtonTitle:NSLocalizedString(@"确定", nil)
-//                                                  otherButtonTitles:nil];
-//            [alert show];
-            NSDictionary *dict = @{
-                                   @"type":@"3",
-                                   @"name":authresponse.uid,
-                                   @"user_id":@([[UserInfos sharedUser].ID integerValue])
-                                   };
-            // 绑定新浪
-            [HTTPTool getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
-            }];
-            
-        }];
-    
+        unBinding();
     }
 }
 // 设置个人信息
@@ -165,6 +99,5 @@
     
     [UserInfos setUser];
 }
-
 
 @end

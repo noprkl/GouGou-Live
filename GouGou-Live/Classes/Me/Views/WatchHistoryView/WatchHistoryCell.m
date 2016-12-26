@@ -283,6 +283,7 @@
         [_deleteButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateSelected];
         _deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
         [_deleteButton addTarget:self action:@selector(deleteButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_deleteButton addTarget:self action:@selector(changeBtnColor:) forControlEvents:UIControlEventTouchDown];
     }
     return _deleteButton;
 }
@@ -298,15 +299,16 @@
 
 - (void)deleteButton:(UIButton *)btn {
     
-    btn.selected = !btn.selected;
-    if (btn.selected) {
-         btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-    } else {
-        btn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
     if (_deleBlock) {
-        _deleBlock();
+        _deleBlock(btn);
     }
+}
+
+- (void)changeBtnColor:(UIButton *)btn {
+
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+
 }
 
 - (void)awakeFromNib {

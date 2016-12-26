@@ -71,12 +71,8 @@
         self.consigneeViw.recevieCity = self.orderInfo.recevieCity;
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
-        
-        // 商家名称
-        if (self.orderInfo.userImgUrl.length != 0) {
-            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
-            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-        }
+        //商家名称
+        self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
         self.sellInfoView.buynessName = self.orderInfo.merchantName;
         self.sellInfoView.currentTime = [NSString stringFromDateString:self.orderInfo.createTime];
         

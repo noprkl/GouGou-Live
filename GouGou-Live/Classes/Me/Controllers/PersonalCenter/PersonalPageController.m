@@ -66,7 +66,7 @@ static NSString *cellid4 = @"cellid4";
 }
 // 相册列表
 - (void)getRequestAlbums {
-    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
                            @"user_id":@(_personalID)
                            };
     [self getRequestWithPath:API_album params:dict success:^(id successJson) {
@@ -99,7 +99,7 @@ static NSString *cellid4 = @"cellid4";
 }
 // 请求粉丝数据
 - (void)postRequestGetFans {
-    //[[UserInfos sharedUser].ID integerValue]
+
     NSDictionary *dict = @{
                            @"user_id":@(_personalID)
                            };
@@ -118,7 +118,7 @@ static NSString *cellid4 = @"cellid4";
 
 // 满意度
 - (void)getUserPleasure {
-    NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
                            @"user_id":@(_personalID)
                            };
     [self getRequestWithPath:API_home params:dict success:^(id successJson) {
@@ -258,6 +258,8 @@ static NSString *cellid4 = @"cellid4";
                 headerView.pleasureCount = self.pleasureCount;
                 headerView.userImg = self.personalModel.userImgUrl;
                 headerView.userName = self.personalModel.userName;
+                headerView.isReal = [self.personalModel.isReal isEqualToString:@"3"] ? YES:NO;
+                headerView.isMentch = [self.personalModel.isMerchant isEqualToString:@"2"] ? YES:NO;
                 
                 headerView.backgroundColor = [UIColor whiteColor];
                 [cell0.contentView addSubview:headerView];
@@ -289,10 +291,10 @@ static NSString *cellid4 = @"cellid4";
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
-                if ([UserInfos sharedUser].username.length == 0) {
-                    label.text = @"未实名";
+                if ([self.personalModel.isReal isEqualToString:@"3"]) {
+                    label.text = self.personalModel.userName;
                 }else{
-                    label.text = [UserInfos sharedUser].username;
+                    label.text = @"未实名";
                 }
                 label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];
@@ -306,10 +308,10 @@ static NSString *cellid4 = @"cellid4";
                 UILabel *label = [[UILabel alloc] initWithFrame:(CGRectMake(100, 0, 100, 44))];
                 label.backgroundColor = [UIColor whiteColor];
                 
-                if ([UserInfos sharedUser].username.length == 0) {
-                    label.text = @"未认证";
-                }else{
+                if ([self.personalModel.isMerchant isEqualToString:@"2"]) {
                     label.text = @"已认证";
+                }else{
+                    label.text = @"未认证";
                 }
                 label.font = [UIFont systemFontOfSize:14];
                 label.textColor = [UIColor colorWithHexString:@"#333333"];

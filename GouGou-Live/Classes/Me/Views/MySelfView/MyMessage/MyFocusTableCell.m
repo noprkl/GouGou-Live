@@ -36,7 +36,9 @@
     self.userSignLabel.text = model.userMotto;
 
 }
+
 - (void)setSearchModel:(SearchFanModel *)searchModel {
+    self.selectBtn.selected = NO;
     _searchModel = searchModel;
     if (searchModel.userImgUrl != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:searchModel.userImgUrl];

@@ -373,31 +373,31 @@
                 NSInteger tag = self.lastBtn.tag;
                 [self.navigationController pushViewController:streamVc animated:YES];
                 DLog(@"%@", streamModel.rtmp);
-//                if (tag == 900) {
-//                    [CreateLiveViewController SinaShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//                    
-//                }else if (tag == 901){
-//                    [CreateLiveViewController WChatShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//
-//                }else if (tag == 902){
-//                    [CreateLiveViewController QQShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//
-//                }else if (tag == 903){
-//                    [CreateLiveViewController TencentShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//
-//                }else if (tag == 904){
-//                    [CreateLiveViewController WechatTimeShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//                }
+                if (tag == 900) {
+                    [CreateLiveViewController SinaShare:streamModel.rtmp success:^{
+                        [self.navigationController pushViewController:streamVc animated:YES];
+                    }];
+                    
+                }else if (tag == 901){
+                    [CreateLiveViewController WChatShare:streamModel.rtmp success:^{
+                        [self.navigationController pushViewController:streamVc animated:YES];
+                    }];
+
+                }else if (tag == 902){
+                    [CreateLiveViewController QQShare:streamModel.rtmp success:^{
+                        [self.navigationController pushViewController:streamVc animated:YES];
+                    }];
+
+                }else if (tag == 903){
+                    [CreateLiveViewController TencentShare:streamModel.rtmp success:^{
+                        [self.navigationController pushViewController:streamVc animated:YES];
+                    }];
+
+                }else if (tag == 904){
+                    [CreateLiveViewController WechatTimeShare:streamModel.rtmp success:^{
+                        [self.navigationController pushViewController:streamVc animated:YES];
+                    }];
+                }
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);
@@ -484,9 +484,7 @@
         _SinaShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_SinaShareBtn setImage:[UIImage imageNamed:@"weibo_btn"] forState:(UIControlStateNormal)];
         [_SinaShareBtn setImage:[UIImage imageNamed:@"新浪微博"] forState:(UIControlStateSelected)];
-//        self.lastBtn = _SinaShareBtn;
         _SinaShareBtn.tag = 900;
-
         _SinaShareBtn.selected = YES;
         [_SinaShareBtn addTarget:self action:@selector(ClickSinaShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }

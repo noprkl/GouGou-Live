@@ -115,25 +115,36 @@
         };
          __block CGFloat W = 0;
          if (ImgCount <= kMaxImgCount) {
-         W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / 2;
+             W = (SCREEN_WIDTH - (ImgCount + 1) * 10) / 2;
          }else{
-         W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / 2;
+             W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / 2;
          }
-         AddUpdataImagesView * addImag = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(10, 240, SCREEN_WIDTH - 20, W + 20)];
+
+         AddUpdataImagesView *addImag = [[AddUpdataImagesView alloc] initWithFrame:CGRectMake(10, 240, SCREEN_WIDTH - 20, W + 20)];
         
         addImag.layer.cornerRadius = 5;
         addImag.layer.masksToBounds = YES;
         addImag.maxCount = ImgCount;
-        
+        __weak typeof(addImag) weakAdd = addImag;
+
          addImag.addBlock = ^(){
          
          TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
          imagePickerVc.sortAscendingByModificationDate = NO;
          
          [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
-         
          [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
-       
+             if (flag) {
+                 [weakAdd.dataArr addObject:photos[0]];
+                 
+                 [weakAdd.collectionView reloadData];
+                 CGFloat row = weakAdd.dataArr.count / kMaxImgCount;
+                 CGRect rect = weakAdd.frame;
+                 rect.size.height = (row + 1) * (W + 10) + 10;
+                 weakAdd.frame = rect;
+             }else{
+                 DLog(@"出错了");
+             }
          }];
          };
          [_experienceView addSubview:addImag];
@@ -164,6 +175,7 @@
                                                         };
                                 [weakSelf postRequestWithPath:API_Add_system_msg params:dict2 success:^(id successJson) {
                                     DLog(@"%@", successJson);
+                                    [self showAlert:successJson[@"message"]];
                                 } error:^(NSError *error) {
                                     DLog(@"%@", error);
                                 }];
@@ -180,6 +192,7 @@
                                                 };
                         [weakSelf postRequestWithPath:API_Add_system_msg params:dict2 success:^(id successJson) {
                             DLog(@"%@", successJson);
+                            [self showAlert:successJson[@"message"]];
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];

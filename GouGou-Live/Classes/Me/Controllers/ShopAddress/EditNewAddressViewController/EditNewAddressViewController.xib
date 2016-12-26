@@ -45,7 +45,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="Lfu-K2-ETY">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="Lfu-K2-ETY">
                     <rect key="frame" x="357" y="105" width="8" height="15"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Opc-Q3-wq8">
@@ -109,7 +109,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="EL2-zA-m2q">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="返回-（小）" translatesAutoresizingMaskIntoConstraints="NO" id="EL2-zA-m2q">
                     <rect key="frame" x="357" y="150" width="8" height="15"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7B-Ev-cp1">

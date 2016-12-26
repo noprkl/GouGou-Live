@@ -14,6 +14,6 @@
 /** 商家名 */
 @property (strong,nonatomic) NSString *buynessName;
 /** 商家头像 */
-@property (strong,nonatomic) UIImageView *buynessImg;
+@property (strong,nonatomic) NSString *buynessImg;
 
 @end

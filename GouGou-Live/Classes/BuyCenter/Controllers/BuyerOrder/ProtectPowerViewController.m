@@ -194,10 +194,12 @@ static NSString * protectFailedCell = @"protectFailedCell";
     }
     return cell1;
 }
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ProtectProwerTableModel * model = self.dataArray[indexPath.row];
     SellerOrderDetailProtectPowerViewController *protcetVc = [[SellerOrderDetailProtectPowerViewController alloc] init];
     protcetVc.orderID = model.ID;
     [self.navigationController pushViewController:protcetVc animated:YES];
 }
+*/
 @end

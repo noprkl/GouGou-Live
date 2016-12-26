@@ -100,6 +100,7 @@
             cardView.dogInfo = dogInfos[i];
             cardView.message = [NSString stringWithFormat:@"%ld/%ld", i + 1, count];
             cardView.backgroundColor = [UIColor whiteColor];
+            
             cardView.frame = CGRectMake(x, y, w, h);
             
             cardView.tag = i + 50;

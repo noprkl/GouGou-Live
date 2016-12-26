@@ -32,7 +32,7 @@ static NSString *cellid = @"MessageMeumView";
         self.dataSource = self;
         self.tableFooterView = [[UIView alloc] init];
         self.showsVerticalScrollIndicator = NO;
-        
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self registerClass:[UITableViewCell class] forCellReuseIdentifier:cellid];
     }
     return self;
@@ -69,6 +69,10 @@ static NSString *cellid = @"MessageMeumView";
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+    
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+    view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+    [cell.contentView addSubview:view];
     
     if (indexPath.row == 0) {
         cell.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];

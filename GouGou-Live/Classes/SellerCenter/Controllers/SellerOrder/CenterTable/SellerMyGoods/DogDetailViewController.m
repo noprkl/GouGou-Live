@@ -55,6 +55,7 @@
     deleView.message = @"确认删除此狗狗吗？";
     
     [deleView show];
+    deleView.message = @"是否删除这个商品";
     deleView.sureBlock = ^(UIButton *btn){
         NSDictionary *dict = @{
                                @"user_id":@([[UserInfos sharedUser].ID integerValue]),

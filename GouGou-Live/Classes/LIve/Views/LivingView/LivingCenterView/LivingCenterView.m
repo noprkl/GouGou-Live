@@ -186,7 +186,6 @@
         btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         self.lastBtn = btn;
     }
-
 }
 - (void)clickSellerBtnAction:(UIButton *)btn {
     if (_sellerBlock) {

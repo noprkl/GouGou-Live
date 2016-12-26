@@ -128,7 +128,6 @@ static NSString *cellid = @"SetcellId";
     
     [UserInfos removeUser];
     [UserInfos sharedUser].usertel = @"";
-    [UserInfos sharedUser].ID = @"";
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // 退出环信

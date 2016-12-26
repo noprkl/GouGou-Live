@@ -142,7 +142,8 @@ static NSString *cellid = @"TalkTableViewCell";
             [self.dataArray addObject:txt];
             [self.tableView reloadData];
             // 刷新
-            NSIndexPath *indexPath = [[NSIndexPath alloc] initWithIndex:(self.dataArray.count - 1)];
+//            NSIndexPath *indexPath = [[NSIndexPath alloc] initWithIndex:(self.dataArray.count - 1)];
+            
 //            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationBottom)];
             }
                 break;

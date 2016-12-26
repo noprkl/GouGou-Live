@@ -99,6 +99,10 @@
                     [self showAlert:@"短信不存在"];
                 }
                 if ([successJson[@"code"] isEqual:@"1"]) {
+                    
+                    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+                    NSString *phoneNumStr = [UserInfos sharedUser].usertel;
+                    [defaults setObject:phoneNumStr forKey:@"phoneNum"];
                    
                     SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
                     sureVC.title = @"密码确认";
@@ -109,10 +113,7 @@
                 if ([successJson[@"code"] isEqual:@"2"]) {
                     return ;
                 }
-                
-                NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-                NSString *phoneNumStr = [UserInfos sharedUser].usertel;
-                [defaults setObject:phoneNumStr forKey:@"phoneNum"];
+
                 
             } error:^(NSError *error) {
                 DLog(@"%@",error);

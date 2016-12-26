@@ -8,7 +8,8 @@
 
 #import "PresentWaitingViewController.h"
 #import "PromptView.h"
-#import "SingleChatViewController.h"
+//#import "SingleChatViewController.h"
+#import "AccountHelpCenterVc.h"
 
 @interface PresentWaitingViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *promptLabel;
@@ -19,9 +20,8 @@
 
 
 - (IBAction)clickHelpButton:(UIButton *)sender {
-    SingleChatViewController *singleVc = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-    singleVc.title = EaseTest_Chat1;
-    singleVc.chatID = EaseTest_Chat1;
+    AccountHelpCenterVc *singleVc = [[AccountHelpCenterVc alloc] init];
+    singleVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:singleVc animated:YES];
 }
 

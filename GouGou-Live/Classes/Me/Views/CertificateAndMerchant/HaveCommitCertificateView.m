@@ -48,16 +48,17 @@
 }
 - (UIImageView *)iconView {
     if (!_iconView) {
-        _iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"矢量智能对象"]];
+        _iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon开心狗"]];
     }
     return _iconView;
 }
 - (UILabel *)noteLabel {
     if (!_noteLabel) {
         _noteLabel = [[UILabel alloc] init];
-        _noteLabel.text = @"您的信息正在审核中";
+        _noteLabel.text = @"您提交信息正在审核中\n请耐心等待";
         _noteLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _noteLabel.font = [UIFont systemFontOfSize:13];
+        _noteLabel.numberOfLines = 0;
     }
     return _noteLabel;
 }

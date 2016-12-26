@@ -135,15 +135,8 @@ static NSString *cellid = @"cellid";
 
     self.cell = cell;
     
-    DogTypesViewController * typeVC = [[DogTypesViewController alloc] init];
-    
-    typeVC.title = cell.textLabel.text;
-    [self.navigationController pushViewController:typeVC animated:YES];
-    
-    self.cell = cell;
-    
+    // 跳转 
     MoreImpressionModel *model = self.dataArr[indexPath.row];
-
     DogTypesViewController *dogType = [[DogTypesViewController alloc] init];
     dogType.dogType = model;
     dogType.title = model.name;

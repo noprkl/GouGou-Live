@@ -152,10 +152,20 @@
     }];
     
 }
+- (void)setModel:(SellerShipTemplateModel *)model {
+    _model = model;
+    self.templateName.text = model.name;
+    if ([model.money isEqualToString:@"0"]) {
+        self.freeTemplate.text = @"免运费";
+    }else if ([model.money isEqualToString:@"50"]){
+        self.freeTemplate.text = @"默认价格";
+    }else{
+        self.freeTemplate.text = @"按实结算";
+    }
+}
 #pragma mark
 #pragma mark - 懒加载
-- (IBAction)clickBtnAction:(UIButton *)sender forEvent:(UIEvent *)event {
-}
+
 
 -  (UIView *)spaceView {
     

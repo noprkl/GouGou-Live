@@ -15,13 +15,13 @@
 
 #import "LivingSendMessageView.h" // 编辑弹幕信息
 #import "TalkingViewController.h" // 弹幕控制器
-
+#import "ShowIngDogModel.h"
 
 #import "LiveListRespModel.h"
 #import "LiveListStreamModel.h"
 #import "LiveListRootModel.h"
 #import "LiveRootStreamModel.h"
-#import "ShowIngDogModel.h"
+
 
 #import <PLPlayerKit/PLPlayerKit.h>
 

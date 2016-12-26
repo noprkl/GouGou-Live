@@ -52,9 +52,11 @@
     DLog(@"%@", dict);
     [self getRequestWithPath:API_PlayBack params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        
-        self.liveTitleLabel.text = successJson[@"merchant_name"];
-        self.playBackURL = successJson[@"live"];
+        NSArray *arr = successJson[@"data"];
+        NSDictionary *info = arr[0];
+        self.liveTitleLabel.text = info[@"merchant_name"];
+        self.playBackURL = info[@"live"];
+        [self updatePlayerWithURL:[NSURL URLWithString:self.playBackURL]];
         [self play];
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -107,13 +109,11 @@
 #pragma mark - Action
 - (AVPlayer *)player{
     if (!_player) {
-        NSURL *url = [NSURL URLWithString:@"http://ogzlwdrm8.bkt.clouddn.com/cc22908a24122e6ddd72db68de556540.m3u8"];
-        [self updatePlayerWithURL:url];
         _player = [AVPlayer playerWithPlayerItem:_playerItem];
         _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
         _isSliding = NO;
-        DLog(@"%@", NSStringFromCGRect(self.playerView.frame));
-        _playerLayer.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+//        DLog(@"%@", NSStringFromCGRect(self.playerView.frame));
+        _playerLayer.frame = CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
         [self.playerView.layer addSublayer:_playerLayer];
     }
     return _player;
@@ -134,7 +134,7 @@
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
-        _playerLayer.frame = self.view.frame;
+        _playerLayer.frame = CGRectMake(40, 40, SCREEN_WIDTH - 80, SCREEN_HEIGHT - 80);
 
     }
     if (orientation == UIDeviceOrientationPortrait) {
@@ -297,7 +297,6 @@
 #pragma mark - UI
 - (void)initUI {
     self.edgesForExtendedLayout = 0;
-    
     [self.view addSubview:self.playerView];
     [self.playerView addSubview:self.topView];
     [self.topView addSubview:self.backBtn];

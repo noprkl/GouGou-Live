@@ -10,7 +10,7 @@
 
 @interface UserAssetModel : BaseModel
 
-@property(nonatomic, strong) NSString *assetChange; /**< 交易金额 */
+@property(nonatomic, strong) NSString *assetChange; /**< 金额变化 */
 @property(nonatomic, strong) NSString *assetChangeTime; /**< 交易时间 */
 @property(nonatomic, strong) NSString *assetChangeType; /**< 交易类型 */
 @property(nonatomic, strong) NSString *nowAsset; /**< 交易后账户 */

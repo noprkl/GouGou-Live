@@ -43,7 +43,7 @@
     
     self.sendCode.layer.cornerRadius = 5;
     self.sendCode.layer.masksToBounds = YES;
-    self.sureBtn.layer.cornerRadius = 5;
+    self.sureBtn.layer.cornerRadius = 9;
     self.sureBtn.layer.masksToBounds = YES;
 }
 

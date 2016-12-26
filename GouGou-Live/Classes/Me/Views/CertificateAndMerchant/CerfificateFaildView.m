@@ -95,7 +95,7 @@
         _recommitBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         [_recommitBtn addTarget:self action:@selector(clickRecommitAction) forControlEvents:(UIControlEventTouchDown)];
     }
-    return _backBtn;
+    return _recommitBtn;
 }
 - (void)clickBackAction {
     if (_backBlcok) {

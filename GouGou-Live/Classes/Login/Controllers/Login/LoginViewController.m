@@ -53,7 +53,6 @@
     self.psdTextField.delegate = self;
     
     [self.phoneTestField addTarget:self action:@selector(phoneTextFieldChanged:) forControlEvents:(UIControlEventEditingDidEnd)];
-    
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -115,27 +114,23 @@
                                    };
             // 请求之前删掉上一次的信息
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
-               
+               // 电话号码
                 NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
                 
                 NSString * phoneString = [defaults objectForKey:@"phoneNum"];
                 
-                
+                // 密码
                 NSUserDefaults *psdDefaults = [NSUserDefaults standardUserDefaults];
                 NSString * psdString = [psdDefaults objectForKey:@"psdString"];
                 
                 if (self.phoneTestField.text != phoneString) {
-                    
                     [self showAlert:@"手机号未注册"];
-                }else {
+                } else {
                     if (self.psdTextField.text != psdString) {
-                       
-                        [self showAlert:successJson[@"message"]];
-
-                    }else {
-                    
+                        [self showAlert:successJson[@"账号或密码错误"]];
                     }
                 }
+                
                 if ([successJson[@"message"] isEqualToString:@"成功"]) {
                     DLog(@"%@", successJson);
                     
@@ -236,13 +231,137 @@
 
 #pragma mark - 第三方登录
 - (IBAction)clickQQLogin:(UIButton *)sender {
-    [LoginViewController QQLogin];
+    [LoginViewController QQLogin:^(id success) {
+//        [self showAlert:success[@"message"]];
+        NSDictionary *successJson = [success[@"data"] firstObject];
+        if ([success[@"message"] isEqualToString:@"成功"]) {
+            DLog(@"%@", successJson);
+            
+            [self saveUserWithID:successJson[@"id"]
+                        user_pwd:successJson[@"user_pwd"]
+                    user_img_url:successJson[@"user_img_url"]
+                       user_name:successJson[@"user_name"]
+                  user_nick_name:successJson[@"user_nick_name"]
+                        user_tel:successJson[@"user_tel"]
+                     is_merchant:successJson[@"is_merchant"]
+                         is_real:successJson[@"is_real"]
+                      user_motto:successJson[@"user_motto"]
+                   user_pay_code:successJson[@"user_pay_code"]
+                   user_ali_code:successJson[@"user_ali_code"]
+                      qq_open_id:successJson[@"qq_open_id"]
+                      wx_open_id:successJson[@"wx_open_id"]
+                      wb_open_id:successJson[@"wb_open_id"]
+                     user_status:successJson[@"user_status"]
+             ];
+            
+            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+            EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"id"] password:successJson[@"id"]];
+            if (error==nil) {
+                DLog(@"注册成功");
+                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
+                if (!error2) {
+                    DLog(@"登录成功");
+                }
+            }else{
+                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
+                if (!error2) {
+                    DLog(@"登录成功");
+                }
+            }
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+
+        
+    } unBinding:^{
+        [self showAlert:@"您未绑定腾讯账号"];
+    }];
 }
 - (IBAction)clickWXLogin:(UIButton *)sender {
-    [LoginViewController WChatLogin];
+    [LoginViewController WChatLogin:^(id success) {
+        NSDictionary *successJson = [success[@"data"] firstObject];
+        if ([success[@"message"] isEqualToString:@"成功"]) {
+            DLog(@"%@", successJson);
+            
+            [self saveUserWithID:successJson[@"id"]
+                        user_pwd:successJson[@"user_pwd"]
+                    user_img_url:successJson[@"user_img_url"]
+                       user_name:successJson[@"user_name"]
+                  user_nick_name:successJson[@"user_nick_name"]
+                        user_tel:successJson[@"user_tel"]
+                     is_merchant:successJson[@"is_merchant"]
+                         is_real:successJson[@"is_real"]
+                      user_motto:successJson[@"user_motto"]
+                   user_pay_code:successJson[@"user_pay_code"]
+                   user_ali_code:successJson[@"user_ali_code"]
+                      qq_open_id:successJson[@"qq_open_id"]
+                      wx_open_id:successJson[@"wx_open_id"]
+                      wb_open_id:successJson[@"wb_open_id"]
+                     user_status:successJson[@"user_status"]
+             ];
+            
+            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+            EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"id"] password:successJson[@"id"]];
+            if (error==nil) {
+                DLog(@"注册成功");
+                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
+                if (!error2) {
+                    DLog(@"登录成功");
+                }
+            }else{
+                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
+                if (!error2) {
+                    DLog(@"登录成功");
+                }
+            }
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    } unBinding:^{
+        [self showAlert:@"您未绑定微信账号"];
+    }];
 }
 - (IBAction)clickSinaLogin:(UIButton *)sender {
-    [LoginViewController SinaLogin];
+    [LoginViewController SinaLogin:^(id success) {
+        NSDictionary *successJson = [success[@"data"] firstObject];
+        if ([success[@"message"] isEqualToString:@"成功"]) {
+            DLog(@"%@", successJson);
+            
+            [self saveUserWithID:successJson[@"id"]
+                        user_pwd:successJson[@"user_pwd"]
+                    user_img_url:successJson[@"user_img_url"]
+                       user_name:successJson[@"user_name"]
+                  user_nick_name:successJson[@"user_nick_name"]
+                        user_tel:successJson[@"user_tel"]
+                     is_merchant:successJson[@"is_merchant"]
+                         is_real:successJson[@"is_real"]
+                      user_motto:successJson[@"user_motto"]
+                   user_pay_code:successJson[@"user_pay_code"]
+                   user_ali_code:successJson[@"user_ali_code"]
+                      qq_open_id:successJson[@"qq_open_id"]
+                      wx_open_id:successJson[@"wx_open_id"]
+                      wb_open_id:successJson[@"wb_open_id"]
+                     user_status:successJson[@"user_status"]
+             ];
+            
+            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+            EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"id"] password:successJson[@"id"]];
+            if (error==nil) {
+                DLog(@"注册成功");
+                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
+                if (!error2) {
+                    DLog(@"登录成功");
+                }
+            }else{
+                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
+                if (!error2) {
+                    DLog(@"登录成功");
+                }
+            }
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+
+    } unBinding:^{
+        [self showAlert:@"您未绑定新浪账号"];
+    }];
 }
 
 
@@ -278,7 +397,10 @@
         return NO;
     }
 }
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 @end

@@ -375,7 +375,6 @@
                     
                     // beginConfiguration ensures that pending changes are not applied immediately
                     [weakSelf.captureSession beginConfiguration];
-                    
                     [weakSelf.captureSession removeInput:input];
                     [weakSelf.captureSession addInput:newInput];
                     
@@ -409,6 +408,7 @@
     if (!_showDogView) {
         _showDogView = [[LinvingShowDogView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
         _showDogView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+        _showDogView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _showDogView.cellBlock = ^(LiveListDogInfoModel *model){
             if (model.pathSmall != NULL) {
@@ -426,8 +426,12 @@
     if (!_sendMessageView) {
         _sendMessageView = [[LivingSendMessageView alloc] init];
         _sendMessageView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+        _sendMessageView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
         _sendMessageView.textFieldBlock = ^(UITextField *textField){
-            
+            if (![textField.text isEqualToString:@""]) {
+                [weakSelf.talkingVc sendTextMessage:textField.text];
+            }
         };
     }
     return _sendMessageView;
@@ -438,6 +442,7 @@
         _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         _talkingVc.ishidText = YES;
+        _talkingVc.view.hidden = YES;
         _talkingVc.roomID = _chatRoomID;
     }
     return _talkingVc;
@@ -496,6 +501,7 @@
             make.left.right.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
+        
     }];
 }
 

@@ -30,7 +30,12 @@
 }
 - (void)setUnReadCount:(NSInteger)unReadCount {
     _unReadCount = unReadCount;
-    self.messageCountLabel.text = [@(unReadCount) stringValue];
+    
+    if (unReadCount == 0) {
+        self.messageCountLabel.hidden = YES;
+    }else{
+        self.messageCountLabel.text = [@(unReadCount) stringValue];
+    }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

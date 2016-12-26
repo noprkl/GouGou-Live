@@ -31,6 +31,11 @@ static NSString *cellid = @"SystemNotificationCell";
 - (void)initUI{
     [self.view addSubview:self.tableView];
     self.title = @"系统通知";
+    //把关注的人存到本地
+    NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
+    NSString * fileName = [docDir stringByAppendingPathComponent:SystemMessage];
+    [self.models writeToFile:fileName atomically:YES];
+//    [NSKeyedArchiver archiveRootObject:self.models toFile:fileName];
 }
 - (void)setModels:(NSArray *)models {
     _models = models;
@@ -74,11 +79,11 @@ static NSString *cellid = @"SystemNotificationCell";
     CGSize size = [model.conent boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin |
     NSStringDrawingTruncatesLastVisibleLine attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"], NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
     
-    return 50 + size.height;
+    return 50 + size.height + 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        return 0;
     }
     return 0;
 }

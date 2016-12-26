@@ -191,7 +191,6 @@
     [self.boomScrollView addSubview:self.costView];
     [self.boomScrollView addSubview:self.sureApplyRefundView];
     [self.boomScrollView addSubview:self.photoView];
-    
     //注册键盘出现的通知
     [[NSNotificationCenter defaultCenter] addObserver:self
      
@@ -364,8 +363,6 @@
         }
     }
 }
-
-
 - (void)keyboardWasShown:(NSNotification*)aNotification {
     //键盘高度
     CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -380,7 +377,6 @@
 //        }];
     }];
 }
-
 -(void)keyboardWillBeHidden:(NSNotification*)aNotification {
     [UIView animateWithDuration:0.3 animations:^{
         [self.boomScrollView setContentOffset:CGPointMake(0, 0)animated:YES];

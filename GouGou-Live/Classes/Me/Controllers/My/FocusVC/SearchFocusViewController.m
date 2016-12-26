@@ -45,7 +45,8 @@ static NSString *cellid = @"MyFocusCell";
 - (void)clickSearchBottonAction {
     [self.titleInputView resignFirstResponder];
     NSDictionary *dict = @{
-                           @"user_nick_name":self.titleInputView.text
+                           @"user_nick_name":self.titleInputView.text,
+                           @"user_id":[UserInfos sharedUser].ID
                            };
     [self postRequestWithPath:API_Search_nick params:dict success:^(id successJson) {
         DLog(@"%@", successJson);

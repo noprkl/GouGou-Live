@@ -12,6 +12,7 @@
 #import "DeletePrommtView.h"
 
 #import "SellerAddShipTemplateViewController.h" // 模板管理
+#import "SellerShipTemplateModel.h"
 
 @interface SellerShipTemplateViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -35,9 +36,10 @@ static NSString *cellid = @"SellerShipTemplateCell";
                     @"page":@1,
                     @"pageSize":@10
                     };
-    [self getRequestWithPath:API_List_freight params:dict
-                     success:^(id successJson) {
+    [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        self.dataArr = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -62,7 +64,6 @@ static NSString *cellid = @"SellerShipTemplateCell";
 - (void)initUI{
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
         [self getRequestShipTemplate];
         [self.tableView.mj_header endRefreshing];
     }];
@@ -107,6 +108,7 @@ static NSString *cellid = @"SellerShipTemplateCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerShipTemplateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+    cell.model = self.dataArr[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.row == 0) {

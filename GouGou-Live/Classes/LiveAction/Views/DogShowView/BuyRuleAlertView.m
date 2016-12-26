@@ -102,7 +102,7 @@
                            NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"]
                            };
     self.ruleContent.attributedText = [[NSAttributedString alloc] initWithString:ruleContets attributes:dict];
-    _height = [ruleContets boundingRectWithSize:CGSizeMake(SCREEN_WIDTH, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dict context:nil].size.height + 50;
+    _height = [ruleContets boundingRectWithSize:CGSizeMake(SCREEN_WIDTH, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dict context:nil].size.height + 120;
     
 }
 #pragma mark

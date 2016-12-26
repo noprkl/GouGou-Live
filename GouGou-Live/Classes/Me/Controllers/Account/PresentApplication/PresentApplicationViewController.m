@@ -101,7 +101,7 @@
 
     self.title = @"提现申请";
     
-    self.sureBtn.layer.cornerRadius = 7.5;
+    self.sureBtn.layer.cornerRadius = 9;
     self.sureBtn.layer.masksToBounds = YES;
     
     [self.moneyTextfiled addTarget:self action:@selector(editPresentMoneyAction:) forControlEvents:(UIControlEventEditingChanged)];

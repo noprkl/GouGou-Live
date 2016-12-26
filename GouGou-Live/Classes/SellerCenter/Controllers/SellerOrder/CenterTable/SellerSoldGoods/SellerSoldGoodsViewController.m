@@ -134,7 +134,7 @@ static NSString *closeCell = @"SellerCloseCell";
     if ([model.status integerValue] == 1){ // 1：待付款
         
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
-
+        cell.model = model;
         cell.orderState = @"待付宽";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
 
@@ -150,7 +150,7 @@ static NSString *closeCell = @"SellerCloseCell";
         return cell;
     }else if ([model.status integerValue] == 2){ // 2：待付定金
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
-        
+        cell.model = model;
         cell.orderState = @"待付定金";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
         NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
@@ -165,7 +165,7 @@ static NSString *closeCell = @"SellerCloseCell";
         return cell;
     }else if ([model.status integerValue] == 3){ //3：已付定金，待付尾款
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
-        
+        cell.model = model;
         cell.orderState = @"待付尾款";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
@@ -180,11 +180,14 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 4){ // 4：放弃订金，交易结束
         SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
         cell.orderState = @"交易关闭";
+        cell.model = model;
 
         return cell;
     }else if ([model.status integerValue] == 5){ // 5：待付全款
         
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
+        cell.model = model;
+
         cell.orderState = @"待付全款";
         cell.btnTitles = @[@"联系买家"];
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
@@ -206,8 +209,8 @@ static NSString *closeCell = @"SellerCloseCell";
         return cell;
     }else if ([model.status integerValue] == 7){ // 7：已付清款，待发货
         SellerWaitSendCell *cell = [tableView dequeueReusableCellWithIdentifier:waitSendCell];
-        SellerOrderModel *model = self.dataArr[indexPath.row];
-        cell.model = model;cell.orderState = @"待发货";
+        cell.model = model;
+        cell.orderState = @"待发货";
         
         cell.btnTitles = @[@"联系买家", @"发货"];
         NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
@@ -223,7 +226,6 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 8){ // 8：已发货，待收货
         
         SellerWaitAcceptCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAcceptCell];
-        SellerOrderModel *model = self.dataArr[indexPath.row];
         cell.model = model;
         
         cell.orderState = @"待发货";
@@ -245,7 +247,6 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 9){ // 9: 已收货，待评价
         SellerWaitRateCell *cell = [tableView dequeueReusableCellWithIdentifier:waitRateCell];
         
-        SellerOrderModel *model = self.dataArr[indexPath.row];
         cell.model = model;
         
         cell.orderState = @"待评价";
@@ -265,7 +266,6 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 10){ // 10：已评价
         SellerWaitRateCell *cell = [tableView dequeueReusableCellWithIdentifier:waitRateCell];
         
-        SellerOrderModel *model = self.dataArr[indexPath.row];
         cell.model = model;
         
         cell.orderState = @"已评价";
@@ -320,11 +320,11 @@ static NSString *closeCell = @"SellerCloseCell";
     }else if ([model.status integerValue] == 3){ //3：已付定金，待付尾款
         height = 245;
     }else if ([model.status integerValue] == 4){ // 4：放弃订金，交易结束
-        height = 230;
+        height = 245;
     }else if ([model.status integerValue] == 5){ // 5：待付全款
-        height = 230;
+        height = 245;
     }else if ([model.status integerValue] == 6){ //
-        height = 230;
+        height = 245;
     }else if ([model.status integerValue] == 7){ // 7：已付清款，待发货
         height = 245;
     }else if ([model.status integerValue] == 8){ // 8：已发货，待收货

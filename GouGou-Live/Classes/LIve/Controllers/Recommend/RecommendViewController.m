@@ -22,6 +22,7 @@
 #import "LiveViewCellModel.h"
 
 #import "NoneFocusView.h"
+#import "BannerModel.h"
 @interface RecommendViewController ()<UIScrollViewDelegate, SDCycleScrollViewDelegate>
 
 /** 底部scrollview */
@@ -122,7 +123,16 @@
         DLog(@"%@", error);
     }];
 }
-
+- (void)getRequestBanner {
+    [self getRequestWithPath:API_Banner params:nil success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.urlArray = [BannerModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        
+        [self.baseScrollView addSubview:self.cycleScrollView];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)getRequestFilterLiveListWithSize:(DogCategoryModel *)size {
     NSDictionary *dict = @{
                            @"size":@([size.ID intValue])
@@ -340,6 +350,9 @@
     [super viewWillAppear:animated];
 
     [self getRequestLiveList];
+    [self getRequestBanner];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
 - (void)viewDidLoad {
@@ -349,13 +362,12 @@
 
 - (void)initUI {
     
-    self.urlArray = @[@"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg", @"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg", @"http://d.hiphotos.baidu.com/image/h%3D200/sign=6008b360f336afc3110c38658318eb85/a1ec08fa513d26973aa9f6fd51fbb2fb4316d81c.jpg"];
+    
     //    [self.view addSubview:self.noneNetView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.view addSubview:self.baseScrollView];
     [self.view addSubview:self.noneView];
-    [self.baseScrollView addSubview:self.cycleScrollView];
-
+//    [self.baseScrollView addSubview:self.cycleScrollView];
     [self.baseScrollView addSubview:self.tableView];
     [self.baseScrollView addSubview:self.filtView];
     
@@ -407,9 +419,13 @@
         _cycleScrollView.pageDotColor = [UIColor colorWithHexString:@"#ffffff"];
         // 选中颜色
         _cycleScrollView.currentPageDotColor = [UIColor colorWithHexString:@"ffa11a"];
-        
+        NSMutableArray *bannerArr = [NSMutableArray array];
+        for (BannerModel *model in self.urlArray) {
+            [bannerArr addObject:model.img];
+        }
+        self.cycleScrollView.imageURLStringsGroup = bannerArr;
         // 图片路径
-        _cycleScrollView.imageURLStringsGroup = self.urlArray;
+        _cycleScrollView.imageURLStringsGroup = bannerArr;
         
     }
     return _cycleScrollView;
@@ -535,9 +551,10 @@
     livingVC.liverIcon = model.userImgUrl;
     livingVC.liverName = model.merchantName;
     livingVC.doginfos = dogInfos;
-    livingVC.watchCount = model.pNum;
+    livingVC.watchCount = model.viewNum;
     livingVC.chatRoomID = model.chatroom;
     livingVC.state = model.status;
+    livingVC.isLandscape = NO;
     livingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:livingVC animated:YES];
 }
@@ -579,7 +596,8 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     
     // 点击图片回调
-    DLog(@"%ld", index);
+    BannerModel *model = self.urlArray[index];
+    DLog(@"%@", model.url);
 }
 
 - (void)didReceiveMemoryWarning {

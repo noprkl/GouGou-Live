@@ -7,7 +7,7 @@
 //
 
 #import "SellerBaseCell.h"
-
+#import "SellerShipTemplateModel.h"
 typedef void(^ClickEditBtnBlock)();
 typedef void(^ClickAcquiesceBtnBlock)(UIButton *btn);
 typedef void(^ClickDeleteBteBlock)();
@@ -20,6 +20,9 @@ typedef void(^ClickDeleteBteBlock)();
 @property(nonatomic, strong) ClickAcquiesceBtnBlock acquiesceBlock;
 /** 点击删除按钮回调 */
 @property (strong,nonatomic) ClickDeleteBteBlock deleteBlock;
+
+
+@property (nonatomic, strong) SellerShipTemplateModel *model; /**< 模型 */
 
 
 @end

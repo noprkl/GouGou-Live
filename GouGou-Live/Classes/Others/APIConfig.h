@@ -260,6 +260,9 @@
 #pragma mark - 系统通知
 /** 系统通知 */
 #define API_System_msg @"api/UserService/system_msg"
+/** 轮播图 */
+#define API_Banner @"api/UserService/banner"
+
 
 #pragma mark - 直播
 

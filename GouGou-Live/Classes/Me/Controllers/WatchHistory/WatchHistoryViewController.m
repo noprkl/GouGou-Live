@@ -93,7 +93,14 @@ static NSString * watchCell = @"watchCellID";
     WatchHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:watchCell];
     PlayBackModel *model = self.dataArr[indexPath.row];
     cell.model = model;
-    cell.deleBlock = ^(){
+    cell.deleBlock = ^(UIButton *btn){
+        if (btn.selected) {
+            
+            [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+            
+        } else {
+            [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+        }
         NSDictionary *dict = @{
                                @"id":model.liveId
                                };

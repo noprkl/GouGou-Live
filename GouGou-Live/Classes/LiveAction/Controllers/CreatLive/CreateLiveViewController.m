@@ -370,6 +370,7 @@
                 streamVc.liveID = liveId;
                 streamVc.chatRoomID = successJson[@"data"][@"chatroom"][@"data"][@"id"];
                 streamVc.hidesBottomBarWhenPushed = YES;
+                streamVc.streamRtmp = streamModel.rtmp;
                 NSInteger tag = self.lastBtn.tag;
                 [self.navigationController pushViewController:streamVc animated:YES];
                 DLog(@"%@", streamModel.rtmp);

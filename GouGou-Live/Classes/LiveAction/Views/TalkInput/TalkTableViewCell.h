@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TalkTableViewCell : UITableViewCell
+@interface TalkTableViewCell : EaseBaseMessageCell
 
 @property (weak, nonatomic) IBOutlet UILabel *OwnerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;

@@ -64,9 +64,12 @@
     self.phoneTextField.text = self.adressModel.userTel;
     self.areaChooseTextfiled.text = adress;
     self.detailAddressTextfiled.text = self.adressModel.userAddress;
-    self.roadTextField.text = self.adressModel.street;
-    self.postalcodeTextfiled.text = self.adressModel.code;
-    
+    if (self.adressModel.street.length != 0) {
+        self.roadTextField.text = self.adressModel.street;
+    }
+    if (self.adressModel.code.length != 0) {
+        self.postalcodeTextfiled.text = self.adressModel.code;
+    }
     DLog(@"%@",self.roadTextField.text);
     DLog(@"%@",self.postalcodeTextfiled.text);
     [self requestGetAreaData];

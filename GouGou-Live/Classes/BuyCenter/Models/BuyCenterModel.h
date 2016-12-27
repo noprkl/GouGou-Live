@@ -47,4 +47,5 @@
 
 @property (nonatomic, strong) NSString *comment; /**< 补充 */
 
+@property (copy, nonatomic) NSString *creatTime; /**< 度订单创建时间 */
 @end

@@ -58,13 +58,48 @@
     }
     self.nickView.nickName.text = centerModel.merchantName;
     self.nickView.stateLabe.text = @"待付定金";
+   /*
+    // 当前时间
+    NSDate *date = [NSDate date];
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyddhhmmss"];
+    // 当前时间转化为字符串
+    NSString * dateString = [dateFormatter stringFromDate:date];
+    NSDateFormatter *formatterDate = [[NSDateFormatter alloc] init];
+    [formatterDate setDateFormat:@"yyddhhmmss"];
+    NSDate *date1 = [formatterDate dateFromString:dateString];
+    NSTimeInterval dateTime = [date1 timeIntervalSince1970];
+
+    
+//    // 获取时间差字符串
+//    NSString * cutDownTime = [NSString dateTimeDifferenceWithStartTime:centerModel.creatTime endTime:dateString];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyddhhmmss"];
+    NSDate *cutDate = [formatter dateFromString:centerModel.creatTime];
+    NSTimeInterval downTime = [cutDate timeIntervalSince1970];
+    // 差值
+    NSTimeInterval remainTime = downTime - dateTime;
+    
+    if (remainTime > 30 *60) {
+        self.nickView.remainTimeLabel.text = @"";
+    } else {
+        int h = remainTime / 60 / 60;
+        int m = remainTime / 60 / 60 / 24;
+        if (h != 0) {
+            [self.nickView.remainTimeLabel beginCountDownWithTimeInterval:h * 60 * 60];
+        } else if (m != 0){
+        
+            [self.nickView.remainTimeLabel beginCountDownWithTimeInterval:m * 60];
+        } else {
+            self.nickView.remainTimeLabel.text = @"";
+        }
+    }
+*/
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
         [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-        
     }
-
     self.dogCardView.dogNameLabel.text = centerModel.name;
     self.dogCardView.dogAgeLabel.text = centerModel.ageName;
     self.dogCardView.dogSizeLabel.text = centerModel.sizeName;

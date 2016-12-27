@@ -147,7 +147,6 @@
         make.height.equalTo(1);
         
     }];
-    
 }
 
 #pragma mark

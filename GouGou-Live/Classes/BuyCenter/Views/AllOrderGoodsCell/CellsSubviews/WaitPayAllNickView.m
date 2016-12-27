@@ -20,6 +20,7 @@
 //@property (strong,nonatomic) UILabel *stateLabe;
 @end
 
+
 @implementation WaitPayAllNickView
 - (void)setOrderState:(NSString *)orderState {
 
@@ -37,6 +38,7 @@
         [self addSubview:self.sellerIamge];
         [self addSubview:self.nickName];
         [self addSubview:self.stateLabe];
+        [self addSubview:self.remainTimeLabel];
         
     }
     return self;
@@ -74,6 +76,12 @@
         make.centerY.equalTo(weakself.centerY).offset(10);
         make.size.equalTo(CGSizeMake(70, 20));
         
+    }];
+    
+    [_remainTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(weakself.stateLabe.left).offset(-10);
+        make.centerY.equalTo(weakself.centerY);
     }];
     
 
@@ -122,6 +130,17 @@
         _stateLabe.textAlignment = NSTextAlignmentCenter;
     }
     return _stateLabe;
+}
+
+- (CountDownLabel *)remainTimeLabel {
+
+    if (!_remainTimeLabel) {
+        _remainTimeLabel = [[CountDownLabel alloc] init];
+        _remainTimeLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        _remainTimeLabel.font = [UIFont systemFontOfSize:14];
+        _remainTimeLabel.text = @"剩余1小时";
+    }
+    return _remainTimeLabel;
 }
 
 

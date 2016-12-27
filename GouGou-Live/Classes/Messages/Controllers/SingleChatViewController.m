@@ -46,7 +46,31 @@
 }
 //#pragma mark
 //#pragma mark - 自定义cell
-
+// 头像
+- (id<IMessageModel>)messageViewController:(EaseMessageViewController *)viewController
+                           modelForMessage:(EMMessage *)message
+{
+       //用户可以根据自己的用户体系，根据message设置用户昵称和头像
+    id<IMessageModel> model = nil;
+    model = [[EaseMessageModel alloc] initWithMessage:message];
+    model.avatarImage = [UIImage imageNamed:@"头像"];//默认头像
+    
+    if (model.isSender) {
+        if ([UserInfos getUser]) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+            model.avatarURLPath = urlString;//头像网络地址
+        }
+         model.nickname = [UserInfos sharedUser].usernickname;//用户昵称
+    }else{
+        if (self.personalModel.userImgUrl != NULL) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.personalModel.userImgUrl];
+            model.avatarURLPath = urlString;//头像网络地址
+        }
+        model.nickname = self.personalModel.userName;//用户昵称
+    }
+    
+    return model;
+}
 //生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -197,8 +221,22 @@
     if (!_menuView) {
         _menuView = [[MessageMeumView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 130, 64, 130, 176) style:(UITableViewStylePlain)];
         _menuView.hidden = YES;
+        EMError *error = nil;
+        NSArray *blackArr = [[EMClient sharedClient].contactManager getBlackListFromServerWithError:&error];
+        NSString *filename = [NSString cachePathWithfileName:Focus];
+        NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
         
-        _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
+        // 如果已经屏蔽 已经关注
+        if ([blackArr containsObject:_chatID] && [focusArr containsObject:_chatID]) {
+            _menuView.dataPlist = @[@"已关注", @"已屏蔽", @"举报", @"个人主页"];
+        }else if ([blackArr containsObject:_chatID] && ![focusArr containsObject:_chatID]) {
+            _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
+        }else if (![blackArr containsObject:_chatID] && [focusArr containsObject:_chatID]) {
+            _menuView.dataPlist = @[@"已关注", @"屏蔽", @"举报", @"个人主页"];
+        }else if (![blackArr containsObject:_chatID] && ![focusArr containsObject:_chatID]) {
+            _menuView.dataPlist = @[@"关注", @"已屏蔽", @"举报", @"个人主页"];
+        }
+        
         __weak typeof(self) weakSelf = self;
         _menuView.cellBlock = ^(NSString *cellText){
             [weakSelf clickMenuActionWithText:cellText];
@@ -208,6 +246,25 @@
 }
 
 - (void)clickMenuActionWithText:(NSString *)text {
+    if ([text isEqualToString:@"已关注"]) {
+        NSDictionary *dict = @{
+                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                               @"id":@([_chatID intValue]),
+                               @"type":@(0)
+                               };
+        
+        [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            [self showHint:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"关注成功"]) {
+                _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
+                [self.menuView reloadData];
+            }
+            
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
     if ([text isEqualToString:@"关注"]) {
         NSDictionary *dict = @{
                                @"user_id":@([[UserInfos sharedUser].ID intValue]),
@@ -217,10 +274,32 @@
 
         [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
-            [self showHint:successJson[@"message"]];
+            if ([successJson[@"message"] isEqualToString:@"关注成功"]) {
+                [self showHint:successJson[@"message"]];
+                _menuView.dataPlist = @[@"已关注", @"屏蔽", @"举报", @"个人主页"];
+                [self.menuView reloadData];
+            }
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
+        
+        }
+        if ([text isEqualToString:@"已关注"]) {
+            NSDictionary *dict = @{
+                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                   @"id":@([_chatID intValue]),
+                                   @"type":@(0)
+                                   };
+            
+            [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                    [self showHint:successJson[@"message"]];
+                    _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
+                    [self.menuView reloadData];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        
     }else if ([text isEqualToString:@"屏蔽"]){
         EMError *error = nil;
         NSArray *blackArr = [[EMClient sharedClient].contactManager getBlackListFromServerWithError:&error];

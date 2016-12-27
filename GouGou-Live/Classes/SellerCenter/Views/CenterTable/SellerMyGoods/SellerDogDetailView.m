@@ -109,7 +109,7 @@
     self.dogPriceLaebl.text = dogInfo.price;
     
     self.descLabel.text = dogInfo.comment;
-    self.promulgateTimeLabel.text = dogInfo.createTime;
+    self.promulgateTimeLabel.text = [NSString stringFromDateString:dogInfo.createTime];
     
     NSArray *imsArr = [dogInfo.pathBig componentsSeparatedByString:@","];
     

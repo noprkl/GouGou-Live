@@ -48,7 +48,7 @@
 
     self.nickView.nickName.text = protectModel.merchantName;
     self.nickView.stateLabe.text = @"维权失败";
-    
+//    self.nickView.remainTimeLabel.text = protectModel.closeTime;
     // 狗狗详情
     if (protectModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:protectModel.pathSmall];

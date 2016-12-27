@@ -84,17 +84,29 @@
     _dogInfos = dogInfos;
     if (_dogInfos.count == 0) {
         self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
-    }else {
+    }if (_dogInfos.count == 1) {
+        DogCardView *cardView = [[DogCardView alloc] init];
+        cardView.dogInfo = dogInfos[0];
+        cardView.message = [NSString stringWithFormat:@"1"];
+        cardView.backgroundColor = [UIColor whiteColor];
+        cardView.frame = CGRectMake(20, 10, SCREEN_WIDTH - 2 * 20, 93);
+        
+        cardView.tag = 0 + 50;
+        //            cardView.layer.cornerRadius = 5;
+        //            cardView.layer.masksToBounds = YES;
+        [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
+        [self.dogCardScrollView addSubview:cardView];
+    } else {
         NSInteger count = dogInfos.count;
         self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 10), 0);
 
         CGFloat w = 300;
         CGFloat h = 93;
-        CGFloat x = 10;
+        CGFloat x = 0;
         CGFloat y = 10;
         
         for (NSInteger i = 0; i < count; i ++) {
-            x = i * (w + 10);
+            x = i * (w + 20) + 20;
             
             DogCardView *cardView = [[DogCardView alloc] init];
             cardView.dogInfo = dogInfos[i];
@@ -104,8 +116,8 @@
             cardView.frame = CGRectMake(x, y, w, h);
             
             cardView.tag = i + 50;
-            cardView.layer.cornerRadius = 5;
-            cardView.layer.masksToBounds = YES;
+//            cardView.layer.cornerRadius = 5;
+//            cardView.layer.masksToBounds = YES;
             [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
             [self.dogCardScrollView addSubview:cardView];
         }

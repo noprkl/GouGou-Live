@@ -46,6 +46,7 @@
     }
     self.nickView.nickName.text = protectModel.merchantName;
     self.nickView.stateLabe.text = @"维权中";
+//    self.nickView.remainTimeLabel.text = protectModel.closeTime;
     
     // 狗狗详情
     if (protectModel.pathSmall.length != 0) {

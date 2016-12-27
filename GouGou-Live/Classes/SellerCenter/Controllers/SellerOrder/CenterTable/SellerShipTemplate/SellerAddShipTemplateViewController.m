@@ -94,6 +94,9 @@ static NSString *cellid = @"SellerAddShipTemplate";
                 [self postRequestWithPath:API_Freight params:dict success:^(id successJson) {
                     [self showAlert:successJson[@"message"]];
                     DLog(@"%@", successJson);
+                    if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];

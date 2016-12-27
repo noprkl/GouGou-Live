@@ -61,6 +61,8 @@
     }
     self.nickView.nickName.text = centerModel.merchantName;
     self.nickView.stateLabe.text = @"待收货";
+    self.nickView.remainTimeLabel.text = centerModel.creatTime;
+
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];

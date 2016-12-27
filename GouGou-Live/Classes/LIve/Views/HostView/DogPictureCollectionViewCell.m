@@ -55,7 +55,7 @@
     self.titlelable.text = model.userNickName;
     self.degistLable.text = model.name;
     self.salesvolumeLable.text = [NSString stringWithFormat:@"在售%ld/%ld", model.num, model.pNum];
-
+    self.personNumLable.text = model.viewNum;
 }
 #pragma mark
 #pragma mark - 约束

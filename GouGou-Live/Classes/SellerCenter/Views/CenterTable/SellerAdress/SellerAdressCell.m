@@ -66,18 +66,15 @@
     _adressModel = adressModel;
     self.userName.text = adressModel.merchantName;
     self.phoneTextfiled.text = adressModel.merchantTel;
-    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@", adressModel.merchantProvince, adressModel.merchantCity, adressModel.merchantDistrict, adressModel.merchantAddress];
+    NSString *adress = [NSString stringWithFormat:@"%@,%@,%@,%@,%@", adressModel.merchantProvince, adressModel.merchantCity, adressModel.merchantDistrict, adressModel.street,adressModel.merchantAddress];
     self.detailAddress.text = adress;
-    
-//    self.stree.text = adressModel.street;
-//    self.code.text  = adressModel.code;
     
     if (adressModel.isDefault == 1) {
         self.duihaoImageBtn.selected = YES;
     }else{
         self.duihaoImageBtn.selected = NO;
     }
-    
+//    CGFloat adressheight
 }
 #pragma mark
 #pragma mark - 约束
@@ -91,7 +88,6 @@
         
         make.top.left.right.equalTo(weakself);
         make.height.equalTo(10);
-        
     }];
     
     [_relationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -103,34 +99,29 @@
     }];
     
     [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(weakself.relationLabel.right).offset(10);
         make.centerY.equalTo(weakself.relationLabel.centerY);
         make.size.equalTo(CGSizeMake(200, 15));
-        
     }];
     
     [_phoneTextfiled mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.relationLabel.centerY);
         make.height.equalTo(15);
-        
     }];
     
     [_addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.relationLabel.bottom).offset(10);
         make.left.equalTo(weakself.left).offset(10);
-        make.height.equalTo(15);
-        
+        make.size.equalTo(CGSizeMake(30, 15));
     }];
     
     [_detailAddress mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.centerY.equalTo(weakself.addressLabel.centerY);
         make.left.equalTo(weakself.addressLabel.right).offset(10);
-        make.height.equalTo(15);
+        make.right.equalTo(weakself.right).offset(-20);
+        make.height.equalTo(30);
         
     }];
     
@@ -229,7 +220,8 @@
         _detailAddress = [[UILabel alloc] init];
         _detailAddress.text = @"北京，北京市，朝阳区，将台将府家园";
         _detailAddress.textColor  = [UIColor colorWithHexString:@"#666666"];
-        _detailAddress.font = [UIFont systemFontOfSize:14];
+        _detailAddress.font = [UIFont systemFontOfSize:12];
+        _detailAddress.numberOfLines = 0;
     }
     return _detailAddress;
 }

@@ -16,4 +16,7 @@
 @property(nonatomic, strong) NSString *userImgUrl; /**< 头像 */
 
 @property(nonatomic, strong) NSString *ID; /**< 关注ID */
+
+@property (nonatomic, strong) NSString *state; /**< 是否关注 */
+
 @end

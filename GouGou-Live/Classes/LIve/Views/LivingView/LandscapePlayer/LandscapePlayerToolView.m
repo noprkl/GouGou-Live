@@ -10,19 +10,6 @@
 
 @interface LandscapePlayerToolView ()
 
-@property(nonatomic, strong) UIButton *backBtn; /**< 返回按钮 */
-
-
-@property(nonatomic, strong) UIImageView *livingImageView; /**< 直播提示图 */
-
-@property(nonatomic, strong) UIButton *watchCount; /**< 观看人数 */
-
-@property(nonatomic, strong) UIButton *reportBtn; /**< 举报 */
-
-@property(nonatomic, strong) UIButton *shareBtn; /**< 分享 */
-
-@property(nonatomic, strong) UIButton *collectBtn; /**< 翻转按钮 */
-
 @end
 @implementation LandscapePlayerToolView
 #pragma mark
@@ -94,10 +81,10 @@
     }
 }
 - (void)clickcollectBtnAction:(UIButton *)btn {
-    btn.selected = !btn.selected;
     if (_collectBlcok) {
         _collectBlcok(btn.selected);
     }
+    btn.selected = !btn.selected;
 }
 #pragma mark
 #pragma mark - 懒加载

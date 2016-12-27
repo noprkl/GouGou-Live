@@ -4,7 +4,7 @@
 //
 //  Created by ma c on 16/10/27.
 //  Copyright © 2016年 LXq. All rights reserved.
-//
+//  直播
 
 #import "BaseViewController.h"
 
@@ -22,7 +22,6 @@
 @property (nonatomic, strong) NSString *state; /**< 直播状态 */
 
 @property (nonatomic, assign) BOOL isLandscape; /**< 是否为横屏 */
-
 
 /** 是否选中 */
 @property (assign,nonatomic) BOOL isSelectCollectBtn;

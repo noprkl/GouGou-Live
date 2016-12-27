@@ -66,11 +66,12 @@
     self.detailAddressTextfiled.text = self.adressModel.merchantAddress;
     self.roadTextField.text = self.adressModel.street;
     self.postalcodeTextfiled.text = self.adressModel.code;
-   
-    
-    DLog(@"%@",self.roadTextField.text);
-    DLog(@"%@",self.postalcodeTextfiled.text);
-    
+    if (self.adressModel.street.length != 0) {
+        self.roadTextField.text = self.adressModel.street;
+    }
+    if (self.adressModel.code.length != 0) {
+        self.postalcodeTextfiled.text = self.adressModel.code;
+    }
     [self requestGetAreaData];
 }
 - (void)setAdressModel:(SellerAdressModel *)adressModel {

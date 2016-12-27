@@ -23,7 +23,7 @@
 #import "LiveRootStreamModel.h"
 
 #import "LiveListDogInfoModel.h"
-
+#import "CreateLiveViewController+ThirdShare.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
@@ -109,7 +109,11 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-
+    
+    // 删除聊天室
+    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+        
+    }];
 }
 // 切换横竖屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -119,6 +123,18 @@
         [invocation setSelector:selector];
         [invocation setTarget: [UIDevice currentDevice]];
         int val = orientation;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+}
+// 切横屏
+- (void)forwardInvocationLandscapeRight {
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationLandscapeRight;
         [invocation setArgument:&val atIndex:2];
         [invocation invoke];
     }
@@ -304,7 +320,9 @@
                     case 0:
                     {
                     // 朋友圈
-                    [weakSelf WechatTimeShare];
+                    [CreateLiveViewController WechatTimeShare:weakSelf.streamRtmp success:^{
+                        [weakSelf forwardInvocationLandscapeRight];
+                    }];
                     shareAlert = nil;
                     [shareAlert dismiss];
                     }
@@ -312,7 +330,9 @@
                     case 1:
                     {
                     // 微信
-                    [weakSelf WChatShare];
+                    [CreateLiveViewController WChatShare:weakSelf.streamRtmp success:^{
+                        [weakSelf forwardInvocationLandscapeRight];
+                    }];
                     shareAlert = nil;
                     [shareAlert dismiss];
                     }
@@ -320,7 +340,10 @@
                     case 2:
                     {
                     // QQ空间
-                    [weakSelf TencentShare];
+
+                    [CreateLiveViewController TencentShare:weakSelf.streamRtmp success:^{
+                        [weakSelf forwardInvocationLandscapeRight];
+                    }];
                     shareAlert = nil;
                     [shareAlert dismiss];
                     }
@@ -328,7 +351,9 @@
                     case 3:
                     {
                     // 新浪微博
-                    [weakSelf SinaShare];
+                    [CreateLiveViewController SinaShare:weakSelf.streamRtmp success:^{
+                        [weakSelf forwardInvocationLandscapeRight];
+                    }];
                     shareAlert = nil;
                     [shareAlert dismiss];
                     }
@@ -336,12 +361,13 @@
                     case 4:
                     {
                     // QQ
-                    [weakSelf QQShare];
+                    [CreateLiveViewController QQShare:weakSelf.streamRtmp success:^{
+                        [weakSelf forwardInvocationLandscapeRight];
+                    }];
                     shareAlert = nil;
                     [shareAlert dismiss];
                     }
                         break;
-                        
                     default:
                         break;
                 }

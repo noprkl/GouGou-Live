@@ -34,7 +34,7 @@ static NSString * indenifer = @"addressCellID";
     
     // [[UserInfos sharedUser].ID integerValue]
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           @"user_id":@([[UserInfos sharedUser].ID intValue])
                            };
     [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
 //        [self showAlert:successJson[@"message"]];
@@ -122,7 +122,7 @@ static NSString * indenifer = @"addressCellID";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    return 113;
+    return 125;
 }
 
 
@@ -134,7 +134,6 @@ static NSString * indenifer = @"addressCellID";
     MyShopAdressModel *model = (MyShopAdressModel *)self.dataArray[indexPath.row];
 
     cell.adressModel = model;
-
     // 请求参数
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID intValue]),

@@ -39,6 +39,7 @@
     
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 
 }
 - (void)viewWillDisappear:(BOOL)animated {

@@ -65,6 +65,8 @@
     self.nickView.nickName.text = centerModel.merchantName;
     if ([centerModel.status intValue] == 9) {
         self.nickView.stateLabe.text = @"待评价";
+        
+        self.nickView.remainTimeLabel.text = centerModel.creatTime;
     }
     if ([centerModel.status intValue] == 10) {
         self.nickView.stateLabe.text = @"已评价";

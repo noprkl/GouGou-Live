@@ -47,7 +47,6 @@
     
     _centerModel = centerModel;
     
-    
     // 直接赋值
     // 昵称
     if (centerModel.merchantImg1.length != 0) {
@@ -57,6 +56,31 @@
     }
     self.nickView.nickName.text = centerModel.merchantName;
     self.nickView.stateLabe.text = @"待付尾款";
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *endDate = [dateFormatter dateFromString:centerModel.creatTime];
+    NSDate *endDate_tomorrow = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:([endDate timeIntervalSinceReferenceDate] + 24*3600)];
+    
+    //当前时间
+    NSDate *startDate = [NSDate date];
+    //得到相差秒数
+    
+    NSTimeInterval timeInterval =[endDate_tomorrow timeIntervalSinceDate:startDate];
+    
+//    if (timeInterval==0) {
+//        self.nickView.remainTimeLabel.hidden = NO;
+//        
+//    }else{
+//        self.nickView.remainTimeLabel.hidden = YES;
+//        
+//    }
+    if (timeInterval > 30 * 60) {
+    self.nickView.remainTimeLabel.text = @"";
+    } else {
+        [self.nickView.remainTimeLabel beginCountDownWithTimeInterval:timeInterval];
+    }
+    
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
@@ -131,7 +155,6 @@
 
 #pragma mark
 #pragma mark - 懒加载
-
 - (NicknameView *)nickView {
     
     if (!_nickView) {
@@ -175,8 +198,6 @@
     }
     return _costView;
 }
-
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];

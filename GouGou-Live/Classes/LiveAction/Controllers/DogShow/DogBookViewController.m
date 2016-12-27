@@ -86,7 +86,7 @@
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
                             if ([successJson[@"message"] isEqualToString:@"支付全额"]) {
-                                NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                                NSString *price = successJson[@"data"];
                                 [self clickPayAllMoney:orderId price:price];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
@@ -105,7 +105,7 @@
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
                             if ([successJson[@"message"] isEqualToString:@"支付订金"]) {
-                                NSString *price = [NSString stringWithFormat:@"%.0lf",[successJson[@"data"] floatValue] * 100];
+                                NSString *price = successJson[@"data"];
                                 [self clickPayFontMoney:orderId productDeposit:price];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
@@ -121,7 +121,6 @@
             }
             };
         [choseStyle show];
-      
     }
 }
 /** 定金支付 */
@@ -172,7 +171,7 @@
             
             // 验证密码
             NSDictionary *dict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"user_id":[UserInfos sharedUser].ID,
                                    @"pay_password":[NSString md5WithString:text]
                                    };
             [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
@@ -277,7 +276,6 @@
         
         [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             DLog(@"reslut = %@",resultDic);
-            
             //
             [self.navigationController popViewControllerAnimated:YES];
         }];
@@ -327,6 +325,9 @@
     self.navigationController.navigationBarHidden = NO;
     self.hidesBottomBarWhenPushed = YES;
     [self postGetAdressRequest];
+   
+    // 通知监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

@@ -12,6 +12,7 @@
 #import "NoneNetWorkingView.h"
 
 #import "LivingViewController.h"
+#import "PlayBackViewController.h"
 
 #import "MoreImpressViewController.h"
 
@@ -47,8 +48,11 @@ static NSString * reuseIdentifier = @"headerID";
                            };
     [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+       
+        [self.collection setContentOffset:CGPointMake(0, 0) animated:YES];
         [self.dataArray removeAllObjects];
         [self.dogInfos removeAllObjects];
+        
         //        [self showHudInView:self.view hint:@"刷新中"];
         /** 所有信息 */
         NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
@@ -77,18 +81,18 @@ static NSString * reuseIdentifier = @"headerID";
                 [liveMutableArr addObject:model];
 
                 if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                    DLog(@"%ld", i);
                     self.dogInfos = dogInfos;
                     self.dataArray = liveMutableArr;
                     [self.collection reloadData];
                     //                    [self hideHud];
                 }
+                [self.collection reloadData];
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
         }
         //                    [self hideHud]
-//        [self.collection reloadData];
+        [self.collection reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -234,7 +238,7 @@ static NSString * reuseIdentifier = @"headerID";
 //        // 设置头部区域大小
 //        flowLayout.headerReferenceSize = CGSizeMake(0, 45);
         
-        _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 54, SCREEN_WIDTH, 500) collectionViewLayout:flowLayout];
+        _collection = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         
         _collection.delegate  = self;
         _collection.dataSource = self;
@@ -269,14 +273,37 @@ static NSString * reuseIdentifier = @"headerID";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *dogArr = self.dogInfos[indexPath.row];
     HostLiveModel *model = self.dataArray[indexPath.row];
-    LivingViewController *livingVC = [[LivingViewController alloc] init];
-    livingVC.liveID = model.liveId;
-    livingVC.liverName = model.userNickName;
-    livingVC.doginfos = dogArr;
-    livingVC.chatRoomID = model.chatroom;
-    livingVC.state = model.status;
-    livingVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:livingVC animated:YES];
+            DLog(@"%@", model);
+        if ([model.status isEqualToString:@"1"]) {
+            LivingViewController *livingVC = [[LivingViewController alloc] init];
+            livingVC.liveID = model.liveId;
+            livingVC.liverId = model.userId;
+            livingVC.liverIcon = model.userImgUrl;
+            livingVC.liverName = model.userNickName;
+            livingVC.doginfos = dogArr;
+            livingVC.watchCount = model.viewNum;
+            livingVC.chatRoomID = model.chatroom;
+            livingVC.state = model.status;
+            livingVC.isLandscape = NO;
+            livingVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:livingVC animated:YES];
+        }
+        if ([model.status isEqualToString:@"3"]) {
+            PlayBackViewController *livingVC = [[PlayBackViewController alloc] init];
+            livingVC.liveID = model.liveId;
+            livingVC.liverId = model.userId;
+            livingVC.liverIcon = model.userImgUrl;
+            livingVC.liverName = model.userNickName;
+            livingVC.doginfos = dogArr;
+            livingVC.watchCount = model.viewNum;
+            livingVC.chatRoomID = model.chatroom;
+            livingVC.state = model.status;
+            livingVC.isLandscape = NO;
+
+            livingVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:livingVC animated:YES];
+        }
+
 }
 
 

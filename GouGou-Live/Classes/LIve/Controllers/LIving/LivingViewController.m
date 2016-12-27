@@ -39,11 +39,7 @@
 #import "LiveListRootModel.h"
 #import "LiveRootStreamModel.h"
 
-// 播放器
-#import "PlayerBackTopView.h"
-#import "PlayerBackDownView.h"
-#import <AVFoundation/AVFoundation.h>
-
+#import "AppDelegate.h"
 
 @interface LivingViewController ()<UIScrollViewDelegate, PLPlayerDelegate>
 // 回放
@@ -113,26 +109,9 @@
 
 #pragma mark
 #pragma mark - 回放
-@property (strong, nonatomic) UIView *playerView;
-@property (nonatomic, strong) AVPlayerItem *playerItem; /**<  */
-@property (nonatomic, strong) AVPlayerLayer *playerLayer; /**<  */
-@property (nonatomic, strong) AVPlayer *playBackPlayer; /**<  */
-@property (strong, nonatomic) PlayerBackTopView *topView;
-@property (strong, nonatomic) UILabel *liveTitleLabel;
-@property (strong, nonatomic) UIButton *playbackBtn;
-
-@property (strong, nonatomic) PlayerBackDownView *downView;
-@property (strong, nonatomic) UISlider *progressSlider;
-@property (strong, nonatomic) UILabel *beginTimeLabel;
-@property (strong, nonatomic) UILabel *endTimeLabel;
-@property (strong, nonatomic) UIProgressView *progressView;
-@property (strong, nonatomic) UIButton *playBtn;
-@property (strong, nonatomic) UIButton *playscreenBtn;
 
 // 播放状态
 @property (nonatomic, assign) BOOL isPlaying;
-
-@property (nonatomic, strong) NSString *playBackURL; /**< 回放地址 */
 
 @property (nonatomic, strong) UILabel *playAlert; /**< 播放提示 */
 
@@ -148,6 +127,7 @@
     [super viewDidLoad];
     // 子视图
     [self makeSubVcConstraint];
+    [self getRequestLiveMessage];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -155,13 +135,11 @@
     self.navigationController.navigationBarHidden = YES;
     // 请求直播
 
-    if ([_state isEqualToString:@"1"]) { // 如果是1直播
-        [self getRequestLiveMessage];
-    }else if ([_state isEqualToString:@"3"]){ // 如果是3回放
-        [self getRequestPlayBackURL];
-        [self playbackInitUI];
-    }
+//    [self LiveInitUI];// 直播UI
 
+//    if (_isLandscape) {//横屏
+//        [self forceOrientationLandscapeRight];
+//    }
     // 设置直播参数
     self.roomNameLabel.text = _liverName;
     [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
@@ -172,13 +150,6 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.hidesBottomBarWhenPushed = YES;
     
-    // 请求播放信息
-//    [self getRequestLiveMessage];
-    // 设置直播参数
-    self.roomNameLabel.text = _liverName;
-    [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
-    
-    DLog(@"%@",_watchCount);
     // 添加观看观看历史
     if ([UserInfos getUser]) {
         NSDictionary *dictHistory = @{
@@ -190,9 +161,7 @@
             DLog(@"%@", error);
         }];
     }
-    if (_isLandscape) {//横屏
-        [self forceOrientationLandscapeRight];
-    }
+
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -204,6 +173,8 @@
     if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
+    // 停止播放
+    [self.livePlayer pause];
 }
 #pragma mark
 #pragma mark - 直播播放
@@ -219,8 +190,7 @@
         self.resp = resp;
         LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:rootSteam.steam];
         self.stream = stream;
-        
-        [self LiveInitUI];// 直播UI
+        [self LiveInitUI];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -262,26 +232,6 @@
 - (void)LiveInitUI {
     [self.view addSubview:self.livePlayerView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    // 初始化 PLPlayerOption 对象
-    PLPlayerOption *playerOption = [PLPlayerOption defaultOption];
-    
-    // 更改需要修改的 option 属性键所对应的值
-    [playerOption setOptionValue:@10 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
-    [playerOption setOptionValue:@2000 forKey:PLPlayerOptionKeyMaxL1BufferDuration];
-    [playerOption setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
-    [playerOption setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
-    [playerOption setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
-    
-    NSURL *url = [NSURL URLWithString:self.stream.rtmp];
-    DLog(@"%@", url);
-    self.livePlayer = [[PLPlayer alloc] initWithURL:url option:playerOption];
-    self.livePlayer.delegate = self;
-//    [self.livePlayerView addSubview:self.livePlayer.playerView];
-    [self.livePlayerView insertSubview:self.livePlayer.playerView atIndex:0];
-    self.livePlayer.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    // 添加播放视图
-    [self.view addSubview:self.livePlayer.playerView];
-    
     // 播放
     [self.livePlayer play];
     
@@ -550,7 +500,6 @@
     [shareAlert show];
 }
 - (void)clickCollectBtnAction:(UIButton *)btn {
-    
     if (btn.selected) { // 如果被选中 删除
         NSDictionary *dict = @{//
                                @"user_id":[UserInfos sharedUser].ID,
@@ -582,6 +531,7 @@
     }
 
     btn.selected = !btn.selected;
+    self.livetopView.collectBtn.selected = btn.selected;
 }
 
 - (void)clickScreenButtonAction:(UIButton *)btn {
@@ -606,6 +556,28 @@
 
 
 #pragma mark - 直播控件
+- (PLPlayer *)livePlayer {
+    if (!_livePlayer) {
+        // 初始化 PLPlayerOption 对象
+        PLPlayerOption *playerOption = [PLPlayerOption defaultOption];
+        // 更改需要修改的 option 属性键所对应的值
+        [playerOption setOptionValue:@10 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
+        [playerOption setOptionValue:@2000 forKey:PLPlayerOptionKeyMaxL1BufferDuration];
+        [playerOption setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
+        [playerOption setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
+        [playerOption setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
+        
+        NSURL *url = [NSURL URLWithString:self.stream.rtmp];
+        _livePlayer = [[PLPlayer alloc] initWithURL:url option:playerOption];
+        _livePlayer.delegate = self;
+        //    [self.livePlayerView addSubview:self.livePlayer.playerView];
+        [_livePlayerView insertSubview:self.livePlayer.playerView atIndex:0];
+        _livePlayer.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        // 添加播放视图
+        [self.view addSubview:_livePlayer.playerView];
+    }
+    return _livePlayer;
+}
 - (UIView *)livePlayerView {
     if (!_livePlayerView) {
         _livePlayerView = [[UIView alloc] init];
@@ -765,10 +737,10 @@
         self.livingImageView.hidden = !self.livetopView.hidden;
         self.watchLabel.hidden = !self.livetopView.hidden;
     }
-    [UIView animateWithDuration:0.3 animations:^{
-        self.topView.hidden = !self.topView.hidden;
-        self.downView.hidden = !self.downView.hidden;
-    }];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.topView.hidden = !self.topView.hidden;
+//        self.downView.hidden = !self.downView.hidden;
+//    }];
     
 }
 - (void)clickDanmuAction:(UIButton *)btn {
@@ -782,6 +754,7 @@
         [_danmuBtn setImage:[UIImage imageNamed:@"弹幕"] forState:(UIControlStateNormal)];
         [_danmuBtn setImage:[UIImage imageNamed:@"禁止弹幕"] forState:(UIControlStateSelected)];
         _danmuBtn.hidden = YES;
+        _danmuBtn.selected = YES;
         [_danmuBtn addTarget:self action:@selector(clickDanmuAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _danmuBtn;
@@ -805,13 +778,15 @@
         };
         _livetopView.shareBlcok = ^(UIButton *btn){
             __block ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, weakSelf.view.bounds.size.height - 150, weakSelf.view.bounds.size.width, 150) alertModels:weakSelf.shareAlertBtns tapView:^(NSInteger btnTag) {
-                
+
                 NSInteger index = btnTag - 20;
                 switch (index) {
                     case 0:
                     {
+                    
                     // 朋友圈
                     [weakSelf WechatTimeShare];
+                    
                     shareAlert = nil;
                     [shareAlert dismiss];
                     }
@@ -853,6 +828,8 @@
                         break;
                 }
             } colCount:5];
+            [weakSelf forceOrientationPriate];
+
             if (shareAlert.isDismiss) {
                 btn.selected = NO;
             }else{
@@ -863,7 +840,8 @@
         };
         // 收藏
         _livetopView.collectBlcok = ^(BOOL isCollection){
-            if (isCollection) { // 删除直播
+            weakSelf.collectBtn.selected = isCollection;
+            if (isCollection) { // 如果被选中 删除
                 NSDictionary *dict = @{//
                                        @"user_id":[UserInfos sharedUser].ID,
                                        @"product_id":weakSelf.liveID,
@@ -873,21 +851,21 @@
                 [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
                     [weakSelf showAlert:successJson[@"message"]];
-                    
+                    weakSelf.isSelectCollectBtn = NO;
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
-                
-            }else{
-                NSDictionary *dict = @{//添加直播
-                                       @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                       @"product_id":@([weakSelf.liveID integerValue]),
+            }else{ // 否则添加
+                NSDictionary *dict = @{//
+                                       @"user_id":[UserInfos sharedUser].ID,
+                                       @"product_id":weakSelf.liveID,
                                        @"type":@(1),
                                        @"state":@(2)
                                        };
                 [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
                     [weakSelf showAlert:successJson[@"message"]];
+                    weakSelf.isSelectCollectBtn = YES;
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
@@ -953,382 +931,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark
-#pragma mark - 回放
-// 回放
-- (void)getRequestPlayBackURL {
-    NSDictionary *dict = @{@"live_id":_liveID};
-    DLog(@"%@", dict);
-    [self getRequestWithPath:API_PlayBack params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        
-        self.liveTitleLabel.text = successJson[@"merchant_name"];
-        self.playBackURL = successJson[@"live"];
-        [self play];
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-}
-
-#pragma mark - Action
-- (AVPlayer *)playBackPlayer{
-    if (!_playBackPlayer) {
-//        [self updatePlayerWithURL:[NSURL URLWithString:self.playBackURL]];
-        _playBackPlayer = [AVPlayer playerWithPlayerItem:_playerItem];
-        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_playBackPlayer];
-        _isSliding = NO;
-        DLog(@"%@", NSStringFromCGRect(self.playerView.frame));
-        _playerLayer.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
-        [self.playerView.layer addSublayer:_playerLayer];
-    }
-    return _playBackPlayer;
-}
-- (void)updatePlayerWithURL:(NSURL *)url {
-    _playerItem = [AVPlayerItem playerItemWithURL:url]; // create item
-    [_playBackPlayer  replaceCurrentItemWithPlayerItem:_playerItem]; // replaceCurrentItem
-    [self addObserverAndNotification]; // 添加观察者，发布通知
-}
-
-- (void)ClickBackButtonAction:(UIButton *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-    // 取消横屏
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-        [self forceOrientation:UIInterfaceOrientationPortrait];
-    }
-}
-
-- (void)clickPlayOrPauseAction:(UIButton *)sender {
-    sender.selected = !sender.selected;
-    if (_isPlaying) {
-        [self pause];
-    } else {
-        [self play];
-    }
-}
-
-- (void)playerSliderTouchDown:(id)sender {
-    [self pause];
-}
-
-- (void)playerSliderTouchUpInside:(id)sender {
-    _isSliding = NO; // 滑动结束
-    [self play];
-}
-
-// 不要拖拽的时候改变， 手指抬起来后缓冲完成再改变
-- (void)playerSliderValueChanged:(id)sender {
-    _isSliding = YES;
-    [self pause];
-    // 跳转到拖拽秒处
-    CMTime changedTime = CMTimeMakeWithSeconds(self.progressSlider.value, 1.0);
-    DLog(@"%.2f", self.progressSlider.value);
-    [_playerItem seekToTime:changedTime completionHandler:^(BOOL finished) {
-        // 跳转完成后 继续播放
-        [self play];
-    }];
-}
-
-//  添加观察者 、通知 、监听播放进度
-- (void)addObserverAndNotification {
-    [self.playerItem addObserver:self forKeyPath:@"status" options:(NSKeyValueObservingOptionNew) context:nil]; // 观察status属性， 一共有三种属性
-    [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil]; // 观察缓冲进度
-    [self addNotification]; // 添加通知
-}
-
-// 观察播放进度
-- (void)monitoringPlayback:(AVPlayerItem *)item {
-    __weak typeof(self)WeakSelf = self;
-    
-    // 播放进度, 每秒执行30次， CMTime 为30分之一秒
-    _playTimeObserver = [_playBackPlayer addPeriodicTimeObserverForInterval:CMTimeMake(1, 30.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-        // 当前播放秒
-        float currentPlayTime = (double)item.currentTime.value/ item.currentTime.timescale;
-        // 更新slider, 如果正在滑动则不更新
-        if (_isSliding == NO) {
-            [WeakSelf updateVideoSlider:currentPlayTime];
-        }
-    }];
-}
-
-// 更新滑动条
-- (void)updateVideoSlider:(float)currentTime {
-    self.progressSlider.value = currentTime;
-    self.beginTimeLabel.text = [NSString convertTime:currentTime];
-}
-
-#pragma mark 添加通知
-- (void)addNotification {
-    // 播放完成通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-}
-
-- (void)playbackFinished:(NSNotification *)notification {
-    DLog(@"视频播放完成通知");
-    _playerItem = [notification object];
-    // 是否无限循环
-    [_playerItem seekToTime:kCMTimeZero]; // 跳转到初始
-    //    [_player play]; // 是否无限循环
-}
-
-#pragma mark KVO - status
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    AVPlayerItem *item = (AVPlayerItem *)object;
-    if ([keyPath isEqualToString:@"status"]) {
-        // 判断status 的 状态
-        AVPlayerItemStatus status = [[change objectForKey:@"new"] intValue]; // 获取更改后的状态
-        if (status == AVPlayerStatusReadyToPlay) {
-            NSLog(@"准备播放");
-            // CMTime 本身是一个结构体
-            CMTime duration = item.duration; // 获取视频长度
-            NSLog(@"%.2f", CMTimeGetSeconds(duration));
-            // 设置视频时间
-            [self setMaxDuration:CMTimeGetSeconds(duration)];
-            // 播放
-            [self play];
-            
-            [self monitoringPlayback:self.playerItem]; // 监听播放
-            self.playAlert.hidden = YES;
-        } else if (status == AVPlayerStatusFailed) {
-            DLog(@"AVPlayerStatusFailed");
-            [self showAlert:@"播放失败"];
-            self.playAlert.hidden = NO;
-        } else {
-            DLog(@"AVPlayerStatusUnknown");
-        }
-    } else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
-        NSTimeInterval timeInterval = [self availableDurationRanges]; // 缓冲时间
-        CGFloat totalDuration = CMTimeGetSeconds(_playerItem.duration); // 总时间
-        [self.progressView setProgress:timeInterval / totalDuration animated:YES];
-    }
-}
-
-// 设置最大时间
-- (void)setMaxDuration:(CGFloat)duration {
-    self.progressSlider.maximumValue = duration; // maxValue = CMGetSecond(item.duration)
-    self.endTimeLabel.text = [NSString convertTime:duration];
-}
-// 已缓冲进度
-- (NSTimeInterval)availableDurationRanges {
-    NSArray *loadedTimeRanges = [_playerItem loadedTimeRanges]; // 获取item的缓冲数组
-    // discussion Returns an NSArray of NSValues containing CMTimeRanges
-    
-    // CMTimeRange 结构体 start duration 表示起始位置 和 持续时间
-    CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue]; // 获取缓冲区域
-    float startSeconds = CMTimeGetSeconds(timeRange.start);
-    float durationSeconds = CMTimeGetSeconds(timeRange.duration);
-    NSTimeInterval result = startSeconds + durationSeconds; // 计算总缓冲时间 = start + duration
-    return result;
-}
-
-#pragma mark - 播放 暂停
-- (void)play {
-    _isPlaying = YES;
-    [self.playBackPlayer play]; // 调用avplayer 的play方法
-    DLog(@"播放");
-}
-
-- (void)pause {
-    _isPlaying = NO;
-    [self.playBackPlayer pause];
-    DLog(@"暂停");
-}
-
-#pragma mark
-#pragma mark - 回放约束
-- (void)playbackInitUI {
-    self.edgesForExtendedLayout = 0;
-    [self.view addSubview:self.playerView];
-    [self.playerView addSubview:self.topView];
-    [self.topView addSubview:self.backBtn];
-    [self.topView addSubview:self.liveTitleLabel];
-    [self.playerView addSubview:self.downView];
-    [self.downView addSubview:self.playBtn];
-    [self.downView addSubview:self.beginTimeLabel];
-    [self.downView addSubview:self.progressView];
-    [self.progressView addSubview:self.progressSlider];
-    [self.downView addSubview:self.endTimeLabel];
-    [self.downView addSubview:self.screenBtn];
-    [self.playerView addSubview:self.playAlert];
-    [self makePlayLeacsecBackConstraints];
-}
-- (void)makePlayLeacsecBackConstraints {
-    [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(self.view.top);
-        make.height.equalTo(245);
-    }];
-    [self.topView remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.playerView);
-        make.height.equalTo(54);
-    }];
-    [self.backBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY).offset(10);
-        make.left.equalTo(self.topView.left).offset(20);
-    }];
-    [self.liveTitleLabel remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY).offset(10);
-        make.left.equalTo(self.topView.left).offset(40);
-        make.right.equalTo(self.topView.right).offset(-20);
-    }];
-    [self.downView remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.left.right.equalTo(self.playerView);
-        make.height.equalTo(44);
-    }];
-    [self.playBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.downView.centerY);
-        make.left.equalTo(self.downView.left).offset(20);
-    }];
-    [self.beginTimeLabel remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.downView.centerY);
-        make.left.equalTo(self.playBtn.right).offset(10);
-    }];
-    [self.progressView remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.downView.centerY);
-        make.left.equalTo(self.downView.left).offset(90);
-        make.right.equalTo(self.downView.right).offset(-90);
-    }];
-    [self.progressSlider remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.downView.centerY);
-        make.left.equalTo(self.downView.left).offset(90);
-        make.right.equalTo(self.downView.right).offset(-90);
-    }];
-    [self.screenBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.downView.centerY);
-        make.right.equalTo(self.downView.right).offset(-10);
-    }];
-    [self.endTimeLabel remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.downView.centerY);
-        make.right.equalTo(self.downView.right).offset(-40);
-    }];
-    [self.playAlert remakeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.playerView.center);
-    }];
-}
-#pragma mark - 回放控件
-- (UIButton *)playscreenBtn {
-    if (!_playscreenBtn) {
-        _playscreenBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_playscreenBtn setImage:[UIImage imageNamed:@"缩小"] forState:(UIControlStateNormal)];
-        [_playscreenBtn addTarget:self action:@selector(clickScreenButtonAction:) forControlEvents:(UIControlEventTouchDown)];
-    }
-    return _playscreenBtn;
-}
-- (UISlider *)progressSlider {
-    if (!_progressSlider) {
-        _progressSlider = [[UISlider alloc] init];
-        _progressSlider.minimumValue = 0;
-        _progressSlider.value = 0;
-        [_progressSlider setThumbImage:[UIImage imageNamed:@"椭圆-7"] forState:(UIControlStateNormal)];
-        
-        [_progressSlider addTarget:self action:@selector(playerSliderTouchDown:) forControlEvents:(UIControlEventTouchDown)];
-        [_progressSlider addTarget:self action:@selector(playerSliderTouchUpInside:) forControlEvents:(UIControlEventTouchUpInside)];
-        [_progressSlider addTarget:self action:@selector(playerSliderValueChanged:) forControlEvents:(UIControlEventValueChanged)];
-        
-    }
-    return _progressSlider;
-}
-- (UIProgressView *)progressView {
-    if (!_progressView) {
-        _progressView = [[UIProgressView alloc] initWithProgressViewStyle:(UIProgressViewStyleDefault)];
-        _progressView.progress = 0;
-    }
-    return _progressView;
-}
-- (UILabel *)endTimeLabel {
-    if (!_endTimeLabel) {
-        _endTimeLabel = [[UILabel alloc] init];
-        _endTimeLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _endTimeLabel.text = @"00:00";
-        _endTimeLabel.font = [UIFont systemFontOfSize:12];
-    }
-    return _endTimeLabel;
-}
-- (UILabel *)beginTimeLabel {
-    if (!_beginTimeLabel) {
-        _beginTimeLabel = [[UILabel alloc] init];
-        _beginTimeLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _beginTimeLabel.text = @"00:00";
-        _beginTimeLabel.font = [UIFont systemFontOfSize:12];
-    }
-    return _beginTimeLabel;
-}
-- (UIButton *)playBtn {
-    if (!_playBtn) {
-        _playBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_playBtn setImage:[UIImage imageNamed:@"播放"] forState:(UIControlStateNormal)];
-        [_playBtn setImage:[UIImage imageNamed:@"暂停"] forState:(UIControlStateSelected)];
-        
-        [_playBtn addTarget:self action:@selector(clickPlayOrPauseAction:) forControlEvents:(UIControlEventTouchDown)];
-    }
-    return _playBtn;
-}
-- (PlayerBackDownView *)downView {
-    if (!_downView) {
-        _downView = [[PlayerBackDownView alloc] init];
-        _downView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
-    }
-    return _downView;
-}
-- (UILabel *)liveTitleLabel {
-    if (!_liveTitleLabel) {
-        _liveTitleLabel = [[UILabel alloc] init];
-        _liveTitleLabel.text = @"标题";
-        _liveTitleLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-        _liveTitleLabel.font = [UIFont systemFontOfSize:13];
-    }
-    return _liveTitleLabel;
-}
-- (UIButton *)playbackBtn {
-    if (!_playbackBtn) {
-        _playbackBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_playbackBtn setImage:[UIImage imageNamed:@"返回-拷贝"] forState:(UIControlStateNormal)];
-        [_playbackBtn addTarget:self action:@selector(ClickBackButtonAction:) forControlEvents:(UIControlEventTouchDown)];
-    }
-    return _playbackBtn;
-}
-- (PlayerBackTopView *)topView {
-    if (!_topView) {
-        _topView = [[PlayerBackTopView alloc] init];
-        _topView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
-        
-    }
-    return _topView;
-}
-- (UIView *)playerView {
-    if (!_playerView) {
-        _playerView = [[UIView alloc] init];
-        _playerView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
-    }
-    return _playerView;
-}
-- (UILabel *)playAlert {
-    if (!_playAlert) {
-        _playAlert = [[UILabel alloc] init];
-        _playAlert.text = @"播放失败";
-        _playAlert.font = [UIFont systemFontOfSize:14];
-        _playAlert.hidden = YES;
-        _playAlert.tintColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
-    return _playAlert;
-}
-#pragma mark
-#pragma mark - 回放全屏
-
-#pragma mark
-#pragma mark - ---
-- (void)dealloc {
-    [self removeObserveAndNOtification];
-    [_playBackPlayer removeTimeObserver:_playTimeObserver]; // 移除playTimeObserver
-}
-- (void)removeObserveAndNOtification {
-    [_playBackPlayer replaceCurrentItemWithPlayerItem:nil];
-    [_playerItem removeObserver:self forKeyPath:@"status"];
-    [_playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
-    [_playBackPlayer removeTimeObserver:_playTimeObserver];
-    _playTimeObserver = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 // 切换横屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
@@ -1343,6 +945,9 @@
 }
 // 横屏转竖屏
 - (void)forceOrientationPriate {
+//    AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    appDelegate.isLandscape = NO;
+    
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
@@ -1353,24 +958,21 @@
         [invocation invoke];
     }
     _isLandscape = YES;
-    _playerLayer.frame = self.playerView.bounds;
     self.baseScrollView.hidden = NO;
     self.centerView.hidden = NO;
-    if ([_state isEqualToString:@"1"]) {
-        
-        [self makeLiveSubviewConstraint];
-        [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
-        
-    }else if ([_state isEqualToString:@"3"]){
-        [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.view);
-            make.top.equalTo(self.view.top);
-            make.height.equalTo(245);
-        }];
-    }
+    [self.talkingVc.tableView removeFromSuperview];
+    [self.baseScrollView addSubview:self.talkingVc.tableView];
+    self.talkingVc.tableView.alpha = 1;
+    self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    
+    
+    [self makeLiveSubviewConstraint];
+    [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
 }
 // 竖屏转横屏
 - (void)forceOrientationLandscapeRight {
+//    AppDelegate * appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    appDelegate.isLandscape = YES;
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
@@ -1381,16 +983,13 @@
         [invocation invoke];
     }
     [UIViewController attemptRotationToDeviceOrientation];
-    [self forceOrientation:(UIInterfaceOrientationLandscapeLeft)];
     _isLandscape = NO;
-    if ([_state isEqualToString:@"1"]) {
-        [self makeliveLancseConstraint];
-    }else if ([_state isEqualToString:@"3"]){
-        [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-        }];
-        _playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    }
+    [self.talkingVc.tableView removeFromSuperview];
+    [self.livePlayer.playerView addSubview:self.talkingVc.tableView];
+    self.talkingVc.tableView.alpha = 0.4;
+    self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
+
+    [self makeliveLancseConstraint];
     self.baseScrollView.hidden = YES;
     self.centerView.hidden = YES;
 
@@ -1439,9 +1038,9 @@
 }
 - (void)addChildViewControllers {
     
-    self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    self.talkingVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
-    [self.view addSubview:self.talkingVc.tableView];
+    [self.baseScrollView addSubview:self.talkingVc.tableView];
     [self addChildViewController:_talkingVc];
 
     // 狗狗
@@ -1480,7 +1079,7 @@
     self.baseScrollView.delegate = self;
     
     // 进入后第一次加载hot
-    //    [self scrollViewDidEndDecelerating:self.baseScrollView];
+    [self scrollViewDidEndDecelerating:self.baseScrollView];
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     // 每个子控制器的宽高
@@ -1503,7 +1102,7 @@
     // 判断当前vc是否加载过
     if ([childVC isViewLoaded]) {
         if(![childVC isKindOfClass:[TalkingViewController class]]) {
-            [self.talkingVc.tableView reloadData];
+            [self.talkingVc.view reloadInputViews];
         }
         return;
     };

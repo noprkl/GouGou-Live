@@ -11,6 +11,9 @@
 #import "SearchFocusViewController.h"
 #import "FocusAndFansModel.h"
 #import "PersonalPageController.h" // 个人主页
+#import <FMDB.h>
+#import "FMDBUser.h"
+
 @interface MyFocusViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
@@ -33,11 +36,45 @@ static NSString *cellid = @"MyFocusCell";
             DLog(@"%@", successJson);
             // 得到关注人的人
             self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            //把关注的人存到本地
-            NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
-            NSString * fileName = [docDir stringByAppendingPathComponent:FocusFile];
-            [UserInfos sharedUser].focusCount = self.dataArr.count;
-            [self.dataArr writeToFile:fileName atomically:YES];
+//            // 单例
+//            FMDBUser *fmdbTool = [FMDBUser tool];
+//            // 建表
+//            FMDatabase * database = [fmdbTool getDBWithDBName:Focus];
+//            // 清除表数据
+//            [fmdbTool clearDatabase:database from:Focus];
+//            for (FocusAndFansModel *model in self.dataArr) {
+//                NSDictionary *dict = @{
+//                                       Focus:@(model.userFanId)
+//                                       };
+//                [fmdbTool DataBase:database insertKeyValues:dict intoTable:Focus];
+//            }
+//            //把关注的人存到本地
+//            FMDatabase *dataBase = [FMDatabase databaseWithPath:[NSString cachePathWithfileName:Focus]];
+//            if ([dataBase open] ) {
+//                // 创建表
+//                NSString *sql = [NSString stringWithFormat:@"create table if not exists %@ (id integer primary key autoincrement, %@ integer);", Focus, Focus];
+//                [dataBase executeUpdate:sql];
+//                // 删除数据
+//                [dataBase executeUpdate:[NSString stringWithFormat:@"delete from %@;", Focus]];
+//                // 添加数据 把Focus插入到Focus
+//                for (FocusAndFansModel *model in self.dataArr) {
+//                    NSString *add = [NSString stringWithFormat:@"insert into %@ (%@) values (%ld);", Focus, Focus, model.userFanId];
+//                    [dataBase executeStatements:add];
+//                }
+//                [dataBase close];
+//                
+//            }else{
+//                DLog(@"打开失败");
+//            }
+//        }
+            
+        NSString *filePath = [NSString cachePathWithfileName:Focus];
+        NSMutableArray *arr = [NSMutableArray array];
+        for (FocusAndFansModel *model in self.dataArr) {
+            [arr addObject:@(model.userFanId)];
+        }
+        [arr writeToFile:filePath atomically:YES];
+        
             [self.tableView reloadData];
         }
         

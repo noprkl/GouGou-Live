@@ -29,7 +29,7 @@
             //        [self.tableView reloadData];
             UMSocialAuthResponse *authresponse = result;
             DLog(@"%@", authresponse.uid);
-            
+
             NSDictionary *dict = @{
                                    @"type":@"1",
                                    @"name":authresponse.uid,

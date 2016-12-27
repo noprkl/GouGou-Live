@@ -469,7 +469,7 @@
         case 2:
         {
             cell.textLabel.text = self.dataArr[2];
-            cell.detailTextLabel.text = @"默认¥ 50";
+            cell.detailTextLabel.text = self.model.traficMoney;
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
 
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

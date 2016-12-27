@@ -15,4 +15,6 @@
 
 @property(nonatomic, strong) NSArray *messages; /**< 花费信息 */
 
+@property(nonatomic, strong) NSString *freightMoney; /**< 运费信息 */
+
 @end

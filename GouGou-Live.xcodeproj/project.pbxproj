@@ -45,6 +45,7 @@
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
 		044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */; };
 		044E86DE1E11392700FD89A2 /* BanaerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DD1E11392600FD89A2 /* BanaerViewController.m */; };
+		044E86E11E12391100FD89A2 /* LiveIngViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86E01E12391100FD89A2 /* LiveIngViewController.m */; };
 		044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
@@ -623,6 +624,8 @@
 		044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBUser.m; sourceTree = "<group>"; };
 		044E86DC1E11392600FD89A2 /* BanaerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BanaerViewController.h; sourceTree = "<group>"; };
 		044E86DD1E11392600FD89A2 /* BanaerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BanaerViewController.m; sourceTree = "<group>"; };
+		044E86DF1E12391000FD89A2 /* LiveIngViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveIngViewController.h; sourceTree = "<group>"; };
+		044E86E01E12391100FD89A2 /* LiveIngViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveIngViewController.m; sourceTree = "<group>"; };
 		044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamChatRoomVcViewController.h; sourceTree = "<group>"; };
 		044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamChatRoomVcViewController.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
@@ -2980,6 +2983,8 @@
 			children = (
 				0479B4CD1DCADC7B00CB288A /* LivingViewController.h */,
 				0479B4CE1DCADC7B00CB288A /* LivingViewController.m */,
+				044E86DF1E12391000FD89A2 /* LiveIngViewController.h */,
+				044E86E01E12391100FD89A2 /* LiveIngViewController.m */,
 				045E3B4B1E0F894200624CEA /* PlayBackViewController.h */,
 				045E3B4C1E0F894200624CEA /* PlayBackViewController.m */,
 				6180CB4E1DFC26CF006357B4 /* LandscapePlayerVc.h */,
@@ -4996,6 +5001,7 @@
 				045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */,
 				046F0B981DE2AB8B00D50D5C /* UpLoadPictureView.m in Sources */,
 				046F0BAE1DE2AB8B00D50D5C /* WaitBackMoneyCell.m in Sources */,
+				044E86E11E12391100FD89A2 /* LiveIngViewController.m in Sources */,
 				04CE13DD1DDC488100EB8777 /* SellerWaitAcceptCell.m in Sources */,
 				046BEFD31DE4696600BC32E9 /* MBProgressHUD.m in Sources */,
 				046BF0321DE4696600BC32E9 /* EaseChatToolbar.m in Sources */,

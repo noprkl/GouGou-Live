@@ -202,7 +202,6 @@
     return CGRectGetMaxY(self.briefContentLabel.frame) + 10;;
 }
 - (void)clickFocusBtnAction:(UIButton *)btn {
-    btn.selected = !btn.selected;
     if (_focusBlock) {
         _focusBlock(self.focusBtn);
     }
@@ -263,7 +262,6 @@
         _rateLabel.text = @"评价";
         _rateLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _rateLabel.font = [UIFont systemFontOfSize:14];
-
     }
     return _rateLabel;
 }
@@ -285,13 +283,14 @@
 }
 - (UIButton *)focusBtn {
     if (!_focusBtn) {
-        _focusBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        _focusBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         
         _focusBtn.layer.cornerRadius = 5;
         _focusBtn.layer.masksToBounds = YES;
         
         [_focusBtn setTitle:@"关注" forState:(UIControlStateNormal)];
         [_focusBtn setTitle:@"已关注" forState:(UIControlStateSelected)];
+        _focusBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         _focusBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         [_focusBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         [_focusBtn addTarget:self action:@selector(clickFocusBtnAction:) forControlEvents:(UIControlEventTouchDown)];

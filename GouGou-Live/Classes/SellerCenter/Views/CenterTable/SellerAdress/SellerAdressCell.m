@@ -215,7 +215,6 @@
 }
 
 - (UILabel *)detailAddress {
-    
     if (!_detailAddress) {
         _detailAddress = [[UILabel alloc] init];
         _detailAddress.text = @"北京，北京市，朝阳区，将台将府家园";
@@ -227,7 +226,6 @@
 }
 
 - (UIView *)lineView {
-    
     if (!_lineView) {
         _lineView = [[UIView alloc] init];
         _lineView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];

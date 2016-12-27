@@ -162,6 +162,16 @@
     }else{
         self.freeTemplate.text = @"按实结算";
     }
+    
+    self.userName.text = model.merchantName;
+    self.phoneTextfiled.text = model.merchantTel;
+    self.detailAddress.text = [NSString stringWithFormat:@"%@,%@,%@,%@,%@", model.merchantProvince, model.merchantCity, model.merchantDistrict, model.street, model.merchantAddress];
+    
+    if (model.isDefault == 0) {
+        self.duihaoImageBtn.selected = NO;
+    }else{
+        self.duihaoImageBtn.selected = YES;
+    }
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -330,7 +340,6 @@
     if (_editBtnBlock) {
         _editBtnBlock();
     }
-    
 }
 
 - (void)cilckDeleteButton {
@@ -338,7 +347,6 @@
     if (_deleteBlock) {
         _deleteBlock();
     }
-
 }
 
 - (void)cilckDuihaoImageBtn:(UIButton *)button {

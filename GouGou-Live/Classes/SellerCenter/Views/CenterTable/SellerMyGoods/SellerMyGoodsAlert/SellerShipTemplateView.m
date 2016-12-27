@@ -13,7 +13,7 @@
 @property (strong, nonatomic) UIControl *overLayer;
 
 /** 数据 */
-@property (strong, nonatomic) NSArray *dataPlist;
+//@property (strong, nonatomic) NSArray *dataPlist;
 
 /** 上一个按钮 */
 @property (strong, nonatomic) UIButton *lastBtn;
@@ -29,16 +29,16 @@ static NSString *cellid = @"SellerShipTemplate";
 #pragma mark
 #pragma mark - TableView 代理
 
-- (NSArray *)dataPlist {
-    if (!_dataPlist) {
-        _dataPlist = [NSArray array];
-        _dataPlist = @[@"运费模板一", @"运费模板二", @"运费模板三"];
-    }
-    return _dataPlist;
-}
+//- (NSArray *)dataPlist {
+//    if (!_dataPlist) {
+//        _dataPlist = [NSArray array];
+//        _dataPlist = @[@"运费模板一", @"运费模板二", @"运费模板三"];
+//    }
+//    return _dataPlist;
+//}
 - (void)setDetailPlist:(NSArray *)detailPlist {
     _detailPlist = detailPlist;
-    self.dataPlist = detailPlist;
+//    self.dataPlist = detailPlist;
     [self reloadData];
 }
 - (NSMutableArray *)buttons {
@@ -49,7 +49,7 @@ static NSString *cellid = @"SellerShipTemplate";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.dataPlist.count;
+    return self.detailPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -68,28 +68,28 @@ static NSString *cellid = @"SellerShipTemplate";
     [btn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];
     [btn addTarget:self action:@selector(choseTransformBtn:) forControlEvents:(UIControlEventTouchDown)];
     [self.buttons addObject:btn];
-    if (indexPath.row == 0) {
-        self.lastBtn = btn;
-        self.lastIndex = 0;
-        btn.selected = YES;
-    }
+//    if (indexPath.row == 0) {
+//        self.lastBtn = btn;
+//        self.lastIndex = 0;
+//        btn.selected = YES;
+//    }
     [cell.contentView addSubview:btn];
-    SellerShipTemplateModel *model = self.dataPlist[indexPath.row];
+    SellerShipTemplateModel *model = self.detailPlist[indexPath.row];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(image.size.width + 20, 0, 200, 44)];
     label.text = model.name;
     label.textColor = [UIColor colorWithHexString:@"#999999"];
     label.font = [UIFont systemFontOfSize:14];
     [cell.contentView addSubview:label];
-    NSString *cost = @"";
-    if ([model.money isEqualToString:@"0"]) {
-        cost = @"免运费";
-    }else if ([model.money isEqualToString:@"50"]){
-        cost = @"默认价格 50";
-    }else{
-        cost = [NSString stringWithFormat:@"%@", model.money];
-    }
+//    NSString *cost = @"";
+//    if ([model.money isEqualToString:@"0"]) {
+//        cost = @"免运费";
+//    }else if ([model.money isEqualToString:@"50"]){
+//        cost = @"默认价格 50";
+//    }else{
+//        cost = [NSString stringWithFormat:@"%@", model.money];
+//    }
     
-    cell.detailTextLabel.attributedText = [self getAttributeWith:cost];
+    cell.detailTextLabel.attributedText = [self getAttributeWith:model.money];
     return cell;
     
 }

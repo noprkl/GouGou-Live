@@ -98,10 +98,10 @@
             NSDictionary * dict = @{
                                     @"user_tel":self.phoneTextField.text ,
                                     @"code":self.codeTextField.text,
-                                    @"type":@3
+                                    @"type":@4
                                     };
             
-            [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+            [self getRequestWithPath:API_Register_sms params:dict success:^(id successJson) {
                 
                 DLog(@"%@",successJson);
                 

@@ -1,32 +1,24 @@
 //
-//  BanaerViewController.m
+//  LiveIngViewController.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/12/26.
+//  Created by ma c on 16/12/27.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "BanaerViewController.h"
+#import "LiveIngViewController.h"
 
-@interface BanaerViewController ()
-
-@property (nonatomic, strong) UIWebView *webView; /**< webView */
+@interface LiveIngViewController ()
 
 @end
 
-@implementation BanaerViewController
+@implementation LiveIngViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavBarItem];
+    // Do any additional setup after loading the view.
 }
-- (UIWebView *)webView {
-    if (!_webView) {
-        _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-//        _webView
-    }
-    return _webView;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

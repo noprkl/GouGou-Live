@@ -82,7 +82,7 @@
 //    self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.price;
     self.costView.totalMoney.text = centerModel.price;
-     
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficMoney];
 }
 #pragma mark
 #pragma mark - 约束

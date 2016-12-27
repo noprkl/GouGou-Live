@@ -46,14 +46,14 @@ static NSString * reuseIdentifier = @"headerID";
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    [self showHudInView:self.view hint:@"刷新中"];
+
     [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
        
         [self.collection setContentOffset:CGPointMake(0, 0) animated:YES];
         [self.dataArray removeAllObjects];
         [self.dogInfos removeAllObjects];
-        
-        //        [self showHudInView:self.view hint:@"刷新中"];
         /** 所有信息 */
         NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         /** 直播信息 */
@@ -81,10 +81,10 @@ static NSString * reuseIdentifier = @"headerID";
                 [liveMutableArr addObject:model];
 
                 if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                    [self hideHud];
                     self.dogInfos = dogInfos;
                     self.dataArray = liveMutableArr;
                     [self.collection reloadData];
-                    //                    [self hideHud];
                 }
                 [self.collection reloadData];
             } error:^(NSError *error) {

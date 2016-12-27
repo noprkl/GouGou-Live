@@ -10,4 +10,7 @@
 
 @interface BanaerViewController : BaseViewController
 
+
+@property (nonatomic, strong) NSString *banaerURL; /**< 跳转 */
+
 @end

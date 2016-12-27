@@ -47,4 +47,6 @@
 
 @property (nonatomic, strong) NSString *comment; /**< 补充 */
 
+@property (nonatomic, strong) NSString *traficMoney; /**< 运费 */
+
 @end

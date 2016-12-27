@@ -71,7 +71,7 @@
     
     self.logisticsView.transformNumber = model.ID;
     self.costView.moneyMessage = model.price;
-    
+        self.costView.freightMoney = model.traficMoney;
 }
 #pragma mark
 #pragma mark - 约束

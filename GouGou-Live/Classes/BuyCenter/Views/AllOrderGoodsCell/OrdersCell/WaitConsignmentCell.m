@@ -43,23 +43,7 @@
 }
 #pragma mark - 模型
 - (void)setCenterModel:(BuyCenterModel *)centerModel {
-    /*
-    self.nickView.model.merchantName = centerModel.merchantName;
-    self.nickView.model.status = centerModel.status;
-    self.nickView.model.merchantImgl = centerModel.merchantImgl;
-    
-    self.dogCardView.dogCardModel.sizeName = centerModel.sizeName;
-    self.dogCardView.dogCardModel.colorName = centerModel.colorName;
-    self.dogCardView.dogCardModel.ageName = centerModel.ageName;
-    self.dogCardView.dogCardModel.name = centerModel.name;
-    self.dogCardView.dogCardModel.pathSmall = centerModel.pathSmall;
-    self.dogCardView.dogCardModel.priceOld = centerModel.priceOld;
-    self.dogCardView.dogCardModel.price = centerModel.price;
-    self.dogCardView.dogCardModel.kindName = centerModel.kindName;
-    
-    self.costView.costModel.productRealDeposit = centerModel.productRealDeposit;
-    self.costView.costModel.balance = centerModel.balance;
-*/
+
     // 直接赋值
     // 昵称
     if (centerModel.merchantImg1.length != 0) {
@@ -88,7 +72,8 @@
     self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.productBalance;
     self.costView.totalMoney.text = centerModel.price;
-    
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficMoney];
+
 }
 #pragma mark
 #pragma mark - 约束

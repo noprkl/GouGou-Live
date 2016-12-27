@@ -74,6 +74,11 @@
 @implementation PlayBackViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getRequestPlayBackURL];
+    [self playbackInitUI];
+    
+    // 设置直播参数
+    self.liveTitleLabel.text = _liverName;
     // 子视图
     [self makeSubVcConstraint];
     [self setNavBarItem];
@@ -84,11 +89,7 @@
     self.navigationController.navigationBarHidden = YES;
     // 请求直播
     
-    [self getRequestPlayBackURL];
-    [self playbackInitUI];
     
-    // 设置直播参数
-    self.liveTitleLabel.text = _liverName;
 //    [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
     
     //    [self collectionBtn];

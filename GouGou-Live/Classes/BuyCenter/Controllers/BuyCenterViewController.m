@@ -409,31 +409,16 @@
 }
 // 点击提醒发货
 - (void)clickConsignment:(BuyCenterModel *)model {
-    
-    NSDate * firstDate = [NSDate date];
-    NSDate * secondDate = [NSDate dateWithTimeInterval:2  sinceDate:firstDate];
-    //    NSDate * secondDate = [NSDate dateWithTimeInterval:60 * 60 * 24  sinceDate:firstDate];
-    
-    NSDate * thirdDate = [NSDate dateWithTimeInterval:4  sinceDate:firstDate];
-    //    NSDate * thirdDate = [NSDate dateWithTimeInterval:60 * 60 * 24 *3 sinceDate:secondDate];
-    ProtecePowerPromptView * consignmentPrompt = [[ProtecePowerPromptView alloc] init];
-    
-    if (secondDate) {
-        
-        consignmentPrompt.message = @"付款不超过24小时,不能提醒";
-        
-        [consignmentPrompt show];
-    } else if (thirdDate) {
-        
-        consignmentPrompt.message = @"已提醒卖家发货，请耐心等待";
-        
-        [consignmentPrompt show];
-    } else {
-        
-        consignmentPrompt.message = @"三小时内不能重复提醒";
-        
-        [consignmentPrompt show];
-    }
+    NSDictionary *dict = @{
+                           @"id":model.ID,
+                           @"user_id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Order_remind params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
 
 

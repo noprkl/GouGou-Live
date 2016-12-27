@@ -64,7 +64,7 @@ static NSString * closeCell = @"closeCell";
 //#pragma mark - 网络请求
 - (void)postGetAllStateOrderRequest {
     
-    NSDictionary * dict = @{//[[UserInfos sharedUser].ID integerValue]
+    NSDictionary * dict = @{
                             @"user_id":@([[UserInfos sharedUser].ID intValue]),
                             @"status":@(0),
                             @"page":@(1),

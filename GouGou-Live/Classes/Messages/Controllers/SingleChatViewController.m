@@ -246,25 +246,6 @@
 }
 
 - (void)clickMenuActionWithText:(NSString *)text {
-    if ([text isEqualToString:@"已关注"]) {
-        NSDictionary *dict = @{
-                               @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                               @"id":@([_chatID intValue]),
-                               @"type":@(0)
-                               };
-        
-        [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-            [self showHint:successJson[@"message"]];
-            if ([successJson[@"message"] isEqualToString:@"关注成功"]) {
-                _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
-                [self.menuView reloadData];
-            }
-            
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
-    }
     if ([text isEqualToString:@"关注"]) {
         NSDictionary *dict = @{
                                @"user_id":@([[UserInfos sharedUser].ID intValue]),
@@ -274,6 +255,7 @@
 
         [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
+            [self showHint:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"关注成功"]) {
                 [self showHint:successJson[@"message"]];
                 _menuView.dataPlist = @[@"已关注", @"屏蔽", @"举报", @"个人主页"];
@@ -299,8 +281,8 @@
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
-        
-    }else if ([text isEqualToString:@"屏蔽"]){
+    }
+    if ([text isEqualToString:@"屏蔽"]){
         EMError *error = nil;
         NSArray *blackArr = [[EMClient sharedClient].contactManager getBlackListFromServerWithError:&error];
 

@@ -52,7 +52,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     self.title = @"运费管理";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
         [self.view addSubview:self.tableView];
-    _cost = @"";
+    _cost = @"0";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,7 +94,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
                 [self postRequestWithPath:API_Freight params:dict success:^(id successJson) {
                     [self showAlert:successJson[@"message"]];
                     DLog(@"%@", successJson);
-                    if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                    if ([successJson[@"message"] isEqualToString:@"成功"]) {
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                 } error:^(NSError *error) {

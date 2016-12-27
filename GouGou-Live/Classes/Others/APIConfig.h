@@ -31,6 +31,10 @@
 #define API_RetrivePwd @"api/UserService/retrivePwd"
 /** 验证登录密码 */
 #define API_Validation_l_pwd @"api/UserService/validation_l_pwd"
+/** 验证验证码 */
+#define API_Register_sms @"api/UserService/register_sms"
+
+
 /** 登录密码重置 */
 #define API_Reset_pwd @"api/UserService/reset_pwd"
 /** 第三方登录 */
@@ -174,8 +178,11 @@
 #define API_Up_freight @"api/UserService/up_freight"
 /** 运费模板添加 */
 #define API_Freight @"api/UserService/freight"
+/** 运费模板默认 */
+#define API_Freight_default @"api/UserService/freight_default"
+
 /** 运费模板删除 */
-//#define API_Seller_address_del @"api/UserService/seller_address_del"
+#define API_Del_freight @"api/UserService/del_freight"
 
 #pragma mark
 #pragma mark - 商品
@@ -256,6 +263,8 @@
 #define API_Order_Confirm @"api/OrderService/order_confirm"
 /** 不想买了 */
 #define API_Order_Nobuy @"api/OrderService/order_nobuy"
+/** 提醒发货 */
+#define API_Order_remind @"api/OrderService/order_remind"
 
 #pragma mark - 系统通知
 /** 系统通知 */

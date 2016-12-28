@@ -37,6 +37,8 @@ static NSString * reuseIdentifier = @"headerID";
 
 @property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
 
+@property (assign, nonatomic) NSUInteger dogCount; /**< 最新的数量 */
+
 @end
 
 @implementation HostViewController
@@ -53,7 +55,7 @@ static NSString * reuseIdentifier = @"headerID";
         [self.dataArray removeAllObjects];
         [self.dogInfos removeAllObjects];
         
-        //        [self showHudInView:self.view hint:@"刷新中"];
+//        [self showHudInView:self.view hint:@"刷新中"];
         /** 所有信息 */
         NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         /** 直播信息 */
@@ -76,6 +78,8 @@ static NSString * reuseIdentifier = @"headerID";
                 }else{
                     if (successJson[@"data"]) {
                         [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                        
+                        self.dogCount = dogInfos.count;
                     }
                 }
                 [liveMutableArr addObject:model];
@@ -91,6 +95,7 @@ static NSString * reuseIdentifier = @"headerID";
                 DLog(@"%@", error);
             }];
         }
+        
         //                    [self hideHud]
         [self.collection reloadData];
     } error:^(NSError *error) {
@@ -143,6 +148,19 @@ static NSString * reuseIdentifier = @"headerID";
         [self getRequestHostLive];
         [self.collection.mj_header endRefreshing];
     }];
+    
+    /*
+    if (self.dataArray.count == self.dogCount) {
+        
+        self.collection.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            [self getRequestHostLive];
+            [self.collection.mj_header endRefreshing];
+        }];
+    } else {
+    
+        [self showAlert:@"正在努力加载"];
+    }
+     */
 }
 
 - (void)addCollectionview {

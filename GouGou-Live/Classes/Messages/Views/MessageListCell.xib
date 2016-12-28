@@ -123,7 +123,7 @@
                 <outlet property="nickNameLabel" destination="rrM-2b-Tqu" id="lud-ah-oFM"/>
                 <outlet property="unreadCountLabel" destination="hsg-tV-Mik" id="Ef0-9D-Op5"/>
             </connections>
-            <point key="canvasLocation" x="251" y="115.5"/>
+            <point key="canvasLocation" x="247" y="103.5"/>
         </tableViewCell>
     </objects>
     <resources>

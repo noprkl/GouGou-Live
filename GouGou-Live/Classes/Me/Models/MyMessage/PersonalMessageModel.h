@@ -16,5 +16,5 @@
 @property (nonatomic, strong) NSString *userImgUrl; /**< 用户头像 */
 @property (nonatomic, strong) NSString *userMotto; /**< 用户签名 */
 @property (nonatomic, strong) NSString *userName; /**< 用户实名 */
-
+@property (nonatomic, strong) NSString *userNickName;  /** 用户昵称*/
 @end

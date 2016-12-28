@@ -89,8 +89,6 @@
     }
     // 搜索一样的数据 删除
     [historyArr removeObjectsInArray:searTXT];
-    // 添加当前搜索的数据
-    [historyArr addObject:seaTxt];
     // 存放限制 15个
     if(searTXT.count > 15)
         {
@@ -99,9 +97,7 @@
     //将上述数据全部存储到NSUserDefaults中
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:historyArr forKey:@"DOGTYPEHISSTORY"];
-    
-
-    
+   
     NSDictionary *dict = @{
                            @"name":self.titleInputView.text,
                            @"type":@(3)
@@ -219,6 +215,4 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 @end

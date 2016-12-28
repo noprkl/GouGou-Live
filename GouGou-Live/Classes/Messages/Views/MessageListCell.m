@@ -11,6 +11,19 @@
 #import "HTTPTool.h"
 #import "PersonalMessageModel.h"
 @implementation MessageListCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        
+        
+    }
+    return self;
+}
+
+
+
 - (void)setModel:(id<IConversationModel>)model
 {
     _model = model;
@@ -21,13 +34,14 @@
         DLog(@"%@", successJson);
         NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
        PersonalMessageModel *personalModel = [arr lastObject];
-        if (personalModel.userName != NULL) {
-            self.nickNameLabel.text = personalModel.userName;
+        if (personalModel.userNickName.length != 0) {
+            self.nickNameLabel.text = personalModel.userNickName;
         }else{
             
         }
         if (personalModel.userImgUrl != NULL) {
             NSString *img = [IMAGE_HOST stringByAppendingString:personalModel.userImgUrl];
+            [self.imageView sd_setImageWithURL:[NSURL URLWithString:img] placeholderImage:[UIImage imageNamed:@"主播头像"]];
             
         }
     } error:^(NSError *error) {

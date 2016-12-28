@@ -79,7 +79,7 @@
     self.costView.remainderMoneylabel.text = @"待付尾款:";
     self.costView.remainderMoeny.text = centerModel.productBalance;
     self.costView.totalMoney.text = centerModel.price;    
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficMoney];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficFee];
     
 }
 #pragma mark

@@ -75,14 +75,13 @@
     self.dogCardView.nowPriceLabel.text = centerModel.price;
     // 付款状况
 
-    
 //    self.costView.fontMoneyLabel.text = @"";
 //    self.costView.fontMoney.text = @"";
     self.costView.remainderMoneylabel.text = @"待付全款:";
 //    self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.price;
     self.costView.totalMoney.text = centerModel.price;
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficMoney];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficFee];
 }
 #pragma mark
 #pragma mark - 约束

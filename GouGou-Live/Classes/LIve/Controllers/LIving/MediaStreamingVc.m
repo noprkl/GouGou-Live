@@ -54,6 +54,9 @@
 
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
 
+
+@property (nonatomic, strong) NSTimer *timer; /**< 计时器 */
+
 @end
 
 @implementation MediaStreamingVc
@@ -173,7 +176,7 @@
     [self.session startStreamingWithPushURL:[NSURL URLWithString:_streamPublish] feedback:^(PLStreamStartStateFeedback feedback) {
         DLog(@"%lu", feedback);
         if (feedback == 0) { // 开始推流
-            
+           
         }
     }];
     
@@ -183,6 +186,25 @@
     }];
     self.session.delegate = self;
     [self initUI];
+    // 开始请求
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(getRequestWatchCount) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+- (void)getRequestWatchCount {
+    NSDictionary *dict = @{
+                           @"live_id":_liveID
+                           };
+    [self getRequestWithPath:API_live_view params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if (successJson[@"data"]) {
+            [self.watchCount setTitle:successJson[@"data"] forState:(UIControlStateNormal)];
+        }else{
+            [self.watchCount setTitle:@"0" forState:(UIControlStateNormal)];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
 // 推流代理
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state {

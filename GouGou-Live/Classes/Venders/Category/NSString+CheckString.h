@@ -32,5 +32,5 @@
 + (NSString *)getAgeFormInt:(NSInteger)age;
 /** 根据文件名获得文件位置 */
 + (NSString *)cachePathWithfileName:(NSString *)filename;
-
++ (NSInteger)getRemainTimeWithString:(NSString *)createTime;
 @end

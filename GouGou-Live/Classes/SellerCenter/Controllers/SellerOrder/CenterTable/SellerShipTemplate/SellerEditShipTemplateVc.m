@@ -45,6 +45,20 @@ static NSString *cellid = @"SellerAddShipTemplate";
 #pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)initUI{
+    self.title = @"运费管理";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
+    [self.view addSubview:self.tableView];
+    _cost = @"0";
+}
+- (void)setShipModel:(SellerShipTemplateModel *)shipModel {
+   
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //
     if (![_shipModel.money isEqualToString:@"0"]) {
         self.shipCost.on = YES;
         self.costTextField.text = _shipModel.money;
@@ -62,22 +76,10 @@ static NSString *cellid = @"SellerAddShipTemplate";
     model.merchantProvince = _shipModel.merchantProvince;
     model.merchantTel = _shipModel.merchantTel;
     self.adressModel = model;
-    self.templateName.text = _shipModel.name;
-    [self.tableView reloadData];
-}
+    
+    self.templateStr = _shipModel.name;
+//    [self.tableView reloadData];
 
-- (void)initUI{
-    self.title = @"运费管理";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
-    [self.view addSubview:self.tableView];
-    _cost = @"0";
-}
-- (void)setShipModel:(SellerShipTemplateModel *)shipModel {
-   
-}
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ChoseSendAdress" object:nil];
     [self initUI];
     [self setNavBarItem];
@@ -254,6 +256,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
         if (self.templateStr.length != 0) {
             templateName.text = self.templateStr;
         }
+        
         templateName.font = [UIFont systemFontOfSize:14];
         templateName.textColor = [UIColor colorWithHexString:@"#333333"];
         templateName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.dataArr[indexPath.row] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}];

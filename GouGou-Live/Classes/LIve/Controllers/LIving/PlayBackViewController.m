@@ -506,8 +506,6 @@
     }
     return _playAlert;
 }
-#pragma mark
-#pragma mark - 回放全屏
 
 #pragma mark
 #pragma mark - ---
@@ -639,6 +637,7 @@
    
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
+    dogShowVC.view.bounds = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;

@@ -41,11 +41,9 @@
 		044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044C82EC1DCC411A00B62575 /* ChoseShopAdressCell.xib */; };
 		044C8D801E025391004BCA52 /* BuyerCloseOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C8D7E1E025391004BCA52 /* BuyerCloseOrderCell.m */; };
 		044D3FD51DF6C1C60076672E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D3FD11DF6C1C60076672E /* libWeChatSDK.a */; };
-		044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D3FE81DF6E7890076672E /* MediaStreamingVc.m */; };
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
 		044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */; };
 		044E86DE1E11392700FD89A2 /* BanaerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DD1E11392600FD89A2 /* BanaerViewController.m */; };
-		044E86E11E12391100FD89A2 /* LiveIngViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86E01E12391100FD89A2 /* LiveIngViewController.m */; };
 		044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
@@ -438,6 +436,7 @@
 		04A31F831DED4F4900BE175A /* AddUpdataImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F7F1DED4F4900BE175A /* AddUpdataImagesView.m */; };
 		04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F811DED4F4900BE175A /* AddUpdataImagesCell.m */; };
 		04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */; };
+		04A5F6141E12A00400353B9A /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5F6121E12A00400353B9A /* MediaStreamingVc.m */; };
 		04B161B81DE704C200DABC77 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161B71DE704C200DABC77 /* BaseModel.m */; };
 		04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161BD1DE7227300DABC77 /* MyShopAdressModel.m */; };
 		04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161C01DE7E5BD00DABC77 /* AddNewAdressVc.m */; };
@@ -538,7 +537,6 @@
 		6180CB471DFC17E6006357B4 /* LiveListRootModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6180CB461DFC17E6006357B4 /* LiveListRootModel.m */; };
 		6180CB4A1DFC1808006357B4 /* LiveListRespModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6180CB491DFC1808006357B4 /* LiveListRespModel.m */; };
 		6180CB4D1DFC1823006357B4 /* LiveListStreamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6180CB4C1DFC1823006357B4 /* LiveListStreamModel.m */; };
-		6180CB501DFC26CF006357B4 /* LandscapePlayerVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6180CB4F1DFC26CF006357B4 /* LandscapePlayerVc.m */; };
 		6180CB541DFC2819006357B4 /* LandscapePlayerToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6180CB531DFC2819006357B4 /* LandscapePlayerToolView.m */; };
 		619395301DF828BD00EBC23B /* ChosePayStyleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6193952F1DF828BD00EBC23B /* ChosePayStyleView.m */; };
 		61EF1DB71DFD17D40049FBBB /* NSAttributedString+DogOldPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EF1DB61DFD17D40049FBBB /* NSAttributedString+DogOldPrice.m */; };
@@ -616,16 +614,12 @@
 		044D3FD21DF6C1C60076672E /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		044D3FD31DF6C1C60076672E /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		044D3FD41DF6C1C60076672E /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
-		044D3FE71DF6E7890076672E /* MediaStreamingVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingVc.h; sourceTree = "<group>"; };
-		044D3FE81DF6E7890076672E /* MediaStreamingVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingVc.m; sourceTree = "<group>"; };
 		044D9B931DF44ED500C56B1D /* ProtectPowerDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerDetailModel.h; sourceTree = "<group>"; };
 		044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerDetailModel.m; sourceTree = "<group>"; };
 		044E86D91E0FEA4300FD89A2 /* FMDBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBUser.h; sourceTree = "<group>"; };
 		044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBUser.m; sourceTree = "<group>"; };
 		044E86DC1E11392600FD89A2 /* BanaerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BanaerViewController.h; sourceTree = "<group>"; };
 		044E86DD1E11392600FD89A2 /* BanaerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BanaerViewController.m; sourceTree = "<group>"; };
-		044E86DF1E12391000FD89A2 /* LiveIngViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveIngViewController.h; sourceTree = "<group>"; };
-		044E86E01E12391100FD89A2 /* LiveIngViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveIngViewController.m; sourceTree = "<group>"; };
 		044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamChatRoomVcViewController.h; sourceTree = "<group>"; };
 		044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamChatRoomVcViewController.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
@@ -1402,6 +1396,8 @@
 		04A31F801DED4F4900BE175A /* AddUpdataImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddUpdataImagesCell.h; sourceTree = "<group>"; };
 		04A31F811DED4F4900BE175A /* AddUpdataImagesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddUpdataImagesCell.m; sourceTree = "<group>"; };
 		04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddUpdataImagesCell.xib; sourceTree = "<group>"; };
+		04A5F6121E12A00400353B9A /* MediaStreamingVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingVc.m; sourceTree = "<group>"; };
+		04A5F6131E12A00400353B9A /* MediaStreamingVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingVc.h; sourceTree = "<group>"; };
 		04B161B61DE704C200DABC77 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		04B161B71DE704C200DABC77 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		04B161BC1DE7227300DABC77 /* MyShopAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopAdressModel.h; sourceTree = "<group>"; };
@@ -1598,8 +1594,6 @@
 		6180CB491DFC1808006357B4 /* LiveListRespModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveListRespModel.m; sourceTree = "<group>"; };
 		6180CB4B1DFC1823006357B4 /* LiveListStreamModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveListStreamModel.h; sourceTree = "<group>"; };
 		6180CB4C1DFC1823006357B4 /* LiveListStreamModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveListStreamModel.m; sourceTree = "<group>"; };
-		6180CB4E1DFC26CF006357B4 /* LandscapePlayerVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapePlayerVc.h; sourceTree = "<group>"; };
-		6180CB4F1DFC26CF006357B4 /* LandscapePlayerVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapePlayerVc.m; sourceTree = "<group>"; };
 		6180CB521DFC2819006357B4 /* LandscapePlayerToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapePlayerToolView.h; sourceTree = "<group>"; };
 		6180CB531DFC2819006357B4 /* LandscapePlayerToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapePlayerToolView.m; sourceTree = "<group>"; };
 		6193952E1DF828BD00EBC23B /* ChosePayStyleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChosePayStyleView.h; sourceTree = "<group>"; };
@@ -2983,14 +2977,10 @@
 			children = (
 				0479B4CD1DCADC7B00CB288A /* LivingViewController.h */,
 				0479B4CE1DCADC7B00CB288A /* LivingViewController.m */,
-				044E86DF1E12391000FD89A2 /* LiveIngViewController.h */,
-				044E86E01E12391100FD89A2 /* LiveIngViewController.m */,
 				045E3B4B1E0F894200624CEA /* PlayBackViewController.h */,
 				045E3B4C1E0F894200624CEA /* PlayBackViewController.m */,
-				6180CB4E1DFC26CF006357B4 /* LandscapePlayerVc.h */,
-				6180CB4F1DFC26CF006357B4 /* LandscapePlayerVc.m */,
-				044D3FE71DF6E7890076672E /* MediaStreamingVc.h */,
-				044D3FE81DF6E7890076672E /* MediaStreamingVc.m */,
+				04A5F6131E12A00400353B9A /* MediaStreamingVc.h */,
+				04A5F6121E12A00400353B9A /* MediaStreamingVc.m */,
 				044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */,
 				044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */,
 			);
@@ -4834,6 +4824,7 @@
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
 				04592EE41DF199390095C8EE /* DogCategoryModel.m in Sources */,
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
+				04A5F6141E12A00400353B9A /* MediaStreamingVc.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,
 				0471ADAF1E04E11800E11DE4 /* SuggestButtonView.m in Sources */,
 				0452A1D41DE03674007C1E4F /* SellerDogDetailView.m in Sources */,
@@ -4983,7 +4974,6 @@
 				044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */,
 				046BF01A1DE4696600BC32E9 /* EaseEmoji.m in Sources */,
 				046BF0261DE4696600BC32E9 /* EaseBaseMessageCell.m in Sources */,
-				6180CB501DFC26CF006357B4 /* LandscapePlayerVc.m in Sources */,
 				046BF0051DE4696600BC32E9 /* PSTCollectionViewFlowLayout.m in Sources */,
 				0479B61D1DCADC7B00CB288A /* AboutUsViewController.m in Sources */,
 				046F0BA71DE2AB8B00D50D5C /* SellNameView.m in Sources */,
@@ -5001,7 +4991,6 @@
 				045FE30E1DCC6635001B95B1 /* ChosedAdressView.m in Sources */,
 				046F0B981DE2AB8B00D50D5C /* UpLoadPictureView.m in Sources */,
 				046F0BAE1DE2AB8B00D50D5C /* WaitBackMoneyCell.m in Sources */,
-				044E86E11E12391100FD89A2 /* LiveIngViewController.m in Sources */,
 				04CE13DD1DDC488100EB8777 /* SellerWaitAcceptCell.m in Sources */,
 				046BEFD31DE4696600BC32E9 /* MBProgressHUD.m in Sources */,
 				046BF0321DE4696600BC32E9 /* EaseChatToolbar.m in Sources */,
@@ -5180,7 +5169,6 @@
 				046908561E0E07D8001E2128 /* BannerModel.m in Sources */,
 				046BEFFA1DE4696600BC32E9 /* UIImage+EMGIF.m in Sources */,
 				04EA2AD31DDDB01B0023D9A8 /* SellerProtectPowerStateView.m in Sources */,
-				044D3FEA1DF6E7890076672E /* MediaStreamingVc.m in Sources */,
 				0408920B1DFFF272006DF570 /* BuyCenterViewController.m in Sources */,
 				0479B6361DCADC7B00CB288A /* main.m in Sources */,
 				046BF00C1DE4696600BC32E9 /* PSTGridLayoutSection.m in Sources */,

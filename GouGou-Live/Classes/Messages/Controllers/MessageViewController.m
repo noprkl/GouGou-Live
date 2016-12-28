@@ -210,8 +210,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
 
         NSString *filename = [NSString cachePathWithfileName:Focus];
         NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
-        DLog(@"%@", focusArr);
-        DLog(@"%@", conversation.conversationId);
         if ([focusArr containsObject:@([conversation.conversationId intValue])]) {
             cell.isFocus.selected = YES;
         }else{
@@ -398,6 +396,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
         }
     }
 }
+
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"删除后不可恢复";
 }

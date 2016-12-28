@@ -14,26 +14,6 @@
 - (void)setModel:(id<IConversationModel>)model
 {
     _model = model;
-    NSDictionary *dict = @{
-                           @"id":model.conversation.conversationId
-                           };
-    [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/personal" params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-       PersonalMessageModel *personalModel = [arr lastObject];
-        if (personalModel.userName != NULL) {
-            self.nickNameLabel.text = personalModel.userName;
-        }else{
-            
-        }
-        if (personalModel.userImgUrl != NULL) {
-            NSString *img = [IMAGE_HOST stringByAppendingString:personalModel.userImgUrl];
-            
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-
     
     // 昵称
     if ([_model.title length] > 0) {

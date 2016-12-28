@@ -225,15 +225,16 @@
         NSArray *blackArr = [[EMClient sharedClient].contactManager getBlackListFromServerWithError:&error];
         NSString *filename = [NSString cachePathWithfileName:Focus];
         NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
+        NSInteger chatID = [_chatID integerValue];
         
         // 如果已经屏蔽 已经关注
-        if ([blackArr containsObject:_chatID] && [focusArr containsObject:_chatID]) {
+        if ([blackArr containsObject:_chatID] && [focusArr containsObject:@(chatID)]) {
             _menuView.dataPlist = @[@"已关注", @"已屏蔽", @"举报", @"个人主页"];
-        }else if ([blackArr containsObject:_chatID] && ![focusArr containsObject:_chatID]) {
+        }else if ([blackArr containsObject:_chatID] && ![focusArr containsObject:@(chatID)]) {
             _menuView.dataPlist = @[@"关注", @"已屏蔽", @"举报", @"个人主页"];
-        }else if (![blackArr containsObject:_chatID] && [focusArr containsObject:_chatID]) {
+        }else if (![blackArr containsObject:_chatID] && [focusArr containsObject:@(chatID)]) {
             _menuView.dataPlist = @[@"已关注", @"屏蔽", @"举报", @"个人主页"];
-        }else if (![blackArr containsObject:_chatID] && ![focusArr containsObject:_chatID]) {
+        }else if (![blackArr containsObject:_chatID] && ![focusArr containsObject:@(chatID)]) {
             _menuView.dataPlist = @[@"关注", @"屏蔽", @"举报", @"个人主页"];
         }
         
@@ -250,7 +251,7 @@
         NSDictionary *dict = @{
                                @"user_id":@([[UserInfos sharedUser].ID intValue]),
                                @"id":@([_chatID intValue]),
-                               @"type":@(1)
+                               @"type":@(0)
                                };
 
         [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {
@@ -270,7 +271,7 @@
             NSDictionary *dict = @{
                                    @"user_id":@([[UserInfos sharedUser].ID intValue]),
                                    @"id":@([_chatID intValue]),
-                                   @"type":@(0)
+                                   @"type":@(1)
                                    };
             
             [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/add_fan" params:dict success:^(id successJson) {

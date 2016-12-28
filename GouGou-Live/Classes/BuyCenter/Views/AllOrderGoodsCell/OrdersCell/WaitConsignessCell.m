@@ -79,7 +79,7 @@
     self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.productBalance;
     self.costView.totalMoney.text = centerModel.price;
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficMoney];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficFee];
 
     self.logisticView.orderCode = centerModel.ID;
 }

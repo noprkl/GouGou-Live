@@ -717,14 +717,7 @@
     }
     return _notePlayer;
 }
-//- (TalkingViewController *)talkingVc {
-//    if (!_talkingVc) {
-//        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-//        _talkingVc.tableView.backgroundColor = [UIColor whiteColor];
-//        _talkingVc.roomID = _chatRoomID;
-//    }
-//    return _talkingVc;
-//}
+
 #pragma mark  - 直播全屏
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -1040,7 +1033,9 @@
     
     [self.baseScrollView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.centerView.bottom);
-        make.left.right.bottom.equalTo(self.view);
+        make.left.equalTo(self.view.left);
+        make.bottom.equalTo(self.view.bottom);
+        make.width.equalTo(SCREEN_WIDTH);
     }];
     // 子控制器
     [self addChildViewControllers];

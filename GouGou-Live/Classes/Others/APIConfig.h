@@ -300,14 +300,13 @@
 /** 印象/年龄、价格搜索 */
 #define API_Live_list_new_im @"api/ProductService/Live_new_list_im"
 
-
 /** 更多印象 */
 #define API_Impression @"api/ProductService/Impression"
 /** 直播视频保存 */
 #define API_save @"api/ProductService/save"
 /** 直播视频回放 */
 #define API_PlayBack @"api/ProductService/playback"
-
-
+/** 直播观看人数 */
+#define API_live_view @"api/OrderService/live_view"
 
 @end

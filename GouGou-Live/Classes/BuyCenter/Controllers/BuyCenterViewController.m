@@ -18,8 +18,6 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
 
-#define countDownTime  360
-
 @interface BuyCenterViewController ()
 
 @end
@@ -50,7 +48,6 @@
         }];
     };
     [prompt show];
-    
 }
 
 #pragma mark - 支付
@@ -68,11 +65,12 @@
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"支付全额"]) {
-                if ([successJson[@"data"] isEqualToString:@"0"]) {
+                if ([successJson[@"data"][@"product_price"] isEqualToString:@"0"]) {
                     [self showAlert:@"支付金额不能为0"];
                 }else{
-                    NSString *price = successJson[@"data"];
-                    [self chosePayStyleWIthOrderID:orderID protductPrice:price];
+                    NSString *price = successJson[@"data"][@"product_price"];
+                    NSString *orderid = successJson[@"data"][@"order_id"];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price];
                 }
             }
         } error:^(NSError *error) {
@@ -90,11 +88,12 @@
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"支付订金"]) {
-                if ([successJson[@"data"] isEqualToString:@"0"]) {
+                if ([successJson[@"data"][@"product_deposit"] isEqualToString:@"0"]) {
                     [self showAlert:@"支付金额不能为0"];
                 }else{
-                    NSString *price = successJson[@"data"];
-                    [self chosePayStyleWIthOrderID:orderID protductPrice:price];
+                    NSString *price = successJson[@"data"][@"product_deposit"];
+                    NSString *orderid = successJson[@"data"][@"order_id"];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price];
                 }
             }
         } error:^(NSError *error) {
@@ -103,21 +102,21 @@
     }
     if ([payStyle isEqualToString:@"支付尾款"]) {
         // 生成待支付尾款订单
-        NSString *finalID = [NSString stringWithFormat:@"%@wk", orderID];
         NSDictionary *typeDict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
-                                   @"order_id":finalID,
+                                   @"order_id":orderID,
                                    @"type":@(3)
                                    };
         [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"支付尾款"]) {
-                if ([successJson[@"data"] isEqualToString:@"0"]) {
+                if ([successJson[@"data"][@"product_balance"] isEqualToString:@"0"]) {
                     [self showAlert:@"支付金额不能为0"];
                 }else{
-                    NSString *price = successJson[@"data"];
-                    [self chosePayStyleWIthOrderID:finalID protductPrice:price];
+                    NSString *price = successJson[@"data"][@"product_balance"];
+                    NSString *orderid = [NSString stringWithFormat:@"wk%@", successJson[@"data"][@"order_id"]];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price];
                 }
             }
         } error:^(NSError *error) {
@@ -189,14 +188,15 @@
 }
 /** 微信支付 */
 - (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(NSString *)fee {
-    NSString *money = [NSString stringWithFormat:@"%d", [fee intValue] * 100];
-
+    NSString *money = [NSString stringWithFormat:@"%lf", [fee floatValue] * 100];
+    
     NSDictionary *dict = @{
                            @"order":orderID,
                            @"total_fee":money,
                            @"mark":@"gougou"
                            };
     DLog(@"%@", dict);
+    
     [self getRequestWithPath:@"weixinpay/wxapi.php" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         PayReq * req = [[PayReq alloc] init];
@@ -213,9 +213,9 @@
         if (req.partnerId.length != 0){
             BOOL flag = [WXApi sendReq:req];
             if (flag) {
-                [self showAlert:successJson[@"支付成功"]];
+                DLog(@"支付成功");
             }else{
-                [self showAlert:successJson[@"支付失败"]];
+                DLog(@"支付失败");
             }
         }else{
             [self showAlert:@"partnerId没有值"];
@@ -227,7 +227,7 @@
 /** 支付宝支付 */
 - (void)aliPayWithOrderId:(NSString *)orderID totalFee:(NSString *)fee {
 
-    NSString *money = [NSString stringWithFormat:@"%d", [fee intValue] * 100];
+    NSString *money = [NSString stringWithFormat:@"%lf", [fee floatValue] * 100];
     NSDictionary *dit = @{
                           @"id":orderID,
                           @"total_fee":money
@@ -351,6 +351,7 @@
         // 点击提示框确认按钮请求支付密码
         __weak typeof(prompt) weakPrompt = prompt;
         prompt.clickSureBtnBlock = ^(NSString *text){
+            
             // 验证密码
             NSDictionary *dict = @{
                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
@@ -393,13 +394,16 @@
         [weakself dismiss];
         
         pppView.sureApplyBtnBlock = ^(UIButton * btn) {
+            
             // 跳转至申请维权
             ApplyProtectPowerViewController * allpyProVC = [[ApplyProtectPowerViewController alloc] init];
             allpyProVC.orderID = orderID;
             [self.navigationController pushViewController:allpyProVC animated:YES];
+            
         };
         // 弹框显示
         [pppView show];
+        
     };
     // 弹框显示
     [allpyPrompt show];
@@ -407,46 +411,6 @@
 }
 // 点击提醒发货
 - (void)clickConsignment:(BuyCenterModel *)model {
-
-//    
-//    NSDate * firstDate = [NSDate date];
-//    NSDate * secondDate = [NSDate dateWithTimeInterval:2  sinceDate:firstDate];
-//    
-//    NSDate * thirdDate = [NSDate dateWithTimeInterval:4  sinceDate:firstDate];
-   
-//    ProtecePowerPromptView * consignmentPrompt = [[ProtecePowerPromptView alloc] init];
-//    
-//    NSDictionary *dict = @{
-//                           @"id":model.ID,
-//                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
-//                           };
-//    
-//    [self getRequestWithPath:@"api/OrderService/order_remind" params:dict success:^(id successJson) {
-//        
-//        DLog(@"%@",successJson);
-//       
-//    } error:^(NSError *error) {
-//        
-//        DLog(@"%@",error);
-//    }];
-//
-//    if (secondDate) {
-//        
-//        consignmentPrompt.message = @"付款不超过24小时,不能提醒";
-//        
-//        [consignmentPrompt show];
-//    } else if (thirdDate) {
-//        
-//        consignmentPrompt.message = @"已提醒卖家发货，请耐心等待";
-//        
-//        [consignmentPrompt show];
-//    } else {
-//        
-//        consignmentPrompt.message = @"三小时内不能重复提醒";
-//        
-//        [consignmentPrompt show];
-//    }
-
     NSDictionary *dict = @{
                            @"id":model.ID,
                            @"user_id":[UserInfos sharedUser].ID
@@ -457,10 +421,7 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-
 }
 
-- (void)cutDownTime:(BuyCenterModel *)model {
-    NSString * string = model.creatTime;
-}
+
 @end

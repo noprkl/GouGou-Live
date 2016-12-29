@@ -54,7 +54,6 @@
 
 @end
 
-
 @implementation RecommendViewController
 
 #pragma mark
@@ -362,21 +361,19 @@
 
 - (void)initUI {
     
-    
+    self.edgesForExtendedLayout = 0;
+
     //    [self.view addSubview:self.noneNetView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.view addSubview:self.baseScrollView];
     [self.view addSubview:self.noneView];
-//    [self.baseScrollView addSubview:self.cycleScrollView];
     [self.baseScrollView addSubview:self.tableView];
     [self.baseScrollView addSubview:self.filtView];
     
-    self.edgesForExtendedLayout = 0;
     
     
     // 上下拉刷新
     self.baseScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
         self.noneView.hidden = YES;
         [self getRequestLiveList];
         [self.baseScrollView.mj_header endRefreshing];

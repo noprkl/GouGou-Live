@@ -25,7 +25,7 @@
 #import "LiveListDogInfoModel.h"
 #import "CreateLiveViewController+ThirdShare.h"
 #import <AVFoundation/AVFoundation.h>
-
+#import "AppDelegate.h"
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate>
 
 @property (nonatomic, strong) PLMediaStreamingSession *session;
@@ -53,7 +53,6 @@
 @property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
 
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
-
 
 @property (nonatomic, strong) NSTimer *timer; /**< 计时器 */
 
@@ -100,11 +99,12 @@
     [self.session destroy];
 
     // 取消横屏
-    
+
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
+    
     // 保存视频
     NSDictionary *dict =@{
                           @"live_id":_liveID
@@ -166,6 +166,7 @@
     
     // 设置视频推流参数
     PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+    videoStreamingConfiguration.videoSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
     PLStream *stream = _stream;
     DLog(@"%@", stream);
     // 设置音频推流参数
@@ -198,10 +199,11 @@
         DLog(@"%@", successJson);
         if (successJson[@"data"]) {
             [self.watchCount setTitle:successJson[@"data"] forState:(UIControlStateNormal)];
+            self.topView.watchPeople = successJson[@"data"];
         }else{
             [self.watchCount setTitle:@"0" forState:(UIControlStateNormal)];
+            self.topView.watchPeople = @"";
         }
-        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -321,7 +323,7 @@
         _watchCount = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_watchCount setImage:[UIImage imageNamed:@"联系人"] forState:(UIControlStateNormal)];
         _watchCount.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_watchCount setTitle:@"1000" forState:(UIControlStateNormal)];
+        [_watchCount setTitle:@"0" forState:(UIControlStateNormal)];
         [_watchCount setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
         _watchCount.enabled = NO;
     }
@@ -406,7 +408,7 @@
         };
         _topView.faceBlcok = ^(){
             // 摄像头前后切换
-            [weakSelf swapFrontAndBackCameras];
+            [weakSelf.session toggleCamera];
         };
     }
     return _topView;
@@ -574,7 +576,6 @@
         }];
     }];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

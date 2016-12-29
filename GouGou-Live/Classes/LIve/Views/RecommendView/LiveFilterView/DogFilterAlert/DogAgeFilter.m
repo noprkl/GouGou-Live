@@ -121,14 +121,13 @@ static NSString *cellid = @"SizeFilterCellID";
             self.currentminIndex = index;
             self.currentmaxIndex = index;
             [pickerView selectRow:index inComponent:0 animated:YES];
-            
         }
     }
     
     if (component == 0) {
     self.minModel = self.dataPlist[self.currentminIndex];
     }
-    if (component == 0) {
+    if (component == 1) {
     self.maxModel = self.dataPlist[self.currentmaxIndex];
     }
 }
@@ -198,7 +197,6 @@ static NSString *cellid = @"SizeFilterCellID";
         _agePicker.backgroundColor = [UIColor whiteColor];
         _agePicker.delegate = self;
         _agePicker.dataSource = self;
-        _agePicker.tintColor = [UIColor colorWithHexString:@"#f6f6f6"];
     }
     return _agePicker;
 }

@@ -23,6 +23,8 @@
 @property(nonatomic, assign) NSInteger lastIndex; /**< 上一个选中的按钮的位置 */
 
 
+@property (nonatomic, strong) UITableViewCell *lastCell; /**< <#注释#> */
+
 @end
 static NSString *cellid = @"SellerShipTemplate";
 @implementation SellerShipTemplateView
@@ -53,9 +55,15 @@ static NSString *cellid = @"SellerShipTemplate";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+//    NSArray *arr = self.lastCell.contentView.subviews;
+//    for (UIView *view in arr) {
+//        if ([view isKindOfClass:[UILabel class]]) {
+//            [view removeFromSuperview];
+//        }
+//    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-    
+
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
@@ -80,18 +88,20 @@ static NSString *cellid = @"SellerShipTemplate";
     label.textColor = [UIColor colorWithHexString:@"#999999"];
     label.font = [UIFont systemFontOfSize:14];
     [cell.contentView addSubview:label];
-//    NSString *cost = @"";
-//    if ([model.money isEqualToString:@"0"]) {
-//        cost = @"免运费";
-//    }else if ([model.money isEqualToString:@"50"]){
-//        cost = @"默认价格 50";
-//    }else{
-//        cost = [NSString stringWithFormat:@"%@", model.money];
-//    }
+    NSString *cost = @"";
+    if (model.type == 0) { //模板类型 0运费模版 1免运费 2按时计算
+        cost = model.money;
+    }else  if(model.type == 1) {
+        cost = @"免运费";
+    }else if(model.type == 2) {
+        cost = @"按实结算";
+    }
     
-    cell.detailTextLabel.attributedText = [self getAttributeWith:model.money];
+    cell.detailTextLabel.attributedText = [self getAttributeWith:cost];
+
+    self.lastCell = cell;
     return cell;
-    
+
 }
 - (void)choseTransformBtn:(UIButton *)btn {
     

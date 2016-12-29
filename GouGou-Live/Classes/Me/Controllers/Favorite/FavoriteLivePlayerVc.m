@@ -81,7 +81,7 @@
     [super viewWillDisappear:animated];
     // 出去竖屏
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
     self.navigationController.navigationBarHidden = NO;
@@ -134,13 +134,13 @@
     NSArray *arr = self.playerView.subviews;
     DLog(@"%@", arr);
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
         _playerLayer.frame = CGRectMake(40, 40, SCREEN_WIDTH - 80, SCREEN_HEIGHT - 80);
 
     }
     if (orientation == UIDeviceOrientationPortrait) {
-        [self forceOrientation:(UIInterfaceOrientationLandscapeLeft)];
+        [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
 //        _playerLayer.frame = self.playerView.frame;
         _playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     }

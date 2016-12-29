@@ -32,8 +32,7 @@
 + (NSString *)getAgeFormInt:(NSInteger)age;
 /** 根据文件名获得文件位置 */
 + (NSString *)cachePathWithfileName:(NSString *)filename;
-
-// 获取时间差
-+ (NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
-+ (NSInteger)getRemainTimeWithString:(NSString *)closeTime;
++ (NSInteger)getRemainTimeWithString:(NSString *)createTime;
+/** 得到当前的时间戳 */
++ (NSString *)getCurrentTime;
 @end

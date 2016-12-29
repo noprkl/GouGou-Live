@@ -22,9 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addChildViewController];
-    
-    [[UITabBar appearance] setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
-    
+    self.tabBar.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
 }
 - (void)addChildViewController {
  

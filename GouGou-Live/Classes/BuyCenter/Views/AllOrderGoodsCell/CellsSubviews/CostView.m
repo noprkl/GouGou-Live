@@ -39,7 +39,6 @@
     self.remainderMoneylabel.text = backLabel;
     self.remainderMoeny.text = backMoney;
     
-
 }
 /*
 #pragma mark - 模型
@@ -58,11 +57,11 @@
 
 }
 */
-//-(void)setMoneyMessage:(NSString *)moneyMessage {
-//    
-//    _moneyMessage = moneyMessage;
-//    self.totalMoney.text = moneyMessage;
-//}
+-(void)setMoneyMessage:(NSString *)moneyMessage {
+    
+    _moneyMessage = moneyMessage;
+    self.totalMoney.text = [NSString stringWithFormat:@"￥%@", moneyMessage];
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -146,10 +145,6 @@
         make.centerY.equalTo(weakself.centerY);
         
     }];
-    
-    
-    
-    
 }
 
 #pragma mark
@@ -170,7 +165,6 @@
     
     if (!_totalMoney) {
         _totalMoney = [[UILabel alloc] init];
-        _totalMoney.text = @"￥1450";
         _totalMoney.textColor = [UIColor colorWithHexString:@"#333333"];
         _totalMoney.font = [UIFont systemFontOfSize:16];
     }
@@ -188,7 +182,6 @@
     return _freightLabel;
 }
 -(UILabel *)freightMoney {
-    
     if (!_freightMoney) {
         _freightMoney = [[UILabel alloc] init];
         _freightMoney.text = @"￥50)";
@@ -209,7 +202,6 @@
 }
 
 -(UILabel *)fontMoney {
-    
     if (!_fontMoney) {
         _fontMoney = [[UILabel alloc] init];
         _fontMoney.text = @"￥500";

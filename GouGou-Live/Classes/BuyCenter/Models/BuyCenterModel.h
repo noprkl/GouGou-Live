@@ -10,7 +10,7 @@
 
 @interface BuyCenterModel : BaseModel
 
-@property (assign,nonatomic) NSString *ID;/** 订单ID */
+@property (strong,nonatomic) NSString *ID;/** 订单ID */
 
 @property (copy,nonatomic) NSString *merchantImg1;/**< 商家图片 */
 
@@ -47,9 +47,8 @@
 
 @property (nonatomic, strong) NSString *comment; /**< 补充 */
 
-@property (copy, nonatomic) NSString *creatTime; /**< 度订单创建时间 */
-
 @property (nonatomic, strong) NSString *traficFee; /**< 运费 */
 @property (nonatomic, strong) NSString *createTime; /**< 订单创建时间 */
 @property (nonatomic, strong) NSString *closeTime; /**< 订单创建时间 */
+
 @end

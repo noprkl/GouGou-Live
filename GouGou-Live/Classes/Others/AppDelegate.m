@@ -30,9 +30,7 @@
     self.window.backgroundColor = [UIColor groupTableViewBackgroundColor];
     BaseTabBarController *tabBC = [[BaseTabBarController alloc] init];
     [tabBC.tabBar setBackgroundColor:[UIColor whiteColor]];
-    
     self.tabBC = tabBC;
-    
     self.window.rootViewController = tabBC;
     
     [self.window makeKeyAndVisible];
@@ -74,16 +72,21 @@
 // NOTE: 9.0以后使用新API接口
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
-    // 支付宝
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            DLog(@"result = %@",resultDic);
-        }];
-        return YES;
-    }else{
-        return [WXApi handleOpenURL:url delegate:self];
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    if (!result) {
+        
+        // 支付宝
+        if ([url.host isEqualToString:@"safepay"]) {
+            //跳转支付宝钱包进行支付，处理支付结果
+            [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+                DLog(@"result = %@",resultDic);
+            }];
+            return YES;
+        }else{
+            return [WXApi handleOpenURL:url delegate:self];
+        }
     }
+    return result;
 }
 //被废弃的方法. 但是在低版本中会用到.建议写上
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
@@ -114,9 +117,8 @@
             return UIInterfaceOrientationMaskPortrait;
         }
     }
-    else
-        {
-        return UIInterfaceOrientationMaskAllButUpsideDown;
-        }
+    else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
 }
 @end

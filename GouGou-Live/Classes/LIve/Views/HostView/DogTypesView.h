@@ -10,7 +10,7 @@
 #import "MoreImpressionModel.h"
 typedef void(^ClickBtnBlock)(MoreImpressionModel *model);
 
-@interface DogTypesView : UIView
+@interface DogTypesView : UIScrollView
 
 /** 点击Button回调方法 */
 @property (copy,nonatomic) ClickBtnBlock btnBlock;

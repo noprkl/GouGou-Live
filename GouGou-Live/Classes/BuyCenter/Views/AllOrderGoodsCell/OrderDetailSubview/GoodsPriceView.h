@@ -16,10 +16,7 @@
 @property (copy, nonatomic) NSString *balancePayMethod; /**< 尾款支付方式 */
 @property (copy, nonatomic) NSString *traficFee; /**< 商品运费 */
 @property (copy, nonatomic) NSString *traficRealFee; /**< 商品实付运费 */
-
 @property (copy, nonatomic) NSString *totalsMoney; /**< 商品总价 */
-
 @property (copy, nonatomic) NSString *cutMoney; /**< 优惠 */
-
 
 @end

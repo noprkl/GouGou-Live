@@ -164,36 +164,8 @@
     return [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", filename]];
 }
 
-/**
- * 开始到结束的时间差
- */
-+ (NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime{
-    NSDateFormatter *date = [[NSDateFormatter alloc]init];
-    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *startD =[date dateFromString:startTime];
-    NSDate *endD = [date dateFromString:endTime];
-    NSTimeInterval start = [startD timeIntervalSince1970]*1;
-    NSTimeInterval end = [endD timeIntervalSince1970]*1;
-    NSTimeInterval value = end - start;
-    int second = (int)value %60;//秒
-    int minute = (int)value /60%60;
-    int house = (int)value / (24 * 3600)%3600;
-    int day = (int)value / (24 * 3600);
-    NSString *str;
-    if (day != 0) {
-        str = [NSString stringWithFormat:@"耗时%d天%d小时%d分%d秒",day,house,minute,second];
-    }else if (day==0 && house != 0) {
-        str = [NSString stringWithFormat:@"耗时%d小时%d分%d秒",house,minute,second];
-    }else if (day== 0 && house== 0 && minute!=0) {
-        str = [NSString stringWithFormat:@"耗时%d分%d秒",minute,second];
-    }else{
-        str = [NSString stringWithFormat:@"耗时%d秒",second];
-    }
-    return str;
-}
 // 根据订单创建时间获得订单的倒计时数
 + (NSInteger)getRemainTimeWithString:(NSString *)closeTime {
-  
     NSDate *date = [NSDate date];// 当前时间
     NSDateFormatter *formate = [[NSDateFormatter alloc] init];
     formate.dateFormat = @"YYMMddHHmmss";
@@ -202,7 +174,13 @@
     // 时间差 剩余时间 关闭时间-当前时间
     NSInteger timeLast = [closeTime integerValue] - [formatDate integerValue];
     return timeLast;
-
-
+}
+// 得到当前的时间戳
++ (NSString *)getCurrentTime{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    format.dateFormat = @"YYYYMMddHHmmss";
+    NSString *time = [format stringFromDate:date];
+    return time;
 }
 @end

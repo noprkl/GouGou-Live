@@ -155,7 +155,9 @@ static NSString *cellid3 = @"MyPageViewController3";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initUI];
+    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+
+    [self initUI];    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

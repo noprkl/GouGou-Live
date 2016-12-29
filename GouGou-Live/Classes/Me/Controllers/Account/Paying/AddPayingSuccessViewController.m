@@ -29,9 +29,6 @@
 }
 - (IBAction)clickRelationServiceBtn:(UIButton *)sender {
     
-    [sender setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
-    [sender setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
-    
     [self clickButtonAction];
     
     SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
@@ -65,6 +62,9 @@
     [super viewDidLoad];
     
     [self initUI];
+    [self.relationServiceBtn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+    [self.relationServiceBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    
 }
 
 - (void)initUI {

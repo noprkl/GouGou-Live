@@ -9,7 +9,6 @@
 #import "AboutUsViewController.h"
 #import "HTTPTool.h"
 #import "UserProtocolVc.h"
-
 @interface AboutUsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -23,6 +22,7 @@
 @end
 
 @implementation AboutUsViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -70,9 +70,7 @@
     NSString *cellText = self.dataArr[indexPath.row];
     
     if ([cellText isEqualToString:@"用户使用协议"]) {
-        
         UserProtocolVc * userVC = [[UserProtocolVc alloc] init];
-        
         [self.navigationController pushViewController:userVC animated:YES];
         
         DLog(@"%@", cellText);

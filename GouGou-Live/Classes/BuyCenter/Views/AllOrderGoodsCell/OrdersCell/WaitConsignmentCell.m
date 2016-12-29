@@ -52,7 +52,7 @@
     }
     self.nickView.nickName.text = centerModel.merchantName;
     self.nickView.stateLabe.text = @"待发货";
-//    self.nickView.remainTimeLabel.text = centerModel.creatTime;
+    
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
@@ -71,7 +71,7 @@
     // 付款状况
     self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.productBalance;
-    self.costView.totalMoney.text = centerModel.price;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [centerModel.price integerValue] + [centerModel.traficFee integerValue]];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficFee];
 
 }

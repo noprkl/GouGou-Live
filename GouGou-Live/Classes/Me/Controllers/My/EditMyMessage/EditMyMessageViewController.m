@@ -280,7 +280,7 @@ static NSString *cellid = @"cellid";
 #pragma mark  上传个人昵称
                         // 请求参数
                         NSDictionary *dict = @{
-                                               @"user_id":@17,
+                                               @"user_id":[UserInfos sharedUser].ID,
                                                @"nickname":nickname
                                                };
                         // 请求

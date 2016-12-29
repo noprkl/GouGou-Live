@@ -23,6 +23,7 @@
 - (void)showSendAlert {
   __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
     __weak typeof(self) weakSelf = self;
+    sendView.orderID = _orderID;
     
     sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
         // 送货请求，如果成功返回YES 失败返回NO
@@ -35,9 +36,11 @@
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
-                [weakSelf.navigationController popViewControllerAnimated:YES];
                 sendView = nil;
                 [sendView dismiss];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                });
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);

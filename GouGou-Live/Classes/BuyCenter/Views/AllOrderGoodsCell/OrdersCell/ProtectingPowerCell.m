@@ -46,7 +46,6 @@
     }
     self.nickView.nickName.text = protectModel.merchantName;
     self.nickView.stateLabe.text = @"维权中";
-//    self.nickView.remainTimeLabel.text = protectModel.closeTime;
     
     // 狗狗详情
     if (protectModel.pathSmall.length != 0) {
@@ -62,9 +61,9 @@
     self.dogCardView.nowPriceLabel.text = protectModel.price;
     // 花费状况
 //    self.costView.fontMoney.text = protectModel.productRealDeposit;
-    self.costView.remainderMoeny.text = protectModel.productRealBalance;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [protectModel.price integerValue] + [protectModel.traficMoney integerValue]];
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficMoney];
     
     self.logisticView.orderCode = protectModel.ID;
 }

@@ -86,8 +86,9 @@
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
                             if ([successJson[@"message"] isEqualToString:@"支付全额"]) {
-                                NSString *price = successJson[@"data"];
-                                [self clickPayAllMoney:orderId price:price];
+                                NSString *price = successJson[@"data"][@"product_price"];
+                                NSString *orderid = successJson[@"data"][@"order_id"];
+                                [self clickPayAllMoney:orderid price:price];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
                             }
@@ -105,8 +106,9 @@
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
                             if ([successJson[@"message"] isEqualToString:@"支付订金"]) {
-                                NSString *price = successJson[@"data"];
-                                [self clickPayFontMoney:orderId productDeposit:price];
+                                NSString *price = successJson[@"data"][@"product_deposit"];
+                                NSString *orderid = successJson[@"data"][@"order_id"];
+                                [self clickPayFontMoney:orderid productDeposit:price];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
                             }
@@ -127,7 +129,7 @@
 - (void)clickPayFontMoney:(NSString *)modelID productDeposit:(NSString *)productDeposit {
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
-    payMonery.payMoney = [NSString stringWithFormat:@"%.2lf", [productDeposit floatValue] / 100];
+    payMonery.payMoney = [NSString stringWithFormat:@"%.2lf", [productDeposit floatValue]];
     payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
     [payMonery show];
     
@@ -193,11 +195,11 @@
         };
     }
     if ([payWay isEqualToString:@"支付宝支付"]) {
-        [self aliPayWithOrderId:[orderID intValue] totalFee:[money intValue]];
+        [self aliPayWithOrderId:[orderID intValue] totalFee:[money floatValue]];
     }
     if ([payWay isEqualToString:@"微信支付"]) {
         
-        [self WeChatPayWithOrderID:[orderID intValue] totalFee:[money intValue]];
+        [self WeChatPayWithOrderID:orderID totalFee:[money floatValue]];
     }
 }
 /** 钱包支付 2定金 3全款 */
@@ -217,12 +219,13 @@
     }];
 }
 /** 微信支付 */
-- (void)WeChatPayWithOrderID:(int)orderID totalFee:(int)fee {
+- (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(float)fee {
     // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
+    NSString *money = [NSString stringWithFormat:@"%lf", fee * 100];
     
     NSDictionary *dict = @{
-                           @"order":@(orderID),
-                           @"total_fee":@(fee),
+                           @"order":orderID,
+                           @"total_fee":money,
                            @"mark":@"爪行宠物直播"
                            };
     DLog(@"%@", dict);
@@ -239,14 +242,14 @@
         req.sign = [successJson objectForKey:@"sign"] != [NSNull null] ?successJson[@"sign"]:@"";
         req.openID = [successJson objectForKey:@"appid"] != [NSNull null] ?successJson[@"appid"]:@"";
         
-        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
+        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%lu, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
         
         BOOL flag = [WXApi sendReq:req];
         if (flag) {
             
-            [self showAlert:successJson[@"支付成功"]];
+            DLog(@"支付成功");
         }else{
-            [self showAlert:successJson[@"支付失败"]];
+            DLog(@"支付失败");
         }
         
     } error:^(NSError *error) {
@@ -254,11 +257,13 @@
     }];
 }
 /** 支付宝支付 */
-- (void)aliPayWithOrderId:(int)orderID totalFee:(int)fee {
+- (void)aliPayWithOrderId:(int)orderID totalFee:(float)fee {
     //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
+    NSString *money = [NSString stringWithFormat:@"%lf", fee * 100];
+
     NSDictionary *dit = @{
                           @"id":@(orderID),
-                          @"total_fee":@(fee)
+                          @"total_fee":money
                           };
     DLog(@"%@", dit);
     [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "WaitAllNickModel.h"
-#import "CountDownLabel.h"
 
 @interface WaitPayAllNickView : UIView
 /** 间隔 */
@@ -20,9 +19,6 @@
 @property (strong,nonatomic) UILabel *nickName;
 /** 状态 */
 @property (strong,nonatomic) UILabel *stateLabe;
-/** 剩余时间 */
-@property (strong,nonatomic) CountDownLabel *remainTimeLabel;
-
 
 /** 订单状态信息 */
 @property (strong,nonatomic) NSString *orderState;

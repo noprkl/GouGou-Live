@@ -383,17 +383,6 @@ static NSString * MedrchantCell = @"MedrchantCell";
     }
     return _doneCertificateView;
 }
-// 上传佐证label
-- (UILabel *)upLoadlabel {
-    if (!_upLoadlabel) {
-        _upLoadlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 262, SCREEN_WIDTH, 44)];
-        _upLoadlabel.text = @"   上传佐证";
-        _upLoadlabel.textColor = [UIColor colorWithHexString:@"#000000"];
-        _upLoadlabel.font = [UIFont systemFontOfSize:16];
-        _upLoadlabel.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    }
-    return _upLoadlabel;
-}
 - (AddUpdataImagesView *)photoView {
     
     if (!_photoView) {
@@ -434,6 +423,17 @@ static NSString * MedrchantCell = @"MedrchantCell";
 
     }
     return _photoView;
+}
+// 上传佐证label
+- (UILabel *)upLoadlabel {
+    if (!_upLoadlabel) {
+        _upLoadlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 262, SCREEN_WIDTH, 44)];
+        _upLoadlabel.text = @"   上传佐证";
+        _upLoadlabel.textColor = [UIColor colorWithHexString:@"#000000"];
+        _upLoadlabel.font = [UIFont systemFontOfSize:16];
+        _upLoadlabel.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _upLoadlabel;
 }
 - (UILabel *)pictureCountLabel {
     if (!_pictureCountLabel) {

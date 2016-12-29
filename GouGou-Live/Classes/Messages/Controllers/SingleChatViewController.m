@@ -31,18 +31,14 @@
     NSDictionary *dict = @{
                            @"id":@([_chatID intValue])
                            };
-    DLog(@"%@",dict);
     [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/personal" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         self.personalModel = [arr lastObject];
-        if (self.personalModel.userNickName.length != 0) {
-//            self.title = _chatID;
-            self.title = self.personalModel.userNickName;
-
+        if (self.personalModel.userName != NULL) {
+            self.title = self.personalModel.userName;
         }else{
             self.title = _chatID;
-//            self.title = self.personalModel.userNickName;
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -72,6 +68,7 @@
         }
         model.nickname = self.personalModel.userName;//用户昵称
     }
+    
     return model;
 }
 //生命周期
@@ -113,7 +110,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    
     // 监听键盘
     [self focusKeyboardShow];
 }
@@ -143,7 +140,6 @@
         };
         _talkView.sendBlock = ^(NSString *message){
             if (message.length != 0) {
-//                DLog(@"%@",message);
                 [weakSelf sendTextMessage:message];
             }
         };
@@ -227,6 +223,8 @@
         _menuView.hidden = YES;
         EMError *error = nil;
         NSArray *blackArr = [[EMClient sharedClient].contactManager getBlackListFromServerWithError:&error];
+       
+        // 关注
         NSString *filename = [NSString cachePathWithfileName:Focus];
         NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
         NSInteger chatID = [_chatID integerValue];
@@ -330,4 +328,3 @@
 }
 
 @end
-//

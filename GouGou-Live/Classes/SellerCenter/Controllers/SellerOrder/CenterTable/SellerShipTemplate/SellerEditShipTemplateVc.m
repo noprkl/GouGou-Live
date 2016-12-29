@@ -35,6 +35,7 @@
 @property(nonatomic, strong) UISwitch *realCost; /**< 按实结算 */
 
 @property (nonatomic, strong) NSString *cost; /**< 花费 */
+@property (nonatomic, assign) NSInteger type; /**< 运费类型 */
 
 @end
 
@@ -45,43 +46,53 @@ static NSString *cellid = @"SellerAddShipTemplate";
 #pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initUI];
 }
 
 - (void)initUI{
     self.title = @"运费管理";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
+    
     [self.view addSubview:self.tableView];
-    _cost = @"0";
+    
+    self.templateStr = _shipModel.name;
+    self.cost = _shipModel.money;
+    self.type = _shipModel.type;
+    //
+    if (_shipModel.type == 0) {//自定义
+        self.shipCost.on = YES;
+        [self shipCostSwitchBtnAction:self.shipCost];
+        
+    }else if(_shipModel.type == 1){ //免运费
+        self.freeCost.on = YES;
+
+        [self priceSwitchBtnAction:self.freeCost];
+    }else if (_shipModel.type == 2){ // 按实结算
+        self.realCost.on = YES;
+
+        [self realCostSwitchBtnAction:self.realCost];
+    }
+    // 构造模型
+    [self.tableView reloadData];
+
 }
 - (void)setShipModel:(SellerShipTemplateModel *)shipModel {
-   
+    _shipModel = shipModel;
+    SellerAdressModel *model = [[SellerAdressModel alloc] init];
+    model.ID = shipModel.addressId;
+    model.merchantAddress = shipModel.merchantAddress;
+    model.merchantCity = shipModel.merchantCity;
+    model.merchantDistrict = shipModel.merchantDistrict;
+    model.merchantName = shipModel.merchantName;
+    model.merchantProvince = shipModel.merchantProvince;
+    model.merchantTel = shipModel.merchantTel;
+    model.street = shipModel.street;
+    self.adressModel = model;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //
-    if (![_shipModel.money isEqualToString:@"0"]) {
-        self.shipCost.on = YES;
-        self.costTextField.text = _shipModel.money;
-        self.cost = _shipModel.money;
-    }else{
-        self.freeCost.on = YES;
-        self.cost = @"0";
-    }
-    SellerAdressModel *model = [[SellerAdressModel alloc] init];
-    model.ID = _shipModel.addressId;
-    model.merchantAddress = _shipModel.merchantAddress;
-    model.merchantCity = _shipModel.merchantCity;
-    model.merchantDistrict = _shipModel.merchantDistrict;
-    model.merchantName = _shipModel.merchantName;
-    model.merchantProvince = _shipModel.merchantProvince;
-    model.merchantTel = _shipModel.merchantTel;
-    self.adressModel = model;
-    
-    self.templateStr = _shipModel.name;
-//    [self.tableView reloadData];
-
+   
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ChoseSendAdress" object:nil];
-    [self initUI];
     [self setNavBarItem];
 }
 
@@ -89,7 +100,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     
     SellerAdressModel *model = adress.userInfo[@"ChoseSendAdress"];
     if (model.merchantTel.length != 0) {
-        [self.view addSubview:self.tableView];
+//        [self.view addSubview:self.tableView];
         [self.tableView reloadData];
         self.adressModel = model;
     }
@@ -113,12 +124,14 @@ static NSString *cellid = @"SellerAddShipTemplate";
                                        @"name":self.templateStr,
                                        @"money":self.cost,
                                        @"address_id":@(self.adressModel.ID),
-                                       @"id":@(self.shipModel.ID)
+                                       @"id":@(self.shipModel.ID),
+                                       @"type":@(self.type),
+                                       @"is_default":@(_shipModel.isDefault)
                                        };
                 [self postRequestWithPath:API_Up_freight params:dict success:^(id successJson) {
                     [self showAlert:successJson[@"message"]];
                     DLog(@"%@", successJson);
-                    if ([successJson[@"message"] isEqualToString:@"成功"]) {
+                    if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                 } error:^(NSError *error) {
@@ -128,10 +141,11 @@ static NSString *cellid = @"SellerAddShipTemplate";
         }
     }
 }
+// 免运费
 - (void)priceSwitchBtnAction:(UISwitch *)switchBtn {
     [self.dataArr removeAllObjects];
     
-    [_dataArr addObject:self.templateName.text];
+    [_dataArr addObject:self.templateStr];
     [_dataArr addObject:@"发货地址(必填)"];
     [_dataArr addObject:@"免运费"];
     [_dataArr addObject:@"默认运费价格"];
@@ -142,13 +156,14 @@ static NSString *cellid = @"SellerAddShipTemplate";
         self.shipCost.on = NO;
         self.realCost.on = NO;
         self.cost = @"0";
+        _type = 1;
     }
 }
 - (void)shipCostSwitchBtnAction:(UISwitch *)switchBtn {
     if (switchBtn.isOn) {
         [self.dataArr removeAllObjects];
         
-        [_dataArr addObject:self.templateName.text];
+        [_dataArr addObject:self.templateStr];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
         [_dataArr addObject:@"默认运费价格"];
@@ -157,10 +172,12 @@ static NSString *cellid = @"SellerAddShipTemplate";
         [self.tableView reloadData];
         self.realCost.on = NO;
         self.freeCost.on = NO;
+        _type = 0;
+
     }else{
         [self.dataArr removeAllObjects];
         
-        [_dataArr addObject:self.templateName.text];
+        [_dataArr addObject:self.templateStr];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
         [_dataArr addObject:@"默认运费价格"];
@@ -179,7 +196,8 @@ static NSString *cellid = @"SellerAddShipTemplate";
     [_dataArr addObject:@"默认运费价格"];
     [_dataArr addObject:@"按实结算"];
     [self.tableView reloadData];
-    self.cost = @"50";
+    self.cost = @"0";
+    _type = 2;
 }
 - (void)editShipTemplateAction:(UITextField *)textField {
     _templateStr = textField.text;
@@ -214,7 +232,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     if (!_freeCost) {
         _freeCost = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
         _freeCost.on = YES;
-        [_freeCost addTarget:self action:@selector(priceSwitchBtnAction:) forControlEvents:(UIControlEventValueChanged)];
+//        [_freeCost addTarget:self action:@selector(priceSwitchBtnAction:) forControlEvents:(UIControlEventValueChanged)];
     }
     return _freeCost;
 }

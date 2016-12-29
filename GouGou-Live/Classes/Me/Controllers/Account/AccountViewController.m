@@ -11,6 +11,7 @@
 
 #import "PresentApplicationViewController.h"
 #import "SingleChatViewController.h"
+#import "HelpViewController.h"
 
 @interface AccountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -200,10 +201,13 @@
     
 }
 - (void)clickHelpBtnAction {
-    SingleChatViewController *singleVc = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-    singleVc.title = EaseTest_Chat1;
-    singleVc.chatID = EaseTest_Chat1;
-    [self.navigationController pushViewController:singleVc animated:YES];
+//    SingleChatViewController *singleVc = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+//    singleVc.title = EaseTest_Chat1;
+//    singleVc.chatID = EaseTest_Chat1;
+//    [self.navigationController pushViewController:singleVc animated:YES];
+    HelpViewController *helpVC = [[HelpViewController alloc] init];
+    
+    [self.navigationController pushViewController:helpVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

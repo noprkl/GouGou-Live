@@ -38,36 +38,30 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.showsHorizontalScrollIndicator = NO;
     }
     return self;
 }
 - (void)setImpressionArr:(NSArray *)impressionArr {
     _impressionArr = impressionArr;
     NSInteger cols = impressionArr.count;
-    
+    self.contentSize = CGSizeMake(70 * cols + 35, 0);
+    self.contentOffset = CGPointMake(0, 0);
     CGFloat space = 5;
     
-    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * space)/cols;
+//    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * space)/cols;
+    CGFloat btnW = 70;
+    
     CGFloat btnH = 30;
     CGFloat margin = space;
     CGFloat btnY = self.frame.size.height / 2 - btnH / 2;
     
-    //    CGFloat btnW = (SCREEN_WIDTH - (cols + 1) * kDogImageWidth)/cols;
-    //    CGFloat btnH = 25;
-    //    CGFloat margin = kDogImageWidth;
-    //    CGFloat btnY = kDogImageWidth;
+//    CGFloat boardMargin = (SCREEN_WIDTH - cols * btnW - (cols- 1)* margin)/2;
     
-    
-    CGFloat boardMargin = (SCREEN_WIDTH - cols * btnW - (cols- 1)* margin)/2;
     
     for (NSInteger i = 0; i < cols; i++) {
         
         UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
-        
-        if (i == 0) {
-            btn.frame = CGRectMake(boardMargin, btnY, btnW, btnH);
-        }
         
         btn.layer.cornerRadius = 5;
         btn.layer.masksToBounds = YES;
@@ -78,7 +72,12 @@
         
         [btn setTitle:model.name forState:UIControlStateNormal];
         
-        btn.frame = CGRectMake(boardMargin + (margin + btnW)*i, btnY, btnW, btnH);
+        
+        if (i == 0) {
+            btn.frame = CGRectMake(space, btnY, btnW, btnH);
+        } else {
+            btn.frame = CGRectMake(space + (margin + btnW)*i, btnY, btnW, btnH);
+        }
         
         [btn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];
@@ -96,7 +95,6 @@
         [self addSubview:btn];
     }
 }
-
 - (void)clickBtnAction:(UIButton *)button {
     [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 

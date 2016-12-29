@@ -147,11 +147,10 @@
     return _nickName;
 }
 
-- (CountDownLabel *)remainTimeLabel {
+- (UILabel *)remainTimeLabel {
 
     if (!_remainTimeLabel) {
-        _remainTimeLabel = [[CountDownLabel alloc] init];
-        _remainTimeLabel.text = @"剩余1天1小时";
+        _remainTimeLabel = [[UILabel alloc] init];
         _remainTimeLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _remainTimeLabel.font = [UIFont systemFontOfSize:14];
     }

@@ -46,7 +46,6 @@ static NSString *cellid = @"SizeFilterCellID";
 
 @implementation DogPriceFilter
 - (void)setDataPlist:(NSArray *)dataPlist {
-    
     _dataPlist = dataPlist;
     self.ageData = dataPlist;
     [self.agePicker reloadAllComponents];
@@ -54,18 +53,14 @@ static NSString *cellid = @"SizeFilterCellID";
     self.maxModel = self.ageData[0];
 }
 
-
 #pragma mark
 #pragma mark - Action + 代理
 - (void)clickSureBtnAction {
     if (_priceRangeBlock) {
-        
         _priceRangeBlock(self.minModel, self.maxModel);
-        
         [self fadeOut];
     }}
 - (void)clickCancelBtnAction {
-    
     [self fadeOut];
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
@@ -85,7 +80,6 @@ static NSString *cellid = @"SizeFilterCellID";
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     
     // 列数
-    
     return 2;
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
@@ -118,15 +112,12 @@ static NSString *cellid = @"SizeFilterCellID";
                 [pickerView selectRow:row inComponent:1 animated:YES];
             }
             break;
-            
         case 1:
             if (row < self.currentminIndex) {
 //                DLog(@"%ld--%ld", row, component);
                 self.currentminIndex = [pickerView selectedRowInComponent:1];
                 self.currentmaxIndex = [pickerView selectedRowInComponent:1];;
-                
                 [pickerView selectRow:row inComponent:1 animated:YES];
-                
             }
             break;
         default:

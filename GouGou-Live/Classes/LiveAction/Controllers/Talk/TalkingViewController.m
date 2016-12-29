@@ -85,8 +85,8 @@ static NSString *cellid = @"TalkTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-//    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-290);
-    self.tableView.frame = self.view.bounds;
+    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-290);
+//    self.tableView.frame = self.view.bounds;
 //    [self.tableView registerNib:[UINib nibWithNibName:cellid bundle:nil] forCellReuseIdentifier:cellid];
 
     [self initUI];

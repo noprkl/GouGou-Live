@@ -67,6 +67,10 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
 }
+- (void)setWatchPeople:(NSString *)watchPeople {
+    _watchPeople = watchPeople;
+    [self.watchCount setTitle:watchPeople forState:(UIControlStateNormal)];
+}
 #pragma mark
 #pragma mark - Action
 - (void)clickBackBtnAction {
@@ -107,7 +111,7 @@
         _watchCount = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_watchCount setImage:[UIImage imageNamed:@"联系人"] forState:(UIControlStateNormal)];
         _watchCount.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_watchCount setTitle:@"1000" forState:(UIControlStateNormal)];
+        [_watchCount setTitle:@"0" forState:(UIControlStateNormal)];
         [_watchCount setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
         _watchCount.enabled = NO;
     }

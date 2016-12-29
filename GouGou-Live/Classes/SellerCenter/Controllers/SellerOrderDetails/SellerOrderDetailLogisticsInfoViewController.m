@@ -262,13 +262,29 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerOrderDetailInfoView *orderInfoView = [[SellerOrderDetailInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 127)];
-            orderInfoView.orderCodeNumber.text = self.orderInfo.createTime;
-            
-            orderInfoView.createTime.text = self.orderInfo.createTime;
-            
-            orderInfoView.depositTime.text = self.orderInfo.depositTime;
-            
-            orderInfoView.finalMoneyTime.text = self.orderInfo.balanceTime;
+        if (![self.orderInfo.createTime isEqualToString:@"0"]) {
+            orderInfoView.createTime.text = [NSString stringFromDateString:self.orderInfo.createTime];
+        }else{
+            orderInfoView.createTime.text = @"未付";
+        }
+        
+        if (![self.orderInfo.depositTime isEqualToString:@"0"]) {
+            orderInfoView.depositTime.text = [NSString stringFromDateString:self.orderInfo.depositTime];
+        }else{
+            orderInfoView.depositTime.text = @"未付";
+        }
+        
+        if (![self.orderInfo.balanceTime isEqualToString:@"0"]) {
+            orderInfoView.finalMoneyTime.text = [NSString stringFromDateString:self.orderInfo.balanceTime];
+        }else{
+            orderInfoView.finalMoneyTime.text = @"未付";
+        }
+        
+        if (![self.orderInfo.deliveryTime isEqualToString:@"0"]) {
+            orderInfoView.sendTime.text = [NSString stringFromDateString:self.orderInfo.deliveryTime];
+        }else{
+            orderInfoView.sendTime.text = @"未发货";
+        }
             [cell.contentView addSubview:orderInfoView];
             return cell;
 

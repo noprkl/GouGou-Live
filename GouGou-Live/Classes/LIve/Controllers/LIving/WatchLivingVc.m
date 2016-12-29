@@ -1,18 +1,18 @@
 //
-//  MediaStreamChatRoomVcViewController.m
+//  WatchLivingVc.m
 //  GouGou-Live
 //
-//  Created by ma c on 16/12/22.
+//  Created by ma c on 16/12/28.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#import "MediaStreamChatRoomVcViewController.h"
+#import "WatchLivingVc.h"
 
-@interface MediaStreamChatRoomVcViewController ()
+@interface WatchLivingVc ()
 
 @end
 
-@implementation MediaStreamChatRoomVcViewController
+@implementation WatchLivingVc
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,13 +23,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
-}
+
 /*
 #pragma mark - Navigation
 

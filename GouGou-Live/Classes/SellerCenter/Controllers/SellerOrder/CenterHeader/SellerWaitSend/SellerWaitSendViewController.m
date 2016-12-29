@@ -116,7 +116,6 @@ static NSString *cellid = @"SellerWaitSendCell";
         [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
     };
     
-
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

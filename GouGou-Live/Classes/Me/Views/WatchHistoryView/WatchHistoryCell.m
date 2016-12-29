@@ -300,16 +300,15 @@
 - (void)deleteButton:(UIButton *)btn {
     
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
-    [btn setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
     if (_deleBlock) {
         _deleBlock(btn);
     }
 }
 
 - (void)changeBtnColor:(UIButton *)btn {
-    
-    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+
 }
 
 - (void)awakeFromNib {

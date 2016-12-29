@@ -11,7 +11,7 @@
 @interface MessageListCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *isFocus;
+@property (weak, nonatomic) IBOutlet UILabel *isFocus;
 @property (weak, nonatomic) IBOutlet UILabel *lastMessageLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *lastTimeLabel;

@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "NickNameModel.h"
-#import "CountDownLabel.h"
-
 
 @interface NicknameView : UIView
 /** 间隔 */
@@ -19,7 +17,7 @@
 /** 昵称 */
 @property (strong,nonatomic) UILabel *nickName;
 /** 剩余时间 */
-@property (strong,nonatomic) CountDownLabel *remainTimeLabel;
+@property (strong,nonatomic) UILabel *remainTimeLabel;
 /** 状态 */
 @property (strong,nonatomic) UILabel *stateLabe;
 

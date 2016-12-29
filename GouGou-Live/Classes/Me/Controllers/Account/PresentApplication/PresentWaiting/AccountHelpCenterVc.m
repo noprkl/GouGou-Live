@@ -8,6 +8,7 @@
 
 #import "AccountHelpCenterVc.h"
 #import "NormalModel.h"
+#import "SingleChatViewController.h"
 
 @interface AccountHelpCenterVc ()
 @property (nonatomic, strong) UIButton *perfromBtn; /**< 未解决按钮 */
@@ -32,12 +33,19 @@
         DLog(@"%@", error);
     }];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [self getRequestHelp];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavBarItem];
     [self.view addSubview:self.label];
     [self.label makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(UIEdgeInsetsMake(20, 20, 50, 20));
+        make.edges.equalTo(UIEdgeInsetsMake(0 , 20, 0, 44));
     }];
     [self.view addSubview:self.perfromBtn];
     [self.view addSubview:self.serviceBtn];
@@ -58,8 +66,8 @@
     if (!_perfromBtn) {
         _perfromBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_perfromBtn setTitle:@"还没解决问题？" forState:(UIControlStateNormal)];
-        _perfromBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        _perfromBtn.backgroundColor = [UIColor colorWithHexString:@"#ff1aa1"];
+        _perfromBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        _perfromBtn.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];
         _perfromBtn.titleLabel.tintColor = [UIColor colorWithHexString:@"#ffffff"];
         [_perfromBtn addTarget:self action:@selector(ClickPerformBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -71,9 +79,9 @@
 - (UIButton *)serviceBtn {
     if (!_serviceBtn) {
         _serviceBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_serviceBtn setTitle:@"还没解决问题？" forState:(UIControlStateNormal)];
-        _serviceBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        _serviceBtn.backgroundColor = [UIColor colorWithHexString:@"#ff1aa1"];
+        [_serviceBtn setTitle:@"联系客服" forState:(UIControlStateNormal)];
+        _serviceBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        _serviceBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         _serviceBtn.titleLabel.tintColor = [UIColor colorWithHexString:@"#ffffff"];
         [_serviceBtn addTarget:self action:@selector(ClickServiceBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -81,7 +89,10 @@
 }
 
 - (void)ClickServiceBtnAction {
-    
+    SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+    viewController.title = EaseTest_Chat1;
+    viewController.chatID = EaseTest_Chat1;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 - (UILabel *)label {
     if (!_label) {

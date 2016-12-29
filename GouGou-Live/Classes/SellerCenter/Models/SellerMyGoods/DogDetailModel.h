@@ -23,4 +23,6 @@
 @property(nonatomic, strong) NSString *status; /**< 商品状态 */
 @property(nonatomic, strong) NSString *createTime; /**< 创建时间 */
 
+@property (nonatomic, strong) NSString *traficMoney; /**< 运费 */
+
 @end

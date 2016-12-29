@@ -33,6 +33,7 @@
     }
     
     self.userNameLabel.text = model.userNickName;
+
     self.userSignLabel.text = model.userMotto;
 
 }

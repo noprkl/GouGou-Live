@@ -56,6 +56,11 @@
     _messages = messages;
     
 }
+- (void)setFreightMoney:(NSString *)freightMoney {
+    _freightMoney = freightMoney;
+    self.freightLabel.text = [NSString stringWithFormat:@"(含运费:￥%@)", freightMoney];
+    
+}
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
@@ -111,32 +116,6 @@
         [self addSubview:label];
     }
 
-//    [_fontMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.equalTo(weakself.totalMoney.right).offset(20);
-//        make.centerY.equalTo(weakself.centerY);
-//        
-//    }];
-//    
-//    [_fontMoney mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.equalTo(weakself.fontMoneyLabel.right).offset(5);
-//        make.centerY.equalTo(weakself.centerY);
-//        
-//    }];
-//    
-//    [_remainderMoneylabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.equalTo(weakself.fontMoney.right).offset(10);
-//        make.centerY.equalTo(weakself.centerY);
-//        
-//    }];
-//    
-//    [_remainderMoeny mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.equalTo(weakself.remainderMoneylabel.right).offset(5);
-//        make.centerY.equalTo(weakself.centerY);
-//    }];
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(weakself.bottom);
         make.left.right.equalTo(weakself);

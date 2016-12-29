@@ -32,5 +32,6 @@
 
 @property (nonatomic, strong) NSString *productBalance; /**< 尾款 */
 @property (nonatomic, strong) NSString *productRealBalance; /**< 实付尾款 */
+@property (nonatomic, strong) NSString *traficMoney; /**< 运费 */
 
 @end

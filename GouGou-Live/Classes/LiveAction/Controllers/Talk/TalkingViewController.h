@@ -7,6 +7,7 @@
 //
 
 #import "EaseMessageViewController.h"
+#import "TalkingView.h"
 
 @interface TalkingViewController : EaseMessageViewController
 
@@ -18,4 +19,6 @@
 
 @property (nonatomic, assign) BOOL ishidText; /**< 隐藏 */
 
+@property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
+@property (nonatomic, assign) BOOL isNotification; /**< 是否监听 */
 @end

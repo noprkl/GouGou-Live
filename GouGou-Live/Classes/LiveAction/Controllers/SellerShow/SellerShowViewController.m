@@ -252,9 +252,16 @@ static NSString *cellid3 = @"MyPageViewController3";
             messageView.userImg = self.liverIcon;
             messageView.descCommnet = self.personalModel.userMotto;
             messageView.backgroundColor = [UIColor whiteColor];
-            
+            NSString *filename = [NSString cachePathWithfileName:Focus];
+            NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
+        
+            if ([focusArr containsObject:@([_authorId intValue])]) {
+                messageView.isFocus = YES;
+            }else{
+                messageView.isFocus = NO;
+            }
+        
             messageView.focusBlock = ^(UIButton *btn){
-                
                 if ([UserInfos getUser]) {
                     
                     if (btn.selected) {
@@ -266,7 +273,6 @@ static NSString *cellid3 = @"MyPageViewController3";
                         [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
-                            [btn setTitle:@"已关注" forState:(UIControlStateNormal)];
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];
@@ -279,13 +285,13 @@ static NSString *cellid3 = @"MyPageViewController3";
                         [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
                             DLog(@"%@", successJson);
                             [self showAlert:successJson[@"message"]];
-                             [btn setTitle:@"已关注" forState:(UIControlStateSelected)];
                             
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];
                     }
                 }
+                btn.selected = !btn.selected;
             };
             [cell1.contentView addSubview:messageView];
             return cell1;

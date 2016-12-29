@@ -7,6 +7,7 @@
 //
 
 #import "HelpViewController.h"
+#import "NormalModel.h"
 
 @interface HelpViewController ()
 
@@ -18,6 +19,23 @@
 @end
 
 @implementation HelpViewController
+#pragma mark - 网络请求
+- (void)getHelpRequest {
+    NSDictionary *dict = @{@"id":@(6)};
+    [self getRequestWithPath:API_Help params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+//        NSArray *arr = [NormalModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+#pragma mark - 生命周期
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

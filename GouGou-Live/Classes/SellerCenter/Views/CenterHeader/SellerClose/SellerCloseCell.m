@@ -64,7 +64,7 @@
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     
     self.costView.moneyMessage = model.price;
-    
+    self.costView.freightMoney = model.traficMoney;
 }
 - (void)clickDeleButtonAction:(UIButton *)btn {
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];

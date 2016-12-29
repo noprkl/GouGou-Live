@@ -10,8 +10,6 @@
 
 @interface MessageMeumView ()<UITableViewDelegate, UITableViewDataSource>
 
-@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
-
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
 @property(nonatomic, strong) NSMutableArray *cells; /**< cells */
@@ -37,16 +35,9 @@ static NSString *cellid = @"MessageMeumView";
     }
     return self;
 }
-- (NSArray *)dataArr {
-    if (!_dataArr) {
-        _dataArr = [NSArray array];
-    }
-    return _dataArr;
-}
+
 - (void)setDataPlist:(NSArray *)dataPlist {
     _dataPlist = dataPlist;
-    self.dataArr = dataPlist;
-//    self.dataArr = @[@"关注", @"举报",  @"屏蔽消息", @"个人主页"];
     [self reloadData];
 }
 - (NSMutableArray *)cells {

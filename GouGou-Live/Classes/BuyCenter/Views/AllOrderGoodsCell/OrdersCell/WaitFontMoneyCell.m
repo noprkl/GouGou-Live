@@ -58,6 +58,7 @@
     }
     self.nickView.nickName.text = centerModel.merchantName;
     self.nickView.stateLabe.text = @"待付定金";
+
    /*
     // 当前时间
     NSDate *date = [NSDate date];
@@ -95,6 +96,33 @@
         }
     }
 */
+
+    self.nickView.remainTimeLabel.text = [NSString stringFromDateString:centerModel.createTime];
+    
+    __block NSInteger timeout = [NSString getRemainTimeWithString:centerModel.closeTime]; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                self.nickView.remainTimeLabel.text = @"订单已关闭";
+            });
+        }else{
+            NSInteger minutes = timeout / 60;
+            NSInteger seconds = timeout % 60;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                self.nickView.remainTimeLabel.text = [NSString stringWithFormat:@"%ld分%ld秒", minutes, seconds];
+            });
+            timeout--;
+        }
+    });
+    dispatch_resume(_timer);
+    
+
     // 狗狗详情
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
@@ -117,41 +145,34 @@
     self.costView.remainderMoeny.text = centerModel.productDeposit;
 //    self.costView.totalMoney.text = centerModel.price;
     self.costView.totalMoney.text = centerModel.productDeposit;
-    
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficFee];
+
 }
+
 #pragma mark
 #pragma mark - 约束
 - (void)layoutSubviews {
     
     [super layoutSubviews];
     __weak typeof(self) weakself = self;
-    
-    
     [_nickView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.left.right.equalTo(weakself);
         make.height.equalTo(54);
         
     }];
-    
     [_lineview1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.nickView.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(1);
-        
     }];
     
     [_dogCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.lineview1.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(110);
-        
     }];
 
     [_costView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.dogCardView.bottom);
         make.left.right.equalTo(weakself);
         make.height.equalTo(44);

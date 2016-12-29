@@ -132,70 +132,83 @@
         
         [self showAlert:@"所输入的不是手机号"];
         
-    }else{
+    } if (!self.duiHao.selected) {
+        [self showAlert:@"请勾选用户协议"];
+    }else {
         
-            NSDictionary *dict = @{
-                                   @"user_tel":@([phoneNumber integerValue]),
-                                   @"code":self.psdNumber.text
-                                   };
-        // 请求之前删掉上一次的信息
-        [self getRequestWithPath:API_LoginQuick params:dict success:^(id successJson) {
-            
-            DLog(@"%@", successJson);
-            [self showAlert:successJson[@"message"]];
-            if ([successJson[@"message"] isEqualToString:@"成功"]) {
-                
-                [self saveUserWithID:successJson[@"data"][@"id"]
-                            user_pwd:successJson[@"data"][@"user_pwd"]
-                        user_img_url:successJson[@"data"][@"user_img_url"]
-                           user_name:successJson[@"data"][@"user_name"]
-                      user_nick_name:successJson[@"data"][@"user_nick_name"]
-                            user_tel:successJson[@"data"][@"user_tel"]
-                         is_merchant:successJson[@"data"][@"is_merchant"]
-                             is_real:successJson[@"data"][@"is_real"]
-                          user_motto:successJson[@"data"][@"user_motto"]
-                       user_pay_code:successJson[@"data"][@"user_pay_code"]
-                       user_ali_code:successJson[@"data"][@"user_ali_code"]
-                          qq_open_id:successJson[@"data"][@"qq_open_id"]
-                          wx_open_id:successJson[@"data"][@"wx_open_id"]
-                          wb_open_id:successJson[@"data"][@"wb_open_id"]
-                         user_status:successJson[@"data"][@"user_status"]
-                 ];
-                DLog(@"%@",successJson[@"data"][@"user_pay_code"]);
-                DLog(@"%@",successJson[@"data"][@"user_ali_code"]);
+        NSDictionary * dictcode = @{
+                                @"user_tel":phoneNumber,
+                                @"code":self.psdNumber.text,
+                                @"type":@2
+                                };
+        
+        [self getRequestWithPath:API_Register_sms params:dictcode success:^(id successJson) {
+            if ([successJson[@"code"] intValue] == 0) {
+                [self showAlert:@"验证码输入有误"];
+            }
+            if ([successJson[@"code"] intValue] == 1) {
+                NSDictionary *dict = @{
+                                       @"user_tel":@([phoneNumber integerValue]),
+                                       @"code":self.psdNumber.text
+                                       };
+                // 请求之前删掉上一次的信息
+                [self getRequestWithPath:API_LoginQuick params:dict success:^(id successJson) {
+                    
+                    DLog(@"%@", successJson);
+                    [self showAlert:successJson[@"message"]];
+                    if ([successJson[@"message"] isEqualToString:@"登录成功"]) {
+                        
+                        [self saveUserWithID:successJson[@"data"][@"id"]
+                                    user_pwd:successJson[@"data"][@"user_pwd"]
+                                user_img_url:successJson[@"data"][@"user_img_url"]
+                                   user_name:successJson[@"data"][@"user_name"]
+                              user_nick_name:successJson[@"data"][@"user_nick_name"]
+                                    user_tel:successJson[@"data"][@"user_tel"]
+                                 is_merchant:successJson[@"data"][@"is_merchant"]
+                                     is_real:successJson[@"data"][@"is_real"]
+                                  user_motto:successJson[@"data"][@"user_motto"]
+                               user_pay_code:successJson[@"data"][@"user_pay_code"]
+                               user_ali_code:successJson[@"data"][@"user_ali_code"]
+                                  qq_open_id:successJson[@"data"][@"qq_open_id"]
+                                  wx_open_id:successJson[@"data"][@"wx_open_id"]
+                                  wb_open_id:successJson[@"data"][@"wb_open_id"]
+                                 user_status:successJson[@"data"][@"user_status"]
+                         ];
+                        DLog(@"%@",successJson[@"data"][@"user_pay_code"]);
+                        DLog(@"%@",successJson[@"data"][@"user_ali_code"]);
+                        
+                        
+                        
+                        // 通知给所有人 已经登录
+                        //                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
+                        //
+                        //                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                        
+                        // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+                        EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
+                        if (error==nil) {
+                            DLog(@"注册成功");
+                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
+                            if (!error2) {
+                                DLog(@"登录成功");
+                            }
+                        }else{
+                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
+                            if (!error2) {
+                                DLog(@"登录成功");
+                            }
+                        }
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
 
-           
-                
-                // 通知给所有人 已经登录
-//                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
-//                
-//                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                
-                // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-                EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
-                if (error==nil) {
-                    DLog(@"注册成功");
-                    EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
-                    if (!error2) {
-                        DLog(@"登录成功");
-                    }
-                }else{
-                    EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
-                    if (!error2) {
-                        DLog(@"登录成功");
-                    }
-                }
-                
-                if (!self.duiHao.selected) {
-                    [self showAlert:@"请勾选用户协议"];
-                } else {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                }
             }
         } error:^(NSError *error) {
-            DLog(@"%@", error);
+            
         }];
-    }
+
+        }
 
 }
 

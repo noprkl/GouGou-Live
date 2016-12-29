@@ -89,6 +89,15 @@
     }
     // 搜索一样的数据 删除
     [historyArr removeObjectsInArray:searTXT];
+
+    // 添加当前搜索的数据
+    if ([historyArr.lastObject isEqual:@""] || ![historyArr.lastObject isEqual:seaTxt]) {
+        // 添加当前搜索的数据
+        [historyArr addObject:seaTxt];
+    } else {
+        return;
+    }
+
     // 存放限制 15个
     if(searTXT.count > 15)
         {

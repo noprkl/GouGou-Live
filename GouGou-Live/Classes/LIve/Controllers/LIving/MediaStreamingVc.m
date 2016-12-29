@@ -54,6 +54,9 @@
 
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
 
+
+@property (nonatomic, strong) NSTimer *timer; /**< 计时器 */
+
 @end
 
 @implementation MediaStreamingVc
@@ -80,10 +83,12 @@
     self.navigationController.navigationBarHidden = YES;
     
     // 进入后横屏
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIDeviceOrientationPortrait) {
-        [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
-    }
+//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+//    if (orientation == UIDeviceOrientationPortrait) {
+//        [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
+//    }
+    // 强制横屏
+    [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
     [self getRequestShowingDog];
     [self streamingVideo];
 }
@@ -171,7 +176,7 @@
     [self.session startStreamingWithPushURL:[NSURL URLWithString:_streamPublish] feedback:^(PLStreamStartStateFeedback feedback) {
         DLog(@"%lu", feedback);
         if (feedback == 0) { // 开始推流
-            
+           
         }
     }];
     
@@ -181,6 +186,25 @@
     }];
     self.session.delegate = self;
     [self initUI];
+    // 开始请求
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(getRequestWatchCount) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+- (void)getRequestWatchCount {
+    NSDictionary *dict = @{
+                           @"live_id":_liveID
+                           };
+    [self getRequestWithPath:API_live_view params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if (successJson[@"data"]) {
+            [self.watchCount setTitle:successJson[@"data"] forState:(UIControlStateNormal)];
+        }else{
+            [self.watchCount setTitle:@"0" forState:(UIControlStateNormal)];
+        }
+        
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
 }
 // 推流代理
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state {
@@ -382,33 +406,7 @@
         };
         _topView.faceBlcok = ^(){
             // 摄像头前后切换
-
-            NSArray *inputs = weakSelf.captureSession.inputs;
-            for (AVCaptureDeviceInput *input in inputs ) {
-                AVCaptureDevice *device = input.device;
-                if ( [device hasMediaType:AVMediaTypeVideo] ) {
-                    AVCaptureDevicePosition position = device.position;
-                    AVCaptureDevice *newCamera =nil;
-                    AVCaptureDeviceInput *newInput =nil;
-                    
-                    if (position ==AVCaptureDevicePositionFront){
-                        newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
-                    }
-                    else{
-                        newCamera = [self cameraWithPosition:AVCaptureDevicePositionFront];
-                    }
-                    newInput = [AVCaptureDeviceInput deviceInputWithDevice:newCamera error:nil];
-                    
-                    // beginConfiguration ensures that pending changes are not applied immediately
-                    [weakSelf.captureSession beginConfiguration];
-                    [weakSelf.captureSession removeInput:input];
-                    [weakSelf.captureSession addInput:newInput];
-                    
-                    // Changes take effect once the outermost commitConfiguration is invoked.
-                    [weakSelf.captureSession commitConfiguration];
-                    break;  
-                }  
-            }
+            [weakSelf swapFrontAndBackCameras];
         };
     }
     return _topView;
@@ -454,9 +452,9 @@
         _sendMessageView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
         _sendMessageView.hidden = YES;
         __weak typeof(self) weakSelf = self;
-        _sendMessageView.textFieldBlock = ^(UITextField *textField){
-            if (![textField.text isEqualToString:@""]) {
-                [weakSelf.talkingVc sendTextMessage:textField.text];
+        _sendMessageView.sendBlock = ^(NSString *text){
+            if (![text isEqualToString:@""]) {
+                [weakSelf.talkingVc sendTextMessage:text];
             }
         };
     }
@@ -493,13 +491,42 @@
     return _showingBtn;
 }
 // 切换前后摄像头
-- (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition)position
-{
+- (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition)position {
+    
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     for (AVCaptureDevice *device in devices )
         if ( device.position == position )
             return device;
     return nil;
+}
+- (void)swapFrontAndBackCameras {
+    // Assume the session is already running
+
+    NSArray *inputs = self.captureSession.inputs;
+    for ( AVCaptureDeviceInput *input in inputs ) {
+        AVCaptureDevice *device = input.device;
+        if ( [device hasMediaType:AVMediaTypeVideo] ) {
+            AVCaptureDevicePosition position = device.position;
+            AVCaptureDevice *newCamera = nil;
+            AVCaptureDeviceInput *newInput = nil;
+            
+            if (position == AVCaptureDevicePositionFront)
+                newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
+            else
+                newCamera = [self cameraWithPosition:AVCaptureDevicePositionFront];
+            newInput = [AVCaptureDeviceInput deviceInputWithDevice:newCamera error:nil];
+            
+            // beginConfiguration ensures that pending changes are not applied immediately
+            [self.captureSession beginConfiguration];
+            
+            [self.captureSession removeInput:input];
+            [self.captureSession addInput:newInput];
+            
+            // Changes take effect once the outermost commitConfiguration is invoked.
+            [self.captureSession commitConfiguration];
+            break;
+        }
+    } 
 }
 // 监听键盘
 - (void)focusKeyboardShow {
@@ -514,6 +541,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+    
+    //监听是否触发home键挂起程序.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification object:nil];
+    //监听是否重新进入程序程序.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)keyboardWasShown:(NSNotification*)aNotification {
@@ -541,13 +575,21 @@
     }];
 }
 
-- (void)swapFrontAndBackCameras {
-    // Assume the session is already running
-   }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark
+#pragma mark - 监听home键
+// 触发home按下
+- (void)applicationWillResignActive:(NSNotification *)notification {
+    [self.session stopCaptureSession];
+}
+// 重新进来后响应
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    [self forwardInvocationLandscapeRight];
+    [self.session startCaptureSession];
+}
 
 @end

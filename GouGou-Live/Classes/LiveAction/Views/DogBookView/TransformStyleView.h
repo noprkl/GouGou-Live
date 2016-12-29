@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 typedef void(^ClickCellBlock)(NSString *style);
 
 @interface TransformStyleView : UITableView

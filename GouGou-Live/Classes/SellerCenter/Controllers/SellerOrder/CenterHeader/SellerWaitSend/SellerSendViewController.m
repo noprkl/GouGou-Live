@@ -33,6 +33,7 @@
                                };
         [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
+            [self showAlert:successJson[@"message"]];
             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
                 sendView = nil;

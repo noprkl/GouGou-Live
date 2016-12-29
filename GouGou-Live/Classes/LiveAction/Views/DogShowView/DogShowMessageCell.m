@@ -254,6 +254,7 @@
         [self.bookBtn setBackgroundColor:[UIColor colorWithHexString:@"#999999"]];
     }
     self.liveStateLabel.text = state;
+    self.transPriceLabel.text = model.traficMoney;
 }
 #pragma mark
 #pragma mark - 懒加载

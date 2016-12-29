@@ -48,6 +48,8 @@ static NSString * reuseIdentifier = @"headerID";
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    [self showHudInView:self.view hint:@"刷新中"];
+
     [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
        
@@ -56,6 +58,7 @@ static NSString * reuseIdentifier = @"headerID";
         [self.dogInfos removeAllObjects];
         
 //        [self showHudInView:self.view hint:@"刷新中"];
+
         /** 所有信息 */
         NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         /** 直播信息 */
@@ -85,10 +88,10 @@ static NSString * reuseIdentifier = @"headerID";
                 [liveMutableArr addObject:model];
 
                 if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                    [self hideHud];
                     self.dogInfos = dogInfos;
                     self.dataArray = liveMutableArr;
                     [self.collection reloadData];
-                    //                    [self hideHud];
                 }
                 [self.collection reloadData];
             } error:^(NSError *error) {
@@ -97,7 +100,7 @@ static NSString * reuseIdentifier = @"headerID";
         }
         
         //                    [self hideHud]
-        [self.collection reloadData];
+//        [self.collection reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -142,7 +145,7 @@ static NSString * reuseIdentifier = @"headerID";
 - (void)initUI {
 
     self.view.backgroundColor = [UIColor colorWithHexString:@"e0e0e0"];
-    self.edgesForExtendedLayout = 64;
+    self.edgesForExtendedLayout = 0;
     
     self.collection.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getRequestHostLive];
@@ -171,17 +174,15 @@ static NSString * reuseIdentifier = @"headerID";
     __weak typeof(self) weakself = self;
     
     [_typesView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.view.top);
         make.left.right.equalTo(weakself.view);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 45));
     }];
     
     [_collection mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.typesView.bottom).offset(10);
         make.left.right.equalTo(weakself.view);
-        make.bottom.equalTo(weakself.view.bottom).offset(-64);
+        make.bottom.equalTo(weakself.view.bottom).offset(-110);
     }];
     
 }

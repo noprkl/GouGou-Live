@@ -140,6 +140,7 @@
     }
     self.dogState.text = state;
     self.sellStateLabel.text = state;
+    self.transPriceLabel.text = dogInfo.traficMoney;
 }
 // 约束
 - (void)layoutSubviews {

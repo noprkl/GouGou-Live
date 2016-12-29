@@ -8,7 +8,6 @@
 
 #import "TalkingViewController.h"
 
-#import "TalkingView.h"
 #import "NoneNetWorkingView.h"
 #import "TalkingView.h"
 //#import <HyphenateLite_CN/EMSDK.h>
@@ -17,11 +16,14 @@
 
 @interface TalkingViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate>
 
-@property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
+//@property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
 
 @end
 static NSString *cellid = @"TalkTableViewCell";
 @implementation TalkingViewController
+//- (void)loadView {
+//    self.view.bounds = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+//}
 #pragma mark
 #pragma mark - 自定义cell
 // 设置
@@ -86,6 +88,7 @@ static NSString *cellid = @"TalkTableViewCell";
 //    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-290);
     self.tableView.frame = self.view.bounds;
 //    [self.tableView registerNib:[UINib nibWithNibName:cellid bundle:nil] forCellReuseIdentifier:cellid];
+
     [self initUI];
 }
 - (void)showHint:(NSString *)hint {
@@ -95,6 +98,27 @@ static NSString *cellid = @"TalkTableViewCell";
     _ishidText = ishidText;
     self.talkView.hidden = YES;
     self.chatToolbar.hidden = YES;
+    
+}
+- (void)setIsNotification:(BOOL)isNotification {
+    _isNotification = isNotification;
+    if (!isNotification) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+        
+    }else{
+        //注册键盘出现的通知
+        [[NSNotificationCenter defaultCenter] addObserver:self
+         
+                                                 selector:@selector(keyboardWasShown:)
+                                                     name:UIKeyboardWillShowNotification object:nil];
+        
+        //注册键盘消失的通知
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillBeHidden:)
+                                                     name:UIKeyboardWillHideNotification object:nil];
+    }
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -112,12 +136,11 @@ static NSString *cellid = @"TalkTableViewCell";
     
 
 //    @property中带有UI_APPEARANCE_SELECTOR，都可以通过set的形式设置样式，具体可以参考EaseBaseMessageCell.h,EaseMessageCell.h
-//    [[EMClient sharedClient].chatManager getConversation:@"liver" type:EMConversationTypeChat createIfNotExist:YES];
 //
 //    //设置发送气泡
-//    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[UIImage imageNamed:@""]] ;
-//    
-//    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@""] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
+    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[UIImage imageNamed:@""]] ;
+//
+    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@""] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
 ////
 //    [[EaseBaseMessageCell appearance] setAvatarSize:0];//设置头像大小
 //    [[EaseBaseMessageCell appearance] setAvatarCornerRadius:0];//设置头像圆角

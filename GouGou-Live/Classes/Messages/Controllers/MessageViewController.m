@@ -15,6 +15,7 @@
 #import "SystemNotificationViewController.h"
 #import "SystemPushMessageModel.h"
 
+#import "MessageMeumView.h"
 @interface MessageViewController ()<UITableViewDelegate, UITableViewDataSource, EaseConversationListViewControllerDataSource, EaseConversationListViewControllerDelegate, IEMChatManager>
 
 @property(nonatomic, strong) NSMutableArray *arrConversion; /**< 所有会话数据 */
@@ -22,6 +23,8 @@
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
 @property(nonatomic, strong) NSArray *systemMessageArr; /**< 系统信息 */
+/** 菜单 */
+@property (strong,nonatomic) MessageMeumView *messMeum;
 
 @end
 
@@ -210,12 +213,17 @@ static NSString *cellid2 = @"NotificationMessageCell";
 
         NSString *filename = [NSString cachePathWithfileName:Focus];
         NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
-        DLog(@"%@", focusArr);
-        DLog(@"%@", conversation.conversationId);
         if ([focusArr containsObject:@([conversation.conversationId intValue])]) {
             cell.isFocus.selected = YES;
+
         }else{
             cell.isFocus.selected = NO;
+        }
+        
+        if (!cell.isFocus.selected) {
+            [cell.isFocus setTitle:@"未关注" forState:UIControlStateSelected];
+        } else {
+            [cell.isFocus setTitle:@"已关注" forState:UIControlStateNormal];
         }
         
         if (conversation.type == EMConversationTypeChat) {
@@ -224,9 +232,12 @@ static NSString *cellid2 = @"NotificationMessageCell";
                 if (conversation.latestMessage.ext[@"nickname"]) {
                     cell.nickNameLabel.text = conversation.latestMessage.ext[@"nickname"];
                 }else{
-                    cell.nickNameLabel.text = conversation.conversationId;
+                    if ([UserInfos sharedUser].usernickname.length == 0) {
+                        cell.nickNameLabel.text = conversation.conversationId;
+                    } else {
+                        cell.nickNameLabel.text = [UserInfos sharedUser].usernickname;
+                    }
                 }
-
                 // 头像
                 if (conversation.latestMessage.ext[@"avatarURL"]) {
                     NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
@@ -234,7 +245,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
                 }else{
                     cell.iconView.image = [UIImage imageNamed:@"头像"];
                 }
-                
                 cell.lastMessageLabel.text = [self _latestMessageTitleForConversation:conversation];
                 cell.lastTimeLabel.text = [self _latestMessageTimeForConversation:conversation];
                 
@@ -245,7 +255,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
                 }else{
                     cell.unreadCountLabel.text = [@([conversation unreadMessagesCount]) stringValue];
                 }
-                
             }
         }
         return cell;
@@ -398,6 +407,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
         }
     }
 }
+
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"删除后不可恢复";
 }

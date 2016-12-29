@@ -32,9 +32,13 @@ static NSString *cellid = @"MyFocusCell";
         DLog(@"%@", successJson);
         
         if (successJson) {
-            //            DLog(@"%@", successJson);
-            self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            [UserInfos sharedUser].fansCount = self.dataArr.count;
+            //            DLog(@"%@", successJson)]
+            
+                self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                [UserInfos sharedUser].fansCount = self.dataArr.count;
+                [self.tableView reloadData];
+                
+    
             [self.tableView reloadData];
         }
     } error:^(NSError *error) {
@@ -109,8 +113,6 @@ static NSString *cellid = @"MyFocusCell";
     }else{
         DLog(@"打开失败");
     }
-
-    
     
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {

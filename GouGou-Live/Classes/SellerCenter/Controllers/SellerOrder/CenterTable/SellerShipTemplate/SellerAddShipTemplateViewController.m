@@ -35,7 +35,7 @@
 @property(nonatomic, strong) UISwitch *realCost; /**< 按实结算 */
 
 @property (nonatomic, strong) NSString *cost; /**< 花费 */
-
+@property (nonatomic, assign) NSInteger type; /**< 运费类型 */
 @end
 
 static NSString *cellid = @"SellerAddShipTemplate";
@@ -52,7 +52,8 @@ static NSString *cellid = @"SellerAddShipTemplate";
     self.title = @"运费管理";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
         [self.view addSubview:self.tableView];
-    _cost = @"";
+    _cost = @"0";
+    _type = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,16 +86,23 @@ static NSString *cellid = @"SellerAddShipTemplate";
             if (self.cost.length == 0) {
                 [self showAlert:@"请选择一种运费方式"];
             }else{
+                
                 NSDictionary *dict = @{
                                        @"user_id":[UserInfos sharedUser].ID,
                                        @"name":self.templateStr,
                                        @"money":self.cost,
-                                       @"address_id":@(self.adressModel.ID)
+                                       @"address_id":@(self.adressModel.ID),
+                                       @"type":@(1)
                                        };
+                /**
+                 type=0 type=1 type=2
+                 
+                 免费      模版     按实结算
+                 */
                 [self postRequestWithPath:API_Freight params:dict success:^(id successJson) {
                     [self showAlert:successJson[@"message"]];
                     DLog(@"%@", successJson);
-                    if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                    if ([successJson[@"message"] isEqualToString:@"成功"]) {
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                 } error:^(NSError *error) {
@@ -118,12 +126,13 @@ static NSString *cellid = @"SellerAddShipTemplate";
         self.shipCost.on = NO;
         self.realCost.on = NO;
         self.cost = @"0";
+        _type = 0;
     }
+    
 }
 - (void)shipCostSwitchBtnAction:(UISwitch *)switchBtn {
     if (switchBtn.isOn) {
         [self.dataArr removeAllObjects];
-       
         [_dataArr addObject:self.templateName.text];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
@@ -135,7 +144,6 @@ static NSString *cellid = @"SellerAddShipTemplate";
         self.freeCost.on = NO;
     }else{
         [self.dataArr removeAllObjects];
-
         [_dataArr addObject:self.templateName.text];
         [_dataArr addObject:@"发货地址(必填)"];
         [_dataArr addObject:@"免运费"];
@@ -156,6 +164,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     [_dataArr addObject:@"按实结算"];
     [self.tableView reloadData];
     self.cost = @"50";
+    _type = 2;
 }
 - (void)editShipTemplateAction:(UITextField *)textField {
     _templateStr = textField.text;

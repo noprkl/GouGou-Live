@@ -105,6 +105,7 @@ static NSString *cellid = @"cellid";
         
         [_tableView registerNib:[UINib nibWithNibName:@"DetailCountViewCell" bundle:nil] forCellReuseIdentifier:cellid];
         _tableView.tableFooterView = [[UIView alloc] init];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;

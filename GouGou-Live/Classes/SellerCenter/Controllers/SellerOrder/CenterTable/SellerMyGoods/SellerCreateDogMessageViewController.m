@@ -194,65 +194,70 @@ static NSString *cellid = @"SellerCreateDogMessage";
                             if (self.photoArr.count == 0) {
                                 [self showAlert:@"请添加狗狗图片"];
                             }else {
-//                                self.sureBtn.enabled = NO;
-
-                                // 印象id字符串
-                                NSMutableArray *impresArr = [NSMutableArray array];
-                                for (NSInteger i = 0; i < self.impressModels.count; i ++) {
-                                    DogCategoryModel *model = self.impressModels[i];
-                                    [impresArr addObject:model.ID];
-                                }
-                                NSString *idStr = [impresArr componentsJoinedByString:@"|"];
-                                // 图片地址
-                                for (NSInteger i = 0; i < self.photoArr.count; i ++) {
-                                    NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
-                                    NSDictionary *dict = @{
-                                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                                           @"img":base64
-                                                           };
+                                if (self.shipModel.name.length == 0) {
+                                    [self showAlert:@"请选择运费模板"];
+                                }else{
+                                    //                                self.sureBtn.enabled = NO;
                                     
-                                    [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
-                                        if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
-                                            
-                                            [self.photoUrl addObject:successJson[@"data"]];
-                                            // 提交商品
-                                            if (self.photoUrl.count == self.photoArr.count) {
-                                                NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
-                                              NSDictionary *dict = @{
-                                                                       @"create_user":@([[UserInfos sharedUser].ID integerValue]),
-                                                                       @"name":self.nameText.text,
-                                                                       @"color_id":@([self.colorModel.ID integerValue]),
-                                                                       @"kind_id":@([self.typeModel.ID integerValue]),
-                                                                       @"size_id":@([self.sizeModel.ID integerValue]),
-                                                                       @"age_time":@(self.age),
-                                                                       @"age_name":self.ageLabel.text,
-                                                                       @"price_old":self.priceText.text,
-                                                                       @"price":self.priceText.text,
-                                                                       @"deposit":self.deposit.text,
-                                                                       @"comment":self.noteText.text,
-                                                                       @"impresssion_id":idStr,
-                                                                       @"path_big":imgStr
-                                                                       };
-                                                DLog(@"%@",dict);
-                                                [self postRequestWithPath:API_Add_product params:dict success:^(id successJson) {
-                                                    DLog(@"%@", successJson);
-                                                    [self showAlert:successJson[@"message"]];
-                                                    DLog(@"%@", self.photoArr);
-                                                    if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-                                                        [self.navigationController popViewControllerAnimated:YES];
-                                                    }else if ([successJson[@"message"] isEqualToString:@"参数不能为空"]){
-//                                                        self.sureBtn.enabled = YES;
-                                                    }
-                                                } error:^(NSError *error) {
-                                                    DLog(@"%@", error);
-                                                }];
-                                            }
-                                        }
+                                    // 印象id字符串
+                                    NSMutableArray *impresArr = [NSMutableArray array];
+                                    for (NSInteger i = 0; i < self.impressModels.count; i ++) {
+                                        DogCategoryModel *model = self.impressModels[i];
+                                        [impresArr addObject:model.ID];
+                                    }
+                                    NSString *idStr = [impresArr componentsJoinedByString:@"|"];
+                                    // 图片地址
+                                    for (NSInteger i = 0; i < self.photoArr.count; i ++) {
+                                        NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
+                                        NSDictionary *dict = @{
+                                                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                               @"img":base64
+                                                               };
                                         
-                                        DLog(@"%@", successJson);
-                                    } error:^(NSError *error) {
-                                        DLog(@"%@", error);
-                                    }];
+                                        [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+                                            if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                                                
+                                                [self.photoUrl addObject:successJson[@"data"]];
+                                                // 提交商品
+                                                if (self.photoUrl.count == self.photoArr.count) {
+                                                    NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
+                                                    NSDictionary *dict = @{
+                                                                           @"create_user":@([[UserInfos sharedUser].ID integerValue]),
+                                                                           @"name":self.nameText.text,
+                                                                           @"color_id":@([self.colorModel.ID integerValue]),
+                                                                           @"kind_id":@([self.typeModel.ID integerValue]),
+                                                                           @"size_id":@([self.sizeModel.ID integerValue]),
+                                                                           @"age_time":@(self.age),
+                                                                           @"age_name":self.ageLabel.text,
+                                                                           @"price_old":self.priceText.text,
+                                                                           @"price":self.priceText.text,
+                                                                           @"deposit":self.deposit.text,
+                                                                           @"comment":self.noteText.text,
+                                                                           @"impresssion_id":idStr,
+                                                                           @"path_big":imgStr,
+                                                                           @"trafic_template":@(self.shipModel.ID)
+                                                                           };
+                                                    DLog(@"%@",dict);
+                                                    [self postRequestWithPath:API_Add_product params:dict success:^(id successJson) {
+                                                        DLog(@"%@", successJson);
+                                                        [self showAlert:successJson[@"message"]];
+                                                        DLog(@"%@", self.photoArr);
+                                                        if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                                                            [self.navigationController popViewControllerAnimated:YES];
+                                                        }else if ([successJson[@"message"] isEqualToString:@"参数不能为空"]){
+                                                            //                                                        self.sureBtn.enabled = YES;
+                                                        }
+                                                    } error:^(NSError *error) {
+                                                        DLog(@"%@", error);
+                                                    }];
+                                                }
+                                            }
+                                            
+                                            DLog(@"%@", successJson);
+                                        } error:^(NSError *error) {
+                                            DLog(@"%@", error);
+                                        }];
+                                    }
                                 }
                             }
                         }
@@ -532,28 +537,28 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
-//            SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
+            SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
 
-        // 请求运费模板
-//            NSDictionary *dict = @{
-//                                   @"user_id":[UserInfos sharedUser].ID,
-//                                   @"page":@1,
-//                                   @"pageSize":@10
-//                                   };
-//            [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
-//                DLog(@"%@", successJson);
-//                shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-//                [shipTemplateView reloadData];
-//            } error:^(NSError *error) {
-//                DLog(@"%@", error);
-//            }];
+            //请求运费模板
+            NSDictionary *dict = @{
+                                   @"user_id":[UserInfos sharedUser].ID,
+                                   @"page":@1,
+                                   @"pageSize":@10
+                                   };
+            [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                [shipTemplateView reloadData];
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
         
-//            shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
-//                DLog(@"%@", templateType);
-//                self.shipLabel.text = [NSString stringWithFormat:@"%@%@", templateType.name, templateType.money];
-//                self.shipModel = templateType;
-//            };
-//            [shipTemplateView show];
+            shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
+                DLog(@"%@", templateType);
+                self.shipLabel.text = [NSString stringWithFormat:@"%@--%@", templateType.name, templateType.money];
+                self.shipModel = templateType;
+            };
+            [shipTemplateView show];
         }
             break;
         default:

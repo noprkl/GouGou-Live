@@ -43,7 +43,7 @@ static NSString *cellid = @"DogShowCellid";
 #pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blueColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self initUI];
 }
 - (void)viewWillAppear:(BOOL)animated {

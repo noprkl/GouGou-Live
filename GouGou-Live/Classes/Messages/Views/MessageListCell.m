@@ -11,22 +11,10 @@
 #import "HTTPTool.h"
 #import "PersonalMessageModel.h"
 @implementation MessageListCell
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        
-        
-    }
-    return self;
-}
-
-
-
 - (void)setModel:(id<IConversationModel>)model
 {
     _model = model;
+
     NSDictionary *dict = @{
                            @"id":model.conversation.conversationId
                            };
@@ -48,7 +36,6 @@
         DLog(@"%@", error);
     }];
 
-    
     // 昵称
     if ([_model.title length] > 0) {
         self.nickNameLabel.text = _model.title;
@@ -64,14 +51,12 @@
             self.iconView.image = _model.avatarImage;
         }
     }
-
     // 未读信息
     if ([model.conversation unreadMessagesCount] > 0) {
         self.unreadCountLabel.hidden = NO;
         self.unreadCountLabel.text = [@([model.conversation unreadMessagesCount]) stringValue];
     }
     self.unreadCountLabel.hidden = YES;
-   
 }
 
 - (void)awakeFromNib {

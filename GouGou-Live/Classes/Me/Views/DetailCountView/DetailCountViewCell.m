@@ -22,6 +22,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+
 }
 - (void)setModel:(UserAssetModel *)model {
     _model = model;
@@ -41,7 +42,7 @@
     self.stateLabel.text = type;
     self.incomeLabel.text = model.assetChange;
     self.balanceLabel.text = model.nowAsset;
-    self.timeLabel.text = model.assetChangeTime;
+    self.timeLabel.text = [NSString stringFromDateString:model.assetChangeTime];
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

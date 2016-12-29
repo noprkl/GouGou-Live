@@ -14,7 +14,6 @@ typedef void(^ClickSureAddButtonBlock)(DogCategoryModel *model);
 
 @property(nonatomic, strong) ClickSureAddButtonBlock sureAddBlock; /**< 确认添加按钮 */
 
-
 @property(nonatomic, strong) NSArray *dataPlist; /**< 数据 */
 
 @end

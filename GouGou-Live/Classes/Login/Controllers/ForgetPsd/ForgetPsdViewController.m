@@ -105,7 +105,7 @@
                                 @"type":@1
                                 };
         
-        [self getRequestWithPath:@"api/UserService/register_sms" params:dict success:^(id successJson) {
+        [self getRequestWithPath:API_Register_sms params:dict success:^(id successJson) {
             
             DLog(@"%@",successJson);
             
@@ -118,9 +118,7 @@
                 sureVC.title = @"新密码设置";
                 sureVC.telNumber = self.phoneTextField.text;
                 sureVC.codeNumber = self.codeTextField.text;
-                
                 [self.navigationController pushViewController:sureVC animated:YES];
-
             }
         } error:^(NSError *error) {
             DLog(@"%@",error);

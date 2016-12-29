@@ -407,44 +407,57 @@
 }
 // 点击提醒发货
 - (void)clickConsignment:(BuyCenterModel *)model {
-    
-    NSDate * firstDate = [NSDate date];
-    NSDate * secondDate = [NSDate dateWithTimeInterval:2  sinceDate:firstDate];
-    
-    NSDate * thirdDate = [NSDate dateWithTimeInterval:4  sinceDate:firstDate];
+
+//    
+//    NSDate * firstDate = [NSDate date];
+//    NSDate * secondDate = [NSDate dateWithTimeInterval:2  sinceDate:firstDate];
+//    
+//    NSDate * thirdDate = [NSDate dateWithTimeInterval:4  sinceDate:firstDate];
    
-    ProtecePowerPromptView * consignmentPrompt = [[ProtecePowerPromptView alloc] init];
-    
+//    ProtecePowerPromptView * consignmentPrompt = [[ProtecePowerPromptView alloc] init];
+//    
+//    NSDictionary *dict = @{
+//                           @"id":model.ID,
+//                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+//                           };
+//    
+//    [self getRequestWithPath:@"api/OrderService/order_remind" params:dict success:^(id successJson) {
+//        
+//        DLog(@"%@",successJson);
+//       
+//    } error:^(NSError *error) {
+//        
+//        DLog(@"%@",error);
+//    }];
+//
+//    if (secondDate) {
+//        
+//        consignmentPrompt.message = @"付款不超过24小时,不能提醒";
+//        
+//        [consignmentPrompt show];
+//    } else if (thirdDate) {
+//        
+//        consignmentPrompt.message = @"已提醒卖家发货，请耐心等待";
+//        
+//        [consignmentPrompt show];
+//    } else {
+//        
+//        consignmentPrompt.message = @"三小时内不能重复提醒";
+//        
+//        [consignmentPrompt show];
+//    }
+
     NSDictionary *dict = @{
                            @"id":model.ID,
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           @"user_id":[UserInfos sharedUser].ID
                            };
-    
-    [self getRequestWithPath:@"api/OrderService/order_remind" params:dict success:^(id successJson) {
-        
-        DLog(@"%@",successJson);
-       
+    [self getRequestWithPath:API_Order_remind params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        [self showAlert:successJson[@"message"]];
     } error:^(NSError *error) {
-        
-        DLog(@"%@",error);
+        DLog(@"%@", error);
     }];
 
-    if (secondDate) {
-        
-        consignmentPrompt.message = @"付款不超过24小时,不能提醒";
-        
-        [consignmentPrompt show];
-    } else if (thirdDate) {
-        
-        consignmentPrompt.message = @"已提醒卖家发货，请耐心等待";
-        
-        [consignmentPrompt show];
-    } else {
-        
-        consignmentPrompt.message = @"三小时内不能重复提醒";
-        
-        [consignmentPrompt show];
-    }
 }
 
 - (void)cutDownTime:(BuyCenterModel *)model {

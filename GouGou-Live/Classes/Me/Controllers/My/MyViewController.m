@@ -145,6 +145,7 @@
             }
             [arr writeToFile:filePath atomically:YES];
             
+          
             [UserInfos sharedUser].focusCount = self.focusArray.count;
             
             [self.tableView reloadData];

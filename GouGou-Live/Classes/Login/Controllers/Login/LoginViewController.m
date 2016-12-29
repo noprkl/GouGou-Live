@@ -151,44 +151,26 @@
                              user_status:successJson[@"data"][@"user_status"]
                      ];
                    
+//                     判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"user_nick_name"] password:successJson[@"data"][@"user_nick_name"]];
+                        EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
                         if (error==nil) {
                             DLog(@"注册成功");
-                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"user_nick_name"] password:@"gougoulive"];
+                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
                             if (!error2) {
+                                
                                 DLog(@"登录成功");
                             }
                         }else{
-                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"user_nick_name"] password:@"gougoulive"];
-                            //                            []
+                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
+//                            []
                             if (!error2) {
                                 DLog(@"登录成功");
                             }
                         }
-                        //                        [[EMClient sharedClient].chatManager ];
+//                        [[EMClient sharedClient].chatManager ];
                         
                     });
-                    // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                        EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:successJson[@"data"][@"id"]];
-//                        if (error==nil) {
-//                            DLog(@"注册成功");
-//                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
-//                            if (!error2) {
-//                                DLog(@"登录成功");
-//                            }
-//                        }else{
-//                            EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
-////                            []
-//                            if (!error2) {
-//                                DLog(@"登录成功");
-//                            }
-//                        }
-////                        [[EMClient sharedClient].chatManager ];
-//                        
-//                    });
-                    
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
             } error:^(NSError *error) {
@@ -230,8 +212,7 @@
     [UserInfos sharedUser].ID = ID;
     [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;
-    
-    
+
     [UserInfos setUser];
 }
 

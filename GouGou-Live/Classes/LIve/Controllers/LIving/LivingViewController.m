@@ -137,17 +137,10 @@
 
     self.navigationController.navigationBarHidden = YES;
     // 请求直播
-
-//    [self LiveInitUI];// 直播UI
-
-//    if (_isLandscape) {//横屏
-//        [self forceOrientationLandscapeRight];
-//    }
     // 设置直播参数
     self.roomNameLabel.text = _liverName;
     [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
     
-//    [self collectionBtn];
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
@@ -535,18 +528,11 @@
 }
 
 - (void)clickScreenButtonAction:(UIButton *)btn {
-//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-//    if (orientation == UIInterfaceOrientationLandscapeRight) { // 转竖屏
-//        [self forceOrientationPriate];
-//    }else if (orientation == UIDeviceOrientationPortrait) { // 转横屏
-//        [self forceOrientationLandscapeRight];
-//    }
     if (btn.selected) { // 转竖屏
         [self forceOrientationPriate];
     }else { // 转横屏
         [self forceOrientationLandscapeRight];
     }
-    btn.selected = !btn.selected;
 }
 // 喜欢状态
 - (void)collectionBtn {
@@ -705,7 +691,7 @@
 }
 - (UIButton *)screenBtn {
     if (!_screenBtn) {
-        _screenBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        _screenBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         
         _screenBtn.layer.cornerRadius = 3;
         _screenBtn.layer.masksToBounds = YES;
@@ -774,7 +760,7 @@
         _livetopView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _livetopView.backBlcok = ^(){
-            [weakSelf clickScreenButtonAction:weakSelf.backBtn];
+            [weakSelf forceOrientationPriate];
         };
         _livetopView.shareBlcok = ^(UIButton *btn){
             __block ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, weakSelf.view.bounds.size.height - 150, weakSelf.view.bounds.size.width, 150) alertModels:weakSelf.shareAlertBtns tapView:^(NSInteger btnTag) {
@@ -962,34 +948,6 @@
         [invocation setArgument:&val atIndex:2];
         [invocation invoke];
     }
-    _isLandscape = YES;
-    self.baseScrollView.hidden = NO;
-    self.centerView.hidden = NO;
-   
-    [self.talkingVc.tableView removeFromSuperview];
-    [self.baseScrollView addSubview:self.talkingVc.view];
-    [self.childVCS replaceObjectAtIndex:1 withObject:self.talkingVc];
-    [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
-    
-//    [self.talkingVc.tableView remakeConstraints:^(MASConstraintMaker *make) {
-//        make.width.equalTo(SCREEN_WIDTH);
-//        make.height.equalTo(self.baseScrollView.height);
-//        make.top.equalTo(self.baseScrollView.top);
-//        make.left.equalTo(self.baseScrollView.left).offset(SCREEN_WIDTH);
-//    }];
-    [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(SCREEN_WIDTH);
-        make.height.equalTo(self.baseScrollView.height);
-        make.top.equalTo(self.baseScrollView.top);
-        make.left.equalTo(self.baseScrollView.left).offset(SCREEN_WIDTH);
-    }];
-
-    self.talkingVc.isNotification = YES;
-
-    self.talkingVc.tableView.alpha = 1;
-    self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    
-    [self makeLiveSubviewConstraint];
 }
 // 竖屏转横屏
 - (void)forceOrientationLandscapeRight {
@@ -1005,19 +963,7 @@
         [invocation invoke];
     }
     [UIViewController attemptRotationToDeviceOrientation];
-    _isLandscape = NO;
-    
-    [self.talkingVc.tableView removeFromSuperview];
-    [self.livePlayer.playerView addSubview:self.talkingVc.tableView];
-    self.talkingVc.isNotification = NO;
-    self.talkingVc.tableView.alpha = 0.4;
-    self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
-
-    [self makeliveLancseConstraint];
-    self.baseScrollView.hidden = YES;
-    self.centerView.hidden = YES;
-    [self focusKeyboardShow];
-}
+   }
 // 1. 设置样式
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent; // 白色的
@@ -1063,6 +1009,11 @@
     return _childVCS;
 }
 - (void)addChildViewControllers {
+    
+    //    self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    //    [self.baseScrollView addSubview:self.talkingVc.tableView];
+    //    [self addChildViewController:_talkingVc];
+    //    [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
     
     TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
     
@@ -1119,12 +1070,12 @@
     
     //根据索引返回vc的引用
     UIViewController *childVC = self.childVCS[index];
-
+    
     // 判断当前vc是否加载过
+    if([childVC isKindOfClass:[TalkingViewController class]]) {
+        //        self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    }
     if ([childVC isViewLoaded]) {
-//        if(![childVC isKindOfClass:[TalkingViewController class]]) {
-//            [self.talkingVc.view reloadInputViews];
-//        }
         return;
     };
     
@@ -1254,8 +1205,54 @@
 - (BOOL)shouldAutorotate {
     return YES;
 }
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
+}
+// 代理方法监听屏幕方向
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if (toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
+        DLog(@"进入横屏");
+
+        _screenBtn.selected = YES;
+        [self.talkingVc.tableView removeFromSuperview];
+        [self.livePlayer.playerView addSubview:self.talkingVc.tableView];
+        self.talkingVc.isNotification = NO;
+        self.talkingVc.tableView.alpha = 0.4;
+        self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
+        
+        [self makeliveLancseConstraint];
+        self.baseScrollView.hidden = YES;
+        self.centerView.hidden = YES;
+        [self focusKeyboardShow];
+        
+    }else {
+        DLog(@"进入竖屏");
+        // 取消横屏
+        _screenBtn.selected = NO;
+
+        self.baseScrollView.hidden = NO;
+        self.centerView.hidden = NO;
+        
+        [self.talkingVc.tableView removeFromSuperview];
+        [self.baseScrollView addSubview:self.talkingVc.view];
+        [self.childVCS replaceObjectAtIndex:0 withObject:self.talkingVc];
+        [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
+        
+         [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(SCREEN_WIDTH);
+            make.height.equalTo(self.baseScrollView.height);
+            make.top.equalTo(self.baseScrollView.top);
+            make.left.equalTo(self.baseScrollView.left).offset(0);
+        }];
+        
+        self.talkingVc.isNotification = YES;
+        
+        self.talkingVc.tableView.alpha = 1;
+        self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
+        [self makeLiveSubviewConstraint];
+
+    }
 }
 @end

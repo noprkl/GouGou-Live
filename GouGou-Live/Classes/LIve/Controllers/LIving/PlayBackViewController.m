@@ -540,8 +540,8 @@
         [self forceOrientationLandscapeRight];
     }
     btn.selected = !btn.selected;
-
 }
+
 // 横屏转竖屏
 - (void)forceOrientationPriate {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -635,11 +635,6 @@
     return _childVCS;
 }
 - (void)addChildViewControllers {
-    
-//    self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-//    [self.baseScrollView addSubview:self.talkingVc.tableView];
-//    [self addChildViewController:_talkingVc];
-//    [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
    
     TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
     

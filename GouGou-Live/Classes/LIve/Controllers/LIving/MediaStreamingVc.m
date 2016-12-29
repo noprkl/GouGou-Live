@@ -81,13 +81,19 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
-    // 进入后横屏
-//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-//    if (orientation == UIDeviceOrientationPortrait) {
-//        [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
-//    }
-    // 强制横屏
-    [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = YES;
+    
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationLandscapeRight;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+
     [self getRequestShowingDog];
     [self streamingVideo];
 }
@@ -99,12 +105,19 @@
     [self.session destroy];
 
     // 取消横屏
-
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeRight) {
-        [self forceOrientation:UIInterfaceOrientationPortrait];
-    }
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = NO;
     
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationPortrait;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+
     // 保存视频
     NSDictionary *dict =@{
                           @"live_id":_liveID
@@ -592,5 +605,11 @@
     [self forwardInvocationLandscapeRight];
     [self.session startCaptureSession];
 }
-
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
+}
 @end

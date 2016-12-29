@@ -52,7 +52,7 @@
 
 - (BOOL)shouldAutorotate
 {
-    if ([self.topViewController isKindOfClass:[LivingViewController class]]||[self.topViewController isKindOfClass:[PlayBackViewController class]]||[self.topViewController isKindOfClass:[MediaStreamingVc class]]) { // 如果是这个 vc 则支持自动旋转
+    if ([self.topViewController isKindOfClass:[LivingViewController class]]||[self.topViewController isKindOfClass:[PlayBackViewController class]]) { // 如果是这个 vc 则支持自动旋转
         return YES;
     }
     return NO;

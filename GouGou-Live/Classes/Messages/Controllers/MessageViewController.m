@@ -14,7 +14,7 @@
 
 #import "SystemNotificationViewController.h"
 #import "SystemPushMessageModel.h"
-
+#import "PersonalMessageModel.h"
 @interface MessageViewController ()<UITableViewDelegate, UITableViewDataSource, EaseConversationListViewControllerDataSource, EaseConversationListViewControllerDelegate, IEMChatManager>
 
 @property(nonatomic, strong) NSMutableArray *arrConversion; /**< 所有会话数据 */
@@ -22,6 +22,8 @@
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
 @property(nonatomic, strong) NSArray *systemMessageArr; /**< 系统信息 */
+
+@property (nonatomic, strong) NSMutableArray *loadArr; /**< 已加载 */
 
 @end
 
@@ -39,7 +41,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
             self.systemMessageArr = [SystemPushMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             
             [self.tableView reloadData];
-            
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -58,9 +59,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
     // 只要单聊对话
     for (EMConversation *conversation in arr) {
         if (conversation.type == EMConversationTypeChat) {
-//            [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
-//                DLog(@"%@", aError);
-//            }];
             [self.arrConversion addObject:conversation];
         }
     }
@@ -124,15 +122,12 @@ static NSString *cellid2 = @"NotificationMessageCell";
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 重新获取数据
-//        self.arrConversion = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
+        [self.loadArr removeAllObjects];
         NSArray *arr = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
         [self.arrConversion removeAllObjects];
         // 只要单聊对话
         for (EMConversation *conversation in arr) {
             if (conversation.type == EMConversationTypeChat) {
-                //            [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
-                //                DLog(@"%@", aError);
-                //            }];
                 [self.arrConversion addObject:conversation];
             }
         }
@@ -156,6 +151,12 @@ static NSString *cellid2 = @"NotificationMessageCell";
         _arrConversion = [NSMutableArray array];
     }
     return _arrConversion;
+}
+- (NSMutableArray *)loadArr {
+    if (!_loadArr) {
+        _loadArr = [NSMutableArray array];
+    }
+    return _loadArr;
 }
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -207,43 +208,70 @@ static NSString *cellid2 = @"NotificationMessageCell";
         
         EMConversation *conversation = [self.arrConversion objectAtIndex:indexPath.row];
         
-
+        // 关注
         NSString *filename = [NSString cachePathWithfileName:Focus];
         NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
-        if ([focusArr containsObject:@([conversation.conversationId intValue])]) {
-            cell.isFocus.selected = YES;
-        }else{
-            cell.isFocus.selected = NO;
-        }
+        NSInteger focusID = [conversation.conversationId integerValue];
         
+        if ([focusArr containsObject:@(focusID)]) {
+            cell.isFocus.text = @"已关注";
+            cell.isFocus.textColor = [UIColor colorWithHexString:@"#99cc33"];
+        }else{
+            cell.isFocus.text = @"未关注";
+            cell.isFocus.textColor = [UIColor colorWithHexString:@"#666666"];
+
+        }
+     
+   
+        NSDictionary *dict = @{
+                               @"id":conversation.conversationId
+                               };
+
+        if ([self.loadArr containsObject:dict]) {
+            
+        }else{
+        
+        [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            if ([successJson[@"code"] isEqualToString:@"1"]) {
+                NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                PersonalMessageModel *model = [arr lastObject];
+                cell.nickNameLabel.text = model.userName;
+                if (model.userImgUrl != NULL) {
+                    NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
+                    [cell.iconView sd_setImageWithURL:[NSURL URLWithString:urlString]placeholderImage:[UIImage imageNamed:@"头像"]];
+                }
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+        }
+        [self.loadArr addObject:dict];
         if (conversation.type == EMConversationTypeChat) {
             if (conversation.latestMessage) {
-                // 昵称
-                if (conversation.latestMessage.ext[@"nickname"]) {
-                    cell.nickNameLabel.text = conversation.latestMessage.ext[@"nickname"];
-                }else{
-                    cell.nickNameLabel.text = conversation.conversationId;
-                }
-
-                // 头像
-                if (conversation.latestMessage.ext[@"avatarURL"]) {
-                    NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
-                    [cell.iconView sd_setImageWithURL:[NSURL URLWithString:urlString]placeholderImage:[UIImage imageNamed:@"头像"]];
-                }else{
-                    cell.iconView.image = [UIImage imageNamed:@"头像"];
-                }
-                
+//                // 昵称
+//                if (conversation.latestMessage.ext[@"nickname"]) {
+//                    cell.nickNameLabel.text = conversation.latestMessage.ext[@"nickname"];
+//                }else{
+//                    cell.nickNameLabel.text = conversation.conversationId;
+//                }
+//
+//                // 头像
+//                if (conversation.latestMessage.ext[@"avatarURL"]) {
+//                    NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+//                    [cell.iconView sd_setImageWithURL:[NSURL URLWithString:urlString]placeholderImage:[UIImage imageNamed:@"头像"]];
+//                }else{
+//                    cell.iconView.image = [UIImage imageNamed:@"头像"];
+//                }
+            
                 cell.lastMessageLabel.text = [self _latestMessageTitleForConversation:conversation];
                 cell.lastTimeLabel.text = [self _latestMessageTimeForConversation:conversation];
-                
-                cell.isFocus.selected = YES;
-                
+                                
                 if (conversation.unreadMessagesCount == 0) {
                     cell.unreadCountLabel.hidden = YES;
                 }else{
                     cell.unreadCountLabel.text = [@([conversation unreadMessagesCount]) stringValue];
                 }
-                
             }
         }
         return cell;

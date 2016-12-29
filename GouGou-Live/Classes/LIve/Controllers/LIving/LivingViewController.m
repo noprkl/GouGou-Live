@@ -40,6 +40,8 @@
 
 #import "AppDelegate.h"
 
+
+
 @interface LivingViewController ()<UIScrollViewDelegate, PLPlayerDelegate>
 // 回放
 {
@@ -116,6 +118,8 @@
 
 @property (nonatomic, assign) CGPoint scrollPoint; /**< 滑动位置 */
 
+@property (nonatomic, strong) UIView *dogShowView; /**< 狗狗展示 */
+
 @end
 
 @implementation LivingViewController
@@ -169,11 +173,16 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     // 取消横屏
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
     // 停止播放
     [self.livePlayer pause];
+    
+    // 删除会话
+    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+        
+    }];
 }
 #pragma mark
 #pragma mark - 直播播放
@@ -410,10 +419,6 @@
 - (void)clickBackBtnAction {
     [self.navigationController popViewControllerAnimated:YES];
     // 取消横屏
-//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-//    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-//        [self forceOrientation:UIInterfaceOrientationPortrait];
-//    }
 }
 - (void)clickReportBtnAction {
     
@@ -530,12 +535,18 @@
 }
 
 - (void)clickScreenButtonAction:(UIButton *)btn {
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight) { // 转竖屏
+//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+//    if (orientation == UIInterfaceOrientationLandscapeRight) { // 转竖屏
+//        [self forceOrientationPriate];
+//    }else if (orientation == UIDeviceOrientationPortrait) { // 转横屏
+//        [self forceOrientationLandscapeRight];
+//    }
+    if (btn.selected) { // 转竖屏
         [self forceOrientationPriate];
-    }else if (orientation == UIDeviceOrientationPortrait) { // 转横屏
+    }else { // 转横屏
         [self forceOrientationLandscapeRight];
     }
+    btn.selected = !btn.selected;
 }
 // 喜欢状态
 - (void)collectionBtn {
@@ -721,7 +732,7 @@
 #pragma mark  - 直播全屏
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
         self.livetopView.hidden = !self.livetopView.hidden;
         self.livingImageView.hidden = !self.livetopView.hidden;
         self.watchLabel.hidden = !self.livetopView.hidden;
@@ -940,7 +951,8 @@
 }
 // 横屏转竖屏
 - (void)forceOrientationPriate {
-    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = NO;
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
@@ -981,7 +993,8 @@
 }
 // 竖屏转横屏
 - (void)forceOrientationLandscapeRight {
-
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = YES;
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
@@ -993,7 +1006,6 @@
     }
     [UIViewController attemptRotationToDeviceOrientation];
     _isLandscape = NO;
-    
     
     [self.talkingVc.tableView removeFromSuperview];
     [self.livePlayer.playerView addSubview:self.talkingVc.tableView];
@@ -1052,21 +1064,21 @@
 }
 - (void)addChildViewControllers {
     
+    TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+    
+    Vc.roomID = _chatRoomID;
+    self.talkingVc = Vc;
+    [self.childVCS replaceObjectAtIndex:0 withObject:Vc];
+    [self addChildViewController:Vc];
+    
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    [self.childVCS replaceObjectAtIndex:0 withObject:dogShowVC];
+    [self.childVCS replaceObjectAtIndex:1 withObject:dogShowVC];
     [self addChildViewController:dogShowVC];
-    
-    TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-    //    [self.baseScrollView addSubview:self.talkingVc.tableView];
-    Vc.roomID = _chatRoomID;
-    self.talkingVc = Vc;
-    [self.childVCS replaceObjectAtIndex:1 withObject:Vc];
-    [self addChildViewController:Vc];
     
     if (_liverId.length == 0) {
         _liverId = EaseTest_Liver;
@@ -1077,6 +1089,7 @@
     serviceVC.liverName = _liverName;
     [self.childVCS replaceObjectAtIndex:2 withObject:serviceVC];
     [self addChildViewController:serviceVC];
+    
     // 商家
     SellerShowViewController *sellerShowVC = [[SellerShowViewController alloc] init];
     sellerShowVC.liverIcon = _liverIcon;
@@ -1085,16 +1098,8 @@
     [self.childVCS replaceObjectAtIndex:3 withObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
     
-    // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
-    self.baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childTitles.count, 0);
-    
-    // 设置contentView加载时的位置
-    self.baseScrollView.contentOffset = CGPointMake(0, 0);
-    
-    // 减速结束加载控制器视图 代理
-    self.baseScrollView.delegate = self;
-    
     // 进入后第一次加载hot
+    self.baseScrollView.contentOffset = CGPointMake(0, 0);
     [self scrollViewDidEndDecelerating:self.baseScrollView];
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
@@ -1117,9 +1122,9 @@
 
     // 判断当前vc是否加载过
     if ([childVC isViewLoaded]) {
-        if(![childVC isKindOfClass:[TalkingViewController class]]) {
-            [self.talkingVc.view reloadInputViews];
-        }
+//        if(![childVC isKindOfClass:[TalkingViewController class]]) {
+//            [self.talkingVc.view reloadInputViews];
+//        }
         return;
     };
     
@@ -1168,13 +1173,13 @@
         
         __weak typeof(self) weakSelf = self;
         _centerView.talkBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
             return YES;
@@ -1246,6 +1251,11 @@
         }];
     }];
 }
-
-
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
+}
 @end

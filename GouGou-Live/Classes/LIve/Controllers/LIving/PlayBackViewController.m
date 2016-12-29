@@ -18,6 +18,7 @@
 #import "ServiceViewController.h"
 #import "DogShowViewController.h"
 #import "SellerShowViewController.h"
+#import "AppDelegate.h"
 
 @interface PlayBackViewController ()<UIScrollViewDelegate>
 // 回放
@@ -82,27 +83,18 @@
     // 子视图
     [self makeSubVcConstraint];
     [self setNavBarItem];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationLandscapeRight) name:UIWindowDidBecomeVisibleNotification object:nil];//进入全屏
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationPriate) name:UIWindowDidBecomeHiddenNotification object:nil];//退出全屏
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
     // 请求直播
-    
-    
-//    [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
-    
-    //    [self collectionBtn];
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-//    self.hidesBottomBarWhenPushed = YES;
-    
-    // 请求播放信息
-    //    [self getRequestLiveMessage];
-    // 设置直播参数
-//    self.roomNameLabel.text = _liverName;
-//    [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
     
     DLog(@"%@",_watchCount);
     // 添加观看观看历史
@@ -123,14 +115,21 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.hidesBottomBarWhenPushed = YES;
+   
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     // 取消横屏
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = NO;
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
     [self pause];
+    // 删除会话
+    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+        
+    }];
 }
 
 #pragma mark
@@ -172,7 +171,7 @@
     [self.navigationController popViewControllerAnimated:YES];
     // 取消横屏
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
 }
@@ -534,15 +533,20 @@
     }
 }
 - (void)clickScreenButtonAction:(UIButton *)btn {
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight) { // 转竖屏
+    if (btn.selected) { // 转竖屏
         [self forceOrientationPriate];
-    }else if (orientation == UIDeviceOrientationPortrait) { // 转横屏
+        
+    }else { // 转横屏
         [self forceOrientationLandscapeRight];
     }
+    btn.selected = !btn.selected;
+
 }
 // 横屏转竖屏
 - (void)forceOrientationPriate {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = NO;
+
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
@@ -552,7 +556,6 @@
         [invocation setArgument:&val atIndex:2];
         [invocation invoke];
     }
-    _isLandscape = YES;
     _playerLayer.frame = self.playerView.bounds;
     self.baseScrollView.hidden = NO;
     self.centerView.hidden = NO;
@@ -566,6 +569,9 @@
 }
 // 竖屏转横屏
 - (void)forceOrientationLandscapeRight {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = YES;
+
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
@@ -635,24 +641,21 @@
 //    [self addChildViewController:_talkingVc];
 //    [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
    
+    TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+    
+    Vc.roomID = _chatRoomID;
+    self.talkingVc = Vc;
+    [self.childVCS replaceObjectAtIndex:0 withObject:Vc];
+    [self addChildViewController:Vc];
+    
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
-    dogShowVC.view.bounds = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    [self.childVCS replaceObjectAtIndex:0 withObject:dogShowVC];
+    [self.childVCS replaceObjectAtIndex:1 withObject:dogShowVC];
     [self addChildViewController:dogShowVC];
-    
-    TalkingViewController *Vc = [[TalkingViewController alloc] initWithStyle:(UITableViewStylePlain)];
-//    [self.baseScrollView addSubview:self.talkingVc.tableView];
-    Vc.roomID = _chatRoomID;
-    self.talkingVc = Vc;
-    [self.childVCS replaceObjectAtIndex:1 withObject:Vc];
-    [self addChildViewController:Vc];
-    
-
     
     if (_liverId.length == 0) {
         _liverId = EaseTest_Liver;
@@ -663,6 +666,7 @@
     serviceVC.liverName = _liverName;
     [self.childVCS replaceObjectAtIndex:2 withObject:serviceVC];
     [self addChildViewController:serviceVC];
+
     // 商家
     SellerShowViewController *sellerShowVC = [[SellerShowViewController alloc] init];
     sellerShowVC.liverIcon = _liverIcon;
@@ -695,11 +699,11 @@
     
     // 判断当前vc是否加载过
     if([childVC isKindOfClass:[TalkingViewController class]]) {
-        self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+//        self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     }
-//    if ([childVC isViewLoaded]) {
-//        return;
-//    };
+    if ([childVC isViewLoaded]) {
+        return;
+    };
     
     // 给没加载过的控制器设置frame
     childVC.view.frame = CGRectMake(offset, 0, width, height);
@@ -756,13 +760,13 @@
         
         __weak typeof(self) weakSelf = self;
         _centerView.talkBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
             return YES;
@@ -782,21 +786,19 @@
     }
     return _centerView;
 }
-//- (TalkingViewController *)talkingVc {
-//    if (!_talkingVc) {
-//        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-//        EMError *error = nil;
-//        [[EMClient sharedClient].roomManager joinChatroom:_chatRoomID error:&error];
-//        _talkingVc.tableView.backgroundColor = [UIColor whiteColor];
-//        _talkingVc.roomID = _chatRoomID;
-//    }
-//    return _talkingVc;
-//}
 
 - (NSArray *)childTitles {
     if (!_childTitles) {
         _childTitles = @[@"聊天", @"狗狗", @"客服", @"认证商家"];
     }
     return _childTitles;
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
 }
 @end

@@ -223,6 +223,8 @@
         _menuView.hidden = YES;
         EMError *error = nil;
         NSArray *blackArr = [[EMClient sharedClient].contactManager getBlackListFromServerWithError:&error];
+       
+        // 关注
         NSString *filename = [NSString cachePathWithfileName:Focus];
         NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
         NSInteger chatID = [_chatID integerValue];

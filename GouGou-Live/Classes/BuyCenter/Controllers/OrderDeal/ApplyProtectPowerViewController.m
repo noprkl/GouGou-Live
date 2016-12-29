@@ -160,9 +160,9 @@
         // 付款状况
         self.costView.fontMoney.text = self.detailModel.productDeposit;
         self.costView.remainderMoeny.text = self.detailModel.productBalance;
-        self.costView.totalMoney.text = self.detailModel.price;
+        self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld", [self.detailModel.price integerValue] + [self.detailModel.traficFee integerValue]];
         
-        self.sureApplyRefundView.realMoney = self.detailModel.price;
+        self.sureApplyRefundView.realMoney = [NSString stringWithFormat:@"%ld", [self.detailModel.productRealDeposit integerValue] + [self.detailModel.productRealBalance integerValue]];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

@@ -67,7 +67,7 @@
     self.costView.remainderMoeny.text = protectModel.productRealBalance;
   
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficMoney];
     self.logisticView.orderCode = protectModel.ID;
    
 }

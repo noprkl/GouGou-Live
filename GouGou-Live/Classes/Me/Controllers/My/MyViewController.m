@@ -182,15 +182,12 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex:0];
     DLog(@"%@", docDir);
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         if ([UserInfos getUser]) {
             [self postRequestGetFans];
             [self postRequestGetFocus];
             [self postGetUserAsset];
             [self getrequestPersonalMessage];
         }
-        [self.tableView.mj_header endRefreshing];
-    }];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -200,12 +197,15 @@
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
-    if ([UserInfos getUser]) {
-        [self postRequestGetFans];
-        [self postRequestGetFocus];
-        [self postGetUserAsset];
-        [self getrequestPersonalMessage];
-    }
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        if ([UserInfos getUser]) {
+            [self postRequestGetFans];
+            [self postRequestGetFocus];
+            [self postGetUserAsset];
+            [self getrequestPersonalMessage];
+        }
+        [self.tableView.mj_header endRefreshing];
+    }];
 
     if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
         _dataSource = @[@[@"账户", @"我的订单", @"收货地址", @"卖家中心"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
@@ -229,7 +229,7 @@
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.bounces = NO;
+//    self.tableView.bounces = NO;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     self.tableView.showsVerticalScrollIndicator = NO;
 }

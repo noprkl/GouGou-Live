@@ -15,21 +15,21 @@
 {
     _model = model;
     
-    // 昵称
-    if ([_model.title length] > 0) {
-        self.nickNameLabel.text = _model.title;
-    }
-    else{
-        self.nickNameLabel.text = _model.conversation.conversationId;
-    }
-    // 头像
-    if ([_model.avatarURLPath length] > 0){
-        [self.iconView sd_setImageWithURL:[NSURL URLWithString:_model.avatarURLPath] placeholderImage:_model.avatarImage];
-    } else {
-        if (_model.avatarImage) {
-            self.iconView.image = _model.avatarImage;
-        }
-    }
+//    // 昵称
+//    if ([_model.title length] > 0) {
+//        self.nickNameLabel.text = _model.title;
+//    }
+//    else{
+//        self.nickNameLabel.text = _model.conversation.conversationId;
+//    }
+//    // 头像
+//    if ([_model.avatarURLPath length] > 0){
+//        [self.iconView sd_setImageWithURL:[NSURL URLWithString:_model.avatarURLPath] placeholderImage:_model.avatarImage];
+//    } else {
+//        if (_model.avatarImage) {
+//            self.iconView.image = _model.avatarImage;
+//        }
+//    }
 
     // 未读信息
     if ([model.conversation unreadMessagesCount] > 0) {

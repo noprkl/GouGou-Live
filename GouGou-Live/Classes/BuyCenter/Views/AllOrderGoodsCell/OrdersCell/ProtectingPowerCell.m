@@ -61,9 +61,9 @@
     self.dogCardView.nowPriceLabel.text = protectModel.price;
     // 花费状况
 //    self.costView.fontMoney.text = protectModel.productRealDeposit;
-    self.costView.remainderMoeny.text = protectModel.productRealBalance;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [protectModel.price integerValue] + [protectModel.traficMoney integerValue]];
     self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficMoney];
     
     self.logisticView.orderCode = protectModel.ID;
 }

@@ -437,6 +437,8 @@
 		04A31F841DED4F4900BE175A /* AddUpdataImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A31F811DED4F4900BE175A /* AddUpdataImagesCell.m */; };
 		04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */; };
 		04A5F6141E12A00400353B9A /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5F6121E12A00400353B9A /* MediaStreamingVc.m */; };
+		04A5F61C1E13D61600353B9A /* ChoseShipTemplateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5F61B1E13D61600353B9A /* ChoseShipTemplateCell.m */; };
+		04A5F61F1E13E27000353B9A /* WatchLivingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5F61E1E13E27000353B9A /* WatchLivingVc.m */; };
 		04B161B81DE704C200DABC77 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161B71DE704C200DABC77 /* BaseModel.m */; };
 		04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161BD1DE7227300DABC77 /* MyShopAdressModel.m */; };
 		04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161C01DE7E5BD00DABC77 /* AddNewAdressVc.m */; };
@@ -1398,6 +1400,10 @@
 		04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddUpdataImagesCell.xib; sourceTree = "<group>"; };
 		04A5F6121E12A00400353B9A /* MediaStreamingVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamingVc.m; sourceTree = "<group>"; };
 		04A5F6131E12A00400353B9A /* MediaStreamingVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingVc.h; sourceTree = "<group>"; };
+		04A5F61A1E13D61600353B9A /* ChoseShipTemplateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShipTemplateCell.h; sourceTree = "<group>"; };
+		04A5F61B1E13D61600353B9A /* ChoseShipTemplateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShipTemplateCell.m; sourceTree = "<group>"; };
+		04A5F61D1E13E26F00353B9A /* WatchLivingVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchLivingVc.h; sourceTree = "<group>"; };
+		04A5F61E1E13E27000353B9A /* WatchLivingVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchLivingVc.m; sourceTree = "<group>"; };
 		04B161B61DE704C200DABC77 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		04B161B71DE704C200DABC77 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		04B161BC1DE7227300DABC77 /* MyShopAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopAdressModel.h; sourceTree = "<group>"; };
@@ -2983,6 +2989,8 @@
 				04A5F6121E12A00400353B9A /* MediaStreamingVc.m */,
 				044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */,
 				044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */,
+				04A5F61D1E13E26F00353B9A /* WatchLivingVc.h */,
+				04A5F61E1E13E27000353B9A /* WatchLivingVc.m */,
 			);
 			path = LIving;
 			sourceTree = "<group>";
@@ -4145,6 +4153,8 @@
 				04CE13BE1DDC488100EB8777 /* SellerNoneShipTemplate.m */,
 				04CE13BF1DDC488100EB8777 /* SellerShipTemplateCell.h */,
 				04CE13C01DDC488100EB8777 /* SellerShipTemplateCell.m */,
+				04A5F61A1E13D61600353B9A /* ChoseShipTemplateCell.h */,
+				04A5F61B1E13D61600353B9A /* ChoseShipTemplateCell.m */,
 			);
 			path = SellerShipTemplate;
 			sourceTree = "<group>";
@@ -4794,6 +4804,7 @@
 				04EA2AD01DDDAFE80023D9A8 /* SellerOrderDetailStateView.m in Sources */,
 				04CE13EC1DDC488100EB8777 /* SellerDogCardView.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
+				04A5F61C1E13D61600353B9A /* ChoseShipTemplateCell.m in Sources */,
 				046F0C0B1DE33B2000D50D5C /* PicturesCell.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
@@ -5208,6 +5219,7 @@
 				046BEFCC1DE4696600BC32E9 /* EMCDDeviceManagerBase.m in Sources */,
 				046BF0061DE4696600BC32E9 /* PSTCollectionViewItemKey.m in Sources */,
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
+				04A5F61F1E13E27000353B9A /* WatchLivingVc.m in Sources */,
 				0487DA301DFD03B700BDC54F /* AddPictureView.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
 				04CE13EE1DDC488100EB8777 /* SellerLogisticsInfoView.m in Sources */,
@@ -5339,7 +5351,7 @@
 			baseConfigurationReference = 1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5366,7 +5378,7 @@
 			baseConfigurationReference = EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

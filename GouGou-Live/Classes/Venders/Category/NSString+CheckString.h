@@ -33,4 +33,6 @@
 /** 根据文件名获得文件位置 */
 + (NSString *)cachePathWithfileName:(NSString *)filename;
 + (NSInteger)getRemainTimeWithString:(NSString *)createTime;
+/** 得到当前的时间戳 */
++ (NSString *)getCurrentTime;
 @end

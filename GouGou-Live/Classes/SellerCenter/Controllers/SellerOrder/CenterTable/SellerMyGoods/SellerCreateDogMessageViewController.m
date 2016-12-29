@@ -235,8 +235,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                                            @"comment":self.noteText.text,
                                                                            @"impresssion_id":idStr,
                                                                            @"path_big":imgStr,
-                                                                           @"trafic_template":@(self.shipModel.ID)
-                                                                           };
+                                                                           @"trafic_template":@(self.shipModel.ID)                                                                           };
                                                     DLog(@"%@",dict);
                                                     [self postRequestWithPath:API_Add_product params:dict success:^(id successJson) {
                                                         DLog(@"%@", successJson);
@@ -420,6 +419,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
+            cell.textLabel.text = @"运费模板";
             cell.detailTextLabel.text = @"模板-运费";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
         
@@ -503,8 +503,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [self textFieldShouldReturn:self.nameText];
             [self textFieldShouldReturn:self.priceText];
             [self textFieldShouldReturn:self.noteText];
-
-            
             AddDogColorAlertView *colorView = [[AddDogColorAlertView alloc] init];
             
             NSDictionary *dict = @{
@@ -537,6 +535,11 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
+        [self textFieldShouldReturn:self.nameText];
+        [self textFieldShouldReturn:self.priceText];
+        [self textFieldShouldReturn:self.noteText];
+        
+        
             SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
 
             //请求运费模板

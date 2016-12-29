@@ -153,7 +153,7 @@
                    
                     // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:successJson[@"data"][@"id"]];
+                        EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
                         if (error==nil) {
                             DLog(@"注册成功");
                             EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];

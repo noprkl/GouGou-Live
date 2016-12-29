@@ -50,12 +50,10 @@
 #pragma mark - 网络请求
 - (void)getFontMoneyRequest {
     
-    NSDictionary * dict = @{@"id":@([_detailModel.ID intValue])};
+    NSDictionary * dict = @{@"id":@([_detailModel.ID integerValue])};
     
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
-        
-        DLog(@"%@",successJson[@"Message"]);
-        DLog(@"%@",successJson[@"data"]);
+        DLog(@"%@", successJson);
         // 订单状态
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         self.orderStateView.stateMessage = @"待付定金";
@@ -100,10 +98,29 @@
         self.detailPayView.balance = self.orderInfo.productRealBalance;
         // 订单号
         self.orderNumberView.buyUserId = self.orderInfo.ID;
-        self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
-//        self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
-//        self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
-//        self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
+        if (![self.orderInfo.createTime isEqualToString:@"0"]) {
+            self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
+        }else{
+            self.orderNumberView.createTimes = @"未付";
+        }
+        
+        if (![self.orderInfo.depositTime isEqualToString:@"0"]) {
+            self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
+        }else{
+            self.orderNumberView.depositTimes = @"未付";
+        }
+        
+        if (![self.orderInfo.balanceTime isEqualToString:@"0"]) {
+            self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
+        }else{
+            self.orderNumberView.balanceTimes = @"未付";
+        }
+        
+        if (![self.orderInfo.deliveryTime isEqualToString:@"0"]) {
+            self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
+        }else{
+            self.orderNumberView.deliveryTimes = @"未付";
+        }
  
     } error:^(NSError *error) {
         DLog(@"%@",error);

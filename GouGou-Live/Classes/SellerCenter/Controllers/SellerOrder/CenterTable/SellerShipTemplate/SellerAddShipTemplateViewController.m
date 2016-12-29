@@ -29,7 +29,7 @@
 
 @property(nonatomic, strong) UISwitch *shipCost; /**< 默认运费开关 */
 
-@property (nonatomic, strong) UITextField *costTextField; /**< 花费 */
+@property (nonatomic, strong) UITextField *costTextField; /**< 默认金钱 */
 
 
 @property(nonatomic, strong) UISwitch *realCost; /**< 按实结算 */
@@ -52,22 +52,22 @@ static NSString *cellid = @"SellerAddShipTemplate";
     self.title = @"运费管理";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStylePlain) target:self action:@selector(saveBtnAction)];
         [self.view addSubview:self.tableView];
+   // 默认免运费
     _cost = @"0";
-    _type = 0;
+    _type = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ChoseSendAdress" object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ChoseSendAdress" object:nil];
 }
 
 - (void)getShopAdressFromAdress:(NSNotification *)adress {
     
     SellerAdressModel *model = adress.userInfo[@"ChoseSendAdress"];
     if (model.merchantTel.length != 0) {
-        [self.view addSubview:self.tableView];
+//        [self.view addSubview:self.tableView];
         [self.tableView reloadData];
         self.adressModel = model;
     }
@@ -92,12 +92,12 @@ static NSString *cellid = @"SellerAddShipTemplate";
                                        @"name":self.templateStr,
                                        @"money":self.cost,
                                        @"address_id":@(self.adressModel.ID),
-                                       @"type":@(1)
+                                       @"type":@(self.type)
                                        };
                 /**
-                 type=0 type=1 type=2
-                 
-                 免费      模版     按实结算
+                 0 运费模版
+                 1 免运费
+                 2 按时计算
                  */
                 [self postRequestWithPath:API_Freight params:dict success:^(id successJson) {
                     [self showAlert:successJson[@"message"]];
@@ -112,6 +112,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
         }
     }
 }
+// 免费
 - (void)priceSwitchBtnAction:(UISwitch *)switchBtn {
     [self.dataArr removeAllObjects];
     
@@ -126,10 +127,10 @@ static NSString *cellid = @"SellerAddShipTemplate";
         self.shipCost.on = NO;
         self.realCost.on = NO;
         self.cost = @"0";
-        _type = 0;
+        _type = 1;
     }
-    
 }
+// 默认
 - (void)shipCostSwitchBtnAction:(UISwitch *)switchBtn {
     if (switchBtn.isOn) {
         [self.dataArr removeAllObjects];
@@ -142,6 +143,8 @@ static NSString *cellid = @"SellerAddShipTemplate";
         [self.tableView reloadData];
         self.realCost.on = NO;
         self.freeCost.on = NO;
+        _type = 0;
+        _cost = self.templateName.text;
     }else{
         [self.dataArr removeAllObjects];
         [_dataArr addObject:self.templateName.text];
@@ -152,6 +155,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
         [self.tableView reloadData];
     }
 }
+// 按实结算
 - (void)realCostSwitchBtnAction:(UISwitch *)switchBtn {
    
     self.shipCost.on = NO;
@@ -163,7 +167,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     [_dataArr addObject:@"默认运费价格"];
     [_dataArr addObject:@"按实结算"];
     [self.tableView reloadData];
-    self.cost = @"50";
+    self.cost = @"0";
     _type = 2;
 }
 - (void)editShipTemplateAction:(UITextField *)textField {
@@ -171,6 +175,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
 }
 - (void)editShipCount:(UITextField *)textField {
     self.cost = textField.text;
+    _type = 0;
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -199,7 +204,10 @@ static NSString *cellid = @"SellerAddShipTemplate";
     if (!_freeCost) {
         _freeCost = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
         _freeCost.on = YES;
-        [_freeCost addTarget:self action:@selector(priceSwitchBtnAction:) forControlEvents:(UIControlEventValueChanged)];
+        [_freeCost setOn:YES];
+        
+        // 注释掉这个就不能点击了
+//        [_freeCost addTarget:self action:@selector(priceSwitchBtnAction:) forControlEvents:(UIControlEventValueChanged)];
     }
     return _freeCost;
 }

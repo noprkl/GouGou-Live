@@ -153,11 +153,11 @@ static NSString * MedrchantCell = @"MedrchantCell";
     [self.view addSubview:self.photoView];
     [self.view addSubview:self.upLoadlabel];
     [self.view addSubview:self.pictureCountLabel];
-    [self.upLoadlabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.doneCertificateView.bottom).offset(10);
-        make.left.right.equalTo(self.doneCertificateView);
-        make.height.equalTo(44);
-    }];
+//    [self.upLoadlabel makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.doneCertificateView.bottom).offset(10);
+//        make.left.right.equalTo(self.doneCertificateView);
+//        make.height.equalTo(44);
+//    }];
     [self.pictureCountLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.photoView.bottom);
         make.left.right.equalTo(self.doneCertificateView);
@@ -427,7 +427,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
 // 上传佐证label
 - (UILabel *)upLoadlabel {
     if (!_upLoadlabel) {
-        _upLoadlabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _upLoadlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 262, SCREEN_WIDTH, 44)];
         _upLoadlabel.text = @"   上传佐证";
         _upLoadlabel.textColor = [UIColor colorWithHexString:@"#000000"];
         _upLoadlabel.font = [UIFont systemFontOfSize:16];

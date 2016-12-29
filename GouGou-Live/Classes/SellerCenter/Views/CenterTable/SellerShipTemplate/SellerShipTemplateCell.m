@@ -11,7 +11,6 @@
 @interface SellerShipTemplateCell ()
 
 /** 间隔view */
-- (IBAction)clickBtnAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (strong,nonatomic) UIView *spaceView;
 
 @property(nonatomic, strong) UILabel *templateName; /**< 模板名字 */
@@ -155,22 +154,27 @@
 - (void)setModel:(SellerShipTemplateModel *)model {
     _model = model;
     self.templateName.text = model.name;
-    if ([model.money isEqualToString:@"0"]) {
-        self.freeTemplate.text = @"免运费";
-    }else if ([model.money isEqualToString:@"50"]){
-        self.freeTemplate.text = @"默认价格";
-    }else{
-        self.freeTemplate.text = @"按实结算";
-    }
     
     self.userName.text = model.merchantName;
     self.phoneTextfiled.text = model.merchantTel;
-    self.detailAddress.text = [NSString stringWithFormat:@"%@,%@,%@,%@,%@", model.merchantProvince, model.merchantCity, model.merchantDistrict, model.street, model.merchantAddress];
+    if (model.street.length != 0) {
+        self.detailAddress.text = [NSString stringWithFormat:@"%@,%@,%@,%@,%@", model.merchantProvince, model.merchantCity, model.merchantDistrict, model.street, model.merchantAddress];
+    }else{
+        self.detailAddress.text = [NSString stringWithFormat:@"%@,%@,%@,%@", model.merchantProvince, model.merchantCity, model.merchantDistrict, model.merchantAddress];
+    }
     
     if (model.isDefault == 0) {
         self.duihaoImageBtn.selected = NO;
     }else{
         self.duihaoImageBtn.selected = YES;
+    }
+    
+    if (model.type == 0) {
+        self.freeTemplate.text = @"自定义";
+    }else if (model.type == 1){
+        self.freeTemplate.text = @"免运费";
+    }else if (model.type == 2){
+        self.freeTemplate.text = @"按实结算";
     }
 }
 #pragma mark

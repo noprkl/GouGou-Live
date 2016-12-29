@@ -98,11 +98,29 @@
         self.detailPayView.realMoney = self.orderInfo.price;
         self.detailPayView.balance = self.orderInfo.productRealBalance;
         // 订单编号
-        self.orderNumberView.buyUserId = self.orderInfo.ID;
-        self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
-        self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
-        self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
-        self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
+        if (![self.orderInfo.createTime isEqualToString:@"0"]) {
+            self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
+        }else{
+            self.orderNumberView.createTimes = @"未付";
+        }
+        
+        if (![self.orderInfo.depositTime isEqualToString:@"0"]) {
+            self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
+        }else{
+            self.orderNumberView.depositTimes = @"未付";
+        }
+        
+        if (![self.orderInfo.balanceTime isEqualToString:@"0"]) {
+            self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
+        }else{
+            self.orderNumberView.balanceTimes = @"未付";
+        }
+        
+        if (![self.orderInfo.deliveryTime isEqualToString:@"0"]) {
+            self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
+        }else{
+            self.orderNumberView.deliveryTimes = @"未付";
+        }
         
     } error:^(NSError *error) {
         DLog(@"%@",error);

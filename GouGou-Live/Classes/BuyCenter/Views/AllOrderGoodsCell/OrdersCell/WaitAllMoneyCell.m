@@ -80,8 +80,9 @@
     self.costView.remainderMoneylabel.text = @"待付全款:";
 //    self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.price;
-    self.costView.totalMoney.text = centerModel.price;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [centerModel.price integerValue] + [centerModel.traficFee integerValue]];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficFee];
+
 }
 #pragma mark
 #pragma mark - 约束

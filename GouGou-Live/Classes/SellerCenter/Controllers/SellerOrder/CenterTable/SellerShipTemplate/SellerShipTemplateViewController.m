@@ -43,10 +43,10 @@ static NSString *cellid = @"SellerShipTemplateCell";
         DLog(@"%@", successJson);
         self.dataArr = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         if (self.dataArr.count == 0) {
-            self.noneTemplate.hidden = NO;
+            self.noneTemplateLabel.hidden = NO;
             self.tableView.hidden = YES;
         }else{
-            self.noneTemplate.hidden = YES;
+            self.noneTemplateLabel.hidden = YES;
             self.tableView.hidden = NO;
         }
         [self.tableView reloadData];
@@ -99,7 +99,6 @@ static NSString *cellid = @"SellerShipTemplateCell";
     [self.noneTemplateLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.tableView.top).offset(40);
         make.centerX.equalTo(self.tableView.centerX);
-        
     }];
 }
 - (void)initUI{
@@ -175,6 +174,7 @@ static NSString *cellid = @"SellerShipTemplateCell";
         DLog(@"编辑模板--%ld", indexPath.row);
         SellerEditShipTemplateVc *editShipVc = [[SellerEditShipTemplateVc alloc] init];
         editShipVc.hidesBottomBarWhenPushed = YES;
+        editShipVc.shipModel = model;
         [weakSlef.navigationController pushViewController:editShipVc animated:YES];
     };
     

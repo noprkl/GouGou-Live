@@ -48,7 +48,7 @@
 
 #pragma mark - 模型数据
 - (void)setCenterModel:(BuyCenterModel *)centerModel {
-    
+    self.nickView.remainTimeLabel.text = @"";
     _centerModel = centerModel;
         // 直接赋值
     // 昵称
@@ -72,11 +72,13 @@
                 self.nickView.remainTimeLabel.text = @"订单已关闭";
             });
         }else{
-            NSInteger minutes = timeout / 60;
-            NSInteger seconds = timeout % 60;
+            NSInteger days = (int)(timeout/(3600*24));
+            NSInteger hours = (int)((timeout-days*24*3600)/3600);
+            NSInteger minute = (int)(timeout-days*24*3600-hours*3600)/60;
+            NSInteger second = timeout-days*24*3600-hours*3600-minute*60;
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
-                self.nickView.remainTimeLabel.text = [NSString stringWithFormat:@"%ld分%ld秒", minutes, seconds];
+                self.nickView.remainTimeLabel.text = [NSString stringWithFormat:@"%ld天%ld时%ld分%ld秒", days, hours, minute, second];
             });
             timeout--;
         }

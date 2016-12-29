@@ -41,6 +41,11 @@ static NSString *cellid = @"DogShowCellid";
 @implementation DogShowViewController
 #pragma mark
 #pragma mark - 生命周期
+- (void)loadView {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 290)];
+    view.backgroundColor = [UIColor whiteColor];
+    self.view = view;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];

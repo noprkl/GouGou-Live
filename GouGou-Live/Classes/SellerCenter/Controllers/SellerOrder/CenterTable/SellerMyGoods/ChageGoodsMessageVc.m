@@ -60,7 +60,7 @@
 @property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
 @property(nonatomic, strong) UILabel *shipLabel; /**< 模板名字 */
-@property(nonatomic, strong) SellerShipTemplateModel *shipModel; /**< 模板名字 */
+@property(nonatomic, strong) SellerShipTemplateModel *shipModel; /**< 模板信息 */
 
 @end
 
@@ -114,6 +114,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
     self.typeModel = _model.kind;
     self.typeLabel.attributedText = [self getCellTextWith:_model.kind.name];
     self.priceText.text = model.price;
+    
+    
     // 图片url
 //    NSArray *imsArr = [_model.pathBig componentsSeparatedByString:@","];
     
@@ -274,7 +276,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                                        @"deposit":self.deposit.text,
                                                                        @"comment":self.noteText.text,
                                                                        @"impresssion_id":idStr,
-                                                                       @"path_big":imgStr
+                                                                       @"path_big":imgStr,
+                                                                       @"trafic_template":@(self.shipModel.ID)
                                                                        };
                                                 DLog(@"%@",dict);
                                                 [self postRequestWithPath:API_Up_product  params:dict success:^(id successJson) {
@@ -621,28 +624,28 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
-//            SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
-        // 请求运费模板
-//        NSDictionary *dict = @{
-//                               @"user_id":[UserInfos sharedUser].ID,
-//                               @"page":@1,
-//                               @"pageSize":@10
-//                               };
-//        [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
-//            DLog(@"%@", successJson);
-//            shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-//            [shipTemplateView reloadData];
-//        } error:^(NSError *error) {
-//            DLog(@"%@", error);
-//        }];
+        SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
         
-//        shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
-//            DLog(@"%@", templateType);
-//            self.shipLabel.text = [NSString stringWithFormat:@"%@%@", templateType.name, templateType.money];
-//            self.shipModel = templateType;
-//        };
-//
-//            [shipTemplateView show];
+        //请求运费模板
+        NSDictionary *dict = @{
+                               @"user_id":[UserInfos sharedUser].ID,
+                               @"page":@1,
+                               @"pageSize":@10
+                               };
+        [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+            shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [shipTemplateView reloadData];
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+        
+        shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
+            DLog(@"%@", templateType);
+            self.shipLabel.text = [NSString stringWithFormat:@"%@--%@", templateType.name, templateType.money];
+            self.shipModel = templateType;
+        };
+        [shipTemplateView show];
         }
             break;
         default:

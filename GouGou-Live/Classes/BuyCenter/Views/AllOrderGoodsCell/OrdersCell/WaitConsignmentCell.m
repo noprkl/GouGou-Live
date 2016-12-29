@@ -71,7 +71,7 @@
     // 付款状况
     self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoeny.text = centerModel.productBalance;
-    self.costView.totalMoney.text = centerModel.price;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [centerModel.price integerValue] + [centerModel.traficFee integerValue]];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficFee];
 
 }

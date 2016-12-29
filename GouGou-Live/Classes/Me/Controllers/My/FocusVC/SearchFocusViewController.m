@@ -51,19 +51,18 @@ static NSString *cellid = @"MyFocusCell";
     [self postRequestWithPath:API_Search_nick params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (successJson) {
-            //            DLog(@"%@", successJson);
             self.dataArr = [SearchFanModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            
             [self.tableView reloadData];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
-// 每改变一个字搜一次
+
 - (void)editSearchAction:(UITextField *)textField {
-    
+    // 如果每改变一个字搜一次用这个
 }
+
 - (UITextField *)titleInputView {
     if (!_titleInputView) {
         _titleInputView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 280, 30)];
@@ -86,6 +85,7 @@ static NSString *cellid = @"MyFocusCell";
     }
     return _dataArr;
 }
+
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
@@ -100,26 +100,25 @@ static NSString *cellid = @"MyFocusCell";
 #pragma mark - 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
         return self.dataArr.count;
-//    return 15;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SearchFanModel *model = self.dataArr[indexPath.row];
-//    cell.selected = YES;
+
     cell.searchModel = model;
 
-//    NSString *filename = [NSString cachePathWithfileName:Focus];
-//    NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
-//    DLog(@"%@", focusArr);
-//    if ([focusArr containsObject:@([model.ID intValue])]) {
-//        cell.isSelect = NO;
-//    }else{
-//        cell.isSelect = YES;
-//    }
+    NSString *filename = [NSString cachePathWithfileName:Focus];
+    NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
+
+    if ([focusArr containsObject:@([model.ID intValue])]) {
+        cell.isSelect = NO;
+    }else{
+        cell.isSelect = YES;
+    }
     
     cell.selectBlock = ^(BOOL isSelect){
-        if (isSelect) {
+        if (isSelect) {// 选中 灰色 type 添加0 删除1
             
             NSDictionary *dict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
@@ -166,15 +165,5 @@ static NSString *cellid = @"MyFocusCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

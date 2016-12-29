@@ -175,5 +175,12 @@
     NSInteger timeLast = [closeTime integerValue] - [formatDate integerValue];
     return timeLast;
 }
-
+// 得到当前的时间戳
++ (NSString *)getCurrentTime{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    format.dateFormat = @"YYYYMMddHHmmss";
+    NSString *time = [format stringFromDate:date];
+    return time;
+}
 @end

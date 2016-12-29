@@ -43,7 +43,7 @@
 /** 商品实收尾款 */
 @property (copy,nonatomic) NSString *productRealBalance;
 /** 运费 */
-@property (copy,nonatomic) NSString *traficRealFee;
+@property (copy,nonatomic) NSString *traficMoney;
 
 @property (copy, nonatomic) NSString *closeTime; /**< 维权关闭时间 */
 

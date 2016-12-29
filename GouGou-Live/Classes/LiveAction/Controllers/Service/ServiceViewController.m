@@ -51,6 +51,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+
     [self initUI];
 }
 - (void)viewWillAppear:(BOOL)animated {

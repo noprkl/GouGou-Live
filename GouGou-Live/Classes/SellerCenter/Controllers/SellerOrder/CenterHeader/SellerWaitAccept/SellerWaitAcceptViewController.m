@@ -104,7 +104,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     
     cell.orderState = @"待收货";
     cell.btnTitles = @[@"联系买家"];
-    NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.price];
+    NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%ld", [model.price integerValue] +[model.traficMoney integerValue]];
 
     cell.costMessage = @[allMoney];
     

@@ -66,7 +66,7 @@
     //DLog(@"UMeng social version: %@", [UMSocialGlobal umSocialSDKVersion]);
     
     //设置微信的appKey和appSecret
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxbef5a0656069e8e2" appSecret:@"ac07f6f1f055271566e664b5e8927147" redirectURL:@"http://mobile.umeng.com/social"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxbef5a0656069e8e2" appSecret:@"d881be199fdba004d89a8ef12e79e0ce" redirectURL:@"http://mobile.umeng.com/social"];
     
     //设置分享到QQ互联的appKey和appSecret
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105774632"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];

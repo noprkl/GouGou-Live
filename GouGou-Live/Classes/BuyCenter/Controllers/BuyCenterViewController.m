@@ -152,7 +152,7 @@
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:[orderID intValue] price:money payPwd:[NSString md5WithString:text] states:3];
+                    [self walletPayWithOrderId:orderID price:money payPwd:[NSString md5WithString:text] states:3];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -170,11 +170,11 @@
     }
 }
 /** 钱包支付 2定金 3全款 */
-- (void)walletPayWithOrderId:(int)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state {
-   NSString *money = [NSString stringWithFormat:@"%d", [price intValue] * 100];
+- (void)walletPayWithOrderId:(NSString *)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state {
+   NSString *money = [NSString stringWithFormat:@"%.0lf", [price floatValue] * 100];
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                           @"order_id":@(orderID),
+                           @"order_id":orderID,
                            @"user_price":money,
                            @"user_pwd":payPwd,
                            @"status":@(state)
@@ -188,7 +188,7 @@
 }
 /** 微信支付 */
 - (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(NSString *)fee {
-    NSString *money = [NSString stringWithFormat:@"%lf", [fee floatValue] * 100];
+    NSString *money = [NSString stringWithFormat:@"%.0lf", [fee floatValue] * 100];
     
     NSDictionary *dict = @{
                            @"order":orderID,
@@ -227,7 +227,7 @@
 /** 支付宝支付 */
 - (void)aliPayWithOrderId:(NSString *)orderID totalFee:(NSString *)fee {
 
-    NSString *money = [NSString stringWithFormat:@"%lf", [fee floatValue] * 100];
+    NSString *money = [NSString stringWithFormat:@"%.0lf", [fee floatValue] * 100];
     NSDictionary *dit = @{
                           @"id":orderID,
                           @"total_fee":money
@@ -309,6 +309,9 @@
         };
     };
     [promptView show];
+    
+}
+- (void)cancelOrder:(BuyCenterModel *)model {
     
 }
 #pragma mark - 不想买了网络请求

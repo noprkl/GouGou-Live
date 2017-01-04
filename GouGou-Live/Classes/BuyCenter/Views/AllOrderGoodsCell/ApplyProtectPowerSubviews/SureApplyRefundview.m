@@ -102,12 +102,10 @@
 }
 
 - (UISwitch *)swich {
-
     if (!_swich) {
         _swich = [[UISwitch alloc] init];
         [_swich setOn:NO];
         _swich.onTintColor = [UIColor colorWithHexString:@"#99cc33"];
-    
         [_swich addTarget:self action:@selector(openAction:) forControlEvents:UIControlEventValueChanged];
     }
     return _swich;

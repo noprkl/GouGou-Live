@@ -166,13 +166,15 @@
 
 // 根据订单创建时间获得订单的倒计时数
 + (NSInteger)getRemainTimeWithString:(NSString *)closeTime {
-    NSDate *date = [NSDate date];// 当前时间
-    NSDateFormatter *formate = [[NSDateFormatter alloc] init];
-    formate.dateFormat = @"YYMMddHHmmss";
-    NSString *formatDate = [formate stringFromDate:date];
     
+    NSDate *date = [NSDate date];// 当前时间
+//    NSDateFormatter *formate = [[NSDateFormatter alloc] init];
+//    formate.dateFormat = @"YYMMddHHmmss";
+//    NSString *formatDate = [formate stringFromDate:date];
+    NSString *timeSp = [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+
     // 时间差 剩余时间 关闭时间-当前时间
-    NSInteger timeLast = [closeTime integerValue] - [formatDate integerValue];
+    NSInteger timeLast = [closeTime integerValue] / 1000 - [timeSp integerValue];
     return timeLast;
 }
 // 得到当前的时间戳

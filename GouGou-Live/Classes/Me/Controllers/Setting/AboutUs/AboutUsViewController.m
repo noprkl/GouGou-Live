@@ -30,7 +30,7 @@
 
 - (void)initUI {
     
-    self.phoneLabel.text = @"服务热线 010-82929292";
+    self.phoneLabel.text = ServicePhone;
 
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *currentVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];

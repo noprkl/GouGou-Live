@@ -12,6 +12,7 @@
 #import "NSString+MD5Code.h"
 #import "SetPayingPsdViewController.h"
 #import "ForgetPayPsdViewController.h"
+#import "ResetPsdViewController.h"
 
 @interface PresentApplicationViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *moneyTextfiled;
@@ -33,6 +34,11 @@
     NSString * moneyNumString = self.moneyTextfiled.text;
     if (moneyNumString.length == 0) {
         [self showAlert:@"提现金额不能为空"];
+    }else if ([UserInfos sharedUser].userpaycode.length == 0){
+        ResetPsdViewController *resetVC = [[ResetPsdViewController alloc] init];
+        resetVC.hidesBottomBarWhenPushed = YES;
+        resetVC.title = @"支付密码重置";
+        
     } else {
     
         // 封装蒙版的View

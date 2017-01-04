@@ -12,6 +12,7 @@
 #import "UIView+Toast.h"
 #import "WXApi.h"
 #import <AlipaySDK/AlipaySDK.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface BaseViewController ()
 
@@ -48,19 +49,9 @@
                                 Error(error);
     }];
 }
-- (void)postJsonRequestWithPath:(NSString *)path
-                         params:(NSString *)params
-                        success:(HttpRequestSuccessBlock)returnSuccess
-                          error:(HttpRequestErrorBlock)returnError{
-    [HTTPTool postJsonRequestWithPath:path params:params success:^(id   successJson) {
-        returnSuccess(successJson);
-    } error:^(NSError *error) {
-        returnError(error);
-    }];
-}
 
 - (void)showAlert:(NSString *)string{
-    [self.view makeToast:string duration:2 position:@"center"];
+    [self showHint:string yOffset:-200];
 }
 
 #pragma mark

@@ -70,6 +70,7 @@
     if (self.adressModel.code.length != 0) {
         self.postalcodeTextfiled.text = self.adressModel.code;
     }
+
     DLog(@"%@",self.roadTextField.text);
     DLog(@"%@",self.postalcodeTextfiled.text);
     [self requestGetAreaData];
@@ -180,10 +181,10 @@
                 }else{
                     NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
                     NSDictionary *dict = @{
-                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                           @"user_id":[UserInfos sharedUser].ID,
                                            @"id":@(_adressModel.ID ),
                                            @"user_name":self.userNameTextfiled.text,
-                                           @"user_tel":@([self.phoneTextField.text integerValue]),
+                                           @"user_tel":self.phoneTextField.text,
                                            @"is_default":@(_adressModel.isDefault),
                                            @"user_province":_adressModel.userProvince,
                                            @"user_city":_adressModel.userCity,
@@ -234,22 +235,16 @@
     }
     if (textField == self.phoneTextField) {
         
-        if (range.location < 11) {
-            BOOL flag = [NSString validateNumber:textField.text];
-            if (flag) {
-                return YES;
-            }
-            return NO;
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
+            return YES;
         }
         return NO;
     }
     if (textField == self.postalcodeTextfiled) {
-        if (range.location < 8) {
-            BOOL flag = [NSString validateNumber:textField.text];
-            if (flag) {
-                return YES;
-            }
-            return NO;
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 8 && flag) {
+            return YES;
         }
         return NO;
     }

@@ -61,7 +61,9 @@
 
 @property(nonatomic, strong) UILabel *shipLabel; /**< 模板名字 */
 @property(nonatomic, strong) SellerShipTemplateModel *shipModel; /**< 模板信息 */
-
+@property (nonatomic, strong) NSString *shipCost; /**< 模板花费 */
+@property (nonatomic, strong) NSString *shipType; /**< 模板类型 */
+@property (nonatomic, assign) NSInteger shipId; /**< 模板id */
 @end
 
 static NSString *cellid = @"SellerCreateDogMessage";
@@ -136,6 +138,9 @@ static NSString *cellid = @"SellerCreateDogMessage";
     }
     self.oldPrice.attributedText = [self getCellTextWith:_model.price];
     
+    self.shipCost = model.traficMoney;
+    self.shipType = model.traficType;
+    self.shipId = model.traficId;
     [self.tableView reloadData];
 }
 - (void)changeDogType:(NSNotification *)notification {
@@ -240,68 +245,73 @@ static NSString *cellid = @"SellerCreateDogMessage";
                             if (self.photoArr.count == 0) {
                                 [self showAlert:@"请添加狗狗图片"];
                             }else {
-//                                self.sureBtn.enabled = NO;
-                                // 印象id字符串
-                                NSMutableArray *impresArr = [NSMutableArray array];
-                                for (NSInteger i = 0; i < self.impressModels.count; i ++) {
-                                    DogCategoryModel *model = self.impressModels[i];
-                                    [impresArr addObject:model.ID];
-                                }
-                                NSString *idStr = [impresArr componentsJoinedByString:@"|"];
-                                // 图片地址
-                                for (NSInteger i = 0; i < self.photoArr.count; i ++) {
-                                    NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(93, 93)];
-                                    NSDictionary *dict = @{
-                                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                                           @"img":base64
-                                                           };
-                                    
-                                    [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
-                                        if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
-                                            
-                                            [self.photoUrl addObject:successJson[@"data"]];
-                                            // 提交商品
-                                            if (self.photoUrl.count == self.photoArr.count) {
-                                                NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
-                                                NSDictionary *dict = @{
-                                                                       @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                                                       @"id":@([_model.ID integerValue]),
-                                                                       @"name":self.nameText.text,
-                                                                       @"color_id":@([self.colorModel.ID integerValue]),
-                                                                       @"kind_id":@([self.typeModel.ID integerValue]),
-                                                                       @"size_id":@([self.sizeModel.ID integerValue]),
-                                                                       @"age_id":@(self.age),
-                                                                       @"price_old":_model.price,
-                                                                       @"price":self.priceText.text,
-                                                                       @"deposit":self.deposit.text,
-                                                                       @"comment":self.noteText.text,
-                                                                       @"impresssion_id":idStr,
-                                                                       @"path_big":imgStr,
-                                                                       @"trafic_template":@(self.shipModel.ID)
-                                                                       };
-                                                DLog(@"%@",dict);
-                                                [self postRequestWithPath:API_Up_product  params:dict success:^(id successJson) {
-                                                    DLog(@"%@", successJson);
-                                                    [self showAlert:successJson[@"message"]];
-                                                    if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
-                                                        [self.navigationController popViewControllerAnimated:YES];
-                                                    }
-//                                                    self.sureBtn.enabled = YES;
-
-                                                } error:^(NSError *error) {
-                                                    DLog(@"%@", error);
-                                                }];
+                                if (self.shipCost.length == 0) {
+                                    [self showAlert:@"请选择运费模板"];
+                                }else{
+                                    //                                self.sureBtn.enabled = NO;
+                                    // 印象id字符串
+                                    NSMutableArray *impresArr = [NSMutableArray array];
+                                    for (NSInteger i = 0; i < self.impressModels.count; i ++) {
+                                        DogCategoryModel *model = self.impressModels[i];
+                                        [impresArr addObject:model.ID];
+                                    }
+                                    NSString *idStr = [impresArr componentsJoinedByString:@"|"];
+                                    // 图片地址
+                                    [self.photoUrl removeAllObjects];
+                                    for (NSInteger i = 0; i < self.photoArr.count; i ++) {
+                                        NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(93, 93)];
+                                        NSDictionary *dict = @{
+                                                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                               @"img":base64
+                                                               };
+                                        
+                                        [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+                                            if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                                                
+                                                [self.photoUrl addObject:successJson[@"data"]];
+                                                // 提交商品
+                                                if (self.photoUrl.count == self.photoArr.count) {
+                                                    NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
+                                                    NSDictionary *dict = @{
+                                                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                                           @"id":@([_model.ID integerValue]),
+                                                                           @"name":self.nameText.text,
+                                                                           @"color_id":@([self.colorModel.ID integerValue]),
+                                                                           @"kind_id":@([self.typeModel.ID integerValue]),
+                                                                           @"size_id":@([self.sizeModel.ID integerValue]),
+                                                                           @"age_id":@(self.age),
+                                                                           @"price_old":_model.price,
+                                                                           @"price":self.priceText.text,
+                                                                           @"deposit":self.deposit.text,
+                                                                           @"comment":self.noteText.text,
+                                                                           @"impresssion_id":idStr,
+                                                                           @"path_big":imgStr,
+                                                                           @"trafic_template":@(self.shipId)
+                                                                           };
+                                                    DLog(@"%@",dict);
+                                                    [self postRequestWithPath:API_Up_product  params:dict success:^(id successJson) {
+                                                        DLog(@"%@", successJson);
+                                                        [self showAlert:successJson[@"message"]];
+                                                        if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                                                            [self.navigationController popViewControllerAnimated:YES];
+                                                        }
+                                                        //                                                    self.sureBtn.enabled = YES;
+                                                        
+                                                    } error:^(NSError *error) {
+                                                        DLog(@"%@", error);
+                                                    }];
+                                                    
+                                                }
                                                 
                                             }
                                             
-                                        }
-                                        
-                                        DLog(@"%@", successJson);
-                                    } error:^(NSError *error) {
-                                        DLog(@"%@", error);
-                                    }];
+                                            DLog(@"%@", successJson);
+                                        } error:^(NSError *error) {
+                                            DLog(@"%@", error);
+                                        }];
+                                    }
+                                    
                                 }
-                                
                             }
                         }
                     }
@@ -496,6 +506,15 @@ static NSString *cellid = @"SellerCreateDogMessage";
             cell.textLabel.attributedText = [self getCellTextWith:@"运费"];
             cell.detailTextLabel.text = @"模板-运费";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+            if (self.shipCost.length != 0) {
+                if ([self.shipType isEqualToString:@"0"]) {
+                    cell.detailTextLabel.text = @"自定义";
+                }else if ([self.shipType isEqualToString:@"1"]){
+                    cell.detailTextLabel.text = @"免运费";
+                }else if ([self.shipType isEqualToString:@"2"]){
+                    cell.detailTextLabel.text = @"按实结算";
+                }
+            }
             self.shipLabel = cell.detailTextLabel;
         }
             break;
@@ -624,6 +643,11 @@ static NSString *cellid = @"SellerCreateDogMessage";
             break;
         case 9:
         {
+        [self textFieldShouldReturn:self.nameText];
+        [self textFieldShouldReturn:self.priceText];
+        [self textFieldShouldReturn:self.noteText];
+        
+        
         SellerShipTemplateView *shipTemplateView = [[SellerShipTemplateView alloc] init];
         
         //请求运费模板
@@ -635,6 +659,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
         [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [shipTemplateView show];
             [shipTemplateView reloadData];
         } error:^(NSError *error) {
             DLog(@"%@", error);
@@ -642,10 +667,20 @@ static NSString *cellid = @"SellerCreateDogMessage";
         
         shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
             DLog(@"%@", templateType);
-            self.shipLabel.text = [NSString stringWithFormat:@"%@--%@", templateType.name, templateType.money];
+            NSString *cost = @"";
+            if (templateType.type == 0) { //模板类型 0运费模版 1免运费 2按时计算
+                cost = templateType.money;
+            }else  if(templateType.type == 1) {
+                cost = @"免运费";
+            }else if(templateType.type == 2) {
+                cost = @"按实结算";
+            }
+            self.shipLabel.text = [NSString stringWithFormat:@"%@-%@",templateType.name, cost];
             self.shipModel = templateType;
+            
+            self.shipId = templateType.ID;
+            self.shipCost = templateType.money;
         };
-        [shipTemplateView show];
         }
             break;
         default:
@@ -670,7 +705,9 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
             imagePickerVc.sortAscendingByModificationDate = NO;
-            
+            imagePickerVc.isSelectOriginalPhoto = YES;
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
             
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {

@@ -8,7 +8,7 @@
 
 #import "TalkingView.h"
 
-@interface TalkingView ()<UITextFieldDelegate>
+@interface TalkingView ()<UITextFieldDelegate, UITextViewDelegate>
 
 @property(nonatomic, strong) UIButton *faceBtn; /**< 表情输入按钮 */
 
@@ -16,7 +16,7 @@
 
 @property(nonatomic, strong) UILabel *line; /**< 绿色的线 */
 
-@property(nonatomic, strong) UITextField *messageTextField; /**< 信息输入 */
+@property(nonatomic, strong) UITextView *messageTextField; /**< 信息输入 */
 
 @end
 
@@ -71,7 +71,7 @@
 
 - (void)clickSendMesBtnAction {
     if (_sendBlock) {
-
+        [self.messageTextField resignFirstResponder];
         _sendBlock(self.messageTextField.text);
         self.messageTextField.text = @"";
         [self.messageTextField resignFirstResponder];
@@ -86,13 +86,14 @@
 
 #pragma mark
 #pragma mark - 懒加载
-- (UITextField *)messageTextField {
+- (UITextView *)messageTextField {
     
     if (!_messageTextField) {
-        _messageTextField = [[UITextField alloc] init];
+        _messageTextField = [[UITextView alloc] init];
+//        _messageTextField.text = @"请输入聊天内容";
+//        _messageTextField.textColor = [UIColor colorWithHexString:@""]
         
-        _messageTextField.borderStyle = UITextBorderStyleNone;
-        [_messageTextField addTarget:self action:@selector(textFieldEditAction:) forControlEvents:(UIControlEventAllEvents)];
+//        [_messageTextField addTarget:self action:@selector(textFieldEditAction:) forControlEvents:(UIControlEventAllEvents)];
         _messageTextField.delegate = self;
     }
     return _messageTextField;

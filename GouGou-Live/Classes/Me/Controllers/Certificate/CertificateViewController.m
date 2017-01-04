@@ -49,7 +49,7 @@ static NSString * identityCell = @"identitiCellID";
     NSString *faceBase64 = [NSString imageBase64WithDataURL:self.faceIdentfityImg withSize:CGSizeMake(SCREEN_WIDTH * 2/ 3, SCREEN_WIDTH / 3)];
     
     NSDictionary *faceDict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"img":faceBase64
                            };
     
@@ -60,7 +60,7 @@ static NSString * identityCell = @"identitiCellID";
             NSString *backBase64 = [NSString imageBase64WithDataURL:self.backIdentfityImg withSize:CGSizeMake(SCREEN_WIDTH * 2/ 3, SCREEN_WIDTH / 3)];
             
             NSDictionary *backDict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"user_id":[UserInfos sharedUser].ID,
                                    @"img":backBase64
                                    };
             
@@ -69,7 +69,7 @@ static NSString * identityCell = @"identitiCellID";
                     NSString *backStr = successJson[@"data"];
                     // 提交认证
                     NSDictionary *dict = @{
-                                           @"id":@([[UserInfos sharedUser].ID integerValue]),
+                                           @"id":[UserInfos sharedUser].ID,
                                            @"user_name":self.acceptName.text,
                                            @"user_auth_id":self.acceptIdebtity.text,
                                            @"user_auth_img_front":faceStr,
@@ -215,8 +215,15 @@ static NSString * identityCell = @"identitiCellID";
                 
                 [self showAlert:@"您输入的身份证格式不正确"];
             } else {
-                
-                [self postCertificateIdentfity];
+                if (self.faceIdentfityImg == nil) {
+                    [self showAlert:@"请选择正面照片"];
+                }else{
+                    if (self.backIdentfityImg == nil) {
+                        [self showAlert:@"请选择背面照片"];
+                    }else{
+                        [self postCertificateIdentfity];
+                    }
+                }
             }
         }
     }
@@ -249,7 +256,7 @@ static NSString * identityCell = @"identitiCellID";
 
         _identityTableView.delegate = self;
         _identityTableView.dataSource = self;
-        _identityTableView.bounces = NO;
+//        _identityTableView.bounces = NO;
 
         _identityTableView.showsVerticalScrollIndicator = NO;
         [_identityTableView registerClass:[IdentityPictureCell class] forCellReuseIdentifier:identityCell];
@@ -272,13 +279,20 @@ static NSString * identityCell = @"identitiCellID";
     IdentityPictureCell * cell = [tableView dequeueReusableCellWithIdentifier:identityCell];
     
     if (indexPath.row == 0) {
-        [cell identityWithPromptlabel:@"请上传身份证正面标签" instanceImage:[UIImage imageNamed:@"组-12"] instanceLabe:@"(示例)清晰正面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰正面照"];
+        if (self.faceIdentfityImg == nil) {
+            [cell identityWithPromptlabel:@"请上传身份证正面标签" instanceImage:[UIImage imageNamed:@"组-12"] instanceLabe:@"(示例)清晰正面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰正面照"];
+        }else{
+            
+            [cell identityWithPromptlabel:@"请上传身份证正面标签" instanceImage:[UIImage imageNamed:@"组-12"] instanceLabe:@"(示例)清晰正面照" identityImage:self.faceIdentfityImg identityLabel:@"清晰正面照"];
+        }
        
         __weak typeof(self) weakSelf = self;
         cell.addIdentityBlock = ^(UIImageView *identfityView) {
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
             imagePickerVc.sortAscendingByModificationDate = NO;
-            
+            imagePickerVc.isSelectOriginalPhoto = YES;
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
             
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
@@ -295,15 +309,21 @@ static NSString * identityCell = @"identitiCellID";
         };
 
     } else if (indexPath.row == 1) {
-
-        [cell identityWithPromptlabel:@"请上传身份证背面标签" instanceImage:[UIImage imageNamed:@"组-11"] instanceLabe:@"(示例)清晰背面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰背面照"];
+        
+        if (self.backIdentfityImg == nil) {
+            [cell identityWithPromptlabel:@"请上传身份证背面标签" instanceImage:[UIImage imageNamed:@"组-11"] instanceLabe:@"(示例)清晰背面照" identityImage:[UIImage imageNamed:@"图层-53-拷贝-2"] identityLabel:@"清晰背面照"];
+        }else{
+            [cell identityWithPromptlabel:@"请上传身份证背面标签" instanceImage:[UIImage imageNamed:@"组-11"] instanceLabe:@"(示例)清晰背面照" identityImage:self.backIdentfityImg identityLabel:@"清晰背面照"];
+        }
         __weak typeof(self) weakSelf = self;
 
         cell.addIdentityBlock = ^(UIImageView *identfityView) {
            
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
             imagePickerVc.sortAscendingByModificationDate = NO;
-            
+            imagePickerVc.isSelectOriginalPhoto = YES;
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
             
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {

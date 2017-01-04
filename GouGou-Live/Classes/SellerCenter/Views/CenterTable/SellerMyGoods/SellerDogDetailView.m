@@ -105,14 +105,14 @@
     self.dogKindLabel.text = dogInfo.kind.name;
     self.dogNameLabel.text = dogInfo.name;
     self.dogSizeLabel.text = dogInfo.size.name;
-
     self.dogPriceLaebl.text = dogInfo.price;
     
     self.descLabel.text = dogInfo.comment;
     self.promulgateTimeLabel.text = [NSString stringFromDateString:dogInfo.createTime];
     
-    NSArray *imsArr = [dogInfo.pathBig componentsSeparatedByString:@","];
-    
+    NSMutableArray *imsArr = [NSMutableArray arrayWithArray:[self.dogInfo.pathBig componentsSeparatedByString:@","]];
+    [imsArr removeObjectAtIndex:0];
+
     CGFloat height = [_dogImageView getCellHeightWithImages:imsArr];
     _dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
     
@@ -205,15 +205,20 @@
     [self.transMoneyLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left).offset(10);
         make.top.equalTo(self.line2.bottom).offset(15);
-    }];
-    [self.markImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.transMoneyLabel.centerY);
-        make.right.equalTo(self.right).offset(-10);
+        make.width.equalTo(100);
     }];
     [self.transPriceLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.transMoneyLabel.right).offset(100);
         make.centerY.equalTo(self.transMoneyLabel.centerY);
-        make.right.equalTo(self.markImageView.left).offset(-10);
     }];
+    [self.markImageView makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.transPriceLabel.right).offset(100);
+        make.centerY.equalTo(self.transMoneyLabel.centerY);
+    }];
+//    [self.transPriceLabel makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.transMoneyLabel.centerY);
+//        make.right.equalTo(self.markImageView.left).offset(-10);
+//    }];
     [self.line3 makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
         make.top.equalTo(self.line2.bottom).offset(44);
@@ -366,13 +371,21 @@
 - (UILabel *)transPriceLabel {
     if (!_transPriceLabel) {
         _transPriceLabel = [[UILabel alloc] init];
-        _transPriceLabel.text = @"默认价格¥50";
+        _transPriceLabel.text = @"运费价格";
         _transPriceLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _transPriceLabel.font = [UIFont systemFontOfSize:12];
-        
     }
     return _transPriceLabel;
 }
+//- (UILabel *)transPriceLabel {
+//    if (!_transPriceLabel) {
+//        _transPriceLabel = [[UILabel alloc] init];
+//        _transPriceLabel.text = @"默认价格¥50";
+//        _transPriceLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+//        _transPriceLabel.font = [UIFont systemFontOfSize:12];
+//    }
+//    return _transPriceLabel;
+//}
 - (UIImageView *)markImageView {
     if (!_markImageView) {
         _markImageView = [[UIImageView alloc] init];

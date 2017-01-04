@@ -245,23 +245,16 @@
     
     if (textField == self.phoneTextField) {
         
-        if (range.location < 11) {
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
             return YES;
-//            BOOL flag = [NSString validateNumber:textField.text];
-//            if (flag) {
-//                return YES;
-//            }
-//            return NO;
         }
         return NO;
     }
     if (textField == self.postalcodeTextfiled) {
-        if (range.location < 8) {
-            BOOL flag = [NSString validateNumber:textField.text];
-            if (flag) {
-                return YES;
-            }
-            return NO;
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 8 && flag) {
+            return YES;
         }
         return NO;
     }

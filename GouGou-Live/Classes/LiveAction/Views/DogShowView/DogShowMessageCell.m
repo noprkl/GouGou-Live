@@ -226,8 +226,10 @@
 
     // 时间戳转时间
     self.promulgateTimeLabel.text = [NSString stringFromDateString:model.createTime];
-    
-    NSArray *imgArr = [model.dataPhoto componentsSeparatedByString:@"|"];
+   
+    NSMutableArray *imgArr = [NSMutableArray arrayWithArray:[model.dataPhoto componentsSeparatedByString:@"|"]];
+    [imgArr removeObjectAtIndex:0];
+
     CGFloat height = [self.dogImageView getCellHeightWithImages:imgArr];
     self.dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
 

@@ -20,10 +20,14 @@
 
 #import "LivingViewController.h"// 直播
 #import "PlayBackViewController.h"// 回放
+#import "BanaerViewController.h" //banaer图
 #import "LiveViewCellModel.h"
 
 #import "NoneFocusView.h"
 #import "BannerModel.h"
+
+#import "TalkingViewController.h"
+
 @interface RecommendViewController ()<UIScrollViewDelegate, SDCycleScrollViewDelegate>
 
 /** 底部scrollview */
@@ -64,8 +68,9 @@
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Live_new_list params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
+//        DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         if (successJson[@"data"][@"num"] == 0) { // 如果为0刷新
@@ -92,7 +97,7 @@
             [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 if (model.pNum == 0) {
-                    height += 240;
+                    height += 250;
                     [dogInfos addObject:@[]];
                 }else{
                     height += 357;
@@ -103,14 +108,14 @@
                 [liveMutableArr addObject:model];
 
                 if (dogInfos.count == liveArr.count && liveMutableArr.count == liveArr.count) {
+                    [self hideHud];
+                    self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 44);
                     CGRect rect = self.tableView.frame;
                     rect.size.height = height;
-                    self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 64);
                     self.tableView.frame = rect;
                     self.tableView.dogInfos = dogInfos;
                     self.tableView.dataPlist = liveMutableArr;
                     [self.tableView reloadData];
-                    [self hideHud];
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -125,9 +130,14 @@
 - (void)getRequestBanner {
     [self getRequestWithPath:API_Banner params:nil success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.urlArray = [BannerModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-        
-        [self.baseScrollView addSubview:self.cycleScrollView];
+        self.urlArray = [BannerModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        NSMutableArray *bannerArr = [NSMutableArray array];
+        for (BannerModel *model in self.urlArray) {
+            [bannerArr addObject:model.img];
+        }
+        self.cycleScrollView.imageURLStringsGroup = bannerArr;
+        // 图片路径
+        self.cycleScrollView.imageURLStringsGroup = bannerArr;
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -367,15 +377,15 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self.view addSubview:self.baseScrollView];
     [self.view addSubview:self.noneView];
+    [self.baseScrollView addSubview:self.cycleScrollView];
     [self.baseScrollView addSubview:self.tableView];
     [self.baseScrollView addSubview:self.filtView];
-    
-    
     
     // 上下拉刷新
     self.baseScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.noneView.hidden = YES;
         [self getRequestLiveList];
+        [self getRequestBanner];
         [self.baseScrollView.mj_header endRefreshing];
     }];
     self.baseScrollView.mj_footer = [MJRefreshFooter footerWithRefreshingBlock:^{
@@ -383,7 +393,6 @@
         [self.baseScrollView.mj_footer endRefreshing];
     }];
 }
-
 
 #pragma mark
 #pragma mark - 懒加载
@@ -406,7 +415,6 @@
         
         // 滚动时间
         _cycleScrollView.autoScrollTimeInterval = 3;
-        
         // 动画
         _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolAlimentCenter;
 
@@ -417,14 +425,6 @@
         _cycleScrollView.pageDotColor = [UIColor colorWithHexString:@"#ffffff"];
         // 选中颜色
         _cycleScrollView.currentPageDotColor = [UIColor colorWithHexString:@"ffa11a"];
-        NSMutableArray *bannerArr = [NSMutableArray array];
-        for (BannerModel *model in self.urlArray) {
-            [bannerArr addObject:model.img];
-        }
-        self.cycleScrollView.imageURLStringsGroup = bannerArr;
-        // 图片路径
-        _cycleScrollView.imageURLStringsGroup = bannerArr;
-        
     }
     return _cycleScrollView;
 }
@@ -526,7 +526,6 @@
 - (LiveTableView *)tableView {
     if (!_tableView) {
         _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH,1000) style:(UITableViewStylePlain)];
-
         _tableView.bounces = NO;
 
         __weak typeof(self) weakSelf = self;
@@ -569,6 +568,12 @@
         livingVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:livingVC animated:YES];
     }
+    TalkingViewController *talkVc = [[TalkingViewController alloc] initWithConversationChatter:model.chatroom conversationType:(EMConversationTypeChatRoom)];
+    talkVc.liverid = model.ID;
+    talkVc.roomID = model.chatroom;
+    talkVc.isNotification = YES;
+    talkVc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:talkVc animated:YES];
 }
 - (NSMutableArray *)dataSource {
     if (!_dataSource) {
@@ -601,14 +606,43 @@
         rect.origin.y = 110;
     }
     self.filtView.frame = rect;
-    
 }
 
 // 轮播代理
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-    
     // 点击图片回调
     BannerModel *model = self.urlArray[index];
+    if (model.type == 0) { // 页面跳转
+        BanaerViewController *banaerVc = [[BanaerViewController alloc] init];
+        banaerVc.banaerURL = model.url;
+        banaerVc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:banaerVc animated:YES];
+    }else{ // 直播跳转
+        if (model.status == 1) {
+            LivingViewController *livingVC = [[LivingViewController alloc] init];
+            livingVC.liveID = model.liveId;
+            
+            livingVC.liverId = model.ID;
+            livingVC.liverIcon = model.userImgUrl;
+            livingVC.liverName = model.merchantName;
+            livingVC.watchCount = model.viewNum;
+            livingVC.chatRoomID = model.chatroom;
+            livingVC.isLandscape = NO;
+            livingVC.hidesBottomBarWhenPushed = YES;
+            NSDictionary *dict = @{
+                                   @"live_id":model.liveId
+                                   };
+            [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                if (successJson[@"data"]) {
+                    NSArray *doginfos = [LiveListDogInfoModel   mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                    livingVC.doginfos = doginfos;
+                    [self.navigationController pushViewController:livingVC animated:YES];
+                }
+             } error:^(NSError *error) {
+                 
+             }];
+        }
+    }
     DLog(@"%@", model.url);
 }
 

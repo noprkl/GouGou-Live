@@ -43,7 +43,9 @@
     [self.backBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
+    
     [self.livingImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
         make.left.equalTo(self.backBtn.right).offset(10);

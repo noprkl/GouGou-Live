@@ -32,15 +32,35 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createAddChildVC];
     [self setNavView];
+    
+    if ([UserInfos getUser]) {
+        [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(RequestBlackUser) userInfo:nil repeats:YES];
+    }
+    
 }
-
+- (void)RequestBlackUser {
+    NSDictionary *dict = @{
+                           @"user_id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Memberstate params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"code"] integerValue] == 0) {// 0拉黑用户 1正常用户
+            [UserInfos removeUser];
+            [UserInfos sharedUser].usertel = @"";
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            // 退出环信
+            [[EMClient sharedClient] logout:YES];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

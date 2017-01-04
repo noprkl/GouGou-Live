@@ -10,6 +10,7 @@
 #import "WatchHistoryCell.h"
 #import "FavoriteLivePlayerVc.h"
 #import "PlayBackModel.h"
+#import "NoneDateView.h"
 
 static NSString * watchCell = @"watchCellID";
 @interface WatchHistoryViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -17,6 +18,8 @@ static NSString * watchCell = @"watchCellID";
 @property (strong,nonatomic) UITableView *tableview;
 
 @property (nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+
+@property (nonatomic, strong) NoneDateView *noneDateView; /**< 没有数据 */
 
 @end
 
@@ -29,8 +32,15 @@ static NSString * watchCell = @"watchCellID";
                            };
     [self getRequestWithPath:API_List_view_history params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        [self.tableview reloadData];
+        if (successJson[@"data"]) {
+            self.tableview.hidden = NO;
+            self.noneDateView.hidden = YES;
+            self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.tableview reloadData];
+        }else{
+            self.tableview.hidden = YES;
+            self.noneDateView.hidden = NO;
+        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -51,6 +61,7 @@ static NSString * watchCell = @"watchCellID";
 - (void)initUI {
 
     [self.view addSubview:self.tableview];
+    [self.view addSubview:self.noneDateView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     self.title = @"观看历史";
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -76,6 +87,18 @@ static NSString * watchCell = @"watchCellID";
         [_tableview registerClass:[WatchHistoryCell class] forCellReuseIdentifier:watchCell];
     }
     return _tableview;
+}
+
+#pragma mark
+#pragma mark - 没有数据
+- (NoneDateView *)noneDateView {
+    if (!_noneDateView) {
+        _noneDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneDateView.noteStr = @"没有观看历史";
+        _noneDateView.hidden = YES;
+        _noneDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneDateView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

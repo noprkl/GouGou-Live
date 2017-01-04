@@ -14,4 +14,8 @@
 
 @property(nonatomic, strong) NSString *codeNumber; /**< 验证码 */
 
+@property (nonatomic, strong) NSString *name; /**< openid */
+
+@property (nonatomic, assign) NSInteger type; /**< 类型 */
+
 @end

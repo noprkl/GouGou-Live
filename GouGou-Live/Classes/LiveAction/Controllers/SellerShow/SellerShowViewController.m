@@ -150,6 +150,26 @@ static NSString *cellid3 = @"MyPageViewController3";
         DLog(@"%@", error);
     }];
 }
+// 关注的人
+- (void)postRequestGetFocus {
+    NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
+        if ([successJson[@"code"] isEqualToString:@"1"]) {
+            // 得到关注人的人
+           NSArray *focusArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            NSString *filePath = [NSString cachePathWithfileName:Focus];
+            NSMutableArray *arr = [NSMutableArray array];
+            for (FocusAndFansModel *model in focusArr) {
+                [arr addObject:@(model.userFanId)];
+            }
+            [arr writeToFile:filePath atomically:YES];
+            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)getPersonalDesc {
     
 }
@@ -176,7 +196,9 @@ static NSString *cellid3 = @"MyPageViewController3";
     [self getUserPleasure];
     // 请求回放
     [self getRequestMyLive];
-
+    if ([UserInfos getUser]) {
+        [self postRequestGetFocus];
+    }
     self.dataArr = @[@"认证信息", @"回放", @"相册"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -266,7 +288,7 @@ static NSString *cellid3 = @"MyPageViewController3";
             messageView.focusBlock = ^(UIButton *btn){
                 if ([UserInfos getUser]) {
                     
-                    if (btn.selected) {
+                    if (btn.selected) {// 取消关注
                         NSDictionary *dict = @{
                                                @"user_id":@([[UserInfos sharedUser].ID intValue]),
                                                @"id":@([_authorId intValue]),
@@ -274,11 +296,12 @@ static NSString *cellid3 = @"MyPageViewController3";
                                                };
                         [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
                             DLog(@"%@", successJson);
-                            [self showAlert:successJson[@"message"]];
+//                            [self showAlert:successJson[@"message"]];
+                            [self postRequestGetFocus];
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];
-                    }else{
+                    }else{// 关注
                         NSDictionary *dict = @{
                                                @"user_id":@([[UserInfos sharedUser].ID intValue]),
                                                @"id":@([_authorId intValue]),
@@ -286,8 +309,8 @@ static NSString *cellid3 = @"MyPageViewController3";
                                                };
                         [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
                             DLog(@"%@", successJson);
-                            [self showAlert:successJson[@"message"]];
-                            
+//                            [self showAlert:successJson[@"message"]];
+                                [self postRequestGetFocus];
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];

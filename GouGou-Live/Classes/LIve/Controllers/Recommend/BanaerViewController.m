@@ -19,11 +19,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavBarItem];
+    [self.view addSubview:self.webView];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_banaerURL]];
+    [self.webView loadRequest:request];
+    self.title = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
 }
 - (UIWebView *)webView {
     if (!_webView) {
         _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-//        _webView
     }
     return _webView;
 }

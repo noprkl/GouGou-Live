@@ -33,7 +33,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.edgesForExtendedLayout = 64;
-    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)initUI {
@@ -60,7 +59,9 @@
 }
 - (IBAction)clickGetCodeBtnAction:(UIButton *)sender {
     BOOL flag =  [NSString valiMobile:self.phoneTextField.text];
-    if (!flag) {
+    if (self.phoneTextField.text.length == 0) {
+        [self showAlert:@"手机号不能为空"];
+    }else if (!flag) {
         [self showAlert:@"请输入正确的手机号"];
     }else{
 

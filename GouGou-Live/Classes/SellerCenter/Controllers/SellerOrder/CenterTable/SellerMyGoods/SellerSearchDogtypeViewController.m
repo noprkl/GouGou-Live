@@ -6,6 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
+#define kHistory @"DOGTYPEHISSTORY"
+
 #import "SellerSearchDogtypeViewController.h"
 #import "SellerNoInputTableView.h"
 #import "SellerDoInputTableView.h"
@@ -64,63 +66,33 @@
     
 }
 - (void)clickSearchBtnAction {
-    
-    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-    //读取数组NSArray类型的数据
-    NSArray *myArray = [[NSArray alloc] initWithArray:[userDefaultes arrayForKey:@"DOGTYPEHISSTORY"]];
-    // NSArray --> NSMutableArray
-    NSMutableArray *historyArr = [myArray mutableCopy];
-    
-    // 可变数组存放一样的数据
-    NSMutableArray *searTXT = [NSMutableArray array];
-    //        searTXT = [myArray mutableCopy];
-    NSString *seaTxt = self.titleInputView.text;
-    if (searTXT.count > 0) {
-        //判断搜索内容是否存在，存在的话放到数组最后一位，不存在的话添加。
-        for (NSString * str in myArray) {
-            if ([seaTxt isEqualToString:str]) {
-                //获取指定对象的索引
-                //                    NSUInteger index = [myArray indexOfObject:seaTxt];
-                //                    [searTXT replaceObjectAtIndex:index withObject:str];
-                //                    [searTXT addObject:seaTxt];
-                [searTXT addObject:seaTxt];
-            }
-        }
+    if (self.titleInputView.text.length != 0) {
+        [self searchDogTypeWithType:self.titleInputView.text];    
     }
-    // 搜索一样的数据 删除
-    [historyArr removeObjectsInArray:searTXT];
-    // 添加当前搜索的数据
-    if ([historyArr.lastObject isEqual:@""] || ![historyArr.lastObject isEqual:seaTxt]) {
-        // 添加当前搜索的数据
-        [historyArr addObject:seaTxt];
-    } else {
-        return;
+    
+}
+- (void)editSearchAction:(UITextField *)textField {
+    if (textField.text.length == 0) {
+        // 刷新
+        self.noinputView.hidden = NO;
+        [self.noinputView reloadData];
+        self.doInputView.hidden = YES;
+        self.noneDoyType.hidden = YES;
     }
-    // 存放限制 15个
-    if(searTXT.count > 15)
-        {
-        [searTXT removeObjectAtIndex:0];
-        }
-    //将上述数据全部存储到NSUserDefaults中
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:historyArr forKey:@"DOGTYPEHISSTORY"];
-    
-
-    
+}
+- (void)searchDogTypeWithType:(NSString *)type {
     NSDictionary *dict = @{
-                           @"name":self.titleInputView.text,
+                           @"name":type,
                            @"type":@(3)
                            };
     [self postRequestWithPath:API_Search_varieties params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if ([successJson[@"data"] count] == 0) {
-
             self.noinputView.hidden = YES;
             self.doInputView.hidden = YES;
             self.noneDoyType.hidden = NO;
             self.noneDoyType.dogType = self.titleInputView.text;
         }else{
-
             self.noinputView.hidden = YES;
             self.doInputView.hidden = NO;
             self.noneDoyType.hidden = YES;
@@ -131,16 +103,39 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-
-}
-- (void)editSearchAction:(UITextField *)textField {
-    if (textField.text.length == 0) {
-        // 刷新
-        self.noinputView.hidden = NO;
-        [self.noinputView reloadData];
-        self.doInputView.hidden = YES;
-        self.noneDoyType.hidden = YES;
+    [self.titleInputView resignFirstResponder];
+    
+    // 本地
+    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+    //读取数组NSArray类型的数据
+    NSArray *myArray = [[NSArray alloc] initWithArray:[userDefaultes arrayForKey:kHistory]];
+    // NSArray --> NSMutableArray
+    NSMutableArray *historyArr = [myArray mutableCopy];
+    
+    // 可变数组存放一样的数据
+    NSMutableArray *searTXT = [NSMutableArray array];
+    //        searTXT = [myArray mutableCopy];
+    
+    if (historyArr.count > 0) {
+        //搜索本地内容
+        for (NSString * str in historyArr) {
+            if ([type isEqualToString:str]) {
+                [searTXT addObject:type];
+            }
+        }
     }
+    // 搜索一样的数据 删除
+    [historyArr removeObjectsInArray:searTXT];
+    // 添加数据
+    [historyArr insertObject:type atIndex:0];
+    // 存放限制 10个
+    if(searTXT.count > 10)
+        {
+        [searTXT removeLastObject];
+        }
+    //将上述数据全部存储到NSUserDefaults中
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:historyArr forKey:kHistory];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -158,6 +153,7 @@
     }
     return _titleInputView;
 }
+// 已经搜索了
 - (SellerDoInputTableView *)doInputView {
     if (!_doInputView) {
         _doInputView = [[SellerDoInputTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:(UITableViewStylePlain)];
@@ -178,6 +174,7 @@
     }
     return _doInputView;
 }
+// 未搜索
 - (SellerNoInputTableView *)noinputView {
     if (!_noinputView) {
         _noinputView = [[SellerNoInputTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:(UITableViewStylePlain)];
@@ -190,11 +187,15 @@
             NSNotification *notification = [NSNotification notificationWithName:@"DogType" object:nil userInfo:dict];
             [[NSNotificationCenter defaultCenter] postNotification:notification];
             [weakSelf.navigationController popViewControllerAnimated:YES];
-
+        };
+        _noinputView.typeCellBlock = ^(NSString *type){
+            weakSelf.titleInputView.text = type;
+            [weakSelf searchDogTypeWithType:type];
         };
     }
     return _noinputView;
 }
+// 没搜索到品种，添加
 - (SellerNoneDogTypeView *)noneDoyType {
     if (!_noneDoyType) {
         _noneDoyType = [[SellerNoneDogTypeView alloc] initWithFrame:(CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64))];

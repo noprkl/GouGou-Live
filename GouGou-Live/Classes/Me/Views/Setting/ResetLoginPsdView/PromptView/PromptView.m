@@ -158,7 +158,7 @@
         _editngtextfiled.font = [UIFont systemFontOfSize:14];
         _editngtextfiled.textColor = [UIColor colorWithHexString:@"#999999"];
         _editngtextfiled.delegate = self;
-
+        _editngtextfiled.secureTextEntry=YES;
         //        _editngtextfiled.keyboardAppearance =
         [_editngtextfiled addTarget:self action:@selector(begingEditing:) forControlEvents:UIControlEventEditingDidEnd];
         _editngtextfiled.returnKeyType = UIReturnKeyDefault;

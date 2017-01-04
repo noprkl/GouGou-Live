@@ -14,7 +14,7 @@
 #import "TalkTableViewCell.h"
 #import "IMessageModel.h"
 
-@interface TalkingViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate>
+@interface TalkingViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate, IEMChatroomManager>
 
 //@property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
 
@@ -50,21 +50,6 @@ static NSString *cellid = @"TalkTableViewCell";
     
     return model;
 }
-//- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)messageModel {
-//    TalkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-//    cell.OwnerLabel.text = messageModel.nickname;
-//   
-//    // 聊天内容
-//    EMMessage *message = messageModel.message;
-//    EMMessageBody *msgBody = message.body;
-//    EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
-//    NSString *txt = textBody.text;
-//    cell.contentLabel.text = txt;
-////    cell.contentLabel.text = messageModel.message.
-////    cell.contentLabel.text = messageModel.m;
-//    
-//    return cell;
-//}
 //具体创建自定义Cell的样例：
 - (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)model
 {
@@ -85,11 +70,13 @@ static NSString *cellid = @"TalkTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-290);
-//    self.tableView.frame = self.view.bounds;
-//    [self.tableView registerNib:[UINib nibWithNibName:cellid bundle:nil] forCellReuseIdentifier:cellid];
-
     [self initUI];
+    if (self.conversation.type == EMConversationTypeChatRoom) {
+        [self joinChatroom:_roomID];
+    }
+}
+- (void)showHudInView:(UIView *)view hint:(NSString *)hint {
+
 }
 - (void)showHint:(NSString *)hint {
     
@@ -98,7 +85,6 @@ static NSString *cellid = @"TalkTableViewCell";
     _ishidText = ishidText;
     self.talkView.hidden = YES;
     self.chatToolbar.hidden = YES;
-    
 }
 - (void)setIsNotification:(BOOL)isNotification {
     _isNotification = isNotification;
@@ -107,22 +93,12 @@ static NSString *cellid = @"TalkTableViewCell";
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
         
     }else{
-        //注册键盘出现的通知
-        [[NSNotificationCenter defaultCenter] addObserver:self
-         
-                                                 selector:@selector(keyboardWasShown:)
-                                                     name:UIKeyboardWillShowNotification object:nil];
-        
-        //注册键盘消失的通知
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeHidden:)
-                                                     name:UIKeyboardWillHideNotification object:nil];
+        [self focusKeyboardShow];
     }
-
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
     // 隐藏
 
     [self.view insertSubview:self.talkView aboveSubview:self.talkView];
@@ -130,71 +106,82 @@ static NSString *cellid = @"TalkTableViewCell";
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(44);
     }];
-
-    // 提前
-//    [self.view bringSubviewToFront:self.talkView];
-    
-
-//    @property中带有UI_APPEARANCE_SELECTOR，都可以通过set的形式设置样式，具体可以参考EaseBaseMessageCell.h,EaseMessageCell.h
-//
-//    //设置发送气泡
-    [[EaseBaseMessageCell appearance] setSendBubbleBackgroundImage:[UIImage imageNamed:@""]] ;
-//
-    [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@""] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
-////
-//    [[EaseBaseMessageCell appearance] setAvatarSize:0];//设置头像大小
-//    [[EaseBaseMessageCell appearance] setAvatarCornerRadius:0];//设置头像圆角
-    
     
     // 隐藏输入框 自定义输入框
     self.chatToolbar.hidden = YES;
-    //    [self.view addSubview:self.talkView];
-    //    [self.talkView makeConstraints:^(MASConstraintMaker *make) {
-    //        make.left.bottom.right.equalTo(self.view);
-    //        make.height.equalTo(44);
-    //    }];
-    // 加入聊天室
-    EMError *error = nil;
-    [[EMClient sharedClient].roomManager joinChatroom:_roomID error:&error];
-    //注册消息回调
-    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
-    
+    // 设置代理
+    [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
 }
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    // 退出聊天室
-    EMError *error = nil;
-    [[EMClient sharedClient].roomManager leaveChatroom:_roomID error:&error];
-    //移除消息回调
-    [[EMClient sharedClient].chatManager removeDelegate:self];
-}
+
 // 接受消息回调
 - (void)didReceiveMessages:(NSArray *)aMessages {
     for (EMMessage *message in aMessages) {
-        EMMessageBody *msgBody = message.body;
-        switch (msgBody.type) {
-            case EMMessageBodyTypeText:
-            {
-            // 收到的文字消息
-            EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
-            NSString *txt = textBody.text;
-            DLog(@"%@", txt);
-            [self.dataArray addObject:txt];
-            [self.tableView reloadData];
-            // 刷新
-//            NSIndexPath *indexPath = [[NSIndexPath alloc] initWithIndex:(self.dataArray.count - 1)];
-            
-//            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationBottom)];
+        if (message.chatType == EMChatTypeChatRoom) { // 只接受群聊消息
+            EMMessageBody *msgBody = message.body;
+            switch (msgBody.type) {
+                case EMMessageBodyTypeText:
+                {
+                // 收到的文字消息
+                EMTextMessageBody *textBody = (EMTextMessageBody *)msgBody;
+                NSString *txt = textBody.text;
+                DLog(@"%@", txt);
+                [self.dataArray addObject:message];
+                [self.tableView reloadData];
+                // 刷新
+                }
+                    break;
+                default:
+                    break;
             }
-                break;
-            default:
-                break;
         }
     }
 }
 - (void)initUI {
-    
-    [self focusKeyboardShow];
+
+}
+#pragma mark
+#pragma mark - chatroom
+- (void)saveChatroom:(EMChatroom *)chatroom
+{
+    NSString *chatroomName = chatroom.subject ? chatroom.subject : @"";
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *key = [NSString stringWithFormat:@"OnceJoinedChatrooms_%@", [[EMClient sharedClient] currentUsername]];
+    NSMutableDictionary *chatRooms = [NSMutableDictionary dictionaryWithDictionary:[ud objectForKey:key]];
+    if (![chatRooms objectForKey:chatroom.chatroomId]) {
+        [chatRooms setObject:chatroomName forKey:chatroom.chatroomId];
+        [ud setObject:chatRooms forKey:key];
+        [ud synchronize];
+    }
+}
+
+- (void)joinChatroom:(NSString *)chatroomId
+{
+    __weak typeof(self) weakSelf = self;
+//    [self showHudInView:self.view hint:NSEaseLocalizedString(@"chatroom.joining",@"Joining the chatroom")];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        EMError *error = nil;
+        EMChatroom *chatroom = [[EMClient sharedClient].roomManager joinChatroom:chatroomId error:&error];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (weakSelf) {
+                EaseMessageViewController *strongSelf = weakSelf;
+                [strongSelf hideHud];
+                if (error != nil) {
+                    [strongSelf showHint:[NSString stringWithFormat:NSEaseLocalizedString(@"chatroom.joinFailed",@"join chatroom \'%@\' failed"), chatroomId]];
+                } else {
+                    strongSelf.isJoinedChatroom = YES;
+                    [self saveChatroom:chatroom];
+                }
+            }  else {
+                if (!error || (error.code == EMErrorChatroomAlreadyJoined)) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        EMError *leaveError;
+                        [[EMClient sharedClient].roomManager leaveChatroom:chatroomId error:&leaveError];
+                        [[EMClient sharedClient].chatManager deleteConversation:chatroomId isDeleteMessages:YES completion:nil];
+                    });
+                }
+            }
+        });
+    });
 }
 
 #pragma mark
@@ -208,6 +195,17 @@ static NSString *cellid = @"TalkTableViewCell";
         
         _talkView.sendBlock = ^(NSString *message){
             [weakSelf sendTextMessage:message];
+//            EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:message];
+//            NSString *from = [[EMClient sharedClient] currentUsername];
+//            
+//            // 消息拓展
+////            NSDictionary *dict = [];
+//            //生成Message
+//            EMMessage *sendmessage = [[EMMessage alloc] initWithConversationID:weakSelf.roomID from:from to:weakSelf.roomID body:body ext:nil];
+//            sendmessage.chatType = EMChatTypeChatRoom;// 设置为聊天室消息
+//           // 消息发送
+//            [[EMClient sharedClient].chatManager sendMessage:sendmessage progress:nil completion:^(EMMessage *message, EMError *error) {
+//            }];
         };
         _talkView.emojiBlock = ^(){
             
@@ -233,7 +231,6 @@ static NSString *cellid = @"TalkTableViewCell";
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
 }
-
 - (void)keyboardWasShown:(NSNotification*)aNotification {
     //键盘高度
     CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -257,10 +254,32 @@ static NSString *cellid = @"TalkTableViewCell";
         }];
     }];
 }
+- (void)dealloc
+{
+    if (self.conversation.type == EMConversationTypeChatRoom)
+        {
+        //退出聊天室，删除会话
+        if (self.isJoinedChatroom) {
+            NSString *chatter = [self.conversation.conversationId copy];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                EMError *error = nil;
+                [[EMClient sharedClient].roomManager leaveChatroom:chatter error:&error];
+                if (error !=nil) {
+                }
+            });
+        }
+        else {
+            [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId isDeleteMessages:YES completion:nil];
+        }
+        }
+    
+    [[EMClient sharedClient] removeDelegate:self];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//- (BOOL)shouldAutorotate {
+//}
 @end

@@ -128,7 +128,7 @@
     
     if (!_sureDeleteLabel) {
         _sureDeleteLabel = [[UILabel alloc] init];
-        _sureDeleteLabel.text = @"删除后不能回复!";
+        _sureDeleteLabel.text = @"删除后不能恢复!";
         _sureDeleteLabel.font = [UIFont systemFontOfSize:14];
         _sureDeleteLabel.numberOfLines = 0;
         _sureDeleteLabel.lineBreakMode = NSLineBreakByWordWrapping;

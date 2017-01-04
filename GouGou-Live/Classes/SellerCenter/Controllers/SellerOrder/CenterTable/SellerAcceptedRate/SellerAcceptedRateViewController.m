@@ -79,22 +79,16 @@ static NSString *cellid = @"SellerAcceptRateCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self getRequestComment];
+    [self getUserPleasure];
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
         [self getRequestComment];
-        
+        [self getUserPleasure];
         [self.tableView.mj_header endRefreshing];
     }];
 }
 - (void)initUI{
     [self.view addSubview:self.tableView];
-    
-    // 上下拉刷新
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self getRequestComment];
-        [self.tableView.mj_header endRefreshing];
-    }];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -124,7 +118,6 @@ static NSString *cellid = @"SellerAcceptRateCell";
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
-//    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerAcceptRateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];

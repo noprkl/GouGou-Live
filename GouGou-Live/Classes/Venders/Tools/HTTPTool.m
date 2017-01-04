@@ -61,21 +61,5 @@ static NSString *baseURL = SERVER_HOST;
         }
     }];
 }
-// post json字符串请求数据
-+ (void)postJsonRequestWithPath:(NSString *)path
-                         params:(NSString *)params
-                        success:(HttpRequestSuccessBlock)returnSuccess
-                          error:(HttpRequestErrorBlock)returnError{
-    HTTPTool *manager = [HTTPTool shareAFNManager];
-    [manager POST:path parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if (returnSuccess) {
-            returnSuccess(responseObject);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (returnError) {
-            returnError(error);
-        }
-    }];
-}
 
 @end

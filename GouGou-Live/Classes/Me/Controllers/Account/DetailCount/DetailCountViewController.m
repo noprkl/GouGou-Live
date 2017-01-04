@@ -48,9 +48,12 @@ static NSString *cellid = @"cellid";
         self.dataArr = [UserAssetModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         self.allcomeArr = self.dataArr ;
 //        NSString *income = successJson[@"data"][@"income"];
+        if (successJson[@"data"][@"income"]==nil) {
+            self.income=@"";
+        }else {
+            self.income = [NSString stringWithFormat:@"收支：%@", successJson[@"data"][@"income"]];
+            }
         [self.tableView reloadData];
-       self.income = [NSString stringWithFormat:@"收支：%@", successJson[@"data"][@"income"]];
-
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -230,9 +233,13 @@ static NSString *cellid = @"cellid";
         if ([successJson[@"code"] intValue] == 1) {
             self.dataArr = [UserAssetModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
             self.allcomeArr = self.dataArr ;
-            [self.tableView reloadData];
+        }
+        if (successJson[@"data"][@"income"]==nil) {
+            self.income=@"收支";
+        }else {
             self.income = [NSString stringWithFormat:@"收支：%@", successJson[@"data"][@"income"]];
         }
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

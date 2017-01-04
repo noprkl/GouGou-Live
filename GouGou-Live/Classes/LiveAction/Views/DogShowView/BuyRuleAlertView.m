@@ -27,6 +27,8 @@
 @property(nonatomic, strong) UIButton *sureBtn; /**< 确定按钮 */
 
 @property (nonatomic, assign) CGFloat height; /**< 高度 */
+/** 底部scrollView */
+@property (strong,nonatomic) UIScrollView *boomScrollView;
 
 @end
 
@@ -40,11 +42,13 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.ruleLabel];
-        [self addSubview:self.ruleContent];
+        //        [self addSubview:self.ruleContent];
         [self addSubview:self.ruleAlertLabel];
         [self addSubview:self.line];
         [self addSubview:self.sureBtn];
         [self addSubview:self.cancelBtn];
+        [self  addSubview:self.boomScrollView];
+        [self.boomScrollView addSubview:self.ruleContent];
     }
     return self;
 }
@@ -75,22 +79,28 @@
         make.bottom.equalTo(self.cancelBtn.top);
         make.height.equalTo(1);
     }];
-    DLog(@"%@", self.line);
+    
     [self.ruleAlertLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left).offset(10);
         make.bottom.equalTo(self.line.top).offset(-10);
     }];
     
-    [self.ruleContent makeConstraints:^(MASConstraintMaker *make) {
+    [self.boomScrollView makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left).offset(10);
         make.top.equalTo(self.ruleLabel.bottom).offset(10);
         make.right.equalTo(self.right).offset(-10);
-        make.bottom.equalTo(self.ruleAlertLabel.top).offset(-5);
+        make.bottom.equalTo(self.ruleAlertLabel.top).offset(-10);
+    }];
+    [self.ruleContent makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left).offset(10);
+        make.top.equalTo(self.boomScrollView);
+        make.right.equalTo(self.right).offset(-10);
+        make.bottom.equalTo(self.boomScrollView.bottom);
     }];
 }
 - (void)setRuleContets:(NSString *)ruleContets {
     _ruleContets = ruleContets;
-
+    
     // 首行
     NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
     CGFloat emptylen = LabelFont * 2;
@@ -128,9 +138,10 @@
         NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
         CGFloat emptylen = LabelFont * 2;
         paragraph.firstLineHeadIndent = emptylen;
-
+        paragraph.alignment = NSTextAlignmentJustified;
+        
         _ruleContent.attributedText = [[NSAttributedString alloc] initWithString:_ruleContent.text attributes:@{
-                                                    NSParagraphStyleAttributeName:paragraph                                                       }];
+                                                                                                                NSParagraphStyleAttributeName:paragraph                                                       }];
         
     }
     return _ruleContent;
@@ -144,6 +155,19 @@
     }
     return _ruleAlertLabel;
 }
+
+- (UIScrollView *)boomScrollView {
+    
+    if (!_boomScrollView) {
+        _boomScrollView = [[UIScrollView alloc] init];
+        _boomScrollView.showsVerticalScrollIndicator = NO;
+        _boomScrollView.contentSize = CGSizeMake(0, self.height);
+        _boomScrollView.contentOffset = CGPointMake(0, 0);
+        _boomScrollView.bounces = NO;
+    }
+    return _boomScrollView;
+}
+
 - (UILabel *)line {
     if (!_line) {
         _line = [[UILabel alloc] init];
@@ -173,7 +197,7 @@
 }
 - (void)clickSureBtnAction {
     if (_sureBlock) {
-       [self dismiss];
+        [self dismiss];
         _sureBlock();
     }
 }
@@ -207,7 +231,7 @@
     self.frame = rect;
     
     // 约束
-//    [self setUP];
+    //    [self setUP];
     
     //渐入动画
     [self fadeIn];

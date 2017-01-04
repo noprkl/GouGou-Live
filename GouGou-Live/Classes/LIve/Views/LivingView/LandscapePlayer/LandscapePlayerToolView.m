@@ -107,7 +107,7 @@
         _watchCount = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_watchCount setImage:[UIImage imageNamed:@"联系人"] forState:(UIControlStateNormal)];
         _watchCount.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_watchCount setTitle:@"1000" forState:(UIControlStateNormal)];
+        [_watchCount setTitle:@"0" forState:(UIControlStateNormal)];
         [_watchCount setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
         _watchCount.enabled = NO;
     }

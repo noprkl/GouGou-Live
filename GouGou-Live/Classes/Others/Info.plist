@@ -136,5 +136,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>NSCameraUsageDescription</key>
+  <string>cameraDesciption</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>microphoneDesciption</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>photoLibraryDesciption</string>
 </dict>
 </plist>

@@ -131,7 +131,9 @@
          
          TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
          imagePickerVc.sortAscendingByModificationDate = NO;
-         
+         imagePickerVc.isSelectOriginalPhoto = YES;
+         imagePickerVc.allowPickingOriginalPhoto = NO;
+        
          [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
          [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
              if (flag) {
@@ -175,7 +177,10 @@
                                                         };
                                 [weakSelf postRequestWithPath:API_Add_system_msg params:dict2 success:^(id successJson) {
                                     DLog(@"%@", successJson);
-                                    [self showAlert:successJson[@"message"]];
+                                    [weakSelf showAlert:successJson[@"message"]];
+                                    if ([successJson[@"message"] isEqualToString:@"请求成功"]) {
+                                        [weakSelf.navigationController popViewControllerAnimated:YES];
+                                    }
                                 } error:^(NSError *error) {
                                     DLog(@"%@", error);
                                 }];
@@ -192,7 +197,7 @@
                                                 };
                         [weakSelf postRequestWithPath:API_Add_system_msg params:dict2 success:^(id successJson) {
                             DLog(@"%@", successJson);
-                            [self showAlert:successJson[@"message"]];
+                            [weakSelf showAlert:successJson[@"message"]];
                         } error:^(NSError *error) {
                             DLog(@"%@", error);
                         }];

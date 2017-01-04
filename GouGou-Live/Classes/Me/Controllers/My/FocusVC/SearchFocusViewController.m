@@ -10,7 +10,8 @@
 #import "MyFocusTableCell.h"
 #import "SearchFanModel.h"
 #import "PersonalPageController.h" // 个人主页
-#import <FMDB.h>
+#import "NoneDateView.h"
+
 @interface SearchFocusViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
@@ -18,6 +19,8 @@
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITextField *titleInputView; /**< 头部输入框 */
+
+@property (nonatomic, strong) NoneDateView *noneDateView; /**< 没有数据 */
 
 @end
 
@@ -39,6 +42,7 @@ static NSString *cellid = @"MyFocusCell";
     
     [self.navigationItem setTitleView:self.titleInputView];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.noneDateView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
 }
 // 只有点击搜索才能点击搜索
@@ -50,9 +54,14 @@ static NSString *cellid = @"MyFocusCell";
                            };
     [self postRequestWithPath:API_Search_nick params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        if (successJson) {
+        if (successJson[@"data"]) {
+            self.tableView.hidden = NO;
+            self.noneDateView.hidden = YES;
             self.dataArr = [SearchFanModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             [self.tableView reloadData];
+        }else{
+            self.tableView.hidden = YES;
+            self.noneDateView.hidden = NO;
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -96,6 +105,15 @@ static NSString *cellid = @"MyFocusCell";
     }
     return _tableView;
 }
+- (NoneDateView *)noneDateView {
+    if (!_noneDateView) {
+        _noneDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneDateView.noteStr = @"没有搜到";
+        _noneDateView.hidden = YES;
+        _noneDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneDateView;
+}
 #pragma mark
 #pragma mark - 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -106,17 +124,7 @@ static NSString *cellid = @"MyFocusCell";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SearchFanModel *model = self.dataArr[indexPath.row];
 
-    cell.searchModel = model;
-
-    NSString *filename = [NSString cachePathWithfileName:Focus];
-    NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
-
-    if ([focusArr containsObject:@([model.ID intValue])]) {
-        cell.isSelect = NO;
-    }else{
-        cell.isSelect = YES;
-    }
-    
+    cell.searchModel = model;    
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {// 选中 灰色 type 添加0 删除1
             

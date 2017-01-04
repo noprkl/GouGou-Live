@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "BuyCenterModel.h"
 
+typedef void(^CancelOrderBlock)();
 @interface WaitFontMoneyCell : UITableViewCell
+
 /** 订单模型 */
 @property (strong,nonatomic) BuyCenterModel *centerModel;
+
+@property (nonatomic, strong) CancelOrderBlock cancelBlock; /**< 倒计时结束 */
 
 @end

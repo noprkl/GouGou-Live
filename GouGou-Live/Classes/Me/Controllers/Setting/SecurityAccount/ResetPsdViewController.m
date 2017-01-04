@@ -25,7 +25,7 @@
         NSString *pwd = [NSString md5WithString:self.psdTextField.text];
         DLog(@"%@", pwd);
         NSDictionary *dict = @{
-                                   @"user_tel":@([[UserInfos sharedUser].usertel integerValue]),
+                                   @"user_tel":[UserInfos sharedUser].usertel,
                                    @"user_pwd":pwd,
                                    @"user_old_pwd":[NSString md5WithString:_oldPsd]
                                    };
@@ -35,6 +35,7 @@
             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                 
                 SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
+                sureSuccVC.title = @"登录密码重置";
                 [self.navigationController pushViewController:sureSuccVC animated:YES];
             }
 
@@ -47,7 +48,7 @@
     
     if ([self.title isEqualToString:@"支付密码重置"]) {
         NSDictionary *dict = @{
-                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                               @"user_id":[UserInfos sharedUser].ID,
                                @"old_password":[NSString md5WithString:_oldPsd] ,
                                @"pay_password":[NSString md5WithString:self.psdTextField.text]
                                };
@@ -58,6 +59,7 @@
             if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
                     
                     SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
+                    sureSuccVC.title = @"支付密码重置";
                     [self.navigationController pushViewController:sureSuccVC animated:YES];
                
             }
@@ -111,7 +113,11 @@
     NSString *psdNumber = self.psdTextField.text;
     NSString *surePsd = self.surePsdTextField.text;
     
-    if (![psdNumber isEqualToString:surePsd]) {
+    if (psdNumber.length < 6||surePsd.length < 6 ||surePsd.length > 20 ||psdNumber.length > 20) {
+        
+        [self showAlert:@"密码限制6-20位"];
+        
+    }else if (![psdNumber isEqualToString:surePsd]) {
         
         [self showAlert:@"两次密码输入不一样"];
         

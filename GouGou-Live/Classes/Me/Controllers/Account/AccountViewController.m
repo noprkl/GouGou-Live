@@ -32,6 +32,9 @@
     [self setNavBarItem];
     [self initUI];
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 - (void)initUI {
     self.navigationController.navigationBarHidden = NO;
     
@@ -72,18 +75,6 @@
 - (NSArray *)dataArr {
     if (!_dataArr) {
         _dataArr = [NSArray array];
-        if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
-            
-            if(!([UserInfos sharedUser].useralicode.length == 0)) { // 未设置支付密码 需要设置支付密码
-                _dataArr = @[@"余额", @"结算", @"提现支付宝"];
-            }else{ // 已经设置了支付密码 不能点击
-                _dataArr = @[@"余额", @"结算", @"提现支付宝"];
-            }
-
-        }else { // 未实名
-            _dataArr = @[@"余额",@"提示"];
-        }
-  
     }
     return _dataArr;
 }
@@ -95,7 +86,7 @@
             if([UserInfos sharedUser].useralicode.length == 0) { // 未绑定支付宝 需要绑定
                 _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
             }else{ // 已经设置了支付宝 不能点击
-                _controllerNames = @[@"", @"PresentApplicationViewController",@""];
+                _controllerNames = @[@"", @"PresentApplicationViewController",@"AddPayingSuccessViewController"];
             }
         }else { // 未实名
             _controllerNames = @[@"",@"CertificateViewController"];
@@ -120,6 +111,16 @@
 #pragma mark
 #pragma mark - TableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
+        if(!([UserInfos sharedUser].useralicode.length == 0)) { // 未设置支付密码 需要设置支付密码
+            _dataArr = @[@"余额", @"结算", @"提现支付宝"];
+        }else{ // 已经设置了支付密码 不能点击
+            _dataArr = @[@"余额", @"结算", @"提现支付宝"];
+        }
+        
+    }else { // 未实名
+        _dataArr = @[@"余额",@"提示"];
+    }
     return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -185,7 +186,6 @@
     
     NSString *cellText = self.dataArr[indexPath.row ];
     NSString *controllerName = self.controllerNames[indexPath.row];
-    
     UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
     VC.hidesBottomBarWhenPushed = YES;
     VC.title = cellText;

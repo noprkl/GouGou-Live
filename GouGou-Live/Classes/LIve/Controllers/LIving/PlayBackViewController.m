@@ -14,10 +14,12 @@
 
 #import "LivingCenterView.h"
 #import "LivingSendMessageView.h" // 编辑弹幕信息
+
 #import "TalkingViewController.h"
 #import "ServiceViewController.h"
 #import "DogShowViewController.h"
 #import "SellerShowViewController.h"
+
 #import "AppDelegate.h"
 
 @interface PlayBackViewController ()<UIScrollViewDelegate>
@@ -46,7 +48,9 @@
 @property (strong, nonatomic) UIProgressView *progressView;
 @property (strong, nonatomic) UIButton *playBtn;
 @property (strong, nonatomic) UIButton *playscreenBtn;
-@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
+@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 聊天室控制器 */
+@property(nonatomic, strong) ServiceViewController *serviceVc; /**< 客服控制器 */
+
 /** 底部scrollview */
 @property (strong, nonatomic) UIScrollView *baseScrollView;
 /** 选择按钮 */
@@ -84,8 +88,8 @@
     [self makeSubVcConstraint];
     [self setNavBarItem];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationLandscapeRight) name:UIWindowDidBecomeVisibleNotification object:nil];//进入全屏
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationPriate) name:UIWindowDidBecomeHiddenNotification object:nil];//退出全屏
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationLandscapeRight) name:UIWindowDidBecomeVisibleNotification object:nil];//进入全屏
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationPriate) name:UIWindowDidBecomeHiddenNotification object:nil];//退出全屏
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -176,7 +180,6 @@
     }
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-
         [UIView animateWithDuration:0.3 animations:^{
             self.topView.hidden = !self.topView.hidden;
             self.downView.hidden = !self.downView.hidden;
@@ -517,6 +520,7 @@
     [_playerItem removeObserver:self forKeyPath:@"status"];
     [_playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
     [_playBackPlayer removeTimeObserver:_playTimeObserver];
+    
     _playTimeObserver = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -556,16 +560,6 @@
         [invocation setArgument:&val atIndex:2];
         [invocation invoke];
     }
-    _playerLayer.frame = self.playerView.bounds;
-    self.baseScrollView.hidden = NO;
-    self.centerView.hidden = NO;
-//    [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
-//        make.left.right.equalTo(self.view);
-//        make.top.equalTo(self.view.top);
-//        make.height.equalTo(245);
-//    }];
-    [self makePlayLeacsecBackConstraints];
-    self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 245);
 }
 // 竖屏转横屏
 - (void)forceOrientationLandscapeRight {
@@ -582,15 +576,6 @@
         [invocation invoke];
     }
     [UIViewController attemptRotationToDeviceOrientation];
-    _isLandscape = NO;
-    [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
-    _playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    self.baseScrollView.hidden = YES;
-    self.centerView.hidden = YES;
-    
 }
 // 1. 设置样式
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -627,21 +612,18 @@
 - (NSMutableArray *)childVCS {
     if (!_childVCS) {
         _childVCS = [NSMutableArray array];
-        [_childVCS addObject:@"0"];
-        [_childVCS addObject:@"1"];
-        [_childVCS addObject:@"2"];
-        [_childVCS addObject:@"3"];
     }
     return _childVCS;
 }
 - (void)addChildViewControllers {
    
-    TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-    
-    Vc.roomID = _chatRoomID;
-    self.talkingVc = Vc;
-    [self.childVCS replaceObjectAtIndex:0 withObject:Vc];
-    [self addChildViewController:Vc];
+    TalkingViewController *talkVc = [[TalkingViewController alloc] init];
+    talkVc.roomID = _chatRoomID;
+//    self.talkingVc = talkVc;
+    talkVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    [self.baseScrollView addSubview:talkVc.view];
+    [self addChildViewController:talkVc];
+    [self.childVCS addObject:talkVc];
     
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
@@ -649,7 +631,9 @@
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    [self.childVCS replaceObjectAtIndex:1 withObject:dogShowVC];
+    dogShowVC.view.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    [self.baseScrollView addSubview:dogShowVC.view];
+    [self.childVCS addObject:dogShowVC];
     [self addChildViewController:dogShowVC];
     
     if (_liverId.length == 0) {
@@ -659,7 +643,10 @@
     ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
     serviceVC.liverImgUrl = _liverIcon;
     serviceVC.liverName = _liverName;
-    [self.childVCS replaceObjectAtIndex:2 withObject:serviceVC];
+    serviceVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH , SCREEN_HEIGHT - 290);
+    self.serviceVc = serviceVC;
+    [self.baseScrollView addSubview:serviceVC.view];
+    [self.childVCS addObject:serviceVC];
     [self addChildViewController:serviceVC];
 
     // 商家
@@ -667,7 +654,9 @@
     sellerShowVC.liverIcon = _liverIcon;
     sellerShowVC.liverName = _liverName;
     sellerShowVC.authorId = _liverId;
-    [self.childVCS replaceObjectAtIndex:3 withObject:sellerShowVC];
+    sellerShowVC.view.frame = CGRectMake(SCREEN_WIDTH * 3, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    [self.baseScrollView addSubview:sellerShowVC.view];
+    [self.childVCS addObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
     
     // 进入后第一次加载hot
@@ -675,52 +664,26 @@
     [self scrollViewDidEndDecelerating:self.baseScrollView];
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    
     // 每个子控制器的宽高
     CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height - 290;
-    
     // 偏移量 - x
-    // 如果是通过点击狗狗卡片进入的,滑到狗狗位置
-    //    if (_isDogCard) {
-    //        [scrollView setContentOffset:CGPointMake(width, 0)];
-    //    }
     CGFloat offset = scrollView.contentOffset.x;
-    
     // 获取视图的索引
     NSInteger index = offset / width;
-    
     //根据索引返回vc的引用
     UIViewController *childVC = self.childVCS[index];
     
     // 判断当前vc是否加载过
-    if([childVC isKindOfClass:[TalkingViewController class]]) {
-//        self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-    }
     if ([childVC isViewLoaded]) {
         return;
     };
     
-    // 给没加载过的控制器设置frame
-    childVC.view.frame = CGRectMake(offset, 0, width, height);
-    DLog(@"%@", NSStringFromCGRect(childVC.view.frame));
-    // 添加控制器视图到contentScrollView上
-    [scrollView addSubview:childVC.view];
-    
 #pragma mark - 隐藏键盘
-    if ([self.lastVC isKindOfClass:[TalkingViewController class]]) {
-        
-        self.talkingVc = (TalkingViewController *)self.lastVC;
-        
-        [self.talkingVc.textField resignFirstResponder];
-        
-    }else if ([self.lastVC isKindOfClass:NSClassFromString(@"ServiceViewController")]){
-        
-        ServiceViewController *serviceVC = (ServiceViewController *)self.lastVC;
-        
-        [serviceVC.textField resignFirstResponder];
-    }
-    
-    self.lastVC = childVC;
+    // 如果屏幕转动，让输入框隐藏
+    [self.talkingVc.textField resignFirstResponder];
+    [self.serviceVc.textField resignFirstResponder];
+
     self.scrollPoint = scrollView.contentOffset;
 }
 // 减速结束时调用 加载子控制器view的方法
@@ -731,8 +694,8 @@
 }
 - (UIScrollView *)baseScrollView {
     if (!_baseScrollView) {
-        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-        _baseScrollView.scrollEnabled = NO;
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 290, SCREEN_WIDTH, SCREEN_HEIGHT - 290)];
+//        _baseScrollView.scrollEnabled = NO;
         _baseScrollView.pagingEnabled = YES;
         _baseScrollView.showsVerticalScrollIndicator = NO;
         // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
@@ -792,8 +755,34 @@
 - (BOOL)shouldAutorotate {
     return YES;
 }
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
 }
+// 代理方法监听屏幕方向
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    // 如果屏幕转动，让输入框隐藏
+    [self.talkingVc.textField resignFirstResponder];
+    [self.serviceVc.textField resignFirstResponder];
+
+    if (toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
+        DLog(@"进入横屏");
+        _isLandscape = NO;
+        [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+        }];
+        _playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        self.baseScrollView.hidden = YES;
+        self.centerView.hidden = YES;
+        
+    }else {
+        DLog(@"进入竖屏");
+        _playerLayer.frame = self.playerView.bounds;
+        self.baseScrollView.hidden = NO;
+        self.centerView.hidden = NO;
+        [self makePlayLeacsecBackConstraints];
+        self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 245);
+    }
+}
+
 @end

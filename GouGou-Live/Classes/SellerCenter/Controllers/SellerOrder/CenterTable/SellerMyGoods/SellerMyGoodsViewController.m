@@ -38,6 +38,8 @@
 
 @property(nonatomic, assign) BOOL isSelect; /**< 是否选中 */
 
+@property (nonatomic, assign) NSInteger lastBtn; /**< 上一个按钮 */
+
 @end
 
 static NSString *cellid = @"SellerMyGoodsCell";
@@ -107,14 +109,19 @@ static NSString *cellid = @"SellerMyGoodsCell";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self getRequestSellerDog];
+
+    if (self.lastBtn) {
+        [self getRequestSellerDog];
+    }else{
+        [self GetRequestStateGoods:self.lastBtn];
+    }
 }
 - (void)initUI{
     _isMove = NO;
     _isSelect = NO;
     [self.view addSubview:self.headerView];
     [self.view addSubview:self.tableView];
-
+    self.lastBtn = 5;
     // 添加两个按钮
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.barBtnView];
     self.navigationItem.rightBarButtonItem = item;
@@ -171,20 +178,22 @@ static NSString *cellid = @"SellerMyGoodsCell";
         _headerView.backgroundColor = [UIColor whiteColor];
         __weak typeof(self) weakSelf = self;
 
-        _headerView.allBlock = ^(){
-            
-            [weakSelf getRequestSellerDog];
+        _headerView.allBlock = ^(){ //0 所有 1审核中/审核未通过  2 售完 3 待售
+            weakSelf.lastBtn = 0;
+            [weakSelf GetRequestStateGoods:0];
         };
-        _headerView.waitSellBlock = ^(){ // 待售1
-            [weakSelf GetRequestStateGoods:1];
-        };
-        _headerView.soldBlock = ^(){ // 已售
-            [weakSelf GetRequestStateGoods:2];
-        };
-        _headerView.reviewBlock = ^(){ // 审核
+        _headerView.waitSellBlock = ^(){
+            weakSelf.lastBtn = 3;
             [weakSelf GetRequestStateGoods:3];
         };
-
+        _headerView.soldBlock = ^(){
+            weakSelf.lastBtn = 2;
+            [weakSelf GetRequestStateGoods:2];
+        };
+        _headerView.reviewBlock = ^(){
+            weakSelf.lastBtn = 1;
+            [weakSelf GetRequestStateGoods:1];
+        };
     }
     return _headerView;
 }

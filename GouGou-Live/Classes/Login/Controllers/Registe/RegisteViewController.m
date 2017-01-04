@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendCodeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *readBtn;
 
 @end
 
@@ -57,16 +58,19 @@
         
         [self showAlert:@"请输入正确的手机号"];
     }else{
-        [self freetimeout];
         
         NSDictionary *dict = @{
                                @"tel" :self.phoneTextField.text ,
                                @"type" : @0
                                };
-        DLog(@"%@", dict);
+
         [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
+
             [self showAlert:successJson[@"message"]];
+            if ([successJson[@"code"] isEqualToString:@"1"]) {
+                [self freetimeout];
+            }
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -76,7 +80,9 @@
     NSString *phoneNumber = self.phoneTextField.text;
     NSString *codeNumber = self.codeTextField.text;
     BOOL flag =  [NSString valiMobile:phoneNumber];
-    if (phoneNumber.length == 0) {
+    if (!self.readBtn.selected) {
+        [self showAlert:@"请勾选用户协议"];
+    }else if (phoneNumber.length == 0) {
         [self showAlert:@"手机号不能为空"];
     }else if(!flag){
         [self showAlert:@"所输入的不是手机号"];
@@ -108,6 +114,8 @@
                     sureVC.title = @"密码确认";
                     sureVC.telNumber = self.phoneTextField.text;
                     sureVC.codeNumber = self.codeTextField.text;
+                    sureVC.type = _type;
+                    sureVC.name = _name;
                     [self.navigationController pushViewController:sureVC animated:YES];
                 }
                 if ([successJson[@"code"] isEqual:@"2"]) {
@@ -127,8 +135,7 @@
     sender.selected = !sender.selected;
     
     // 已阅读 可以确定
-    self.sureBtn.enabled = sender.selected;
-    
+//    self.sureBtn.enabled = sender.selected;
 }
 - (IBAction)clickProtocolAction:(UIButton *)sender {
 

@@ -46,6 +46,7 @@
     }
 }
 + (void)SinaLogin:(LoginSuccessBlock)success unBinding:(LoginUnBindingBlock)unBinding{
+    
     if (![[UserInfos sharedUser].wbopenid isEqual:[NSNull null]] && ![[UserInfos sharedUser].wbopenid isEqualToString:@""]) {
         NSDictionary *dict = @{
                                @"type":@"3",

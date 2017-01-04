@@ -75,7 +75,7 @@
 
 #pragma mark - 账户
 /** 获取用户资产 */
-#define API_UserAsset @"api/UserService/getUserAsset"
+#define API_UserAsset @"api/UserService/getUserAssert"
 /** 获取用户资产明细 */
 #define API_GetUserAssertDetai @"api/UserService/getUserAssertDetai"
 /** 用户提现申请 */
@@ -110,8 +110,6 @@
 #define API_Add_system_msg @"api/UserService/add_system_msg"
 /** 系统内容 */
 #define API_Help @"api/UserService/Help"
-
-
 
 #pragma mark - 收藏
 // 我的喜欢-狗狗
@@ -271,6 +269,8 @@
 #define API_System_msg @"api/UserService/system_msg"
 /** 轮播图 */
 #define API_Banner @"api/UserService/banner"
+/** 拉黑请求 */
+#define API_Memberstate @"api/UserService/Memberstate"
 
 
 #pragma mark - 直播
@@ -287,8 +287,11 @@
 
 /** 关注的主播的直播 */
 #define API_Fan_live @"api/ProductService/fan_live"
-/** 主播搜索 */
-#define API_Search_live @"api/ProductService/search_live"
+/** 直播搜索 */
+#define API_Live_kind @"api/ProductService/live_kind"
+/** 直播热搜 */
+#define API_Kind_recommand @"api/ProductService/kind_recommand"
+
 /** 最新直播卡片 */
 #define API_Look_like @"api/ProductService/look_like"
 /** 体型/印象搜索 */

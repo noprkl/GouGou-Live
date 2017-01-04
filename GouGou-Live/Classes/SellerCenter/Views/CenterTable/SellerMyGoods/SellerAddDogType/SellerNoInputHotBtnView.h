@@ -14,6 +14,7 @@ typedef void(^ClickBtnBlock)(DogCategoryModel *btnTitle);
 /** 数据 */
 @property (strong,nonatomic) NSArray *datalist;
 - (CGFloat)getViewHeight:(NSArray *)datalist;
+
 @property(nonatomic, strong) ClickBtnBlock clickBlcok; /**< 点击事件 */
 
 @end

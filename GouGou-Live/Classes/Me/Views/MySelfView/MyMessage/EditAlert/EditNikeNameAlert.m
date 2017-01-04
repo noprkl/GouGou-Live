@@ -8,7 +8,6 @@
 
 #import "EditNikeNameAlert.h"
 
-#define MaxLength 17
 
 @interface EditNikeNameAlert ()<UITextViewDelegate,UITextFieldDelegate>
 /** 蒙版 */
@@ -29,9 +28,6 @@
 
 @property(nonatomic, strong) UILabel *countLabel; /**< 字的个数 */
 
-
-@property(nonatomic, assign) NSInteger count; /**< 字数 */
-
 @end
 @implementation EditNikeNameAlert
 
@@ -49,7 +45,7 @@
         [self addSubview:self.sureBtn];
         [self addSubview:self.cancelBtn];
         
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewtextDidEndEditing:) name:@"UITextFieldTextDidChangeNotification" object:_editTextView];
+//        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewtextDidEndEditing:) name:@"UITextFieldTextDidChangeNotification" object:_editTextView];
     }
     return self;
 }
@@ -66,8 +62,8 @@
         UITextPosition *position = [textView positionFromPosition:selectedRange.start offset:0];
         // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
         if (!position) {
-            if (toBeString.length > MaxLength) {
-                textView.text = [toBeString substringToIndex:MaxLength];
+            if (toBeString.length > _countText) {
+                textView.text = [toBeString substringToIndex:_countText];
             }
         }
         // 有高亮选择的字符串，则暂不对文字进行统计和限制
@@ -77,11 +73,10 @@
     }
     // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
     else{
-        if (toBeString.length > MaxLength) {
-            textView.text = [toBeString substringToIndex:MaxLength];
+        if (toBeString.length > _countText) {
+            textView.text = [toBeString substringToIndex:_countText];
         }  
     }
-
 }
 
 - (void)setUP {
@@ -133,9 +128,9 @@
     self.editTextView.text = easyMessage;
 }
 
-- (void)setCountText:(NSString *)countText {
+- (void)setCountText:(NSInteger)countText {
     _countText = countText;
-    self.countLabel.text = countText;
+    self.countLabel.text = [NSString stringWithFormat:@"%ld", countText];
 }
 
 #pragma mark
@@ -171,11 +166,11 @@
         self.placeLabel = placeLabel;
        
         UILabel *countLabel = [[UILabel alloc] init];
-        countLabel.text = @"17";
-        _count = 17;
+        countLabel.text = [NSString stringWithFormat:@"%ld", _countText];
         countLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         countLabel.font = [UIFont systemFontOfSize:14];
-        countLabel.frame = CGRectMake(SCREEN_WIDTH - 25, 20, 20, 15);
+        countLabel.frame = CGRectMake(SCREEN_WIDTH - 40, 20, 35, 15);
+        countLabel.textAlignment = NSTextAlignmentCenter;
         [_editTextView addSubview:countLabel];
         self.countLabel = countLabel;
         
@@ -227,7 +222,7 @@
         return NO;
     }
     
-    if (range.location < 17) {
+    if (range.location < 20) {
         return YES;
     }
     return NO;
@@ -237,12 +232,17 @@
     if (textView.text.length == 0) {
         
         self.placeLabel.text = self.placeHolder;
-
     }else{
         self.placeLabel.text = @"";
     }
-    self.countLabel.text = [@(17 - textView.text.length) stringValue];
+    // 剩余字数
+    NSInteger lastCount = _countText - textView.text.length;
+    self.countLabel.text = [NSString stringWithFormat:@"%ld",lastCount];
+    if (lastCount <= 0) {
+        self.editTextView.text = [textView.text substringWithRange:NSMakeRange(0, _countText - 1)];
+    }
 }
+
 #pragma mark
 #pragma mark - 蒙版弹出效果
 - (UIControl *)overLayer
@@ -273,7 +273,7 @@
 //    CGFloat h = keyBoardFrame.size.height;
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 165 - 258, SCREEN_WIDTH, 165);
+    rect = CGRectMake(0, SCREEN_HEIGHT - 165 - 280, SCREEN_WIDTH, 165);
     self.frame = rect;
    
     [self.editTextView becomeFirstResponder];
@@ -283,7 +283,6 @@
     
     //渐入动画
     [self fadeIn];
-    
 }
 - (void)dismiss
 {

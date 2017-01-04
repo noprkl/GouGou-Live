@@ -66,7 +66,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     }else if(_shipModel.type == 1){ //免运费
         self.freeCost.on = YES;
 
-        [self priceSwitchBtnAction:self.freeCost];
+//        [self priceSwitchBtnAction:self.freeCost];
     }else if (_shipModel.type == 2){ // 按实结算
         self.realCost.on = YES;
 
@@ -232,6 +232,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     if (!_freeCost) {
         _freeCost = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
         _freeCost.on = YES;
+        _freeCost.userInteractionEnabled = NO;
 //        [_freeCost addTarget:self action:@selector(priceSwitchBtnAction:) forControlEvents:(UIControlEventValueChanged)];
     }
     return _freeCost;
@@ -246,7 +247,6 @@ static NSString *cellid = @"SellerAddShipTemplate";
 - (UISwitch *)realCost {
     if (!_realCost) {
         _realCost = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
-        
         [_realCost addTarget:self action:@selector(realCostSwitchBtnAction:) forControlEvents:(UIControlEventValueChanged)];
     }
     return _realCost;
@@ -277,7 +277,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
         
         templateName.font = [UIFont systemFontOfSize:14];
         templateName.textColor = [UIColor colorWithHexString:@"#333333"];
-        templateName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.dataArr[indexPath.row] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}];
+        templateName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"运费模板一(自定义输入名称)" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#333333"]}];
         [templateName addTarget:self action:@selector(editShipTemplateAction:) forControlEvents:(UIControlEventEditingChanged)];
         templateName.delegate = self;
         self.templateName = templateName;

@@ -48,14 +48,14 @@
 
 #pragma mark
 #pragma mark - 网络请求
-// 用户账单
+// 用户资产
 - (void)postGetUserAsset {
     
-    NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                           @"uid":@([[UserInfos sharedUser].ID intValue]),
+    NSDictionary *dict = @{
+                           @"user_id":[UserInfos sharedUser].ID,
                            };
     
-  [self postRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
+  [self getRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
       if ([successJson[@"message"] isEqualToString:@"请求成功"]) {
            self.userAsset = successJson[@"data"][@"asset"];
@@ -63,9 +63,9 @@
             self.userAsset = @"0.00";
       }
       [UserInfos sharedUser].userAsset = self.userAsset;
+      [UserInfos setUser];
       [self.tableView reloadData];
   } error:^(NSError *error) {
-
       DLog(@"%@", error);
   }];
 }
@@ -82,6 +82,7 @@
 //            DLog(@"%@", successJson);
             self.fansArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             [UserInfos sharedUser].fansCount = self.fansArray.count;
+            [UserInfos setUser];
 //            [self.tableView reloadData];
         }
     } error:^(NSError *error) {
@@ -99,39 +100,6 @@
             DLog(@"%@", successJson);
             // 得到关注人的人
             self.focusArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-     
-//            //把关注的人存到本地
-//            // 单例
-//            FMDBUser *fmdbTool = [FMDBUser tool];
-//            // 建表
-//            FMDatabase * database = [fmdbTool getDBWithDBName:Focus];
-//            // 清除表数据
-//            [fmdbTool clearDatabase:database from:Focus];
-//            for (FocusAndFansModel *model in self.focusArray) {
-//                NSDictionary *dict = @{
-//                                       Focus:@(model.userFanId)
-//                                       };
-//                [fmdbTool DataBase:database insertKeyValues:dict intoTable:Focus];
-//            }
-//            
-//            FMDatabase *dataBase = [FMDatabase databaseWithPath:[NSString cachePathWithfileName:Focus]];
-//            if ([dataBase open] ) {
-//                // 创建表
-//                NSString *sql = [NSString stringWithFormat:@"create table if not exists %@ (id integer primary key autoincrement, %@ integer);", Focus, Focus];
-//                [dataBase executeUpdate:sql];
-//                // 删除数据
-//                [dataBase executeUpdate:[NSString stringWithFormat:@"delete from %@;", Focus]];
-//                // 添加数据 把Focus插入到Focus
-//                for (FocusAndFansModel *model in self.focusArray) {
-//                    NSString *add = [NSString stringWithFormat:@"insert into %@ (%@) values (%ld);", Focus, Focus, model.userFanId];
-//                    [dataBase executeStatements:add];
-//                }
-//                [dataBase close];
-//                
-//            }else{
-//                DLog(@"打开失败");
-//            }
-            
             
             NSString *filePath = [NSString cachePathWithfileName:Focus];
             NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -146,7 +114,7 @@
             [arr writeToFile:filePath atomically:YES];
             
             [UserInfos sharedUser].focusCount = self.focusArray.count;
-            
+            [UserInfos setUser];
             [self.tableView reloadData];
         }
 

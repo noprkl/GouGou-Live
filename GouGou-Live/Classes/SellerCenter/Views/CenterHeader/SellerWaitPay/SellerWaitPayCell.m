@@ -50,8 +50,32 @@
     _model = model;
     
     self.nickView.nickName.text = model.userName;
-    self.nickView.dateLabel.text = @"14分59秒";
-    
+
+    __block NSInteger timeout = 1000;//[NSString getRemainTimeWithString:model.]; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                self.nickView.dateLabel.text = @"订单已关闭";
+            });
+        }else{
+            NSInteger days = (int)(timeout/(3600*24));
+            NSInteger hours = (int)((timeout-days*24*3600)/3600);
+            NSInteger minute = (int)(timeout-days*24*3600-hours*3600)/60;
+            NSInteger second = timeout-days*24*3600-hours*3600-minute*60;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                self.nickView.dateLabel.text = [NSString stringWithFormat:@"%ld天%ld时%ld分%ld秒", days, hours, minute, second];
+            });
+            timeout--;
+        }
+    });
+    dispatch_resume(_timer);
+
     if (model.pathSmall != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
         [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];

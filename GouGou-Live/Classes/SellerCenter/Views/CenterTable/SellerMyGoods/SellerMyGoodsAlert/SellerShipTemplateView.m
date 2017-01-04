@@ -50,8 +50,11 @@ static NSString *cellid = @"SellerShipTemplate";
     return _buttons;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return self.detailPlist.count;
+    if (_detailPlist.count == 0) {
+        return 1;
+    }else{
+        return self.detailPlist.count;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -67,39 +70,36 @@ static NSString *cellid = @"SellerShipTemplate";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:cellid];
     }
-    
-    UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    UIImage *image = [UIImage imageNamed:@"椭圆-1"];
-    [btn setImage:image forState:(UIControlStateNormal)];
-    btn.frame = CGRectMake(10 , (44 - image.size.height) / 2, image.size.width, image.size.height);
-    
-    [btn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];
-    [btn addTarget:self action:@selector(choseTransformBtn:) forControlEvents:(UIControlEventTouchDown)];
-    [self.buttons addObject:btn];
-//    if (indexPath.row == 0) {
-//        self.lastBtn = btn;
-//        self.lastIndex = 0;
-//        btn.selected = YES;
-//    }
-    [cell.contentView addSubview:btn];
-    SellerShipTemplateModel *model = self.detailPlist[indexPath.row];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(image.size.width + 20, 0, 200, 44)];
-    label.text = model.name;
-    label.textColor = [UIColor colorWithHexString:@"#999999"];
-    label.font = [UIFont systemFontOfSize:14];
-    [cell.contentView addSubview:label];
-    NSString *cost = @"";
-    if (model.type == 0) { //模板类型 0运费模版 1免运费 2按时计算
-        cost = model.money;
-    }else  if(model.type == 1) {
-        cost = @"免运费";
-    }else if(model.type == 2) {
-        cost = @"按实结算";
+    if (_detailPlist.count == 0) {
+        cell.textLabel.text = @"暂无模板";
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    }else{
+        UIButton *btn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        UIImage *image = [UIImage imageNamed:@"椭圆-1"];
+        [btn setImage:image forState:(UIControlStateNormal)];
+        btn.frame = CGRectMake(10 , (44 - image.size.height) / 2, image.size.width, image.size.height);
+        
+        [btn setImage:[UIImage imageNamed:@"圆角-对勾"] forState:(UIControlStateSelected)];
+        [btn addTarget:self action:@selector(choseTransformBtn:) forControlEvents:(UIControlEventTouchDown)];
+        [self.buttons addObject:btn];
+        [cell.contentView addSubview:btn];
+        SellerShipTemplateModel *model = self.detailPlist[indexPath.row];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(image.size.width + 20, 0, 200, 44)];
+        label.text = model.name;
+        label.textColor = [UIColor colorWithHexString:@"#999999"];
+        label.font = [UIFont systemFontOfSize:14];
+        [cell.contentView addSubview:label];
+        NSString *cost = @"";
+        if (model.type == 0) { //模板类型 0运费模版 1免运费 2按时计算
+            cost = model.money;
+        }else  if(model.type == 1) {
+            cost = @"免运费";
+        }else if(model.type == 2) {
+            cost = @"按实结算";
+        }
+        cell.detailTextLabel.attributedText = [self getAttributeWith:cost];
+        self.lastCell = cell;
     }
-    
-    cell.detailTextLabel.attributedText = [self getAttributeWith:cost];
-
-    self.lastCell = cell;
     return cell;
 
 }
@@ -223,7 +223,7 @@ static NSString *cellid = @"SellerShipTemplate";
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 180, SCREEN_WIDTH, 180);
+    rect = CGRectMake(0, SCREEN_HEIGHT - ((self.detailPlist.count +1)* 44), SCREEN_WIDTH, ((self.detailPlist.count +1)* 44));
     self.frame = rect;
     //渐入动画
     [self fadeIn];

@@ -46,8 +46,7 @@ static NSString * reuseIdentifier = @"headerID";
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.view hint:@"刷新中"];
-
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
        
@@ -86,12 +85,11 @@ static NSString * reuseIdentifier = @"headerID";
                     self.dataArray = liveMutableArr;
                     [self.collection reloadData];
                 }
-                [self.collection reloadData];
+//                [self.collection reloadData];
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
         }
-        //                    [self hideHud]
 //        [self.collection reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);

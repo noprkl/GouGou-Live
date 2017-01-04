@@ -204,8 +204,7 @@ static NSString *cellid = @"SellerAddShipTemplate";
     if (!_freeCost) {
         _freeCost = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
         _freeCost.on = YES;
-        [_freeCost setOn:YES];
-        
+        _freeCost.userInteractionEnabled = NO;
         // 注释掉这个就不能点击了
 //        [_freeCost addTarget:self action:@selector(priceSwitchBtnAction:) forControlEvents:(UIControlEventValueChanged)];
     }

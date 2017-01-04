@@ -175,6 +175,8 @@ static NSString *cellid4 = @"cellid4";
     [self getRequestAlbums];
     // 请求评论数
     [self getRequestComment];
+    // 请求粉丝数
+    [self postRequestGetFans];
     // 请求满意度
     [self getUserPleasure];
     // 请求

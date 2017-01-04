@@ -8,14 +8,17 @@
 
 #import "MyFansViewController.h"
 #import "MyFocusTableCell.h"
-#import "FocusAndFansModel.h"
+#import "FanModel.h"
 #import "PersonalPageController.h" // 个人主页
-#import "FMDBUser.h"
+#import "NoneDateView.h"// 没有数据
+
 @interface MyFansViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+
+@property (nonatomic, strong) NoneDateView *noneDateView; /**< 没有数据 */
 
 @end
 
@@ -31,9 +34,13 @@ static NSString *cellid = @"MyFocusCell";
     [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         
-        if (successJson) {
-            //            DLog(@"%@", successJson);
-            self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneDateView.hidden = NO;
+            self.tableView.hidden = YES;
+        }else if ([successJson[@"code"] isEqualToString:@"1"]) {
+            self.noneDateView.hidden = YES;
+            self.tableView.hidden = NO;
+            self.dataArr = [FanModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             [UserInfos sharedUser].fansCount = self.dataArr.count;
             [self.tableView reloadData];
         }
@@ -58,6 +65,7 @@ static NSString *cellid = @"MyFocusCell";
     [self setNavBarItem];
     self.title = @"我的粉丝";
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.noneDateView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
 }
 
@@ -79,6 +87,15 @@ static NSString *cellid = @"MyFocusCell";
     }
     return _tableView;
 }
+- (NoneDateView *)noneDateView {
+    if (!_noneDateView) {
+        _noneDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneDateView.noteStr = @"没有粉丝";
+        _noneDateView.hidden = YES;
+        _noneDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneDateView;
+}
 #pragma mark
 #pragma mark - 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -87,9 +104,8 @@ static NSString *cellid = @"MyFocusCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    FocusAndFansModel *model = self.dataArr[indexPath.row];
-    cell.model = model;
-        
+    FanModel *model = self.dataArr[indexPath.row];
+    cell.fanModel = model;
     cell.selectBlock = ^(BOOL isSelect){
         if (isSelect) {
 
@@ -108,8 +124,8 @@ static NSString *cellid = @"MyFocusCell";
         }else {
 
             NSDictionary *dict = @{
-                                   @"user_id":@(11),
-                                   @"id":[UserInfos sharedUser].ID,
+                                   @"user_id":[UserInfos sharedUser].ID,
+                                   @"id":@(model.userFanId),
                                    @"type":@(1)
                                    };
             [self getRequestWithPath:API_Add_fan params:dict success:^(id successJson) {
@@ -129,7 +145,7 @@ static NSString *cellid = @"MyFocusCell";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
-    FocusAndFansModel *model = self.dataArr[indexPath.row];
+    FanModel *model = self.dataArr[indexPath.row];
 
     PersonalPageController *personalVc = [[PersonalPageController alloc] init];
     personalVc.personalID = model.userFanId;

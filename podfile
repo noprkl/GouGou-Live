@@ -13,7 +13,7 @@ target 'GouGou-Live' do
 	pod 'MJRefresh', '~> 3.1.12'
 	pod 'TZImagePickerController'	
 	pod 'FMDB', '~> 2.6.2'
-
+	pod 'SVProgressHUD', '~> 2.0.3'
 	
 	# U-Share SDK UI模块（分享面板，建议添加）
   	  pod 'UMengUShare/UI'

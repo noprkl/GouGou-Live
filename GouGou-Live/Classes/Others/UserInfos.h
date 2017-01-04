@@ -29,7 +29,7 @@
 @property(nonatomic, strong) NSString *isreal; /**< 实名认证 1.未认证 2.审核 3.已认证 4.认证失败 */
 
 @property(nonatomic, strong) NSString *useralicode; /**< 支付宝账号 */
-@property(nonatomic, strong) NSString *userpaycode; /**< 支付宝账号 */
+@property(nonatomic, strong) NSString *userpaycode; /**< 支付宝账号密码 */
 
 // 不可删掉
 @property(nonatomic, strong) NSString *wxopenid; /**< 微信快捷登录 */

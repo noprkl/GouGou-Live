@@ -27,7 +27,7 @@
 - (void)setCurrentTime:(NSString *)currentTime {
 
     _currentTime = currentTime;
-    self.timeLabel.text = [NSString stringFromDateString:currentTime];
+    self.timeLabel.text = currentTime;
 }
 
 - (void)setBuynessName:(NSString *)buynessName {
@@ -77,7 +77,7 @@
         
         make.left.equalTo(weakself.userImage.right).offset(10);
         make.centerY.equalTo(weakself.centerY);
-        
+        make.width.equalTo(80);
     }];
     
     [_certityLabel mas_makeConstraints:^(MASConstraintMaker *make) {

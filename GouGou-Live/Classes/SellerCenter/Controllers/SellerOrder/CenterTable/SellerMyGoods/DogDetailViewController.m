@@ -33,7 +33,8 @@
         DLog(@"%@", successJson);
         if (successJson) {
             self.dogInfo = [DogDetailModel mj_objectWithKeyValues:successJson[@"data"]];
-            NSArray *imsArr = [self.dogInfo.pathBig componentsSeparatedByString:@","];
+            NSMutableArray *imsArr = [NSMutableArray arrayWithArray:[self.dogInfo.pathBig componentsSeparatedByString:@","]];
+            [imsArr removeObjectAtIndex:0];
             if (imsArr.count == 4) {
                 self.dogDetailView.contentSize = CGSizeMake(0, 650);
             }else{
@@ -102,7 +103,6 @@
         make.left.width.bottom.equalTo(self.view);
         make.height.equalTo(50);
     }];
-
 }
 #pragma mark
 #pragma mark - 懒加载

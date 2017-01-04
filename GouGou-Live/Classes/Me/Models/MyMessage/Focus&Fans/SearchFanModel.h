@@ -17,6 +17,6 @@
 
 @property(nonatomic, strong) NSString *ID; /**< 关注ID */
 
-@property (nonatomic, strong) NSString *state; /**< 是否关注 */
+@property (nonatomic, strong) NSString *state; /**< 是否关注0未关注 1关注 */
 
 @end

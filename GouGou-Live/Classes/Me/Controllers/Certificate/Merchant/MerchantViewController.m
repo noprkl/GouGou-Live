@@ -260,7 +260,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
                                                                 @"shop_region":areasText,
                                                                 @"shop_area":adressText,
                                                                 @"shop_photo":str,
-                                                                @"invite_id":@([phoneNumText integerValue])
+                                                                @"invite_id":phoneNumText
                                                                 };
                                         DLog(@"%@", dict2);
                                         [self postRequestWithPath:API_MerchantAuth params:dict2 success:^(id successJson) {
@@ -401,7 +401,9 @@ static NSString * MedrchantCell = @"MedrchantCell";
 
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
             imagePickerVc.sortAscendingByModificationDate = NO;
-            
+            imagePickerVc.isSelectOriginalPhoto = YES;
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
             
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {

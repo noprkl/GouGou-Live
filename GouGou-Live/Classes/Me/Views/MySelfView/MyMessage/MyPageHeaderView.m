@@ -154,6 +154,7 @@
         }
     }else{
         self.userNameAuthen.hidden = YES;
+        self.pleasure.hidden = YES;
         self.startSource.hidden = YES;
     }
 }

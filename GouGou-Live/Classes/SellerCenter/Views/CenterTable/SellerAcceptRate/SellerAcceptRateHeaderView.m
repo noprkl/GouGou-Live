@@ -122,6 +122,10 @@
     self.fansCountLabel.text = [@([UserInfos sharedUser].fansCount) stringValue];
     self.rateCountLabel.text = [@([UserInfos sharedUser].commentCount) stringValue];
 }
+- (void)setPleasureCount:(NSInteger)pleasureCount {
+    _pleasureCount = pleasureCount;
+    self.startView.startCount = pleasureCount;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UIImageView *)sellerIconView {

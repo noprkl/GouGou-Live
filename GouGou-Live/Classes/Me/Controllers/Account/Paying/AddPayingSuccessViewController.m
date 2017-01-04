@@ -22,10 +22,7 @@
     [sender setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 
     [self clickButtonAction];
-    PresentApplicationViewController * preApplicatVC = [[PresentApplicationViewController alloc] init];
-    
-    [self.navigationController pushViewController:preApplicatVC animated:YES];
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)clickRelationServiceBtn:(UIButton *)sender {
     
@@ -38,8 +35,6 @@
     viewController.title = EaseTest_Chat1;
     viewController.chatID = EaseTest_Chat1;
     [self.navigationController pushViewController:viewController animated:YES];
-    
-    
 }
 
 - (void)clickButtonAction {
@@ -73,7 +68,7 @@
     [self.relationServiceBtn setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     [self.relationServiceBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];
     [self.relationServiceBtn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
-    [self.relationServiceBtn setBackgroundColor:[UIColor whiteColor]];
+    [self.relationServiceBtn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
     
     [self.cancelBtn setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     [self.cancelBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];

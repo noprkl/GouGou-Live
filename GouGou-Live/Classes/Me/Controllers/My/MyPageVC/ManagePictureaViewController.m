@@ -18,6 +18,7 @@
 #import "PicturesViewController.h" //相册
 
 #import "MyAlbumsModel.h"
+#import "NoneDateView.h"
 
 @interface ManagePictureaViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
@@ -34,6 +35,8 @@
 
 @property(nonatomic, strong) SellerGoodsBarBtnView *barBtnView; /**< 上边按钮 */
 @property(nonatomic, strong) UIButton *allBtn; /**< 全选按钮 */
+
+@property (nonatomic, strong) NoneDateView *noneDateView; /**< 没有数据 */
 
 @end
 static NSString *cellid = @"ManagePictureaCell";
@@ -56,7 +59,15 @@ static NSString *cellid = @"ManagePictureaCell";
     [self getRequestWithPath:API_album params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.dataArr removeAllObjects];
-        self.dataArr = [MyAlbumsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneDateView.hidden = NO;
+            self.collectionView.hidden = YES;
+        }else{
+            self.noneDateView.hidden = NO;
+            self.collectionView.hidden = YES;
+            self.dataArr = [MyAlbumsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        }
+        
         // 刷新
         [self.collectionView reloadData];
     } error:^(NSError *error) {
@@ -93,6 +104,7 @@ static NSString *cellid = @"ManagePictureaCell";
     self.navigationItem.rightBarButtonItem = item;
     
     [self.view addSubview:self.bottomView];
+    [self.view addSubview:self.noneDateView];
     [self.bottomView makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
         make.height.equalTo(50);
@@ -100,8 +112,6 @@ static NSString *cellid = @"ManagePictureaCell";
     _isSelect = NO;
     _isHid = YES;
     [self.view addSubview:self.collectionView];
-    
-    [self.view addSubview:self.bottomView];
 }
 - (void)choseAddPicture:(UIButton *)btn {
     btn.selected = !btn.selected;
@@ -224,11 +234,20 @@ static NSString *cellid = @"ManagePictureaCell";
                 [prommit dismiss];
             };
             [prommit show];
-            
         };
     }
     return _bottomView;
 }
+- (NoneDateView *)noneDateView {
+    if (!_noneDateView) {
+        _noneDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneDateView.noteStr = @"没有相册";
+        _noneDateView.hidden = YES;
+        _noneDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneDateView;
+}
+
 #pragma mark
 #pragma mark - 代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

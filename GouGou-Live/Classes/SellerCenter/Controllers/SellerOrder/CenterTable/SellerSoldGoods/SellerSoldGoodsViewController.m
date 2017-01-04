@@ -41,7 +41,7 @@ static NSString *closeCell = @"SellerCloseCell";
 // 请求所有的订单
 - (void)getRequestAllOrder {
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(0),
                            @"page":@(1),
                            @"pageSize":@(10)

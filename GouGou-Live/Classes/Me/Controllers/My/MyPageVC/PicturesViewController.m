@@ -19,16 +19,16 @@
 #import "MyPictureListModel.h"
 
 #import "SDPhotoBrowser.h"
+#import "NoneDateView.h"
 
 @interface PicturesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, SDPhotoBrowserDelegate>
 
 @property(nonatomic, strong) UICollectionView *collectionView; /**< 表格 */
 
 @property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
-
 @property(nonatomic, strong) NSMutableArray *selectData; /**< 选中数据 */
-
 @property(nonatomic, assign) BOOL isSelect; /**< 是否选中 */
+
 @property(nonatomic, assign) BOOL isHid; /**< 是否隐藏 */
 
 @property(nonatomic, strong) SellerGoodsBottomView *bottomView; /**< 选中按钮 */
@@ -36,6 +36,8 @@
 @property(nonatomic, strong) SellerGoodsBarBtnView *barBtnView; /**< 上边按钮 */
 
 @property(nonatomic, strong) UIButton *allBtn; /**< 全选按钮 */
+
+@property (nonatomic, strong) NoneDateView *noneDateView; /**< 没有数据 */
 
 @end
 static NSString *cellid = @"PicturesCell";
@@ -49,8 +51,15 @@ static NSString *cellid = @"PicturesCell";
     [self getRequestWithPath:API_Album_list params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.dataArr removeAllObjects];
-        self.dataArr = [MyPictureListModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-        [self.collectionView reloadData];
+        if (successJson[@"data"]) {
+            self.collectionView.hidden = NO;
+            self.noneDateView.hidden = YES;
+            self.dataArr = [MyPictureListModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [self.collectionView reloadData];
+        }else{
+            self.collectionView.hidden = YES;
+            self.noneDateView.hidden = NO;
+        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -85,6 +94,7 @@ static NSString *cellid = @"PicturesCell";
     self.navigationItem.rightBarButtonItem = item;
     
     [self.view addSubview:self.bottomView];
+    [self.view addSubview:self.noneDateView];
     [self.bottomView makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
         make.height.equalTo(50);
@@ -92,8 +102,6 @@ static NSString *cellid = @"PicturesCell";
     _isSelect = NO;
     _isHid = YES;
     [self.view addSubview:self.collectionView];
-    
-    [self.view addSubview:self.bottomView];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -137,6 +145,16 @@ static NSString *cellid = @"PicturesCell";
     }
     return _collectionView;
 }
+- (NoneDateView *)noneDateView {
+    if (!_noneDateView) {
+        _noneDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneDateView.noteStr = @"没有照片";
+        _noneDateView.hidden = YES;
+        _noneDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneDateView;
+}
+
 // 编辑
 - (SellerGoodsBarBtnView *)barBtnView {
     if (!_barBtnView) {
@@ -163,7 +181,9 @@ static NSString *cellid = @"PicturesCell";
             // 添加相片
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
             imagePickerVc.sortAscendingByModificationDate = NO;
-            
+            imagePickerVc.isSelectOriginalPhoto = YES;
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
             
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {

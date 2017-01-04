@@ -207,6 +207,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                     }
                                     NSString *idStr = [impresArr componentsJoinedByString:@"|"];
                                     // 图片地址
+                                    [self.photoUrl removeAllObjects];
                                     for (NSInteger i = 0; i < self.photoArr.count; i ++) {
                                         NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
                                         NSDictionary *dict = @{
@@ -443,7 +444,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [self textFieldShouldReturn:self.priceText];
             [self textFieldShouldReturn:self.noteText];
             AddDogAgeAlertView *ageView = [[AddDogAgeAlertView alloc] init];
-
             [ageView show];
             
             //            __weak typeof(sizeView) weakView = sizeView;
@@ -551,6 +551,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 shipTemplateView.detailPlist = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                [shipTemplateView show];
                 [shipTemplateView reloadData];
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -558,10 +559,17 @@ static NSString *cellid = @"SellerCreateDogMessage";
         
             shipTemplateView.sureBlock = ^(SellerShipTemplateModel *templateType){
                 DLog(@"%@", templateType);
-                self.shipLabel.text = [NSString stringWithFormat:@"%@--%@", templateType.name, templateType.money];
+                NSString *cost = @"";
+                if (templateType.type == 0) { //模板类型 0运费模版 1免运费 2按时计算
+                    cost = templateType.money;
+                }else  if(templateType.type == 1) {
+                    cost = @"免运费";
+                }else if(templateType.type == 2) {
+                    cost = @"按实结算";
+                }
+                self.shipLabel.text = cost;
                 self.shipModel = templateType;
             };
-            [shipTemplateView show];
         }
             break;
         default:
@@ -586,9 +594,10 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
             imagePickerVc.sortAscendingByModificationDate = NO;
-            
+            imagePickerVc.isSelectOriginalPhoto = YES;
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
-            
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
                 if (flag) {
                     [weakPhoto.dataArr addObject:photos[0]];
@@ -613,6 +622,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
 #pragma mark - 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 60;
+
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     

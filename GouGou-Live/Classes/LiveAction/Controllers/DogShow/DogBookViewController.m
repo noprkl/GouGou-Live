@@ -20,6 +20,8 @@
 #import "PromptView.h"
 #import "NSString+MD5Code.h"
 #import "ForgetPayPsdViewController.h"
+#import "BuySuccessVc.h"
+
 @interface DogBookViewController ()<UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
 @property(nonatomic, strong) UITableView *tablevView; /**< 表格 */
@@ -50,6 +52,7 @@
 
 @implementation DogBookViewController
 #pragma mark - 网络请求
+
 // 结算
 - (void)clickPayBtnAction:(UIButton *)btn {
     if (![UserInfos getUser]){
@@ -64,8 +67,8 @@
             }else{
             
             NSDictionary *dict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                                   @"id":@([_model.ID intValue]),
+                                   @"user_id":[UserInfos sharedUser].ID,
+                                   @"id":_model.ID,
                                    @"address_id":@(_defaultModel.ID)
                                    };
             DLog(@"%@", dict);
@@ -78,8 +81,8 @@
                     if ([style isEqualToString:@"支付全款"]) {
                         // 生成待支付全款订单
                         NSDictionary *typeDict = @{
-                                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                                                   @"order_id":@([orderId intValue]),
+                                                   @"user_id":[UserInfos sharedUser].ID,
+                                                   @"order_id":orderId,
                                                    @"type":@(1)
                                                    };
                         [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
@@ -98,8 +101,8 @@
                     }else if ([style isEqualToString:@"支付定金"]) {
                         // 生成待支付定金订单
                         NSDictionary *typeDict = @{
-                                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                                                   @"order_id":@([orderId intValue]),
+                                                   @"user_id":[UserInfos sharedUser].ID,
+                                                   @"order_id":orderId ,
                                                    @"type":@(2)
                                                    };
                         [self postRequestWithPath:API_Order_second params:typeDict success:^(id successJson) {
@@ -180,7 +183,7 @@
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:[orderID intValue] price:[money intValue] payPwd:[NSString md5WithString:text] states:3];
+                    [self walletPayWithOrderId:orderID price:money payPwd:[NSString md5WithString:text] states:3];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -195,7 +198,7 @@
         };
     }
     if ([payWay isEqualToString:@"支付宝支付"]) {
-        [self aliPayWithOrderId:[orderID intValue] totalFee:[money floatValue]];
+        [self aliPayWithOrderId:orderID totalFee:[money floatValue]];
     }
     if ([payWay isEqualToString:@"微信支付"]) {
         
@@ -203,17 +206,22 @@
     }
 }
 /** 钱包支付 2定金 3全款 */
-- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state {
+- (void)walletPayWithOrderId:(NSString *)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state {
+    NSString *money = [NSString stringWithFormat:@"%.0lf", [price floatValue] * 100];
+
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                           @"order_id":@(orderID),
-                           @"user_price":@(price),
+                           @"user_id":[UserInfos sharedUser].ID,
+                           @"order_id":orderID,
+                           @"user_price":money,
                            @"user_pwd":payPwd,
                            @"status":@(state)
                            };
     [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
+        BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
+        paySuccessVc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:paySuccessVc animated:YES];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -221,7 +229,7 @@
 /** 微信支付 */
 - (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(float)fee {
     // /gougou.itnuc.com/weixinpay/wxapi.php?order=wx12345678&total_fee=1&mark=testpya
-    NSString *money = [NSString stringWithFormat:@"%lf", fee * 100];
+    NSString *money = [NSString stringWithFormat:@"%.0lf", fee * 100];
     
     NSDictionary *dict = @{
                            @"order":orderID,
@@ -242,12 +250,15 @@
         req.sign = [successJson objectForKey:@"sign"] != [NSNull null] ?successJson[@"sign"]:@"";
         req.openID = [successJson objectForKey:@"appid"] != [NSNull null] ?successJson[@"appid"]:@"";
         
-        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%lu, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
+        DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
         
         BOOL flag = [WXApi sendReq:req];
         if (flag) {
             
             DLog(@"支付成功");
+            BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
+            paySuccessVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:paySuccessVc animated:YES];
         }else{
             DLog(@"支付失败");
         }
@@ -257,12 +268,12 @@
     }];
 }
 /** 支付宝支付 */
-- (void)aliPayWithOrderId:(int)orderID totalFee:(float)fee {
+- (void)aliPayWithOrderId:(NSString *)orderID totalFee:(float)fee {
     //htp://gougou.itnuc.com/appalipay/signatures_url.php?id=111111111111&total_fee=1
-    NSString *money = [NSString stringWithFormat:@"%lf", fee * 100];
+    NSString *money = [NSString stringWithFormat:@"%.0lf", fee * 100];
 
     NSDictionary *dit = @{
-                          @"id":@(orderID),
+                          @"id":orderID,
                           @"total_fee":money
                           };
     DLog(@"%@", dit);
@@ -282,7 +293,11 @@
         [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             DLog(@"reslut = %@",resultDic);
             //
-            [self.navigationController popViewControllerAnimated:YES];
+            if ([resultDic[@"resultStatus"] intValue] == 9000) {
+                BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
+                paySuccessVc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:paySuccessVc animated:YES];
+            }
         }];
     }
 }
@@ -317,6 +332,28 @@
         }];
     }
 }
+// 用户资产
+- (void)postGetUserAsset {
+    
+    NSDictionary *dict = @{
+                           @"user_id":[UserInfos sharedUser].ID,
+                           };
+    
+    [self getRequestWithPath:API_UserAsset params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        NSString *userAsset;
+        if ([successJson[@"message"] isEqualToString:@"请求成功"]) {
+            userAsset = successJson[@"data"][@"asset"];
+        }else {
+            userAsset = @"0.00";
+        }
+        [UserInfos sharedUser].userAsset = userAsset;
+        [UserInfos setUser];
+
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -330,7 +367,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.hidesBottomBarWhenPushed = YES;
     [self postGetAdressRequest];
-   
+    [self postGetUserAsset];
     // 通知监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }

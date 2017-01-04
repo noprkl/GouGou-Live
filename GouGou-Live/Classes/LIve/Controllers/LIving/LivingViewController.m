@@ -17,7 +17,9 @@
 #import "ShareBtnModel.h"
 #import "DeletePrommtView.h" // 举报提示
 
-#import "TalkingViewController.h"
+//#import "TalkingViewController.h"
+#import "EaseMessageViewController.h"
+
 #import "ServiceViewController.h"
 #import "DogShowViewController.h"
 #import "SellerShowViewController.h"
@@ -29,7 +31,6 @@
 #import "ShareBtnModel.h" // 分享模型
 
 #import "LivingSendMessageView.h" // 编辑弹幕信息
-#import "TalkingViewController.h" // 弹幕控制器
 #import "ShowIngDogModel.h"
 
 #import "LiveListDogInfoModel.h"
@@ -76,7 +77,11 @@
 @property(nonatomic, strong) UIImageView *livingImageView; /**< 直播中图片 */
 @property(nonatomic, strong) LandscapePlayerToolView *livetopView; /**< 头部view */
 @property(nonatomic, strong) LivingSendMessageView *sendMessageView; /**< 编辑信息view */
-@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
+@property(nonatomic, strong) EaseMessageViewController *talkingVc; /**< 弹窗控制器 */
+
+@property (nonatomic, strong) EaseMessageViewController *lanceMessageVc; /**< 横屏聊天 */
+
+@property (nonatomic, strong) ServiceViewController *serviceVc; /**< 客服 */
 
 /** 观看人数 */
 @property (strong, nonatomic) UIButton *watchLabel;
@@ -140,6 +145,8 @@
     // 设置直播参数
     self.roomNameLabel.text = _liverName;
     [self.watchLabel setTitle:_watchCount forState:(UIControlStateNormal)];
+    // 横屏
+    [self.livetopView.watchCount setTitle:_watchCount forState:(UIControlStateNormal)];
     
     // 设置navigationBar的透明效果
     [self.navigationController.navigationBar setAlpha:0];
@@ -192,6 +199,30 @@
         LiveListStreamModel *stream = [LiveListStreamModel mj_objectWithKeyValues:rootSteam.steam];
         self.stream = stream;
         [self LiveInitUI];
+        // 设置直播展示的狗
+        if (self.rootModel.info.count > 0) {
+            [self.livePlayer.playerView addSubview:self.showingImg];
+            [self.livePlayer.playerView addSubview:self.showingPrice];
+            [self.showingImg remakeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.view.centerY);
+                make.right.equalTo(self.view.right).offset(-10);
+                make.size.equalTo(CGSizeMake(30, 30));
+            }];
+            
+            [self.showingPrice remakeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self.showingImg.centerX);
+                make.top.equalTo(self.showingImg.bottom).offset(10);
+            }];
+
+            ShowIngDogModel *showDogModel = self.rootModel.info[0];
+            if (showDogModel.pathSmall != NULL) {
+                NSString *imgStr = [IMAGE_HOST stringByAppendingString:showDogModel.pathSmall];
+                [self.showingImg sd_setImageWithURL:[NSURL URLWithString:imgStr] placeholderImage:[UIImage imageNamed:@"组-7"]];
+            }
+            self.showingPrice.text = showDogModel.price;
+
+        }
+        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -249,16 +280,16 @@
     // 全屏
     [self.livePlayer.playerView addSubview:self.livetopView];
     [self.livePlayer.playerView addSubview:self.livingImageView];
-    [self.livePlayer.playerView addSubview:self.showingImg];
-    [self.livePlayer.playerView addSubview:self.showingPrice];
+    
+    [self addChildViewController:self.lanceMessageVc];
+    [self.livePlayer.playerView addSubview:self.lanceMessageVc.view];
     [self.livePlayer.playerView addSubview:self.sendMessageView];
     [self.livePlayer.playerView addSubview:self.danmuBtn];
-    
     // 播放控件约束
     [self makeLiveSubviewConstraint];
 }
 
-// 播放控件约束
+// 竖屏播放控件约束
 - (void)makeLiveSubviewConstraint {
     
     self.backBtn.hidden = NO;
@@ -275,6 +306,7 @@
     self.sendMessageView.hidden = YES;
     self.showingImg.hidden = YES;
     self.showingPrice.hidden = YES;
+    self.lanceMessageVc.view.hidden = YES;
     
     [self.livePlayerView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.view);
@@ -323,7 +355,7 @@
 #pragma mark
 #pragma mark - 直播全屏
 
-// 约束
+// 横屏约束
 - (void)makeliveLancseConstraint {
     [self.livePlayerView remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
@@ -354,7 +386,8 @@
     self.reportBtn.hidden = YES;
     self.collectBtn.hidden = YES;
     self.screenBtn.hidden = YES;
-    
+    self.lanceMessageVc.view.hidden = NO;
+
     [self.livetopView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left);
         make.top.equalTo(self.view.top);
@@ -372,13 +405,7 @@
         make.left.equalTo(self.livingImageView.right).offset(10);
         make.width.equalTo(100);
     }];
-    
-    [self.talkingVc.tableView remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.left);
-        make.top.equalTo(self.view.top).offset(110);
-        make.bottom.equalTo(self.danmuBtn.top).offset(-10);
-        make.width.equalTo(270);
-    }];
+
     [self.danmuBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left).offset(12);
         make.bottom.equalTo(self.view.bottom).offset(-15);
@@ -390,21 +417,32 @@
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(45);
     }];
-
-    [self.showingImg remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.view.centerY);
-        make.right.equalTo(self.view.right).offset(-10);
-        make.size.equalTo(CGSizeMake(30, 30));
+    [self.lanceMessageVc.view remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.left);
+        make.top.equalTo(self.view.top).offset(110);
+        make.bottom.equalTo(self.sendMessageView.bottom);
+        make.width.equalTo(250);
     }];
-
-    [self.showingPrice remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.showingImg.centerX);
-        make.top.equalTo(self.showingImg.bottom).offset(10);
-    }];
+    
     [self.notePlayer remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.livePlayer.playerView.centerX);
         make.top.equalTo(self.livePlayer.playerView.top).offset(150);
     }];
+}
+- (EaseMessageViewController *)lanceMessageVc {
+    if (!_lanceMessageVc) {
+        _lanceMessageVc = [[EaseMessageViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+        //        [[EMClient sharedClient].roomManager joinChatroom:_chatRoomID completion:^(EMChatroom *aChatroom, EMError *aError) {
+        //            DLog(@"%@", aError);
+        //        }];
+        _lanceMessageVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+//        _lanceMessageVc.ishidText = YES;
+//        _lanceMessageVc.isNotification = NO;
+        _lanceMessageVc.view.hidden = YES;
+        _lanceMessageVc.chatToolbar.hidden = YES;
+//        _lanceMessageVc.roomID = _chatRoomID;
+    }
+    return _lanceMessageVc;
 }
 
 #pragma mark
@@ -527,7 +565,7 @@
     self.livetopView.collectBtn.selected = btn.selected;
 }
 
-- (void)clickScreenButtonAction:(UIButton *)btn {
+- (void)clickScreenBtnAction:(UIButton *)btn {
     if (btn.selected) { // 转竖屏
         [self forceOrientationPriate];
     }else { // 转横屏
@@ -545,7 +583,6 @@
         [self.collectBtn setImage:[UIImage imageNamed:@"喜欢"] forState:UIControlStateNormal];
     }
 }
-
 
 #pragma mark - 直播控件
 - (PLPlayer *)livePlayer {
@@ -700,7 +737,7 @@
         _screenBtn.frame = CGRectMake((SCREEN_WIDTH - kWidth - 10), 215, kWidth, kWidth);
         
         [_screenBtn setImage:[UIImage imageNamed:@"缩小"] forState:(UIControlStateNormal)];
-        [_screenBtn addTarget:self action:@selector(clickScreenButtonAction:) forControlEvents:(UIControlEventTouchDown)];
+        [_screenBtn addTarget:self action:@selector(clickScreenBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _screenBtn;
 }
@@ -723,15 +760,10 @@
         self.livingImageView.hidden = !self.livetopView.hidden;
         self.watchLabel.hidden = !self.livetopView.hidden;
     }
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.topView.hidden = !self.topView.hidden;
-//        self.downView.hidden = !self.downView.hidden;
-//    }];
-    
 }
 - (void)clickDanmuAction:(UIButton *)btn {
     btn.selected = !btn.selected;
-    self.talkingVc.view.hidden = btn.selected;
+    self.lanceMessageVc.view.hidden = btn.selected;
     self.sendMessageView.hidden = btn.selected;
 }
 - (UIButton *)danmuBtn {
@@ -740,7 +772,6 @@
         [_danmuBtn setImage:[UIImage imageNamed:@"弹幕"] forState:(UIControlStateNormal)];
         [_danmuBtn setImage:[UIImage imageNamed:@"禁止弹幕"] forState:(UIControlStateSelected)];
         _danmuBtn.hidden = YES;
-        _danmuBtn.selected = YES;
         [_danmuBtn addTarget:self action:@selector(clickDanmuAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _danmuBtn;
@@ -809,7 +840,6 @@
                     [shareAlert dismiss];
                     }
                         break;
-                        
                     default:
                         break;
                 }
@@ -890,7 +920,17 @@
         __weak typeof(self) weakSelf = self;
         _sendMessageView.sendBlock = ^(NSString *text){
             if (text.length != 0) {
-                [weakSelf.talkingVc sendTextMessage:text];
+//                [weakSelf.lanceMessageVc sendTextMessage:text];
+                
+                // 消息发送
+                EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];
+                NSString *from = [[EMClient sharedClient] currentUsername];
+                //生成Message
+                EMMessage *message = [[EMMessage alloc] initWithConversationID:weakSelf.chatRoomID from:from to:weakSelf.chatRoomID body:body ext:nil];
+                message.chatType = EMChatTypeChatRoom;
+                [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+                    DLog(@"%@", error);
+                }];
             }
         };
     }
@@ -991,9 +1031,7 @@
     
     [self.baseScrollView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.centerView.bottom);
-        make.left.equalTo(self.view.left);
-        make.bottom.equalTo(self.view.bottom);
-        make.width.equalTo(SCREEN_WIDTH);
+        make.left.right.bottom.equalTo(self.view);
     }];
     // 子控制器
     [self addChildViewControllers];
@@ -1001,26 +1039,17 @@
 - (NSMutableArray *)childVCS {
     if (!_childVCS) {
         _childVCS = [NSMutableArray array];
-        [_childVCS addObject:@"0"];
-        [_childVCS addObject:@"1"];
-        [_childVCS addObject:@"2"];
-        [_childVCS addObject:@"3"];
     }
     return _childVCS;
 }
 - (void)addChildViewControllers {
     
-    //    self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-    //    [self.baseScrollView addSubview:self.talkingVc.tableView];
-    //    [self addChildViewController:_talkingVc];
-    //    [self.childVCS replaceObjectAtIndex:0 withObject:_talkingVc];
-    
-    TalkingViewController *Vc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-    
-    Vc.roomID = _chatRoomID;
-    self.talkingVc = Vc;
-    [self.childVCS replaceObjectAtIndex:0 withObject:Vc];
-    [self addChildViewController:Vc];
+    EaseMessageViewController *talkVc = [[EaseMessageViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+    talkVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+//    talkVc.isNotification = YES;
+    [self.baseScrollView addSubview:talkVc.view];
+    [self addChildViewController:talkVc];
+    [self.childVCS addObject:talkVc];
     
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
@@ -1028,7 +1057,9 @@
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    [self.childVCS replaceObjectAtIndex:1 withObject:dogShowVC];
+    dogShowVC.view.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    [self.baseScrollView addSubview:dogShowVC.view];
+    [self.childVCS addObject:dogShowVC];
     [self addChildViewController:dogShowVC];
     
     if (_liverId.length == 0) {
@@ -1038,7 +1069,10 @@
     ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
     serviceVC.liverImgUrl = _liverIcon;
     serviceVC.liverName = _liverName;
-    [self.childVCS replaceObjectAtIndex:2 withObject:serviceVC];
+    serviceVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH , SCREEN_HEIGHT - 290);
+    self.serviceVc = serviceVC;
+    [self.baseScrollView addSubview:serviceVC.view];
+    [self.childVCS addObject:serviceVC];
     [self addChildViewController:serviceVC];
     
     // 商家
@@ -1046,7 +1080,9 @@
     sellerShowVC.liverIcon = _liverIcon;
     sellerShowVC.liverName = _liverName;
     sellerShowVC.authorId = _liverId;
-    [self.childVCS replaceObjectAtIndex:3 withObject:sellerShowVC];
+    sellerShowVC.view.frame = CGRectMake(SCREEN_WIDTH * 3, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    [self.baseScrollView addSubview:sellerShowVC.view];
+    [self.childVCS addObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
     
     // 进入后第一次加载hot
@@ -1054,52 +1090,26 @@
     [self scrollViewDidEndDecelerating:self.baseScrollView];
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    
     // 每个子控制器的宽高
     CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height - 290;
-    
     // 偏移量 - x
-    // 如果是通过点击狗狗卡片进入的,滑到狗狗位置
-    //    if (_isDogCard) {
-    //        [scrollView setContentOffset:CGPointMake(width, 0)];
-    //    }
     CGFloat offset = scrollView.contentOffset.x;
-    
     // 获取视图的索引
     NSInteger index = offset / width;
-    
     //根据索引返回vc的引用
     UIViewController *childVC = self.childVCS[index];
     
     // 判断当前vc是否加载过
-    if([childVC isKindOfClass:[TalkingViewController class]]) {
-        //        self.talkingVc.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-    }
     if ([childVC isViewLoaded]) {
         return;
     };
     
-    // 给没加载过的控制器设置frame
-    childVC.view.frame = CGRectMake(offset, 0, width, height);
-    DLog(@"%@", NSStringFromCGRect(childVC.view.frame));
-    // 添加控制器视图到contentScrollView上
-    [scrollView addSubview:childVC.view];
-    
 #pragma mark - 隐藏键盘
-    if ([self.lastVC isKindOfClass:[TalkingViewController class]]) {
-        
-        self.talkingVc = (TalkingViewController *)self.lastVC;
-        
-        [self.talkingVc.textField resignFirstResponder];
-        
-    }else if ([self.lastVC isKindOfClass:NSClassFromString(@"ServiceViewController")]){
-        
-        ServiceViewController *serviceVC = (ServiceViewController *)self.lastVC;
-        
-        [serviceVC.textField resignFirstResponder];
-    }
+    // 如果屏幕转动，让输入框隐藏
+//    [self.talkingVc.textField resignFirstResponder];
+    [self.serviceVc.textField resignFirstResponder];
     
-    self.lastVC = childVC;
     self.scrollPoint = scrollView.contentOffset;
 }
 // 减速结束时调用 加载子控制器view的方法
@@ -1110,10 +1120,17 @@
 }
 - (UIScrollView *)baseScrollView {
     if (!_baseScrollView) {
-        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-        _baseScrollView.scrollEnabled = NO;
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 290, SCREEN_WIDTH, SCREEN_HEIGHT - 290)];
+        //        _baseScrollView.scrollEnabled = NO;
         _baseScrollView.pagingEnabled = YES;
         _baseScrollView.showsVerticalScrollIndicator = NO;
+        // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
+        _baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childTitles.count, 0);
+        
+        // 设置scroll初始偏移量
+        [_baseScrollView setScrollIndicatorInsets:UIEdgeInsetsMake(0, -1, 0, 0)];
+        // 减速结束加载控制器视图 代理
+        _baseScrollView.delegate = self;
     }
     return _baseScrollView;
 }
@@ -1170,13 +1187,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    
-//    //监听是否触发home键挂起程序.
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
-//                                                 name:UIApplicationWillResignActiveNotification object:nil];
-//    //监听是否重新进入程序程序.
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:)
-//                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+- (void)removeKeyboardFocus {
+    // 注销键盘通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 - (void)keyboardWasShown:(NSNotification*)aNotification {
     //键盘高度
@@ -1189,7 +1204,6 @@
             make.left.right.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
-        
     }];
 }
 
@@ -1209,17 +1223,18 @@
     return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
 }
 // 代理方法监听屏幕方向
--(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
     if (toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
         DLog(@"进入横屏");
 
         _screenBtn.selected = YES;
-        [self.talkingVc.tableView removeFromSuperview];
-        [self.livePlayer.playerView addSubview:self.talkingVc.tableView];
-        self.talkingVc.isNotification = NO;
-        self.talkingVc.tableView.alpha = 0.4;
-        self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
+//        [self.talkingVc.view removeFromSuperview];
+//        [self.livePlayer.playerView addSubview:self.talkingVc.view];
+//        self.talkingVc.isNotification = NO;
+            self.talkingVc.chatToolbar.hidden = NO;
+//        self.talkingVc.tableView.alpha = 0.4;
+//        self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
         
         [self makeliveLancseConstraint];
         self.baseScrollView.hidden = YES;
@@ -1234,25 +1249,23 @@
         self.baseScrollView.hidden = NO;
         self.centerView.hidden = NO;
         
-        [self.talkingVc.tableView removeFromSuperview];
-        [self.baseScrollView addSubview:self.talkingVc.view];
-        [self.childVCS replaceObjectAtIndex:0 withObject:self.talkingVc];
-        [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
-        
-         [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(SCREEN_WIDTH);
-            make.height.equalTo(self.baseScrollView.height);
-            make.top.equalTo(self.baseScrollView.top);
-            make.left.equalTo(self.baseScrollView.left).offset(0);
-        }];
-        
-        self.talkingVc.isNotification = YES;
-        
-        self.talkingVc.tableView.alpha = 1;
-        self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//        [self.talkingVc.view removeFromSuperview];
+//        [self.baseScrollView addSubview:self.talkingVc.view];
+//        [self.baseScrollView setContentOffset:self.scrollPoint animated:YES];
+//         [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
+//            make.width.equalTo(SCREEN_WIDTH);
+//            make.height.equalTo(self.baseScrollView.height);
+//            make.top.equalTo(self.baseScrollView.top);
+//            make.left.equalTo(self.baseScrollView.left).offset(0);
+//        }];
+//        
+//        self.talkingVc.isNotification = YES;
+        self.talkingVc.chatToolbar.hidden = YES;
+        [self removeKeyboardFocus];
+//        self.talkingVc.tableView.alpha = 1;
+//        self.talkingVc.tableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
         [self makeLiveSubviewConstraint];
-
     }
 }
 @end

@@ -24,5 +24,6 @@
 @property(nonatomic, strong) NSString *createTime; /**< 创建时间 */
 
 @property (nonatomic, strong) NSString *traficMoney; /**< 运费 */
-
+@property (nonatomic, strong) NSString *traficType; /**< 运费模板类型 */
+@property (nonatomic, assign) NSInteger traficId; /**< 运费模板id */
 @end

@@ -208,11 +208,9 @@ static NSString *cellid = @"DogShowCellid";
                 __block BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
                 NSDictionary *dict2 = @{@"id":@(2)};
                 [self getRequestWithPath:API_Help params:dict2 success:^(id successJson) {
-                    DLog(@"%@", successJson);
                     NSArray *arr = [NormalModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                     NormalModel *model = arr[0];
                     rulesAlert.ruleContets = model.conent;
-                    DLog(@"%@",rulesAlert.ruleContets);
                     [rulesAlert show];
                 } error:^(NSError *error) {
                     DLog(@"%@", error);

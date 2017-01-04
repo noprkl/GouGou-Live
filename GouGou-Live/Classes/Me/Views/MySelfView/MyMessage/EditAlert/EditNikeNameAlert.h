@@ -17,8 +17,8 @@ typedef void(^ClickSureBtnBlock)(NSString *message);
 
 @property(nonatomic, strong) NSString *placeHolder; /**< 占位字符 */
 @property(nonatomic, strong) NSString *noteString; /**< 提示 */
-@property (copy, nonatomic) NSString *easyMessage; /**< 简介信息 */
-@property (copy, nonatomic) NSString *countText; /**< 计数 */
+@property (strong, nonatomic) NSString *easyMessage; /**< 简介信息 */
+@property (assign, nonatomic) NSInteger countText; /**< 计数个数 */
 
 - (void)show;
 

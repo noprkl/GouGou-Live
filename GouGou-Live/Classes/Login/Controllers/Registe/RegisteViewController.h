@@ -10,4 +10,8 @@
 
 @interface RegisteViewController : BaseViewController
 
+@property (nonatomic, strong) NSString *name; /**< openid */
+
+@property (nonatomic, assign) NSInteger type; /**< 类型 */
+
 @end

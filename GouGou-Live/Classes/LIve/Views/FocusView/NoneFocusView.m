@@ -79,19 +79,23 @@
 - (UIButton *)reRequest {
     if (!_reRequest) {
         _reRequest = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_reRequest setTitle:@"重新加载" forState:(UIControlStateNormal)];
+        if ([UserInfos getUser]) {
+            [_reRequest setTitle:@"重新加载" forState:(UIControlStateNormal)];
+        }else{
+            [_reRequest setTitle:@"去登录" forState:(UIControlStateNormal)];
+        }
         [_reRequest setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         _reRequest.layer.cornerRadius = 5;
         _reRequest.layer.masksToBounds = YES;
         _reRequest.titleLabel.font = [UIFont systemFontOfSize:14];
         _reRequest.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        [_reRequest addTarget:self action:@selector(ClickRequestAction) forControlEvents:(UIControlEventTouchDown)];
+        [_reRequest addTarget:self action:@selector(ClickRequestAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _reRequest;
 }
-- (void)ClickRequestAction {
+- (void)ClickRequestAction:(UIButton *)btn {
     if (_requestBlock) {
-        _requestBlock(self.warnLabel.text);
+        _requestBlock([btn currentTitle]);
     }
 }
 @end

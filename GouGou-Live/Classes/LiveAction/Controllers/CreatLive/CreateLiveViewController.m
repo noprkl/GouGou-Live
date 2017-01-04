@@ -24,6 +24,7 @@
 #import "LiveListStreamModel.h"
 #import "LiveRootStreamModel.h"
 #import "CreateLiveViewController+ThirdShare.h"
+#import "TalkingViewController.h"
 
 @interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate, CLLocationManagerDelegate>
 {
@@ -368,37 +369,48 @@
                 streamVc.stream = stream;
                 streamVc.streamPublish = streamModel.publish;
                 streamVc.liveID = liveId;
-                streamVc.chatRoomID = successJson[@"data"][@"chatroom"][@"data"][@"id"];
+                NSString *chatRoom = successJson[@"data"][@"chatroom"][@"data"][@"id"];
+                streamVc.chatRoomID = chatRoom;
                 streamVc.hidesBottomBarWhenPushed = YES;
                 streamVc.streamRtmp = streamModel.rtmp;
                 NSInteger tag = self.lastBtn.tag;
+               
+#pragma mark
+#pragma mark - 跳到群聊
+                TalkingViewController *talkVc = [[TalkingViewController alloc] initWithConversationChatter:chatRoom conversationType:(EMConversationTypeChatRoom)];
+                talkVc.liverid = [UserInfos sharedUser].ID;
+                talkVc.roomID = chatRoom;
+                talkVc.isNotification = YES;
+                talkVc.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:talkVc animated:YES];
+                
                 [self.navigationController pushViewController:streamVc animated:YES];
-                DLog(@"%@", streamModel.rtmp);
-                if (tag == 900) {
-                    [CreateLiveViewController SinaShare:streamModel.rtmp success:^{
-                        [self.navigationController pushViewController:streamVc animated:YES];
-                    }];
-                    
-                }else if (tag == 901){
-                    [CreateLiveViewController WChatShare:streamModel.rtmp success:^{
-                        [self.navigationController pushViewController:streamVc animated:YES];
-                    }];
-
-                }else if (tag == 902){
-                    [CreateLiveViewController QQShare:streamModel.rtmp success:^{
-                        [self.navigationController pushViewController:streamVc animated:YES];
-                    }];
-
-                }else if (tag == 903){
-                    [CreateLiveViewController TencentShare:streamModel.rtmp success:^{
-                        [self.navigationController pushViewController:streamVc animated:YES];
-                    }];
-
-                }else if (tag == 904){
-                    [CreateLiveViewController WechatTimeShare:streamModel.rtmp success:^{
-                        [self.navigationController pushViewController:streamVc animated:YES];
-                    }];
-                }
+//                DLog(@"%@", streamModel.rtmp);
+//                if (tag == 900) {
+//                    [CreateLiveViewController SinaShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//                    
+//                }else if (tag == 901){
+//                    [CreateLiveViewController WChatShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//
+//                }else if (tag == 902){
+//                    [CreateLiveViewController QQShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//
+//                }else if (tag == 903){
+//                    [CreateLiveViewController TencentShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//
+//                }else if (tag == 904){
+//                    [CreateLiveViewController WechatTimeShare:streamModel.rtmp success:^{
+//                        [self.navigationController pushViewController:streamVc animated:YES];
+//                    }];
+//                }
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);

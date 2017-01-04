@@ -173,9 +173,12 @@ static NSString *cellid = @"cellid";
             imageView.layer.masksToBounds = YES;
           
             // 头像url拼接
-            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.detailArr[indexPath.row]];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
-
+            if ([UserInfos sharedUser].userimgurl != NULL) {
+                NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+            }else{
+                imageView.image = [UIImage imageNamed:@"头像"];
+            }
             self.userIconView = imageView;
             [cell.contentView addSubview:imageView];
             
@@ -273,9 +276,11 @@ static NSString *cellid = @"cellid";
                 // 弹出框
                 EditNikeNameAlert *editNikeAlert = [[EditNikeNameAlert alloc] init];
                 [editNikeAlert show];
-                
+                editNikeAlert.countText = 20;
                 editNikeAlert.sureBlock = ^(NSString *nickname){
-                    if (![nickname isEqualToString:@""]) {
+                    if ([nickname isEqualToString:@""]) {
+                        [self showAlert:@"请输入昵称"];
+                    }else {
                         DLog(@"%@", nickname);
 #pragma mark  上传个人昵称
                         // 请求参数
@@ -314,11 +319,11 @@ static NSString *cellid = @"cellid";
                     weakSign.easyMessage = [UserInfos sharedUser].usermotto;
                     weakSign.placeHolder = @"";
                     NSString * string = [UserInfos sharedUser].usermotto;
-                    weakSign.countText = [NSString stringWithFormat:@"%@",@(17 - string.length)];
+                    weakSign.countText = 17 - string.length;
                 }else{
                     weakSign.placeHolder = @"这个人很懒，他什么也没留下";
                     weakSign.easyMessage = @"";
-                    weakSign.countText = @"17";
+                    weakSign.countText = 17;
                     
                 }
                 editSignAlert.sureBlock = ^(NSString *signaue){
@@ -663,12 +668,10 @@ static NSString *cellid = @"cellid";
         if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
             // 修改TableView的显示
             self.userIconView.image = image;
-    
             // 修改本地存储
             [UserInfos sharedUser].userimgurl = successJson[@"data"];
             [UserInfos setUser];
         }
-
         DLog(@"%@", successJson);
     } error:^(NSError *error) {
         DLog(@"%@", error);

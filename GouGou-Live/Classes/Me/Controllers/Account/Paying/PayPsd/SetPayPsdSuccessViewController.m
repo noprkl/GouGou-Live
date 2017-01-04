@@ -25,8 +25,6 @@
 
 - (void)initUI {
     
-    self.title = @"设置支付密码";
-    
     [self freetimeout];
 }
 

@@ -98,14 +98,15 @@ static NSString *userAssetKey = @"userAsset";
     [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].qqopenid forKey:qqopenidKey];
 
     //用户信息
-//    [NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser]. forKey:<#(nonnull NSString *)#>
-    
+    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].fansCount) forKey:fansCountKey];
+    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].focusCount) forKey:focusCountKey];
+    [[NSUserDefaults standardUserDefaults] setObject:@([UserInfos sharedUser].commentCount) forKey:commentCountKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[UserInfos sharedUser].userAsset forKey:userAssetKey];
+
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     DLog(@"%@", paths);
-    
-//    [EMClient sharedClient].chatManager up
 }
 
 + (void)removeUser {
@@ -127,21 +128,26 @@ static NSString *userAssetKey = @"userAsset";
     if ([UserInfos sharedUser].userpaycode != NULL) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:userpaycodeKey];
     }
-//    if ([UserInfos sharedUser].wxopenid != NULL) {
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wxopenidKey];
-//    }
-//    if ([UserInfos sharedUser].wbopenid != NULL) {
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wbopenidKey];
-//    }
-//    if ([UserInfos sharedUser].qqopenid != NULL) {
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:qqopenidKey];
-//    }
+    if ([UserInfos sharedUser].wxopenid != NULL) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wxopenidKey];
+    }
+    if ([UserInfos sharedUser].wbopenid != NULL) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:wbopenidKey];
+    }
+    if ([UserInfos sharedUser].qqopenid != NULL) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:qqopenidKey];
+    }
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:ismerchantKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:isrealKey];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:IDKey];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:userPsdKey];
 
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:userAssetKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:focusCountKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:commentCountKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:fansCountKey];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

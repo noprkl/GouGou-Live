@@ -41,20 +41,20 @@
     
     // 如果验证成功，跳转到添加成功
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"user_name":[UserInfos sharedUser].username,
                            @"user_ali_code":self.payingTextfiled.text
                            };
     [self postRequestWithPath:API_Treasure params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
-        if ([successJson[@"message"] isEqualToString:@"成功"]) {
-            
+        if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
+            [UserInfos sharedUser].useralicode = self.payingTextfiled.text;
+            [UserInfos setUser];
         }
         // 延迟两秒跳
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            AddPayingSuccessViewController *payPsdVC = [[AddPayingSuccessViewController alloc] init];
-            [self.navigationController pushViewController:payPsdVC animated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
         });
 
     } error:^(NSError *error) {
@@ -86,7 +86,7 @@
         [self showAlert:@"您输入的手机号与账号不一致"];
         
     }else{
-        // 自出说明输入的是手机号，需要进行网络请求验证
+        // 说明输入的是手机号，需要进行网络请求验证
         [self requestPhoneNum];
     }
 
@@ -95,7 +95,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
     if (textField == self.userNameTexfiled) {
-        
+        [textField resignFirstResponder];
         return NO;
         
     }else if (textField == self.payingTextfiled){
@@ -112,13 +112,12 @@
     if (textField == self.userNameTexfiled) {
         [textField resignFirstResponder];
     }
-    
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
     if (textField == self.userNameTexfiled) {
-        return NO;
+        return YES;
     }
     return YES;
     

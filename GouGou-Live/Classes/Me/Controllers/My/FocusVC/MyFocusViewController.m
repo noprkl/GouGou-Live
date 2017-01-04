@@ -11,8 +11,7 @@
 #import "SearchFocusViewController.h"
 #import "FocusAndFansModel.h"
 #import "PersonalPageController.h" // 个人主页
-#import <FMDB.h>
-#import "FMDBUser.h"
+#import "NoneDateView.h"
 
 @interface MyFocusViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -20,6 +19,7 @@
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
+@property (nonatomic, strong) NoneDateView *noneDateView; /**< 没有数据 */
 
 @end
 
@@ -31,22 +31,24 @@ static NSString *cellid = @"MyFocusCell";
     NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID
                            };
     [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
-        
-        if (successJson) {
-            DLog(@"%@", successJson);
+        if ([successJson[@"code"] isEqualToString:@"0"]) {
+            self.noneDateView.hidden = NO;
+            self.tableView.hidden = YES;
+        }else if ([successJson[@"code"] isEqualToString:@"1"]) {
+            self.noneDateView.hidden = YES;
+            self.tableView.hidden = NO;
             // 得到关注人的人
             self.dataArr = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             
-        NSString *filePath = [NSString cachePathWithfileName:Focus];
-        NSMutableArray *arr = [NSMutableArray array];
-        for (FocusAndFansModel *model in self.dataArr) {
-            [arr addObject:@(model.userFanId)];
-        }
-        [arr writeToFile:filePath atomically:YES];
-        
+            NSString *filePath = [NSString cachePathWithfileName:Focus];
+            NSMutableArray *arr = [NSMutableArray array];
+            for (FocusAndFansModel *model in self.dataArr) {
+                [arr addObject:@(model.userFanId)];
+            }
+            [arr writeToFile:filePath atomically:YES];
             [self.tableView reloadData];
         }
-        
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -76,6 +78,7 @@ static NSString *cellid = @"MyFocusCell";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStyleDone) target:self action:@selector(clickAddBtnAction)];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.noneDateView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
 }
 - (void)clickAddBtnAction {
@@ -101,6 +104,16 @@ static NSString *cellid = @"MyFocusCell";
     }
     return _tableView;
 }
+- (NoneDateView *)noneDateView {
+    if (!_noneDateView) {
+        _noneDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneDateView.noteStr = @"没有关注的人";
+        _noneDateView.hidden = YES;
+        _noneDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneDateView;
+}
+#pragma mark - 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
 //    return 15;

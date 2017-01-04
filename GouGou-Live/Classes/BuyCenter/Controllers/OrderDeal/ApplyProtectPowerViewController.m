@@ -160,9 +160,9 @@
         // 付款状况
         self.costView.fontMoney.text = self.detailModel.productDeposit;
         self.costView.remainderMoeny.text = self.detailModel.productBalance;
-        self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld", [self.detailModel.price integerValue] + [self.detailModel.traficFee integerValue]];
+        self.costView.totalMoney.text = [NSString stringWithFormat:@"%.2lf", [self.detailModel.price floatValue] + [self.detailModel.traficFee floatValue]];
         
-        self.sureApplyRefundView.realMoney = [NSString stringWithFormat:@"%ld", [self.detailModel.productRealDeposit integerValue] + [self.detailModel.productRealBalance integerValue]];
+        self.sureApplyRefundView.realMoney = [NSString stringWithFormat:@"%.2lf", [self.detailModel.productRealDeposit floatValue] + [self.detailModel.productRealBalance floatValue]];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -204,6 +204,8 @@
                                                  name:UIKeyboardWillHideNotification object:nil];
 }
 - (void)addControllers {
+    
+    self.edgesForExtendedLayout = 0;
     // 底部按钮
     [_handinApplicationBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.left.right.equalTo(self.view);
@@ -221,7 +223,12 @@
     if (!_boomScrollView) {
         _boomScrollView = [[UIScrollView alloc] init];
         _boomScrollView.delegate = self;
-        _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT - 64);
+        if (SCREEN_WIDTH>320) {// 根据手机适配
+            _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-50);
+        }else{
+            _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT+20);
+        }
+//              _boomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT - 64);
         _boomScrollView.showsVerticalScrollIndicator = NO;
     }
     return _boomScrollView;
@@ -298,7 +305,9 @@
         _photoView.addBlock = ^(){
             TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakSelf];
             imagePickerVc.sortAscendingByModificationDate = NO;
-            
+            imagePickerVc.allowPickingOriginalPhoto = NO;
+            imagePickerVc.isSelectOriginalPhoto = YES;
+
             [weakSelf presentViewController:imagePickerVc animated:YES completion:nil];
             
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {

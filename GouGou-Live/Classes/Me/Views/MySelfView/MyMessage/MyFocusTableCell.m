@@ -36,7 +36,24 @@
     self.userSignLabel.text = model.userMotto;
 
 }
-
+- (void)setFanModel:(FanModel *)fanModel {
+    _fanModel = fanModel;
+    if (fanModel.userImgUrl != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:fanModel.userImgUrl];
+        [self.userIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }else{
+        self.userIconView.image =[UIImage imageNamed:@"头像"];
+    }
+    
+    self.userNameLabel.text = fanModel.userNickName;
+    self.userSignLabel.text = fanModel.userMotto;
+    // 判断model的id是否在列表中，如果是就选中，没有就选不中
+    if ([fanModel.state integerValue] == 1) {
+        self.selectBtn.selected = YES;
+    }else if ([fanModel.state integerValue] == 0){
+        self.selectBtn.selected = NO;
+    }
+}
 - (void)setSearchModel:(SearchFanModel *)searchModel {
 
     _searchModel = searchModel;
@@ -59,9 +76,9 @@
 - (IBAction)clickSelectBtn:(UIButton *)sender {
     
     if (_selectBlock) {
+        sender.selected = !sender.selected;
         _selectBlock(sender.selected);
     }
-    sender.selected = !sender.selected;
 }
 - (void)setIsSelect:(BOOL)isSelect {
     _isSelect = isSelect;

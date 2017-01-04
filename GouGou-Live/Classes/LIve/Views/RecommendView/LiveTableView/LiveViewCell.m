@@ -41,6 +41,7 @@
     self.anchorCityLabel.font = [UIFont systemFontOfSize:12];
     self.anchorNameLabel.font = [UIFont systemFontOfSize:14];
     self.certificateLabel.font = [UIFont systemFontOfSize:12];
+    self.anchorNameLabel.font = [UIFont systemFontOfSize:14];
 }
 - (void)clickCardViewAction:(UIControl *)control {
     if (_cardBlcok) {
@@ -89,7 +90,7 @@
         cardView.dogInfo = dogInfos[0];
         cardView.message = [NSString stringWithFormat:@"1"];
         cardView.backgroundColor = [UIColor whiteColor];
-        cardView.frame = CGRectMake(20, 10, SCREEN_WIDTH - 2 * 20, 93);
+        cardView.frame = CGRectMake(10, 10, SCREEN_WIDTH - 2 * 10, 93);
         
         cardView.tag = 0 + 50;
         //            cardView.layer.cornerRadius = 5;
@@ -106,7 +107,7 @@
         CGFloat y = 10;
         
         for (NSInteger i = 0; i < count; i ++) {
-            x = i * (w + 20) + 20;
+            x = i * (w + 20) + 10;
             
             DogCardView *cardView = [[DogCardView alloc] init];
             cardView.dogInfo = dogInfos[i];

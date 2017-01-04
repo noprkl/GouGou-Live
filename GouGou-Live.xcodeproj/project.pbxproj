@@ -33,6 +33,12 @@
 		0412FE001DFD368F00E84438 /* AddShowDogImgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0412FDFE1DFD368F00E84438 /* AddShowDogImgCell.m */; };
 		0412FE011DFD368F00E84438 /* AddShowDogImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0412FDFF1DFD368F00E84438 /* AddShowDogImgCell.xib */; };
 		0423DC0C1DCC35320073E6AA /* ChoseShopAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */; };
+		04334F6B1E16159F002C4BA7 /* NoinputSearchKindView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04334F6A1E16159F002C4BA7 /* NoinputSearchKindView.m */; };
+		04334F6E1E16169B002C4BA7 /* SearchLiveKindBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04334F6D1E16169B002C4BA7 /* SearchLiveKindBtnView.m */; };
+		04334F711E162EAF002C4BA7 /* LiveHotSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04334F701E162EAF002C4BA7 /* LiveHotSearchModel.m */; };
+		04334F741E16552B002C4BA7 /* FanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04334F731E16552B002C4BA7 /* FanModel.m */; };
+		04334F771E1A838F002C4BA7 /* LivingChatroomVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04334F761E1A838E002C4BA7 /* LivingChatroomVcViewController.m */; };
+		04334F7A1E1A83FC002C4BA7 /* LivingChatroomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04334F791E1A83FC002C4BA7 /* LivingChatroomCell.m */; };
 		043CBB581DF90C1D0096C9CE /* UIView+FontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 043CBB571DF90C1D0096C9CE /* UIView+FontSize.m */; };
 		04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486AB51DD012C400BC6D15 /* UIView+Toast.m */; };
 		04486ABF1DD015FC00BC6D15 /* BaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04486ABE1DD015FC00BC6D15 /* BaseHandler.m */; };
@@ -44,7 +50,6 @@
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
 		044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */; };
 		044E86DE1E11392700FD89A2 /* BanaerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DD1E11392600FD89A2 /* BanaerViewController.m */; };
-		044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
 		0452A1C51DDEA27E007C1E4F /* SellerChangePriceAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C41DDEA27E007C1E4F /* SellerChangePriceAlertView.m */; };
@@ -280,6 +285,8 @@
 		046BF0571DE5507E00BC32E9 /* MessageMeumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF0561DE5507E00BC32E9 /* MessageMeumView.m */; };
 		046BF0601DE5940900BC32E9 /* SystemNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046BF05F1DE5940900BC32E9 /* SystemNotificationViewController.m */; };
 		046BF0621DE5997D00BC32E9 /* MessageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BF0611DE5997D00BC32E9 /* MessageListCell.xib */; };
+		046D0B7F1E1B4F720037E111 /* NoneDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D0B7E1E1B4F710037E111 /* NoneDateView.m */; };
+		046D0B821E1B7E5A0037E111 /* BuySuccessVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D0B811E1B7E5A0037E111 /* BuySuccessVc.m */; };
 		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
 		046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */; };
 		046F0B961DE2AB8B00D50D5C /* PowerOrderStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B4C1DE2AB8A00D50D5C /* PowerOrderStateView.m */; };
@@ -438,7 +445,6 @@
 		04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A31F821DED4F4900BE175A /* AddUpdataImagesCell.xib */; };
 		04A5F6141E12A00400353B9A /* MediaStreamingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5F6121E12A00400353B9A /* MediaStreamingVc.m */; };
 		04A5F61C1E13D61600353B9A /* ChoseShipTemplateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5F61B1E13D61600353B9A /* ChoseShipTemplateCell.m */; };
-		04A5F61F1E13E27000353B9A /* WatchLivingVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A5F61E1E13E27000353B9A /* WatchLivingVc.m */; };
 		04B161B81DE704C200DABC77 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161B71DE704C200DABC77 /* BaseModel.m */; };
 		04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161BD1DE7227300DABC77 /* MyShopAdressModel.m */; };
 		04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161C01DE7E5BD00DABC77 /* AddNewAdressVc.m */; };
@@ -599,6 +605,18 @@
 		0412FDFF1DFD368F00E84438 /* AddShowDogImgCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddShowDogImgCell.xib; sourceTree = "<group>"; };
 		0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShopAdressViewController.h; sourceTree = "<group>"; };
 		0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShopAdressViewController.m; sourceTree = "<group>"; };
+		04334F691E16159F002C4BA7 /* NoinputSearchKindView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoinputSearchKindView.h; sourceTree = "<group>"; };
+		04334F6A1E16159F002C4BA7 /* NoinputSearchKindView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoinputSearchKindView.m; sourceTree = "<group>"; };
+		04334F6C1E16169B002C4BA7 /* SearchLiveKindBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchLiveKindBtnView.h; sourceTree = "<group>"; };
+		04334F6D1E16169B002C4BA7 /* SearchLiveKindBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchLiveKindBtnView.m; sourceTree = "<group>"; };
+		04334F6F1E162EAE002C4BA7 /* LiveHotSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveHotSearchModel.h; sourceTree = "<group>"; };
+		04334F701E162EAF002C4BA7 /* LiveHotSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveHotSearchModel.m; sourceTree = "<group>"; };
+		04334F721E16552B002C4BA7 /* FanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FanModel.h; sourceTree = "<group>"; };
+		04334F731E16552B002C4BA7 /* FanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FanModel.m; sourceTree = "<group>"; };
+		04334F751E1A838E002C4BA7 /* LivingChatroomVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivingChatroomVcViewController.h; sourceTree = "<group>"; };
+		04334F761E1A838E002C4BA7 /* LivingChatroomVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivingChatroomVcViewController.m; sourceTree = "<group>"; };
+		04334F781E1A83FC002C4BA7 /* LivingChatroomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LivingChatroomCell.h; sourceTree = "<group>"; };
+		04334F791E1A83FC002C4BA7 /* LivingChatroomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LivingChatroomCell.m; sourceTree = "<group>"; };
 		043CBB561DF90C1D0096C9CE /* UIView+FontSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FontSize.h"; sourceTree = "<group>"; };
 		043CBB571DF90C1D0096C9CE /* UIView+FontSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FontSize.m"; sourceTree = "<group>"; };
 		04486AB41DD012C400BC6D15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
@@ -622,8 +640,6 @@
 		044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBUser.m; sourceTree = "<group>"; };
 		044E86DC1E11392600FD89A2 /* BanaerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BanaerViewController.h; sourceTree = "<group>"; };
 		044E86DD1E11392600FD89A2 /* BanaerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BanaerViewController.m; sourceTree = "<group>"; };
-		044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamChatRoomVcViewController.h; sourceTree = "<group>"; };
-		044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamChatRoomVcViewController.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
 		0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerSendAlertView.m; sourceTree = "<group>"; };
 		0452A1C01DDEA260007C1E4F /* SellerChangeShipCostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangeShipCostView.h; sourceTree = "<group>"; };
@@ -1106,6 +1122,10 @@
 		046BF05E1DE5940900BC32E9 /* SystemNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotificationViewController.h; sourceTree = "<group>"; };
 		046BF05F1DE5940900BC32E9 /* SystemNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemNotificationViewController.m; sourceTree = "<group>"; };
 		046BF0611DE5997D00BC32E9 /* MessageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageListCell.xib; sourceTree = "<group>"; };
+		046D0B7D1E1B4F710037E111 /* NoneDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoneDateView.h; sourceTree = "<group>"; };
+		046D0B7E1E1B4F710037E111 /* NoneDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneDateView.m; sourceTree = "<group>"; };
+		046D0B801E1B7E5A0037E111 /* BuySuccessVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuySuccessVc.h; sourceTree = "<group>"; };
+		046D0B811E1B7E5A0037E111 /* BuySuccessVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuySuccessVc.m; sourceTree = "<group>"; };
 		046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLiveViewController.h; sourceTree = "<group>"; };
 		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
 		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
@@ -1402,8 +1422,6 @@
 		04A5F6131E12A00400353B9A /* MediaStreamingVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamingVc.h; sourceTree = "<group>"; };
 		04A5F61A1E13D61600353B9A /* ChoseShipTemplateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseShipTemplateCell.h; sourceTree = "<group>"; };
 		04A5F61B1E13D61600353B9A /* ChoseShipTemplateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseShipTemplateCell.m; sourceTree = "<group>"; };
-		04A5F61D1E13E26F00353B9A /* WatchLivingVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchLivingVc.h; sourceTree = "<group>"; };
-		04A5F61E1E13E27000353B9A /* WatchLivingVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchLivingVc.m; sourceTree = "<group>"; };
 		04B161B61DE704C200DABC77 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		04B161B71DE704C200DABC77 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		04B161BC1DE7227300DABC77 /* MyShopAdressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopAdressModel.h; sourceTree = "<group>"; };
@@ -1922,6 +1940,8 @@
 				045D11991DF031EF008623E5 /* FocusAndFansModel.m */,
 				04E332251E0D0D4400693957 /* SearchFanModel.h */,
 				04E332261E0D0D4400693957 /* SearchFanModel.m */,
+				04334F721E16552B002C4BA7 /* FanModel.h */,
+				04334F731E16552B002C4BA7 /* FanModel.m */,
 			);
 			path = "Focus&Fans";
 			sourceTree = "<group>";
@@ -2878,6 +2898,10 @@
 			children = (
 				0471ADB31E0500D800E11DE4 /* HaveNoneLiveView.h */,
 				0471ADB41E0500D800E11DE4 /* HaveNoneLiveView.m */,
+				04334F691E16159F002C4BA7 /* NoinputSearchKindView.h */,
+				04334F6A1E16159F002C4BA7 /* NoinputSearchKindView.m */,
+				04334F6C1E16169B002C4BA7 /* SearchLiveKindBtnView.h */,
+				04334F6D1E16169B002C4BA7 /* SearchLiveKindBtnView.m */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -2987,10 +3011,6 @@
 				045E3B4C1E0F894200624CEA /* PlayBackViewController.m */,
 				04A5F6131E12A00400353B9A /* MediaStreamingVc.h */,
 				04A5F6121E12A00400353B9A /* MediaStreamingVc.m */,
-				044ECB301E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.h */,
-				044ECB311E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m */,
-				04A5F61D1E13E26F00353B9A /* WatchLivingVc.h */,
-				04A5F61E1E13E27000353B9A /* WatchLivingVc.m */,
 			);
 			path = LIving;
 			sourceTree = "<group>";
@@ -3047,6 +3067,8 @@
 				04F936D91E067BCD0016EFF1 /* MoreImpressionModel.m */,
 				046908541E0E07D8001E2128 /* BannerModel.h */,
 				046908551E0E07D8001E2128 /* BannerModel.m */,
+				04334F6F1E162EAE002C4BA7 /* LiveHotSearchModel.h */,
+				04334F701E162EAF002C4BA7 /* LiveHotSearchModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3247,6 +3269,8 @@
 				0479B51B1DCADC7B00CB288A /* DogShowViewController.m */,
 				0479B63E1DCAE7F900CB288A /* DogBookViewController.h */,
 				0479B63F1DCAE7F900CB288A /* DogBookViewController.m */,
+				046D0B801E1B7E5A0037E111 /* BuySuccessVc.h */,
+				046D0B811E1B7E5A0037E111 /* BuySuccessVc.m */,
 				0423DC0A1DCC35320073E6AA /* ChoseShopAdressViewController.h */,
 				0423DC0B1DCC35320073E6AA /* ChoseShopAdressViewController.m */,
 			);
@@ -3276,6 +3300,8 @@
 			children = (
 				0479B5231DCADC7B00CB288A /* TalkingViewController.h */,
 				0479B5241DCADC7B00CB288A /* TalkingViewController.m */,
+				04334F751E1A838E002C4BA7 /* LivingChatroomVcViewController.h */,
+				04334F761E1A838E002C4BA7 /* LivingChatroomVcViewController.m */,
 			);
 			path = Talk;
 			sourceTree = "<group>";
@@ -3341,6 +3367,8 @@
 				046795A91E0AA09D0076F517 /* TalkTableViewCell.h */,
 				046795AA1E0AA09D0076F517 /* TalkTableViewCell.m */,
 				046795AB1E0AA09D0076F517 /* TalkTableViewCell.xib */,
+				04334F781E1A83FC002C4BA7 /* LivingChatroomCell.h */,
+				04334F791E1A83FC002C4BA7 /* LivingChatroomCell.m */,
 			);
 			path = TalkInput;
 			sourceTree = "<group>";
@@ -4301,6 +4329,8 @@
 				04DAC9761DD21A9A0089236D /* MyUnLoginView.m */,
 				046795931E090E640076F517 /* PlayBackCell.h */,
 				046795941E090E640076F517 /* PlayBackCell.m */,
+				046D0B7D1E1B4F710037E111 /* NoneDateView.h */,
+				046D0B7E1E1B4F710037E111 /* NoneDateView.m */,
 			);
 			path = MySelfView;
 			sourceTree = "<group>";
@@ -4805,6 +4835,7 @@
 				04CE13EC1DDC488100EB8777 /* SellerDogCardView.m in Sources */,
 				0479B5E41DCADC7B00CB288A /* LivingCenterView.m in Sources */,
 				04A5F61C1E13D61600353B9A /* ChoseShipTemplateCell.m in Sources */,
+				04334F771E1A838F002C4BA7 /* LivingChatroomVcViewController.m in Sources */,
 				046F0C0B1DE33B2000D50D5C /* PicturesCell.m in Sources */,
 				0479B5D51DCADC7B00CB288A /* HostViewController.m in Sources */,
 				047AD5E21DD564F80025290E /* HttpImageTool.m in Sources */,
@@ -4829,6 +4860,7 @@
 				046BF02B1DE4696600BC32E9 /* EaseBubbleView+Gif.m in Sources */,
 				04CE13D81DDC488100EB8777 /* SellerMyLiveViewController.m in Sources */,
 				04CE13E41DDC488100EB8777 /* SellerAcceptRateHeaderView.m in Sources */,
+				04334F6B1E16159F002C4BA7 /* NoinputSearchKindView.m in Sources */,
 				04DAC9A91DD2D1250089236D /* SearchFocusViewController.m in Sources */,
 				0479B5F01DCADC7B00CB288A /* ShareBtn.m in Sources */,
 				044C8D801E025391004BCA52 /* BuyerCloseOrderCell.m in Sources */,
@@ -4875,6 +4907,7 @@
 				0479B5F81DCADC7B00CB288A /* DogShowMessageCell.m in Sources */,
 				04CE13EA1DDC488100EB8777 /* SellerBaseCell.m in Sources */,
 				046BF0291DE4696600BC32E9 /* EaseMessageTimeCell.m in Sources */,
+				04334F7A1E1A83FC002C4BA7 /* LivingChatroomCell.m in Sources */,
 				046BEFFE1DE4696600BC32E9 /* UIImageView+EMWebCache.m in Sources */,
 				04CE13E51DDC488100EB8777 /* SellerMyGoodsCell.m in Sources */,
 				046BF0121DE4696600BC32E9 /* NSDate+Category.m in Sources */,
@@ -4884,6 +4917,7 @@
 				046F0B9E1DE2AB8B00D50D5C /* CloseBusinessCell.m in Sources */,
 				046BF0081DE4696600BC32E9 /* PSTCollectionViewUpdateItem.m in Sources */,
 				040892021DFEB91F006DF570 /* WaitSellConsigmentViewContorller.m in Sources */,
+				04334F741E16552B002C4BA7 /* FanModel.m in Sources */,
 				046BF01B1DE4696600BC32E9 /* EaseEmojiEmoticons.m in Sources */,
 				04EA2ACE1DDDAFE80023D9A8 /* SellerOrderDetailMorePriceView.m in Sources */,
 				6180CB4D1DFC1823006357B4 /* LiveListStreamModel.m in Sources */,
@@ -4948,6 +4982,7 @@
 				046BEFED1DE4696600BC32E9 /* MWTapDetectingView.m in Sources */,
 				046795921E08D8BE0076F517 /* PlayBackModel.m in Sources */,
 				046BEFF21DE4696600BC32E9 /* EMSDWebImageDecoder.m in Sources */,
+				046D0B7F1E1B4F720037E111 /* NoneDateView.m in Sources */,
 				0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */,
 				04CE13E11DDC488100EB8777 /* AcceptRateBuyerView.m in Sources */,
 				046BEFC81DE4696600BC32E9 /* EMCDDeviceManager+Media.m in Sources */,
@@ -5008,6 +5043,7 @@
 				04EDC4AD1DF98345009C972D /* SellerProtectModel.m in Sources */,
 				046F0BB41DE2AB8B00D50D5C /* AnonymityAssessView.m in Sources */,
 				045D51151DD9539E001854A8 /* MyPageHeaderView.m in Sources */,
+				04334F6E1E16169B002C4BA7 /* SearchLiveKindBtnView.m in Sources */,
 				0479B63C1DCADC7B00CB288A /* UIColor+HexString.m in Sources */,
 				046BF0541DE54C4C00BC32E9 /* MessageInputView.m in Sources */,
 				046795A81E0A7B180076F517 /* AddDogAgeAlertView.m in Sources */,
@@ -5137,6 +5173,7 @@
 				0452A1F61DE1A730007C1E4F /* SellerSearchDogtypeViewController.m in Sources */,
 				045D514D1DD99BEF001854A8 /* IdentityIfonView.m in Sources */,
 				04CE13ED1DDC488100EB8777 /* SellerFunctionButtonView.m in Sources */,
+				04334F711E162EAF002C4BA7 /* LiveHotSearchModel.m in Sources */,
 				04CE13F21DDC6BF400EB8777 /* SellerGoodsBarBtnView.m in Sources */,
 				040892081DFFB152006DF570 /* LiveRootStreamModel.m in Sources */,
 				046908591E0E165D001E2128 /* MyPageViewController+ThirdBinding.m in Sources */,
@@ -5158,12 +5195,12 @@
 				04CE13FB1DDD4D8B00EB8777 /* SellerBaseViewController.m in Sources */,
 				046BF01D1DE4696600BC32E9 /* EaseEmotionManager.m in Sources */,
 				0479B6451DCB046C00CB288A /* BuyRuleAlertView.m in Sources */,
+				046D0B821E1B7E5A0037E111 /* BuySuccessVc.m in Sources */,
 				04DAC9971DD21A9A0089236D /* PromptView.m in Sources */,
 				0479B5F51DCADC7B00CB288A /* TalkingViewController.m in Sources */,
 				046BEFEC1DE4696600BC32E9 /* MWTapDetectingImageView.m in Sources */,
 				040891FD1DFEB91F006DF570 /* OrderWaitAssessViewController.m in Sources */,
 				046BF0001DE4696600BC32E9 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
-				044ECB321E0B75D8001CB724 /* MediaStreamChatRoomVcViewController.m in Sources */,
 				046F0BB01DE2AB8B00D50D5C /* WaitConsignmentCell.m in Sources */,
 				046BF02E1DE4696600BC32E9 /* EaseBubbleView+Text.m in Sources */,
 				6180CB401DFBDEE4006357B4 /* AddDogShowController.m in Sources */,
@@ -5219,7 +5256,6 @@
 				046BEFCC1DE4696600BC32E9 /* EMCDDeviceManagerBase.m in Sources */,
 				046BF0061DE4696600BC32E9 /* PSTCollectionViewItemKey.m in Sources */,
 				0479B61F1DCADC7B00CB288A /* MessagePushViewController.m in Sources */,
-				04A5F61F1E13E27000353B9A /* WatchLivingVc.m in Sources */,
 				0487DA301DFD03B700BDC54F /* AddPictureView.m in Sources */,
 				0479B5FC1DCADC7B00CB288A /* SellerMessageView.m in Sources */,
 				04CE13EE1DDC488100EB8777 /* SellerLogisticsInfoView.m in Sources */,

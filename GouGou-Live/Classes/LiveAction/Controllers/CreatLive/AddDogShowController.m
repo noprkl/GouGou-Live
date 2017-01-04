@@ -38,10 +38,10 @@ static NSString * dogShowCell = @"dogShowCellID";
 // 全部可添加商品
 - (void)getRequestSellerDog {
     NSDictionary *dict = @{ //
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"page":@(1),
                            @"pageSize":@(10),
-                           @"type":@(1)
+                           @"type":@(3)
                            };
     [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -60,7 +60,7 @@ static NSString * dogShowCell = @"dogShowCellID";
         [self.selectedData replaceObjectAtIndex:i withObject:model.ID];
     }
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"id":[self.selectedData componentsJoinedByString:@","]
                            };
     
@@ -272,7 +272,7 @@ static NSString * dogShowCell = @"dogShowCellID";
             
             // 网络请求，然后删除订单
             NSDictionary *dict = @{
-                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                   @"user_id":[UserInfos sharedUser].ID,
                                    @"id":@([model.ID intValue])
                                    };
             

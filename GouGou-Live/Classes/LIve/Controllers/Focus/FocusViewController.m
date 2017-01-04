@@ -14,6 +14,7 @@
 #import "LiveViewCell.h" // 自定义cell
 #import "LivingViewController.h"
 #import "PlayBackViewController.h"
+#import "LoginViewController.h"
 
 @interface FocusViewController ()
 
@@ -34,15 +35,17 @@
 
 #pragma mark - 关注的直播列表
 - (void)getRequestLiveList {
-    [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID intValue])
                            };
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Fan_live params:dict success:^(id successJson) {
+        [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         if ([successJson[@"code"] isEqualToString:@"0"]) {
+            [self hideHud];
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
         }else{
@@ -67,16 +70,16 @@
                     //                DLog(@"%@", successJson);
                     if (model.pNum == 0) {
                         [dogInfos addObject:@[]];
-                        DLog(@"%ld", i);
+
                     }else{
-                        DLog(@"%ld", i);
+
                         if (successJson[@"data"]) {
                             [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
                         }
                     }
                     [liveMutableArr addObject:model];
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                        DLog(@"%ld", i);
+                        [self hideHud];
                         self.tableView.dogInfos = dogInfos;
                         self.tableView.dataPlist = liveMutableArr;
                         [self.tableView reloadData];
@@ -96,22 +99,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // 上拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getRequestLiveList];
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.edgesForExtendedLayout = 64;
-    [self getRequestLiveList];
     [self loadFocusView];
+    
 }
 - (void)loadFocusView {
     
     // 先判断是否有网，然后请求数据 如果没有添加无主播 否则添加 有主播
 //    [self.view addSubview:self.noneNetView];
-    
     [self.view addSubview:self.noneView];
-    
     [self.view addSubview:self.tableView];
+
+    if ([UserInfos getUser]) {
+        self.noneView.hidden = YES;
+        self.tableView.hidden = NO;
+        [self getRequestLiveList];
+    }else{
+        self.noneView.hidden = NO;
+        self.tableView.hidden = YES;
+    }
 }
 
 #pragma mark
@@ -123,12 +138,15 @@
         _noneView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
         __weak typeof(self) weakSelf = self;
         _noneView.requestBlock = ^(NSString *text){
-            weakSelf.noneNetView.hidden = YES;
-//            weakSelf.tableView.hidden = NO;
-            [weakSelf.tableView.mj_header beginRefreshingWithCompletionBlock:^{
+            if ([text isEqualToString:@"去登录"]) {
+                LoginViewController *loginVC = [[LoginViewController alloc] init];
+                loginVC.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:loginVC animated:YES];
+            }else if ([text isEqualToString:@"重新加载"]){
+                weakSelf.noneNetView.hidden = YES;
+                //            weakSelf.tableView.hidden = NO;
                 [weakSelf getRequestLiveList];
-                [weakSelf.tableView.mj_header endRefreshing];
-            }];
+            }
         };
     }
     return _noneView;

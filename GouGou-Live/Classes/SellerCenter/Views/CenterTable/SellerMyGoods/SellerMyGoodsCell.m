@@ -152,15 +152,15 @@
     // 判断状态
     NSString *state = @"";
     if ([model.status isEqualToString:@"1"]) {// 1：新建商品 2：审核未通过  3：上线 4：下线5：售完
-        state = @"新建商品";
+        state = @"审核中";
     }else if ([model.status isEqualToString:@"2"]) {
         state = @"审核未通过";
     }else if ([model.status isEqualToString:@"3"]) {
-        state = @"上线";
+        state = @"待售";
     }else if ([model.status isEqualToString:@"4"]) {
-        state = @"下线";
+        state = @"已预订";
     }else if ([model.status isEqualToString:@"5"]) {
-        state = @"售完";
+        state = @"已售";
     }
     self.stateLabel.text = state;
 }

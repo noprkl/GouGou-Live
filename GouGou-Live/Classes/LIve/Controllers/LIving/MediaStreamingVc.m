@@ -11,7 +11,8 @@
 #import "LivingSendMessageView.h" // 编辑信息
 #import "LinvingShowDogView.h" // 表格
 
-#import "TalkingViewController.h" // 弹幕
+//#import "TalkingViewController.h" // 弹幕
+#import "EaseMessageViewController.h"
 #import "ShareAlertView.h" // 分享
 #import "ShareBtnModel.h" // 分享模型
 #import "NSString+MD5Code.h"
@@ -50,8 +51,8 @@
 
 @property(nonatomic, strong) LinvingShowDogView *showDogView; /**< 展示狗狗 */
 
-@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
-
+//@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
+@property(nonatomic, strong) EaseMessageViewController *talkingVc; /**< 弹窗控制器 */
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
 
 @property (nonatomic, strong) NSTimer *timer; /**< 计时器 */
@@ -120,18 +121,21 @@
 
     // 保存视频
     NSDictionary *dict =@{
-                          @"live_id":_liveID
+                          @"live_id":_liveID,
+                          @"user_id":[UserInfos sharedUser].ID
                           };
     [self getRequestWithPath:API_save params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
-    
-    // 删除聊天室
-    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
-        
+  // 离开聊天室
+    [[EMClient sharedClient].roomManager leaveChatroom:_chatRoomID completion:^(EMChatroom *aChatroom, EMError *aError) {
+        DLog(@"%@", aError);
     }];
+    self.timer = nil;
+    [self.timer invalidate];
+    
 }
 // 切换横竖屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -186,7 +190,8 @@
     PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
     
     _session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:_stream];
-    
+    // 自动重连
+    _session.autoReconnectEnable = YES;
     [self.session startStreamingWithPushURL:[NSURL URLWithString:_streamPublish] feedback:^(PLStreamStartStateFeedback feedback) {
         DLog(@"%lu", feedback);
         if (feedback == 0) { // 开始推流
@@ -221,17 +226,56 @@
         DLog(@"%@", error);
     }];
 }
-// 推流代理
+#pragma mark
+#pragma mark - 推流代理
+// 正常断开、连接
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state {
-    // 推流结束
+    // 正常断开推流
     if (state == PLStreamStateDisconnected) {
-        
+        // 保存视频
+        NSDictionary *dict =@{
+                              @"live_id":_liveID,
+                              @"user_id":[UserInfos sharedUser].ID
+                              };
+        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
     }
 }
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didDisconnectWithError:(NSError *)error {
     // 非正常断开的情况
     // 重连
+    if (session.streamState != PLStreamStateAutoReconnecting) {
+        // 保存视频
+        NSDictionary *dict =@{
+                              @"live_id":_liveID,
+                              @"user_id":[UserInfos sharedUser].ID
+                              };
+        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
     
+}
+//开始推流时，会每间隔 3s 调用该回调方法来反馈该 3s 内的流状态，包括视频帧率、音频帧率、音视频总码率
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status {
+    // 出错状态 或者已经断开状态 保存视频
+    if (session.streamState == PLStreamStateError || session.streamState == PLStreamStateDisconnected) {
+        // 保存视频
+        NSDictionary *dict =@{
+                              @"live_id":_liveID,
+                              @"user_id":[UserInfos sharedUser].ID
+                              };
+        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+            DLog(@"%@", successJson);
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 // 设置Ui
 - (void)initUI {
@@ -301,10 +345,10 @@
 #pragma mark
 #pragma mark - Action
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
     self.livingImageView.hidden = !self.livingImageView.hidden;
     self.watchCount.hidden = !self.watchCount.hidden;
     self.topView.hidden = !self.topView.hidden;
-    
 }
 - (void)clickDanmuAction:(UIButton *)btn {
     btn.selected = !btn.selected;
@@ -321,6 +365,7 @@
         _danmuBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_danmuBtn setImage:[UIImage imageNamed:@"弹幕"] forState:(UIControlStateNormal)];
         [_danmuBtn setImage:[UIImage imageNamed:@"禁止弹幕"] forState:(UIControlStateSelected)];
+        _danmuBtn.selected = YES;
         [_danmuBtn addTarget:self action:@selector(clickDanmuAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _danmuBtn;
@@ -470,19 +515,32 @@
         _sendMessageView.sendBlock = ^(NSString *text){
             if (![text isEqualToString:@""]) {
                 [weakSelf.talkingVc sendTextMessage:text];
+                // 消息发送
+//                EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];
+//                NSString *from = [[EMClient sharedClient] currentUsername];
+//                //生成Message
+//                EMMessage *message = [[EMMessage alloc] initWithConversationID:weakSelf.chatRoomID from:from to:weakSelf.chatRoomID body:body ext:nil];
+//                message.chatType = EMChatTypeChatRoom;
+//                [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+//                    DLog(@"%@", error);
+//                }];
             }
         };
     }
     return _sendMessageView;
 }
 
-- (TalkingViewController *)talkingVc {
+- (EaseMessageViewController *)talkingVc {
     if (!_talkingVc) {
-        _talkingVc = [[TalkingViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+        _talkingVc = [[EaseMessageViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+//        [[EMClient sharedClient].roomManager joinChatroom:_chatRoomID completion:^(EMChatroom *aChatroom, EMError *aError) {
+//            DLog(@"%@", aError);
+//        }];
         _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
-        _talkingVc.ishidText = YES;
+//        _talkingVc.ishidText = YES;
         _talkingVc.view.hidden = YES;
-        _talkingVc.roomID = _chatRoomID;
+        _talkingVc.chatToolbar.hidden = YES;
+//        _talkingVc.roomID = _chatRoomID;
     }
     return _talkingVc;
 }

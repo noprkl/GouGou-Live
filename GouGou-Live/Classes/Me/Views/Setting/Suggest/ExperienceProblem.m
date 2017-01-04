@@ -211,8 +211,11 @@ static NSString * identifer = @"collectionCell";
 }
 - (void)textViewDidChange:(UITextView *)textView {
     
+    NSInteger lastCount = 140 - textView.text.length;
+    if (lastCount <= 0) {
+        self.textView.text = [textView.text substringWithRange:NSMakeRange(0, 140 - 1)];
+    }
     self.countLabel.text = [@(140 - textView.text.length) stringValue];
-    
 }
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
 

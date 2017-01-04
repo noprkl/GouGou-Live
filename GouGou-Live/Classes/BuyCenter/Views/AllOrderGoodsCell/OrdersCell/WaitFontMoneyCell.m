@@ -70,6 +70,9 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 self.nickView.remainTimeLabel.text = @"订单已关闭";
+                if (_cancelBlock) {
+                    _cancelBlock();
+                }
             });
         }else{
             NSInteger days = (int)(timeout/(3600*24));
@@ -89,7 +92,6 @@
     if (centerModel.pathSmall.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:centerModel.pathSmall];
         [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
-        
     }
 
     self.dogCardView.dogNameLabel.text = centerModel.name;
@@ -108,7 +110,7 @@
     self.costView.remainderMoneylabel.text = @"待付定金:";
     self.costView.remainderMoeny.text = centerModel.productDeposit;
 //    self.costView.totalMoney.text = centerModel.price;
-    self.costView.totalMoney.text = centerModel.productDeposit;
+    self.costView.totalMoney.text = [NSString stringWithFormat:@"%.0lf", [centerModel.price floatValue] + [centerModel.traficFee floatValue]];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficFee];
 
 }

@@ -27,7 +27,7 @@
 - (void)setTimeMessage:(NSString *)timeMessage {
 
     _timeMessage = timeMessage;
-    self.remianTime.text = [NSString stringFromDateString:timeMessage];
+    self.remianTime.text = timeMessage;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame

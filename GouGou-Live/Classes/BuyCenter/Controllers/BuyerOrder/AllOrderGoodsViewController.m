@@ -72,11 +72,8 @@ static NSString * closeCell = @"closeCell";
                             };
     
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-//        [self showAlert:successJson[@"message"]];
-        
+        DLog(@"%@", successJson);        
         if (successJson[@"data"][@"info"]) {
-            DLog(@"%@",successJson[@"data"][@"info"]);
             self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
             [self.tableview reloadData];
         }
@@ -198,6 +195,9 @@ static NSString * closeCell = @"closeCell";
         
         WaitFontMoneyCell * cell = [[WaitFontMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitFontCell];
         cell.centerModel = model;
+        cell.cancelBlock = ^(){
+            
+        };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"待付款",@"取消订单",@"联系卖家"] buttonNum:3];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {

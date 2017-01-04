@@ -21,7 +21,6 @@
 /** 数据源 */
 @property (strong, nonatomic) NSArray *dataArr;
 
-
 /** 提示框 */
 @property (strong,nonatomic) ResetPsdAlertView *resetAalerView;
 

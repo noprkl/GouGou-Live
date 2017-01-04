@@ -36,8 +36,4 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)returnSuccess
                       error:(HttpRequestErrorBlock)returnError;
-+ (void)postJsonRequestWithPath:(NSString *)path
-                     params:(NSString *)params
-                    success:(HttpRequestSuccessBlock)returnSuccess
-                      error:(HttpRequestErrorBlock)returnError;
 @end

@@ -34,9 +34,11 @@ static NSString *cellid = @"SellerWaitSendCell";
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [self hideHud];
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);

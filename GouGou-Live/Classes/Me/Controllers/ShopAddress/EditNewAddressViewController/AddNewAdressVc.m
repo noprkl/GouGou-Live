@@ -159,9 +159,9 @@
                     NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
 
                     NSDictionary *dict = @{
-                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                           @"user_id":[UserInfos sharedUser].ID,
                                            @"user_name":self.userNameTextfiled.text,
-                                           @"user_tel":@([self.phoneTextField.text integerValue]),
+                                           @"user_tel":self.phoneTextField.text,
                                            @"is_default":@(0),
                                            @"user_province":self.provice,
                                            @"user_city":self.city,
@@ -213,25 +213,18 @@
 
     if (textField == self.phoneTextField) {
         
-        if (range.location < 11) {
-            BOOL flag = [NSString validateNumber:textField.text];
-            if (flag) {
-                return YES;
-            }
-            return NO;
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 11 && flag) {
+            return YES;
         }
         return NO;
     }
     if (textField == self.postalcodeTextfiled) {
-        if (range.location < 8) {
-            BOOL flag = [NSString validateNumber:textField.text];
-            if (flag) {
-                return YES;
-            }
-            return NO;
+        BOOL flag = [NSString validateNumber:string];
+        if (range.location < 8 && flag) {
+            return YES;
         }
-        return NO;
-    }
+        return NO;    }
     if (textField == self.detailAddressTextfiled) {
         if (range.location < 20) {
             

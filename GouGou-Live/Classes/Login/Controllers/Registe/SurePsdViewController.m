@@ -22,27 +22,29 @@
     
     NSString *pwd = [NSString md5WithString:self.psdTextField.text];
     DLog(@"%@", pwd);
-    NSDictionary *dict = @{
-                           @"user_tel":self.telNumber,
-                           @"user_pwd":pwd,
-                           @"code":self.codeNumber 
-                           };
+    NSDictionary *dict = [NSDictionary dictionary];
+    
+    if (_type && _name.length != 0) {// 第三方注册
+        dict = @{
+                 @"user_tel":self.telNumber,
+                 @"user_pwd":pwd,
+                 @"code":self.codeNumber,
+                 @"type":@(_type),
+                 @"name":_name
+                 };
+    }else{// 正常注册
+        dict = @{
+                 @"user_tel":self.telNumber,
+                 @"user_pwd":pwd,
+                 @"code":self.codeNumber
+                 };
+    }
+    
     DLog(@"%@", dict);
     [self getRequestWithPath:API_Register params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
         if ([successJson[@"message"] isEqualToString:@"注册成功"]) {
-//            // 环信注册
-//            EMError *error = [[EMClient sharedClient] registerWithUsername:_telNumber password:_telNumber];
-//            if (error==nil) {
-//                DLog(@"环信注册成功");
-//                if (!error) {
-//                    //设置是否自动登录
-//                    [[EMClient sharedClient].options setIsAutoLogin:YES];
-//                }
-//            }
-            
-
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 SurePsdSuccessViewController *sureSuccVC = [[SurePsdSuccessViewController alloc] init];
                 
@@ -99,7 +101,10 @@
     NSString *psdNumber = self.psdTextField.text;
     NSString *surePsd = self.surePsdTextField.text;
         
-    if (![psdNumber isEqualToString:surePsd]) {
+    if (psdNumber.length < 6 || surePsd.length < 6 || psdNumber.length > 20 || surePsd.length > 20) {
+        
+        [self showAlert:@"限制密码6-20位"];
+    }else if (![psdNumber isEqualToString:surePsd]) {
 
         [self showAlert:@"两次密码输入不一样"];
         

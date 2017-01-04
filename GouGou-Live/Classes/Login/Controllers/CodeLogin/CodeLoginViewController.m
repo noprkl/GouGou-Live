@@ -113,7 +113,7 @@
         [self getRequestWithPath:API_Code params:dict success:^(id successJson) {
             DLog(@"%@", successJson[@"message"]);
             [self showAlert:successJson[@"message"]];
-            
+    
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -148,7 +148,7 @@
             }
             if ([successJson[@"code"] intValue] == 1) {
                 NSDictionary *dict = @{
-                                       @"user_tel":@([phoneNumber integerValue]),
+                                       @"user_tel":phoneNumber,
                                        @"code":self.psdNumber.text
                                        };
                 // 请求之前删掉上一次的信息
@@ -174,16 +174,7 @@
                                   wb_open_id:successJson[@"data"][@"wb_open_id"]
                                  user_status:successJson[@"data"][@"user_status"]
                          ];
-                        DLog(@"%@",successJson[@"data"][@"user_pay_code"]);
-                        DLog(@"%@",successJson[@"data"][@"user_ali_code"]);
-                        
-                        
-                        
-                        // 通知给所有人 已经登录
-                        //                NSNotification* notification = [NSNotification notificationWithName:@"CodeLoginSuccess" object:successJson[@"data"]];
-                        //
-                        //                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                        
+                   
                         // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
                         EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"data"][@"id"] password:@"gougoulive"];
                         if (error==nil) {
@@ -198,11 +189,11 @@
                                 DLog(@"登录成功");
                             }
                         }
+                        [self.navigationController popViewControllerAnimated:YES];
                     }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
-
             }
         } error:^(NSError *error) {
             

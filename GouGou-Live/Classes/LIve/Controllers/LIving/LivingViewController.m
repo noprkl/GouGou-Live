@@ -1063,7 +1063,7 @@
     [self addChildViewController:dogShowVC];
     
     if (_liverId.length == 0) {
-        _liverId = EaseTest_Liver;
+        _liverId = @"";
     }
     // 客服
     ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
@@ -1121,7 +1121,7 @@
 - (UIScrollView *)baseScrollView {
     if (!_baseScrollView) {
         _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 290, SCREEN_WIDTH, SCREEN_HEIGHT - 290)];
-        //        _baseScrollView.scrollEnabled = NO;
+        _baseScrollView.scrollEnabled = NO;
         _baseScrollView.pagingEnabled = YES;
         _baseScrollView.showsVerticalScrollIndicator = NO;
         // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽

@@ -402,23 +402,30 @@ static NSString *cellid = @"cellid";
 
                         if (result != nil){
                             DLog(@"%@", authresponse.uid);
-                            
-                            NSDictionary *dict = @{
-                                                   @"type":@"1",
-                                                   @"name":authresponse.uid,
-                                                   @"user_id":[UserInfos sharedUser].ID
-                                                   };
-                            [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                                DLog(@"%@", successJson);
-                                [self showAlert:successJson[@"message"]];
-                                if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
-                                    [UserInfos sharedUser].wxopenid = authresponse.uid;
-                                    [UserInfos setUser];
-                                    [self.bottomTableView reloadData];
+                            [[UMSocialManager defaultManager] getUserInfoWithPlatform:(UMSocialPlatformType_WechatSession) currentViewController:self completion:^(id result, NSError *error) {
+                                UMSocialUserInfoResponse *userinfo = result;
+                                if (userinfo != nil) {
+                                    NSDictionary *dict = @{
+                                                           @"type":@"1",
+                                                           @"name":authresponse.uid,
+                                                           @"nickname":userinfo.name,
+                                                           @"user_id":[UserInfos sharedUser].ID
+                                                           };
+                                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                                        DLog(@"%@", successJson);
+                                        [self showAlert:successJson[@"message"]];
+                                        if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
+                                            [UserInfos sharedUser].wxopenid = authresponse.uid;
+                                            [UserInfos setUser];
+                                            [self.bottomTableView reloadData];
+                                        }
+                                    } error:^(NSError *error) {
+                                        DLog(@"%@", error);
+                                    }];
+
                                 }
-                            } error:^(NSError *error) {
-                                DLog(@"%@", error);
                             }];
+                            
                         }else{
                             swit.on = !swit.on;
                         }
@@ -470,23 +477,29 @@ static NSString *cellid = @"cellid";
                         UMSocialAuthResponse *authresponse = result;
                         if (authresponse != nil) {
                             DLog(@"%@", authresponse.uid);
-                            
-                            NSDictionary *dict = @{
-                                                   @"type":@"2",
-                                                   @"name":authresponse.uid,
-                                                   @"user_id":[UserInfos sharedUser].ID
-                                                   };
-                            [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                                DLog(@"%@", successJson);
-                                [self showAlert:successJson[@"message"]];
-                                if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
-                                    [UserInfos sharedUser].qqopenid = authresponse.uid;
-                                    [UserInfos setUser];
-                                    [self.bottomTableView reloadData];
+                            [[UMSocialManager defaultManager] getUserInfoWithPlatform:(UMSocialPlatformType_QQ) currentViewController:self completion:^(id result, NSError *error) {
+                                UMSocialUserInfoResponse *userinfo = result;
+                                if (userinfo != nil) {
+                                    NSDictionary *dict = @{
+                                                           @"type":@"2",
+                                                           @"name":authresponse.uid,
+                                                           @"user_id":[UserInfos sharedUser].ID,
+                                                           @"nickname":userinfo.name
+                                                           };
+                                    [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                                        DLog(@"%@", successJson);
+                                        [self showAlert:successJson[@"message"]];
+                                        if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
+                                            [UserInfos sharedUser].qqopenid = authresponse.uid;
+                                            [UserInfos setUser];
+                                            [self.bottomTableView reloadData];
+                                        }
+                                    } error:^(NSError *error) {
+                                        DLog(@"%@", error);
+                                    }];
                                 }
-                            } error:^(NSError *error) {
-                                DLog(@"%@", error);
                             }];
+                            
                         }else{
                             swit.on = !swit.on;
                         }
@@ -539,23 +552,29 @@ static NSString *cellid = @"cellid";
                         UMSocialAuthResponse *authresponse = result;
                         if (authresponse != nil) {
                             DLog(@"%@", authresponse.uid);
-                            
-                            NSDictionary *dict = @{
-                                                   @"type":@"3",
-                                                   @"name":authresponse.uid,
-                                                   @"user_id":[UserInfos sharedUser].ID
-                                                   };
-                            [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
-                                DLog(@"%@", successJson);
-                                [self showAlert:successJson[@"message"]];
-                                if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
-                                    [UserInfos sharedUser].wbopenid = authresponse.uid;
-                                    [UserInfos setUser];
-                                    [self.bottomTableView reloadData];
-                                }
-                            } error:^(NSError *error) {
-                                DLog(@"%@", error);
-                            }];
+                           [[UMSocialManager defaultManager] getUserInfoWithPlatform:(UMSocialPlatformType_Sina) currentViewController:self completion:^(id result, NSError *error) {
+                               UMSocialUserInfoResponse *userinfo = result;
+                               if (userinfo != nil) {
+                                   NSDictionary *dict = @{
+                                                          @"type":@"3",
+                                                          @"name":authresponse.uid,
+                                                          @"nickname":userinfo.name,
+                                                          @"user_id":[UserInfos sharedUser].ID
+                                                          };
+                                   [self getRequestWithPath:API_Binding params:dict success:^(id successJson) {
+                                       DLog(@"%@", successJson);
+                                       [self showAlert:successJson[@"message"]];
+                                       if ([successJson[@"message"] isEqualToString:@"绑定成功"]) {
+                                           [UserInfos sharedUser].wbopenid = authresponse.uid;
+                                           [UserInfos setUser];
+                                           [self.bottomTableView reloadData];
+                                       }
+                                   } error:^(NSError *error) {
+                                       DLog(@"%@", error);
+                                   }];
+                               }
+                           }];
+                           
                         }else{
                             swit.on = !swit.on;
                         }

@@ -51,10 +51,8 @@
     }];
     
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.top).offset(50);
         make.centerX.equalTo(weakself.centerX);
-        
     }];
     
     [_titlelable mas_makeConstraints:^(MASConstraintMaker *make) {

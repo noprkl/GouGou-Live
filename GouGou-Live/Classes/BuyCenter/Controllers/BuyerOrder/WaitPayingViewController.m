@@ -140,6 +140,9 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         WaitFontMoneyCell * cell = [[WaitFontMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitFontCell];
         cell.centerModel = model;
+        cell.cancelBlock = ^(){
+            [self getCancleOrderRequest:model];
+        };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"待付款",@"取消订单",@"联系卖家"] buttonNum:3];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
@@ -179,6 +182,9 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         WaitFontMoneyCell * cell = [[WaitFontMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitFontCell];
         cell.centerModel = model;
+        cell.cancelBlock = ^(){
+            [self getCancleOrderRequest:model];
+        };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付订金",@"取消订单",@"联系卖家"] buttonNum:3];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
@@ -207,6 +213,9 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         
         WaitBackMoneyCell * cell = [[WaitBackMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitBackCell];
         cell.centerModel = model;
+        cell.cancelBlock = ^(){
+            [self getCancleOrderRequest:model];
+        };
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付尾款",@"不想买了",@"联系卖家",@"申请维权"] buttonNum:4];
@@ -250,6 +259,9 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
         // 待付全款cell
         WaitAllMoneyCell *cell = [[WaitAllMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitAllMoneyCell];
         cell.centerModel = model;
+        cell.cancelBlock = ^(){
+            [self getCancleOrderRequest:model];
+        };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家", @"取消订单"] buttonNum:2];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {

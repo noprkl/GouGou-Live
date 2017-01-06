@@ -94,25 +94,20 @@
     }];
     
     [_nickName mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(weakself.sellerIamge.right).offset(10);
         make.centerY.equalTo(weakself.centerY).offset(10);
-        
+        make.width.equalTo(50);
     }];
     
     [_stateLabe mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.centerY).offset(10);
         make.size.equalTo(CGSizeMake(70, 20));
-        
     }];
     
     [_remainTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.right.equalTo(weakself.stateLabe.left).offset(-10);
         make.centerY.equalTo(weakself.stateLabe.centerY);
-        
     }];
 }
 #pragma mark

@@ -66,7 +66,8 @@
     self.dogCardView.dogColorLabel.text = model.colorName;
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [model.price integerValue] + [model.traficFee integerValue]];
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [model.price floatValue] + [model.traficMoney floatValue]];
+    self.costView.freightMoney = model.traficMoney;
 }
 - (void)clickDeleButtonAction:(UIButton *)btn {
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];

@@ -29,25 +29,23 @@
 @property (copy,nonatomic) NSString *sizeName;/**< 狗狗体型 */
 
 @property (copy,nonatomic) NSString *colorName;/**< 狗狗颜色 */
-@property (nonatomic, strong) NSString *impresssion; /**< 狗狗印象 */
+
 @property (nonatomic, strong) NSString *saleUserId; /**< 卖家id */
 
 
 @property (copy,nonatomic) NSString *priceOld;/**< 原价 */
 
 @property (copy,nonatomic) NSString *price;/**< 现价 */
-
 @property (copy,nonatomic) NSString *productDeposit;/**< 商品定金 */
-
-@property (copy,nonatomic) NSString *productRealDeposit;/**< 实付定金 */
-
 @property (copy,nonatomic) NSString *productBalance;/** 商品尾款 */
 
+@property (copy,nonatomic) NSString *productRealDeposit;/**< 实付定金 */
 @property (copy,nonatomic) NSString *productRealBalance;/** 实付尾款 */
+@property (copy,nonatomic) NSString *productRealPrice;/** 实付金额 */
 
 @property (nonatomic, strong) NSString *comment; /**< 补充 */
 
-@property (nonatomic, strong) NSString *traficFee; /**< 运费 */
+@property (nonatomic, strong) NSString *traficMoney; /**< 运费 */
 @property (nonatomic, strong) NSString *createTime; /**< 订单创建时间 */
 @property (nonatomic, strong) NSString *closeTime; /**< 订单创建时间 */
 

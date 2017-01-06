@@ -70,15 +70,13 @@ static NSString * reuseIdentifier = @"headerID";
             
             [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                 //                DLog(@"%@", successJson);
-                if (model.pNum == 0) {
-                    [dogInfos addObject:@[]];
+                if (successJson[@"data"]) {
+                    [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
                 }else{
-                    if (successJson[@"data"]) {
-                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                    }
+                    [dogInfos addObject:@[]];
                 }
+                
                 [liveMutableArr addObject:model];
-
                 if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                     [self hideHud];
                     self.dogInfos = dogInfos;
@@ -122,10 +120,6 @@ static NSString * reuseIdentifier = @"headerID";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self addCollectionview];
-
-    [self getRequestHostLive];
-    [self getRequestImpresion];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -136,6 +130,10 @@ static NSString * reuseIdentifier = @"headerID";
 
     self.view.backgroundColor = [UIColor colorWithHexString:@"e0e0e0"];
     self.edgesForExtendedLayout = 0;
+    [self addCollectionview];
+    
+    [self getRequestHostLive];
+    [self getRequestImpresion];
     
     self.collection.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getRequestHostLive];

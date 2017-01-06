@@ -85,11 +85,14 @@ static NSString *cellid = @"RecommentCellid";
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LiveViewCellModel *model = self.dataArr[indexPath.row];
-    if (model.pNum == 0){
-        return 250;
-    }else{
-        return 357;
+    if (self.dogInfos.count != 0) {
+        NSArray *arr = self.dogInfos[indexPath.row];
+        if (arr.count == 0){
+            return 250;
+        }else{
+            return 357;
+        }
     }
+    return 0;
 }
 @end

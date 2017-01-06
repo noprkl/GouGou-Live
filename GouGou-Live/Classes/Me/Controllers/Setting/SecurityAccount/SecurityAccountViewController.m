@@ -11,7 +11,7 @@
 #import "ResetPsdAlertView.h"
 #import "SetPayingPsdViewController.h"
 #import "NSString+MD5Code.h"
-#import "ForgetPsdViewController.h"
+#import "ForgetPayPsdViewController.h"
 
 @interface SecurityAccountViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -160,7 +160,7 @@
     
     [self.resetAalerView dismiss];
         
-        ForgetPsdViewController * forgetVC = [[ForgetPsdViewController alloc] init];
+        ForgetPayPsdViewController * forgetVC = [[ForgetPayPsdViewController alloc] init];
         [self.navigationController pushViewController:forgetVC animated:YES];
     
 }

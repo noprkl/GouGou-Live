@@ -14,7 +14,7 @@ typedef void(^ClickProblemBtnBlock)(NSString *problem);
 @property (copy, nonatomic) NSString *textViewText; /**< textView文字信息 */
 /** 点击'提交'回调 */
 @property (strong,nonatomic) ClickHAndinBlock handinBlock;
-/** 点击'提交'回调 */
+/** 点击'问题'回调 */
 @property (strong,nonatomic) ClickProblemBtnBlock problemBlock;
 
 /** 存放问题按钮数组 */

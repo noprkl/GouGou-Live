@@ -23,6 +23,9 @@
 @property (copy, nonatomic) NSString *closeTime; /**< 交易关闭时间 */
 
 @property (copy, nonatomic) NSString *finalTime; /**< 维权截止时间 */
+@property (copy, nonatomic) NSString *productRealPrice; /**< 商品定金 */
+
+
 @property (copy, nonatomic) NSString *productDeposit; /**< 商品定金 */
 @property (copy, nonatomic) NSString *productRealDeposit; /**< 商品实付定金 */
 @property (copy, nonatomic) NSString *productBalance; /**< 商品尾款 */

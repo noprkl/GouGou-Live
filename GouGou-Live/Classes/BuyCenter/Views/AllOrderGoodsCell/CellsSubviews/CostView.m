@@ -12,8 +12,8 @@
 @interface CostView  ()
 /** 合计 */
 @property (strong,nonatomic) UILabel *totalLabel;
-///** 总钱数 */
-//@property (strong,nonatomic) UILabel *totalMoney;
+/** 总钱数 */
+@property (strong,nonatomic) UILabel *totalMoney;
 /** 运费 */
 //@property (strong,nonatomic) UILabel *freightLabel;
 ///** 运费数 */

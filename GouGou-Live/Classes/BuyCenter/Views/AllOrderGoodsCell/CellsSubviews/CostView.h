@@ -13,8 +13,6 @@
 /** 交易金额 */
 @property (strong,nonatomic) NSString *moneyMessage;
 
-/** 总钱数 */
-@property (strong,nonatomic) UILabel *totalMoney;
 /** 运费数 */
 @property (strong,nonatomic) UILabel *freightMoney;
 /** 定金 */

@@ -61,8 +61,9 @@
 
 @property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
-
 @property (nonatomic, strong) UIButton *lastBtn; /**< 上一个按钮 */
+
+@property (nonatomic, assign) NSInteger shareType; /**< 分享类型 */
 
 @end
 
@@ -86,6 +87,9 @@
 
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLiveShowDog:) name:@"AddLiveShowDog" object:nil];
+    
+    // 默认不分享
+    self.shareType = 10;
 }
 // 添加展播狗狗图片
 - (void)addLiveShowDog:(NSNotification *)notification {
@@ -265,54 +269,38 @@
     self.lastBtn.selected = NO;
     self.lastBtn = btn;
     btn.selected = YES;
-
+    self.shareType = 0;
 }
 // 微信分享
 - (void)ClickWXShareAction:(UIButton *)btn{
     self.lastBtn.selected = NO;
     self.lastBtn = btn;
     btn.selected = YES;
+    self.shareType = 1;
 }
 // QQ分享
 - (void)ClickQQShareAction:(UIButton *)btn{
     self.lastBtn.selected = NO;
     self.lastBtn = btn;
     btn.selected = YES;
+    self.shareType = 2;
 }
 // 空间分享
 - (void)ClickTencentShareAction:(UIButton *)btn{
     self.lastBtn.selected = NO;
     self.lastBtn = btn;
     btn.selected = YES;
+    self.shareType = 3;
 }
 // 朋友圈分享
 - (void)ClickFriendShareAction:(UIButton *)btn{
     self.lastBtn.selected = NO;
     self.lastBtn = btn;
     btn.selected = YES;
+    self.shareType = 4;
 }
 // 开始直播
 - (void)ClickBeginLiveBtnAction:(UIButton *)btn{
-    // 创建聊天室
-//    POST 'https:/a1.easemob.com/easemob-demo/chatdemoui/chatrooms' -H 'Authorization: Bearer YWMtP_8IisA-EeK-a5cNq4Jt3QAAAT7fI10IbPuKdRxUTjA9CNiZMnQIgk0LEUE' -d '{"name":"testchatroom","description":"server create chatroom","owner":"jma1","maxusers":300,"members":["ceshia"]}'
-//    NSDictionary *dict = @{@"name":self.editNameText.text,
-//                           @"description":@"server create chatroom",
-//                           @"owner":[UserInfos sharedUser].ID,
-//                           @"maxusers":@(5000),
-//                           };
-//    DLog(@"%@", dict);
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    [self postRequestWithPath:@"gougoulive/chatrooms" params:dict success:^(id successJson) {
-//        DLog(@"%@", successJson);
-//    } error:^(NSError *error) {
-//        DLog(@"%@", error);
-//    }];
-//    
-//    [[AFHTTPSessionManager manager] POST:@"https://a1.easemob.com/1161161023178138/gougoulive/chatrooms" parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        DLog(@"%@", responseObject);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        DLog(@"%@", error);
-//    }];
     if (self.editNameText.text.length == 0) {
         [self showAlert:@"请输入房间名"];
     }else{
@@ -373,44 +361,8 @@
                 streamVc.chatRoomID = chatRoom;
                 streamVc.hidesBottomBarWhenPushed = YES;
                 streamVc.streamRtmp = streamModel.rtmp;
-                NSInteger tag = self.lastBtn.tag;
-               
-#pragma mark
-#pragma mark - 跳到群聊
-                TalkingViewController *talkVc = [[TalkingViewController alloc] initWithConversationChatter:chatRoom conversationType:(EMConversationTypeChatRoom)];
-                talkVc.liverid = [UserInfos sharedUser].ID;
-                talkVc.roomID = chatRoom;
-                talkVc.isNotification = YES;
-                talkVc.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:talkVc animated:YES];
-                
+                streamVc.shareType = self.shareType;
                 [self.navigationController pushViewController:streamVc animated:YES];
-//                DLog(@"%@", streamModel.rtmp);
-//                if (tag == 900) {
-//                    [CreateLiveViewController SinaShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//                    
-//                }else if (tag == 901){
-//                    [CreateLiveViewController WChatShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//
-//                }else if (tag == 902){
-//                    [CreateLiveViewController QQShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//
-//                }else if (tag == 903){
-//                    [CreateLiveViewController TencentShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//
-//                }else if (tag == 904){
-//                    [CreateLiveViewController WechatTimeShare:streamModel.rtmp success:^{
-//                        [self.navigationController pushViewController:streamVc animated:YES];
-//                    }];
-//                }
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);
@@ -476,7 +428,6 @@
         _QQShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_QQShareBtn setImage:[UIImage imageNamed:@"QQgray"] forState:(UIControlStateNormal)];
         [_QQShareBtn setImage:[UIImage imageNamed:@"QQ-(1)"] forState:(UIControlStateSelected)];
-        _QQShareBtn.tag = 902;
         [_QQShareBtn addTarget:self action:@selector(ClickQQShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _QQShareBtn;
@@ -486,7 +437,6 @@
         _WXShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_WXShareBtn setImage:[UIImage imageNamed:@"微信未点击"] forState:(UIControlStateNormal)];
         [_WXShareBtn setImage:[UIImage imageNamed:@"微信select"] forState:(UIControlStateSelected)];
-        _WXShareBtn.tag = 901;
 
         [_WXShareBtn addTarget:self action:@selector(ClickWXShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -497,7 +447,6 @@
         _SinaShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_SinaShareBtn setImage:[UIImage imageNamed:@"weibo_btn"] forState:(UIControlStateNormal)];
         [_SinaShareBtn setImage:[UIImage imageNamed:@"新浪微博"] forState:(UIControlStateSelected)];
-        _SinaShareBtn.tag = 900;
         _SinaShareBtn.selected = YES;
         [_SinaShareBtn addTarget:self action:@selector(ClickSinaShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -508,7 +457,6 @@
         _TencentShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_TencentShareBtn setImage:[UIImage imageNamed:@"空间"] forState:(UIControlStateNormal)];
         [_TencentShareBtn setImage:[UIImage imageNamed:@"QQ空间"] forState:(UIControlStateSelected)];
-        _TencentShareBtn.tag = 903;
 
         [_TencentShareBtn addTarget:self action:@selector(ClickTencentShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -519,7 +467,6 @@
         _friendShareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_friendShareBtn setImage:[UIImage imageNamed:@"朋友圈"] forState:(UIControlStateNormal)];
         [_friendShareBtn setImage:[UIImage imageNamed:@"朋友圈selected"] forState:(UIControlStateSelected)];
-        _friendShareBtn.tag = 904;
 
         [_friendShareBtn addTarget:self action:@selector(ClickFriendShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }

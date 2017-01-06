@@ -18,5 +18,6 @@
 #import "SellerOrderModel.h"
 
 @interface SellerBaseViewController : BaseViewController
-
+/** 在线客服 */
+- (void)clickServiceBtnAction;
 @end

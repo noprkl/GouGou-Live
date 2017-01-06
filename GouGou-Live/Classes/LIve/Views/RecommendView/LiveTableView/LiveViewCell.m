@@ -42,6 +42,7 @@
     self.anchorNameLabel.font = [UIFont systemFontOfSize:14];
     self.certificateLabel.font = [UIFont systemFontOfSize:12];
     self.anchorNameLabel.font = [UIFont systemFontOfSize:14];
+    self.roomMessageLabel.font = [UIFont systemFontOfSize:12];
 }
 - (void)clickCardViewAction:(UIControl *)control {
     if (_cardBlcok) {

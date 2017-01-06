@@ -48,7 +48,7 @@
     _model = model;
     
     self.nickView.nickName.text = model.userName;
-    self.nickView.dateLabel.text = @"14分59秒";
+    self.nickView.dateLabel.text = @"";
     
     if (model.pathSmall != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];

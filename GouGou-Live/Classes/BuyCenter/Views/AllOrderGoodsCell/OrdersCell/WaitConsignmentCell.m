@@ -67,13 +67,56 @@
     self.dogCardView.nowPriceLabel.text = centerModel.price;
    
     // 付款状况
-    self.dogCardView.nowPriceLabel.text = centerModel.price;
-    // 付款状况
-    self.costView.fontMoney.text = centerModel.productDeposit;
-    self.costView.remainderMoeny.text = centerModel.productBalance;
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [centerModel.price integerValue] + [centerModel.traficFee integerValue]];
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficFee];
+    // 总价价格
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [centerModel.price floatValue] + [centerModel.traficMoney floatValue]];
 
+    // 运费
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficMoney];
+    // 付款状况
+    // 实付款
+    if (centerModel.productRealPrice.length != 0) {// 全款支付
+        // 定金
+        self.costView.fontMoneyLabel.text = @"";
+        self.costView.fontMoney.text = @"";
+        
+        // 实付
+        self.costView.remainderMoneylabel.text = @"已付全款";
+        if (centerModel.productRealPrice.length != 0) {
+            self.costView.remainderMoeny.text = centerModel.productRealPrice;
+        }else{
+            self.costView.remainderMoeny.text = @"0";
+        }
+    }else{
+        // 定金
+        if (centerModel.productRealDeposit.length != 0) {
+            //尾款
+            if (centerModel.productRealBalance.length != 0) {
+                // 定金
+                self.costView.fontMoneyLabel.text = @"已付定金";
+                if (centerModel.productRealDeposit.length != 0) {
+                    self.costView.fontMoney.text = centerModel.productRealDeposit;
+                }else{
+                    self.costView.fontMoney.text = @"0";
+                }
+                
+                
+                // 实付
+                self.costView.remainderMoneylabel.text = @"已付尾款";
+                self.costView.remainderMoeny.text = centerModel.productRealBalance.length !=0 ? centerModel.productRealBalance:@"0";
+            }else{
+                //尾款
+                if (centerModel.productRealBalance.length != 0) {
+                    // 定金
+                    self.costView.fontMoneyLabel.text = @"";
+                    self.costView.fontMoney.text = @"";
+                    
+                    // 实付
+                    self.costView.remainderMoneylabel.text = @"已付定金";
+                    self.costView.remainderMoeny.text = centerModel.productRealDeposit.length != 0 ? centerModel.productRealDeposit:@"0";
+                }
+            }
+        }
+    }
 }
 #pragma mark
 #pragma mark - 约束
@@ -165,7 +208,6 @@
     
     if (!_costView) {
         _costView = [[CostView alloc] init];
-        [_costView costWithFreightPrice:@"￥50）" fontMoneyLabel:@"已付定金:" fontMoney:@"￥500" backMoneyLable:@"已付尾款:" backMoney:@"￥950"];
     }
     return _costView;
 }

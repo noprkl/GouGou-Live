@@ -67,9 +67,8 @@
 }
 - (void)clickSearchBtnAction {
     if (self.titleInputView.text.length != 0) {
-        [self searchDogTypeWithType:self.titleInputView.text];    
+        [self searchDogTypeWithType:self.titleInputView.text];
     }
-    
 }
 - (void)editSearchAction:(UITextField *)textField {
     if (textField.text.length == 0) {

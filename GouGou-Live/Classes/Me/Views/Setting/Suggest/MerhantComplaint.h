@@ -16,4 +16,7 @@ typedef void(^ClickHAndinBlock)(UIButton *button);
 @property (strong,nonatomic) ClickPhoneNumBlcok phoneNumBlock;
 /** 点击'提交'回调 */
 @property (strong,nonatomic) ClickHAndinBlock handinBlock;
+
+@property (nonatomic, strong) NSString *phoneNumber; /**< 电话号码 */
+
 @end

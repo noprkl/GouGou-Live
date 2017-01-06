@@ -28,7 +28,10 @@
 @property (copy, nonatomic) NSString *productRealDeposit; /**< 商品实付定金 */
 @property (copy, nonatomic) NSString *productBalance; /**< 商品尾款 */
 @property (copy, nonatomic) NSString *productRealBalance; /**< 商品实付尾款 */
+@property (copy, nonatomic) NSString *productRealPrice; /**< 商品实付款 */
+
 @property (copy, nonatomic) NSString *balancePayMethod; /**< 尾款支付方式 */
+
 @property (copy, nonatomic) NSString *traficFee; /**< 商品运费 */
 @property (copy, nonatomic) NSString *traficRealFee; /**< 商品实付运费 */
 

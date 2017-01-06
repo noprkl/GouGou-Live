@@ -70,7 +70,7 @@
                            };
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Live_new_list params:dict success:^(id successJson) {
-//        DLog(@"%@", successJson);
+        DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         if (successJson[@"data"][@"num"] == 0) { // 如果为0刷新
@@ -96,17 +96,15 @@
                                    };
             [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
-                if (model.pNum == 0) {
+                if (successJson[@"data"]) {
+                    height += 357;
+                     [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                }else{
                     height += 250;
                     [dogInfos addObject:@[]];
-                }else{
-                    height += 357;
-                    if (successJson[@"data"]) {
-                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                    }
                 }
+                
                 [liveMutableArr addObject:model];
-
                 if (dogInfos.count == liveArr.count && liveMutableArr.count == liveArr.count) {
                     [self hideHud];
                     self.baseScrollView.contentSize = CGSizeMake(0, height + 110 + 44);
@@ -146,12 +144,13 @@
     NSDictionary *dict = @{
                            @"size":@([size.ID intValue])
                            };
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        if ([successJson[@"code"] isEqualToString:@"0"]) {
+        if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
         }else{
@@ -174,19 +173,15 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        height += 240;
-                        [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
-                        
-                    }else{
+                    if (successJson[@"data"]) {
                         height += 357;
-                        
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
-                        }
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        height += 250;
+                        [dogInfos addObject:@[]];
                     }
+                    
+                    [liveMutableArr addObject:model];
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                         
                         CGRect rect = self.tableView.frame;
@@ -196,7 +191,7 @@
                         self.tableView.dogInfos = dogInfos;
                         self.tableView.dataPlist = liveMutableArr;
                         [self.tableView reloadData];
-                        //                    [self hideHud];
+                        [self hideHud];
                     }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
@@ -218,12 +213,13 @@
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        if ([successJson[@"code"] isEqualToString:@"0"]) {
+        if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
         }else{
@@ -246,19 +242,16 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        height += 240;
-                        [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
-                        
-                    }else{
+                    if (successJson[@"data"]) {
                         height += 357;
-                        
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
-                        }
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        height += 250;
+                        [dogInfos addObject:@[]];
                     }
+                    
+                    [liveMutableArr addObject:model];
+                    
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                         
                         CGRect rect = self.tableView.frame;
@@ -268,7 +261,7 @@
                         self.tableView.dogInfos = dogInfos;
                         self.tableView.dataPlist = liveMutableArr;
                         [self.tableView reloadData];
-                        //                    [self hideHud];
+                        [self hideHud];
                     }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
@@ -283,19 +276,19 @@
 }
 - (void)getRequestFilterLiveListWithMinPrice:(DogCategoryModel *)minPrice MaxPrice:(DogCategoryModel *)maxPrice  {
     NSDictionary *dict = @{
-                           //                           @"size":@([size.ID intValue])
-                           @"t":@([minPrice.ID intValue]),
-                           @"e":@([maxPrice.ID intValue]),
+                           @"t":minPrice.ID,
+                           @"e":maxPrice.ID,
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
-    [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
+    [self showHudInView:self.view hint:@"加载中"];
+    [self getRequestWithPath:API_Price_screening params:dict success:^(id successJson) {
         
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        if ([successJson[@"code"] isEqualToString:@"0"]) {
+        if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
         }else{
@@ -318,19 +311,16 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        height += 240;
-                        [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
-                        
-                    }else{
+                    if (successJson[@"data"]) {
                         height += 357;
-                        
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
-                        }
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        height += 250;
+                        [dogInfos addObject:@[]];
                     }
+                    
+                    [liveMutableArr addObject:model];
+                    
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                         
                         CGRect rect = self.tableView.frame;
@@ -340,7 +330,7 @@
                         self.tableView.dogInfos = dogInfos;
                         self.tableView.dataPlist = liveMutableArr;
                         [self.tableView reloadData];
-                        //                    [self hideHud];
+                        [self hideHud];
                     }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
@@ -357,9 +347,6 @@
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    [self getRequestLiveList];
-    [self getRequestBanner];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
@@ -367,6 +354,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
+    [self getRequestBanner];
+    [self getRequestLiveList];
 }
 
 - (void)initUI {

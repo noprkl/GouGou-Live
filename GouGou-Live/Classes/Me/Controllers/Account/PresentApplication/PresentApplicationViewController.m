@@ -38,7 +38,7 @@
         ResetPsdViewController *resetVC = [[ResetPsdViewController alloc] init];
         resetVC.hidesBottomBarWhenPushed = YES;
         resetVC.title = @"支付密码重置";
-        
+        [self.navigationController pushViewController:resetVC animated:YES];
     } else {
     
         // 封装蒙版的View
@@ -101,7 +101,6 @@
     [super viewWillAppear:animated];
     // 请求用户资产
      self.moneyTextfiled.placeholder = [NSString stringWithFormat:@"请输入要提现的金额(最高￥%@)", [UserInfos sharedUser].userAsset];
-
 }
 - (void)initUI {
 
@@ -113,20 +112,18 @@
     [self.moneyTextfiled addTarget:self action:@selector(editPresentMoneyAction:) forControlEvents:(UIControlEventEditingChanged)];
     self.moneyTextfiled.delegate = self;
     self.moneyTextfiled.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
-    [self.moneyTextfiled addTarget:self action:@selector(inputSomthing:) forControlEvents:UIControlEventEditingDidEnd];
-    
+
 }
-- (void)editPresentMoneyAction:(UITextField *)textFiled {
+- (IBAction)editPresentMoneyAction:(UITextField *)textFiled {
     // 最高是当前账号的钱数
-    if (textFiled.text > [UserInfos sharedUser].userAsset) {
+    if ([textFiled.text floatValue]> [[UserInfos sharedUser].userAsset floatValue]) {
         textFiled.text = [UserInfos sharedUser].userAsset;
     }
 }
 - (void)inputSomthing:(UITextField *)textFiled {
- 
     UIButton *button = [textFiled valueForKey:@"_clearButton"];
     [button setImage:[UIImage imageNamed:@"-单删除"] forState:UIControlStateNormal];
+    textFiled.clearButtonMode = UITextFieldViewModeWhileEditing;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

@@ -32,7 +32,7 @@ static NSString *cellid = @"ChoseShopAdressCell";
     
     // [[UserInfos sharedUser].ID integerValue]
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue])
+                           @"user_id":[UserInfos sharedUser].ID
                            };
     
     [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
@@ -81,13 +81,17 @@ static NSString *cellid = @"ChoseShopAdressCell";
 - (void)initUI {
     [self addRightBarButtonitem];
     self.title = @"选择收货地址";
-    
+
+    self.edgesForExtendedLayout = 0;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     [self.view addSubview:self.tableView];
+    [self.tableView makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];

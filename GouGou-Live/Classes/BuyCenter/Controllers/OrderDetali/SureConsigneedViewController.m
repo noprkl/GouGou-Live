@@ -58,7 +58,7 @@
         DLog(@"%@",successJson[@"data"]);
         // 状态信息
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
-        self.orderStateView.stateMessage = @"待付定金";
+        self.orderStateView.stateMessage = @"待收货";
         self.orderStateView.timeMessage = [NSString stringFromDateString:self.orderInfo.createTime];
         // 联系人信息
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
@@ -68,10 +68,6 @@
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         // 商家名称
-//        if (self.orderInfo.userImgUrl.length != 0) {
-//            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
-//            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-//        }
         self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
 
         self.sellInfoView.buynessName = self.orderInfo.merchantName;
@@ -90,13 +86,53 @@
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
         // 商品总价
         self.goodsPriceView.totalsMoney = self.orderInfo.price;
+       // 运费
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
-        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.price integerValue] + [self.orderInfo.traficFee integerValue] - [self.orderInfo.productDeposit integerValue] - [self.orderInfo.productBalance integerValue]];
-        // 付款信息
-        self.detailPayView.needBackMessage = self.orderInfo.productBalance;
-        self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
-        self.detailPayView.realMoney = self.orderInfo.price;
-        self.detailPayView.balance = self.orderInfo.productRealBalance;
+        // 优惠
+        
+        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%.2lf",[self.orderInfo.productDeposit floatValue] + [self.orderInfo.productBalance floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
+        
+        // 实付款
+        if (self.orderInfo.productRealPrice.length != 0) {// 全款支付
+            //尾款
+            self.detailPayView.needBackMessage = @"0";
+            // 实付
+            self.detailPayView.realMoney = self.orderInfo.productRealPrice;
+            // 定金
+            if (self.orderInfo.productRealDeposit.length == 0) {
+                self.detailPayView.fontMoneyMessage = @"0";
+            }else{
+                self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
+            }
+            // 尾款
+            if (self.orderInfo.productRealBalance.length == 0) {
+                self.detailPayView.balance = @"0";
+            }else{
+                self.detailPayView.balance = self.orderInfo.productRealBalance;
+            }
+        }else{
+            //尾款
+            if (self.orderInfo.productBalance.length != 0) {
+                self.detailPayView.needBackMessage = self.orderInfo.productBalance;
+            }else{
+                self.detailPayView.needBackMessage = @"0";
+            }
+            // 实付
+            self.detailPayView.realMoney = [NSString stringWithFormat:@"%.2lf", [self.detailModel.productRealDeposit floatValue] + [_detailModel.productRealDeposit floatValue]];
+            // 定金
+            if (self.orderInfo.productRealDeposit.length == 0) {
+                self.detailPayView.fontMoneyMessage = @"0";
+            }else{
+                self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
+            }
+            // 实付尾款
+            if (self.orderInfo.productRealBalance.length == 0) {
+                self.detailPayView.balance = @"0";
+            }else{
+                self.detailPayView.balance = self.orderInfo.productRealBalance;
+            }
+        }
+        
         // 订单编号
         self.orderNumberView.buyUserId = self.orderInfo.ID;
         

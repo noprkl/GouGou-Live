@@ -59,6 +59,7 @@
         self.orderStateView.stateMessage = @"待付全款";
         self.orderStateView.timeMessage = [NSString stringFromDateString:self.orderInfo.createTime];
         // 联系人地址
+//        self.consigneeViw.buyUser
         self.consigneeViw.buyUserName = self.orderInfo.buyUserName;
         self.consigneeViw.buyUserTel = self.orderInfo.buyUserTel;
         self.consigneeViw.recevieProvince = self.orderInfo.recevieProvince;
@@ -67,11 +68,6 @@
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         // 商家
         self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
-        
-//        if (self.orderInfo.userImgUrl.length != 0) {
-//            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
-//            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-//        }
         self.sellInfoView.buynessName = self.orderInfo.merchantName;
         self.sellInfoView.currentTime = [NSString stringFromDateString:self.orderInfo.createTime];
         // 狗狗详情
@@ -89,7 +85,7 @@
         // 商品总价
         self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
-        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
+        self.goodsPriceView.cutMoney = @"0";
         
         // 全款
         self.payMonyView.totalMoney = self.orderInfo.price;
@@ -117,9 +113,6 @@
         }else{
             self.orderNumberView.deliveryTimes = @"未付";
         }
-
-
-        
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];

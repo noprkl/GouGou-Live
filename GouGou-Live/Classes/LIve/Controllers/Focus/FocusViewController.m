@@ -68,14 +68,10 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        [dogInfos addObject:@[]];
-
+                    if (successJson[@"data"]) {
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
                     }else{
-
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                        }
+                        [dogInfos addObject:@[]];
                     }
                     [liveMutableArr addObject:model];
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
@@ -99,6 +95,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadFocusView];
     // 上拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getRequestLiveList];
@@ -109,7 +106,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.edgesForExtendedLayout = 64;
-    [self loadFocusView];
     
 }
 - (void)loadFocusView {

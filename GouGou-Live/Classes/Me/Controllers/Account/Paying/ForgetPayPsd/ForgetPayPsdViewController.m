@@ -36,7 +36,7 @@
 }
 
 - (void)initUI {
-    self.title = @"重设支付密码";
+    self.title = @"忘记支付密码";
     
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;

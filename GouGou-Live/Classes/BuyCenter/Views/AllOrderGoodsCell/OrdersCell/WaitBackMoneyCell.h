@@ -10,8 +10,13 @@
 #import "BuyCenterModel.h"
 
 @class NickNameModel;
+
+typedef void(^CancelBackOrderBlock)();
+
 @interface WaitBackMoneyCell : UITableViewCell
 /** 订单模型 */
 @property (strong,nonatomic) BuyCenterModel *centerModel;
+
+@property (nonatomic, strong) CancelBackOrderBlock cancelBlock; /**< 倒计时结束 */
 
 @end

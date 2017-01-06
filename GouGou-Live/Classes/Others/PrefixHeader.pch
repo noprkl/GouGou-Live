@@ -27,6 +27,11 @@
 #define IOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >=8.0 ? YES : NO)
 // 客服电话
 #define ServicePhone @"010-0928928"
+// 短信
+#define SMSPhone @"13810214551"
+// 分享地址
+#define ShareAdress @"http://gougou.itnuc.com/h5/share.html"
+
 // 关注文件名(本地)
 #define FocusFile @"Focus"
 #define Focus @"FocusPeople"
@@ -72,19 +77,9 @@
 #define MyLog(s,...)
 #endif
 
-
-
-// test数据
-#define EaseTest_Login1 @"lxq"  
-#define EaseTest_Login2 @"lxq2"
-#define EaseTest_Login3 @"lxq3"
-
-#define EaseTest_Chat1 @"lxq"  // 客服
-#define EaseTest_Chat2 @"lxq2" // 买家
-#define EaseTest_Chat3 @"lxq3" // 卖家
+// 环信测试数据
+#define EaseTest_Service @"servicer"  // 客服
 #define EaseTest_Liver @"liver" // 主播
-
-#define TestID 17
 
 #endif
 

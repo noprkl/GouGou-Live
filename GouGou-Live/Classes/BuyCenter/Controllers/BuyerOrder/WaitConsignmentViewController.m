@@ -9,7 +9,6 @@
 #import "WaitConsignmentViewController.h"
 #import "FunctionButtonView.h"  // cell下边的按钮
 #import "WaitConsignmentCell.h" // 待发货cell
-#import "WaitConsignessCell.h"
 #import "ProtecePowerPromptView.h"
 
 #import "WaitSellConsigmentViewContorller.h" // 代发货订单详情

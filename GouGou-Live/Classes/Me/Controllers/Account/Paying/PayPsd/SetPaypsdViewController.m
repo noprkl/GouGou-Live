@@ -34,6 +34,8 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
         if ([successJson[@"message"] isEqualToString:@"设置成功"]) {
+            [UserInfos sharedUser].userpaycode = pwd;
+            [UserInfos setUser];
             SetPayPsdSuccessViewController *sureSuccVC = [[SetPayPsdSuccessViewController alloc] init];
             [self.navigationController pushViewController:sureSuccVC animated:YES];
         }

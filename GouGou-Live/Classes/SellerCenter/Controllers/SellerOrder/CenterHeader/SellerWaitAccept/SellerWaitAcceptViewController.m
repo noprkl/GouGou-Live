@@ -128,19 +128,16 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
-    logisticsInfoVC.orderState = @"已完成";
+    logisticsInfoVC.orderState = @"待收货";
     SellerOrderModel *model = self.dataArr[indexPath.row];
     logisticsInfoVC.orderID = model.ID;
     logisticsInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:logisticsInfoVC animated:YES];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
 }
 #pragma mark
 #pragma mark - 点击按钮Action
 - (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
-    
     
     if ([title isEqualToString:@"联系买家"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:orderModel.buyUserId conversationType:(EMConversationTypeChat)];
@@ -174,13 +171,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat1;
-         viewController.chatID = EaseTest_Chat1;
-        viewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:viewController animated:YES];
-        
-
+               [self clickServiceBtnAction];
     }
 }
 

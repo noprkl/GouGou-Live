@@ -48,6 +48,7 @@
     [self.sellerName makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.sellerIconView.centerY);
         make.left.equalTo(self.sellerIconView.right).offset(10);
+        make.width.equalTo(SCREEN_WIDTH / 4);
     }];
     [self.sellerCertificateLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.sellerIconView.centerY);

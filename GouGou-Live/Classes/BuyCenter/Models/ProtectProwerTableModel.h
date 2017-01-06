@@ -37,13 +37,13 @@
 @property (copy,nonatomic) NSString *price;
 
 /** 商品实际价格 */
-@property (copy,nonatomic) NSString *productPrice;
+@property (copy,nonatomic) NSString *productRealPrice;
 /** 实付实收定金 */
 @property (copy,nonatomic) NSString *productRealDeposit;
 /** 商品实收尾款 */
 @property (copy,nonatomic) NSString *productRealBalance;
 /** 运费 */
-@property (copy,nonatomic) NSString *traficMoney;
+@property (copy,nonatomic) NSString *traficRealFee;
 
 @property (copy, nonatomic) NSString *closeTime; /**< 维权关闭时间 */
 

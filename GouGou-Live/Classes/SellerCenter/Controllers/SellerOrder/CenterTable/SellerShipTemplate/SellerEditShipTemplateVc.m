@@ -100,7 +100,6 @@ static NSString *cellid = @"SellerAddShipTemplate";
     
     SellerAdressModel *model = adress.userInfo[@"ChoseSendAdress"];
     if (model.merchantTel.length != 0) {
-//        [self.view addSubview:self.tableView];
         [self.tableView reloadData];
         self.adressModel = model;
     }

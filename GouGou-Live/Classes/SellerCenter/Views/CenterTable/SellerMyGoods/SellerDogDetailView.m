@@ -111,7 +111,9 @@
     self.promulgateTimeLabel.text = [NSString stringFromDateString:dogInfo.createTime];
     
     NSMutableArray *imsArr = [NSMutableArray arrayWithArray:[self.dogInfo.pathBig componentsSeparatedByString:@","]];
-    [imsArr removeObjectAtIndex:0];
+    if (imsArr.count > 1) {
+        [imsArr removeObjectAtIndex:0];
+    }
 
     CGFloat height = [_dogImageView getCellHeightWithImages:imsArr];
     _dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
@@ -128,16 +130,17 @@
     
     NSString *state = @"";
     if ([dogInfo.status isEqualToString:@"1"]) {// 1：新建商品 2：审核未通过  3：上线 4：下线5：售完
-        state = @"新建商品";
+        state = @"审核中";
     }else if ([dogInfo.status isEqualToString:@"2"]) {
         state = @"审核未通过";
     }else if ([dogInfo.status isEqualToString:@"3"]) {
-        state = @"上线";
+        state = @"待售";
     }else if ([dogInfo.status isEqualToString:@"4"]) {
-        state = @"下线";
+        state = @"已预订";
     }else if ([dogInfo.status isEqualToString:@"5"]) {
-        state = @"售完";
+        state = @"已售";
     }
+
     self.dogState.text = state;
     self.sellStateLabel.text = state;
     self.transPriceLabel.text = dogInfo.traficMoney;
@@ -194,7 +197,7 @@
         make.left.equalTo(self.dogSizeLabel.right).offset(10);
     }];
     [self.dogPriceLaebl makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.dogColorLaebl.centerY);
+        make.centerY.equalTo(self.dogAgeLaebl.centerY);
         make.right.equalTo(self.right).offset(-10);
     }];
     [self.line2 makeConstraints:^(MASConstraintMaker *make) {
@@ -207,18 +210,15 @@
         make.top.equalTo(self.line2.bottom).offset(15);
         make.width.equalTo(100);
     }];
-    [self.transPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.transMoneyLabel.right).offset(100);
-        make.centerY.equalTo(self.transMoneyLabel.centerY);
-    }];
     [self.markImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.transPriceLabel.right).offset(100);
+        make.right.equalTo(self.right).offset(-20);
         make.centerY.equalTo(self.transMoneyLabel.centerY);
     }];
-//    [self.transPriceLabel makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(self.transMoneyLabel.centerY);
-//        make.right.equalTo(self.markImageView.left).offset(-10);
-//    }];
+    [self.transPriceLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.markImageView.left).offset(-10);
+        make.centerY.equalTo(self.transMoneyLabel.centerY);
+    }];
+    
     [self.line3 makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
         make.top.equalTo(self.line2.bottom).offset(44);

@@ -22,8 +22,10 @@
 #import "SellerChangeViewController.h"
 #import "SellerSendViewController.h"
 #import "SellerProtectDetailModel.h"
+#import <MessageUI/MessageUI.h>
+#import "SellerSendAlertView.h"
 
-@interface SellerOrderDetailProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SellerOrderDetailProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
@@ -40,7 +42,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
 #pragma mark - 网络请求
 - (void)getProtectPowerRequest {
     
-    NSDictionary * dict = @{@"id":@([_orderID intValue])
+    NSDictionary * dict = @{@"id":_orderID
                             };
     DLog(@"%@", dict);
     [self getRequestWithPath:API_Activist_limit params:dict success:^(id successJson) {
@@ -243,14 +245,19 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             }            cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerOrderDetailMorePriceView *morePriceView = [[SellerOrderDetailMorePriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
-            morePriceView.allPriceCount.text = self.orderInfo.priceOld;
-            morePriceView.favorablePriceCount.text = self.orderInfo.price;
-            morePriceView.realPriceCount.text = [NSString stringWithFormat:@"%d", [self.orderInfo.priceOld intValue] - [self.orderInfo.price intValue]];
+        // 商品总价
+        morePriceView.allPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficRealFee floatValue]];
+        // 优惠价格
+        morePriceView.favorablePriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficFee floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
+        
+        morePriceView.realPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.productRealBalance floatValue] + [self.orderInfo.productRealDeposit floatValue] + [self.orderInfo.traficRealFee floatValue] + [self.orderInfo.productRealPrice floatValue]];
+        // 运费
+        morePriceView.templatePriceCount.text = self.orderInfo.traficRealFee.length != 0 ?self.orderInfo.traficRealFee:@"0";
+        // 尾款
+        morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance !=0 ?self.orderInfo.productRealBalance:@"0";
+        // 定金
+        morePriceView.depositCount.text = self.orderInfo.productRealDeposit.length !=0 ? self.orderInfo.productRealDeposit:@"0";
 
-            morePriceView.templatePriceCount.text = self.orderInfo.traficRealFee;
-            morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance;
-            morePriceView.depositCount.text = self.orderInfo.productRealDeposit;
-            
             [cell.contentView addSubview:morePriceView];
             return cell;
 
@@ -327,27 +334,51 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     
     if ([title isEqualToString:@"联系买家"]) {
         // 跳转至买家
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat2 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat2;
-         viewController.chatID = EaseTest_Chat3;
+        NSString *chatId = self.orderInfo.buyUserId;
+        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:chatId conversationType:(EMConversationTypeChat)];
+        viewController.title = chatId;
+         viewController.chatID = chatId;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
         
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
+        changeVC.changeStyle = @"修改运费";
+        changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
+        changeVC.changeStyle = @"修改价格";
+        changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:sendVC animated:YES];
+        __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+        
+        sendView.orderID = self.orderID;
+        sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
+            // 送货请求，如果成功返回YES 失败返回NO
+            NSDictionary *dict = @{
+                                   @"user_id":[UserInfos sharedUser].ID,
+                                   @"status":@(8),
+                                   @"id":self.orderID
+                                   };
+            [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+                if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                    sendView = nil;
+                    [sendView dismiss];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        };
+        [sendView show];
         
     }else if ([title isEqualToString:@"查看评价"]){
         
@@ -359,10 +390,49 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat1;
-         viewController.chatID = EaseTest_Chat3;
-        [self.navigationController pushViewController:viewController animated:YES];
+        [self clickServiceBtnAction];
+    }
+}
+/** 在线客服 */
+- (void)clickServiceBtnAction {
+    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
+    
+    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
+        
+        controller.recipients = [NSArray arrayWithObject:SMSPhone];
+        controller.body = @"测试发短信";
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:^{
+            
+        }];
+        //修改短信界面标题
+        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
+    }else{
+        [self showAlert:@"不支持发送短信"];
+    }
+}
+#pragma mark
+#pragma mark - 短信发送协议
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [controller dismissViewControllerAnimated:NO completion:^{
+        
+    }];//关键的一句   不能为YES
+    
+    switch ( result ) {
+            
+        case MessageComposeResultCancelled:
+            
+            [self showAlert:@"取消发送"];
+            break;
+        case MessageComposeResultFailed:// send failed
+            [self showAlert:@"发送失败"];
+            break;
+        case MessageComposeResultSent:
+            [self showAlert:@"发送成功"];
+            break;
+        default:
+            break;
     }
 }
 

@@ -87,10 +87,7 @@
     }else if(!flag){
         [self showAlert:@"所输入的不是手机号"];
     }else{
-        if (codeNumber.length != 6) {
-            [self showAlert:@"验证码只能是6位"];
-        }else{
-
+        if (codeNumber.length == 6 || codeNumber.length == 5) {
             NSDictionary * dict = @{
                                     @"user_tel":self.phoneTextField.text ,
                                     @"code":self.codeTextField.text,
@@ -109,24 +106,26 @@
                     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
                     NSString *phoneNumStr = [UserInfos sharedUser].usertel;
                     [defaults setObject:phoneNumStr forKey:@"phoneNum"];
-                   
+                    
                     SurePsdViewController *sureVC = [[SurePsdViewController alloc] init];
                     sureVC.title = @"密码确认";
                     sureVC.telNumber = self.phoneTextField.text;
                     sureVC.codeNumber = self.codeTextField.text;
                     sureVC.type = _type;
                     sureVC.name = _name;
+                    sureVC.nickName = _nickName;
                     [self.navigationController pushViewController:sureVC animated:YES];
                 }
                 if ([successJson[@"code"] isEqual:@"2"]) {
                     return ;
                 }
-
+                
                 
             } error:^(NSError *error) {
                 DLog(@"%@",error);
             }];
-            
+        }else{
+            [self showAlert:@"验证码输入错误"];
         }
     }
 }

@@ -8,6 +8,7 @@
 
 #import "SellerWaitSendViewController.h"
 #import "SellerWaitSendCell.h"
+#import "SellerSendAlertView.h"
 
 @interface SellerWaitSendViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -148,10 +149,32 @@ static NSString *cellid = @"SellerWaitSendCell";
         [self.navigationController pushViewController:viewController animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        sendVC.orderID = orderModel.ID;
-        [self.navigationController pushViewController:sendVC animated:YES];
+//        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
+//        sendVC.hidesBottomBarWhenPushed = YES;
+//        sendVC.orderID = orderModel.ID;
+//        [self.navigationController pushViewController:sendVC animated:YES];
+            __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+
+            sendView.orderID = orderModel.ID;
+            sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
+                // 送货请求，如果成功返回YES 失败返回NO
+                NSDictionary *dict = @{
+                                       @"user_id":[UserInfos sharedUser].ID,
+                                       @"status":@(8),
+                                       @"id":orderModel.ID
+                                       };
+                [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                    [self showAlert:successJson[@"message"]];
+                    if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                        sendView = nil;
+                        [sendView dismiss];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            };
+            [sendView show];
     }
 }
 
@@ -176,12 +199,7 @@ static NSString *cellid = @"SellerWaitSendCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat1;
-         viewController.chatID = EaseTest_Chat3;
-        viewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:viewController animated:YES];
-        
+        [self clickServiceBtnAction];
     }
 }
 @end

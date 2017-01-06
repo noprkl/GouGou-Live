@@ -219,322 +219,208 @@
 
 #pragma mark - 第三方登录
 - (IBAction)clickQQLogin:(UIButton *)sender {
-//    [LoginViewController QQLogin:^(id success) {
-////        [self showAlert:success[@"message"]];
-//        NSDictionary *successJson = [success[@"data"] firstObject];
-//        if ([success[@"message"] isEqualToString:@"成功"]) {
-//            DLog(@"%@", successJson);
-//            
-//            [self saveUserWithID:successJson[@"id"]
-//                        user_pwd:successJson[@"user_pwd"]
-//                    user_img_url:successJson[@"user_img_url"]
-//                       user_name:successJson[@"user_name"]
-//                  user_nick_name:successJson[@"user_nick_name"]
-//                        user_tel:successJson[@"user_tel"]
-//                     is_merchant:successJson[@"is_merchant"]
-//                         is_real:successJson[@"is_real"]
-//                      user_motto:successJson[@"user_motto"]
-//                   user_pay_code:successJson[@"user_pay_code"]
-//                   user_ali_code:successJson[@"user_ali_code"]
-//                      qq_open_id:successJson[@"qq_open_id"]
-//                      wx_open_id:successJson[@"wx_open_id"]
-//                      wb_open_id:successJson[@"wb_open_id"]
-//                     user_status:successJson[@"user_status"]
-//             ];
-//            
-//            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-//            EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"id"] password:successJson[@"id"]];
-//            if (error==nil) {
-//                DLog(@"注册成功");
-//                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
-//                if (!error2) {
-//                    DLog(@"登录成功");
-//                }
-//            }else{
-//                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
-//                if (!error2) {
-//                    DLog(@"登录成功");
-//                }
-//            }
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//        }
-//
-//        
-//    } unBinding:^{
-//        [self showAlert:@"您未绑定腾讯账号"];
-//    }];
     // 第三方QQ登录
     [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_QQ currentViewController:self completion:^(id result, NSError *error) {
         //        [self.tableView reloadData];
         UMSocialAuthResponse *authresponse = result;
         if (authresponse != nil) {
             DLog(@"%@", authresponse.uid);
-            
-            NSDictionary *dict = @{
-                                   @"type":@"2",
-                                   @"name":authresponse.uid
-                                   };
-            [self getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-                if ([successJson[@"code"] integerValue] == 0) {// 未绑定过
-                    RegisteViewController *registeVc = [[RegisteViewController alloc] init];
-                    registeVc.type = 1;
-                    registeVc.name = authresponse.uid;
-                    [self.navigationController pushViewController:registeVc animated:YES];
-                }else{// 已经绑定过
-                    NSArray *infos = successJson[@"data"];
-                    
-                    NSDictionary *info = infos[0];
-                    [self saveUserWithID:info[@"id"]
-                                user_pwd:info[@"user_pwd"]
-                            user_img_url:info[@"user_img_url"]
-                               user_name:info[@"user_name"]
-                          user_nick_name:info[@"user_nick_name"]
-                                user_tel:info[@"user_tel"]
-                             is_merchant:info[@"is_merchant"]
-                                 is_real:info[@"is_real"]
-                              user_motto:info[@"user_motto"]
-                           user_pay_code:info[@"user_pay_code"]
-                           user_ali_code:info[@"user_ali_code"]
-                              qq_open_id:info[@"qq_open_id"]
-                              wx_open_id:info[@"wx_open_id"]
-                              wb_open_id:info[@"wb_open_id"]
-                             user_status:info[@"user_status"]
-                     ];
-                    
-                    // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-                    EMError *error = [[EMClient sharedClient] registerWithUsername:info[@"id"] password:@"gougoulive"];
-                    if (error==nil) {
-                        DLog(@"注册成功");
-                        EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
-                        if (!error2) {
-                            DLog(@"登录成功");
+            [[UMSocialManager defaultManager] getUserInfoWithPlatform:(UMSocialPlatformType_QQ) currentViewController:self completion:^(id result, NSError *error) {
+                UMSocialUserInfoResponse *userinfo = result;
+                if (userinfo != nil) {
+                    NSDictionary *dict = @{
+                                           @"type":@"2",
+                                           @"name":authresponse.uid
+                                           };
+                    [self getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                        if ([successJson[@"code"] integerValue] == 0) {// 未绑定过
+                            RegisteViewController *registeVc = [[RegisteViewController alloc] init];
+                            registeVc.type = 1;
+                            registeVc.name = authresponse.uid;
+                            [self.navigationController pushViewController:registeVc animated:YES];
+                        }else{// 已经绑定过
+                            NSArray *infos = successJson[@"data"];
+                            
+                            NSDictionary *info = infos[0];
+                            [self saveUserWithID:info[@"id"]
+                                        user_pwd:info[@"user_pwd"]
+                                    user_img_url:info[@"user_img_url"]
+                                       user_name:info[@"user_name"]
+                                  user_nick_name:info[@"user_nick_name"]
+                                        user_tel:info[@"user_tel"]
+                                     is_merchant:info[@"is_merchant"]
+                                         is_real:info[@"is_real"]
+                                      user_motto:info[@"user_motto"]
+                                   user_pay_code:info[@"user_pay_code"]
+                                   user_ali_code:info[@"user_ali_code"]
+                                      qq_open_id:info[@"qq_open_id"]
+                                      wx_open_id:info[@"wx_open_id"]
+                                      wb_open_id:info[@"wb_open_id"]
+                                     user_status:info[@"user_status"]
+                             ];
+                            
+                            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+                            EMError *error = [[EMClient sharedClient] registerWithUsername:info[@"id"] password:@"gougoulive"];
+                            if (error==nil) {
+                                DLog(@"注册成功");
+                                EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
+                                if (!error2) {
+                                    DLog(@"登录成功");
+                                }
+                            }else{
+                                EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
+                                if (!error2) {
+                                    DLog(@"登录成功");
+                                }
+                            }
+                            [self.navigationController popToRootViewControllerAnimated:YES];
                         }
-                    }else{
-                        EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
-                        if (!error2) {
-                            DLog(@"登录成功");
-                        }
-                    }
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
                 }
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
+               
             }];
-            
         }
     }];
 
 }
 - (IBAction)clickWXLogin:(UIButton *)sender {
-//    [LoginViewController WChatLogin:^(id success) {
-//        NSDictionary *successJson = [success[@"data"] firstObject];
-//        if ([success[@"message"] isEqualToString:@"成功"]) {
-//            DLog(@"%@", successJson);
-//            
-//            [self saveUserWithID:successJson[@"id"]
-//                        user_pwd:successJson[@"user_pwd"]
-//                    user_img_url:successJson[@"user_img_url"]
-//                       user_name:successJson[@"user_name"]
-//                  user_nick_name:successJson[@"user_nick_name"]
-//                        user_tel:successJson[@"user_tel"]
-//                     is_merchant:successJson[@"is_merchant"]
-//                         is_real:successJson[@"is_real"]
-//                      user_motto:successJson[@"user_motto"]
-//                   user_pay_code:successJson[@"user_pay_code"]
-//                   user_ali_code:successJson[@"user_ali_code"]
-//                      qq_open_id:successJson[@"qq_open_id"]
-//                      wx_open_id:successJson[@"wx_open_id"]
-//                      wb_open_id:successJson[@"wb_open_id"]
-//                     user_status:successJson[@"user_status"]
-//             ];
-//            
-//            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-//            EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"id"] password:successJson[@"id"]];
-//            if (error==nil) {
-//                DLog(@"注册成功");
-//                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
-//                if (!error2) {
-//                    DLog(@"登录成功");
-//                }
-//            }else{
-//                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
-//                if (!error2) {
-//                    DLog(@"登录成功");
-//                }
-//            }
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//        }
-//    } unBinding:^{
-//        [self showAlert:@"您未绑定微信账号"];
-//    }];
     // 第三方微信登录
     [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_WechatSession currentViewController:self completion:^(id result, NSError *error) {
         //        [self.tableView reloadData];
         UMSocialAuthResponse *authresponse = result;
+        
         if (authresponse != nil) {
             DLog(@"%@", authresponse.uid);
-            
-            NSDictionary *dict = @{
-                                   @"type":@"1",
-                                   @"name":authresponse.uid
-                                   };
-            [self getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
-                if ([successJson[@"code"] integerValue] == 0) {// 未绑定过
-                    RegisteViewController *registeVc = [[RegisteViewController alloc] init];
-                    registeVc.type = 1;
-                    registeVc.name = authresponse.uid;
-                    [self.navigationController pushViewController:registeVc animated:YES];
-                }else{// 已经绑定过
-                    NSArray *infos = successJson[@"data"];
-                    
-                    NSDictionary *info = infos[0];
-                    [self saveUserWithID:info[@"id"]
-                                user_pwd:info[@"user_pwd"]
-                            user_img_url:info[@"user_img_url"]
-                               user_name:info[@"user_name"]
-                          user_nick_name:info[@"user_nick_name"]
-                                user_tel:info[@"user_tel"]
-                             is_merchant:info[@"is_merchant"]
-                                 is_real:info[@"is_real"]
-                              user_motto:info[@"user_motto"]
-                           user_pay_code:info[@"user_pay_code"]
-                           user_ali_code:info[@"user_ali_code"]
-                              qq_open_id:info[@"qq_open_id"]
-                              wx_open_id:info[@"wx_open_id"]
-                              wb_open_id:info[@"wb_open_id"]
-                             user_status:info[@"user_status"]
-                     ];
-                    
-                    // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-                    EMError *error = [[EMClient sharedClient] registerWithUsername:info[@"id"] password:@"gougoulive"];
-                    if (error==nil) {
-                        DLog(@"注册成功");
-                        EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
-                        if (!error2) {
-                            DLog(@"登录成功");
+            [[UMSocialManager defaultManager] getUserInfoWithPlatform:(UMSocialPlatformType_WechatSession) currentViewController:self completion:^(id result, NSError *error) {
+                UMSocialUserInfoResponse *userinfo = result;
+                if (userinfo != nil) {
+                    NSDictionary *dict = @{
+                                           @"type":@"1",
+                                           @"name":authresponse.uid
+                                           };
+                    [self getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                        if ([successJson[@"code"] integerValue] == 0) {// 未绑定过
+                            RegisteViewController *registeVc = [[RegisteViewController alloc] init];
+                            registeVc.type = 1;
+                            registeVc.name = authresponse.uid;
+                            [self.navigationController pushViewController:registeVc animated:YES];
+                        }else{// 已经绑定过
+                            NSArray *infos = successJson[@"data"];
+                            
+                            NSDictionary *info = infos[0];
+                            [self saveUserWithID:info[@"id"]
+                                        user_pwd:info[@"user_pwd"]
+                                    user_img_url:info[@"user_img_url"]
+                                       user_name:info[@"user_name"]
+                                  user_nick_name:info[@"user_nick_name"]
+                                        user_tel:info[@"user_tel"]
+                                     is_merchant:info[@"is_merchant"]
+                                         is_real:info[@"is_real"]
+                                      user_motto:info[@"user_motto"]
+                                   user_pay_code:info[@"user_pay_code"]
+                                   user_ali_code:info[@"user_ali_code"]
+                                      qq_open_id:info[@"qq_open_id"]
+                                      wx_open_id:info[@"wx_open_id"]
+                                      wb_open_id:info[@"wb_open_id"]
+                                     user_status:info[@"user_status"]
+                             ];
+                            
+                            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+                            EMError *error = [[EMClient sharedClient] registerWithUsername:info[@"id"] password:@"gougoulive"];
+                            if (error==nil) {
+                                DLog(@"注册成功");
+                                EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
+                                if (!error2) {
+                                    DLog(@"登录成功");
+                                }
+                            }else{
+                                EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
+                                if (!error2) {
+                                    DLog(@"登录成功");
+                                }
+                            }
+                            [self.navigationController popToRootViewControllerAnimated:YES];
                         }
-                    }else{
-                        EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
-                        if (!error2) {
-                            DLog(@"登录成功");
-                        }
-                    }
-                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
                 }
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
             }];
-            
         }
     }];
 }
 - (IBAction)clickSinaLogin:(UIButton *)sender {
-    // 新浪第三方登录
+    // 新浪第三方登录授权
     [[UMSocialManager defaultManager]  authWithPlatform:UMSocialPlatformType_Sina currentViewController:self completion:^(id result, NSError *error) {
         //        [self.tableView reloadData];
         UMSocialAuthResponse *authresponse = result;
         if (authresponse != nil) {
             DLog(@"%@", authresponse.uid);
-            
-        NSDictionary *dict = @{
-                               @"type":@"3",
-                               @"name":authresponse.uid
-                               };
-        [self getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-            if ([successJson[@"code"] integerValue] == 0) {// 未绑定过
-                RegisteViewController *registeVc = [[RegisteViewController alloc] init];
-                registeVc.type = 3;
-                registeVc.name = authresponse.uid;
-                [self.navigationController pushViewController:registeVc animated:YES];
-            }else{// 已经绑定过
-                NSArray *infos = successJson[@"data"];
-                
-                NSDictionary *info = infos[0];
-                [self saveUserWithID:info[@"id"]
-                            user_pwd:info[@"user_pwd"]
-                        user_img_url:info[@"user_img_url"]
-                           user_name:info[@"user_name"]
-                      user_nick_name:info[@"user_nick_name"]
-                            user_tel:info[@"user_tel"]
-                         is_merchant:info[@"is_merchant"]
-                             is_real:info[@"is_real"]
-                          user_motto:info[@"user_motto"]
-                       user_pay_code:info[@"user_pay_code"]
-                       user_ali_code:info[@"user_ali_code"]
-                          qq_open_id:info[@"qq_open_id"]
-                          wx_open_id:info[@"wx_open_id"]
-                          wb_open_id:info[@"wb_open_id"]
-                         user_status:info[@"user_status"]
-                 ];
-                
-                // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-                EMError *error = [[EMClient sharedClient] registerWithUsername:info[@"id"] password:@"gougoulive"];
-                if (error==nil) {
-                    DLog(@"注册成功");
-                    EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
-                    if (!error2) {
-                        DLog(@"登录成功");
-                    }
-                }else{
-                    EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
-                    if (!error2) {
-                        DLog(@"登录成功");
-                    }
+           // 用户信息回调
+            [[UMSocialManager defaultManager] getUserInfoWithPlatform:(UMSocialPlatformType_Sina) currentViewController:self completion:^(id result, NSError *error) {
+                UMSocialUserInfoResponse *userinfo = (UMSocialUserInfoResponse *)result;
+                if (userinfo != nil) {
+                    NSDictionary *dict = @{
+                                           @"type":@"3",
+                                           @"name":authresponse.uid
+                                           };
+                    [self getRequestWithPath:API_Login_binding params:dict success:^(id successJson) {
+                        DLog(@"%@", successJson);
+                        if ([successJson[@"code"] integerValue] == 0) {// 未绑定过
+                            RegisteViewController *registeVc = [[RegisteViewController alloc] init];
+                            registeVc.type = 3;
+                            registeVc.name = authresponse.uid;
+                            registeVc.nickName = userinfo.name;
+                            [self.navigationController pushViewController:registeVc animated:YES];
+                        }else{// 已经绑定过
+                            NSArray *infos = successJson[@"data"];
+                            
+                            NSDictionary *info = infos[0];
+                            [self saveUserWithID:info[@"id"]
+                                        user_pwd:info[@"user_pwd"]
+                                    user_img_url:info[@"user_img_url"]
+                                       user_name:info[@"user_name"]
+                                  user_nick_name:info[@"user_nick_name"]
+                                        user_tel:info[@"user_tel"]
+                                     is_merchant:info[@"is_merchant"]
+                                         is_real:info[@"is_real"]
+                                      user_motto:info[@"user_motto"]
+                                   user_pay_code:info[@"user_pay_code"]
+                                   user_ali_code:info[@"user_ali_code"]
+                                      qq_open_id:info[@"qq_open_id"]
+                                      wx_open_id:info[@"wx_open_id"]
+                                      wb_open_id:info[@"wb_open_id"]
+                                     user_status:info[@"user_status"]
+                             ];
+                            
+                            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
+                            EMError *error = [[EMClient sharedClient] registerWithUsername:info[@"id"] password:@"gougoulive"];
+                            if (error==nil) {
+                                DLog(@"注册成功");
+                                EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
+                                if (!error2) {
+                                    DLog(@"登录成功");
+                                }
+                            }else{
+                                EMError *error2 = [[EMClient sharedClient] loginWithUsername:info[@"id"] password:@"gougoulive"];
+                                if (!error2) {
+                                    DLog(@"登录成功");
+                                }
+                            }
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        }
+                    } error:^(NSError *error) {
+                        DLog(@"%@", error);
+                    }];
                 }
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            }
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
-
+                
+            }];
         }
     }];
-        
-//    [LoginViewController SinaLogin:^(id success) {
-//        NSDictionary *successJson = [success[@"data"] firstObject];
-//        if ([success[@"message"] isEqualToString:@"成功"]) {
-//            DLog(@"%@", successJson);
-//            
-//            [self saveUserWithID:successJson[@"id"]
-//                        user_pwd:successJson[@"user_pwd"]
-//                    user_img_url:successJson[@"user_img_url"]
-//                       user_name:successJson[@"user_name"]
-//                  user_nick_name:successJson[@"user_nick_name"]
-//                        user_tel:successJson[@"user_tel"]
-//                     is_merchant:successJson[@"is_merchant"]
-//                         is_real:successJson[@"is_real"]
-//                      user_motto:successJson[@"user_motto"]
-//                   user_pay_code:successJson[@"user_pay_code"]
-//                   user_ali_code:successJson[@"user_ali_code"]
-//                      qq_open_id:successJson[@"qq_open_id"]
-//                      wx_open_id:successJson[@"wx_open_id"]
-//                      wb_open_id:successJson[@"wb_open_id"]
-//                     user_status:successJson[@"user_status"]
-//             ];
-//            
-//            // 判断如果没有注册过环信 注册并登陆 否则直接登录 用户名 id 密码 id
-//            EMError *error = [[EMClient sharedClient] registerWithUsername:successJson[@"id"] password:successJson[@"id"]];
-//            if (error==nil) {
-//                DLog(@"注册成功");
-//                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
-//                if (!error2) {
-//                    DLog(@"登录成功");
-//                }
-//            }else{
-//                EMError *error2 = [[EMClient sharedClient] loginWithUsername:successJson[@"id"] password:@"gougoulive"];
-//                if (!error2) {
-//                    DLog(@"登录成功");
-//                }
-//            }
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//        }
-//
-//    } unBinding:^{
-//        [self showAlert:@"您未绑定新浪账号"];
-//    }];
 }
 
 

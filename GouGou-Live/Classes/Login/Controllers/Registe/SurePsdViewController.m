@@ -24,13 +24,14 @@
     DLog(@"%@", pwd);
     NSDictionary *dict = [NSDictionary dictionary];
     
-    if (_type && _name.length != 0) {// 第三方注册
+    if (_type && _name.length != 0 && _nickName.length != 0) {// 第三方注册
         dict = @{
                  @"user_tel":self.telNumber,
                  @"user_pwd":pwd,
                  @"code":self.codeNumber,
                  @"type":@(_type),
-                 @"name":_name
+                 @"name":_name,
+                 @"nickname":_nickName
                  };
     }else{// 正常注册
         dict = @{

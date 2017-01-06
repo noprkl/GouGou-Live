@@ -15,7 +15,7 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     //设置文本
-    messageObject.text = [NSString stringWithFormat:@"\n狗狗直播，狗狗直播，狗狗直播\n%@", liveUrl];
+    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_QQ messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -34,7 +34,7 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     //设置文本
-    messageObject.text = [NSString stringWithFormat:@"\n狗狗直播，狗狗直播，狗狗直播\n%@", liveUrl];
+    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Sina messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -53,7 +53,7 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     //设置文本
-    messageObject.text = [NSString stringWithFormat:@"\n狗狗直播，狗狗直播，狗狗直播\n%@", liveUrl];
+    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatSession messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -72,7 +72,7 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     //设置文本
-    messageObject.text = [NSString stringWithFormat:@"\n狗狗直播，狗狗直播，狗狗直播\n%@", liveUrl];
+    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatTimeLine messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {

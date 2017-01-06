@@ -139,7 +139,7 @@
         self.powerOrderView.orderStateMessage = state;
         self.powerOrderView.orderCode = _orderID;
       
-        self.sellInfoView.currentTime = self.detailModel.createTime;
+        self.sellInfoView.currentTime = [NSString stringFromDateString:self.detailModel.createTime];
         self.sellInfoView.buynessName = self.detailModel.userName;
         self.sellInfoView.buynessImg = self.detailModel.userImgUrl;
         
@@ -160,9 +160,36 @@
         // 付款状况
         self.costView.fontMoney.text = self.detailModel.productDeposit;
         self.costView.remainderMoeny.text = self.detailModel.productBalance;
-        self.costView.totalMoney.text = [NSString stringWithFormat:@"%.2lf", [self.detailModel.price floatValue] + [self.detailModel.traficFee floatValue]];
+        self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [self.detailModel.price floatValue] + [self.detailModel.traficFee floatValue]];
+        self.costView.freightMoney.text = self.detailModel.traficRealFee;
+        self.sureApplyRefundView.realMoney = [NSString stringWithFormat:@"%.2lf", [self.detailModel.productRealDeposit floatValue] + [self.detailModel.productRealBalance floatValue] + [self.detailModel.productRealPrice floatValue]];
         
-        self.sureApplyRefundView.realMoney = [NSString stringWithFormat:@"%.2lf", [self.detailModel.productRealDeposit floatValue] + [self.detailModel.productRealBalance floatValue]];
+        // 实付款
+        if (self.detailModel.productRealPrice.length != 0) {// 全款支付
+            
+            self.costView.fontMoney.text = @"";
+            self.costView.fontMoneyLabel.text = @"";
+            self.costView.remainderMoneylabel.text = @"已付全款";
+            self.costView.remainderMoeny.text = self.detailModel.productRealPrice;
+        }else{
+            //尾款
+            if (self.detailModel.productRealBalance.length == 0) {
+                self.costView.remainderMoneylabel.text = @"未付尾款";
+                self.costView.remainderMoeny.text = self.detailModel.productBalance;
+                
+            }else{
+                self.costView.remainderMoeny.text = self.detailModel.productRealBalance;
+            }
+            
+            // 定金
+            if (self.detailModel.productRealDeposit.length == 0) {
+                self.costView.fontMoneyLabel.text = @"未付定金";
+                self.costView.fontMoney.text = self.detailModel.productDeposit;
+            }else{
+                self.costView.fontMoney.text = self.detailModel.productRealDeposit;
+            }
+        }
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

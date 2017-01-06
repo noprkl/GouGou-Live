@@ -100,7 +100,8 @@ static NSString * messageCell = @"messageCellID";
             UISwitch * swic = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 45, 25)];
             swic.onTintColor = [UIColor colorWithHexString:@"#99cc33"];
             [swic addTarget:self action:@selector(changeNewsSoundSwitch:) forControlEvents:(UIControlEventValueChanged)];
-            swic.on = [self isNewsSound];
+            swic.on = YES;
+//            swic.on = [self isNewsSound];
             cell.accessoryView = swic;
         }
     } else if (indexPath.section == 1) {
@@ -108,7 +109,8 @@ static NSString * messageCell = @"messageCellID";
             UISwitch * swic = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 45, 25)];
             swic.onTintColor = [UIColor colorWithHexString:@"#99cc33"];
             [swic addTarget:self action:@selector(changeNewsAcceptSwitch:) forControlEvents:(UIControlEventValueChanged)];
-            swic.on = [self isNewsPush];
+//            swic.on = [self isNewsPush];
+            swic.on = YES;
             cell.accessoryView = swic;
         } else if (indexPath.row == 1) { // 环信时间段
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 25)];
@@ -233,8 +235,8 @@ static NSString * messageCell = @"messageCellID";
 // 环信 消息免打扰
 - (BOOL)isNewsPush {
     EMPushOptions *pushOption = [[EMClient sharedClient] pushOptions] ;
-    if (pushOption.noDisturbStatus == EMPushNoDisturbStatusCustom) {
-        return YES;
+    if (pushOption.noDisturbStatus == EMPushNoDisturbStatusClose) {// 关闭免打扰
+        return NO;
     }else{
         return NO;
     }

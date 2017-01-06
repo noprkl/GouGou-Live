@@ -9,7 +9,7 @@
 #define ImgCount 3
 
 #import "MerchantViewController.h"
-#import "CertificateViewController.h"
+#import "CertificateVc.h"
 
 #import "UnCertificateVIew.h"
 #import "DoneCertificateView.h"
@@ -26,7 +26,7 @@
 static NSString * MedrchantCell = @"MedrchantCell";
 
 @interface MerchantViewController ()
-/** 未认证 */
+/** 未实名认证 */
 @property (strong,nonatomic) UnCertificateVIew *unCertificateVIew;
 /** 已经实名认证 */
 @property (strong,nonatomic) DoneCertificateView *doneCertificateView;
@@ -299,7 +299,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
 
         __weak typeof(self) weakSelf = self;
         _unCertificateVIew.certificateBlack = ^(){
-            CertificateViewController *certifi = [[CertificateViewController alloc] init];
+            CertificateVc *certifi = [[CertificateVc alloc] init];
             [weakSelf.navigationController pushViewController:certifi animated:YES];
         };
     }

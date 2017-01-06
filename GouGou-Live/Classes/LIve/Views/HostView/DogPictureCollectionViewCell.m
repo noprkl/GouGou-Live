@@ -86,13 +86,12 @@
         make.height.equalTo(weakself.hudView.height);
         make.right.equalTo(weakself.hudView.right).offset(- 5);
         make.centerY.equalTo(weakself.degistLable.centerY);
-        
     }];
     
     [_titlelable mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.liveDogPicture.bottom).offset(5);
         make.left.equalTo(weakself.liveDogPicture.left);
+        make.width.equalTo(120);
     }];
     
     [_personNumLable mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -37,7 +37,6 @@
         self.unreadCountLabel.text = [@([model.conversation unreadMessagesCount]) stringValue];
     }
     self.unreadCountLabel.hidden = YES;
-   
 }
 
 - (void)awakeFromNib {

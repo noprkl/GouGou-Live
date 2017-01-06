@@ -38,7 +38,7 @@ static NSString *cellid = @"TalkTableViewCell";
     // 如果来自主播
     if ([model.message.from isEqualToString:_liverid]) {
         model.nickname = @"主播:";
-    }else if ([model.message.from isEqualToString:EaseTest_Chat1]){
+    }else if ([model.message.from isEqualToString:EaseTest_Service]){
         model.nickname = @"客服:";
     }else{
         if (model.isSender) {

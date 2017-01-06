@@ -36,6 +36,9 @@ static NSString *cellid2 = @"NotificationMessageCell";
 
 // 关注的人
 - (void)postRequestGetFocus {
+    if (![UserInfos getUser]) {
+        [UserInfos sharedUser].ID = @"";
+    }
     NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID
                            };
     [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
@@ -59,12 +62,14 @@ static NSString *cellid2 = @"NotificationMessageCell";
 // 获得系统通知消息
 - (void)postRequestGetSystemPush {
     // ([[UserInfos sharedUser].ID integerValue])
-    NSDictionary *dict = @{@"user_id":@([[UserInfos sharedUser].ID integerValue])};
+    if (![UserInfos getUser]) {
+        [UserInfos sharedUser].ID = @"";
+    }
+    NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
     [self getRequestWithPath:API_System_msg params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if ([successJson[@"code"] isEqualToString:@"1"]) {
             self.systemMessageArr = [SystemPushMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            
             [self.tableView reloadData];
         }
     } error:^(NSError *error) {
@@ -75,7 +80,11 @@ static NSString *cellid2 = @"NotificationMessageCell";
 #pragma mark - 获取会话
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    // 获取系统消息
 
+    [self postRequestGetSystemPush];
+    [self postRequestGetFocus];
+    
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage3"] forBarMetrics:(UIBarMetricsDefault)];
 
@@ -83,52 +92,12 @@ static NSString *cellid2 = @"NotificationMessageCell";
     [self.arrConversion removeAllObjects];
     // 只要单聊对话
     for (EMConversation *conversation in arr) {
-        if (conversation.type == EMConversationTypeChat) {
+        if (conversation.type == EMConversationTypeChat && ![conversation.conversationId isEqualToString:EaseTest_Liver] && ![conversation.conversationId isEqualToString:EaseTest_Service] && conversation.latestMessage) {
             [self.arrConversion addObject:conversation];
         }
     }
     [self.tableView reloadData];
-
-    [self postRequestGetSystemPush];
-    [self postRequestGetFocus];
 }
-//- (id<IConversationModel>)conversationListViewController:(EaseConversationListViewController *)conversationListViewController
-//                                    modelForConversation:(EMConversation *)conversation
-//{
-//    EaseConversationModel *model = [[EaseConversationModel alloc] initWithConversation:conversation];
-//    if (model.conversation.type == EMConversationTypeChat) {
-//        if ([[RobotManager sharedInstance] isRobotWithUsername:conversation.conversationId]) {
-//            model.title = [[RobotManager sharedInstance] getRobotNickWithUsername:conversation.conversationId];
-//        } else {
-//            UserProfileEntity *profileEntity = [[UserProfileManager sharedInstance] getUserProfileByUsername:conversation.conversationId];
-//            if (profileEntity) {
-//                model.title = profileEntity.nickname == nil ? profileEntity.username : profileEntity.nickname;
-//                model.avatarURLPath = profileEntity.imageUrl;
-//            }
-//        }
-//    } else if (model.conversation.type == EMConversationTypeGroupChat) {
-//        NSString *imageName = @"groupPublicHeader";
-//        if (![conversation.ext objectForKey:@"subject"])
-//            {
-//            NSArray *groupArray = [[EMClient sharedClient].groupManager getJoinedGroups];
-//            for (EMGroup *group in groupArray) {
-//                if ([group.groupId isEqualToString:conversation.conversationId]) {
-//                    NSMutableDictionary *ext = [NSMutableDictionary dictionaryWithDictionary:conversation.ext];
-//                    [ext setObject:group.subject forKey:@"subject"];
-//                    [ext setObject:[NSNumber numberWithBool:group.isPublic] forKey:@"isPublic"];
-//                    conversation.ext = ext;
-//                    break;
-//                }
-//            }
-//            }
-//        NSDictionary *ext = conversation.ext;
-//        model.title = [ext objectForKey:@"subject"];
-//        imageName = [[ext objectForKey:@"isPublic"] boolValue] ? @"groupPublicHeader" : @"groupPrivateHeader";
-//        model.avatarImage = [UIImage imageNamed:imageName];
-//    }
-//    return model;
-//}
-
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -151,9 +120,10 @@ static NSString *cellid2 = @"NotificationMessageCell";
         [self.loadArr removeAllObjects];
         NSArray *arr = [[[EMClient sharedClient].chatManager getAllConversations] mutableCopy];
         [self.arrConversion removeAllObjects];
+       
         // 只要单聊对话
         for (EMConversation *conversation in arr) {
-            if (conversation.type == EMConversationTypeChat) {
+            if (conversation.type == EMConversationTypeChat && ![conversation.conversationId isEqualToString:EaseTest_Liver] && ![conversation.conversationId isEqualToString:EaseTest_Service] && conversation.latestMessage) {
                 [self.arrConversion addObject:conversation];
             }
         }
@@ -238,30 +208,27 @@ static NSString *cellid2 = @"NotificationMessageCell";
         
         EMConversation *conversation = [self.arrConversion objectAtIndex:indexPath.row];
         
-        // 关注
-        NSString *filename = [NSString cachePathWithfileName:Focus];
-        NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
-        NSInteger focusID = [conversation.conversationId integerValue];
-        
-        if ([focusArr containsObject:@(focusID)]) {
-            cell.isFocus.text = @"已关注";
-            cell.isFocus.textColor = [UIColor colorWithHexString:@"#99cc33"];
-        }else{
-            cell.isFocus.text = @"未关注";
-            cell.isFocus.textColor = [UIColor colorWithHexString:@"#666666"];
-
-        }
-        // 如果存在昵称用昵称，否则请求服务
-        if (conversation.latestMessage.ext[@"nickname"]) {
-            cell.nickNameLabel.text = conversation.latestMessage.ext[@"nickname"];
-        }else{
+        if (conversation.type == EMConversationTypeChat) {
+            
+            // 关注
+            NSString *filename = [NSString cachePathWithfileName:Focus];
+            NSArray *focusArr = [NSArray arrayWithContentsOfFile:filename];
+            NSInteger focusID = [conversation.conversationId integerValue];
+            
+            if ([focusArr containsObject:@(focusID)]) {
+                cell.isFocus.text = @"已关注";
+                cell.isFocus.textColor = [UIColor colorWithHexString:@"#99cc33"];
+            }else{
+                cell.isFocus.text = @"未关注";
+                cell.isFocus.textColor = [UIColor colorWithHexString:@"#666666"];
+                
+            }
+            
             NSDictionary *dict = @{
                                    @"id":conversation.conversationId
                                    };
             
-            if ([self.loadArr containsObject:dict]) {
-                
-            }else{
+            if (![self.loadArr containsObject:dict] && ![conversation.conversationId isEqualToString:@"admin"]) {
                 [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
                     if ([successJson[@"code"] isEqualToString:@"1"]) {
@@ -276,13 +243,14 @@ static NSString *cellid2 = @"NotificationMessageCell";
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
+            }else if ([conversation.conversationId isEqualToString:@"admin"]){
+                cell.nickNameLabel.text = @"环信后台";
+                cell.iconView.image = [UIImage imageNamed:@"LOGO"];
             }
             [self.loadArr addObject:dict];
-
-        }
-        
-        if (conversation.type == EMConversationTypeChat) {
-            if (conversation.latestMessage) {            
+            
+            if (conversation.latestMessage) {
+                
                 cell.lastMessageLabel.text = [self _latestMessageTitleForConversation:conversation];
                 cell.lastTimeLabel.text = [self _latestMessageTimeForConversation:conversation];
                                 

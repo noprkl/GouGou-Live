@@ -28,15 +28,21 @@
 /** 选中的按钮 */
 @property (strong,nonatomic) UIButton *selectedButton;
 
+@property (nonatomic, strong) NSString *phoneNumber; /**< 电话号码 */
 
 @end
 
 @implementation SuggestViewController
+// 请求客服电话
+- (void)requestServicePhone {
+    
+}
+
 #pragma mark - 生命周期
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [super viewWillAppear:animated];
+    [self requestServicePhone];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -222,6 +228,14 @@
     if (!_complaint) {
         _complaint = [[MerhantComplaint alloc] init];
         _complaint.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        __weak typeof(self) weakSelf = self;
+        _complaint.phoneNumBlock = ^(){
+            UIWebView*callWebview =[[UIWebView alloc] init];
+            NSURL *telURL =[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", SMSPhone]];
+            [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+            //记得添加到view上
+            [weakSelf.view addSubview:callWebview];
+        };
     }
     return _complaint;
 }

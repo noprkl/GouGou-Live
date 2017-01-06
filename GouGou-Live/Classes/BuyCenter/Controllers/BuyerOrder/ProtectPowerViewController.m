@@ -17,12 +17,13 @@
 #import "ProtectProwerTableModel.h"
 
 #import "SellerOrderDetailProtectPowerViewController.h"
+#import <MessageUI/MessageUI.h>
 
 static NSString * protectingCell = @"protectingCell";
 static NSString * protectSuccessCell = @"protectSuccessCell";
 static NSString * protectFailedCell = @"protectFailedCell";
 
-@interface ProtectPowerViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ProtectPowerViewController ()<UITableViewDelegate,UITableViewDataSource, MFMessageComposeViewControllerDelegate>
 /** tableView */
 @property (strong,nonatomic) UITableView *tableview;
 /** 数据 */
@@ -124,17 +125,23 @@ static NSString * protectFailedCell = @"protectFailedCell";
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
-                // 跳转至在线客服
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-                viewController.title = EaseTest_Chat1;
-                 viewController.chatID = EaseTest_Chat1;
-                viewController.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:viewController animated:YES];
+                [self clickServiceBtnAction];
             }
         };
         
         [cell addSubview:funcBtn];
-        
+        cell.copyBlock = ^(){
+            UIPasteboard *pab = [UIPasteboard generalPasteboard];
+            
+            NSString *string = model.ID;
+            
+            [pab setString:string];
+            
+            if (pab != nil) {
+                [self showAlert:@"已复制"];
+            }
+
+        };
         return cell;
     }
     
@@ -147,17 +154,24 @@ static NSString * protectFailedCell = @"protectFailedCell";
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
-                
-                // 跳转至在线客服
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-                viewController.title = EaseTest_Chat1;
-                 viewController.chatID = EaseTest_Chat3;
-                viewController.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:viewController animated:YES];
+              [self clickServiceBtnAction];
             }
         };
         
         [cell addSubview:funcBtn];
+        cell.copyBlock = ^(){
+            UIPasteboard *pab = [UIPasteboard generalPasteboard];
+            
+            NSString *string = model.ID;
+            
+            [pab setString:string];
+            
+            if (pab != nil) {
+                [self showAlert:@"已复制"];
+            }
+            
+        };
+
         return cell;
     }
     
@@ -171,14 +185,7 @@ static NSString * protectFailedCell = @"protectFailedCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
                 
-                // 跳转至在线客服
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-                viewController.title = EaseTest_Chat1;
-                 viewController.chatID = EaseTest_Chat3;
-                viewController.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:viewController animated:YES];
-                
-                DLog(@"%@",button.titleLabel.text);
+              [self clickServiceBtnAction];                DLog(@"%@",button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"再次申请"]) {
                 // 跳转至再次申请
@@ -189,11 +196,64 @@ static NSString * protectFailedCell = @"protectFailedCell";
             }
         };
         [cell addSubview:funcBtn];
-        
+        cell.copyBlock = ^(){
+            UIPasteboard *pab = [UIPasteboard generalPasteboard];
+            
+            NSString *string = model.ID;
+            
+            [pab setString:string];
+            
+            if (pab != nil) {
+                [self showAlert:@"已复制"];
+            }
+        };
+
         return cell;
     }
     return cell1;
 }
+//- (void)clickServiceBtnAction {
+//    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
+//    
+//    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
+//        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
+//        
+//        controller.recipients = [NSArray arrayWithObject:SMSPhone];
+//        controller.body = @"测试发短信";
+//        controller.messageComposeDelegate = self;
+//        [self presentViewController:controller animated:YES completion:^{
+//            
+//        }];
+//        //修改短信界面标题
+//        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
+//    }else{
+//        [self showAlert:@"不支持发送短信"];
+//    }
+//}
+//#pragma mark
+//#pragma mark - 短信发送协议
+//- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+//    [controller dismissViewControllerAnimated:NO completion:^{
+//        
+//    }];//关键的一句   不能为YES
+//    
+//    switch ( result ) {
+//            
+//        case MessageComposeResultCancelled:
+//            
+//            [self showAlert:@"取消发送"];
+//            break;
+//        case MessageComposeResultFailed:// send failed
+//            [self showAlert:@"发送失败"];
+//            break;
+//        case MessageComposeResultSent:
+//            [self showAlert:@"发送成功"];
+//            break;
+//        default:
+//            break;
+//    }
+//}
+
 /*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ProtectProwerTableModel * model = self.dataArray[indexPath.row];

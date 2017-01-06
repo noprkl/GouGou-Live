@@ -90,12 +90,48 @@
         
         self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
-        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
-        
-        self.detailPayView.needBackMessage = self.orderInfo.productBalance;
-        self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
-        self.detailPayView.realMoney = self.orderInfo.price;
-        self.detailPayView.balance = self.orderInfo.productRealBalance;
+        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%.2lf",[self.orderInfo.productDeposit floatValue] + [self.orderInfo.productBalance floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
+
+        // 实付款
+        if (self.orderInfo.productRealPrice.length != 0) {// 全款支付
+            //尾款
+            self.detailPayView.needBackMessage = @"0";
+            // 实付
+            self.detailPayView.realMoney = self.orderInfo.productRealPrice;
+            // 定金
+            if (self.orderInfo.productRealDeposit.length == 0) {
+                self.detailPayView.fontMoneyMessage = @"0";
+            }else{
+                self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
+            }
+            // 实付尾款
+            if (self.orderInfo.productRealBalance.length == 0) {
+                self.detailPayView.balance = @"0";
+            }else{
+                self.detailPayView.balance = self.orderInfo.productRealBalance;
+            }
+        }else{
+            //尾款
+            if (self.orderInfo.productBalance.length != 0) {
+                self.detailPayView.needBackMessage = self.orderInfo.productBalance;
+            }else{
+                self.detailPayView.needBackMessage = @"0";
+            }
+            // 实付
+            self.detailPayView.realMoney = [NSString stringWithFormat:@"%.2lf", [self.detailModel.productRealDeposit floatValue] + [_detailModel.productRealDeposit floatValue]];
+            // 定金
+            if (self.orderInfo.productRealDeposit.length == 0) {
+                self.detailPayView.fontMoneyMessage = @"0";
+            }else{
+                self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
+            }
+            // 实付尾款
+            if (self.orderInfo.productRealBalance.length == 0) {
+                self.detailPayView.balance = @"0";
+            }else{
+                self.detailPayView.balance = self.orderInfo.productRealBalance;
+            }
+        }
         // 订单号
         self.orderNumberView.buyUserId = self.orderInfo.ID;
         if (![self.orderInfo.createTime isEqualToString:@"0"]) {

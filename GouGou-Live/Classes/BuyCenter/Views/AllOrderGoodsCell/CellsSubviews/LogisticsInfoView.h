@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^CopyOrderIDBlock)();
 @interface LogisticsInfoView : UIView
 
 @property (nonatomic, strong) NSString *orderCode; /**< 订单编号 */
+
+@property (nonatomic, strong) CopyOrderIDBlock copyBlock; /**< 复制 */
 
 @end

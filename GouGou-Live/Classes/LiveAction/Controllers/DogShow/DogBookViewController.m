@@ -51,8 +51,8 @@
 @end
 
 @implementation DogBookViewController
-#pragma mark - 网络请求
 
+#pragma mark - 网络请求
 // 结算
 - (void)clickPayBtnAction:(UIButton *)btn {
     if (![UserInfos getUser]){
@@ -91,7 +91,7 @@
                             if ([successJson[@"message"] isEqualToString:@"支付全额"]) {
                                 NSString *price = successJson[@"data"][@"product_price"];
                                 NSString *orderid = successJson[@"data"][@"order_id"];
-                                [self clickPayAllMoney:orderid price:price];
+                                [self clickPayAllMoney:orderid price:price wallentPay:orderId];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
                             }
@@ -111,7 +111,7 @@
                             if ([successJson[@"message"] isEqualToString:@"支付订金"]) {
                                 NSString *price = successJson[@"data"][@"product_deposit"];
                                 NSString *orderid = successJson[@"data"][@"order_id"];
-                                [self clickPayFontMoney:orderid productDeposit:price];
+                                [self clickPayFontMoney:orderid productDeposit:price wallentPay:orderId];
                                 choseStyle = nil;
                                 [choseStyle dismiss];
                             }
@@ -129,7 +129,7 @@
     }
 }
 /** 定金支付 */
-- (void)clickPayFontMoney:(NSString *)modelID productDeposit:(NSString *)productDeposit {
+- (void)clickPayFontMoney:(NSString *)modelID productDeposit:(NSString *)productDeposit wallentPay:(NSString *)wallentId{
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
     payMonery.payMoney = [NSString stringWithFormat:@"%.2lf", [productDeposit floatValue]];
@@ -140,11 +140,11 @@
         DLog(@"%@", payAway);
     };
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay orderID:modelID money:productDeposit];
+        [self payMoneyFroWay:payWay orderID:modelID money:productDeposit wallentPay:wallentId];
     };
 }
 /** 全款支付 */
-- (void)clickPayAllMoney:(NSString *)modelID price:(NSString *)price {
+- (void)clickPayAllMoney:(NSString *)modelID price:(NSString *)price wallentPay:(NSString *)wallentId{
     
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
     payMonery.payMoney = price;
@@ -155,13 +155,13 @@
         DLog(@"%@", size);
     };
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay orderID:modelID money:price];
+        [self payMoneyFroWay:payWay orderID:modelID money:price wallentPay:wallentId];
     };
 }
 
 #pragma mark
 #pragma mark - 支付方式选择
-- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money{
+- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money wallentPay:(NSString *)wallentId{
     if ([payWay isEqualToString:@"账户余额支付"]) {
         
         //        [self postGetWalletPayRequest];
@@ -207,21 +207,30 @@
 }
 /** 钱包支付 2定金 3全款 */
 - (void)walletPayWithOrderId:(NSString *)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state {
-    NSString *money = [NSString stringWithFormat:@"%.0lf", [price floatValue] * 100];
 
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID,
                            @"order_id":orderID,
-                           @"user_price":money,
+                           @"user_price":price,
                            @"user_pwd":payPwd,
                            @"status":@(state)
                            };
     [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
-        BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
-        paySuccessVc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:paySuccessVc animated:YES];
+        /**
+         5','余额不足'
+         '0','支付失败'
+         '1','支付成功'
+         '4','请先设置支付密码'
+         '3','密码错误'
+         '2','参数不能为空'
+         */
+        if ([successJson[@"message"] isEqualToString:@"支付成功"]) {
+            BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
+            paySuccessVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:paySuccessVc animated:YES];
+        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -304,9 +313,7 @@
 
 // 所有地址
 - (void)postGetAdressRequest {
-    if (self.defaultModel.userName.length != 0) {
-        
-    }else{
+    if (self.defaultModel.userName.length == 0) {
         NSDictionary *dict = @{
                                @"user_id":@([[UserInfos sharedUser].ID integerValue])
                                };
@@ -326,7 +333,6 @@
                 // 刷新
                 [self.tablevView reloadData];
             }
-            
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -369,20 +375,21 @@
     [self postGetAdressRequest];
     [self postGetUserAsset];
     // 通知监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getAcceptShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.hidesBottomBarWhenPushed = YES;
 }
 
-- (void)getShopAdressFromAdress:(NSNotification *)adress {
+- (void)getAcceptShopAdressFromAdress:(NSNotification *)adress {
     self.defaultModel = nil;
     MyShopAdressModel *defaultAdress = adress.userInfo[@"ShopAdress"];
     self.defaultModel = defaultAdress;
     DLog(@"%@", defaultAdress);
     self.chosedView.shopAdress = defaultAdress;
     DLog(@"%@",self.defaultModel.userAddress);
+    [self.tablevView reloadData];
 }
 - (void)initUI {
 
@@ -406,7 +413,7 @@
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     // 地址通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
 - (void)makeConstraint {
     [self.payCount makeConstraints:^(MASConstraintMaker *make) {
@@ -497,7 +504,6 @@
             sellerAnddog.dogColorLabel.text = self.model.colorname;
             sellerAnddog.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.model.price]];
             sellerAnddog.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.model.price];
-            sellerAnddog.dateLabel.text = self.model.createTime;
             sellerAnddog.backgroundColor = [UIColor whiteColor];
             [cell addSubview:sellerAnddog];
 
@@ -516,7 +522,6 @@
 
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
         }
             break;
         case 3:

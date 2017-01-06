@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^CopyOrderidSuccessBlock)();
+
 @class ProtectProwerTableModel;
 @interface ProtectSuccessCell : UITableViewCell
 /** 订单模型 */
 @property (strong,nonatomic) ProtectProwerTableModel *protectModel;
+@property (nonatomic, strong) CopyOrderidSuccessBlock copyBlock; /**< 复制 */
+
 @end

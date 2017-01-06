@@ -9,8 +9,10 @@
 #import "HelpViewController.h"
 #import "NormalModel.h"
 #import "SingleChatViewController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface HelpViewController ()
+@interface HelpViewController ()<MFMessageComposeViewControllerDelegate>
+
 @property (nonatomic, strong) UIButton *perfromBtn; /**< 未解决按钮 */
 @property (nonatomic, strong) UIButton *serviceBtn; /**< 客服按钮 */
 @property (nonatomic, strong) UITableView *tableView; /**< 表格 */
@@ -129,11 +131,45 @@
     return _serviceBtn;
 }
 - (void)ClickServiceBtnAction {
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
     
-    SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-    viewController.title = EaseTest_Chat1;
-    viewController.chatID = EaseTest_Chat1;
-    [self.navigationController pushViewController:viewController animated:YES];
+    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
+        
+        controller.recipients = [NSArray arrayWithObject:SMSPhone];
+        controller.body = @"测试发短信";
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:^{
+            
+        }];
+        //修改短信界面标题
+         [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
+    }else{
+        [self showAlert:@"不支持发送短信"];
+    }
+}
+#pragma mark
+#pragma mark - 短信发送协议
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [controller dismissViewControllerAnimated:NO completion:^{
+        
+    }];//关键的一句   不能为YES
+    
+    switch ( result ) {
+            
+        case MessageComposeResultCancelled:
+            
+            [self showAlert:@"取消发送"];
+            break;
+        case MessageComposeResultFailed:// send failed
+           [self showAlert:@"发送失败"];
+            break;
+        case MessageComposeResultSent:
+            [self showAlert:@"发送成功"];
+            break;
+        default:
+            break;
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

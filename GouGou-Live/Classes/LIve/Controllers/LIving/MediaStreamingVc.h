@@ -12,13 +12,6 @@
 
 @interface MediaStreamingVc : BaseViewController
 
-//@property (nonatomic, strong) NSArray *idArr; /**< 商品id数组 */
-//
-//@property(nonatomic, strong) NSString *roomStr; /**< 房间名 */
-//
-//@property(nonatomic, strong) NSString *city; /**< 主播城市 */
-//
-
 @property (nonatomic, strong) NSString *streamPublish; /**< 推流地址 */
 @property (nonatomic, strong) NSString *streamRtmp; /**< 播放地址 */
 @property (nonatomic, strong) PLStream *stream; /**< 流对象 */
@@ -26,5 +19,7 @@
 @property (nonatomic, strong) NSString *liveID; /**< 直播参数 */
 
 @property (nonatomic, strong) NSString *chatRoomID; /**< 直播房间id */
+
+@property (nonatomic, assign) NSInteger shareType; /**< 分享类型 微博0 微信1 qq2 空间3 朋友圈4 */
 
 @end

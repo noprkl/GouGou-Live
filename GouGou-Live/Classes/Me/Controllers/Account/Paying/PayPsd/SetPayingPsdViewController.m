@@ -110,7 +110,7 @@
                     [self showAlert:@"短信不存在"];
                 }
                 if ([successJson[@"code"] isEqual:@"1"]) {
-                    
+
                     SetPaypsdViewController *payPsdVC = [[SetPaypsdViewController alloc] init];
                     payPsdVC.codeNumber = self.codeTextField.text;
                     payPsdVC.hidesBottomBarWhenPushed = YES;

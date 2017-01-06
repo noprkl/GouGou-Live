@@ -137,9 +137,9 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
             // 跳转至联系卖家
-            SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
-            viewController.title = EaseTest_Chat3;
-             viewController.chatID = EaseTest_Chat3;
+            SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:model.saleUserId conversationType:(EMConversationTypeChat)];
+            viewController.title = model.saleUserId ;
+             viewController.chatID = model.saleUserId ;
             viewController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:viewController animated:YES];
             

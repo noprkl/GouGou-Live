@@ -17,15 +17,16 @@
 #import "NSString+MD5Code.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
+#import <MessageUI/MessageUI.h>
 
-@interface BuyCenterViewController ()
+@interface BuyCenterViewController ()<MFMessageComposeViewControllerDelegate>
 
 @end
 
 @implementation BuyCenterViewController
 #pragma mark - 删除订单网络请求
 // 删除订单
-- (void)clickDeleteOrder:(BuyCenterModel *)model {
+- (void)clickDeleteOrder:(BuyCenterModel *)model endOptioal:(EndOptionalBlock)endOptional {
     
     // 点击删除订单出现的弹框
     DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
@@ -43,6 +44,8 @@
             DLog(@"%@",successJson[@"code"]);
             DLog(@"%@",successJson[@"message"]);
             [self showAlert:successJson[@"message"]];
+            // 回调
+            endOptional();
         } error:^(NSError *error) {
             DLog(@"%@",error);
         }];
@@ -70,7 +73,7 @@
                 }else{
                     NSString *price = successJson[@"data"][@"product_price"];
                     NSString *orderid = successJson[@"data"][@"order_id"];
-                    [self chosePayStyleWIthOrderID:orderid protductPrice:price];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID];
                 }
             }
         } error:^(NSError *error) {
@@ -93,7 +96,7 @@
                 }else{
                     NSString *price = successJson[@"data"][@"product_deposit"];
                     NSString *orderid = successJson[@"data"][@"order_id"];
-                    [self chosePayStyleWIthOrderID:orderid protductPrice:price];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID];
                 }
             }
         } error:^(NSError *error) {
@@ -115,8 +118,8 @@
                     [self showAlert:@"支付金额不能为0"];
                 }else{
                     NSString *price = successJson[@"data"][@"product_balance"];
-                    NSString *orderid = [NSString stringWithFormat:@"wk%@", successJson[@"data"][@"order_id"]];
-                    [self chosePayStyleWIthOrderID:orderid protductPrice:price];
+                    NSString *orderid = [NSString stringWithFormat:@"%@", successJson[@"data"][@"order_id"]];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID];
                 }
             }
         } error:^(NSError *error) {
@@ -125,16 +128,16 @@
     }
 }
 /** 根据选择支付方式进行支付 */
-- (void)chosePayStyleWIthOrderID:(NSString *)orderID protductPrice:(NSString *)price {
+- (void)chosePayStyleWIthOrderID:(NSString *)orderID protductPrice:(NSString *)price wallentpay:(NSString *)wallentid {
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
     payMonery.payMoney = [NSString stringWithFormat:@"%0.2lf",[price floatValue]];
     payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
     [payMonery show];
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay orderID:orderID money:price];
+        [self payMoneyFroWay:payWay orderID:orderID money:price wallentpay:wallentid];
     };
 }
-- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money{
+- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money wallentpay:(NSString *)wallentid {
     if ([payWay isEqualToString:@"账户余额支付"]) {
         // 支付密码提示框
         PromptView * prompt = [[PromptView alloc] init];
@@ -148,11 +151,12 @@
                                    @"user_id":[UserInfos sharedUser].ID,
                                    @"pay_password":[NSString md5WithString:text]
                                    };
+            
             [self postRequestWithPath:API_Validation_pwd params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:orderID price:money payPwd:[NSString md5WithString:text] states:3];
+                    [self walletPayWithOrderId:wallentid price:money payPwd:[NSString md5WithString:text] states:3];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -171,11 +175,11 @@
 }
 /** 钱包支付 2定金 3全款 */
 - (void)walletPayWithOrderId:(NSString *)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state {
-   NSString *money = [NSString stringWithFormat:@"%.0lf", [price floatValue] * 100];
+
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"order_id":orderID,
-                           @"user_price":money,
+                           @"user_price":price,
                            @"user_pwd":payPwd,
                            @"status":@(state)
                            };
@@ -311,9 +315,6 @@
     [promptView show];
     
 }
-- (void)cancelOrder:(BuyCenterModel *)model {
-    
-}
 #pragma mark - 不想买了网络请求
 - (void)getNobuyRequest {
 
@@ -424,6 +425,48 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
+}
+/** 在线客服 */
+- (void)clickServiceBtnAction {
+    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
+    
+    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
+        
+        controller.recipients = [NSArray arrayWithObject:SMSPhone];
+        controller.body = @"测试发短信";
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:^{
+            
+        }];
+        //修改短信界面标题
+        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
+    }else{
+        [self showAlert:@"不支持发送短信"];
+    }
+}
+#pragma mark
+#pragma mark - 短信发送协议
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [controller dismissViewControllerAnimated:NO completion:^{
+        
+    }];//关键的一句   不能为YES
+    
+    switch ( result ) {
+            
+        case MessageComposeResultCancelled:
+            
+            [self showAlert:@"取消发送"];
+            break;
+        case MessageComposeResultFailed:// send failed
+            [self showAlert:@"发送失败"];
+            break;
+        case MessageComposeResultSent:
+            [self showAlert:@"发送成功"];
+            break;
+        default:
+            break;
+    }
 }
 
 

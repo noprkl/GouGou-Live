@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString *userName; /**< 买家名字 */
 @property (nonatomic, strong) NSString *buyUserId; /**< 买家ID */
 @property (nonatomic, strong) NSString *comment; /**< 备注 */
+@property (nonatomic, strong) NSString *closeTime; /**< 订单关闭时间 */
+
 
 @property (nonatomic, strong) NSString *ageName; /**< 狗狗年龄 */
 @property (nonatomic, strong) NSString *colorName; /**< 狗狗颜色 */

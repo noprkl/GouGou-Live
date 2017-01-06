@@ -228,7 +228,10 @@
     self.promulgateTimeLabel.text = [NSString stringFromDateString:model.createTime];
    
     NSMutableArray *imgArr = [NSMutableArray arrayWithArray:[model.dataPhoto componentsSeparatedByString:@"|"]];
-    [imgArr removeObjectAtIndex:0];
+    if (imgArr.count > 1) {
+        [imgArr removeObjectAtIndex:0];
+    }
+    
 
     CGFloat height = [self.dogImageView getCellHeightWithImages:imgArr];
     self.dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
@@ -242,21 +245,25 @@
     
     NSString *state = @"";
     if ([model.status isEqualToString:@"1"]) {// 1：新建商品 2：审核未通过  3：上线 4：下线5：售完
-        state = @"新建商品";
+        state = @"审核中";
     }else if ([model.status isEqualToString:@"2"]) {
         state = @"审核未通过";
-    }else if ([model.status isEqualToString:@"3"]) { // 可以买的
-        state = @"上线";
+    }else if ([model.status isEqualToString:@"3"]) {
+        state = @"待售";
     }else if ([model.status isEqualToString:@"4"]) {
-        state = @"下线";
+        state = @"已预订";
     }else if ([model.status isEqualToString:@"5"]) {
-        state = @"售完";
+        state = @"已售";
     }
+
     if (![model.status isEqualToString:@"3"]) {
-        [self.bookBtn setBackgroundColor:[UIColor colorWithHexString:@"#999999"]];
+        [self.bookBtn setTitle:@"已售" forState:(UIControlStateNormal)];
+    }else{
+        [self.bookBtn setTitle:@"订购" forState:(UIControlStateNormal)];
     }
     self.liveStateLabel.text = state;
     self.transPriceLabel.text = model.traficMoney;
+
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -436,7 +443,6 @@
         _likeBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_likeBtn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
         [_likeBtn addTarget:self action:@selector(clickLikeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-
     }
     return _likeBtn;
 }
@@ -445,7 +451,6 @@
         _bookBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_bookBtn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
         [_bookBtn addTarget:self action:@selector(clickBookBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-
     }
     return _bookBtn;
 }
@@ -471,16 +476,6 @@
     [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
     [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateHighlighted];
     [button setImage:selectImage forState:(UIControlStateHighlighted)];
-
-    // 选中
-//    NSDictionary *selectAttributeDict = @{
-//                                          NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],
-//                                          NSFontAttributeName:[UIFont systemFontOfSize:16]
-//                                          };
-//    NSAttributedString *selectAttribute = [[NSAttributedString alloc] initWithString:title attributes:selectAttributeDict];
-//    [button setImage:selectImage forState:(UIControlStateSelected)];
-//    
-//    [button setAttributedTitle:selectAttribute forState:(UIControlStateSelected)];
     
     [button setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     [self.contentView addSubview:button];
@@ -509,7 +504,7 @@
 - (void)clickBookBtnAction:(UIButton *)btn {
     
     if (_bookBlock) {
-        _bookBlock();
+        _bookBlock([btn currentTitle]);
     }
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 }

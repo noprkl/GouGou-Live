@@ -156,7 +156,7 @@
                     
                     DLog(@"%@", successJson);
                     [self showAlert:successJson[@"message"]];
-                    if ([successJson[@"message"] isEqualToString:@"登录成功"]) {
+                    if ([successJson[@"message"] isEqualToString:@"成功"]) {
                         
                         [self saveUserWithID:successJson[@"data"][@"id"]
                                     user_pwd:successJson[@"data"][@"user_pwd"]
@@ -189,7 +189,7 @@
                                 DLog(@"登录成功");
                             }
                         }
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [self.navigationController popToRootViewControllerAnimated:YES];
                     }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);

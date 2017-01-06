@@ -27,7 +27,7 @@
         
         [self addSubview:self.complaintTitle];
         [self addSubview:self.phoneNumBtn];
-        [self addSubview:self.handinBtn];
+//        [self addSubview:self.handinBtn];
     }
     return self;
 }
@@ -49,12 +49,16 @@
         make.centerX.equalTo(weakself.centerX);
         make.size.equalTo(CGSizeMake(120, 32));
     }];
-    [_handinBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.bottom.right.equalTo(weakself);
-        make.height.equalTo(44);
-    }];
+//    [_handinBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.bottom.right.equalTo(weakself);
+//        make.height.equalTo(44);
+//    }];
     
+}
+- (void)setPhoneNumber:(NSString *)phoneNumber {
+    _phoneNumber = phoneNumber;
+    [self.phoneNumBtn setTitle:phoneNumber forState:(UIControlStateNormal)];
 }
 #pragma mark - 懒加载
 - (UILabel *)complaintTitle {
@@ -73,7 +77,7 @@
         [_phoneNumBtn setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
         [_phoneNumBtn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
         _phoneNumBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [_phoneNumBtn setTitle:@"电话号码" forState:UIControlStateNormal];
+        [_phoneNumBtn setTitle:@"13810214551" forState:UIControlStateNormal];
         _phoneNumBtn.layer.cornerRadius  = 5;
         _phoneNumBtn.layer.masksToBounds = YES;
         [_phoneNumBtn addTarget:self action:@selector(clickPhoneNumber) forControlEvents:UIControlEventTouchUpInside];
@@ -97,7 +101,6 @@
     if (_handinBlock) {
         _handinBlock(button);
     }
-    
 }
 - (void)clickPhoneNumber {
 

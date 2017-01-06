@@ -11,6 +11,9 @@
 #import "SearchViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
+#import "LoginViewController.h"
+#import "ProtecePowerPromptView.h"
+
 @interface LiveViewController ()<UIScrollViewDelegate>
 
 /** 底部的scrollview */
@@ -21,6 +24,8 @@
 
 /** 头部按钮 */
 @property (strong, nonatomic) LiveTopView *topView;
+
+@property (nonatomic, strong) NSTimer *timer; /**< 定时器 */
 
 @end
 
@@ -34,26 +39,49 @@
     [self setNavView];
     
     if ([UserInfos getUser]) {
-        [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(RequestBlackUser) userInfo:nil repeats:YES];
+        // 把之前的干掉
+        self.timer = nil;
+        [self.timer invalidate];
+        // 重新开线程
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(RequestBlackUser) userInfo:nil repeats:YES];
     }
-    
 }
 - (void)RequestBlackUser {
-    NSDictionary *dict = @{
-                           @"user_id":[UserInfos sharedUser].ID
-                           };
-    [self getRequestWithPath:API_Memberstate params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        if ([successJson[@"code"] integerValue] == 0) {// 0拉黑用户 1正常用户
-            [UserInfos removeUser];
-            [UserInfos sharedUser].usertel = @"";
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            // 退出环信
-            [[EMClient sharedClient] logout:YES];
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
+   
+    if ([UserInfos getUser]) {
+        NSDictionary *dict = @{
+                               @"user_id":[UserInfos sharedUser].ID
+                               };
+        [self getRequestWithPath:API_Memberstate params:dict success:^(id successJson) {
+            if ([successJson[@"code"] integerValue] == 0) {// 0拉黑用户 1正常用户
+                // 关闭定时器
+                self.timer = nil;
+                [self.timer invalidate];
+                
+                // 退出登录
+                [UserInfos removeUser];
+                [UserInfos sharedUser].usertel = @"";
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                // 退出环信
+                [[EMClient sharedClient] logout:YES];
+                ProtecePowerPromptView *promptView = [[ProtecePowerPromptView alloc] init];
+                promptView.message = @"此账号因违反平台协议被限制使用";
+                [promptView show];
+                
+                promptView.sureApplyBtnBlock = ^(UIButton *btn){
+                    LoginViewController *loginVc = [[LoginViewController alloc] init];
+                    loginVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:loginVc animated:YES];
+                };
+
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }else{
+        self.timer = nil;
+        [self.timer invalidate];
+    }
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -186,6 +214,10 @@
         }];
     }
     return _topView;
+}
+- (void)dealloc {
+    self.timer = nil;
+    [self.timer invalidate];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

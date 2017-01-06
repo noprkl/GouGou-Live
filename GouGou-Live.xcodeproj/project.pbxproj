@@ -287,6 +287,9 @@
 		046BF0621DE5997D00BC32E9 /* MessageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046BF0611DE5997D00BC32E9 /* MessageListCell.xib */; };
 		046D0B7F1E1B4F720037E111 /* NoneDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D0B7E1E1B4F710037E111 /* NoneDateView.m */; };
 		046D0B821E1B7E5A0037E111 /* BuySuccessVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D0B811E1B7E5A0037E111 /* BuySuccessVc.m */; };
+		046D11571E1DE8000037E111 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 046D11561E1DE8000037E111 /* MessageUI.framework */; };
+		046D115A1E1E86D40037E111 /* CertificateVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D11591E1E86D40037E111 /* CertificateVc.m */; };
+		046D115C1E1F3BB80037E111 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 046D115B1E1F3BB80037E111 /* Images.xcassets */; };
 		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
 		046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */; };
 		046F0B961DE2AB8B00D50D5C /* PowerOrderStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B4C1DE2AB8A00D50D5C /* PowerOrderStateView.m */; };
@@ -398,7 +401,6 @@
 		0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5651DCADC7B00CB288A /* PresentApplicationViewController.xib */; };
 		0479B6101DCADC7B00CB288A /* PresentWaitingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5681DCADC7B00CB288A /* PresentWaitingViewController.m */; };
 		0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0479B5691DCADC7B00CB288A /* PresentWaitingViewController.xib */; };
-		0479B6121DCADC7B00CB288A /* CertificateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B56C1DCADC7B00CB288A /* CertificateViewController.m */; };
 		0479B6141DCADC7B00CB288A /* MerchantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5701DCADC7B00CB288A /* MerchantViewController.m */; };
 		0479B6171DCADC7B00CB288A /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B5771DCADC7B00CB288A /* FavoriteViewController.m */; };
 		0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479B57B1DCADC7B00CB288A /* MyViewController.m */; };
@@ -1126,6 +1128,10 @@
 		046D0B7E1E1B4F710037E111 /* NoneDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoneDateView.m; sourceTree = "<group>"; };
 		046D0B801E1B7E5A0037E111 /* BuySuccessVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuySuccessVc.h; sourceTree = "<group>"; };
 		046D0B811E1B7E5A0037E111 /* BuySuccessVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuySuccessVc.m; sourceTree = "<group>"; };
+		046D11561E1DE8000037E111 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		046D11581E1E86D40037E111 /* CertificateVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateVc.h; sourceTree = "<group>"; };
+		046D11591E1E86D40037E111 /* CertificateVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateVc.m; sourceTree = "<group>"; };
+		046D115B1E1F3BB80037E111 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLiveViewController.h; sourceTree = "<group>"; };
 		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
 		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
@@ -1335,8 +1341,6 @@
 		0479B5671DCADC7B00CB288A /* PresentWaitingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentWaitingViewController.h; sourceTree = "<group>"; };
 		0479B5681DCADC7B00CB288A /* PresentWaitingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentWaitingViewController.m; sourceTree = "<group>"; };
 		0479B5691DCADC7B00CB288A /* PresentWaitingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentWaitingViewController.xib; sourceTree = "<group>"; };
-		0479B56B1DCADC7B00CB288A /* CertificateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateViewController.h; sourceTree = "<group>"; };
-		0479B56C1DCADC7B00CB288A /* CertificateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateViewController.m; sourceTree = "<group>"; };
 		0479B56F1DCADC7B00CB288A /* MerchantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantViewController.h; sourceTree = "<group>"; };
 		0479B5701DCADC7B00CB288A /* MerchantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantViewController.m; sourceTree = "<group>"; };
 		0479B5761DCADC7B00CB288A /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
@@ -1636,6 +1640,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046D11571E1DE8000037E111 /* MessageUI.framework in Frameworks */,
 				045C5CBF1DF53EC3000B8509 /* CoreTelephony.framework in Frameworks */,
 				046BEE9B1DE463A400BC32E9 /* libsqlite3.tbd in Frameworks */,
 				046BEE951DE4637E00BC32E9 /* libc++.tbd in Frameworks */,
@@ -1716,16 +1721,16 @@
 		040891E11DFEB91F006DF570 /* OrderDetali */ = {
 			isa = PBXGroup;
 			children = (
-				040891E21DFEB91F006DF570 /* OrderCompleteAssess.h */,
-				040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */,
-				040891E61DFEB91F006DF570 /* OrderWaitAssessViewController.h */,
-				040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */,
 				040891E81DFEB91F006DF570 /* PayBackMoneyViewController.h */,
 				040891E91DFEB91F006DF570 /* PayBackMoneyViewController.m */,
 				040891EA1DFEB91F006DF570 /* PayFontMoneyViewController.h */,
 				040891EB1DFEB91F006DF570 /* PayFontMoneyViewController.m */,
 				040891EC1DFEB91F006DF570 /* PayingAllMoneyViewController.h */,
 				040891ED1DFEB91F006DF570 /* PayingAllMoneyViewController.m */,
+				040891E21DFEB91F006DF570 /* OrderCompleteAssess.h */,
+				040891E31DFEB91F006DF570 /* OrderCompleteAssess.m */,
+				040891E61DFEB91F006DF570 /* OrderWaitAssessViewController.h */,
+				040891E71DFEB91F006DF570 /* OrderWaitAssessViewController.m */,
 				040891EE1DFEB91F006DF570 /* SureConsigneedViewController.h */,
 				040891EF1DFEB91F006DF570 /* SureConsigneedViewController.m */,
 				040891F01DFEB91F006DF570 /* WaitSellConsigmentViewContorller.h */,
@@ -2126,6 +2131,7 @@
 				046BEE9E1DE4696500BC32E9 /* EaseUI */,
 				046BEE651DE462DB00BC32E9 /* HyphenateSDK */,
 				0479B4C31DCADC7B00CB288A /* Classes */,
+				046D115B1E1F3BB80037E111 /* Images.xcassets */,
 				0467ACE71DBDEF2200562CC4 /* Supporting Files */,
 			);
 			path = "GouGou-Live";
@@ -3535,8 +3541,8 @@
 		0479B56A1DCADC7B00CB288A /* Certificate */ = {
 			isa = PBXGroup;
 			children = (
-				0479B56B1DCADC7B00CB288A /* CertificateViewController.h */,
-				0479B56C1DCADC7B00CB288A /* CertificateViewController.m */,
+				046D11581E1E86D40037E111 /* CertificateVc.h */,
+				046D11591E1E86D40037E111 /* CertificateVc.m */,
 				0479B56E1DCADC7B00CB288A /* Merchant */,
 			);
 			path = Certificate;
@@ -4579,6 +4585,7 @@
 		5808904410711070CD5EE9BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				046D11561E1DE8000037E111 /* MessageUI.framework */,
 				0467954C1E0781220076F517 /* AVKit.framework */,
 				04EDC4AE1DFA9F64009C972D /* CoreLocation.framework */,
 				045C5CCC1DF53F1E000B8509 /* CoreMotion.framework */,
@@ -4704,6 +4711,7 @@
 			files = (
 				046BE8E41DE4524100BC32E9 /* NotificationMessageCell.xib in Resources */,
 				044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */,
+				046D115C1E1F3BB80037E111 /* Images.xcassets in Resources */,
 				046F0BFF1DE2EB1900D50D5C /* ManagePictureaCell.xib in Resources */,
 				04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */,
 				045D11BA1DF05C0E008623E5 /* PayingViewController.xib in Resources */,
@@ -4853,7 +4861,6 @@
 				046BF0071DE4696600BC32E9 /* PSTCollectionViewLayout.m in Sources */,
 				046F0BB21DE2AB8B00D50D5C /* ProtecePowerPromptView.m in Sources */,
 				0479B5DF1DCADC7B00CB288A /* LiveViewCellModel.m in Sources */,
-				0479B6121DCADC7B00CB288A /* CertificateViewController.m in Sources */,
 				046BF0231DE4696600BC32E9 /* EaseUsersListViewController.m in Sources */,
 				04E777351DEC2EE6007B5146 /* SystemPushMessageModel.m in Sources */,
 				046BF00F1DE4696600BC32E9 /* EaseConversationModel.m in Sources */,
@@ -5100,6 +5107,7 @@
 				045E3B4D1E0F894200624CEA /* PlayBackViewController.m in Sources */,
 				046F0BAF1DE2AB8B00D50D5C /* WaitConsignessCell.m in Sources */,
 				0479B6191DCADC7B00CB288A /* MyViewController.m in Sources */,
+				046D115A1E1E86D40037E111 /* CertificateVc.m in Sources */,
 				046BEFEA1DE4696600BC32E9 /* MWPhoto.m in Sources */,
 				0479B5E31DCADC7B00CB288A /* MoreImpressViewCell.m in Sources */,
 				046F0B9F1DE2AB8B00D50D5C /* BottomButtonView.m in Sources */,
@@ -5387,6 +5395,7 @@
 			baseConfigurationReference = 1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5414,6 +5423,7 @@
 			baseConfigurationReference = EEC75C3D1C33BBA8B0E78FDE /* Pods-GouGou-Live.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

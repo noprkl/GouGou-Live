@@ -59,12 +59,48 @@
     self.dogCardView.dogKindLabel.text = protectModel.kindName;
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:protectModel.priceOld];
     self.dogCardView.nowPriceLabel.text = protectModel.price;
-    // 花费信息
-//    self.costView.fontMoney.text = protectModel.productRealDeposit;
-    self.costView.remainderMoeny.text = protectModel.productRealBalance;
-    self.costView.totalMoney.text = [NSString stringWithFormat:@"%ld",([protectModel.productRealDeposit integerValue] +[protectModel.productRealBalance integerValue])];
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficMoney];
-    self.logisticView.orderCode = protectModel.ID;    
+    // 花费状况
+    // 总计
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [protectModel.price floatValue] + [protectModel.traficRealFee floatValue]];
+    // 运费
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",protectModel.traficRealFee];
+    
+    // 实付款
+    if (self.protectModel.productRealPrice.length != 0) {// 全款支付
+        // 定金
+        self.costView.fontMoneyLabel.text = @"";
+        self.costView.fontMoney.text = @"";
+        
+        // 实付
+        self.costView.remainderMoneylabel.text = @"已付全款";
+        self.costView.remainderMoeny.text = self.protectModel.productRealPrice!=0 ? self.protectModel.productRealPrice:@"0";
+    }else{
+        // 定金
+        if (self.protectModel.productRealDeposit.length != 0) {
+            //尾款
+            if (self.protectModel.productRealBalance.length != 0) {
+                // 定金
+                self.costView.fontMoneyLabel.text = @"已付定金";
+                self.costView.fontMoney.text = self.protectModel.productRealDeposit.length !=0 ? self.protectModel.productRealDeposit:@"0";
+                
+                // 实付
+                self.costView.remainderMoneylabel.text = @"已付尾款";
+                self.costView.remainderMoeny.text = self.protectModel.productRealBalance.length != 0 ? self.protectModel.productRealBalance:@"0";
+            }else{
+                //尾款
+                if (self.protectModel.productRealBalance.length != 0) {
+                    // 定金
+                    self.costView.fontMoneyLabel.text = @"";
+                    self.costView.fontMoney.text = @"";
+                    
+                    // 实付
+                    self.costView.remainderMoneylabel.text = @"已付定金";
+                    self.costView.remainderMoeny.text = self.protectModel.productRealDeposit!=0 ?self.protectModel.productRealDeposit:@"0";
+                }
+            }
+        }
+    }
+    self.logisticView.orderCode = protectModel.ID;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -192,6 +228,12 @@
     
     if (!_logisticView) {
         _logisticView = [[LogisticsInfoView alloc] init];
+        __weak typeof(self) weakSelf = self;
+        _logisticView.copyBlock = ^(){
+            if (weakSelf.copyBlock) {
+                weakSelf.copyBlock();
+            }
+        };
     }
     return _logisticView;
 }

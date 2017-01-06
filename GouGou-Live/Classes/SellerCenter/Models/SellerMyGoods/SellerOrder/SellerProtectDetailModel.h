@@ -15,6 +15,9 @@
 
 /** 买家昵称 */
 @property (copy,nonatomic) NSString *userNickName;
+/** 买家昵称 */
+@property (copy,nonatomic) NSString *buyUserId;
+
 /** 维权状态 */
 @property (copy,nonatomic) NSString *status;
 /** 订单状态 */
@@ -39,6 +42,8 @@
 @property (copy,nonatomic) NSString *price;
 
 /** 商品实际价格 */
+@property (copy,nonatomic) NSString *productRealPrice;
+
 @property (copy,nonatomic) NSString *productPrice;
 /** 商品实付定金 */
 @property (copy,nonatomic) NSString *productRealDeposit;
@@ -46,6 +51,9 @@
 @property (copy,nonatomic) NSString *productRealBalance;
 /** 商品实付运费 */
 @property (copy,nonatomic) NSString *traficRealFee;
+/** 商品实付运费 */
+@property (copy,nonatomic) NSString *traficFee;
+
 /** 维权描述内容 */
 @property (copy, nonatomic) NSString *comment;
 /** 照片URL评价 */

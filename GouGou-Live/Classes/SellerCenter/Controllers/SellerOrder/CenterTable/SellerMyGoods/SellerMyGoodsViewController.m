@@ -306,8 +306,6 @@ static NSString *cellid = @"SellerMyGoodsCell";
     __weak typeof(self) weakSelf = self;
 
     // 判断当前数据是否在数组中
-   
-
     cell.selectBlock = ^(UIButton *btn){
         BOOL flag = [self.selectedData containsObject:index];
         

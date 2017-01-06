@@ -179,7 +179,6 @@ static NSString *cellid = @"DogShowCellid";
             }
         } colCount:4];
         [shareAlert show];
-        
     };
     // 喜欢
     cell.likeBlock = ^ (){
@@ -200,18 +199,20 @@ static NSString *cellid = @"DogShowCellid";
             }];
         }
     };
-    cell.bookBlock = ^ (){
+    cell.bookBlock = ^ (NSString *bookStr){
         if ([UserInfos getUser]) {
-            if (![model.status isEqualToString:@"3"]) {
+            if ([bookStr isEqualToString:@"已售"]) {
                 [self showAlert:@"狗狗已经被售出了"];
-            }else{
+            }else if ([bookStr isEqualToString:@"订购"]){
                 __block BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
                 NSDictionary *dict2 = @{@"id":@(2)};
+                [self showHint:@"加载中.."];
                 [self getRequestWithPath:API_Help params:dict2 success:^(id successJson) {
                     NSArray *arr = [NormalModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                     NormalModel *model = arr[0];
                     rulesAlert.ruleContets = model.conent;
                     [rulesAlert show];
+                    [self hideHud];
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];

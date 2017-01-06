@@ -68,16 +68,14 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        height += 240;
-                        [dogInfos addObject:@[]];
-                    }else{
+                    if (successJson[@"data"]) {
                         height += 357;
-                        
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                        }
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        height += 250;
+                        [dogInfos addObject:@[]];
                     }
+                    
                     [liveMutableArr addObject:model];
 
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
@@ -114,7 +112,7 @@
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
         [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        if ([successJson[@"code"] isEqualToString:@"0"]) {
+         if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
         }else{
@@ -137,19 +135,16 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        height += 240;
-                        [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
-                        
-                    }else{
+                    if (successJson[@"data"]) {
                         height += 357;
-                        
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
-                        }
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        height += 250;
+                        [dogInfos addObject:@[]];
                     }
+                    
+                    [liveMutableArr addObject:model];
+
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                         
                         CGRect rect = self.liveTableView.frame;
@@ -186,7 +181,7 @@
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
         [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        if ([successJson[@"code"] isEqualToString:@"0"]) {
+         if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
         }else{
@@ -209,19 +204,16 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        height += 240;
-                        [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
-                        
-                    }else{
+                    if (successJson[@"data"]) {
                         height += 357;
-                        
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
-                        }
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        height += 250;
+                        [dogInfos addObject:@[]];
                     }
+                    
+                    [liveMutableArr addObject:model];
+
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                         
                         CGRect rect = self.liveTableView.frame;
@@ -258,7 +250,7 @@
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
         [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        if ([successJson[@"code"] isEqualToString:@"0"]) {
+         if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
         }else{
@@ -281,19 +273,16 @@
                                        };
                 [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
                     //                DLog(@"%@", successJson);
-                    if (model.pNum == 0) {
-                        height += 240;
-                        [dogInfos addObject:@[]];
-                        [liveMutableArr addObject:model];
-                        
-                    }else{
+                    if (successJson[@"data"]) {
                         height += 357;
-                        
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                            [liveMutableArr addObject:model];
-                        }
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        height += 250;
+                        [dogInfos addObject:@[]];
                     }
+                    
+                    [liveMutableArr addObject:model];
+
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
                         
                         CGRect rect = self.liveTableView.frame;
@@ -332,6 +321,7 @@
     [self.bottomScrollView addSubview:self.liveTableView];
     [self addViews];
     
+    [self getRequestImpressionLiveList];
     self.bottomScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getRequestImpressionLiveList];
         [self.bottomScrollView.mj_header endRefreshing];
@@ -349,7 +339,6 @@
     }];
     
     [_bottomScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.equalTo(weakself.filteButtonView.bottom).offset(5);
         make.left.right.bottom.equalTo(weakself.view);
     }];
@@ -362,7 +351,6 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navImage"] forBarMetrics:(UIBarMetricsDefault)];
     self.navigationController.navigationBar.titleTextAttributes =  @{
                                                                      NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#ffffff"],                         NSFontAttributeName:[UIFont systemFontOfSize:18]                              };
-    [self getRequestImpressionLiveList];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

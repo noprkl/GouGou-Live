@@ -57,6 +57,12 @@
 
 @property (nonatomic, strong) NSTimer *timer; /**< 计时器 */
 
+@property (nonatomic, strong) UIView *endView; /**< 结束 */
+@property (nonatomic, strong) UIButton *endbackbutton; /**< 结束返回按钮 */
+@property (nonatomic, strong) UILabel *endliveLabel; /**< 结束提示图 */
+@property (nonatomic, strong) UILabel *endwatchLabel; /**< 结束观看人数 */
+@property (nonatomic, strong) UILabel *endshowCountlabel; /**< 结束展播数 */
+@property (nonatomic, strong) UILabel *endsoldCountLabel; /**< 结束出售数 */
 @end
 
 @implementation MediaStreamingVc
@@ -68,6 +74,14 @@
         DLog(@"%@", successJson);
         if (successJson[@"data"]) {
             self.showDogView.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            LiveListDogInfoModel *showingModel = self.showDogView.dataArr[0];
+            if (showingModel.pathSmall != NULL) {
+                NSURL *url = [NSURL URLWithString:[IMAGE_HOST stringByAppendingString:showingModel.pathSmall]];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                UIImage *image = [UIImage imageWithData:data];
+                [self.showingBtn setImage:image forState:(UIControlStateNormal)];
+            }
+            self.showingPrice.text = showingModel.price;
             [self.showDogView reloadData];
         }else{
             self.showDogView.hidden = YES;
@@ -97,6 +111,29 @@
 
     [self getRequestShowingDog];
     [self streamingVideo];
+    if (self.shareType == 10) {
+        
+    }else if (self.shareType == 0){
+        [CreateLiveViewController SinaShare:self.streamRtmp success:^{
+            
+        }];
+    }else if (self.shareType == 1){
+        [CreateLiveViewController WechatTimeShare:self.streamRtmp success:^{
+            
+        }];
+    }else if (self.shareType == 2){
+        [CreateLiveViewController QQShare:self.streamRtmp success:^{
+            
+        }];
+    }else if (self.shareType == 3){
+        [CreateLiveViewController TencentShare:self.streamRtmp success:^{
+            
+        }];
+    }else if (self.shareType == 4){
+        [CreateLiveViewController WechatTimeShare:self.streamRtmp success:^{
+            
+        }];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -298,7 +335,7 @@
 - (void)makeConstraint {
     [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
-        make.height.equalTo(44);
+        make.height.equalTo(54);
     }];
     [self.livingImageView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left).offset(10);
@@ -666,8 +703,60 @@
 - (BOOL)shouldAutorotate {
     return YES;
 }
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
     return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
+}
+#pragma mark
+#pragma mark - 结束时的控件
+- (UIView *)endView {
+    if (!_endView) {
+        _endView = [[UIView alloc] init];
+        _endView.backgroundColor = [UIColor colorWithHexString:@"#000000"];
+    }
+    return _endView;
+}
+- (UILabel *)endliveLabel {
+    if (!_endliveLabel) {
+        _endliveLabel = [[UILabel alloc] init];
+        _endliveLabel.text = @"直播已经结束";
+        _endliveLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        _endliveLabel.font = [UIFont systemFontOfSize:16];
+    }
+    return _endliveLabel;
+}
+- (UILabel *)endwatchLabel {
+    if (!_endwatchLabel) {
+        _endwatchLabel = [[UILabel alloc] init];
+        _endwatchLabel.text = @"观看人数 0";
+        _endwatchLabel.font = [UIFont systemFontOfSize:14];
+        _endwatchLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _endwatchLabel;
+}
+- (UILabel *)endshowCountlabel {
+    if (!_endshowCountlabel) {
+        _endshowCountlabel = [[UILabel alloc] init];
+        _endshowCountlabel.text = @"展播 0";
+        _endshowCountlabel.font = [UIFont systemFontOfSize:14];
+        _endshowCountlabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _endshowCountlabel;
+}
+- (UILabel *)endsoldCountLabel {
+    if (!_endsoldCountLabel) {
+        _endsoldCountLabel = [[UILabel alloc] init];
+        _endsoldCountLabel.text = @"售出 0";
+        _endsoldCountLabel.font = [UIFont systemFontOfSize:14];
+        _endsoldCountLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
+    return _endsoldCountLabel;
+}
+- (UIButton *)endbackbutton {
+    if (!_endbackbutton) {
+        _endbackbutton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [_endbackbutton setTitle:@"返回首页" forState:(UIControlStateNormal)];
+        
+    }
+    return _endbackbutton;
 }
 @end

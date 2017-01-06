@@ -135,21 +135,9 @@
 }
 
 - (void)clickCopyBtn {
-    UIPasteboard *pab = [UIPasteboard generalPasteboard];
-    
-    NSString *string = self.numLabel.text;
-    
-    [pab setString:string];
-    
-    if (pab == nil) {
-        DLog(@"%@",pab.string);
-        
-    }else
-    {
-        DLog(@"%@",pab.string);
-
+    if (_copyBlock) {
+        _copyBlock();
     }
-
 }
 
 @end

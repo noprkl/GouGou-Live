@@ -74,10 +74,6 @@
         self.consigneeViw.recevieDistrict = self.orderInfo.recevieDistrict;
         self.consigneeViw.recevieAddress = self.orderInfo.recevieAddress;
         // 商家名称
-//        if (self.orderInfo.userImgUrl.length != 0) {
-//            NSString * imgString = [IMAGE_HOST stringByAppendingString:self.orderInfo.userImgUrl];
-//            [self.sellInfoView.buynessImg sd_setImageWithURL:[NSURL URLWithString:imgString] placeholderImage:[UIImage imageNamed:@"主播头像"]];
-//        }
         self.sellInfoView.buynessImg = self.orderInfo.userImgUrl;
         self.sellInfoView.buynessName = self.orderInfo.merchantName;
         self.sellInfoView.currentTime = [NSString stringFromDateString:self.orderInfo.createTime];
@@ -96,11 +92,12 @@
         // 商品总价
         self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
-        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
+        self.goodsPriceView.cutMoney = @"0";
         // 付款详情
+        // 代付尾款
         self.detailPayView.needBackMessage = self.orderInfo.productBalance;
-        self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
-        self.detailPayView.realMoney = self.orderInfo.price;
+        self.detailPayView.fontMoneyMessage = self.orderInfo.productRealDeposit;
+        self.detailPayView.realMoney = self.orderInfo.productRealDeposit;
         self.detailPayView.balance = self.orderInfo.productRealBalance;
         // 订单编号
         if (![self.orderInfo.createTime isEqualToString:@"0"]) {
@@ -330,9 +327,9 @@
             
                 [weakself clickNotBuy:weakself.detailModel];
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
-                viewController.title = EaseTest_Chat3;
-                 viewController.chatID = EaseTest_Chat3;
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:weakself.orderInfo.buyUserId conversationType:(EMConversationTypeChat)];
+                viewController.title = weakself.orderInfo.buyUserId;
+                 viewController.chatID = weakself.orderInfo.buyUserId;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [weakself.navigationController pushViewController:viewController animated:YES];
                 

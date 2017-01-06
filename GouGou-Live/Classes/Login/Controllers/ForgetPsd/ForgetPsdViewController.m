@@ -36,7 +36,7 @@
 }
 
 - (void)initUI {
-    self.title = @"忘记密码";
+    self.title = @"忘记登录密码";
 
     self.phoneTextField.delegate = self;
     self.codeTextField.delegate = self;

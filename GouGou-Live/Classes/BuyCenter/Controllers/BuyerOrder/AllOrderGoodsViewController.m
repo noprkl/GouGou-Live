@@ -70,7 +70,6 @@ static NSString * closeCell = @"closeCell";
                             @"page":@(1),
                             @"pageSize":@(10)
                             };
-    
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);        
         if (successJson[@"data"][@"info"]) {
@@ -192,11 +191,11 @@ static NSString * closeCell = @"closeCell";
     BuyCenterModel * model = self.dataArray[indexPath.row];
     DLog(@"%ld", [model.status integerValue]);
     if ([model.status integerValue] == 1) {
-        
+        // 待付款
         WaitFontMoneyCell * cell = [[WaitFontMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitFontCell];
         cell.centerModel = model;
         cell.cancelBlock = ^(){
-            
+            [self getCancleOrderRequest:model];
         };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"待付款",@"取消订单",@"联系卖家"] buttonNum:3];
         
@@ -241,6 +240,9 @@ static NSString * closeCell = @"closeCell";
         // 定金
         WaitFontMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitFontCell];
         cell.centerModel = model;
+        cell.cancelBlock = ^(){
+            [self getCancleOrderRequest:model];
+        };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付订金",@"取消订单",@"联系卖家"] buttonNum:3];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
@@ -264,7 +266,6 @@ static NSString * closeCell = @"closeCell";
                 [self.navigationController pushViewController:viewController animated:YES];
                 DLog(@"%@--%@",self,button.titleLabel.text);
             }
-            
         };
         
         [cell.contentView addSubview:funcBtn];
@@ -275,6 +276,9 @@ static NSString * closeCell = @"closeCell";
         // 尾款
         WaitBackMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitBackCell];
         cell.centerModel = model;
+        cell.cancelBlock = ^(){
+            [self getCancleOrderRequest:model];
+        };
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付尾款",@"不想买了",@"联系卖家",@"申请维权"] buttonNum:4];
@@ -284,7 +288,6 @@ static NSString * closeCell = @"closeCell";
             if ([button.titleLabel.text  isEqual:@"申请维权"]) {
                 // 点击申请维权
                 [self clickApplyProtectPower:model.ID];
-                
             }
             
             if ([button.titleLabel.text  isEqual:@"支付尾款"]){
@@ -313,6 +316,9 @@ static NSString * closeCell = @"closeCell";
     if ([model.status integerValue] == 5) {
         // 待付全款cell
         WaitAllMoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAllMoneyCell];
+        cell.cancelBlock = ^(){
+            [self getCancleOrderRequest:model];
+        };
         cell.centerModel = model;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家"] buttonNum:2];
         
@@ -428,8 +434,9 @@ static NSString * closeCell = @"closeCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
-                [self clickDeleteOrder:model];
-                [self postGetAllStateOrderRequest];
+                [self clickDeleteOrder:model endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
@@ -467,7 +474,9 @@ static NSString * closeCell = @"closeCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
-                [self clickDeleteOrder:model];
+                [self clickDeleteOrder:model endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
@@ -505,7 +514,9 @@ static NSString * closeCell = @"closeCell";
             cell.model = model;
             cell.orderState = @"交易关闭";
             cell.deleBlock = ^(){
-                [self clickDeleteOrder:model];
+                [self clickDeleteOrder:model endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
             };
             return cell;
         }
@@ -515,7 +526,9 @@ static NSString * closeCell = @"closeCell";
             cell.model = model;
             cell.orderState = @"交易关闭";
         cell.deleBlock = ^(){
-            [self clickDeleteOrder:model];
+            [self clickDeleteOrder:model endOptioal:^{
+                [self postGetAllStateOrderRequest];
+            }];
         };
             return cell;
         }

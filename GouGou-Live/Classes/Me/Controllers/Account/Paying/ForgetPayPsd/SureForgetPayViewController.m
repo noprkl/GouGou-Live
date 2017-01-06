@@ -22,7 +22,7 @@
     NSString *pwd = [NSString md5WithString:self.surePsdTextField.text];
     DLog(@"%@", pwd);
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"pay_password":pwd,
                            @"pay_sms":_codeNumber
                            };

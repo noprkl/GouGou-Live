@@ -182,9 +182,9 @@
     }
     //[UserInfos getUser] &&
     if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
-        _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+        _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateVc", @"MerchantViewController"],@[@"SettingViewController"]];
     }else{
-        _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateViewController", @"MerchantViewController"],@[@"SettingViewController"]];
+        _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateVc", @"MerchantViewController"],@[@"SettingViewController"]];
     }
     
     [self.tableView reloadData];
@@ -330,8 +330,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([UserInfos getUser]) { // 如果已经登录
     
-        // 如果已经进行商家认证 就选择已商家认证的数据源
+        // 控制器名字
         NSString *controllerName = self.controllerNames[indexPath.section][indexPath.row];
+        // 控制器title
         NSString *cellText = self.dataSource[indexPath.section][indexPath.row];
 
         UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
@@ -367,7 +368,7 @@
             };
             
             // 粉丝
-            messageView.fansCount = [UserInfos sharedUser].fansCount;
+            messageView.fansCount = self.fansArray.count;
             messageView.fansBlcok = ^(){
                 MyFansViewController *myFansVC =
                 [[MyFansViewController alloc] init];

@@ -90,12 +90,12 @@
         // 商品总价
         self.goodsPriceView.totalsMoney = self.orderInfo.price;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
-        self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%ld",[self.orderInfo.productDeposit integerValue] + [self.orderInfo.productBalance integerValue] - [self.orderInfo.traficRealFee integerValue] - [self.orderInfo.productRealDeposit integerValue] - [self.orderInfo.productRealBalance integerValue]];
-        // 付款详情
+        self.goodsPriceView.cutMoney = @"0";
+        // 待付定金
         self.detailPayView.needBackMessage = self.orderInfo.productBalance;
-        self.detailPayView.fontMoneyMessage = self.orderInfo.productDeposit;
-        self.detailPayView.realMoney = self.orderInfo.price;
-        self.detailPayView.balance = self.orderInfo.productRealBalance;
+        self.detailPayView.fontMoneyMessage = @"0";
+        self.detailPayView.realMoney = @"0";
+        self.detailPayView.balance = @"0";
         // 订单号
         self.orderNumberView.buyUserId = self.orderInfo.ID;
         if (![self.orderInfo.createTime isEqualToString:@"0"]) {
@@ -286,13 +286,11 @@
 }
 
 - (DetailPayMoney *)detailPayView {
-
     if (!_detailPayView) {
         _detailPayView = [[DetailPayMoney alloc] init];
         _detailPayView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         _detailPayView.needBackMessage = @"￥950";
         _detailPayView.fontMoneyMessage = @"￥500";
-
     }
     return _detailPayView;
 }
@@ -319,15 +317,15 @@
                 [weakself clickCancleOrder:weakself.detailModel];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat3 conversationType:(EMConversationTypeChat)];
-                viewController.title = EaseTest_Chat3;
-                 viewController.chatID = EaseTest_Chat3;
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:weakself.orderInfo.buyUserId conversationType:(EMConversationTypeChat)];
+                viewController.title = weakself.orderInfo.buyUserId;
+                 viewController.chatID = weakself.orderInfo.buyUserId;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [weakself.navigationController pushViewController:viewController animated:YES];
                 
             } else if ([button.titleLabel.text isEqual:@"支付订金"]) {
                 
-                [self payMoneyWithOrderID:weakself.detailModel.ID payStyle:button.titleLabel.text];
+                [weakself payMoneyWithOrderID:weakself.detailModel.ID payStyle:button.titleLabel.text];
             }
             
         };

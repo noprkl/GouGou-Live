@@ -101,7 +101,7 @@
     }];
     
     [self.finalMoney makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.finalMoneyCount.centerY);
+        make.centerY.equalTo(self.finalMoneyCount.centerY);
         make.right.equalTo(self.finalMoneyCount.left);
     }];
     

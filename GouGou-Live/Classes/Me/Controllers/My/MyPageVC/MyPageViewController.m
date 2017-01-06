@@ -15,7 +15,7 @@
 #import "PromptView.h"
 #import "EditNikeNameAlert.h"
 
-#import "CertificateViewController.h"
+#import "CertificateVc.h"
 #import "MerchantViewController.h"
 
 #import "ManagePictureaViewController.h"
@@ -514,7 +514,7 @@ static NSString *cellid4 = @"cellid4";
 #pragma mark
 #pragma mark - Action
 - (void)clickRealBtnAction {
-    CertificateViewController *certifi = [[CertificateViewController alloc] init];
+    CertificateVc *certifi = [[CertificateVc alloc] init];
     certifi.hidesBottomBarWhenPushed = YES;
     certifi.title = @"实名认证";
     [self.navigationController pushViewController:certifi animated:YES];

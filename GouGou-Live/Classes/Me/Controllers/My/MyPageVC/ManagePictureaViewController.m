@@ -63,8 +63,8 @@ static NSString *cellid = @"ManagePictureaCell";
             self.noneDateView.hidden = NO;
             self.collectionView.hidden = YES;
         }else{
-            self.noneDateView.hidden = NO;
-            self.collectionView.hidden = YES;
+            self.noneDateView.hidden = YES;
+            self.collectionView.hidden = NO;
             self.dataArr = [MyAlbumsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         }
         

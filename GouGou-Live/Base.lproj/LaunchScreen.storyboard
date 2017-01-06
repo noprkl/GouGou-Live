@@ -16,18 +16,7 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qidong" translatesAutoresizingMaskIntoConstraints="NO" id="IRg-3l-oK8">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="IRg-3l-oK8" secondAttribute="bottom" id="DT6-do-l4v"/>
-                            <constraint firstAttribute="trailing" secondItem="IRg-3l-oK8" secondAttribute="trailing" id="cMx-fb-9oA"/>
-                            <constraint firstItem="IRg-3l-oK8" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="mfh-c9-8bo"/>
-                            <constraint firstItem="IRg-3l-oK8" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="qb7-4s-i7c"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
@@ -36,7 +25,4 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="qidong" width="750" height="1334"/>
-    </resources>
 </document>

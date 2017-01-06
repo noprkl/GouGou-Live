@@ -168,6 +168,7 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.model = model;
         cell.orderState = @"待付尾款";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         cell.costMessage = @[finalMoney];
         [self.btnTitles addObject:cell.btnTitles];
@@ -343,7 +344,92 @@ static NSString *closeCell = @"SellerCloseCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    SellerOrderModel *model = self.dataArr[indexPath.row];
+
+    if ([model.status integerValue] == 0) { //
+
+    }else if ([model.status integerValue] == 1){ // 1：待付款
+
+        SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
+        adressVC.hidesBottomBarWhenPushed = YES;
+        adressVC.bottomBtns = self.btnTitles[indexPath.row];
+        adressVC.orderState = self.states[indexPath.row];
+        adressVC.orderID = model.ID;
+        [self.navigationController pushViewController:adressVC animated:YES];
+
+    }else if ([model.status integerValue] == 2){ // 2：待付定金
+
+        SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
+        adressVC.hidesBottomBarWhenPushed = YES;
+        adressVC.bottomBtns = self.btnTitles[indexPath.row];
+        adressVC.orderState = self.states[indexPath.row];
+        adressVC.orderID = model.ID;
+        [self.navigationController pushViewController:adressVC animated:YES];
+
+    }else if ([model.status integerValue] == 3){ //3：已付定金，待付尾款
+
+        SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
+        adressVC.hidesBottomBarWhenPushed = YES;
+        adressVC.bottomBtns = self.btnTitles[indexPath.row];
+        adressVC.orderState = self.states[indexPath.row];
+        adressVC.orderID = model.ID;
+        [self.navigationController pushViewController:adressVC animated:YES];
+
+    }else if ([model.status integerValue] == 4){ // 4：放弃订金，交易结束
+
+    }else if ([model.status integerValue] == 5){ // 5：待付全款
+        SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
+        adressVC.hidesBottomBarWhenPushed = YES;
+        adressVC.bottomBtns = self.btnTitles[indexPath.row];
+        adressVC.orderState = self.states[indexPath.row];
+        adressVC.orderID = model.ID;
+        [self.navigationController pushViewController:adressVC animated:YES];
+
+    }else if ([model.status integerValue] == 6){ //
+
+    }else if ([model.status integerValue] == 7){ // 7：已付清款，待发货
+        SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
+        adressVC.hidesBottomBarWhenPushed = YES;
+        adressVC.bottomBtns = self.btnTitles[indexPath.row];
+        adressVC.orderState = @"待发货";
+        adressVC.orderID = model.ID;
+        [self.navigationController pushViewController:adressVC animated:YES];
+    }else if ([model.status integerValue] == 8){ // 8：已发货，待收货
+        SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
+        logisticsInfoVC.orderState = @"待收货";
+        SellerOrderModel *model = self.dataArr[indexPath.row];
+        logisticsInfoVC.orderID = model.ID;
+        logisticsInfoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:logisticsInfoVC animated:YES];
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    }else if ([model.status integerValue] == 9){ // 9: 已收货，待评价
+        SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        logisticsInfoVC.orderState = @"待评价";
+        SellerOrderModel *model = self.dataArr[indexPath.row];
+        logisticsInfoVC.orderID = model.ID;
+        
+        logisticsInfoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:logisticsInfoVC animated:YES];
+        
+
+    }else if ([model.status integerValue] == 10){ // 10：已评价
+        SellerOrderDetailLogisticsInfoViewController *logisticsInfoVC = [[SellerOrderDetailLogisticsInfoViewController alloc] init];
+        logisticsInfoVC.orderState = @"已完成";
+        SellerOrderModel *model = self.dataArr[indexPath.row];
+        logisticsInfoVC.orderID = model.ID;
+        logisticsInfoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:logisticsInfoVC animated:YES];
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }else if ([model.status integerValue] == 20){ //   20：订单取消
+
+    }else if ([model.status integerValue] == 21){ // 21：交易关闭
+
+    }
     
 }
 #pragma mark
@@ -388,10 +474,7 @@ static NSString *closeCell = @"SellerCloseCell";
 
     }else if ([title isEqualToString:@"在线客服"]){
         
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-         viewController.chatID = EaseTest_Chat1;
-        viewController.title = EaseTest_Chat1;
-        [self.navigationController pushViewController:viewController animated:YES];
+        [self clickServiceBtnAction];
     }
 }
 @end

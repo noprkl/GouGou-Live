@@ -41,7 +41,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self.backBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
+        make.centerY.equalTo(self.centerY).offset(10);
         make.left.equalTo(self.left).offset(10);
         make.size.equalTo(CGSizeMake(40, 40));
     }];

@@ -131,10 +131,12 @@
 }
 - (void)ClickServiceBtnAction {
     
-    SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-    viewController.title = EaseTest_Chat1;
-    viewController.chatID = EaseTest_Chat1;
-    [self.navigationController pushViewController:viewController animated:YES];
+//    SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
+//    viewController.title = EaseTest_Chat1;
+//    viewController.chatID = EaseTest_Chat1;
+//    [self.navigationController pushViewController:viewController animated:YES];
+    // 发送短信
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://13810214551"]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

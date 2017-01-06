@@ -160,13 +160,7 @@ static NSString *cellid = @"SellerWaitRateCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-        viewController.title = EaseTest_Chat1;
-         viewController.chatID = EaseTest_Chat1;
-        viewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:viewController animated:YES];
-        
-
+               [self clickServiceBtnAction];
     }
 }
 @end

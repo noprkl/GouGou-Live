@@ -53,8 +53,11 @@
 @implementation DogBookViewController
 
 #pragma mark - 网络请求
+
 // 结算
 - (void)clickPayBtnAction:(UIButton *)btn {
+    // 请求个人资产
+    [self postGetUserAsset];
     if (![UserInfos getUser]){
         [self showAlert:@"请登录"];
     }else {
@@ -140,7 +143,7 @@
         DLog(@"%@", payAway);
     };
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay orderID:modelID money:productDeposit wallentPay:wallentId];
+        [self payMoneyFroWay:payWay orderID:modelID money:productDeposit wallentPay:wallentId status:2];
     };
 }
 /** 全款支付 */
@@ -155,13 +158,13 @@
         DLog(@"%@", size);
     };
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay orderID:modelID money:price wallentPay:wallentId];
+        [self payMoneyFroWay:payWay orderID:modelID money:price wallentPay:wallentId status:5];
     };
 }
 
 #pragma mark
 #pragma mark - 支付方式选择
-- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money wallentPay:(NSString *)wallentId{
+- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money wallentPay:(NSString *)wallentId status:(int)status {
     if ([payWay isEqualToString:@"账户余额支付"]) {
         
         //        [self postGetWalletPayRequest];
@@ -183,7 +186,7 @@
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:orderID price:money payPwd:[NSString md5WithString:text] states:3];
+                    [self walletPayWithOrderId:wallentId price:money payPwd:[NSString md5WithString:text] states:status];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -215,6 +218,7 @@
                            @"user_pwd":payPwd,
                            @"status":@(state)
                            };
+    DLog(@"%@", dict);
     [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
@@ -373,7 +377,6 @@
     self.navigationController.navigationBarHidden = NO;
     self.hidesBottomBarWhenPushed = YES;
     [self postGetAdressRequest];
-    [self postGetUserAsset];
     // 通知监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getAcceptShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }

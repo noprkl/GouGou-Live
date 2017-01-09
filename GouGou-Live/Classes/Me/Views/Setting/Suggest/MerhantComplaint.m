@@ -98,9 +98,9 @@
 }
 #pragma mark - 按钮点击事件
 - (void)clickHandinBtn:(UIButton *)button {
-    if (_handinBlock) {
-        _handinBlock(button);
-    }
+//    if (_handinBlock) {
+//        _handinBlock(button);
+//    }
 }
 - (void)clickPhoneNumber {
 

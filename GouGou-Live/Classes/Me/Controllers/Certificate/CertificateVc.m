@@ -44,7 +44,7 @@ static NSString * identityCell = @"identitiCellID";
     
     // 请求图片
     // 正面
-    NSString *faceBase64 = [NSString imageBase64WithDataURL:self.faceIdentfityImg withSize:CGSizeMake(SCREEN_WIDTH * 2/ 3, SCREEN_WIDTH / 3)];
+    NSString *faceBase64 = [NSString imageBase64WithDataURL:self.faceIdentfityImg withSize:CGSizeMake(self.faceIdentfityImg.size.width, self.faceIdentfityImg.size.height)];
     
     NSDictionary *faceDict = @{
                                @"user_id":[UserInfos sharedUser].ID,
@@ -55,7 +55,7 @@ static NSString * identityCell = @"identitiCellID";
         if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
             NSString *faceStr = successJson[@"data"];
             // 背面
-            NSString *backBase64 = [NSString imageBase64WithDataURL:self.backIdentfityImg withSize:CGSizeMake(SCREEN_WIDTH * 2/ 3, SCREEN_WIDTH / 3)];
+            NSString *backBase64 = [NSString imageBase64WithDataURL:self.backIdentfityImg withSize:CGSizeMake(self.backIdentfityImg.size.width, self.backIdentfityImg.size.height)];
             
             NSDictionary *backDict = @{
                                        @"user_id":[UserInfos sharedUser].ID,

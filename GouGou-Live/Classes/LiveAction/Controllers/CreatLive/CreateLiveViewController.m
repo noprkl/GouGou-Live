@@ -448,6 +448,7 @@
         [_SinaShareBtn setImage:[UIImage imageNamed:@"weibo_btn"] forState:(UIControlStateNormal)];
         [_SinaShareBtn setImage:[UIImage imageNamed:@"新浪微博"] forState:(UIControlStateSelected)];
         _SinaShareBtn.selected = YES;
+        self.lastBtn = _SinaShareBtn;
         [_SinaShareBtn addTarget:self action:@selector(ClickSinaShareAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _SinaShareBtn;

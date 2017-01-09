@@ -7,7 +7,8 @@
 //
 
 #import "AboutUsViewController.h"
-#import "HTTPTool.h"
+#import "UserProtocolVc.h"
+
 @interface AboutUsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -31,14 +32,15 @@
 - (void)initUI {
     
     self.phoneLabel.text = ServicePhone;
-
+    self.tableView.bounces = NO;
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *currentVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];
     self.versionLabel.text = [NSString stringWithFormat:@"版本号 %@", currentVersion];
 }
 - (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = @[@"用户使用协议", @"检查更新"];
+//        _dataArr = @[@"用户使用协议", @"检查更新"];
+        _dataArr = @[@"用户使用协议"];
     }
     return _dataArr;
 }
@@ -69,17 +71,8 @@
     NSString *cellText = self.dataArr[indexPath.row];
     
     if ([cellText isEqualToString:@"用户使用协议"]) {
-        DLog(@"%@", cellText);
-    }else if ([cellText isEqualToString:@"检查更新"]) {
-
-        NSDictionary *dict = @{
-                               @"id":@""
-                               };
-        [HTTPTool getRequestWithPath:@"http://itunes.apple.com/cn/lookup" params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
+        UserProtocolVc *protocolVc = [[UserProtocolVc alloc] init];
+        [self.navigationController pushViewController:protocolVc animated:YES];
     }
 }
 - (void)didReceiveMemoryWarning {

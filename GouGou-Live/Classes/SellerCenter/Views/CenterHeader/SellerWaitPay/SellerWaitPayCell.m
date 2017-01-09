@@ -92,9 +92,8 @@
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [model.price integerValue] + [model.traficMoney integerValue]];
+    self.costView.moneyMessage = [NSString stringWithFormat:@"￥%.2lf", [model.price floatValue] + [model.traficMoney floatValue]];
     self.costView.freightMoney = model.traficMoney;
-    
 }
 #pragma mark
 #pragma mark - 约束

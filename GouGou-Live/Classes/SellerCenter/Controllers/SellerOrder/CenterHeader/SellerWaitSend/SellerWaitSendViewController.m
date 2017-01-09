@@ -30,11 +30,12 @@ static NSString *cellid = @"SellerWaitSendCell";
 // 请求待发货的订单
 - (void)getRequestWaitSendOrder {
     NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(2),
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    DLog(@"%@", dict);
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -109,10 +110,15 @@ static NSString *cellid = @"SellerWaitSendCell";
     cell.model = model;cell.orderState = @"待发货";
     
     cell.btnTitles = @[@"联系买家", @"发货"];
-    NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
-    NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
-    cell.costMessage = @[finalMoney, depositMoney];
-
+    if (model.productRealPrice.length == 0) {
+        NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+        NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+        cell.costMessage = @[finalMoney, depositMoney];
+    }else{
+        NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+        cell.costMessage = @[allMoney];
+    }
+    
     [self.btnTitles addObject:cell.btnTitles];
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
@@ -139,8 +145,6 @@ static NSString *cellid = @"SellerWaitSendCell";
 #pragma mark
 #pragma mark - 点击按钮Action
 - (void)clickBtnActionWithBtnTitle:(NSString *)title orderModel:(SellerOrderModel *)orderModel {
-    
-    
     if ([title isEqualToString:@"联系买家"]) {
         SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:orderModel.buyUserId conversationType:(EMConversationTypeChat)];
         viewController.title = orderModel.buyUserId;
@@ -149,57 +153,31 @@ static NSString *cellid = @"SellerWaitSendCell";
         [self.navigationController pushViewController:viewController animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-//        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-//        sendVC.hidesBottomBarWhenPushed = YES;
-//        sendVC.orderID = orderModel.ID;
-//        [self.navigationController pushViewController:sendVC animated:YES];
             __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
 
             sendView.orderID = orderModel.ID;
             sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
-                // 送货请求，如果成功返回YES 失败返回NO
                 NSDictionary *dict = @{
                                        @"user_id":[UserInfos sharedUser].ID,
-                                       @"status":@(8),
-                                       @"id":orderModel.ID
+                                       @"id":orderModel.ID,
+                                       @"waybill_number":shipOrder, // 运单号
+                                       @"transportation":shipStyle
                                        };
-                [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
+                [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
                     [self showAlert:successJson[@"message"]];
-                    if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                    if ([successJson[@"code"] intValue] == 1) {
+                        sendView.successNote.text = @"发货成功";
                         sendView = nil;
                         [sendView dismiss];
+                    }else{
+                        sendView.successNote.text = @"发货失败";
                     }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
             };
             [sendView show];
-    }
-}
-
-- (void)test:(NSString *)title {
-     if ([title isEqualToString:@"修改运费"]){
-        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
-        changeVC.title = title;
-        changeVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:changeVC animated:YES];
-    }else if ([title isEqualToString:@"修改价格"]){
-        SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
-        changeVC.title = title;
-        changeVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:changeVC animated:YES];
-    }else if ([title isEqualToString:@"查看评价"]){
-        
-        SellerAcceptedRateViewController *rateVC = [[SellerAcceptedRateViewController alloc] init];
-        rateVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:rateVC animated:YES];
-    }else if ([title isEqualToString:@"未评价"]){
-        DLog(@"%@", title);
-    }else if ([title isEqualToString:@"查看详情"]){
-        
-    }else if ([title isEqualToString:@"在线客服"]){
-        [self clickServiceBtnAction];
     }
 }
 @end

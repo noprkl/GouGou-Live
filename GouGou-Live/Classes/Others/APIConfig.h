@@ -237,12 +237,22 @@
 #define API_Add_activist @"api/OrderService/add_activist"
 /** 订单维权买家列表 */
 #define API_Activist @"api/OrderService/activist"
+/** 订单删除 */
+#define API_Order_Delete @"api/OrderService/order_del"
+/** 确认收货 */
+#define API_Order_Confirm @"api/OrderService/order_confirm"
+/** 不想买了 */
+#define API_Order_Nobuy @"api/OrderService/order_nobuy"
+/** 提醒发货 */
+#define API_Order_remind @"api/OrderService/order_remind"
 
 #pragma mark - 卖家
 /** 卖家订单列表 */
 #define API_My_order @"api/OrderService/my_order"
 /** 订单状态修改 */
 #define API_Up_status @"api/OrderService/up_status"
+/** 卖家发货 */
+#define API_Delivery @"api/OrderService/delivery"
 /** 订单详情 */
 #define API_Order_limit @"api/OrderService/order_limit"
 /** 订单修改价格 */
@@ -255,15 +265,6 @@
 /** 订单维权详情 */
 #define API_Activist_limit @"api/OrderService/activist_limit"
 
-/** 订单删除 */
-#define API_Order_Delete @"api/OrderService/order_del"
-/** 确认收货 */
-#define API_Order_Confirm @"api/OrderService/order_confirm"
-/** 不想买了 */
-#define API_Order_Nobuy @"api/OrderService/order_nobuy"
-/** 提醒发货 */
-#define API_Order_remind @"api/OrderService/order_remind"
-
 #pragma mark - 系统通知
 /** 系统通知 */
 #define API_System_msg @"api/UserService/system_msg"
@@ -271,7 +272,6 @@
 #define API_Banner @"api/UserService/banner"
 /** 拉黑请求 */
 #define API_Memberstate @"api/UserService/Memberstate"
-
 
 #pragma mark - 直播
 
@@ -309,7 +309,7 @@
 #define API_save @"api/ProductService/save"
 /** 直播视频回放 */
 #define API_PlayBack @"api/ProductService/playback"
-/** 直播观看人数 */
+/** 观看人数 */
 #define API_live_view @"api/OrderService/live_view"
 
 @end

@@ -8,11 +8,11 @@
 
 #import "MediaStreamingVc.h"
 #import "LivingToolView.h" // 顶部view
-#import "LivingSendMessageView.h" // 编辑信息
+//#import "LivingSendMessageView.h" // 编辑信息
 #import "LinvingShowDogView.h" // 表格
 
 //#import "TalkingViewController.h" // 弹幕
-#import "EaseMessageViewController.h"
+//#import "EaseMessageViewController.h"
 #import "ShareAlertView.h" // 分享
 #import "ShareBtnModel.h" // 分享模型
 #import "NSString+MD5Code.h"
@@ -33,7 +33,7 @@
 
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 
-@property(nonatomic, strong) UIButton *danmuBtn; /**< 弹幕按钮 */
+//@property(nonatomic, strong) UIButton *danmuBtn; /**< 弹幕按钮 */
 
 @property(nonatomic, strong) UIButton *showingBtn; /**< 展播中的狗按钮 */
 
@@ -45,14 +45,14 @@
 
 @property(nonatomic, strong) LivingToolView *topView; /**< 头部view */
 
-@property(nonatomic, strong) LivingSendMessageView *sendMessageView; /**< 编辑信息view */
+//@property(nonatomic, strong) LivingSendMessageView *sendMessageView; /**< 编辑信息view */
 
 @property (nonatomic, strong) UITextField *sendText; /**< 文本框 */
 
 @property(nonatomic, strong) LinvingShowDogView *showDogView; /**< 展示狗狗 */
 
 //@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 弹窗控制器 */
-@property(nonatomic, strong) EaseMessageViewController *talkingVc; /**< 弹窗控制器 */
+//@property(nonatomic, strong) EaseMessageViewController *talkingVc; /**< 弹窗控制器 */
 @property(nonatomic, strong) NSArray *shareAlertBtns; /**< 分享按钮数组 */
 
 @property (nonatomic, strong) NSTimer *timer; /**< 计时器 */
@@ -63,6 +63,7 @@
 @property (nonatomic, strong) UILabel *endwatchLabel; /**< 结束观看人数 */
 @property (nonatomic, strong) UILabel *endshowCountlabel; /**< 结束展播数 */
 @property (nonatomic, strong) UILabel *endsoldCountLabel; /**< 结束出售数 */
+
 @end
 
 @implementation MediaStreamingVc
@@ -73,8 +74,9 @@
     [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (successJson[@"data"]) {
-            self.showDogView.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            LiveListDogInfoModel *showingModel = self.showDogView.dataArr[0];
+            NSArray *dogArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            self.showDogView.dataArr = dogArr;
+            LiveListDogInfoModel *showingModel = dogArr[0];
             if (showingModel.pathSmall != NULL) {
                 NSURL *url = [NSURL URLWithString:[IMAGE_HOST stringByAppendingString:showingModel.pathSmall]];
                 NSData *data = [NSData dataWithContentsOfURL:url];
@@ -83,10 +85,13 @@
             }
             self.showingPrice.text = showingModel.price;
             [self.showDogView reloadData];
+            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 %ld", dogArr.count];
         }else{
             self.showDogView.hidden = YES;
             self.showingBtn.hidden = YES;
             self.showingPrice.hidden = YES;
+            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 0"];
+            self.endsoldCountLabel.text = [NSString stringWithFormat:@"出售 0"];
         }
     } error:^(NSError *error) {
         
@@ -111,29 +116,6 @@
 
     [self getRequestShowingDog];
     [self streamingVideo];
-    if (self.shareType == 10) {
-        
-    }else if (self.shareType == 0){
-        [CreateLiveViewController SinaShare:self.streamRtmp success:^{
-            
-        }];
-    }else if (self.shareType == 1){
-        [CreateLiveViewController WechatTimeShare:self.streamRtmp success:^{
-            
-        }];
-    }else if (self.shareType == 2){
-        [CreateLiveViewController QQShare:self.streamRtmp success:^{
-            
-        }];
-    }else if (self.shareType == 3){
-        [CreateLiveViewController TencentShare:self.streamRtmp success:^{
-            
-        }];
-    }else if (self.shareType == 4){
-        [CreateLiveViewController WechatTimeShare:self.streamRtmp success:^{
-            
-        }];
-    }
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -203,6 +185,34 @@
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
 //    [self streamingVideo];
+    // 分享
+    DLog(@"%ld", self.shareType);
+    if (self.shareType == 10) {
+        
+    }else if (self.shareType == 0){
+        [CreateLiveViewController SinaShare:self.streamRtmp success:^{
+            [self forwardInvocationLandscapeRight];
+        }];
+    }else if (self.shareType == 1){
+        [CreateLiveViewController WChatShare:self.streamRtmp success:^{
+            [self forwardInvocationLandscapeRight];
+        }];
+    }else if (self.shareType == 2){
+        [CreateLiveViewController QQShare:self.streamRtmp success:^{
+            [self forwardInvocationLandscapeRight];
+
+        }];
+    }else if (self.shareType == 3){
+        [CreateLiveViewController TencentShare:self.streamRtmp success:^{
+            [self forwardInvocationLandscapeRight];
+
+        }];
+    }else if (self.shareType == 4){
+        [CreateLiveViewController WechatTimeShare:self.streamRtmp success:^{
+            [self forwardInvocationLandscapeRight];
+
+        }];
+    }
 }
 // 设置直播画面
 - (void)streamingVideo {
@@ -255,9 +265,11 @@
         if (successJson[@"data"]) {
             [self.watchCount setTitle:successJson[@"data"] forState:(UIControlStateNormal)];
             self.topView.watchPeople = successJson[@"data"];
+            self.endwatchLabel.text = [NSString stringWithFormat:@"观看人数 %@", successJson[@"data"]];
         }else{
             [self.watchCount setTitle:@"0" forState:(UIControlStateNormal)];
-            self.topView.watchPeople = @"";
+            self.topView.watchPeople = @"0";
+            self.endwatchLabel.text = [NSString stringWithFormat:@"观看人数 0"];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -320,16 +332,18 @@
     [self.session.previewView addSubview:self.topView];
     [self.session.previewView addSubview:self.livingImageView];
     [self.session.previewView addSubview:self.watchCount];
-    [self addChildViewController:self.talkingVc];
-    [self.session.previewView addSubview:self.talkingVc.view];
+//    [self addChildViewController:self.talkingVc];
+//    [self.session.previewView addSubview:self.talkingVc.view];
     [self.session.previewView addSubview:self.showingBtn];
     [self.session.previewView addSubview:self.showingPrice];
     [self.session.previewView addSubview:self.showDogView];
-    [self.session.previewView addSubview:self.sendMessageView];
-    [self.session.previewView addSubview:self.danmuBtn];
+//    [self.session.previewView addSubview:self.sendMessageView];
+//    [self.session.previewView addSubview:self.danmuBtn];
 
     [self makeConstraint];
     [self focusKeyboardShow];
+    [self addEndView];
+    
 }
 // 约束
 - (void)makeConstraint {
@@ -346,16 +360,16 @@
         make.left.equalTo(self.livingImageView.right).offset(10);
         make.width.equalTo(70);
     }];
-    [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.right.equalTo(self.view);
-        make.height.equalTo(50);
-    }];
-    [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.left);
-        make.top.equalTo(self.view.top).offset(110);
-        make.bottom.equalTo(self.sendMessageView.bottom);
-        make.width.equalTo(250);
-    }];
+//    [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
+//        make.left.bottom.right.equalTo(self.view);
+//        make.height.equalTo(50);
+//    }];
+//    [self.talkingVc.view remakeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.view.left);
+//        make.top.equalTo(self.view.top).offset(110);
+//        make.bottom.equalTo(self.sendMessageView.bottom);
+//        make.width.equalTo(250);
+//    }];
    
     [self.showingBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.view.centerY);
@@ -369,14 +383,15 @@
     [self.showDogView remakeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.right);
         make.top.equalTo(self.view.top).offset(44);
-        make.bottom.equalTo(self.sendMessageView.top);
+//        make.bottom.equalTo(self.sendMessageView.top);
+          make.bottom.equalTo(self.view.bottom);
         make.width.equalTo(250);
     }];
-    [self.danmuBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.left).offset(12);
-        make.bottom.equalTo(self.view.bottom).offset(-12);
-        make.size.equalTo(CGSizeMake(26, 26));
-    }];
+//    [self.danmuBtn remakeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.view.left).offset(12);
+//        make.bottom.equalTo(self.view.bottom).offset(-12);
+//        make.size.equalTo(CGSizeMake(26, 26));
+//    }];
 }
 
 #pragma mark
@@ -389,24 +404,24 @@
 }
 - (void)clickDanmuAction:(UIButton *)btn {
     btn.selected = !btn.selected;
-    self.talkingVc.view.hidden = btn.selected;
-    self.sendMessageView.hidden = btn.selected;
+//    self.talkingVc.view.hidden = btn.selected;
+//    self.sendMessageView.hidden = btn.selected;
 }
 - (void)clickLivingDogAction {
     self.showDogView.hidden = NO;
 }
 #pragma mark
 #pragma mark - 懒加载
-- (UIButton *)danmuBtn {
-    if (!_danmuBtn) {
-        _danmuBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        [_danmuBtn setImage:[UIImage imageNamed:@"弹幕"] forState:(UIControlStateNormal)];
-        [_danmuBtn setImage:[UIImage imageNamed:@"禁止弹幕"] forState:(UIControlStateSelected)];
-        _danmuBtn.selected = YES;
-        [_danmuBtn addTarget:self action:@selector(clickDanmuAction:) forControlEvents:(UIControlEventTouchDown)];
-    }
-    return _danmuBtn;
-}
+//- (UIButton *)danmuBtn {
+//    if (!_danmuBtn) {
+//        _danmuBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+//        [_danmuBtn setImage:[UIImage imageNamed:@"弹幕"] forState:(UIControlStateNormal)];
+//        [_danmuBtn setImage:[UIImage imageNamed:@"禁止弹幕"] forState:(UIControlStateSelected)];
+//        _danmuBtn.selected = YES;
+//        [_danmuBtn addTarget:self action:@selector(clickDanmuAction:) forControlEvents:(UIControlEventTouchDown)];
+//    }
+//    return _danmuBtn;
+//}
 - (UIImageView *)livingImageView {
     if (!_livingImageView) {
         _livingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"直播中"]];
@@ -431,7 +446,7 @@
         _topView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _topView.backBlcok = ^(){
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            weakSelf.endView.hidden = NO;
         };
         _topView.shareBlcok = ^(UIButton *btn){
             __block ShareAlertView *shareAlert = [[ShareAlertView alloc] initWithFrame:CGRectMake(0, weakSelf.view.bounds.size.height - 150, weakSelf.view.bounds.size.width, 150) alertModels:weakSelf.shareAlertBtns tapView:^(NSInteger btnTag) {
@@ -543,44 +558,44 @@
     }
     return _showDogView;
 }
-- (LivingSendMessageView *)sendMessageView {
-    if (!_sendMessageView) {
-        _sendMessageView = [[LivingSendMessageView alloc] init];
-        _sendMessageView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
-        _sendMessageView.hidden = YES;
-        __weak typeof(self) weakSelf = self;
-        _sendMessageView.sendBlock = ^(NSString *text){
-            if (![text isEqualToString:@""]) {
-                [weakSelf.talkingVc sendTextMessage:text];
-                // 消息发送
-//                EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];
-//                NSString *from = [[EMClient sharedClient] currentUsername];
-//                //生成Message
-//                EMMessage *message = [[EMMessage alloc] initWithConversationID:weakSelf.chatRoomID from:from to:weakSelf.chatRoomID body:body ext:nil];
-//                message.chatType = EMChatTypeChatRoom;
-//                [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
-//                    DLog(@"%@", error);
-//                }];
-            }
-        };
-    }
-    return _sendMessageView;
-}
+//- (LivingSendMessageView *)sendMessageView {
+//    if (!_sendMessageView) {
+//        _sendMessageView = [[LivingSendMessageView alloc] init];
+//        _sendMessageView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+//        _sendMessageView.hidden = YES;
+//        __weak typeof(self) weakSelf = self;
+//        _sendMessageView.sendBlock = ^(NSString *text){
+//            if (![text isEqualToString:@""]) {
+//                [weakSelf.talkingVc sendTextMessage:text];
+//                // 消息发送
+////                EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];
+////                NSString *from = [[EMClient sharedClient] currentUsername];
+////                //生成Message
+////                EMMessage *message = [[EMMessage alloc] initWithConversationID:weakSelf.chatRoomID from:from to:weakSelf.chatRoomID body:body ext:nil];
+////                message.chatType = EMChatTypeChatRoom;
+////                [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+////                    DLog(@"%@", error);
+////                }];
+//            }
+//        };
+//    }
+//    return _sendMessageView;
+//}
 
-- (EaseMessageViewController *)talkingVc {
-    if (!_talkingVc) {
-        _talkingVc = [[EaseMessageViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
-//        [[EMClient sharedClient].roomManager joinChatroom:_chatRoomID completion:^(EMChatroom *aChatroom, EMError *aError) {
-//            DLog(@"%@", aError);
-//        }];
-        _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
-//        _talkingVc.ishidText = YES;
-        _talkingVc.view.hidden = YES;
-        _talkingVc.chatToolbar.hidden = YES;
-//        _talkingVc.roomID = _chatRoomID;
-    }
-    return _talkingVc;
-}
+//- (EaseMessageViewController *)talkingVc {
+//    if (!_talkingVc) {
+//        _talkingVc = [[EaseMessageViewController alloc] initWithConversationChatter:_chatRoomID conversationType:(EMConversationTypeChatRoom)];
+////        [[EMClient sharedClient].roomManager joinChatroom:_chatRoomID completion:^(EMChatroom *aChatroom, EMError *aError) {
+////            DLog(@"%@", aError);
+////        }];
+//        _talkingVc.view.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
+////        _talkingVc.ishidText = YES;
+//        _talkingVc.view.hidden = YES;
+//        _talkingVc.chatToolbar.hidden = YES;
+////        _talkingVc.roomID = _chatRoomID;
+//    }
+//    return _talkingVc;
+//}
 - (UILabel *)showingPrice {
     if (!_showingPrice) {
         _showingPrice = [[UILabel alloc] init];
@@ -666,22 +681,22 @@
     CGFloat h = keyBoardFrame.size.height;
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.bottom).offset(-h);
-            make.left.right.equalTo(self.view);
-            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
-        }];
+//        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(self.view.bottom).offset(-h);
+//            make.left.right.equalTo(self.view);
+//            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+//        }];
         
     }];
 }
 
 -(void)keyboardWillBeHidden:(NSNotification*)aNotification {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.bottom);
-            make.left.right.equalTo(self.view);
-            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
-        }];
+//        [self.sendMessageView remakeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(self.view.bottom);
+//            make.left.right.equalTo(self.view);
+//            make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
+//        }];
     }];
 }
 
@@ -689,6 +704,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark
+#pragma mark - 导航条颜色
+// 1. 设置样式
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent; // 白色的
+}
+// 2. 横屏时显示 statusBar
+- (BOOL)prefersStatusBarHidden {
+    return NO; // 显示
+}
+// 3. 设置隐藏动画
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationNone;
+}
+
 #pragma mark
 #pragma mark - 监听home键
 // 触发home按下
@@ -711,6 +741,7 @@
 - (UIView *)endView {
     if (!_endView) {
         _endView = [[UIView alloc] init];
+        _endView.hidden = YES;
         _endView.backgroundColor = [UIColor colorWithHexString:@"#000000"];
     }
     return _endView;
@@ -755,8 +786,51 @@
     if (!_endbackbutton) {
         _endbackbutton = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_endbackbutton setTitle:@"返回首页" forState:(UIControlStateNormal)];
-        
+        _endbackbutton.tintColor = [UIColor colorWithHexString:@"#ffffff"];
+        _endbackbutton.titleLabel.font = [UIFont systemFontOfSize:15];
+        _endbackbutton.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        [_endbackbutton addTarget:self action:@selector(clickEndBackAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _endbackbutton;
+}
+- (void)clickEndBackAction {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+/** 添加结束的view */
+- (void)addEndView {
+    [self.view addSubview:self.endView];
+    [self.view insertSubview:self.endView atIndex:1000];
+    [self.endView addSubview:self.endliveLabel];
+    [self.endView addSubview:self.endshowCountlabel];
+    [self.endView addSubview:self.endsoldCountLabel];
+    [self.endView addSubview:self.endwatchLabel];
+    [self.endView addSubview:self.endbackbutton];
+    
+    [self.endView makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    [self.endliveLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.endView.centerX);
+        make.top.equalTo(self.endView.top).offset(100);
+    }];
+    [self.endshowCountlabel makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.endView.centerX).offset(-10);
+        make.top.equalTo(self.endliveLabel.bottom).offset(10);
+    }];
+    [self.endsoldCountLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.endView.centerX).offset(10);
+        make.top.equalTo(self.endliveLabel.bottom).offset(10);
+    }];
+    [self.endwatchLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.endView.centerX);
+        make.top.equalTo(self.endshowCountlabel.bottom).offset(10);
+    }];
+    self.endbackbutton.layer.masksToBounds = YES;
+    self.endbackbutton.layer.cornerRadius = 10;
+    [self.endbackbutton makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.endView.centerX);
+        make.top.equalTo(self.endwatchLabel.bottom).offset(10);
+        make.width.equalTo(200);
+    }];
 }
 @end

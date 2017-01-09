@@ -22,4 +22,9 @@
 @property(nonatomic, strong) NSString *userNickName; /**< 买家昵称 */
 @property(nonatomic, strong) NSString *comment; /**< 评价内容 */
 
+@property (nonatomic, strong) NSString *price; /**< 商品价格 */
+@property (nonatomic, strong) NSString *priceOld; /**< 商品老价格 */
+
+@property(nonatomic, strong) NSString *createTime; /**< 评价时间 */
+
 @end

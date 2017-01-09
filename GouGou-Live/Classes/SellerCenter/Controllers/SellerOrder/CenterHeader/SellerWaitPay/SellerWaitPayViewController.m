@@ -29,7 +29,7 @@ static NSString *cellid = @"SellerWaitPayCell";
 // 请求待支付的订单
 - (void)getRequestWaitPayOrder {
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(1),
                            @"page":@(1),
                            @"pageSize":@(10)

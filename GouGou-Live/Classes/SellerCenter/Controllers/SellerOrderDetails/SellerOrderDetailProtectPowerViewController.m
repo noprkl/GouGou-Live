@@ -20,7 +20,6 @@
 #import "SingleChatViewController.h"
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
-#import "SellerSendViewController.h"
 #import "SellerProtectDetailModel.h"
 #import <MessageUI/MessageUI.h>
 #import "SellerSendAlertView.h"
@@ -76,6 +75,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         make.left.width.bottom.equalTo(self.view);
         make.height.equalTo(49);
     }];
+    
     [self.tableView makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.width.equalTo(self.view);
         make.bottom.equalTo(self.bottomView.top);
@@ -132,35 +132,34 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPowerStateView *stateView = [[SellerProtectPowerStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-            if ([self.orderInfo.status intValue] == 1) {
+            if ([self.orderInfo.statusWq integerValue] == 1) {
                 stateView.stateMessage = @"维权中";
-            }else  if ([self.orderInfo.status intValue] == 2) {
+            }else  if ([self.orderInfo.statusWq integerValue] == 2) {
                 stateView.stateMessage = @"维权成功";
-            }else  if ([self.orderInfo.status intValue] == 3) {
+            }else  if ([self.orderInfo.statusWq integerValue] == 3) {
                 stateView.stateMessage = @"维权失败";
             }
         NSString *state = @"";
-        
-        if ([self.orderInfo.statusWq isEqualToString:@"3"]) {
-            
+        if ([self.orderInfo.status integerValue] == 3) {
             state = @"待付尾款";
             NSString *date = [NSString stringFromDateString:self.orderInfo.deposittime];
             state = [NSString stringWithFormat:@"买家于%@付定金,未付尾款", date];
             
-        }else if ([self.orderInfo.statusWq isEqualToString:@"7"]) {
+        }else if ([self.orderInfo.status integerValue] == 7) {
+
             
             NSString *date = [NSString stringFromDateString:self.orderInfo.balancetime];
             state = [NSString stringWithFormat:@"买家于%@付款,未发货", date];
-        }else if ([self.orderInfo.statusWq isEqualToString:@"8"]) {
+        }else if ([self.orderInfo.status integerValue] == 8) {
             
             NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
             state = [NSString stringWithFormat:@"卖家于%@发货,未收货", date];
-        }else if ([self.orderInfo.statusWq isEqualToString:@"9"]) {
+        }else if ([self.orderInfo.status integerValue] == 9) {
             state = @"待评价";
             NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
             state = [NSString stringWithFormat:@"卖家于%@收货,未评价", date];
             
-        }else if ([self.orderInfo.statusWq isEqualToString:@"10"]) {
+        }else if ([self.orderInfo.status integerValue] == 10) {
             state = @"已评价"; // 评价时间
             NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
             state = [NSString stringWithFormat:@"卖家于%@评价,订单已完成", date];
@@ -277,7 +276,12 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
 
             SellerProtectApplyRefundView *applyRefundView = [[SellerProtectApplyRefundView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH , height + 90)];
             applyRefundView.pictureArr = imsArr;
-            applyRefundView.applyRefundCount.text = self.orderInfo.money;
+            if (self.orderInfo.money.length == 0) {
+                applyRefundView.applyRefundCount.text = @"未申请赔偿";
+            }else{
+                applyRefundView.applyRefundCount.text = self.orderInfo.money;
+            }
+
             applyRefundView.reasonLabel.text = self.orderInfo.comment;
             [cell.contentView addSubview:applyRefundView];
             return cell;
@@ -312,7 +316,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             NSArray *imsArr = [self.orderInfo.photoPath componentsSeparatedByString:@"|"];
             DogImageView *imageV = [[DogImageView alloc] init];
             CGFloat height = [imageV getCellHeightWithImages:imsArr];
-            return height + 90;
+            return height + 115;
         }
 
             break;
@@ -361,18 +365,21 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         
         sendView.orderID = self.orderID;
         sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
-            // 送货请求，如果成功返回YES 失败返回NO
             NSDictionary *dict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
-                                   @"status":@(8),
-                                   @"id":self.orderID
+                                   @"id":self.orderID,
+                                   @"waybill_number":shipOrder, // 运单号
+                                   @"transportation":shipStyle
                                    };
-            [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
+            [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
-                if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                if ([successJson[@"code"] intValue] == 1) {
+                    sendView.successNote.text = @"发货成功";
                     sendView = nil;
                     [sendView dismiss];
+                }else{
+                    sendView.successNote.text = @"发货失败";
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -391,48 +398,6 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         
     }else if ([title isEqualToString:@"在线客服"]){
         [self clickServiceBtnAction];
-    }
-}
-/** 在线客服 */
-- (void)clickServiceBtnAction {
-    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
-    
-    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
-        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
-        
-        controller.recipients = [NSArray arrayWithObject:SMSPhone];
-        controller.body = @"测试发短信";
-        controller.messageComposeDelegate = self;
-        [self presentViewController:controller animated:YES completion:^{
-            
-        }];
-        //修改短信界面标题
-        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
-    }else{
-        [self showAlert:@"不支持发送短信"];
-    }
-}
-#pragma mark
-#pragma mark - 短信发送协议
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    [controller dismissViewControllerAnimated:NO completion:^{
-        
-    }];//关键的一句   不能为YES
-    
-    switch ( result ) {
-            
-        case MessageComposeResultCancelled:
-            
-            [self showAlert:@"取消发送"];
-            break;
-        case MessageComposeResultFailed:// send failed
-            [self showAlert:@"发送失败"];
-            break;
-        case MessageComposeResultSent:
-            [self showAlert:@"发送成功"];
-            break;
-        default:
-            break;
     }
 }
 

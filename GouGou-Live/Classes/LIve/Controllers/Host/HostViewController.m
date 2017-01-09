@@ -104,7 +104,7 @@ static NSString * reuseIdentifier = @"headerID";
         DLog(@"%@", successJson);
         NSArray *arr = [MoreImpressionModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         NSMutableArray *mutableArr = [NSMutableArray array];
-        for (NSInteger i = 0; i < 5; i ++) {
+        for (NSInteger i = 0; i < 4; i ++) {
             MoreImpressionModel *model = arr[i];
             [mutableArr addObject:model];
         }

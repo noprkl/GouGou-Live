@@ -59,13 +59,17 @@ static NSString *cellid = @"SetcellId";
 
 - (NSArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = @[@[@"账号安全", @"通知消息提醒"], @[@"帮助", @"关于我们"], @[@"意见反馈", @"清除缓存"]];
+//        _dataArr = @[@[@"账号安全", @"通知消息提醒"], @[@"帮助", @"关于我们"], @[@"意见反馈", @"清除缓存"]];
+        _dataArr = @[@[@"账号安全"], @[@"帮助", @"关于我们"], @[@"意见反馈", @"清除缓存"]];
+
     }
     return _dataArr;
 }
 - (NSArray *)controllerNames {
     if (!_controllerNames) {
-        _controllerNames = @[@[@"SecurityAccountViewController", @"MessagePushViewController"], @[@"HelpViewController", @"AboutUsViewController"], @[@"SuggestViewController", @""]];
+//        _controllerNames = @[@[@"SecurityAccountViewController", @"MessagePushViewController"], @[@"HelpViewController", @"AboutUsViewController"], @[@"SuggestViewController", @""]];
+        _controllerNames = @[@[@"SecurityAccountViewController"], @[@"HelpViewController", @"AboutUsViewController"], @[@"SuggestViewController", @""]];
+
     }
     return _controllerNames;
 }

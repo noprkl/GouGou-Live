@@ -36,7 +36,7 @@
 #pragma mark - 关注的直播列表
 - (void)getRequestLiveList {
     NSDictionary *dict = @{
-                           @"user_id":@([[UserInfos sharedUser].ID intValue])
+                           @"user_id":[UserInfos sharedUser].ID
                            };
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Fan_live params:dict success:^(id successJson) {
@@ -95,7 +95,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadFocusView];
+    [self getRequestLiveList];
     // 上拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getRequestLiveList];
@@ -106,7 +106,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.edgesForExtendedLayout = 64;
-    
+    [self loadFocusView];
 }
 - (void)loadFocusView {
     
@@ -118,7 +118,6 @@
     if ([UserInfos getUser]) {
         self.noneView.hidden = YES;
         self.tableView.hidden = NO;
-        [self getRequestLiveList];
     }else{
         self.noneView.hidden = NO;
         self.tableView.hidden = YES;

@@ -32,6 +32,7 @@
 + (NSString *)getAgeFormInt:(NSInteger)age;
 /** 根据文件名获得文件位置 */
 + (NSString *)cachePathWithfileName:(NSString *)filename;
+/** 得到倒计时时间 */
 + (NSInteger)getRemainTimeWithString:(NSString *)createTime;
 /** 得到当前的时间戳 */
 + (NSString *)getCurrentTime;

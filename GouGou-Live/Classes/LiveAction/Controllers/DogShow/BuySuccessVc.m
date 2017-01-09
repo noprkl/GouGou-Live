@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNavBarItem];
     [self.view addSubview:self.imageView];
     [self.view addSubview:self.noteLabel];
     [self.view addSubview:self.backBtn];

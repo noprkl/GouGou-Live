@@ -17,7 +17,6 @@
 #import "SingleChatViewController.h"
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
-#import "SellerSendViewController.h"
 
 #import "OrderDetailModel.h"
 #import <MessageUI/MessageUI.h>
@@ -364,18 +363,22 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         
         sendView.orderID = self.orderID;
         sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
-            // 送货请求，如果成功返回YES 失败返回NO
+
             NSDictionary *dict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
-                                   @"status":@(8),
-                                   @"id":self.orderID
+                                   @"id":self.orderID,
+                                   @"waybill_number":shipOrder, // 运单号
+                                   @"transportation":shipStyle
                                    };
-            [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
+            [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
-                if ([successJson[@"message"] isEqualToString:@"修改成功"]) {
+                if ([successJson[@"code"] intValue] == 1) {
+                    sendView.successNote.text = @"发货成功";
                     sendView = nil;
                     [sendView dismiss];
+                }else{
+                    sendView.successNote.text = @"发货失败";
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);

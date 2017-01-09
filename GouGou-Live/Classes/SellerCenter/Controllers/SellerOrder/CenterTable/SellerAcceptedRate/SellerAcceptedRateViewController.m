@@ -29,7 +29,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
 // 评价
 - (void)getRequestComment {
     NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"page":@(1),
                            @"pageSize":@(5)
                            };
@@ -122,8 +122,8 @@ static NSString *cellid = @"SellerAcceptRateCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SellerAcceptRateCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.images = @[@"组-7", @"组-7", @"组-7"];
     SellerAccepeRateModel *model = self.dataArr[indexPath.row];
+    cell.images = [model.photoPath componentsSeparatedByString:@","];
     cell.model = model;
     
     return cell;

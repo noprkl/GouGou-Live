@@ -83,15 +83,6 @@
 - (NSArray *)controllerNames {
     if (!_controllerNames) {
         _controllerNames = [NSArray array];
-        if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
-            if([UserInfos sharedUser].useralicode.length == 0) { // 未绑定支付宝 需要绑定
-                _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
-            }else{ // 已经设置了支付宝 不能点击
-                _controllerNames = @[@"", @"PresentApplicationViewController",@"AddPayingSuccessViewController"];
-            }
-        }else { // 未实名
-            _controllerNames = @[@"",@"CertificateVc"];
-        }
     }
     return _controllerNames;
 }
@@ -122,6 +113,16 @@
     }else { // 未实名
         _dataArr = @[@"余额",@"提示"];
     }
+    if ([[UserInfos sharedUser].isreal isEqualToString:@"3"]) { // 实名认证
+        if([UserInfos sharedUser].useralicode.length == 0) { // 未绑定支付宝 需要绑定
+            _controllerNames = @[@"", @"PresentApplicationViewController",@"PayingViewController"];
+        }else{ // 已经设置了支付宝 不能点击
+            _controllerNames = @[@"", @"PresentApplicationViewController",@"AddPayingSuccessViewController"];
+        }
+    }else { // 未实名
+        _controllerNames = @[@"",@"CertificateVc"];
+    }
+
     return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

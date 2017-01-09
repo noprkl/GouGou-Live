@@ -13,7 +13,6 @@
 
 @property(nonatomic, strong) UIButton *backBtn; /**< 发挥按钮 */
 
-
 @property(nonatomic, strong) UIImageView *livingImageView; /**< 直播提示图 */
 
 @property(nonatomic, strong) UIButton *watchCount; /**< 观看人数 */
@@ -43,7 +42,7 @@
     [self.backBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY).offset(10);
         make.left.equalTo(self.left).offset(10);
-        make.size.equalTo(CGSizeMake(40, 40));
+        make.size.equalTo(CGSizeMake(20, 20));
     }];
     
     [self.livingImageView makeConstraints:^(MASConstraintMaker *make) {
@@ -58,12 +57,14 @@
         make.height.equalTo(self.backBtn.height);
     }];
     [self.faceOrBack makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
+        make.centerY.equalTo(self.backBtn.centerY);
         make.right.equalTo(self.right).offset(-10);
+        make.size.equalTo(CGSizeMake(20, 20));
     }];
     [self.shareBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
+        make.centerY.equalTo(self.backBtn.centerY);
         make.right.equalTo(self.faceOrBack.left).offset(-10);
+        make.size.equalTo(CGSizeMake(20, 20));
     }];
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -98,6 +99,7 @@
     if (!_backBtn) {
         _backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_backBtn setImage:[UIImage imageNamed:@"返回-拷贝"] forState:(UIControlStateNormal)];
+        [_backBtn setContentMode:(UIViewContentModeCenter)];
         [_backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _backBtn;
@@ -114,7 +116,7 @@
         [_watchCount setImage:[UIImage imageNamed:@"联系人"] forState:(UIControlStateNormal)];
         _watchCount.titleLabel.font = [UIFont systemFontOfSize:14];
         [_watchCount setTitle:@"0" forState:(UIControlStateNormal)];
-        [_watchCount setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+        [_watchCount setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
         _watchCount.enabled = NO;
     }
     return _watchCount;
@@ -123,6 +125,8 @@
     if (!_shareBtn) {
         _shareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_shareBtn setImage:[UIImage imageNamed:@"分享"] forState:(UIControlStateNormal)];
+        [_shareBtn setContentMode:(UIViewContentModeCenter)];
+
         [_shareBtn setImage:[UIImage imageNamed:@"分享-拷贝"] forState:(UIControlStateSelected)];
         [_shareBtn addTarget:self action:@selector(clickShareBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
@@ -132,6 +136,8 @@
     if (!_faceOrBack) {
         _faceOrBack = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_faceOrBack setImage:[UIImage imageNamed:@"相机翻转"] forState:(UIControlStateNormal)];
+        [_faceOrBack setContentMode:(UIViewContentModeCenter)];
+
         [_faceOrBack addTarget:self action:@selector(clickFaceOrBackAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _faceOrBack;

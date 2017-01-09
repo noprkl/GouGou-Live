@@ -37,7 +37,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
 - (NSArray *)dataArray {
     
     if (!_dataArray) {
-        _dataArray = @[@[@"商家名称"], @[@"省、市、区",@"详细地址"], @[@"邀请码(填写邀请人电话号码会加快审核速度)"]];
+        _dataArray = @[@[@"商家名称"], @[@"省、市、区",@"详细地址"], @[@"邀请码(填写邀请人电话号码免审核)"]];
     }
     return _dataArray;
 }

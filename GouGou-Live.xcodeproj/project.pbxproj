@@ -452,6 +452,7 @@
 		04B161C21DE7E5BE00DABC77 /* AddNewAdressVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161C01DE7E5BD00DABC77 /* AddNewAdressVc.m */; };
 		04B161C31DE7E5BE00DABC77 /* AddNewAdressVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B161C11DE7E5BE00DABC77 /* AddNewAdressVc.xib */; };
 		04B161C61DE8457200DABC77 /* MyShopProvinceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B161C51DE8457200DABC77 /* MyShopProvinceModel.m */; };
+		04C4F1471E20F6F00005228D /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C4F1461E20F6F00005228D /* HUDView.m */; };
 		04CE13CE1DDC488100EB8777 /* SellerCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CE136E1DDC488100EB8777 /* SellerCenterViewController.m */; };
 		04CE13CF1DDC488100EB8777 /* SellerProtectPowerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CE13731DDC488100EB8777 /* SellerProtectPowerViewController.m */; };
 		04CE13D01DDC488100EB8777 /* SellerWaitAcceptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CE13761DDC488100EB8777 /* SellerWaitAcceptViewController.m */; };
@@ -531,7 +532,6 @@
 		04EA2ADC1DDDB9530023D9A8 /* SellerProtectApplyRefundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2ADB1DDDB9530023D9A8 /* SellerProtectApplyRefundView.m */; };
 		04EA2ADF1DDDC57A0023D9A8 /* SellerOrderDetailAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2ADE1DDDC57A0023D9A8 /* SellerOrderDetailAdressViewController.m */; };
 		04EA2AE21DDDC5A60023D9A8 /* SellerOrderDetailLogisticsInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AE11DDDC5A60023D9A8 /* SellerOrderDetailLogisticsInfoViewController.m */; };
-		04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AEA1DDDD8FE0023D9A8 /* SellerSendViewController.m */; };
 		04EA2AEE1DDDDA6C0023D9A8 /* SellerChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA2AED1DDDDA6C0023D9A8 /* SellerChangeViewController.m */; };
 		04EDC4AA1DF98214009C972D /* SellerProtectDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDC4A91DF98214009C972D /* SellerProtectDetailModel.m */; };
 		04EDC4AD1DF98345009C972D /* SellerProtectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDC4AC1DF98345009C972D /* SellerProtectModel.m */; };
@@ -1435,6 +1435,8 @@
 		04B161C11DE7E5BE00DABC77 /* AddNewAdressVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddNewAdressVc.xib; sourceTree = "<group>"; };
 		04B161C41DE8457200DABC77 /* MyShopProvinceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopProvinceModel.h; sourceTree = "<group>"; };
 		04B161C51DE8457200DABC77 /* MyShopProvinceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShopProvinceModel.m; sourceTree = "<group>"; };
+		04C4F1451E20F6F00005228D /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDView.h; sourceTree = "<group>"; };
+		04C4F1461E20F6F00005228D /* HUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDView.m; sourceTree = "<group>"; };
 		04CE136D1DDC488100EB8777 /* SellerCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerCenterViewController.h; sourceTree = "<group>"; };
 		04CE136E1DDC488100EB8777 /* SellerCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerCenterViewController.m; sourceTree = "<group>"; };
 		04CE13721DDC488100EB8777 /* SellerProtectPowerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerProtectPowerViewController.h; sourceTree = "<group>"; };
@@ -1589,8 +1591,6 @@
 		04EA2ADE1DDDC57A0023D9A8 /* SellerOrderDetailAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerOrderDetailAdressViewController.m; sourceTree = "<group>"; };
 		04EA2AE01DDDC5A60023D9A8 /* SellerOrderDetailLogisticsInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerOrderDetailLogisticsInfoViewController.h; sourceTree = "<group>"; };
 		04EA2AE11DDDC5A60023D9A8 /* SellerOrderDetailLogisticsInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerOrderDetailLogisticsInfoViewController.m; sourceTree = "<group>"; };
-		04EA2AE91DDDD8FE0023D9A8 /* SellerSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendViewController.h; sourceTree = "<group>"; };
-		04EA2AEA1DDDD8FE0023D9A8 /* SellerSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerSendViewController.m; sourceTree = "<group>"; };
 		04EA2AEC1DDDDA6C0023D9A8 /* SellerChangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerChangeViewController.h; sourceTree = "<group>"; };
 		04EA2AED1DDDDA6C0023D9A8 /* SellerChangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerChangeViewController.m; sourceTree = "<group>"; };
 		04EDC4A81DF98214009C972D /* SellerProtectDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerProtectDetailModel.h; sourceTree = "<group>"; };
@@ -3756,6 +3756,8 @@
 				0479B5CB1DCADC7B00CB288A /* BaseViewController.m */,
 				04B161B61DE704C200DABC77 /* BaseModel.h */,
 				04B161B71DE704C200DABC77 /* BaseModel.m */,
+				04C4F1451E20F6F00005228D /* HUDView.h */,
+				04C4F1461E20F6F00005228D /* HUDView.m */,
 			);
 			path = BaseViewController;
 			sourceTree = "<group>";
@@ -3930,8 +3932,6 @@
 			children = (
 				04CE137E1DDC488100EB8777 /* SellerWaitSendViewController.h */,
 				04CE137F1DDC488100EB8777 /* SellerWaitSendViewController.m */,
-				04EA2AE91DDDD8FE0023D9A8 /* SellerSendViewController.h */,
-				04EA2AEA1DDDD8FE0023D9A8 /* SellerSendViewController.m */,
 			);
 			path = SellerWaitSend;
 			sourceTree = "<group>";
@@ -4961,6 +4961,7 @@
 				0467959B1E0966D80076F517 /* PlayerBackTopView.m in Sources */,
 				040891FB1DFEB91F006DF570 /* OrderCompleteAssess.m in Sources */,
 				046BEFCB1DE4696600BC32E9 /* EMCDDeviceManager+Remind.m in Sources */,
+				04C4F1471E20F6F00005228D /* HUDView.m in Sources */,
 				04FE7AB81DF11960004E08E9 /* ProtectProwerTableModel.m in Sources */,
 				046BF0311DE4696600BC32E9 /* EaseBubbleView.m in Sources */,
 				04CE13E81DDC488100EB8777 /* SellerNoneShipTemplate.m in Sources */,
@@ -5250,7 +5251,6 @@
 				0452A1DF1DE0B2E3007C1E4F /* SellerDeleDDetailView.m in Sources */,
 				04EDC4AA1DF98214009C972D /* SellerProtectDetailModel.m in Sources */,
 				04EA2AD61DDDB0510023D9A8 /* SellerProtectPLogisticsInfoView.m in Sources */,
-				04EA2AEB1DDDD8FE0023D9A8 /* SellerSendViewController.m in Sources */,
 				0479B5DB1DCADC7B00CB288A /* MoreImpressViewController.m in Sources */,
 				0452A1E81DE173A5007C1E4F /* SellerCreateDogMessageViewController.m in Sources */,
 				046BF0601DE5940900BC32E9 /* SystemNotificationViewController.m in Sources */,
@@ -5396,7 +5396,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: rui zhang (SEF7MMRT9H)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5415,6 +5416,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -5424,7 +5426,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: rui zhang (SEF7MMRT9H)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5443,6 +5446,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

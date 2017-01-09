@@ -69,7 +69,7 @@
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     self.logisticsView.transformNumber = model.ID;
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%ld", [model.price integerValue] + [model.traficMoney integerValue]];
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [model.productRealBalance floatValue] + [model.productRealDeposit floatValue] + [model.productRealPrice floatValue] + [model.traficMoney floatValue]];
     self.costView.freightMoney = model.traficMoney;
 }
 #pragma mark

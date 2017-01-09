@@ -242,7 +242,8 @@ static NSString * MedrchantCell = @"MedrchantCell";
                 }else{
                     
                         for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
-                            NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0] withSize:CGSizeMake(SCREEN_WIDTH / 3, SCREEN_WIDTH / 3)];
+                            UIImage *image = self.photoView.dataArr[0];
+                            NSString *base64 = [NSString imageBase64WithDataURL:image withSize:CGSizeMake(image.size.width, image.size.height)];
                             NSDictionary *dict = @{
                                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                    @"img":base64
@@ -371,11 +372,16 @@ static NSString * MedrchantCell = @"MedrchantCell";
             };
             
             choose.areaBlock = ^(NSString *province,NSString *city,NSString *district){
+                NSString *cityAdress;
+                if (district.length == 0) {
+                    district = @"";
+                    cityAdress = [NSString stringWithFormat:@"%@,%@",province, city];
+                }else{
+                    cityAdress = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
+                }
                 weakSelf.provice = province;
                 weakSelf.city = city;
                 weakSelf.district = district;
-               NSString *cityAdress = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
-//                [self.cityAdressBtn setTitle:cityAdress forState:(UIControlStateNormal)];
                 weakSelf.cityAdressBtn.text =cityAdress;
             };
             [choose show];

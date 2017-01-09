@@ -185,7 +185,8 @@ static NSString * protectFailedCell = @"protectFailedCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"在线客服"]) {
                 
-              [self clickServiceBtnAction];                DLog(@"%@",button.titleLabel.text);
+              [self clickServiceBtnAction];
+                DLog(@"%@",button.titleLabel.text);
                 
             } else if ([button.titleLabel.text isEqual:@"再次申请"]) {
                 // 跳转至再次申请

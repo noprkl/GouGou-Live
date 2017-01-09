@@ -62,7 +62,8 @@
         hasMoney = 2;
     }
     for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
-        NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0] withSize:CGSizeMake(SCREEN_WIDTH / 3, SCREEN_WIDTH / 3)];
+        UIImage *image = self.photoView.dataArr[0];
+        NSString *base64 = [NSString imageBase64WithDataURL:image withSize:CGSizeMake(image.size.width, image.size.width)];
         NSDictionary *dict = @{
                                @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                @"img":base64

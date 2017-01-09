@@ -29,6 +29,4 @@ typedef void(^EndOptionalBlock)();
 - (void)clickApplyProtectPower:(NSString *)orderID;
 /** 点击提醒发货 */
 - (void)clickConsignment:(BuyCenterModel *)model;
-/** 在线客服 */
-- (void)clickServiceBtnAction;
 @end

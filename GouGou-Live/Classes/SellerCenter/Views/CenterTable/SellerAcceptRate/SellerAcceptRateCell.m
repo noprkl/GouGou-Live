@@ -72,6 +72,7 @@
         make.height.equalTo(height);
     }];
     [self.startView makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.dogImageView.bottom).offset(10);
         make.bottom.equalTo(self.bottom).offset(-10);
         make.right.equalTo(self.right).offset(-10);
         make.size.equalTo(CGSizeMake(100, 15));
@@ -83,9 +84,6 @@
 
 }
 - (void)setModel:(SellerAccepeRateModel *)model {
-//    self.buyerView.model.userImgUrl = model.userImgUrl;
-//    self.buyerView.model.userNickName = model.userNickName;
-//    self.buyerView.model.comment = model.comment;
     // 买家信息
     if (model.userImgUrl.length != 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
@@ -93,26 +91,21 @@
     }
     self.buyerView.buyerName.text = model.userNickName;
     self.buyerView.commentContent.text = model.comment;
-    
-    
-//    self.dogCardView.model.name = model.name;
-//    self.dogCardView.model.kindName = model.kind;
-//    self.dogCardView.model.ageName = model.age;
-//    self.dogCardView.model.colorName = model.color;
-//    self.dogCardView.model.pathSmall = model.pathSmall;
-//    self.dogCardView.model.sizeName = model.size;
-    // 狗狗详情 
-    NSString *dogUrlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
-    [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:dogUrlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    self.buyerView.commentTime.text = [NSString stringFromDateString:model.createTime];
 
+    // 狗狗详情
+    if (model.pathSmall.length != 0) {
+        NSString *dogUrlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
+        [self.dogCardView.dogImageView sd_setImageWithURL:[NSURL URLWithString:dogUrlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
+    }
+    
     self.dogCardView.dogNameLabel.text = model.name;
     self.dogCardView.dogKindLabel.text = model.kind;
     self.dogCardView.dogAgeLabel.text = model.age;
     self.dogCardView.dogSizeLabel.text = model.size;
     self.dogCardView.dogColorLabel.text = model.color;
-//    self.dogCardView.oldPriceLabel.text = model.pri;
-//    self.dogCardView.nowPriceLabel.text = model.price;
-    
+    self.dogCardView.nowPriceLabel.text = model.price;
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
 }
 - (void)setImages:(NSArray *)images {
     _images = images;

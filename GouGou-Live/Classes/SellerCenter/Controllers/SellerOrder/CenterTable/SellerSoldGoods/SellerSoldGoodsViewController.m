@@ -16,6 +16,7 @@
 #import "SellerCloseCell.h"
 #import "SellerOrderModel.h"
 #import "SellerProtectModel.h"
+#import "SellerSendAlertView.h"
 
 @interface SellerSoldGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -214,9 +215,14 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.orderState = @"待发货";
         
         cell.btnTitles = @[@"联系买家", @"发货"];
-        NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
-        NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
-        cell.costMessage = @[finalMoney, depositMoney];
+        if (model.productRealPrice.length == 0) {
+            NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+            NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+            cell.costMessage = @[finalMoney, depositMoney];
+        }else{
+            NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+            cell.costMessage = @[allMoney];
+        }
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
         
@@ -231,9 +237,14 @@ static NSString *closeCell = @"SellerCloseCell";
         
         cell.orderState = @"待发货";
         cell.btnTitles = @[@"联系买家"];
-        NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.price];
-        
-        cell.costMessage = @[allMoney];
+        if (model.productRealPrice.length == 0) {
+            NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+            NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+            cell.costMessage = @[finalMoney, depositMoney];
+        }else{
+            NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+            cell.costMessage = @[allMoney];
+        }
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
         
@@ -252,9 +263,14 @@ static NSString *closeCell = @"SellerCloseCell";
         
         cell.orderState = @"待评价";
         cell.btnTitles = @[@"联系买家"];
-        NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
-        NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
-        cell.costMessage = @[realFinalMoney, realDepositMoney];
+        if (model.productRealPrice.length == 0) {
+            NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+            NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+            cell.costMessage = @[finalMoney, depositMoney];
+        }else{
+            NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+            cell.costMessage = @[allMoney];
+        }
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
         
@@ -271,9 +287,14 @@ static NSString *closeCell = @"SellerCloseCell";
         
         cell.orderState = @"已评价";
         cell.btnTitles = @[@"联系买家"];
-        NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
-        NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
-        cell.costMessage = @[realFinalMoney, realDepositMoney];
+        if (model.productRealPrice.length == 0) {
+            NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+            NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+            cell.costMessage = @[finalMoney, depositMoney];
+        }else{
+            NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+            cell.costMessage = @[allMoney];
+        }
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
         
@@ -458,10 +479,35 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        sendVC.orderID = orderModel.ID;
-        [self.navigationController pushViewController:sendVC animated:YES];
+        __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+        sendView.orderID = orderModel.ID;
+        
+        sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
+            NSDictionary *dict = @{
+                                   @"user_id":[UserInfos sharedUser].ID,
+                                   @"id":orderModel.ID,
+                                   @"waybill_number":shipOrder, // 运单号
+                                   @"transportation":shipStyle
+                                   };
+            [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                [self showAlert:successJson[@"message"]];
+                if ([successJson[@"code"] intValue] == 1) {
+                    sendView.successNote.text = @"发货成功";
+                    sendView = nil;
+                    [sendView dismiss];
+                }else{
+                    sendView.successNote.text = @"发货失败";
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        };
+        sendView.dismissBlock = ^(){
+            
+        };
+        [sendView show];
+
     }else if ([title isEqualToString:@"查看评价"]){
         
         SellerAcceptedRateViewController *rateVC = [[SellerAcceptedRateViewController alloc] init];

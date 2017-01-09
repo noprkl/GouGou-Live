@@ -167,7 +167,8 @@
                     [weakSelf showAlert:@"问题描述不能为空"];
                 } else {
                     if (addImag.dataArr.count != 0) { //有图
-                        NSString *base64 = [NSString imageBase64WithDataURL:addImag.dataArr[0] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
+                        UIImage *image = addImag.dataArr[0];
+                        NSString *base64 = [NSString imageBase64WithDataURL:image withSize:CGSizeMake(image.size.width, image.size.height)];
                         NSDictionary *dict = @{
                                                @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                                @"img":base64
@@ -234,7 +235,7 @@
             NSURL *telURL =[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", SMSPhone]];
             [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
             //记得添加到view上
-            [weakSelf.view addSubview:callWebview];
+            [weakSelf.complaint addSubview:callWebview];
         };
     }
     return _complaint;

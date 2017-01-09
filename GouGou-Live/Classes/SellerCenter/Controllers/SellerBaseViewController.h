@@ -12,12 +12,10 @@
 #import "SingleChatViewController.h" // 联系买家
 #import "SellerAcceptedRateViewController.h" // 查看评价
 #import "SellerChangeViewController.h" // 改变运费
-#import "SellerSendViewController.h" // 发货
 #import "SellerOrderDetailProtectPowerViewController.h" // 维权详情
 
 #import "SellerOrderModel.h"
 
 @interface SellerBaseViewController : BaseViewController
-/** 在线客服 */
-- (void)clickServiceBtnAction;
+
 @end

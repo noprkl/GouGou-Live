@@ -54,7 +54,7 @@
     _model = model;
     
     self.nickView.nickName.text = model.userNickName;
-    self.nickView.dateLabel.text = @"14分59秒";
+    self.nickView.dateLabel.text = @"";
     if ([model.status intValue] == 1) {
         self.nickView.stateMessage = @"维权中";
     }else  if ([model.status intValue] == 2) {
@@ -77,7 +77,7 @@
     
     self.logisticsView.transformNumber = model.ID;
     
-    self.costView.moneyMessage = model.price;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [model.productRealBalance floatValue] + [model.productRealDeposit floatValue] + [model.productRealPrice floatValue] + [model.traficRealFee floatValue]];
     self.costView.freightMoney = model.traficRealFee;
 }
 #pragma mark

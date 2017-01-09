@@ -316,7 +316,14 @@
         
         
         choose.areaBlock = ^(NSString *province,NSString *city,NSString *district){
-            self.areaChooseTextfiled.text = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
+            NSString *cityAdress;
+            if (district.length == 0) {
+                district = @"";
+                cityAdress = [NSString stringWithFormat:@"%@,%@",province, city];
+            }else{
+                cityAdress = [NSString stringWithFormat:@"%@,%@,%@",province, city, district];
+            }
+            self.areaChooseTextfiled.text = cityAdress;
             
             _adressModel.userProvince = province;
             _adressModel.userCity = city;

@@ -90,10 +90,14 @@ static NSString *cellid = @"SellerProtectPowerCell";
 
 //    cell.orderState = @"待评价";
     cell.btnTitles = @[@"在线客服", @"查看详情"];
-    NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
-    NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
-    cell.costMessage = @[realFinalMoney, realDepositMoney];
-
+    if (model.productRealPrice.length == 0) {
+        NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+        NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+        cell.costMessage = @[finalMoney, depositMoney];
+    }else{
+        NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+        cell.costMessage = @[allMoney];
+    }
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
         [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];

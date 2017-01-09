@@ -13,9 +13,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "LivingCenterView.h"
-#import "LivingSendMessageView.h" // 编辑弹幕信息
+//#import "LivingSendMessageView.h" // 编辑弹幕信息
 
-#import "TalkingViewController.h"
+//#import "TalkingViewController.h"
 #import "ServiceViewController.h"
 #import "DogShowViewController.h"
 #import "SellerShowViewController.h"
@@ -48,7 +48,7 @@
 @property (strong, nonatomic) UIProgressView *progressView;
 @property (strong, nonatomic) UIButton *playBtn;
 @property (strong, nonatomic) UIButton *playscreenBtn;
-@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 聊天室控制器 */
+//@property(nonatomic, strong) TalkingViewController *talkingVc; /**< 聊天室控制器 */
 @property(nonatomic, strong) ServiceViewController *serviceVc; /**< 客服控制器 */
 
 /** 底部scrollview */
@@ -87,9 +87,26 @@
     // 子视图
     [self makeSubVcConstraint];
     [self setNavBarItem];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationLandscapeRight) name:UIWindowDidBecomeVisibleNotification object:nil];//进入全屏
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forceOrientationPriate) name:UIWindowDidBecomeHiddenNotification object:nil];//退出全屏
+
+    // 添加观看观看历史
+    if ([UserInfos getUser]) {
+        NSDictionary *dictHistory = @{
+                                      @"id":_liveID,
+                                      @"user_id":[UserInfos sharedUser].ID
+                                      };
+        [self getRequestWithPath:API_Add_view_history params:dictHistory success:^(id successJson) {
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }else{
+        NSDictionary *dictHistory = @{
+                                      @"id":_liveID
+                                      };
+        [self getRequestWithPath:API_Add_view_history params:dictHistory success:^(id successJson) {
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -101,17 +118,8 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     
     DLog(@"%@",_watchCount);
-    // 添加观看观看历史
-    if ([UserInfos getUser]) {
-        NSDictionary *dictHistory = @{
-                                      @"id":_liveID,
-                                      @"user_id":[UserInfos sharedUser].ID
-                                      };
-        [self getRequestWithPath:API_Add_view_history params:dictHistory success:^(id successJson) {
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
-    }
+
+    
     if (_isLandscape) {//横屏
         [self forceOrientationLandscapeRight];
     }
@@ -360,11 +368,12 @@
     }];
     [self.playbackBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.topView.centerY).offset(10);
-        make.left.equalTo(self.topView.left).offset(20);
+        make.left.equalTo(self.topView.left).offset(10);
+        make.size.equalTo(CGSizeMake(20, 20));
     }];
     [self.liveTitleLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.topView.centerY).offset(10);
-        make.left.equalTo(self.topView.left).offset(40);
+        make.left.equalTo(self.playbackBtn.right).offset(10);
         make.right.equalTo(self.topView.right).offset(-20);
     }];
     [self.downView remakeConstraints:^(MASConstraintMaker *make) {
@@ -479,6 +488,7 @@
     if (!_playbackBtn) {
         _playbackBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_playbackBtn setImage:[UIImage imageNamed:@"返回-拷贝"] forState:(UIControlStateNormal)];
+        [_playbackBtn setContentMode:(UIViewContentModeCenter)];
         [_playbackBtn addTarget:self action:@selector(ClickBackButtonAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _playbackBtn;
@@ -617,13 +627,13 @@
 }
 - (void)addChildViewControllers {
    
-    TalkingViewController *talkVc = [[TalkingViewController alloc] init];
-    talkVc.roomID = _chatRoomID;
-//    self.talkingVc = talkVc;
-    talkVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
-    [self.baseScrollView addSubview:talkVc.view];
-    [self addChildViewController:talkVc];
-    [self.childVCS addObject:talkVc];
+//    TalkingViewController *talkVc = [[TalkingViewController alloc] init];
+//    talkVc.roomID = _chatRoomID;
+////    self.talkingVc = talkVc;
+//    talkVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+//    [self.baseScrollView addSubview:talkVc.view];
+//    [self addChildViewController:talkVc];
+//    [self.childVCS addObject:talkVc];
     
     // 狗狗
     DogShowViewController *dogShowVC = [[DogShowViewController alloc] init];
@@ -631,7 +641,7 @@
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.dogInfos = self.doginfos;
-    dogShowVC.view.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     [self.baseScrollView addSubview:dogShowVC.view];
     [self.childVCS addObject:dogShowVC];
     [self addChildViewController:dogShowVC];
@@ -643,7 +653,7 @@
     ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
     serviceVC.liverImgUrl = _liverIcon;
     serviceVC.liverName = _liverName;
-    serviceVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH , SCREEN_HEIGHT - 290);
+    serviceVC.view.frame = CGRectMake(SCREEN_WIDTH * 1, 0, SCREEN_WIDTH , SCREEN_HEIGHT - 290);
     self.serviceVc = serviceVC;
     [self.baseScrollView addSubview:serviceVC.view];
     [self.childVCS addObject:serviceVC];
@@ -654,11 +664,13 @@
     sellerShowVC.liverIcon = _liverIcon;
     sellerShowVC.liverName = _liverName;
     sellerShowVC.authorId = _liverId;
-    sellerShowVC.view.frame = CGRectMake(SCREEN_WIDTH * 3, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    sellerShowVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     [self.baseScrollView addSubview:sellerShowVC.view];
     [self.childVCS addObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
     
+    _baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childVCS.count, 0);
+
     // 进入后第一次加载hot
     self.baseScrollView.contentOffset = CGPointMake(0, 0);
     [self scrollViewDidEndDecelerating:self.baseScrollView];
@@ -681,7 +693,7 @@
     
 #pragma mark - 隐藏键盘
     // 如果屏幕转动，让输入框隐藏
-    [self.talkingVc.textField resignFirstResponder];
+//    [self.talkingVc.textField resignFirstResponder];
     [self.serviceVc.textField resignFirstResponder];
 
     self.scrollPoint = scrollView.contentOffset;
@@ -699,7 +711,6 @@
         _baseScrollView.pagingEnabled = YES;
         _baseScrollView.showsVerticalScrollIndicator = NO;
         // 将子控制器的view 加载到MainVC的ScrollView上  这里用的是加载时的屏幕宽
-        _baseScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.childTitles.count, 0);
         
         // 设置scroll初始偏移量
         [_baseScrollView setScrollIndicatorInsets:UIEdgeInsetsMake(0, -1, 0, 0)];
@@ -724,19 +735,19 @@
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(0 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             
             return YES;
         };
         _centerView.serviceBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(2 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(1 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
         };
         _centerView.sellerBlock = ^(UIButton *btn){
-            CGPoint center = CGPointMake(3 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
+            CGPoint center = CGPointMake(2 * SCREEN_WIDTH, weakSelf.baseScrollView.contentOffset.y);
             
             [weakSelf.baseScrollView setContentOffset:center animated:YES];
             return YES;
@@ -747,7 +758,8 @@
 
 - (NSArray *)childTitles {
     if (!_childTitles) {
-        _childTitles = @[@"聊天", @"狗狗", @"客服", @"认证商家"];
+//        _childTitles = @[@"聊天", @"狗狗", @"客服", @"认证商家"];
+        _childTitles = @[@"狗狗", @"客服", @"认证商家"];
     }
     return _childTitles;
 }
@@ -762,7 +774,7 @@
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     
     // 如果屏幕转动，让输入框隐藏
-    [self.talkingVc.textField resignFirstResponder];
+//    [self.talkingVc.textField resignFirstResponder];
     [self.serviceVc.textField resignFirstResponder];
 
     if (toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {

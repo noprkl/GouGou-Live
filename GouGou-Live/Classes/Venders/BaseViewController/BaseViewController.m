@@ -12,9 +12,15 @@
 #import "UIView+Toast.h"
 #import "WXApi.h"
 #import <AlipaySDK/AlipaySDK.h>
-#import <SVProgressHUD/SVProgressHUD.h>
+#import "MBProgressHUD.h"
+#import <MessageUI/MessageUI.h>
+#import "HUDView.h"
 
-@interface BaseViewController ()
+@interface BaseViewController ()<MFMessageComposeViewControllerDelegate>
+
+@property (nonatomic, strong) MBProgressHUD *hud; /**< 指示器 */
+
+@property (nonatomic, strong) HUDView *hudView; /**< 指示器 */
 
 @end
 
@@ -40,6 +46,7 @@
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)Success
                       error:(HttpRequestErrorBlock)Error {
+
     [HTTPTool postRequestWithPath:path
                            params:params
                           success:^(id successJson) {
@@ -49,11 +56,41 @@
                                 Error(error);
     }];
 }
-
+#pragma mark
+#pragma mark - 指示器
 - (void)showAlert:(NSString *)string{
     [self showHint:string yOffset:-200];
 }
 
+// 显示
+- (void)showHudInView:(UIView *)view hint:(NSString *)hint {
+//    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
+//    DLog(@"%@", NSStringFromCGRect(view.frame));
+//    
+//    hud.labelText = hint;
+//    [view addSubview:hud];
+//    [hud show:YES];
+//    self.hud = hud;
+    
+    
+    HUDView *hudView = [[HUDView alloc] init];
+    self.hudView = hudView;
+    hudView.alertStr = hint;
+    [hudView show];
+}
+// 隐藏
+- (void)hideHud {
+//    [self.hud hide:YES];
+//    [self.hud removeFromSuperview];
+    [self.hudView dismiss];
+}
+//- (MBProgressHUD *)hud {
+//    if (!_hud) {
+//        _hud = [[MBProgressHUD alloc] initWithView:self.view];
+//        DLog(@"%f--%f", SCREEN_HEIGHT, SCREEN_WIDTH);
+//    }
+//    return _hud;
+//}
 #pragma mark
 #pragma mark - 第三方分享
 /** QQ分享 */
@@ -149,6 +186,49 @@
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+/** 在线客服 */
+- (void)clickServiceBtnAction {
+    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
+    
+    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
+        
+        controller.recipients = [NSArray arrayWithObject:SMSPhone];
+        controller.body = @"";
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:^{
+            
+        }];
+        //修改短信界面标题
+        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
+    }else{
+        [self showAlert:@"不支持发送短信"];
+    }
+}
+#pragma mark
+#pragma mark - 短信发送协议
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [controller dismissViewControllerAnimated:NO completion:^{
+        
+    }];//关键的一句   不能为YES
+    
+    switch ( result ) {
+            
+        case MessageComposeResultCancelled:
+            
+            [self showAlert:@"取消发送"];
+            break;
+        case MessageComposeResultFailed:// send failed
+            [self showAlert:@"发送失败"];
+            break;
+        case MessageComposeResultSent:
+            [self showAlert:@"发送成功"];
+            break;
+        default:
+            break;
+    }
+}
+
 // 支持旋转的方向 只允许竖屏
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {

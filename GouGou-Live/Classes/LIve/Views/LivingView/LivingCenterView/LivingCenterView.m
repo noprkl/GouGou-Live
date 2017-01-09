@@ -11,7 +11,7 @@
 @interface LivingCenterView ()
 
 /** 聊天 */
-@property (strong, nonatomic) UIButton *talkBtn;
+//@property (strong, nonatomic) UIButton *talkBtn;
 
 /** 狗狗 */
 @property (strong, nonatomic) UIButton *dogBtn;
@@ -34,7 +34,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        [self setBtn:self.talkBtn title:@"消息" normalImage:[UIImage imageNamed:@"消息（直播小icon)"] selectImage:[UIImage imageNamed:@"消息（直播小icon)点击之后"]];
+//        [self setBtn:self.talkBtn title:@"消息" normalImage:[UIImage imageNamed:@"消息（直播小icon)"] selectImage:[UIImage imageNamed:@"消息（直播小icon)点击之后"]];
       
         [self setBtn:self.dogBtn title:@"狗狗" normalImage:[UIImage imageNamed:@"狗狗（直播小icon)"] selectImage:[UIImage imageNamed:@"狗狗（直播小icon)点之后"]];
 
@@ -47,20 +47,20 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self.talkBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
-        make.top.equalTo(self.top);
-        make.width.equalTo(SCREEN_WIDTH / 4);
-        make.left.equalTo(self.left);
-    }];
+//    [self.talkBtn makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.centerY);
+//        make.top.equalTo(self.top);
+//        make.width.equalTo(SCREEN_WIDTH / 4);
+//        make.left.equalTo(self.left);
+//    }];
     
     [self.dogBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
-
-        make.right.equalTo(self.centerX);
-
-        make.width.equalTo(SCREEN_WIDTH / 4);
+//        make.right.equalTo(self.centerX);
+//        make.width.equalTo(SCREEN_WIDTH / 4);
+        make.left.equalTo(self.left);
+        make.width.equalTo(SCREEN_WIDTH / 3);
     }];
     
 
@@ -68,15 +68,19 @@
     [self.serviceBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
-        make.left.equalTo(self.centerX);
-        make.width.equalTo(SCREEN_WIDTH / 4);
+//        make.left.equalTo(self.centerX);
+//        make.width.equalTo(SCREEN_WIDTH / 4);
+        make.left.equalTo(self.dogBtn.right);
+        make.width.equalTo(SCREEN_WIDTH / 3);
     }];
     
     [self.sellerBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.top.equalTo(self.top);
+//        make.right.equalTo(self.right);
+//        make.width.equalTo(SCREEN_WIDTH / 4);
         make.right.equalTo(self.right);
-        make.width.equalTo(SCREEN_WIDTH / 4);
+        make.width.equalTo(SCREEN_WIDTH / 3);
     }];
     
     
@@ -84,28 +88,27 @@
 #pragma mark
 #pragma mark - 懒加载
 
-- (UIButton *)talkBtn {
-    if (!_talkBtn) {
-        _talkBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        
-        _talkBtn.selected = YES;
-        _talkBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-        
-        self.lastBtn = _talkBtn;
-        
-        [_talkBtn addTarget:self action:@selector(clicktalkBtnAction:) forControlEvents:(UIControlEventTouchDown)];
-    }
-    return _talkBtn;
-}
+//- (UIButton *)talkBtn {
+//    if (!_talkBtn) {
+//        _talkBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+//        
+//        _talkBtn.selected = YES;
+//        _talkBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+//        
+//        self.lastBtn = _talkBtn;
+//        
+//        [_talkBtn addTarget:self action:@selector(clicktalkBtnAction:) forControlEvents:(UIControlEventTouchDown)];
+//    }
+//    return _talkBtn;
+//}
 
 - (UIButton *)dogBtn {
     if (!_dogBtn) {
         _dogBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         _dogBtn.backgroundColor = [UIColor whiteColor];
-//        _dogBtn.selected = YES;
-//        _dogBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-//        
-//        self.lastBtn = _dogBtn;
+        _dogBtn.selected = YES;
+        _dogBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+        self.lastBtn = _dogBtn;
 
         [_dogBtn addTarget:self action:@selector(clickdogBtnAction:) forControlEvents:(UIControlEventTouchDown)];
         

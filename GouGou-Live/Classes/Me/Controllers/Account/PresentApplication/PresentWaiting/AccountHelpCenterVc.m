@@ -125,19 +125,11 @@
         _serviceBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         _serviceBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         _serviceBtn.titleLabel.tintColor = [UIColor colorWithHexString:@"#ffffff"];
-        [_serviceBtn addTarget:self action:@selector(ClickServiceBtnAction) forControlEvents:(UIControlEventTouchDown)];
+        [_serviceBtn addTarget:self action:@selector(clickServiceBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _serviceBtn;
 }
-- (void)ClickServiceBtnAction {
-    
-//    SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:EaseTest_Chat1 conversationType:(EMConversationTypeChat)];
-//    viewController.title = EaseTest_Chat1;
-//    viewController.chatID = EaseTest_Chat1;
-//    [self.navigationController pushViewController:viewController animated:YES];
-    // 发送短信
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://13810214551"]];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

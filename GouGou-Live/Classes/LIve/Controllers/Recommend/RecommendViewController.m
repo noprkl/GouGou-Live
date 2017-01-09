@@ -610,7 +610,6 @@
         if (model.status == 1) {
             LivingViewController *livingVC = [[LivingViewController alloc] init];
             livingVC.liveID = model.liveId;
-            
             livingVC.liverId = model.ID;
             livingVC.liverIcon = model.userImgUrl;
             livingVC.liverName = model.merchantName;
@@ -618,18 +617,25 @@
             livingVC.chatRoomID = model.chatroom;
             livingVC.isLandscape = NO;
             livingVC.hidesBottomBarWhenPushed = YES;
-            NSDictionary *dict = @{
-                                   @"live_id":model.liveId
-                                   };
-            [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                if (successJson[@"data"]) {
-                    NSArray *doginfos = [LiveListDogInfoModel   mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-                    livingVC.doginfos = doginfos;
-                    [self.navigationController pushViewController:livingVC animated:YES];
-                }
-             } error:^(NSError *error) {
-                 
-             }];
+            if ([model.pNum integerValue] > 0) {
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    if (successJson[@"data"]) {
+                        NSArray *doginfos = [LiveListDogInfoModel   mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                        livingVC.doginfos = doginfos;
+                        [self.navigationController pushViewController:livingVC animated:YES];
+                    }
+                } error:^(NSError *error) {
+                    
+                }];
+
+            }else{
+                livingVC.doginfos = @[];
+                [self.navigationController pushViewController:livingVC animated:YES];
+            }
+            
         }
     }
     DLog(@"%@", model.url);

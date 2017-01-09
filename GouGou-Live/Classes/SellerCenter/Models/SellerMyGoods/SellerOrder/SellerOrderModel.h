@@ -27,6 +27,7 @@
 @property (nonatomic, strong) NSString *name; /**< 名字 */
 @property (nonatomic, strong) NSString *pathSmall; /**< 缩略图 */
 @property (nonatomic, strong) NSString *price; /**< 价格 */
+@property (nonatomic, strong) NSString *productRealPrice; /**< 实付款 */
 
 @property (nonatomic, strong) NSString *priceOld; /**< 老价格 */
 @property (nonatomic, strong) NSString *productDeposit; /**< 定金 */

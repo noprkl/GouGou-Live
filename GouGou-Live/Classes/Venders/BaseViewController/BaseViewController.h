@@ -26,6 +26,10 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
 
 // 提示字符
 - (void)showAlert:(NSString *)string;
+/** 指示器展示 */
+- (void)showHudInView:(UIView *)view hint:(NSString *)hint;
+/** 指示器隐藏 */
+- (void)hideHud;
 - (void)setNavBarItem;
 
 #pragma mark
@@ -40,6 +44,8 @@ typedef void(^HttpRequestErrorBlock)(NSError *error);
 - (void)WechatTimeShare;
 /** QQ空间分享 */
 - (void)TencentShare;
+/** 在线客服 */
+- (void)clickServiceBtnAction;
 
 /** 钱包支付 */
 //- (void)walletPayWithOrderId:(int)orderID price:(int)price payPwd:(NSString *)payPwd states:(int)state;

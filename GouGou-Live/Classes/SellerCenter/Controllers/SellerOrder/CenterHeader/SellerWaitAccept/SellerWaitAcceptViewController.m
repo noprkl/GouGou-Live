@@ -8,6 +8,7 @@
 
 #import "SellerWaitAcceptViewController.h"
 #import "SellerWaitAcceptCell.h"
+#import "SellerSendAlertView.h"
 
 @interface SellerWaitAcceptViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -28,7 +29,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 // 请求待收货的订单
 - (void)getRequestWaitAcceptOrder {
     NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(3),
                            @"page":@(1),
                            @"pageSize":@(10)
@@ -104,10 +105,14 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     
     cell.orderState = @"待收货";
     cell.btnTitles = @[@"联系买家"];
-    NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%ld", [model.price integerValue] +[model.traficMoney integerValue]];
-
-    cell.costMessage = @[allMoney];
-    
+    if (model.productRealPrice.length == 0) {
+        NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+        NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+        cell.costMessage = @[finalMoney, depositMoney];
+    }else{
+        NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+        cell.costMessage = @[allMoney];
+    }
     [self.btnTitles addObject:cell.btnTitles];
 
     __weak typeof(self) weakSelf = self;
@@ -157,10 +162,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:sendVC animated:YES];
-        
+               
     }else if ([title isEqualToString:@"查看评价"]){
         
         SellerAcceptedRateViewController *rateVC = [[SellerAcceptedRateViewController alloc] init];

@@ -8,6 +8,7 @@
 
 #import "SellerWaitRateViewController.h"
 #import "SellerWaitRateCell.h"
+#import "SellerSendAlertView.h"
 
 @interface SellerWaitRateViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -25,7 +26,7 @@ static NSString *cellid = @"SellerWaitRateCell";
 // 请求待评价的订单
 - (void)getRequestWaitRaterder {
     NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
-                          @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                          @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(4),
                            @"page":@(1),
                            @"pageSize":@(10)
@@ -90,10 +91,14 @@ static NSString *cellid = @"SellerWaitRateCell";
     
     cell.orderState = @"待评价";
     cell.btnTitles = @[@"联系买家"];
-    NSString *realFinalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
-    NSString *realDepositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
-    cell.costMessage = @[realFinalMoney, realDepositMoney];
-
+    if (model.productRealPrice.length == 0) {
+        NSString *finalMoney = [NSString stringWithFormat:@"已付尾款：￥%@", model.productRealBalance];
+        NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productRealDeposit];
+        cell.costMessage = @[finalMoney, depositMoney];
+    }else{
+        NSString *allMoney = [NSString stringWithFormat:@"已付全款：￥%@", model.productRealPrice];
+        cell.costMessage = @[allMoney];
+    }
     __weak typeof(self) weakSelf = self;
     cell.clickBtnBlock = ^(NSString *btnText){
         [weakSelf clickBtnActionWithBtnTitle:btnText orderModel:model];
@@ -146,10 +151,6 @@ static NSString *cellid = @"SellerWaitRateCell";
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        SellerSendViewController *sendVC = [[SellerSendViewController alloc] init];
-        sendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:sendVC animated:YES];
-        
     }else if ([title isEqualToString:@"查看评价"]){
         
         SellerAcceptedRateViewController *rateVC = [[SellerAcceptedRateViewController alloc] init];
@@ -160,7 +161,7 @@ static NSString *cellid = @"SellerWaitRateCell";
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-               [self clickServiceBtnAction];
+        [self clickServiceBtnAction];
     }
 }
 @end

@@ -99,11 +99,6 @@
 - (UILabel *)commentTime {
     if (!_commentTime) {
         _commentTime = [[UILabel alloc] init];
-        NSDate *date = [NSDate date];
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        format.dateFormat = @"YYYY-MM-dd HH:mm:ss";
-        
-        _commentTime.text = [format stringFromDate:date];
         _commentTime.textColor = [UIColor colorWithHexString:@"#666666"];
         _commentTime.font = [UIFont systemFontOfSize:12];
     }

@@ -69,7 +69,9 @@
     
     if (self.photoView.dataArr.count != 0) {
         for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
-            NSString *base64 = [NSString imageBase64WithDataURL:self.photoView.dataArr[0] withSize:CGSizeMake(SCREEN_WIDTH / ImgTotalCount, SCREEN_WIDTH / ImgTotalCount)];
+            
+            UIImage *image = self.photoView.dataArr[0];
+            NSString *base64 = [NSString imageBase64WithDataURL:image withSize:CGSizeMake(image.size.width, image.size.height)];
             NSDictionary *dict = @{
                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                    @"img":base64

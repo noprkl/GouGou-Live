@@ -91,7 +91,6 @@
         [self addSubview:self.line4];
         [self addSubview:self.noteLabel];
         [self addSubview:self.dogState];
-        
     }
     return self;
 }
@@ -108,7 +107,7 @@
     self.dogPriceLaebl.text = dogInfo.price;
     
     self.descLabel.text = dogInfo.comment;
-    self.promulgateTimeLabel.text = [NSString stringFromDateString:dogInfo.createTime];
+    self.promulgateTimeLabel.text = [NSString stringWithFormat:@"%@ 发布", [NSString stringFromDateString:dogInfo.createTime]];
     
     NSMutableArray *imsArr = [NSMutableArray arrayWithArray:[self.dogInfo.pathBig componentsSeparatedByString:@","]];
     if (imsArr.count > 1) {
@@ -141,9 +140,15 @@
         state = @"已售";
     }
 
-    self.dogState.text = state;
+    self.dogState.text = [NSString stringWithFormat:@"%@ %@", state, dogInfo.note];
+    
     self.sellStateLabel.text = state;
-    self.transPriceLabel.text = dogInfo.traficMoney;
+    if ([dogInfo.traficType integerValue] == 1) {
+        self.transPriceLabel.text = @"免运费";
+    }else{
+        self.transPriceLabel.text = dogInfo.traficMoney;
+    }
+    
 }
 // 约束
 - (void)layoutSubviews {
@@ -169,7 +174,8 @@
     }];
     
     [self.line1 makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
+        make.left.equalTo(self.left);
+        make.width.equalTo(SCREEN_WIDTH);
         make.top.equalTo(self.dogImageView.bottom).offset(44);
         make.height.equalTo(1);
     }];
@@ -201,26 +207,31 @@
         make.right.equalTo(self.right).offset(-10);
     }];
     [self.line2 makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
+        make.left.equalTo(self.left);
+        make.width.equalTo(SCREEN_WIDTH);
         make.top.equalTo(self.line1.bottom).offset(53);
         make.height.equalTo(1);
     }];
+    
     [self.transMoneyLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left).offset(10);
         make.top.equalTo(self.line2.bottom).offset(15);
         make.width.equalTo(100);
     }];
     [self.markImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.right).offset(-20);
-        make.centerY.equalTo(self.transMoneyLabel.centerY);
+        make.right.equalTo(self.line2.right).offset(-20);
+        make.top.equalTo(self.line2.bottom).offset(15);
     }];
+
     [self.transPriceLabel makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.markImageView.left).offset(-10);
-        make.centerY.equalTo(self.transMoneyLabel.centerY);
+        make.centerY.equalTo(self.markImageView.centerY);
     }];
+    DLog(@"%@", NSStringFromCGRect(self.transPriceLabel.frame));
     
     [self.line3 makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
+        make.left.equalTo(self.left);
+        make.width.equalTo(SCREEN_WIDTH);
         make.top.equalTo(self.line2.bottom).offset(44);
         make.height.equalTo(1);
     }];
@@ -229,7 +240,8 @@
         make.top.equalTo(self.line3.bottom).offset(15);
     }];
     [self.line4 makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
+        make.left.equalTo(self.left);
+        make.width.equalTo(SCREEN_WIDTH);
         make.top.equalTo(self.line3.bottom).offset(44);
         make.height.equalTo(1);
     }];
@@ -377,19 +389,10 @@
     }
     return _transPriceLabel;
 }
-//- (UILabel *)transPriceLabel {
-//    if (!_transPriceLabel) {
-//        _transPriceLabel = [[UILabel alloc] init];
-//        _transPriceLabel.text = @"默认价格¥50";
-//        _transPriceLabel.textColor = [UIColor colorWithHexString:@"#666666"];
-//        _transPriceLabel.font = [UIFont systemFontOfSize:12];
-//    }
-//    return _transPriceLabel;
-//}
+
 - (UIImageView *)markImageView {
     if (!_markImageView) {
-        _markImageView = [[UIImageView alloc] init];
-        _markImageView.image = [UIImage imageNamed:@"返回-（小）"];
+        _markImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"返回-（小）"]];
     }
     return _markImageView;
 }

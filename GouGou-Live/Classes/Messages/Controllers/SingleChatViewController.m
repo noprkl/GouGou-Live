@@ -308,7 +308,7 @@
     }else if ([text isEqualToString:@"举报"]){
         NSDictionary * dict = @{
                                 @"id":self.chatID,
-                                @"user_id":@([[UserInfos sharedUser].ID intValue])
+                                @"user_id":[UserInfos sharedUser].ID
                                 };
         [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/report"  params:dict success:^(id successJson) {
             DLog(@"%@",successJson);

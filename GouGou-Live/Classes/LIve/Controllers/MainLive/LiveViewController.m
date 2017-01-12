@@ -41,7 +41,7 @@
     if ([UserInfos getUser]) {
         // 把之前的干掉
         self.timer = nil;
-        [self.timer invalidate];
+//        [self.timer invalidate];
         // 重新开线程
         self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(RequestBlackUser) userInfo:nil repeats:YES];
     }
@@ -55,9 +55,9 @@
         [self getRequestWithPath:API_Memberstate params:dict success:^(id successJson) {
             if ([successJson[@"code"] integerValue] == 0) {// 0拉黑用户 1正常用户
                 // 关闭定时器
-                self.timer = nil;
                 [self.timer invalidate];
-                
+                self.timer = nil;
+
                 // 退出登录
                 [UserInfos removeUser];
                 [UserInfos sharedUser].usertel = @"";
@@ -76,11 +76,12 @@
 
             }
         } error:^(NSError *error) {
+            
             DLog(@"%@", error);
         }];
     }else{
-        self.timer = nil;
         [self.timer invalidate];
+        self.timer = nil;
     }
 }
 - (void)viewWillAppear:(BOOL)animated {

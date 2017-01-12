@@ -126,11 +126,12 @@
 
     _easyMessage = easyMessage;
     self.editTextView.text = easyMessage;
+    self.countLabel.text = [NSString stringWithFormat:@"%ld", self.countText - easyMessage.length];
 }
 
 - (void)setCountText:(NSInteger)countText {
     _countText = countText;
-    self.countLabel.text = [NSString stringWithFormat:@"%ld", countText];
+    self.countLabel.text = [NSString stringWithFormat:@"%ld", countText - _easyMessage.length];
 }
 
 #pragma mark
@@ -169,8 +170,8 @@
         countLabel.text = [NSString stringWithFormat:@"%ld", _countText];
         countLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         countLabel.font = [UIFont systemFontOfSize:14];
-        countLabel.frame = CGRectMake(SCREEN_WIDTH - 40, 20, 35, 15);
-        countLabel.textAlignment = NSTextAlignmentCenter;
+        countLabel.frame = CGRectMake(SCREEN_WIDTH - 70, 20, 60, 10);
+        countLabel.textAlignment = NSTextAlignmentRight;
         [_editTextView addSubview:countLabel];
         self.countLabel = countLabel;
         
@@ -207,7 +208,10 @@
     return _sureBtn;
 }
 - (void)clickSureBtnAction {
-    
+    if (self.editTextView.text.length > _countText) {
+        self.editTextView.text = [self.editTextView.text substringWithRange:NSMakeRange(0, _countText - 1)];
+    }
+
     if (_sureBlock) {
         _sureBlock(self.editTextView.text);
         [self dismiss];
@@ -215,34 +219,95 @@
 }
 #pragma mark
 #pragma mark - UItextview 监听
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
         return NO;
     }
-    
-    if (range.location < 20) {
-        return YES;
+
+    //不支持系统表情的输入
+    if ([[textView textInputMode] primaryLanguage]==nil||[[[textView textInputMode] primaryLanguage]isEqualToString:@"emoji"]) {
+        return NO;
     }
-    return NO;
+    UITextRange *selectedRange = [textView markedTextRange];
+    //获取高亮部分
+    UITextPosition *pos = [textView positionFromPosition:selectedRange.start offset:0];
+    //获取高亮部分内容
+    //NSString * selectedtext = [textView textInRange:selectedRange];
+    //如果有高亮且当前字数开始位置小于最大限制时允许输入
+    if (selectedRange && pos) {
+        NSInteger startOffset = [textView offsetFromPosition:textView.beginningOfDocument toPosition:selectedRange.start];
+        NSInteger endOffset = [textView offsetFromPosition:textView.beginningOfDocument toPosition:selectedRange.end];
+        NSRange offsetRange =NSMakeRange(startOffset, endOffset - startOffset);
+        if (offsetRange.location > _countText) {
+            return NO;
+        }else{
+            return YES;
+        }
+    }
+    NSString *comcatstr = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    NSInteger caninputlen = _countText - comcatstr.length;
+    if (caninputlen >= 0){
+        return YES;
+    }else{
+        NSInteger len = text.length + caninputlen;
+        //防止当text.length + caninputlen < 0时，使得rg.length为一个非法最大正数出错
+        NSRange rg = {0,MAX(len,0)};
+        if (rg.length >0){
+            NSString *s = @"";
+            //判断是否只普通的字符或asc码(对于中文和表情返回NO)
+            BOOL asc = [text canBeConvertedToEncoding:NSASCIIStringEncoding];
+            if (asc) {
+                s = [text substringWithRange:rg];//因为是ascii码直接取就可以了不会错
+            }else{
+                __block NSInteger idx =0;
+                __block NSString  *trimString = @"";//截取出的字串
+                //使用字符串遍历，这个方法能准确知道每个emoji是占一个unicode还是两个
+                [text enumerateSubstringsInRange:NSMakeRange(0, [text length])
+                                         options:NSStringEnumerationByComposedCharacterSequences
+                                      usingBlock: ^(NSString* substring,NSRange substringRange,NSRange enclosingRange,BOOL* stop) {
+                                          if (idx >= rg.length) {
+                                              *stop =YES;//取出所需要就break，提高效率
+                                              return ;
+                                          }
+                                          trimString = [trimString stringByAppendingString:substring];
+                                          idx++;
+                                      }];
+                s = trimString;
+            }
+            //rang是指从当前光标处进行替换处理(注意如果执行此句后面返回的是YES会触发didchange事件)
+            [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+            //既然是超出部分截取了，哪一定是最大限制了。
+            self.countLabel.text = [NSString stringWithFormat:@"%d/%ld",0,(long)_countText];
+        }
+        return NO;
+    }
 }
-- (void)textViewDidChange:(UITextView *)textView {
-    
+- (void)textViewDidChange:(UITextView *)textView{
+    UITextRange *selectedRange = [textView markedTextRange];
+    //获取高亮部分
+    UITextPosition *pos = [textView positionFromPosition:selectedRange.start offset:0];
+    //如果在变化中是高亮部分在变，就不要计算字符了
+    if (selectedRange && pos) {
+        return;
+    }
+    NSString  *nsTextContent = textView.text;
+    NSInteger existTextNum = nsTextContent.length;
+    if (existTextNum >_countText){
+        //截取到最大位置的字符(由于超出截部分在should时被处理了所在这里这了提高效率不再判断)
+        NSString *s = [nsTextContent substringToIndex:_countText];
+        [textView setText:s];
+    }
+    //不让显示负数
+    self.countLabel.text = [NSString stringWithFormat:@"%ld/%ld",MAX(0,_countText - existTextNum),_countText];
     if (textView.text.length == 0) {
         
         self.placeLabel.text = self.placeHolder;
     }else{
         self.placeLabel.text = @"";
     }
-    // 剩余字数
-    NSInteger lastCount = _countText - textView.text.length;
-    self.countLabel.text = [NSString stringWithFormat:@"%ld",lastCount];
-    if (lastCount <= 0) {
-        self.editTextView.text = [textView.text substringWithRange:NSMakeRange(0, _countText - 1)];
-    }
 }
-
 #pragma mark
 #pragma mark - 蒙版弹出效果
 - (UIControl *)overLayer

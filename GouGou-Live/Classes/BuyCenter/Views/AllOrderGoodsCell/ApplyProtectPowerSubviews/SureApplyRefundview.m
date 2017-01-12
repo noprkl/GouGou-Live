@@ -104,7 +104,7 @@
 - (UISwitch *)swich {
     if (!_swich) {
         _swich = [[UISwitch alloc] init];
-        [_swich setOn:NO];
+        [_swich setOn:YES];// 默认开启
         _swich.onTintColor = [UIColor colorWithHexString:@"#99cc33"];
         [_swich addTarget:self action:@selector(openAction:) forControlEvents:UIControlEventValueChanged];
     }
@@ -151,7 +151,11 @@
 }
 
 - (void)openAction:(UISwitch *)swich {
-
+    if (swich.on) {
+        self.refundTextfiled.enabled = NO;
+    }else{
+        self.refundTextfiled.enabled = YES;
+    }
     if (_openBlock) {
         _openBlock(swich.isOn);
     }

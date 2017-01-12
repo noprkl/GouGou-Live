@@ -25,8 +25,13 @@
 }
 - (void)setModel:(SystemPushMessageModel *)model {
     _model = model;
-    self.timeLabel.text = model.createTime;
+    self.timeLabel.text = [NSString stringFromDateString:model.createTime];
     self.messageContentLabel.text = model.conent;
+    if (model.conent.length == 0) {
+        self.timeLabel.hidden = YES;
+    }else{
+        self.timeLabel.hidden = NO;
+    }
 }
 - (void)setUnReadCount:(NSInteger)unReadCount {
     _unReadCount = unReadCount;
@@ -34,7 +39,8 @@
     if (unReadCount == 0) {
         self.messageCountLabel.hidden = YES;
     }else{
-        self.messageCountLabel.text = [@(unReadCount) stringValue];
+        self.messageCountLabel.hidden = NO;
+        self.messageCountLabel.text = [NSString stringWithFormat:@"%ld", unReadCount];
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

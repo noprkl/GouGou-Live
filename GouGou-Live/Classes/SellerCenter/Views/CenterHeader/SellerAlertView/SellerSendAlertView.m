@@ -285,6 +285,7 @@
         self.shipStyleNote.hidden = self.shipStyleTextField.text.length > 0 ? YES:NO;
 
         _commitBlock(self.shipStyleTextField.text, self.shipOrderTextField.text);
+        
     }
 }
 
@@ -349,7 +350,7 @@
 #pragma mark - 设置当前view的frame
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 285 - 260, SCREEN_WIDTH, 285);
+    rect = CGRectMake(0, SCREEN_HEIGHT - 285 - 280, SCREEN_WIDTH, 285);
     self.frame = rect;
     
     // 约束

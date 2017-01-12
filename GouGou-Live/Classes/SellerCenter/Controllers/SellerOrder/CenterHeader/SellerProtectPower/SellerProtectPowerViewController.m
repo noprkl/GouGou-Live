@@ -25,14 +25,14 @@ static NSString *cellid = @"SellerProtectPowerCell";
 #pragma mark - 网络请求
 // 请求维权的订单
 - (void)getRequestProtectPowerOrder {
-    NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
-                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+    NSDictionary *dict = @{
+                           @"user_id":[UserInfos sharedUser].ID,
                            @"page":@(1),
                            @"pageSize":@(10),
                            };
     [self getRequestWithPath:API_My_activist params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerProtectModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArr = [SellerProtectModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -49,7 +49,6 @@ static NSString *cellid = @"SellerProtectPowerCell";
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         [self getRequestProtectPowerOrder];
-        
         [self.tableView.mj_header endRefreshing];
     }];
 }

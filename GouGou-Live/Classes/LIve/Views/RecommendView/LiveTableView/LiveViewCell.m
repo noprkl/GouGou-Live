@@ -100,13 +100,13 @@
         [self.dogCardScrollView addSubview:cardView];
     } else {
         NSInteger count = dogInfos.count;
-        self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 10), 0);
 
         CGFloat w = 300;
         CGFloat h = 93;
         CGFloat x = 0;
         CGFloat y = 10;
-        
+        self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 20), 0);
+
         for (NSInteger i = 0; i < count; i ++) {
             x = i * (w + 20) + 10;
             
@@ -120,7 +120,7 @@
             cardView.tag = i + 50;
 //            cardView.layer.cornerRadius = 5;
 //            cardView.layer.masksToBounds = YES;
-            [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
+//            [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
             [self.dogCardScrollView addSubview:cardView];
         }
     }

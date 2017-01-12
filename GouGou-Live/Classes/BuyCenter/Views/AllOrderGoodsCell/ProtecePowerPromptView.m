@@ -55,7 +55,6 @@
         make.top.equalTo(weakself.titlelabel.bottom).offset(5);
         make.left.equalTo(weakself.left).offset(5);
         make.right.equalTo(weakself.right).offset(-5);
-
     }];
     
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -161,7 +160,7 @@
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
     CGFloat W = SCREEN_WIDTH - 120;
-    CGFloat H = 130;
+    CGFloat H = 150;
     rect = CGRectMake((SCREEN_WIDTH - W) / 2, (SCREEN_HEIGHT - H) / 2, W, H);
     self.frame = rect;
     //渐入动画

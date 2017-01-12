@@ -25,7 +25,7 @@
 - (void)setModel:(SystemPushMessageModel *)model {
     _model = model;
     self.notificationTime.text = [NSString stringFromDateString:model.createTime];
-    self.notificationType.text = model.type;
+    self.notificationType.text = model.typeName;
     self.notificationContent.text = model.conent;
 }
 

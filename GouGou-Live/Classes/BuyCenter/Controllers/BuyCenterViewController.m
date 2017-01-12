@@ -17,16 +17,15 @@
 #import "NSString+MD5Code.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
-#import <MessageUI/MessageUI.h>
 
-@interface BuyCenterViewController ()<MFMessageComposeViewControllerDelegate>
+@interface BuyCenterViewController ()
 
 @end
 
 @implementation BuyCenterViewController
 #pragma mark - 删除订单网络请求
 // 删除订单
-- (void)clickDeleteOrder:(BuyCenterModel *)model endOptioal:(EndOptionalBlock)endOptional {
+- (void)clickDeleteOrder:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional {
     
     // 点击删除订单出现的弹框
     DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
@@ -35,8 +34,8 @@
     prompt.sureBlock = ^(UIButton * btn) {
         // 点击确定按钮，删除订单
         NSDictionary * dict = @{
-                                @"id":@([model.ID intValue]),
-                                @"user_id":@([[UserInfos sharedUser].ID intValue])
+                                @"id":orderID,
+                                @"user_id":[UserInfos sharedUser].ID
                                 };
         
         [self getRequestWithPath:API_Order_Delete params:dict success:^(id successJson) {
@@ -55,7 +54,7 @@
 
 #pragma mark - 支付
 /** 根据支付状态请求支付金额 */
-- (void)payMoneyWithOrderID:(NSString *)orderID payStyle:(NSString *)payStyle {
+- (void)payMoneyWithOrderID:(NSString *)orderID payStyle:(NSString *)payStyle endOptioal:(EndOptionalBlock)endOptional  {
     
     if ([payStyle isEqualToString:@"支付全款"]) {
         // 生成待支付全款订单
@@ -73,7 +72,10 @@
                 }else{
                     NSString *price = successJson[@"data"][@"product_price"];
                     NSString *orderid = successJson[@"data"][@"order_id"];
-                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID status:5];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID status:5 endOptioal:^{
+                        // 回调
+                        endOptional();
+                    }];
                 }
             }
         } error:^(NSError *error) {
@@ -96,7 +98,10 @@
                 }else{
                     NSString *price = successJson[@"data"][@"product_deposit"];
                     NSString *orderid = successJson[@"data"][@"order_id"];
-                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID status:2];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID status:2 endOptioal:^{
+                        // 回调
+                        endOptional();
+                    }];
                 }
             }
         } error:^(NSError *error) {
@@ -119,7 +124,10 @@
                 }else{
                     NSString *price = successJson[@"data"][@"product_balance"];
                     NSString *orderid = [NSString stringWithFormat:@"%@", successJson[@"data"][@"order_id"]];
-                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID status:3];
+                    [self chosePayStyleWIthOrderID:orderid protductPrice:price wallentpay:orderID status:3 endOptioal:^{
+                        // 回调
+                        endOptional();
+                    }];
                 }
             }
         } error:^(NSError *error) {
@@ -128,16 +136,19 @@
     }
 }
 /** 根据选择支付方式进行支付 */
-- (void)chosePayStyleWIthOrderID:(NSString *)orderID protductPrice:(NSString *)price wallentpay:(NSString *)wallentid status:(int)status{
+- (void)chosePayStyleWIthOrderID:(NSString *)orderID protductPrice:(NSString *)price wallentpay:(NSString *)wallentid status:(int)status endOptioal:(EndOptionalBlock)endOptional {
     PayMoneyPrompt * payMonery = [[PayMoneyPrompt alloc] init];
     payMonery.payMoney = [NSString stringWithFormat:@"%0.2lf",[price floatValue]];
     payMonery.dataArr = @[@"支付定金",@"应付金额",@"支付方式",@"账户余额支付",@"微信支付",@"支付宝支付",@"取消"];
     [payMonery show];
     payMonery.payCellBlock = ^(NSString *payWay){
-        [self payMoneyFroWay:payWay orderID:orderID money:price wallentpay:wallentid status:status];
+        [self payMoneyFroWay:payWay orderID:orderID money:price wallentpay:wallentid status:status endOptioal:^{
+            // 回调
+            endOptional();
+        }];
     };
 }
-- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money wallentpay:(NSString *)wallentid status:(int)status{
+- (void)payMoneyFroWay:(NSString *)payWay orderID:(NSString *)orderID money:(NSString *)money wallentpay:(NSString *)wallentid status:(int)status endOptioal:(EndOptionalBlock)endOptional {
     if ([payWay isEqualToString:@"账户余额支付"]) {
         // 支付密码提示框
         PromptView * prompt = [[PromptView alloc] init];
@@ -156,7 +167,10 @@
                 DLog(@"%@", successJson);
                 weakPrompt.noteStr = successJson[@"message"];
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
-                    [self walletPayWithOrderId:wallentid price:money payPwd:[NSString md5WithString:text] states:status];
+                    [self walletPayWithOrderId:wallentid price:money payPwd:[NSString md5WithString:text] states:status endOptioal:^{
+                        // 回调
+                        endOptional();
+                    }];
                     [weakPrompt dismiss];
                 }
             } error:^(NSError *error) {
@@ -166,15 +180,21 @@
         [prompt show];
     }
     if ([payWay isEqualToString:@"支付宝支付"]) {
-        [self aliPayWithOrderId:orderID totalFee:money];
+        [self aliPayWithOrderId:orderID totalFee:money endOptioal:^{
+            // 回调
+            endOptional();
+        }];
     }
     if ([payWay isEqualToString:@"微信支付"]) {
         
-        [self WeChatPayWithOrderID:orderID totalFee:money];
+        [self WeChatPayWithOrderID:orderID totalFee:money endOptioal:^{
+            // 回调
+            endOptional();
+        }];
     }
 }
 /** 钱包支付 2定金 3全款 */
-- (void)walletPayWithOrderId:(NSString *)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state {
+- (void)walletPayWithOrderId:(NSString *)orderID price:(NSString *)price payPwd:(NSString *)payPwd states:(int)state endOptioal:(EndOptionalBlock)endOptional {
 
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID,
@@ -187,12 +207,14 @@
     [self postRequestWithPath:API_Wallet params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"message"]];
+        // 回调
+        endOptional();
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
 /** 微信支付 */
-- (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(NSString *)fee {
+- (void)WeChatPayWithOrderID:(NSString *)orderID totalFee:(NSString *)fee endOptioal:(EndOptionalBlock)endOptional {
     NSString *money = [NSString stringWithFormat:@"%.0lf", [fee floatValue] * 100];
     
     NSDictionary *dict = @{
@@ -219,6 +241,8 @@
             BOOL flag = [WXApi sendReq:req];
             if (flag) {
                 DLog(@"支付成功");
+                // 回调
+                endOptional();
             }else{
                 DLog(@"支付失败");
             }
@@ -230,7 +254,7 @@
     }];
 }
 /** 支付宝支付 */
-- (void)aliPayWithOrderId:(NSString *)orderID totalFee:(NSString *)fee {
+- (void)aliPayWithOrderId:(NSString *)orderID totalFee:(NSString *)fee endOptioal:(EndOptionalBlock)endOptional {
 
     NSString *money = [NSString stringWithFormat:@"%.0lf", [fee floatValue] * 100];
     NSDictionary *dit = @{
@@ -241,27 +265,32 @@
     [self getRequestWithPath:@"appalipay/signatures_url.php" params:dit success:^(id successJson) {
         DLog(@"%@", successJson);
         [self showAlert:successJson[@"msg"]];
-        [self aliPayWithOrderString:successJson[@"data"]];
+        [self aliPayWithOrderString:successJson[@"data"] endOptioal:^{
+            // 回调
+            endOptional();
+        }];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
-- (void)aliPayWithOrderString:(NSString *)orderStr {
+- (void)aliPayWithOrderString:(NSString *)orderStr endOptioal:(EndOptionalBlock)endOptional {
     if (orderStr != nil) {
         
         NSString *appScheme = @"ap2016112203105439";
         
         [[AlipaySDK defaultService] payOrder:orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             DLog(@"reslut = %@",resultDic);
+            // 回调
+            endOptional();
         }];
     }
 }
 
 #pragma mark - 取消订单网络请求
-- (void)getCancleOrderRequest:(BuyCenterModel *)model {
+- (void)getCancleOrderRequest:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional {
 
-    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
-                            @"order_id":@([model.ID intValue]),
+    NSDictionary * dict = @{@"user_id":[UserInfos sharedUser].ID,
+                            @"order_id":orderID,
                             @"note":@"test"
                             };
     
@@ -269,7 +298,8 @@
         
         DLog(@"%@",successJson[@"code"]);
         DLog(@"%@",successJson[@"message"]);
-
+        // 回调
+        endOptional();
     } error:^(NSError *error) {
        
         DLog(@"%@",error);
@@ -277,7 +307,7 @@
     }];
 }
 // 点击取消订单
-- (void)clickCancleOrder:(BuyCenterModel *)model {
+- (void)clickCancleOrder:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional {
     
     
     // 点击取消订单出现的弹框
@@ -308,7 +338,10 @@
         // 点击cell
         cancleOrder.reasonCellBlock = ^(NSString *text) {
              DLog(@"%@", text);
-            [self getCancleOrderRequest:model];
+            [self getCancleOrderRequest:orderID endOptioal:^{
+                // 回调
+                endOptional();
+            }];
             [cancleSelf dismiss];
             // 弹框退出，要删除对应cell
         };
@@ -317,10 +350,10 @@
     
 }
 #pragma mark - 不想买了网络请求
-- (void)getNobuyRequest {
+- (void)getNobuyRequest:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional {
 
     NSDictionary *dict = @{
-                           @"id":@(12),
+                           @"id":orderID,
                            @"user_id":@([[UserInfos sharedUser].ID intValue])
                            };
 
@@ -328,7 +361,8 @@
         
         DLog(@"%@",successJson[@"code"]);
         DLog(@"%@",successJson[@"message"]);
-        
+        // 回调
+        endOptional();
     } error:^(NSError *error) {
         
         DLog(@"%@",error);
@@ -336,15 +370,13 @@
 
 }
 // 点击不想买了
-- (void)clickNotBuy:(BuyCenterModel *)model {
+- (void)clickNotBuy:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional {
     // 点击不想买了按钮出现的弹框
     DeletePrommtView * allpyPrompt = [[DeletePrommtView alloc] init];
     allpyPrompt.message = @"放弃定金后，定金将全部打给卖家";
     __weak typeof(allpyPrompt) weakself = allpyPrompt;
     
     allpyPrompt.sureBlock = ^(UIButton * btn) {
-        // 不想买了
-        [self getNobuyRequest];
         
         [weakself dismiss];
         
@@ -368,6 +400,12 @@
                 if ([successJson[@"message"] isEqualToString:@"验证成功"]) {
                     // 申请成功
                     [weakPrompt dismiss];
+                    // 回调
+                    // 不想买了
+                    [self getNobuyRequest:orderID endOptioal:^{
+                        // 回调
+                        endOptional();
+                    }];
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -415,9 +453,9 @@
     
 }
 // 点击提醒发货
-- (void)clickConsignment:(BuyCenterModel *)model {
+- (void)clickConsignment:(NSString *)orderID { 
     NSDictionary *dict = @{
-                           @"id":model.ID,
+                           @"id":orderID,
                            @"user_id":[UserInfos sharedUser].ID
                            };
     [self getRequestWithPath:API_Order_remind params:dict success:^(id successJson) {

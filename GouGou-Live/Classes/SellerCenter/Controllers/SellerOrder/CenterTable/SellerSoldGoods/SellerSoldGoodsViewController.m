@@ -50,7 +50,7 @@ static NSString *closeCell = @"SellerCloseCell";
     DLog(@"%@", dict);
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -136,8 +136,10 @@ static NSString *closeCell = @"SellerCloseCell";
         
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
         cell.model = model;
-        cell.orderState = @"待付宽";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.orderState = @"待付款";
+        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
+        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
+        cell.costMessage = @[finalMoney, depositMoney];
 
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
@@ -154,8 +156,11 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.model = model;
         cell.orderState = @"待付定金";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
-        cell.costMessage = @[allMoney];
+        
+        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
+        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
+        cell.costMessage = @[finalMoney, depositMoney];
+
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
         
@@ -169,9 +174,9 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.model = model;
         cell.orderState = @"待付尾款";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        
+        NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productDeposit];
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
-        cell.costMessage = @[finalMoney];
+        cell.costMessage = @[depositMoney, finalMoney];
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
         
@@ -191,10 +196,10 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.model = model;
 
         cell.orderState = @"待付全款";
-        cell.btnTitles = @[@"联系买家"];
-        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
-        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
-        cell.costMessage = @[finalMoney, depositMoney];
+        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
+        cell.costMessage = @[allMoney];
+
         [self.btnTitles addObject:cell.btnTitles];
         [self.states addObject:cell.orderState];
         
@@ -479,9 +484,10 @@ static NSString *closeCell = @"SellerCloseCell";
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+        SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
         sendView.orderID = orderModel.ID;
         
+        __weak typeof(sendView) weakSend = sendView;
         sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
             NSDictionary *dict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
@@ -489,22 +495,21 @@ static NSString *closeCell = @"SellerCloseCell";
                                    @"waybill_number":shipOrder, // 运单号
                                    @"transportation":shipStyle
                                    };
+            DLog(@"%@", dict);
             [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
-                if ([successJson[@"code"] intValue] == 1) {
-                    sendView.successNote.text = @"发货成功";
-                    sendView = nil;
-                    [sendView dismiss];
+                weakSend.successNote.hidden = NO;
+                if ([successJson[@"message"] isEqualToString:@"成功"]) {
+                    weakSend.successNote.text = @"订单发货成功";
+                    [weakSend dismiss];
+                    [self getRequestAllOrder];
                 }else{
-                    sendView.successNote.text = @"发货失败";
+                    weakSend.successNote.text = @"订单发货失败";
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
-        };
-        sendView.dismissBlock = ^(){
-            
         };
         [sendView show];
 

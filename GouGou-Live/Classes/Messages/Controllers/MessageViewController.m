@@ -27,6 +27,8 @@
 
 @property (nonatomic, strong) NSMutableArray *loadArr; /**< 已加载 */
 
+@property (nonatomic, assign) NSInteger unread; /**< 未读 */
+
 @end
 
 static NSString *cellid1 = @"MessageListCell";
@@ -62,19 +64,31 @@ static NSString *cellid2 = @"NotificationMessageCell";
 // 获得系统通知消息
 - (void)postRequestGetSystemPush {
     // ([[UserInfos sharedUser].ID integerValue])
-    if (![UserInfos getUser]) {
-        [UserInfos sharedUser].ID = @"";
+    if ([UserInfos getUser]) {
+        NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
+        
+        [self getRequestWithPath:API_System_msg params:dict success:^(id successJson) {
+            self.systemMessageArr = @[];
+            DLog(@"%@", successJson);
+            if ([successJson[@"code"] isEqualToString:@"1"]) {
+                self.systemMessageArr = [SystemPushMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+               // 未读消息
+                NSInteger uncount = 0;
+                for (NSInteger i = 0; i < self.systemMessageArr.count; i++) {
+                    SystemPushMessageModel *model = self.systemMessageArr[i];
+                    if ([model.status integerValue] == 0) {
+                        uncount ++;
+                    }
+                }
+                self.unread = uncount;
+                [self.tableView reloadData];
+            }else{
+                self.unread = 0;
+            }
+        } error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
     }
-    NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
-    [self getRequestWithPath:API_System_msg params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        if ([successJson[@"code"] isEqualToString:@"1"]) {
-            self.systemMessageArr = [SystemPushMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            [self.tableView reloadData];
-        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
 }
 #pragma mark
 #pragma mark - 获取会话
@@ -193,14 +207,8 @@ static NSString *cellid2 = @"NotificationMessageCell";
         NotificationMessageCell *notifiCell = [tableView dequeueReusableCellWithIdentifier:cellid2];
         notifiCell.selectionStyle = UITableViewCellSelectionStyleNone;
        
-        notifiCell.model = [self.systemMessageArr lastObject];
-        NSString * docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject];
-        NSString * fileName = [docDir stringByAppendingPathComponent:SystemMessage];
-        DLog(@"%@", fileName);
-//        NSArray * read = [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-        NSArray * read = [NSArray arrayWithContentsOfFile:fileName];
-
-        notifiCell.unReadCount = self.systemMessageArr.count - read.count;
+        notifiCell.model = [self.systemMessageArr firstObject];
+        notifiCell.unReadCount = self.unread;
         return notifiCell;
     }
     if (indexPath.section == 1) {
@@ -367,7 +375,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
     if (indexPath.section == 0) {
         SystemNotificationViewController *systemVC = [[SystemNotificationViewController alloc] init];
         systemVC.hidesBottomBarWhenPushed = YES;
-        systemVC.models = self.systemMessageArr;
         [self.navigationController pushViewController:systemVC animated:YES];
     }
     if (indexPath.section == 1) {

@@ -47,41 +47,40 @@
 // 约束
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self.line makeConstraints:^(MASConstraintMaker *make) {
-        make.left.width.equalTo(self);
+    [self.line remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left);
         make.top.equalTo(self.top);
-        make.height.equalTo(10);
+        make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 10));
     }];
-    [self.buyerView makeConstraints:^(MASConstraintMaker *make) {
-        make.left.width.equalTo(self);
+    [self.buyerView remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left);
         make.top.equalTo(self.line.bottom);
-        make.height.equalTo(65);
+        make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 65));
     }];
-    [self.dogCardView makeConstraints:^(MASConstraintMaker *make) {
-        make.left.width.equalTo(self);
+    [self.dogCardView remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left);
         make.top.equalTo(self.buyerView.bottom).offset(10);
-        make.height.equalTo(78);
+        make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 78));
     }];
     
     
     CGFloat height = [_dogImageView getCellHeightWithImages:self.images];
 
-    [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
-        make.left.width.equalTo(self);
+    [self.dogImageView remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left);
         make.top.equalTo(self.dogCardView.bottom).offset(10);
-        make.height.equalTo(height);
+        make.size.equalTo(CGSizeMake(SCREEN_WIDTH, height));
     }];
-    [self.startView makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dogImageView.bottom).offset(10);
+    
+    [self.startView remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.bottom).offset(-10);
         make.right.equalTo(self.right).offset(-10);
         make.size.equalTo(CGSizeMake(100, 15));
     }];
-    [self.pleaseLabel makeConstraints:^(MASConstraintMaker *make) {
+    [self.pleaseLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.startView.centerY);
         make.right.equalTo(self.startView.left).offset(-10);
     }];
-
 }
 - (void)setModel:(SellerAccepeRateModel *)model {
     // 买家信息
@@ -89,7 +88,7 @@
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
         [self.buyerView.buyerIcon sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"头像"]];
     }
-    self.buyerView.buyerName.text = model.userNickName;
+    self.buyerView.buyerName.text = model.userName;
     self.buyerView.commentContent.text = model.comment;
     self.buyerView.commentTime.text = [NSString stringFromDateString:model.createTime];
 
@@ -100,12 +99,13 @@
     }
     
     self.dogCardView.dogNameLabel.text = model.name;
-    self.dogCardView.dogKindLabel.text = model.kind;
-    self.dogCardView.dogAgeLabel.text = model.age;
-    self.dogCardView.dogSizeLabel.text = model.size;
-    self.dogCardView.dogColorLabel.text = model.color;
-    self.dogCardView.nowPriceLabel.text = model.price;
+    self.dogCardView.dogKindLabel.text = model.kindName;
+    self.dogCardView.dogAgeLabel.text = model.ageName;
+    self.dogCardView.dogSizeLabel.text = model.sizeName;
+    self.dogCardView.dogColorLabel.text = model.colorName;
+    self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
+    self.startView.startCount = model.point;
 }
 - (void)setImages:(NSArray *)images {
     _images = images;

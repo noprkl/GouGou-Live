@@ -16,17 +16,17 @@ typedef void(^EndOptionalBlock)();
 
 @interface BuyCenterViewController : BaseViewController
 /** 删除订单 */
-- (void)clickDeleteOrder:(BuyCenterModel *)model endOptioal:(EndOptionalBlock)endOptional;
+- (void)clickDeleteOrder:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional;
 /** 根据支付状态请求支付金额 进行支付*/
-- (void)payMoneyWithOrderID:(NSString *)orderID payStyle:(NSString *)payStyle;
+- (void)payMoneyWithOrderID:(NSString *)orderID payStyle:(NSString *)payStyle endOptioal:(EndOptionalBlock)endOptional;
 /** 点击取消订单 */
-- (void)clickCancleOrder:(BuyCenterModel *)model;
+- (void)clickCancleOrder:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional;
 /** 取消订单 */
-- (void)getCancleOrderRequest:(BuyCenterModel *)model;
+- (void)getCancleOrderRequest:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional;
 /** 点击不想买了 */
-- (void)clickNotBuy:(BuyCenterModel *)model;
+- (void)clickNotBuy:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional;
 /** 点击申请维权调用 */
 - (void)clickApplyProtectPower:(NSString *)orderID;
 /** 点击提醒发货 */
-- (void)clickConsignment:(BuyCenterModel *)model;
+- (void)clickConsignment:(NSString *)orderID;
 @end

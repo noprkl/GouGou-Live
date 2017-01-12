@@ -26,18 +26,18 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 #pragma mark - 网络请求
 - (void)getConsignmentRequest {
     
-    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
-                            @"status":@(3),
+    NSDictionary * dict = @{@"user_id":[UserInfos sharedUser].ID,
+                            @"status":@(2),
                             @"page":@(1),
                             @"pageSize":@(10)
                             };
-    
+    [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
         
-        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         
         [self.tableview reloadData];
-        
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -119,7 +119,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
         if ([button.titleLabel.text  isEqual:@"提醒发货"]) {
             
             // 跳转至提醒发货
-            [self clickConsignment:model];
+            [self clickConsignment:model.ID];
             DLog(@"%@",button.titleLabel.text);
             
         } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
@@ -146,7 +146,7 @@ static NSString * waitConsignmentCell = @"waitConsignmentCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BuyCenterModel *model = self.dataArray[indexPath.row];
     WaitSellConsigmentViewContorller * waitSelllVC = [[WaitSellConsigmentViewContorller alloc] init];
-    waitSelllVC.detailModel = model;
+    waitSelllVC.orderID = model.ID;
     [self.navigationController pushViewController:waitSelllVC animated:YES];
 }
 

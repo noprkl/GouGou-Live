@@ -53,20 +53,20 @@
         [button setTitle:self.titleArray[i] forState:UIControlStateNormal];
         
         [button setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateSelected];
+//        [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateSelected];
 
         [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
         
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         
         [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-        
-        if (i == 0) {
-            button.selected = YES;
-            [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
-            button.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
-            self.lastButton = button;
-        }
+        [button addTarget:self action:@selector(clickbuttonDown:) forControlEvents:(UIControlEventTouchDown)];
+//        if (i == 0) {
+//            button.selected = YES;
+//            [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+//            button.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+//            self.lastButton = button;
+//        }
         [self addSubview:button];
     }
 }
@@ -77,15 +77,18 @@
         _clickBtnBlock(self.titleArray[btn.tag - 100]);
 
     }
-    self.lastButton.selected = NO;
+//    self.lastButton.selected = NO;
     
-    self.lastButton.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    [self.lastButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    self.lastButton.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+//    [self.lastButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     btn.selected = YES;
-    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
-    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+    [btn setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:UIControlStateNormal];
+    btn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     self.lastButton = btn;
 }
 
-
+- (void)clickbuttonDown:(UIButton *)btn {
+    [btn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    btn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+}
 @end

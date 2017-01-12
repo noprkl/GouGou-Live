@@ -37,7 +37,7 @@
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
         [self.contentView addSubview:self.dogImageView];
         [self.contentView addSubview:self.dogNameLabel];
         [self.contentView addSubview:self.kindLabel];

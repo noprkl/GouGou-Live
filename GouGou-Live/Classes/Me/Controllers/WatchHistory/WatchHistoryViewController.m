@@ -30,6 +30,7 @@ static NSString * watchCell = @"watchCellID";
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    [self showHudInView:self.view hint:@"加载..."];
     [self getRequestWithPath:API_List_view_history params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (successJson[@"data"]) {
@@ -41,6 +42,7 @@ static NSString * watchCell = @"watchCellID";
             self.tableview.hidden = YES;
             self.noneDateView.hidden = NO;
         }
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

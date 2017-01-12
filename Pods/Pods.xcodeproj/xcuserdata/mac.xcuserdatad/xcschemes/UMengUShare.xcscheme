@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '3E096990B019D233497C07A057EF7609'
+               BlueprintIdentifier = '7CF2E9EF87D0D9D8CC5D0CE7BC4DCAAC'
                BlueprintName = 'UMengUShare'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libUMengUShare.a'>

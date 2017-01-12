@@ -77,6 +77,10 @@
     _orderCode = orderCode;
     self.numLabel.text = orderCode;
 }
+- (void)setOrderStyle:(NSString *)orderStyle {
+    _orderStyle = orderStyle;
+    self.expressNameLabe.text = orderStyle;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UILabel *)logisticInfoLabel {

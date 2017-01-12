@@ -75,7 +75,7 @@
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"2247552123"  appSecret:@"b8dbc8631b270432bade30f503ebf4c1" redirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     
     // 微信支付
-   BOOL flag = [WXApi registerApp:@"wxbef5a0656069e8e2" withDescription:@"demo 2.0"];
+   BOOL flag = [WXApi registerApp:@"wxbef5a0656069e8e2" withDescription:@"爪行宠物直播"];
     if (flag) {
         DLog(@"微信注册成功");
     }else{

@@ -68,7 +68,6 @@
         make.top.equalTo(weakself.sureDeleteLabel.bottom).offset(10);
         make.left.right.equalTo(weakself);
         make.height.equalTo(1);
-
     }];
 
     [_verticalView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -212,7 +211,7 @@
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
     CGFloat W = SCREEN_WIDTH - 120;
-    CGFloat H = 130;
+    CGFloat H = 150;
     rect = CGRectMake((SCREEN_WIDTH - W) / 2, (SCREEN_HEIGHT - H) / 2, W, H);
     self.frame = rect;
     //渐入动画

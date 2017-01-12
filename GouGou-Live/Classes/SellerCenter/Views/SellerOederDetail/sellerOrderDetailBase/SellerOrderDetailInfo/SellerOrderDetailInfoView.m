@@ -57,7 +57,7 @@
     }];
     [self.orderCodeNumber makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.orderCode.centerY);
-        make.left.equalTo(self.orderCode.right);
+        make.left.equalTo(self.orderCode.right).offset(5);
     }];
     [self.copBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.orderCode.centerY);
@@ -110,7 +110,7 @@
 - (UILabel *)orderCode {
     if (!_orderCode) {
         _orderCode = [[UILabel alloc] init];
-        _orderCode.text = @"订单编号";
+        _orderCode.text = @"订单编号:";
         _orderCode.textColor = [UIColor colorWithHexString:@"#000000"];
         _orderCode.font = [UIFont systemFontOfSize:16];
     }

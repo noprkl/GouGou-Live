@@ -36,7 +36,7 @@ static NSString *cellid = @"SellerWaitAcceptCell";
                            };
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);

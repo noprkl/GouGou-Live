@@ -21,8 +21,6 @@
 #import "CreateLiveViewController.h" // 创建直播
 #import "FocusAndFansModel.h" 
 #import "PersonalMessageModel.h"
-#import <FMDB.h>
-#import "FMDBUser.h"
 
 @interface MyViewController () <UITableViewDelegate, UITableViewDataSource>
 

@@ -171,10 +171,13 @@
 //    NSDateFormatter *formate = [[NSDateFormatter alloc] init];
 //    formate.dateFormat = @"YYMMddHHmmss";
 //    NSString *formatDate = [formate stringFromDate:date];
-    NSString *timeSp = [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    NSString *timeSp = [NSString stringWithFormat:@"%.0f", [date timeIntervalSince1970]];
 
     // 时间差 剩余时间 关闭时间-当前时间
-    NSInteger timeLast = [closeTime integerValue] / 1000 - [timeSp integerValue];
+    if (closeTime.length > 10) {
+        closeTime = [closeTime substringWithRange:NSMakeRange(0, 10)];
+    }
+    NSInteger timeLast = [closeTime integerValue] - [timeSp integerValue];
     return timeLast;
 }
 // 得到当前的时间戳

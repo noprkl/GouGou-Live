@@ -14,9 +14,6 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - FMDB (2.6.2):
-    - FMDB/standard (= 2.6.2)
-  - FMDB/standard (2.6.2)
   - HappyDNS (0.3.10)
   - Masonry (1.0.2)
   - MJExtension (3.0.13)
@@ -55,7 +52,6 @@ PODS:
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
-  - SVProgressHUD (2.0.3)
   - TZImagePickerController (1.7.1)
   - UMengUShare/Core (6.0.1):
     - UMengUShare/Network
@@ -71,7 +67,6 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
-  - FMDB (~> 2.6.2)
   - Masonry (~> 1.0.1)
   - MJExtension (~> 3.0.13)
   - MJRefresh (~> 3.1.12)
@@ -79,7 +74,6 @@ DEPENDENCIES:
   - PLPlayerKit
   - SDCycleScrollView (~> 1.65)
   - SDWebImage (~> 3.7.0)
-  - SVProgressHUD (~> 2.0.3)
   - TZImagePickerController
   - UMengUShare/Social/QQ
   - UMengUShare/Social/Sina
@@ -88,7 +82,6 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
@@ -99,10 +92,9 @@ SPEC CHECKSUMS:
   PLPlayerKit: 1473253ee2d7863d8a78dbb3b965161245c51ad5
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
-  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   TZImagePickerController: cbfd57ba947263759b860f74132dd1bc33125afc
   UMengUShare: 418c2eaf7d8ba939916111d622bf5ea86c86285a
 
-PODFILE CHECKSUM: 819e1c4053af59760f9c80cf3a6a4d4bb54844e7
+PODFILE CHECKSUM: 4a90a035ca6262fb9b056fb9021e49a94e5e8ab0
 
 COCOAPODS: 1.0.1

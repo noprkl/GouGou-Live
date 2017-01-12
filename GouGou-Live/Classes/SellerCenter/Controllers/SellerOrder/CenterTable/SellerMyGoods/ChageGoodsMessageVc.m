@@ -59,6 +59,8 @@
 
 @property(nonatomic, strong) NSMutableArray *photoUrl; /**< 图片地址 */
 
+@property (nonatomic, strong) AddUpdataImagesView *photoView; /**< <#注释#> */
+
 @property(nonatomic, strong) UILabel *shipLabel; /**< 模板名字 */
 @property(nonatomic, strong) SellerShipTemplateModel *shipModel; /**< 模板信息 */
 @property (nonatomic, strong) NSString *shipCost; /**< 模板花费 */

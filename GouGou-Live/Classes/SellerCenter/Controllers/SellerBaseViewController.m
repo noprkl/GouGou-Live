@@ -7,8 +7,8 @@
 //
 
 #import "SellerBaseViewController.h"
-#import <MessageUI/MessageUI.h>
-@interface SellerBaseViewController ()<MFMessageComposeViewControllerDelegate>
+
+@interface SellerBaseViewController ()
 
 @end
 

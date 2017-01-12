@@ -10,6 +10,7 @@
 #import "LivingViewController.h"
 #import "PlayBackViewController.h"
 #import "MediaStreamingVc.h"
+#import "FavoriteLivePlayerVc.h"
 @interface BaseNavigationController ()
 
 @end

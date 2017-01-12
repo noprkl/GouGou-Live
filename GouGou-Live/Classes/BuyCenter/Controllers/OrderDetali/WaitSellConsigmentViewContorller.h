@@ -10,7 +10,7 @@
 
 @interface WaitSellConsigmentViewContorller : BuyCenterViewController
 
-// 订单模型
-@property (nonatomic, strong) BuyCenterModel *detailModel;
+//** 订单ID */
+@property (strong,nonatomic) NSString *orderID;
 
 @end

@@ -21,10 +21,9 @@
 #import "SellerAcceptedRateViewController.h"
 #import "SellerChangeViewController.h"
 #import "SellerProtectDetailModel.h"
-#import <MessageUI/MessageUI.h>
 #import "SellerSendAlertView.h"
 
-@interface SellerOrderDetailProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
+@interface SellerOrderDetailProtectPowerViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
@@ -129,6 +128,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
             }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPowerStateView *stateView = [[SellerProtectPowerStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
@@ -146,17 +146,25 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             state = [NSString stringWithFormat:@"买家于%@付定金,未付尾款", date];
             
         }else if ([self.orderInfo.status integerValue] == 7) {
+            state = @"待发货";
+            NSString *date;
+            if ([self.orderInfo.balancetime integerValue] > 0) {
+                date = [NSString stringFromDateString:self.orderInfo.balancetime];
 
+            }else{
+                if ( [self.orderInfo.fullTime integerValue] > 0){
+                    date = [NSString stringFromDateString:self.orderInfo.fullTime];
+                }
+            }
+                state = [NSString stringWithFormat:@"买家于%@付清款,未发货", date];
             
-            NSString *date = [NSString stringFromDateString:self.orderInfo.balancetime];
-            state = [NSString stringWithFormat:@"买家于%@付款,未发货", date];
         }else if ([self.orderInfo.status integerValue] == 8) {
             
             NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
             state = [NSString stringWithFormat:@"卖家于%@发货,未收货", date];
         }else if ([self.orderInfo.status integerValue] == 9) {
             state = @"待评价";
-            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
+            NSString *date = [NSString stringFromDateString:self.orderInfo.confirmTime];
             state = [NSString stringWithFormat:@"卖家于%@收货,未评价", date];
             
         }else if ([self.orderInfo.status integerValue] == 10) {
@@ -176,19 +184,26 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerProtectPLogisticsInfoView *logisticsInfoView = [[SellerProtectPLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
-            logisticsInfoView.orderCode = self.orderInfo.ID;
+            if (self.orderInfo.waybillNumber.length == 0) {
+                logisticsInfoView.orderCode = @"";
+                logisticsInfoView.orderStyle = @"未发货";
+            }else{
+                logisticsInfoView.orderCode = self.orderInfo.waybillNumber;
+                logisticsInfoView.orderStyle = self.orderInfo.transportation;
+            }
             [cell.contentView addSubview:logisticsInfoView];
             return cell;
-
         }
             break;
         case 2:
         {
             static NSString *cellid = @"cellid2";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
             }            cell.backgroundView = [[UIView alloc] init];
@@ -198,11 +213,9 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             backView.backgroundColor = [UIColor whiteColor];
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 10, 44)];
-            label.text = [NSString stringWithFormat:@"买家名称：%@", self.orderInfo.userNickName];
+            label.text = [NSString stringWithFormat:@"买家名称：%@", self.orderInfo.userName];
             label.font = [UIFont systemFontOfSize:16];
-            
             [backView addSubview:label];
-            
 
             [cell.contentView addSubview:backView];
             return cell;
@@ -213,6 +226,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         {
             static NSString *cellid = @"cellid3";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
             }            cell.backgroundView = [[UIView alloc] init];
@@ -241,7 +255,9 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             SellerOrderDetailMorePriceView *morePriceView = [[SellerOrderDetailMorePriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
         // 商品总价
@@ -253,7 +269,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         // 运费
         morePriceView.templatePriceCount.text = self.orderInfo.traficRealFee.length != 0 ?self.orderInfo.traficRealFee:@"0";
         // 尾款
-        morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance !=0 ?self.orderInfo.productRealBalance:@"0";
+        morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance.length !=0 ?self.orderInfo.productRealBalance:@"0";
         // 定金
         morePriceView.depositCount.text = self.orderInfo.productRealDeposit.length !=0 ? self.orderInfo.productRealDeposit:@"0";
 
@@ -268,7 +284,9 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
             NSArray *imsArr = [self.orderInfo.photoPath componentsSeparatedByString:@"|"];
             DogImageView *imageV = [[DogImageView alloc] init];
@@ -348,22 +366,22 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
-        changeVC.changeStyle = @"修改运费";
         changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
-        changeVC.changeStyle = @"修改价格";
         changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+        SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
         
         sendView.orderID = self.orderID;
+        __weak typeof(sendView) weakSend = sendView;
+
         sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
             NSDictionary *dict = @{
                                    @"user_id":[UserInfos sharedUser].ID,
@@ -374,13 +392,15 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
+                weakSend.successNote.hidden = NO;
                 if ([successJson[@"code"] intValue] == 1) {
-                    sendView.successNote.text = @"发货成功";
-                    sendView = nil;
-                    [sendView dismiss];
+                    weakSend.successNote.text = @"订单发货成功";
+                    [weakSend dismiss];
+                [self.navigationController popViewControllerAnimated:YES];
                 }else{
-                    sendView.successNote.text = @"发货失败";
+                    weakSend.successNote.text = @"订单发货失败";
                 }
+
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];

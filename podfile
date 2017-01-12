@@ -12,8 +12,6 @@ target 'GouGou-Live' do
 	pod 'SDCycleScrollView', '~> 1.65'
 	pod 'MJRefresh', '~> 3.1.12'
 	pod 'TZImagePickerController'	
-	pod 'FMDB', '~> 2.6.2'
-	pod 'SVProgressHUD', '~> 2.0.3'
 	
 	# U-Share SDK UI模块（分享面板，建议添加）
   	  pod 'UMengUShare/UI'
@@ -24,8 +22,8 @@ target 'GouGou-Live' do
     	# 集成QQ
           pod 'UMengUShare/Social/QQ'
         # 七牛云推流
-	 pod 'PLMediaStreamingKit'
-       	 pod 'PLPlayerKit'
+        pod 'PLMediaStreamingKit'
+        pod 'PLPlayerKit'
   # Pods for GouGou-Live
 
 end

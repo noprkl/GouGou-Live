@@ -31,9 +31,9 @@
         if (successJson) {
             self.dogInfo = [DogDetailModel mj_objectWithKeyValues:successJson[@"data"]];
             NSArray *imsArr = [self.dogInfo.pathBig componentsSeparatedByString:@","];
-            if (imsArr.count == 4) {
+            if (imsArr.count == 5) {//第一张可能是重复的，在后边干掉了
                 self.dogDetailView.contentSize = CGSizeMake(0, 650);
-            }else{
+            } else{
                 self.dogDetailView.contentSize = CGSizeMake(0, 0);
             }
             [self.view addSubview:self.dogDetailView];

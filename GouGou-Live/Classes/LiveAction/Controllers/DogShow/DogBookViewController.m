@@ -230,7 +230,7 @@
          '3','密码错误'
          '2','参数不能为空'
          */
-        if ([successJson[@"message"] isEqualToString:@"支付成功"]) {
+        if ([successJson[@"message"] isEqualToString:@"成功"]) {
             BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
             paySuccessVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:paySuccessVc animated:YES];
@@ -266,14 +266,11 @@
         DLog(@"sign:%@, openID:%@, partnerId:%@, prepayId:%@, nonceStr:%@, timeStamp:%u, package:%@", req.sign, req.openID, req.partnerId, req.prepayId, req.nonceStr, req.timeStamp, req.package);
         
         BOOL flag = [WXApi sendReq:req];
+        
         if (flag) {
-            
-            DLog(@"支付成功");
-            BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
-            paySuccessVc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:paySuccessVc animated:YES];
+            DLog(@"调起成功");
         }else{
-            DLog(@"支付失败");
+            DLog(@"调起失败");
         }
         
     } error:^(NSError *error) {
@@ -379,6 +376,12 @@
     [self postGetAdressRequest];
     // 通知监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getAcceptShopAdressFromAdress:) name:@"ShopAdress" object:nil];
+    // 微信支付监听
+    //检测是否装了微信软件
+    if ([WXApi isWXAppInstalled]) {
+        //监听通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOrderPayResult:) name:@"WXPay" object:nil];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -415,9 +418,23 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    // 地址通知
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopAdressFromAdress:) name:@"ShopAdress" object:nil];
 }
+- (void)getOrderPayResult:(NSNotification *)notification
+{
+    DLog(@"userInfo: %@",notification.userInfo);
+    DLog(@"%@", notification.object);
+    if ([notification.object isEqualToString:@"success"]){
+        BuySuccessVc *paySuccessVc = [[BuySuccessVc alloc] init];
+        paySuccessVc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:paySuccessVc animated:YES];
+
+    }else  if ([notification.object isEqualToString:@"cancel"]){
+        [self showAlert:@"取消微信支付"];
+    }else{
+        [self showAlert:@"支付失败"];
+    }
+}
+
 - (void)makeConstraint {
     [self.payCount makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.right);
@@ -454,7 +471,8 @@
         _tablevView.delegate = self;
         _tablevView.dataSource = self;
         _tablevView.bounces = NO;
-        _tablevView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+        _tablevView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tablevView.showsHorizontalScrollIndicator = NO;
     }
     return _tablevView;
 }
@@ -613,11 +631,11 @@
 }
 - (void)choseBuyDogType:(UIButton *)btn {
     TransformStyleView *transView = [[TransformStyleView alloc] init];
-    transView.detailPlist = @[@"价格 ¥80", @"按实结算"];
+    transView.detailPlist = @[@"价格 ¥0"];
     transView.transformCellBlock = ^(NSString *type){
         DLog(@"%@", type);
         
-        btn.selected = YES;
+    btn.selected = YES;
         
 #pragma mark 改变字体
         NSString *final = [NSString stringWithFormat:@"%0.2lf", ([self.model.price floatValue] * 0.9)];
@@ -737,7 +755,7 @@
     }
 }
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ShopAdress" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

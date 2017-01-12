@@ -17,5 +17,5 @@ typedef void(^ClickSellerLogisticsEditBtnBlock)();
 @property(nonatomic, strong) ClickSellerLogisticsEditBtnBlock editBlock; /**< 点击编辑回调 */
 
 @property (nonatomic, strong) NSString *transformNumber; /**< 运单编号 */
-
+@property (nonatomic, strong) NSString *transformStyle; /**< 运货方式 */
 @end

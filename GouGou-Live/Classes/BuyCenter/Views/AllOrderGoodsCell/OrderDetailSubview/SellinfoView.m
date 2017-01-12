@@ -77,15 +77,14 @@
         
         make.left.equalTo(weakself.userImage.right).offset(10);
         make.centerY.equalTo(weakself.centerY);
-        make.width.equalTo(80);
+        make.width.equalTo(70);
     }];
     
     [_certityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.MedrchantName.right).offset(10);
+        make.left.equalTo(weakself.MedrchantName.right);
         make.centerY.equalTo(weakself.centerY);
         make.size.equalTo(CGSizeMake(75, 25));
-        
     }];
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {

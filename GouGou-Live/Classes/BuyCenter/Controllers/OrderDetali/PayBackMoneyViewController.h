@@ -11,7 +11,7 @@
 @class BuyCenterModel;
 
 @interface PayBackMoneyViewController : BuyCenterViewController
-///** 订单详情模型 */
-@property (strong,nonatomic) BuyCenterModel *detailModel;
+//** 订单ID */
+@property (strong,nonatomic) NSString *orderID;
 
 @end

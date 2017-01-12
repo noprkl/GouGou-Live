@@ -24,6 +24,10 @@
     return self;
 }
 - (CGFloat)getCellHeightWithImages:(NSArray *)images {    
+    NSArray *arr = self.subviews;
+    for (UIView *view in arr) {
+        [view removeFromSuperview];
+    }
     int cols = 0;
     
     CGFloat x = 0;
@@ -73,7 +77,8 @@
         }
         [self addSubview:imageView];
     }
-    
+    [self layoutIfNeeded];
+
     return _maxY;
 }
 

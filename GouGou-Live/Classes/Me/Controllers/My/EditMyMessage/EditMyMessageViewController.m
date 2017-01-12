@@ -276,7 +276,16 @@ static NSString *cellid = @"cellid";
                 // 弹出框
                 EditNikeNameAlert *editNikeAlert = [[EditNikeNameAlert alloc] init];
                 [editNikeAlert show];
+            if ([UserInfos sharedUser].usernickname.length != 0) {
+                editNikeAlert.easyMessage = [UserInfos sharedUser].usernickname;
                 editNikeAlert.countText = 20;
+                editNikeAlert.easyMessage = @"";
+            }else{
+                editNikeAlert.placeHolder = @"用户昵称";
+                editNikeAlert.easyMessage = @"";
+                editNikeAlert.countText = 20;
+            }
+
                 editNikeAlert.sureBlock = ^(NSString *nickname){
                     if ([nickname isEqualToString:@""]) {
                         [self showAlert:@"请输入昵称"];
@@ -317,14 +326,12 @@ static NSString *cellid = @"cellid";
                 // 上传个性签名
                 if ([UserInfos sharedUser].usermotto.length != 0) {
                     weakSign.easyMessage = [UserInfos sharedUser].usermotto;
-                    weakSign.placeHolder = @"";
-                    NSString * string = [UserInfos sharedUser].usermotto;
-                    weakSign.countText = 17 - string.length;
+                    weakSign.countText = 17;
+                    weakSign.easyMessage = @"";
                 }else{
                     weakSign.placeHolder = @"这个人很懒，他什么也没留下";
                     weakSign.easyMessage = @"";
                     weakSign.countText = 17;
-                    
                 }
                 editSignAlert.sureBlock = ^(NSString *signaue){
                     if (![signaue isEqualToString:@""]) {

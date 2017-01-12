@@ -17,13 +17,12 @@
 #import "ProtectProwerTableModel.h"
 
 #import "SellerOrderDetailProtectPowerViewController.h"
-#import <MessageUI/MessageUI.h>
 
 static NSString * protectingCell = @"protectingCell";
 static NSString * protectSuccessCell = @"protectSuccessCell";
 static NSString * protectFailedCell = @"protectFailedCell";
 
-@interface ProtectPowerViewController ()<UITableViewDelegate,UITableViewDataSource, MFMessageComposeViewControllerDelegate>
+@interface ProtectPowerViewController ()<UITableViewDelegate,UITableViewDataSource>
 /** tableView */
 @property (strong,nonatomic) UITableView *tableview;
 /** 数据 */
@@ -35,15 +34,16 @@ static NSString * protectFailedCell = @"protectFailedCell";
 #pragma mark - 网络请求
 - (void)getProtectPowerRequest {
 
-    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
+    NSDictionary * dict = @{@"user_id":[UserInfos sharedUser].ID,
                             @"page":@(1),
                             @"pageSize":@(10)
                             };
-    
+    [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.tableview reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -169,7 +169,6 @@ static NSString * protectFailedCell = @"protectFailedCell";
             if (pab != nil) {
                 [self showAlert:@"已复制"];
             }
-            
         };
 
         return cell;
@@ -213,47 +212,6 @@ static NSString * protectFailedCell = @"protectFailedCell";
     }
     return cell1;
 }
-//- (void)clickServiceBtnAction {
-//    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
-//    
-//    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
-//        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
-//        
-//        controller.recipients = [NSArray arrayWithObject:SMSPhone];
-//        controller.body = @"测试发短信";
-//        controller.messageComposeDelegate = self;
-//        [self presentViewController:controller animated:YES completion:^{
-//            
-//        }];
-//        //修改短信界面标题
-//        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
-//    }else{
-//        [self showAlert:@"不支持发送短信"];
-//    }
-//}
-//#pragma mark
-//#pragma mark - 短信发送协议
-//- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-//    [controller dismissViewControllerAnimated:NO completion:^{
-//        
-//    }];//关键的一句   不能为YES
-//    
-//    switch ( result ) {
-//            
-//        case MessageComposeResultCancelled:
-//            
-//            [self showAlert:@"取消发送"];
-//            break;
-//        case MessageComposeResultFailed:// send failed
-//            [self showAlert:@"发送失败"];
-//            break;
-//        case MessageComposeResultSent:
-//            [self showAlert:@"发送成功"];
-//            break;
-//        default:
-//            break;
-//    }
-//}
 
 /*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

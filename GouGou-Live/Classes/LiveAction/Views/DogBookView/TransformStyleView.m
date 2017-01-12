@@ -32,7 +32,7 @@ static NSString *cellid = @"SizeFilterCellID";
 - (NSArray *)dataPlist {
     if (!_dataPlist) {
         
-        _dataPlist = @[@"运费：", @"运费实付："];
+        _dataPlist = @[@"免运费："];
     }
     return _dataPlist;
 }
@@ -50,7 +50,6 @@ static NSString *cellid = @"SizeFilterCellID";
     return self.dataPlist.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     
@@ -192,7 +191,8 @@ static NSString *cellid = @"SizeFilterCellID";
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - 176, SCREEN_WIDTH, 176);
+    CGFloat height = (self.dataPlist.count + 2) * 44;
+    rect = CGRectMake(0, SCREEN_HEIGHT - height, SCREEN_WIDTH, height);
     self.frame = rect;
     //渐入动画
     [self fadeIn];

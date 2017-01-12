@@ -32,12 +32,15 @@
                     params:(NSDictionary *)params
                    success:(HttpRequestSuccessBlock)Success
                      error:(HttpRequestErrorBlock)Error {
+//    [self showHudInView:self.view hint:@"加载中.."];
     [HTTPTool getRequestWithPath:path
                           params:params
                          success:^(id successJson) {
                              Success(successJson);
                          } error:^(NSError *error) {
+                             DLog(@"请求异常");
                              Error(error);
+                             [self hideHud];
     }];
 }
 
@@ -46,13 +49,15 @@
                      params:(NSDictionary *)params
                     success:(HttpRequestSuccessBlock)Success
                       error:(HttpRequestErrorBlock)Error {
-
+//    [self showHudInView:self.view hint:@"加载中.."];
     [HTTPTool postRequestWithPath:path
                            params:params
                           success:^(id successJson) {
                               Success(successJson);
                           }
                             error:^(NSError *error) {
+                                DLog(@"请求异常");
+                                [self hideHud];
                                 Error(error);
     }];
 }

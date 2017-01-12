@@ -88,6 +88,10 @@ static NSString * dogShowCell = @"dogShowCellID";
     [self addControllers];
     self.title = @"添加展播狗狗";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self  getRequestSellerDog];
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 
 - (void)initUI {

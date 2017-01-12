@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>FMDB.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>HappyDNS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -54,11 +49,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SVProgressHUD.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>TZImagePickerController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,22 +67,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>151F212F323F5835BCFF2895B39EBDCA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>33B206105E615422124E03C78DC64E01</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>3E096990B019D233497C07A057EF7609</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4901005FB7FDA3BD9AD78EA793890F53</key>
+		<key>12B4708863B296964BA362574316E6C4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,7 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>50C7F73287E74198B505790283CCB15C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>683670C37F190C9F884D24A8473326DD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +97,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>89902A131C07194DFEF8CC1FBF9492A0</key>
+		<key>7CF2E9EF87D0D9D8CC5D0CE7BC4DCAAC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,17 +112,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9F12FB4A63E20F601CFB2E64A65B57C1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>B4943715F609162F1EEAB93245DC66FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C28907C87F1618562730EE79193FD723</key>
+		<key>C06989508FF36A648D2784427992759E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

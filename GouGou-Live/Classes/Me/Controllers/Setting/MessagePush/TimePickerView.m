@@ -149,7 +149,6 @@
 }
 #pragma mark - 按钮点击
 - (void)clickSureBtnAction {
-    
     if (_timeBlock) {
         _timeBlock(self.timeString);
     }

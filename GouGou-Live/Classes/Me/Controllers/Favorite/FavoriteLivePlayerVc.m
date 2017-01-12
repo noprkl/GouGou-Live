@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "PlayerBackTopView.h"
 #import "PlayerBackDownView.h"
-
+#import "AppDelegate.h"
 @interface FavoriteLivePlayerVc ()
 {
     BOOL _isSliding; // 是否正在滑动
@@ -67,22 +67,40 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // 进入横屏
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIDeviceOrientationPortrait) {
-        [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = YES;
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationLandscapeRight;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
     }
+
     [self getRequestPlayBackURL];
     // 设置初始化
     [self initUI];
         // setPortraintLayout
     self.navigationController.navigationBarHidden = YES;
+    [[UIApplication sharedApplication] setStatusBarStyle:(UIStatusBarStyleDefault) animated:YES];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     // 出去竖屏
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeRight) {
-        [self forceOrientation:UIInterfaceOrientationPortrait];
+    // 取消横屏
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = NO;
+    
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationPortrait;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
     }
     self.navigationController.navigationBarHidden = NO;
 
@@ -115,7 +133,7 @@
         _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
         _isSliding = NO;
 //        DLog(@"%@", NSStringFromCGRect(self.playerView.frame));
-        _playerLayer.frame = CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
+        _playerLayer.frame = self.view.bounds;
         [self.playerView.layer addSublayer:_playerLayer];
     }
     return _player;
@@ -131,18 +149,13 @@
 }
 
 - (void)ClickRotationAction:(UIButton *)sender {
-    NSArray *arr = self.playerView.subviews;
-    DLog(@"%@", arr);
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
-        _playerLayer.frame = CGRectMake(40, 40, SCREEN_WIDTH - 80, SCREEN_HEIGHT - 80);
 
     }
     if (orientation == UIDeviceOrientationPortrait) {
         [self forceOrientation:(UIInterfaceOrientationLandscapeRight)];
-//        _playerLayer.frame = self.playerView.frame;
-        _playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 }
 - (void)clickPlayOrPauseAction:(UIButton *)sender {
@@ -303,11 +316,13 @@
 - (void)initUI {
     self.edgesForExtendedLayout = 0;
     [self.view addSubview:self.playerView];
-    [self.playerView addSubview:self.topView];
+    [self.view addSubview:self.topView];
+    [self.view insertSubview:self.topView atIndex:100];
     [self.topView addSubview:self.backBtn];
     [self.topView addSubview:self.liveTitleLabel];
 
-    [self.playerView addSubview:self.downView];
+    [self.view addSubview:self.downView];
+    [self.view insertSubview:self.downView atIndex:100];
     [self.downView addSubview:self.playBtn];
     [self.downView addSubview:self.beginTimeLabel];
     [self.downView addSubview:self.progressView];
@@ -319,18 +334,19 @@
 }
 - (void)makeConstraints {
     [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+        make.edges.equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
     }];
     [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.playerView);
-        make.height.equalTo(54);
+        make.height.equalTo(34);
     }];
     [self.backBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY).offset(10);
-        make.left.equalTo(self.topView.left).offset(20);
+        make.centerY.equalTo(self.topView.centerY);
+        make.left.equalTo(self.topView.left).offset(10);
+        make.size.equalTo(CGSizeMake(34, 34));
     }];
     [self.liveTitleLabel remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY).offset(10);
+        make.centerY.equalTo(self.topView.centerY).offset(0);
         make.left.equalTo(self.topView.left).offset(40);
         make.right.equalTo(self.topView.right).offset(-20);
     }];
@@ -340,7 +356,8 @@
     }];
     [self.playBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
-        make.left.equalTo(self.downView.left).offset(20);
+        make.left.equalTo(self.downView.left).offset(0);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
     [self.beginTimeLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
@@ -358,7 +375,8 @@
     }];
     [self.screenBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
-        make.right.equalTo(self.downView.right).offset(-10);
+        make.right.equalTo(self.downView.right);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
     [self.endTimeLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
@@ -463,7 +481,7 @@
 - (UIView *)playerView {
     if (!_playerView) {
         _playerView = [[UIView alloc] init];
-        _playerView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+        _playerView.backgroundColor = [UIColor colorWithHexString:@"#333333"];
     }
     return _playerView;
 }
@@ -497,7 +515,7 @@
 }
 // 1. 设置样式
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent; // 白色的
+    return UIStatusBarStyleDefault; // 黑的
 }
 // 2. 横屏时显示 statusBar
 - (BOOL)prefersStatusBarHidden {
@@ -508,5 +526,30 @@
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationNone;
 }
+
+// 转动
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    return toInterfaceOrientation == UIInterfaceOrientationLandscapeRight;
+}
+// 代理方法监听屏幕方向
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    if (toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
+        DLog(@"进入横屏");
+        
+        _screenBtn.selected = YES;
+        //        _playerLayer.frame = self.playerView.frame;
+        _playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }else {
+        DLog(@"进入竖屏");
+        // 取消横屏
+        _playerLayer.frame = CGRectMake(40, 40, SCREEN_WIDTH - 80, SCREEN_HEIGHT - 80);
+
+    }
+}
+
 
 @end

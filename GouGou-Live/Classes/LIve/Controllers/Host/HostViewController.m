@@ -55,40 +55,44 @@ static NSString * reuseIdentifier = @"headerID";
         [self.dogInfos removeAllObjects];
         /** 所有信息 */
         NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        /** 直播信息 */
-        NSMutableArray *liveMutableArr = [NSMutableArray array];
-        /** 狗狗信息数组 */
-        NSMutableArray *dogInfos = [NSMutableArray array];
-        // 请求狗狗信息
-        for (NSInteger i = 0; i < liveArr.count; i ++) {
-            
-            HostLiveModel *model = liveArr[i];
-            NSDictionary *dict = @{
-                                   @"live_id":model.liveId
-                                   };
-            DLog(@"%@",dict);
-            
-            [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                //                DLog(@"%@", successJson);
-                if (successJson[@"data"]) {
-                    [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                }else{
-                    [dogInfos addObject:@[]];
-                }
+        if (liveArr.count == 0) {
+            [self hideHud];
+            [self showAlert:@"没有数据"];
+        }else{
+            /** 直播信息 */
+            NSMutableArray *liveMutableArr = [NSMutableArray array];
+            /** 狗狗信息数组 */
+            NSMutableArray *dogInfos = [NSMutableArray array];
+            // 请求狗狗信息
+            for (NSInteger i = 0; i < liveArr.count; i ++) {
                 
-                [liveMutableArr addObject:model];
-                if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                    [self hideHud];
-                    self.dogInfos = dogInfos;
-                    self.dataArray = liveMutableArr;
-                    [self.collection reloadData];
-                }
-//                [self.collection reloadData];
-            } error:^(NSError *error) {
-                DLog(@"%@", error);
-            }];
+                HostLiveModel *model = liveArr[i];
+                NSDictionary *dict = @{
+                                       @"live_id":model.liveId
+                                       };
+                DLog(@"%@",dict);
+                
+                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+                    //                DLog(@"%@", successJson);
+                    if (successJson[@"data"]) {
+                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+                    }else{
+                        [dogInfos addObject:@[]];
+                    }
+                    
+                    [liveMutableArr addObject:model];
+                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
+                        [self hideHud];
+                        self.dogInfos = dogInfos;
+                        self.dataArray = liveMutableArr;
+                        [self.collection reloadData];
+                    }
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }
         }
-//        [self.collection reloadData];
+        //        [self.collection reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -159,7 +163,6 @@ static NSString * reuseIdentifier = @"headerID";
         make.left.right.equalTo(weakself.view);
         make.bottom.equalTo(weakself.view.bottom).offset(-110);
     }];
-    
 }
 #pragma mark
 #pragma mark - 懒加载

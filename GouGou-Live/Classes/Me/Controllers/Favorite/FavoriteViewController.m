@@ -37,11 +37,13 @@
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    [self showHudInView:self.view hint:@"刷新..."];
     [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
         self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.favoriteDogTable reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -51,11 +53,13 @@
     NSDictionary * dict = @{
                             @"user_id":@([[UserInfos sharedUser].ID intValue])
                             };
+    [self showHudInView:self.view hint:@"刷新..."];
     [self getRequestWithPath:API_User_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.favotiteLiveTable setContentOffset:CGPointMake(0, 0) animated:YES];
         self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.favotiteLiveTable reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
         

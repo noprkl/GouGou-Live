@@ -21,10 +21,9 @@
 
 #import "SellerOrderDetailModel.h"
 #import "SellerAdressModel.h"
-#import <MessageUI/MessageUI.h>
 #import "SellerSendAlertView.h"
 
-@interface SellerOrderDetailAdressViewController ()<UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
+@interface SellerOrderDetailAdressViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
@@ -50,7 +49,6 @@
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
-
 }
 #pragma mark
 #pragma mark - 生命周期
@@ -261,28 +259,30 @@
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerOrderDetailInfoView *orderInfoView = [[SellerOrderDetailInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 127)];
         
+        orderInfoView.orderCodeNumber.text = self.orderInfo.orderId;
+        
         if (![self.orderInfo.createTime isEqualToString:@"0"]) {
             orderInfoView.createTime.text = [NSString stringFromDateString:self.orderInfo.createTime];
         }else{
-            orderInfoView.createTime.text = @"未付";
+            orderInfoView.createTime.text = @"***";
         }
         
         if (![self.orderInfo.depositTime isEqualToString:@"0"]) {
             orderInfoView.depositTime.text = [NSString stringFromDateString:self.orderInfo.depositTime];
         }else{
-            orderInfoView.depositTime.text = @"未付";
+            orderInfoView.depositTime.text = @"***";
         }
         
         if (![self.orderInfo.balanceTime isEqualToString:@"0"]) {
             orderInfoView.finalMoneyTime.text = [NSString stringFromDateString:self.orderInfo.balanceTime];
         }else{
-            orderInfoView.finalMoneyTime.text = @"未付";
+            orderInfoView.finalMoneyTime.text = @"***";
         }
         
         if (![self.orderInfo.deliveryTime isEqualToString:@"0"]) {
             orderInfoView.sendTime.text = [NSString stringFromDateString:self.orderInfo.deliveryTime];
         }else{
-            orderInfoView.sendTime.text = @"未发货";
+            orderInfoView.sendTime.text = @"***";
         }
 
         [cell.contentView addSubview:orderInfoView];
@@ -351,22 +351,22 @@
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
-        changeVC.changeStyle = @"修改运费";
         changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
-        changeVC.changeStyle = @"修改价格";
         changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+        SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
         
         sendView.orderID = self.orderID;
+        __weak typeof(sendView) weakSend = sendView;
+
         sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
             // 送货请求，如果成功返回YES 失败返回NO
             NSDictionary *dict = @{
@@ -378,12 +378,13 @@
             [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
+                weakSend.successNote.hidden = NO;
                 if ([successJson[@"code"] intValue] == 1) {
-                    sendView.successNote.text = @"发货成功";
-                    sendView = nil;
-                    [sendView dismiss];
+                    weakSend.successNote.text = @"订单发货成功";
+                    [weakSend dismiss];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }else{
-                    sendView.successNote.text = @"发货失败";
+                    weakSend.successNote.text = @"订单发货失败";
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -402,49 +403,7 @@
     }else if ([title isEqualToString:@"查看详情"]){
         
     }else if ([title isEqualToString:@"在线客服"]){
-        [self clickServiceBtnAction];                
-    }
-}
-/** 在线客服 */
-- (void)clickServiceBtnAction {
-    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
-    
-    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
-        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
-        
-        controller.recipients = [NSArray arrayWithObject:SMSPhone];
-        controller.body = @"测试发短信";
-        controller.messageComposeDelegate = self;
-        [self presentViewController:controller animated:YES completion:^{
-            
-        }];
-        //修改短信界面标题
-        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
-    }else{
-        [self showAlert:@"不支持发送短信"];
-    }
-}
-#pragma mark
-#pragma mark - 短信发送协议
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    [controller dismissViewControllerAnimated:NO completion:^{
-        
-    }];//关键的一句   不能为YES
-    
-    switch ( result ) {
-            
-        case MessageComposeResultCancelled:
-            
-            [self showAlert:@"取消发送"];
-            break;
-        case MessageComposeResultFailed:// send failed
-            [self showAlert:@"发送失败"];
-            break;
-        case MessageComposeResultSent:
-            [self showAlert:@"发送成功"];
-            break;
-        default:
-            break;
+        [self clickServiceBtnAction];
     }
 }
 

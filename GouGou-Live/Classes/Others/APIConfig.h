@@ -196,7 +196,6 @@
 /** 添加品种 */
 #define API_Add_varieties @"api/ProductService/Add_varieties"
 
-
 /** 商品分类－获取筛选过滤值 */
 #define API_Category @"api/ProductService/category"
 /** 商品添加 */
@@ -223,9 +222,9 @@
 /** 订单付款项选择生成价格 */
 #define API_Order_second @"api/OrderService/order_second"
 
-/** 买家订单列表 */
+/** 买家订单列表 0全部 1待付 2待发 3待收 4未评价 */
 #define API_List_order @"api/OrderService/list_order"
-/** 订单评价买家 */
+/** 买家订单评价 */
 #define API_Order_evaluation @"api/OrderService/order_evaluation"
 /** 钱包支付 */
 #define API_Wallet @"api/OrderService/wallet"
@@ -247,7 +246,7 @@
 #define API_Order_remind @"api/OrderService/order_remind"
 
 #pragma mark - 卖家
-/** 卖家订单列表 */
+/** 卖家订单列表 0全部 1待付 2待发 3待收 4未评价 */
 #define API_My_order @"api/OrderService/my_order"
 /** 订单状态修改 */
 #define API_Up_status @"api/OrderService/up_status"
@@ -268,6 +267,12 @@
 #pragma mark - 系统通知
 /** 系统通知 */
 #define API_System_msg @"api/UserService/system_msg"
+/** 系统通知已读 */
+#define API_System_msg_status @"api/UserService/system_msg_status"
+/** 系统通知删除 */
+#define API_System_msg_del @"api/UserService/system_msg_del"
+
+
 /** 轮播图 */
 #define API_Banner @"api/UserService/banner"
 /** 拉黑请求 */
@@ -300,7 +305,7 @@
 #define API_Age_screening @"api/ProductService/age_screening"
 /** 价格搜索 */
 #define API_Price_screening @"api/ProductService/price_screening"
-/** 印象/年龄、价格搜索 */
+/** 印象/年龄、价格、体型搜索 */
 #define API_Live_list_new_im @"api/ProductService/Live_new_list_im"
 
 /** 更多印象 */
@@ -311,5 +316,9 @@
 #define API_PlayBack @"api/ProductService/playback"
 /** 观看人数 */
 #define API_live_view @"api/OrderService/live_view"
+/** 直播状态查询 */
+#define API_Live_status @"api/ProductService/live_status"
+/** 直播正在展播的狗 */
+#define API_Live_product_list_weight @"api/ProductService/Live_product_list_weight"
 
 @end

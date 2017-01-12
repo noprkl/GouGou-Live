@@ -65,21 +65,23 @@ static NSString * closeCell = @"closeCell";
 - (void)postGetAllStateOrderRequest {
     
     NSDictionary * dict = @{
-                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"user_id":[UserInfos sharedUser].ID,
                             @"status":@(0),
                             @"page":@(1),
                             @"pageSize":@(10)
                             };
+        [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);        
-        if (successJson[@"data"][@"info"]) {
-            self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        DLog(@"%@", successJson);
+        self.dataArray = @[];
+        if (successJson[@"data"][@"data"]) {
+            self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
             [self.tableview reloadData];
         }
+        [self hideHud];
     } error:^(NSError *error) {
         
         DLog(@"%@",error);
-        
     }];
 }
 
@@ -195,15 +197,18 @@ static NSString * closeCell = @"closeCell";
         WaitFontMoneyCell * cell = [[WaitFontMoneyCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:waitFontCell];
         cell.centerModel = model;
         cell.cancelBlock = ^(){
-            [self getCancleOrderRequest:model];
+            [self getCancleOrderRequest:model.ID endOptioal:^{
+                [self postGetAllStateOrderRequest];
+            }];
         };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"待付款",@"取消订单",@"联系卖家"] buttonNum:3];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"取消订单"]) {
                 // 点击取消订单
-                [self clickCancleOrder:model];
-                [self postGetAllStateOrderRequest];
+                [self clickCancleOrder:model.ID endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
             } else if ([button.titleLabel.text  isEqual:@"待付款"]){
@@ -213,10 +218,14 @@ static NSString * closeCell = @"closeCell";
                 choseStyle.bottomBlock = ^(NSString *style){
                     
                     if ([style isEqualToString:@"支付全款"]) {
-                        [self payMoneyWithOrderID:model.ID payStyle:style];
+                        [self payMoneyWithOrderID:model.ID payStyle:style endOptioal:^{
+                            [self postGetAllStateOrderRequest];
+                        }];
                     }else if ([style isEqualToString:@"支付订金"]) {
                         // 生成待支付定金订单
-                        [self payMoneyWithOrderID:model.ID payStyle:style];
+                        [self payMoneyWithOrderID:model.ID payStyle:style endOptioal:^{
+                            [self postGetAllStateOrderRequest];
+                        }];
                     }
                 };
                 [choseStyle show];
@@ -241,19 +250,25 @@ static NSString * closeCell = @"closeCell";
         WaitFontMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitFontCell];
         cell.centerModel = model;
         cell.cancelBlock = ^(){
-            [self getCancleOrderRequest:model];
+            [self getCancleOrderRequest:model.ID endOptioal:^{
+                [self postGetAllStateOrderRequest];
+            }];
         };
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付订金",@"取消订单",@"联系卖家"] buttonNum:3];
         
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"取消订单"]) {
                 // 点击取消订单
-                [self clickCancleOrder:model];
+                [self clickCancleOrder:model.ID endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 [self postGetAllStateOrderRequest];
             } else if ([button.titleLabel.text  isEqual:@"支付订金"]){
                 // 点击支付定金
-                [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text];
+                [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 
                 DLog(@"%@--%@",self,button.titleLabel.text);
                 
@@ -277,7 +292,9 @@ static NSString * closeCell = @"closeCell";
         WaitBackMoneyCell * cell = [tableView dequeueReusableCellWithIdentifier:waitBackCell];
         cell.centerModel = model;
         cell.cancelBlock = ^(){
-            [self getCancleOrderRequest:model];
+            [self getCancleOrderRequest:model.ID endOptioal:^{
+                [self postGetAllStateOrderRequest];
+            }];
         };
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -292,11 +309,15 @@ static NSString * closeCell = @"closeCell";
             
             if ([button.titleLabel.text  isEqual:@"支付尾款"]){
                 // 点击支付尾款
-                [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text];
+                [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 
             } else if ([button.titleLabel.text isEqual:@"不想买了"]) {
                 // 点击不想买了
-                [self clickNotBuy:model];
+                [self clickNotBuy:model.ID endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:model.saleUserId conversationType:(EMConversationTypeChat)];
@@ -317,7 +338,9 @@ static NSString * closeCell = @"closeCell";
         // 待付全款cell
         WaitAllMoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:waitAllMoneyCell];
         cell.cancelBlock = ^(){
-            [self getCancleOrderRequest:model];
+            [self getCancleOrderRequest:model.ID endOptioal:^{
+                [self postGetAllStateOrderRequest];
+            }];
         };
         cell.centerModel = model;
         FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 210, SCREEN_WIDTH, 45) title:@[@"支付全款",@"联系卖家"] buttonNum:2];
@@ -325,7 +348,9 @@ static NSString * closeCell = @"closeCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"支付全款"]) {
                 // 点击支付全款
-                [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text];
+                [self payMoneyWithOrderID:model.ID payStyle:button.titleLabel.text endOptioal:^{
+                    [self postGetAllStateOrderRequest];
+                }];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 // 跳转至联系卖家
@@ -356,7 +381,7 @@ static NSString * closeCell = @"closeCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"提醒发货"]) {
                 // 提醒发货
-                [self clickConsignment:model];
+                [self clickConsignment:model.ID];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 // 跳转至联系卖家
@@ -396,6 +421,7 @@ static NSString * closeCell = @"closeCell";
                 [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
                     [self showAlert:successJson[@"message"]];
+                    [self postGetAllStateOrderRequest];
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
@@ -434,7 +460,7 @@ static NSString * closeCell = @"closeCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
-                [self clickDeleteOrder:model endOptioal:^{
+                [self clickDeleteOrder:model.ID endOptioal:^{
                     [self postGetAllStateOrderRequest];
                 }];
                 DLog(@"%@--%@",self,button.titleLabel.text);
@@ -474,7 +500,7 @@ static NSString * closeCell = @"closeCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
-                [self clickDeleteOrder:model endOptioal:^{
+                [self clickDeleteOrder:model.ID endOptioal:^{
                     [self postGetAllStateOrderRequest];
                 }];
                 
@@ -498,7 +524,7 @@ static NSString * closeCell = @"closeCell";
                 // 跳转至查看评价
                 DLog(@"%@",button.titleLabel.text);
                 OrderCompleteAssess *Vc = [[OrderCompleteAssess alloc] init];
-                Vc.detailModel = model;
+                Vc.orderID = model.ID;
                 Vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:Vc animated:YES];
             }
@@ -514,7 +540,7 @@ static NSString * closeCell = @"closeCell";
             cell.model = model;
             cell.orderState = @"交易关闭";
             cell.deleBlock = ^(){
-                [self clickDeleteOrder:model endOptioal:^{
+                [self clickDeleteOrder:model.ID endOptioal:^{
                     [self postGetAllStateOrderRequest];
                 }];
             };
@@ -526,7 +552,7 @@ static NSString * closeCell = @"closeCell";
             cell.model = model;
             cell.orderState = @"交易关闭";
         cell.deleBlock = ^(){
-            [self clickDeleteOrder:model endOptioal:^{
+            [self clickDeleteOrder:model.ID endOptioal:^{
                 [self postGetAllStateOrderRequest];
             }];
         };
@@ -545,7 +571,7 @@ static NSString * closeCell = @"closeCell";
         
 //        state = @"待付定金";
         PayFontMoneyViewController *Vc = [[PayFontMoneyViewController alloc] init];
-        Vc.detailModel = model;
+        Vc.orderID = model.ID;
         Vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:Vc animated:YES];
         
@@ -554,7 +580,7 @@ static NSString * closeCell = @"closeCell";
 //        state = @"待付尾款";
         PayBackMoneyViewController *Vc = [[PayBackMoneyViewController alloc] init];
         Vc.hidesBottomBarWhenPushed = YES;
-        Vc.detailModel = model;
+        Vc.orderID = model.ID;
         [self.navigationController pushViewController:Vc animated:YES];
         
     }else if ([model.status isEqualToString:@"4"]) {
@@ -565,7 +591,7 @@ static NSString * closeCell = @"closeCell";
         
 //        state = @"待付全款";
         PayingAllMoneyViewController *Vc = [[PayingAllMoneyViewController alloc] init];
-        Vc.detailModel = model;
+        Vc.orderID = model.ID;
         Vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:Vc animated:YES];
 
@@ -577,7 +603,7 @@ static NSString * closeCell = @"closeCell";
         
 //        state = @"待发货";
         WaitSellConsigmentViewContorller *Vc = [[WaitSellConsigmentViewContorller alloc] init];
-        Vc.detailModel = model;
+        Vc.orderID = model.ID;
         Vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:Vc animated:YES];
         
@@ -585,7 +611,7 @@ static NSString * closeCell = @"closeCell";
         
 //        state = @"待收货";
         SureConsigneedViewController *Vc = [[SureConsigneedViewController alloc] init];
-        Vc.detailModel = model;
+        Vc.orderID = model.ID;
         Vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:Vc animated:YES];
     }else if ([model.status isEqualToString:@"9"]) {
@@ -593,7 +619,7 @@ static NSString * closeCell = @"closeCell";
 //        state = @"未评价";
         
         OrderWaitAssessViewController *Vc = [[OrderWaitAssessViewController alloc] init];
-        Vc.detailModel = model;
+        Vc.orderID = model.ID;
         Vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:Vc animated:YES];
 
@@ -601,7 +627,7 @@ static NSString * closeCell = @"closeCell";
         
 //        state = @"已评价";
         OrderCompleteAssess *Vc = [[OrderCompleteAssess alloc] init];
-        Vc.detailModel = model;
+        Vc.orderID = model.ID;
         Vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:Vc animated:YES];
     }else if ([model.status isEqualToString:@"20"]) {

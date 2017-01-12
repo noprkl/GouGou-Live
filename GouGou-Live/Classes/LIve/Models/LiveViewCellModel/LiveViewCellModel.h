@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) NSString *merchantName;/**< 主播名字 */
 
-@property(nonatomic, strong) NSString *ID; /**< 用户id */
+@property(nonatomic, strong) NSString *ID; /**< 主播id */
 
 @property (strong, nonatomic) NSString *name;/**< 房间名字 */
 

@@ -94,6 +94,8 @@
 - (void)show {
     //获取主window
     UIWindow * keyWindow = [[UIApplication sharedApplication] keyWindow];
+    self.overLayer.frame = CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 44);
+    
     //载入蒙版
     [keyWindow addSubview:self.overLayer];
     //载入alertView
@@ -103,7 +105,7 @@
 #pragma mark - 设置当前view的frame
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    rect = CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 44);
     self.frame = rect;
     [self.ActivityView startAnimating];
     // 约束

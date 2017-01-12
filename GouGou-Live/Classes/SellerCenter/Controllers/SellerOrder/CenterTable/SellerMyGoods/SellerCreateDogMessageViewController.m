@@ -304,6 +304,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             nameText.font = [UIFont systemFontOfSize:14];
             nameText.delegate = self;
             self.nameText = nameText;
+        [nameText addTarget:self action:@selector(editDogName:) forControlEvents:(UIControlEventEditingChanged)];
             [cell.contentView addSubview:nameText];
         }
             break;
@@ -652,18 +653,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
 #pragma mark
 #pragma mark - UItextField代理
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    if (textField == self.nameText ) { // 名字
         
-        BOOL isChinese = [NSString isChinese:string];
-        
-        if (range.location < 8 && isChinese) {
-            
-            return YES;
-        }
-        return NO;
-    }
-    
     if (textField == self.priceText) {
         
         if ([textField.text rangeOfString:@"."].location==NSNotFound) {
@@ -800,6 +790,14 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                                                         NSFontAttributeName:[UIFont systemFontOfSize:14]
                                                                                         }];
     return attribute;
+}
+
+- (void)editDogName:(UITextField *)textField {
+    if (textField == self.nameText) {
+        if (textField.text.length > 8) {
+            textField.text = [textField.text substringWithRange:NSMakeRange(0, 4)];
+        }
+    }
 }
 - (void)dealloc {
     // 释放通知

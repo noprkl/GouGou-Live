@@ -208,9 +208,7 @@ static NSString *cellid = @"DogShowCellid";
                 NSDictionary *dict2 = @{@"id":@(2)};
                 [self showHint:@"加载中.."];
                 [self getRequestWithPath:API_Help params:dict2 success:^(id successJson) {
-                    NSArray *arr = [NormalModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-                    NormalModel *model = arr[0];
-                    rulesAlert.ruleContets = model.conent;
+                    rulesAlert.ruleContets = successJson[@"data"];
                     [rulesAlert show];
                     [self hideHud];
                 } error:^(NSError *error) {

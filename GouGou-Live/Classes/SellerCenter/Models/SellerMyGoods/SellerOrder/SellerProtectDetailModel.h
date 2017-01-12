@@ -14,7 +14,7 @@
 @property (copy,nonatomic) NSString *ID;
 
 /** 买家昵称 */
-@property (copy,nonatomic) NSString *userNickName;
+@property (copy,nonatomic) NSString *userName;
 /** 买家昵称 */
 @property (copy,nonatomic) NSString *buyUserId;
 
@@ -64,5 +64,10 @@
 @property (nonatomic, strong) NSString *deliverytime; /**< 发货时间 */
 @property (nonatomic, strong) NSString *deposittime; /**< 定金支付时间 */
 @property (nonatomic, strong) NSString *balancetime; /**< 尾款支付时间 */
+@property (nonatomic, strong) NSString *fullTime; /**< 全款时间 */
+@property (nonatomic, strong) NSString *confirmTime; /**< 收货时间 */
+
+@property (nonatomic, strong) NSString *transportation; /**< 快递方式 */
+@property (nonatomic, strong) NSString *waybillNumber; /**< 快递方式 */
 
 @end

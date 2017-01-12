@@ -15,7 +15,7 @@
 
 @property(nonatomic, strong) UILabel *ruleLabel; /**< 交易规则 */
 
-@property(nonatomic, strong) UILabel *ruleContent; /**< 规则内容 */
+@property(nonatomic, strong) UIWebView *webView; /**< 规则内容 */
 
 @property(nonatomic, strong) UILabel *ruleAlertLabel; /**< 规则提示 */
 
@@ -25,10 +25,6 @@
 @property(nonatomic, strong) UIButton *cancelBtn; /**< 取消按钮 */
 
 @property(nonatomic, strong) UIButton *sureBtn; /**< 确定按钮 */
-
-@property (nonatomic, assign) CGFloat height; /**< 高度 */
-/** 底部scrollView */
-@property (strong,nonatomic) UIScrollView *boomScrollView;
 
 @end
 
@@ -42,13 +38,12 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.ruleLabel];
-        //        [self addSubview:self.ruleContent];
+        //        [self addSubview:self.webView];
         [self addSubview:self.ruleAlertLabel];
         [self addSubview:self.line];
         [self addSubview:self.sureBtn];
         [self addSubview:self.cancelBtn];
-        [self  addSubview:self.boomScrollView];
-        [self.boomScrollView addSubview:self.ruleContent];
+        [self addSubview:self.webView];
     }
     return self;
 }
@@ -85,35 +80,18 @@
         make.bottom.equalTo(self.line.top).offset(-10);
     }];
     
-    [self.boomScrollView makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.left).offset(10);
-        make.top.equalTo(self.ruleLabel.bottom).offset(10);
-        make.right.equalTo(self.right).offset(-10);
-        make.bottom.equalTo(self.ruleAlertLabel.top).offset(-10);
-    }];
-    [self.ruleContent makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.left).offset(10);
-        make.top.equalTo(self.boomScrollView);
-        make.right.equalTo(self.right).offset(-10);
-        make.bottom.equalTo(self.boomScrollView.bottom);
+    [self.webView makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.left).offset(0);
+        make.top.equalTo(self.top);
+        make.right.equalTo(self.right).offset(0);
+        make.bottom.equalTo(self.ruleAlertLabel.top).offset(-5);
     }];
 }
 - (void)setRuleContets:(NSString *)ruleContets {
     _ruleContets = ruleContets;
     
-    // 首行
-    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
-    CGFloat emptylen = LabelFont * 2;
-    paragraph.firstLineHeadIndent = emptylen;
-    
-    NSDictionary *dict = @{
-                           NSParagraphStyleAttributeName:paragraph,
-                           NSFontAttributeName:[UIFont systemFontOfSize:LabelFont],
-                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"]
-                           };
-    self.ruleContent.attributedText = [[NSAttributedString alloc] initWithString:ruleContets attributes:dict];
-    _height = [ruleContets boundingRectWithSize:CGSizeMake(SCREEN_WIDTH, MAXFLOAT) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dict context:nil].size.height + 120;
-    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:ruleContets]];
+    [self.webView loadRequest:request];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -127,24 +105,11 @@
     }
     return _ruleLabel;
 }
-- (UILabel *)ruleContent {
-    if (!_ruleContent) {
-        _ruleContent = [[UILabel alloc] init];
-        _ruleContent.text = @"交规则交易规则";
-        _ruleContent.textColor = [UIColor colorWithHexString:@"#666666"];
-        _ruleContent.font = [UIFont systemFontOfSize:LabelFont];
-        _ruleContent.numberOfLines = 0;
-        // 首行
-        NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
-        CGFloat emptylen = LabelFont * 2;
-        paragraph.firstLineHeadIndent = emptylen;
-        paragraph.alignment = NSTextAlignmentJustified;
-        
-        _ruleContent.attributedText = [[NSAttributedString alloc] initWithString:_ruleContent.text attributes:@{
-                                                                                                                NSParagraphStyleAttributeName:paragraph                                                       }];
-        
+- (UIWebView *)webView {
+    if (!_webView) {
+        _webView = [[UIWebView alloc] init];
     }
-    return _ruleContent;
+    return _webView;
 }
 - (UILabel *)ruleAlertLabel {
     if (!_ruleAlertLabel) {
@@ -154,18 +119,6 @@
         _ruleAlertLabel.font = [UIFont systemFontOfSize:LabelFont];
     }
     return _ruleAlertLabel;
-}
-
-- (UIScrollView *)boomScrollView {
-    
-    if (!_boomScrollView) {
-        _boomScrollView = [[UIScrollView alloc] init];
-        _boomScrollView.showsVerticalScrollIndicator = NO;
-        _boomScrollView.contentSize = CGSizeMake(0, self.height);
-        _boomScrollView.contentOffset = CGPointMake(0, 0);
-        _boomScrollView.bounces = NO;
-    }
-    return _boomScrollView;
 }
 
 - (UILabel *)line {
@@ -227,7 +180,7 @@
 #pragma mark - 设置当前view的frame
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - _height, SCREEN_WIDTH, _height);
+    rect = CGRectMake(0, SCREEN_HEIGHT - 256, SCREEN_WIDTH, 256);
     self.frame = rect;
     
     // 约束

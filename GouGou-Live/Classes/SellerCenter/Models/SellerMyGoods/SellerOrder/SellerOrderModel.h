@@ -35,6 +35,9 @@
 
 @property (nonatomic, strong) NSString *productBalance; /**< 尾款 */
 @property (nonatomic, strong) NSString *productRealBalance; /**< 实付尾款 */
-@property (nonatomic, strong) NSString *traficMoney; /**< 运费 */
+@property (nonatomic, strong) NSString *traficFee; /**< 运费 */
+
+@property (nonatomic, strong) NSString *transportation; /**< 快递方式 */
+@property (nonatomic, strong) NSString *waybillNumber; /**< 快递方式 */
 
 @end

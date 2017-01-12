@@ -18,7 +18,6 @@
 
 @implementation PresentWaitingViewController
 
-
 - (IBAction)clickHelpButton:(UIButton *)sender {
     AccountHelpCenterVc *singleVc = [[AccountHelpCenterVc alloc] init];
     singleVc.hidesBottomBarWhenPushed = YES;
@@ -35,7 +34,11 @@
 
     [self setNavBarItem];
     self.title = @"提现申请";
-
+    NSDate *date = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    format.dateFormat = @"YYYY-MM-dd";
+    NSString *nowDate = [format stringFromDate:date];
+    self.promptLabel.text = [NSString stringWithFormat:@"您于%@提交的提现申请,将于3个工作日内为您处理", nowDate];
 }
 - (void)setNoteStr:(NSString *)noteStr {
     _noteStr = noteStr;

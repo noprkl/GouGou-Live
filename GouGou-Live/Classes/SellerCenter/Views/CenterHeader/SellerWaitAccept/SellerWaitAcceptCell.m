@@ -54,7 +54,7 @@
     _model = model;
     
     self.nickView.nickName.text = model.userName;
-    self.nickView.dateLabel.text = @"14分59秒";
+    self.nickView.dateLabel.text = @"";
     
     if (model.pathSmall != NULL) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:model.pathSmall];
@@ -66,11 +66,19 @@
     self.dogCardView.dogAgeLabel.text = model.ageName;
     self.dogCardView.dogSizeLabel.text = model.sizeName;
     self.dogCardView.dogColorLabel.text = model.colorName;
-    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", model.priceOld]];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    self.logisticsView.transformNumber = model.ID;
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [model.productRealBalance floatValue] + [model.productRealDeposit floatValue] + [model.productRealPrice floatValue] + [model.traficMoney floatValue]];
-    self.costView.freightMoney = model.traficMoney;
+
+    // 物流信息
+    self.logisticsView.transformNumber = model.waybillNumber;
+    self.logisticsView.transformStyle = model.transportation;
+
+    self.costView.moneyMessage = [NSString stringWithFormat:@"￥%.2lf", [model.productRealBalance floatValue] + [model.productRealDeposit floatValue] + [model.productRealPrice floatValue] + [model.traficFee floatValue]];
+    if (model.traficFee.length == 0) {
+        self.costView.freightMoney = @"0";
+    }else{
+        self.costView.freightMoney = model.traficFee;
+    }
 }
 #pragma mark
 #pragma mark - 约束

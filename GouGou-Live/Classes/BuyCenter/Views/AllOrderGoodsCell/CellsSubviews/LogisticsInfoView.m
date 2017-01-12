@@ -63,16 +63,19 @@
     
     [_copyButton mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.left).offset(315);
+        make.right.equalTo(weakself.right).offset(-10);
         make.centerY.equalTo(weakself.expressNameLabe.centerY);
         make.size.equalTo(CGSizeMake(50, 25));
-        
     }];
     
 }
 - (void)setOrderCode:(NSString *)orderCode {
     _orderCode = orderCode;
     self.numLabel.text = orderCode;
+}
+- (void)setOrderStyle:(NSString *)orderStyle {
+    _orderStyle = orderStyle;
+    self.expressNameLabe.text = orderStyle;
 }
 #pragma mark
 #pragma mark - 懒加载

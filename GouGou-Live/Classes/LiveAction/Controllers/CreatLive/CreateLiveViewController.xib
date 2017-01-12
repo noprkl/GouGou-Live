@@ -22,8 +22,12 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="狗背景" translatesAutoresizingMaskIntoConstraints="NO" id="TEC-R7-qZb">
                     <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bM-AL-Yzp">
-                    <rect key="frame" x="350" y="30" width="15" height="22"/>
+                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bM-AL-Yzp">
+                    <rect key="frame" x="335" y="20" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="DRc-dO-8a8"/>
+                        <constraint firstAttribute="height" constant="40" id="mKW-tE-vgs"/>
+                    </constraints>
                     <state key="normal" image="-单删除"/>
                     <connections>
                         <action selector="clickDeleteBtnAction:" destination="-1" eventType="touchUpInside" id="iJT-r1-ERo"/>
@@ -47,10 +51,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="定位" translatesAutoresizingMaskIntoConstraints="NO" id="Nry-Ng-0Lt">
-                    <rect key="frame" x="208" y="118" width="16" height="19"/>
+                    <rect key="frame" x="208" y="123" width="8" height="10"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmj-6P-Zf8">
-                    <rect key="frame" x="234" y="119" width="42" height="17"/>
+                    <rect key="frame" x="226" y="119" width="42" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -95,9 +99,9 @@
                 <constraint firstItem="dyL-yw-1Hg" firstAttribute="bottom" secondItem="GqR-Fy-DjF" secondAttribute="bottom" constant="-5" id="DGG-tg-las"/>
                 <constraint firstItem="kf5-3H-t26" firstAttribute="top" secondItem="GqR-Fy-DjF" secondAttribute="bottom" constant="20" id="EUh-Bj-jXU"/>
                 <constraint firstItem="TEC-R7-qZb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="L9n-tO-Feu"/>
-                <constraint firstItem="0bM-AL-Yzp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="MNL-OW-d11"/>
+                <constraint firstItem="0bM-AL-Yzp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="MNL-OW-d11"/>
                 <constraint firstItem="Nry-Ng-0Lt" firstAttribute="centerY" secondItem="kf5-3H-t26" secondAttribute="centerY" id="TfP-eF-zbQ"/>
-                <constraint firstAttribute="trailing" secondItem="0bM-AL-Yzp" secondAttribute="trailing" constant="10" id="VET-UD-v5X"/>
+                <constraint firstAttribute="trailing" secondItem="0bM-AL-Yzp" secondAttribute="trailing" id="VET-UD-v5X"/>
                 <constraint firstItem="TEC-R7-qZb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YKB-AB-w2J"/>
                 <constraint firstItem="dmj-6P-Zf8" firstAttribute="leading" secondItem="Nry-Ng-0Lt" secondAttribute="trailing" constant="10" id="Zc2-ld-qsS"/>
                 <constraint firstItem="Nry-Ng-0Lt" firstAttribute="leading" secondItem="kf5-3H-t26" secondAttribute="trailing" constant="20" id="dY7-ef-CgE"/>
@@ -114,7 +118,7 @@
     <resources>
         <image name="-单删除" width="15" height="15"/>
         <image name="不售出-拷贝" width="14" height="17"/>
-        <image name="定位" width="16" height="19"/>
+        <image name="定位" width="8" height="10"/>
         <image name="已售出" width="14" height="17"/>
         <image name="狗背景" width="375" height="667"/>
     </resources>

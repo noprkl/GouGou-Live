@@ -59,8 +59,16 @@ static NSString *cellid = @"LivingShowDogCell";
     LivingShowDogCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     cell.model = self.dataPlist[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+//    cell.backgroundView = [[UIView alloc] init];
+//    cell.backgroundView.backgroundColor = [UIColor clearColor];
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    LiveListDogInfoModel *model = self.dataPlist[indexPath.row];
+    
+    if (_cellBlock) {
+        _cellBlock(model);
+    }
 }
 #pragma mark 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -88,8 +96,9 @@ static NSString *cellid = @"LivingShowDogCell";
         UIButton *backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         UIImage *image = [UIImage imageNamed:@"返回fan"];
         [backBtn setImage:image forState:(UIControlStateNormal)];
-        backBtn.frame = CGRectMake(10, (44 - image.size.height) / 2, image.size.width, image.size.height);
+        backBtn.frame = CGRectMake(0, 0, 43, 43);
         [backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
+        [backBtn setContentMode:(UIViewContentModeCenter)];
         [view addSubview:backBtn];
         // 线
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, SCREEN_WIDTH, 1)];
@@ -106,13 +115,4 @@ static NSString *cellid = @"LivingShowDogCell";
 
     self.hidden = YES;
 }
-
-#pragma mark 选中
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    LiveListDogInfoModel *model = self.dataPlist[indexPath.row];
-    if (_cellBlock) {
-        _cellBlock(model);
-    }
-}
-
 @end

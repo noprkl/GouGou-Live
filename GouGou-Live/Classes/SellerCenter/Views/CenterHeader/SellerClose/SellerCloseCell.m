@@ -60,11 +60,15 @@
     self.dogCardView.dogAgeLabel.text = model.ageName;
     self.dogCardView.dogSizeLabel.text = model.sizeName;
     self.dogCardView.dogColorLabel.text = model.colorName;
-    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", model.priceOld]];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
     
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [model.productRealBalance floatValue] + [model.productRealDeposit floatValue] + [model.productRealPrice floatValue] + [model.traficMoney floatValue]];
-    self.costView.freightMoney = model.traficMoney;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [model.productRealBalance floatValue] + [model.productRealDeposit floatValue] + [model.productRealPrice floatValue] + [model.traficFee floatValue]];
+    if (model.traficFee.length == 0) {
+        self.costView.freightMoney = @"0";
+    }else{
+        self.costView.freightMoney = model.traficFee;
+    }
 }
 - (void)clickDeleButtonAction:(UIButton *)btn {
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];

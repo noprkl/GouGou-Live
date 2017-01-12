@@ -25,23 +25,19 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
 #pragma mark - 网络请求
 - (void)getConsigneeRequest {
     // 待收货
-    NSDictionary * dict = @{@"user_id":@([[UserInfos sharedUser].ID intValue]),
-                            @"status":@(2),
+    NSDictionary * dict = @{@"user_id":[UserInfos sharedUser].ID,
+                            @"status":@(3),
                             @"page":@(1),
                             @"pageSize":@(10)
                             };
-    
+    [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
         
-        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         
-        DLog(@"%@",successJson[@"code"]);
-        DLog(@"%@",successJson[@"message"]);
-        DLog(@"%@",successJson[@"data"]);
-        DLog(@"%@",successJson[@"data"][@"info"]);
-        
+        DLog(@"%@",successJson);
         [self.tableview reloadData];
-        
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -111,10 +107,7 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
     
     BuyCenterModel * model = self.dataArray[indexPath.row];
      WaitConsignessCell * cell = [tableView dequeueReusableCellWithIdentifier:waitConsignessCell];
-    if ([model.status integerValue] == 8) {
-       
-        cell.centerModel = model;
-    }
+    cell.centerModel = model;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FunctionButtonView * funcBtn = [[FunctionButtonView alloc] initWithFrame:CGRectMake(0, 300, SCREEN_WIDTH, 45)title:@[@"申请维权",@"联系卖家",@"确认收货"] buttonNum:3];
@@ -130,6 +123,7 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
             [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
+                [self getConsigneeRequest];
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
@@ -160,7 +154,7 @@ static NSString * waitConsignessCell = @"waitConsignessCell";
     BuyCenterModel *model = self.dataArray[indexPath.row];
 
     SureConsigneedViewController * congisnee = [[SureConsigneedViewController alloc] init];
-    congisnee.detailModel = model;
+    congisnee.orderID = model.ID;
     [self.navigationController pushViewController:congisnee animated:YES];
 }
 

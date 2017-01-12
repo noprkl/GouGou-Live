@@ -75,6 +75,7 @@
         [self.tableView.dogInfos removeAllObjects];
         if (successJson[@"data"][@"num"] == 0) { // 如果为0刷新
             [self.tableView reloadData];
+            [self hideHud];
         }
         self.tableView.hidden = NO;
 
@@ -206,7 +207,6 @@
 }
 - (void)getRequestFilterLiveListWithMinAge:(DogCategoryModel *)minAge MaxAge:(DogCategoryModel *)maxAge  {
     NSDictionary *dict = @{
-//                           @"size":@([size.ID intValue])
                            @"t":@(minAge.time),
                            @"e":@(maxAge.time),
                            @"page":@(1),
@@ -222,6 +222,7 @@
         if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
+            [self hideHud];
         }else{
             self.noneView.hidden = YES;
             self.tableView.hidden = NO;
@@ -267,7 +268,7 @@
                     DLog(@"%@", error);
                 }];
             }
-            //                    [self hideHud]
+            [self hideHud];
             [self.tableView reloadData];
         }
     } error:^(NSError *error) {
@@ -276,21 +277,22 @@
 }
 - (void)getRequestFilterLiveListWithMinPrice:(DogCategoryModel *)minPrice MaxPrice:(DogCategoryModel *)maxPrice  {
     NSDictionary *dict = @{
-                           @"t":minPrice.ID,
-                           @"e":maxPrice.ID,
+                           @"start_price":minPrice.ID,
+                           @"end_price":maxPrice.ID,
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Price_screening params:dict success:^(id successJson) {
-        
+        DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
         if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
+            [self hideHud];
         }else{
             self.noneView.hidden = YES;
             self.tableView.hidden = NO;
@@ -336,7 +338,7 @@
                     DLog(@"%@", error);
                 }];
             }
-            //                    [self hideHud]
+            [self hideHud];
             [self.tableView reloadData];
         }
     } error:^(NSError *error) {

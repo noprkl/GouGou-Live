@@ -229,7 +229,7 @@
 - (StartSourceView *)startView {
     if (!_startView) {
         _startView = [[StartSourceView alloc] init];
-        _startView.startCount = 4;
+        _startView.startCount = 0;
         _startView.backgroundColor = [UIColor whiteColor];
     }
     return _startView;

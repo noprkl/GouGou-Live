@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1912" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -20,8 +20,8 @@
                         <color key="textColor" red="1" green="0.63137254901960782" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HdS-gi-bw0">
-                        <rect key="frame" x="10" y="32" width="28" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HdS-gi-bw0">
+                        <rect key="frame" x="10" y="32" width="290" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -52,6 +52,7 @@
                     <constraint firstAttribute="trailing" secondItem="ZNS-nW-3K8" secondAttribute="trailing" id="boO-MV-ByT"/>
                     <constraint firstItem="HdS-gi-bw0" firstAttribute="top" secondItem="neJ-Ld-3DT" secondAttribute="bottom" constant="10" id="dJc-tY-ivi"/>
                     <constraint firstItem="neJ-Ld-3DT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="idt-NO-PHH"/>
+                    <constraint firstAttribute="trailing" secondItem="HdS-gi-bw0" secondAttribute="trailing" constant="20" id="uQ7-Cx-r09"/>
                     <constraint firstItem="OLu-C2-o3L" firstAttribute="centerY" secondItem="neJ-Ld-3DT" secondAttribute="centerY" id="yg3-0C-zyN"/>
                 </constraints>
             </tableViewCellContentView>
@@ -60,7 +61,7 @@
                 <outlet property="notificationTime" destination="OLu-C2-o3L" id="pt5-8l-kTr"/>
                 <outlet property="notificationType" destination="neJ-Ld-3DT" id="Feu-b5-O6K"/>
             </connections>
-            <point key="canvasLocation" x="263" y="258.5"/>
+            <point key="canvasLocation" x="134" y="242.5"/>
         </tableViewCell>
     </objects>
 </document>

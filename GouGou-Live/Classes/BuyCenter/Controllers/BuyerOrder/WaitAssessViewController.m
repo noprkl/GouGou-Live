@@ -36,17 +36,18 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
 - (void)getAssessRequest {
     
     NSDictionary * dict = @{
-                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                            @"user_id":[UserInfos sharedUser].ID,
                             @"status":@(4),
                             @"page":@(1),
                             @"pageSize":@(10)
                             };
-    
+    [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
         
-        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         
         [self.tableview reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -131,10 +132,8 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         funcBtn.difFuncBlock = ^(UIButton * button) {
             if ([button.titleLabel.text  isEqual:@"删除订单"]) {
                 // 跳转删除订单
-                [self clickDeleteOrder:model];
-                
-                DLog(@"%@--%@",self,button.titleLabel.text);
-                
+                [self clickDeleteOrder:model.ID];
+                                
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
                 // 跳转至联系卖家
                 SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:model.saleUserId conversationType:(EMConversationTypeChat)];
@@ -166,23 +165,23 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     BuyCenterModel * model = self.dataArray[indexPath.row];
     if ([model.status integerValue] == 9) {
         OrderWaitAssessViewController * OrderVC = [[OrderWaitAssessViewController alloc] init];
-        OrderVC.detailModel = model;
+        OrderVC.orderID = model.ID;
         [self.navigationController pushViewController:OrderVC animated:YES];
         
     } else if ([model.status integerValue] == 10) {
         
         OrderCompleteAssess * orderAssessVc = [[OrderCompleteAssess alloc] init];
-        orderAssessVc.detailModel = model;
+        orderAssessVc.orderID = model.ID;
         [self.navigationController pushViewController:orderAssessVc animated:YES];
      
     }
     
 }
 #pragma mark - 删除订单网络请求
-- (void)getDeleteOrderRequest:(BuyCenterModel *)model {
+- (void)getDeleteOrderRequest:(NSString *)orderID {
     
     NSDictionary * dict = @{
-                            @"id":@([model.ID intValue]),
+                            @"id":orderID,
                             @"user_id":@([[UserInfos sharedUser].ID intValue])
                             };
     
@@ -197,7 +196,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     
 }
 // 删除订单
-- (void)clickDeleteOrder:(BuyCenterModel *)model {
+- (void)clickDeleteOrder:(NSString *)orderID {
     
     // 点击删除订单出现的弹框
     DeletePrommtView * prompt = [[DeletePrommtView alloc] init];
@@ -206,7 +205,7 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
     prompt.sureBlock = ^(UIButton * btn) {
         
         // 点击确定按钮，删除订单
-        [self getDeleteOrderRequest:model];
+        [self getDeleteOrderRequest:orderID];
         [self getAssessRequest];
     };
     [prompt show];

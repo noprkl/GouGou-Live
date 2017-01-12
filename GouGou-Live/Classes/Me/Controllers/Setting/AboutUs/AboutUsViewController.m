@@ -31,7 +31,7 @@
 
 - (void)initUI {
     
-    self.phoneLabel.text = ServicePhone;
+    self.phoneLabel.text = [NSString stringWithFormat:@"服务热线 %@", ServicePhone];
     self.tableView.bounces = NO;
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *currentVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];

@@ -76,7 +76,6 @@
     [_locationImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.centerY);
         make.left.equalTo(weakself.left).offset(10);
-        
     }];
     
     [_consignee mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -87,7 +86,6 @@
     }];
     
     [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(weakself.consignee.right).offset(10);
         make.centerY.equalTo(weakself.consignee.centerY);
     }];

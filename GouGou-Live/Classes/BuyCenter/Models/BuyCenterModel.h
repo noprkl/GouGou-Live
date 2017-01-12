@@ -12,9 +12,9 @@
 
 @property (strong,nonatomic) NSString *ID;/** 订单ID */
 
-@property (copy,nonatomic) NSString *merchantImg1;/**< 商家图片 */
+@property (copy,nonatomic) NSString *userImgUrl;/**< 商家图片 */
 
-@property (copy,nonatomic) NSString *merchantName;/**< 商家名称 */
+@property (copy,nonatomic) NSString *userName;/**< 商家名称 */
 
 @property (copy,nonatomic) NSString *status;/**< 订单状态 */
 
@@ -45,8 +45,11 @@
 
 @property (nonatomic, strong) NSString *comment; /**< 补充 */
 
-@property (nonatomic, strong) NSString *traficMoney; /**< 运费 */
+@property (nonatomic, strong) NSString *traficFee; /**< 运费 */
 @property (nonatomic, strong) NSString *createTime; /**< 订单创建时间 */
 @property (nonatomic, strong) NSString *closeTime; /**< 订单创建时间 */
+
+@property (nonatomic, strong) NSString *transportation; /**< 快递方式 */
+@property (nonatomic, strong) NSString *waybillNumber; /**< 快递方式 */
 
 @end

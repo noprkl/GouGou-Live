@@ -4,11 +4,13 @@
 //
 //  Created by ma c on 16/12/5.
 //  Copyright © 2016年 LXq. All rights reserved.
-//  订单详情
+//  卖家订单详情
 
 #import "BaseModel.h"
 
 @interface SellerOrderDetailModel : BaseModel
+
+@property (nonatomic, strong) NSString *ID; /**< 订单iD */
 
 @property (copy, nonatomic) NSString *buyUserId;  /** 买家流水号 */
 @property (copy, nonatomic) NSString *buyUserName; /**< 买家姓名 */
@@ -38,7 +40,7 @@
 @property (copy, nonatomic) NSString *depositTime; /**< 定金支付时间 */
 @property (copy, nonatomic) NSString *balanceTime; /**< 尾款支付时间 */
 @property (copy, nonatomic) NSString *deliveryTime; /**< 发货时间 */
-@property (copy, nonatomic) NSString *userName; /**< 用户昵称 */
+@property (copy, nonatomic) NSString *userName; /**< 当前用户昵称 */
 
 @property (copy, nonatomic) NSString *name; /**< 商品名称 */
 @property (copy, nonatomic) NSString *pathSmall; /**< 缩略图 */
@@ -48,5 +50,9 @@
 @property (copy, nonatomic) NSString *colorName; /**< 狗狗颜色 */
 @property (copy, nonatomic) NSString *priceOld; /**< 原价 */
 @property (copy, nonatomic) NSString *price;  /**< 现价 */
+
+@property (nonatomic, strong) NSString *transportation; /**< 快递方式 */
+@property (nonatomic, strong) NSString *waybillNumber; /**< 快递方式 */
+@property (nonatomic, strong) NSString *orderId; /**< 订单编号 */
 
 @end

@@ -93,7 +93,6 @@
                         if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
                             [self.navigationController popViewControllerAnimated:YES];
                         }
-                        
                     } error:^(NSError *error) {
                         DLog(@"%@",error);
                     }];
@@ -138,7 +137,7 @@
             state = @"订单取消";
         }
         self.powerOrderView.orderStateMessage = state;
-        self.powerOrderView.orderCode = _orderID;
+        self.powerOrderView.orderCode = self.detailModel.orderId;
       
         self.sellInfoView.currentTime = [NSString stringFromDateString:self.detailModel.createTime];
         self.sellInfoView.buynessName = self.detailModel.userName;
@@ -177,7 +176,6 @@
             if (self.detailModel.productRealBalance.length == 0) {
                 self.costView.remainderMoneylabel.text = @"未付尾款";
                 self.costView.remainderMoeny.text = self.detailModel.productBalance;
-                
             }else{
                 self.costView.remainderMoeny.text = self.detailModel.productRealBalance;
             }
@@ -190,7 +188,6 @@
                 self.costView.fontMoney.text = self.detailModel.productRealDeposit;
             }
         }
-
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -199,7 +196,7 @@
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    _isMoney = NO;
+    _isMoney = YES;
     [self getOrderDetailWithOrderID:_orderID];
 }
 - (void)viewDidLoad {
@@ -226,7 +223,6 @@
                                                  name:UIKeyboardWillShowNotification object:nil];
     
     //注册键盘消失的通知
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];

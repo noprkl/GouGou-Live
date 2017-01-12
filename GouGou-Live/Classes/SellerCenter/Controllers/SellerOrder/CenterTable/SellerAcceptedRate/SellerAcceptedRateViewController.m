@@ -10,7 +10,7 @@
 #import "SellerAcceptRateCell.h"
 #import "SellerAcceptRateHeaderView.h"
 #import "SellerAccepeRateModel.h"
-
+#import "DogImageView.h"
 @interface SellerAcceptedRateViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
@@ -129,8 +129,12 @@ static NSString *cellid = @"SellerAcceptRateCell";
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 330;
+    SellerAccepeRateModel *model = self.dataArr[indexPath.row];
+    NSArray * arr = [model.photoPath componentsSeparatedByString:@","];
+    DogImageView *dogImageView = [[DogImageView alloc] init];
+    CGFloat height = [dogImageView getCellHeightWithImages:arr];
+
+    return 190 + height;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     

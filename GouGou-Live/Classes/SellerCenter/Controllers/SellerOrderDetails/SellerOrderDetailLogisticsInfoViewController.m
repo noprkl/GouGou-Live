@@ -19,10 +19,10 @@
 #import "SellerChangeViewController.h"
 
 #import "OrderDetailModel.h"
-#import <MessageUI/MessageUI.h>
+#import "SellerOrderDetailModel.h"
 #import "SellerSendAlertView.h"
 
-@interface SellerOrderDetailLogisticsInfoViewController ()<UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
+@interface SellerOrderDetailLogisticsInfoViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
 
@@ -32,7 +32,7 @@
 
 @property(nonatomic, strong) UIButton *callBuyer; /**< 联系买家 */
 
-@property(nonatomic, strong) OrderDetailModel *orderInfo; /**< 订单信息 */
+@property(nonatomic, strong) SellerOrderDetailModel *orderInfo; /**< 订单信息 */
 
 @end
 static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
@@ -45,7 +45,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
+        self.orderInfo = [SellerOrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -148,7 +148,9 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerOrderDetailStateView *stateView = [[SellerOrderDetailStateView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
@@ -192,14 +194,17 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerLogisticsInfoView *logisticsView = [[SellerLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
-            
+            logisticsView.transformNumber = self.orderInfo.waybillNumber;
+            logisticsView.transformNumber = self.orderInfo.transportation;
+        
             [cell.contentView addSubview:logisticsView];
             return cell;
-
         }
             break;
         case 2:
@@ -208,7 +213,9 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerDogCardView *dogCardView = [[SellerDogCardView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 98)];
@@ -236,7 +243,9 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerOrderDetailMorePriceView *morePriceView = [[SellerOrderDetailMorePriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
@@ -251,7 +260,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         // 运费
         morePriceView.templatePriceCount.text = self.orderInfo.traficRealFee.length != 0 ?self.orderInfo.traficRealFee:@"0";
         // 尾款
-        morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance !=0 ?self.orderInfo.productRealBalance:@"0";
+        morePriceView.finalMoneyCount.text = self.orderInfo.productRealBalance.length !=0 ?self.orderInfo.productRealBalance:@"0";
         // 定金
         morePriceView.depositCount.text = self.orderInfo.productRealDeposit.length !=0 ? self.orderInfo.productRealDeposit:@"0";
             [cell.contentView addSubview:morePriceView];
@@ -265,32 +274,35 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellid];
-            }            cell.backgroundView = [[UIView alloc] init];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [[UIView alloc] init];
             cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
 
             SellerOrderDetailInfoView *orderInfoView = [[SellerOrderDetailInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 127)];
+        orderInfoView.orderCodeNumber.text = self.orderInfo.orderId;
         if (![self.orderInfo.createTime isEqualToString:@"0"]) {
             orderInfoView.createTime.text = [NSString stringFromDateString:self.orderInfo.createTime];
         }else{
-            orderInfoView.createTime.text = @"未付";
+            orderInfoView.createTime.text = @"***";
         }
         
         if (![self.orderInfo.depositTime isEqualToString:@"0"]) {
             orderInfoView.depositTime.text = [NSString stringFromDateString:self.orderInfo.depositTime];
         }else{
-            orderInfoView.depositTime.text = @"未付";
+            orderInfoView.depositTime.text = @"***";
         }
         
         if (![self.orderInfo.balanceTime isEqualToString:@"0"]) {
             orderInfoView.finalMoneyTime.text = [NSString stringFromDateString:self.orderInfo.balanceTime];
         }else{
-            orderInfoView.finalMoneyTime.text = @"未付";
+            orderInfoView.finalMoneyTime.text = @"***";
         }
         
         if (![self.orderInfo.deliveryTime isEqualToString:@"0"]) {
             orderInfoView.sendTime.text = [NSString stringFromDateString:self.orderInfo.deliveryTime];
         }else{
-            orderInfoView.sendTime.text = @"未发货";
+            orderInfoView.sendTime.text = @"***";
         }
             [cell.contentView addSubview:orderInfoView];
             return cell;
@@ -346,22 +358,22 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     }else if ([title isEqualToString:@"修改运费"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
-        changeVC.changeStyle = @"修改运费";
         changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"修改价格"]){
         SellerChangeViewController *changeVC = [[SellerChangeViewController alloc] init];
         changeVC.title = title;
-        changeVC.changeStyle = @"修改价格";
         changeVC.orderID = self.orderID;
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-        __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+        SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
         
         sendView.orderID = self.orderID;
+        __weak typeof(sendView) weakSend = sendView;
+
         sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
 
             NSDictionary *dict = @{
@@ -373,12 +385,13 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
             [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
+                weakSend.successNote.hidden = NO;
                 if ([successJson[@"code"] intValue] == 1) {
-                    sendView.successNote.text = @"发货成功";
-                    sendView = nil;
-                    [sendView dismiss];
+                    weakSend.successNote.text = @"订单发货成功";
+                    [weakSend dismiss];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }else{
-                    sendView.successNote.text = @"发货失败";
+                    weakSend.successNote.text = @"订单发货失败";
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -397,48 +410,6 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         
     }else if ([title isEqualToString:@"在线客服"]){
        [self clickServiceBtnAction];
-    }
-}
-/** 在线客服 */
-- (void)clickServiceBtnAction {
-    //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"sms://18401703756"]];
-    
-    if ([MFMessageComposeViewController canSendText]) {// 判断是否支持发送短信
-        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
-        
-        controller.recipients = [NSArray arrayWithObject:SMSPhone];
-        controller.body = @"测试发短信";
-        controller.messageComposeDelegate = self;
-        [self presentViewController:controller animated:YES completion:^{
-            
-        }];
-        //修改短信界面标题
-        [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"短信发送"];
-    }else{
-        [self showAlert:@"不支持发送短信"];
-    }
-}
-#pragma mark
-#pragma mark - 短信发送协议
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    [controller dismissViewControllerAnimated:NO completion:^{
-        
-    }];//关键的一句   不能为YES
-    
-    switch ( result ) {
-            
-        case MessageComposeResultCancelled:
-            
-            [self showAlert:@"取消发送"];
-            break;
-        case MessageComposeResultFailed:// send failed
-            [self showAlert:@"发送失败"];
-            break;
-        case MessageComposeResultSent:
-            [self showAlert:@"发送成功"];
-            break;
-        default:
-            break;
     }
 }
 

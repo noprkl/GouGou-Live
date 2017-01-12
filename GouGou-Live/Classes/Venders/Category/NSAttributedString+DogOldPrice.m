@@ -22,7 +22,7 @@
                                      NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"]
                                      
                                      };
-        
+        NSString *price = [NSString stringWithFormat:@"￥%@", text];
         NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:text attributes:attribtDic];
         
         return attribut;

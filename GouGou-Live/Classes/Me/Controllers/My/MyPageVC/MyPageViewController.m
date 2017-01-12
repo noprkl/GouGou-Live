@@ -25,6 +25,7 @@
 
 #import "FavoriteLivePlayerVc.h"
 #import "PlayBackModel.h"
+#import "FocusAndFansModel.h"
 
 @interface MyPageViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -34,11 +35,13 @@
 
 @property(nonatomic, strong) NSArray *commentArr; /**< 评论数 */
 
-@property(nonatomic, strong) NSMutableArray *dogCardArr; /**< 临时数据 */
+@property(nonatomic, strong) NSMutableArray *dogCardArr; /**< 回放数据 */
 
-@property(nonatomic, strong) NSArray *picturesArr; /**< 临时数据 */
+@property(nonatomic, strong) NSArray *picturesArr; /**< 相册数据 */
 
 @property (nonatomic, assign) NSInteger pleasureCount; /**< 用户满意度 */
+
+@property (nonatomic, strong) NSArray *fansArray; /**< 粉丝 */
 
 @end
 
@@ -131,7 +134,26 @@ static NSString *cellid4 = @"cellid4";
     }];
     
 }
-
+// 请求粉丝数据
+- (void)postRequestGetFans {
+    //[[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
+                           @"user_id":[UserInfos sharedUser].ID
+                           };
+    [self getRequestWithPath:API_Fans params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        
+        if (successJson) {
+            //            DLog(@"%@", successJson);
+            self.fansArray = [FocusAndFansModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            [UserInfos sharedUser].fansCount = self.fansArray.count;
+            [UserInfos setUser];
+            //            [self.tableView reloadData];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
@@ -151,6 +173,8 @@ static NSString *cellid4 = @"cellid4";
     [self getUserPleasure];
     // 请求
     [self getRequestMyLive];
+    // 请求粉丝数据
+    [self postRequestGetFans];
 }
 
 - (void)initUI {
@@ -218,7 +242,7 @@ static NSString *cellid4 = @"cellid4";
                 }
                 MyPageHeaderView *headerView = [[MyPageHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
                 headerView.fansCount = [UserInfos sharedUser].fansCount;
-                headerView.commentCount = [UserInfos sharedUser].commentCount;
+                headerView.commentCount = self.commentArr.count;
                 headerView.userImg = [UserInfos sharedUser].userimgurl;
                 headerView.userName = [UserInfos sharedUser].username;
                 headerView.isReal = [[UserInfos sharedUser].isreal isEqualToString:@"3"] ? YES:NO;
@@ -251,11 +275,8 @@ static NSString *cellid4 = @"cellid4";
                     [editSignAlert show];
                     if ([UserInfos sharedUser].usermotto.length != 0) {
                         editSignAlert.easyMessage = [UserInfos sharedUser].usermotto;
-                        editSignAlert.placeHolder = @"";
-                        
-                        NSString * string = [UserInfos sharedUser].usermotto;
-                        
-                        editSignAlert.countText = 20 - string.length;
+                        editSignAlert.placeHolder = @"";                        
+                        editSignAlert.countText = 20;
                     }else{
                         editSignAlert.placeHolder = @"这个人很懒，他什么也没留下";
                         editSignAlert.easyMessage = @"";
@@ -446,6 +467,12 @@ static NSString *cellid4 = @"cellid4";
         
     }
     return _dogCardArr;
+}
+- (NSArray *)fansArray {
+    if (!_fansArray) {
+        _fansArray = [NSArray array];
+    }
+    return _fansArray;
 }
 - (NSArray *)picturesArr {
     if (!_picturesArr) {

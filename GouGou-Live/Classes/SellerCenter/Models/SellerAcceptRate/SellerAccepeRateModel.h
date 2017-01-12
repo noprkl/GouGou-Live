@@ -10,21 +10,23 @@
 
 @interface SellerAccepeRateModel : BaseModel
 
-@property(nonatomic, strong) NSString *age; /**< 狗的年龄 */
-@property(nonatomic, strong) NSString *color; /**< 颜色 */
-@property(nonatomic, strong) NSString *size; /**< 狗狗体型 */
+@property(nonatomic, strong) NSString *ageName; /**< 狗的年龄 */
+@property(nonatomic, strong) NSString *colorName; /**< 颜色 */
+@property(nonatomic, strong) NSString *sizeName; /**< 狗狗体型 */
 @property(nonatomic, strong) NSString *ID; /**< 狗狗id */
-@property(nonatomic, strong) NSString *kind; /**< 品种 */
+@property(nonatomic, strong) NSString *kindName; /**< 品种 */
 @property(nonatomic, strong) NSString *name; /**< 名字 */
 @property(nonatomic, strong) NSString *pathSmall; /**< 狗狗缩略图 */
 @property(nonatomic, strong) NSString *photoPath; /**< 图片 */
 @property(nonatomic, strong) NSString *userImgUrl; /**< 买家头像 */
-@property(nonatomic, strong) NSString *userNickName; /**< 买家昵称 */
+@property(nonatomic, strong) NSString *userName; /**< 买家昵称 */
 @property(nonatomic, strong) NSString *comment; /**< 评价内容 */
 
 @property (nonatomic, strong) NSString *price; /**< 商品价格 */
 @property (nonatomic, strong) NSString *priceOld; /**< 商品老价格 */
 
 @property(nonatomic, strong) NSString *createTime; /**< 评价时间 */
+
+@property (nonatomic, assign) NSInteger point; /**< 评分 */
 
 @end

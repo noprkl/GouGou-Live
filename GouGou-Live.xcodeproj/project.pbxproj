@@ -48,7 +48,6 @@
 		044C8D801E025391004BCA52 /* BuyerCloseOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044C8D7E1E025391004BCA52 /* BuyerCloseOrderCell.m */; };
 		044D3FD51DF6C1C60076672E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D3FD11DF6C1C60076672E /* libWeChatSDK.a */; };
 		044D9B951DF44ED500C56B1D /* ProtectPowerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */; };
-		044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */; };
 		044E86DE1E11392700FD89A2 /* BanaerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044E86DD1E11392600FD89A2 /* BanaerViewController.m */; };
 		0452A1BF1DDEA139007C1E4F /* SellerSendAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1BE1DDEA139007C1E4F /* SellerSendAlertView.m */; };
 		0452A1C21DDEA260007C1E4F /* SellerChangeShipCostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A1C11DDEA260007C1E4F /* SellerChangeShipCostView.m */; };
@@ -73,6 +72,7 @@
 		0452A2131DE1E782007C1E4F /* SellerChoseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0452A2121DE1E782007C1E4F /* SellerChoseAdressViewController.m */; };
 		045609801E0BD0AA000BF19E /* PaymentDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0456097F1E0BD0A9000BF19E /* PaymentDetailsController.m */; };
 		045609831E0BDC18000BF19E /* PayMentmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045609821E0BDC18000BF19E /* PayMentmodel.m */; };
+		045800051E27287500371CC2 /* PushOrderMesageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 045800041E27287500371CC2 /* PushOrderMesageModel.m */; };
 		04592EB11DF10D9F0095C8EE /* BuyCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EA61DF10D9F0095C8EE /* BuyCenterModel.m */; };
 		04592EB21DF10D9F0095C8EE /* CostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EA81DF10D9F0095C8EE /* CostModel.m */; };
 		04592EB31DF10D9F0095C8EE /* DogCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04592EAA1DF10D9F0095C8EE /* DogCardModel.m */; };
@@ -289,7 +289,6 @@
 		046D0B821E1B7E5A0037E111 /* BuySuccessVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D0B811E1B7E5A0037E111 /* BuySuccessVc.m */; };
 		046D11571E1DE8000037E111 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 046D11561E1DE8000037E111 /* MessageUI.framework */; };
 		046D115A1E1E86D40037E111 /* CertificateVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D11591E1E86D40037E111 /* CertificateVc.m */; };
-		046D115C1E1F3BB80037E111 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 046D115B1E1F3BB80037E111 /* Images.xcassets */; };
 		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
 		046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */; };
 		046F0B961DE2AB8B00D50D5C /* PowerOrderStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B4C1DE2AB8A00D50D5C /* PowerOrderStateView.m */; };
@@ -638,8 +637,6 @@
 		044D3FD41DF6C1C60076672E /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		044D9B931DF44ED500C56B1D /* ProtectPowerDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectPowerDetailModel.h; sourceTree = "<group>"; };
 		044D9B941DF44ED500C56B1D /* ProtectPowerDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectPowerDetailModel.m; sourceTree = "<group>"; };
-		044E86D91E0FEA4300FD89A2 /* FMDBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDBUser.h; sourceTree = "<group>"; };
-		044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDBUser.m; sourceTree = "<group>"; };
 		044E86DC1E11392600FD89A2 /* BanaerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BanaerViewController.h; sourceTree = "<group>"; };
 		044E86DD1E11392600FD89A2 /* BanaerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BanaerViewController.m; sourceTree = "<group>"; };
 		0452A1BD1DDEA139007C1E4F /* SellerSendAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerSendAlertView.h; sourceTree = "<group>"; };
@@ -687,6 +684,8 @@
 		0456097F1E0BD0A9000BF19E /* PaymentDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentDetailsController.m; sourceTree = "<group>"; };
 		045609811E0BDC18000BF19E /* PayMentmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayMentmodel.h; sourceTree = "<group>"; };
 		045609821E0BDC18000BF19E /* PayMentmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMentmodel.m; sourceTree = "<group>"; };
+		045800031E27287500371CC2 /* PushOrderMesageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushOrderMesageModel.h; sourceTree = "<group>"; };
+		045800041E27287500371CC2 /* PushOrderMesageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushOrderMesageModel.m; sourceTree = "<group>"; };
 		04592EA51DF10D9F0095C8EE /* BuyCenterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyCenterModel.h; sourceTree = "<group>"; };
 		04592EA61DF10D9F0095C8EE /* BuyCenterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyCenterModel.m; sourceTree = "<group>"; };
 		04592EA71DF10D9F0095C8EE /* CostModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CostModel.h; sourceTree = "<group>"; };
@@ -1131,7 +1130,6 @@
 		046D11561E1DE8000037E111 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		046D11581E1E86D40037E111 /* CertificateVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateVc.h; sourceTree = "<group>"; };
 		046D11591E1E86D40037E111 /* CertificateVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateVc.m; sourceTree = "<group>"; };
-		046D115B1E1F3BB80037E111 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLiveViewController.h; sourceTree = "<group>"; };
 		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
 		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
@@ -2131,7 +2129,6 @@
 				046BEE9E1DE4696500BC32E9 /* EaseUI */,
 				046BEE651DE462DB00BC32E9 /* HyphenateSDK */,
 				0479B4C31DCADC7B00CB288A /* Classes */,
-				046D115B1E1F3BB80037E111 /* Images.xcassets */,
 				0467ACE71DBDEF2200562CC4 /* Supporting Files */,
 			);
 			path = "GouGou-Live";
@@ -2166,6 +2163,8 @@
 			children = (
 				04E777331DEC2EE6007B5146 /* SystemPushMessageModel.h */,
 				04E777341DEC2EE6007B5146 /* SystemPushMessageModel.m */,
+				045800031E27287500371CC2 /* PushOrderMesageModel.h */,
+				045800041E27287500371CC2 /* PushOrderMesageModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2830,26 +2829,26 @@
 		046F0B731DE2AB8B00D50D5C /* OrdersCell */ = {
 			isa = PBXGroup;
 			children = (
+				046F0B7A1DE2AB8B00D50D5C /* WaitAllMoneyCell.h */,
+				046F0B7B1DE2AB8B00D50D5C /* WaitAllMoneyCell.m */,
+				046F0B841DE2AB8B00D50D5C /* WaitFontMoneyCell.h */,
+				046F0B851DE2AB8B00D50D5C /* WaitFontMoneyCell.m */,
+				046F0B7E1DE2AB8B00D50D5C /* WaitBackMoneyCell.h */,
+				046F0B7F1DE2AB8B00D50D5C /* WaitBackMoneyCell.m */,
+				046F0B801DE2AB8B00D50D5C /* WaitConsignessCell.h */,
+				046F0B811DE2AB8B00D50D5C /* WaitConsignessCell.m */,
+				046F0B7C1DE2AB8B00D50D5C /* WaitAssessCell.h */,
+				046F0B7D1DE2AB8B00D50D5C /* WaitAssessCell.m */,
+				046F0B821DE2AB8B00D50D5C /* WaitConsignmentCell.h */,
+				046F0B831DE2AB8B00D50D5C /* WaitConsignmentCell.m */,
+				044C8D7D1E025391004BCA52 /* BuyerCloseOrderCell.h */,
+				044C8D7E1E025391004BCA52 /* BuyerCloseOrderCell.m */,
 				046F0B741DE2AB8B00D50D5C /* ProtectFaliedCell.h */,
 				046F0B751DE2AB8B00D50D5C /* ProtectFaliedCell.m */,
 				046F0B761DE2AB8B00D50D5C /* ProtectingPowerCell.h */,
 				046F0B771DE2AB8B00D50D5C /* ProtectingPowerCell.m */,
 				046F0B781DE2AB8B00D50D5C /* ProtectSuccessCell.h */,
 				046F0B791DE2AB8B00D50D5C /* ProtectSuccessCell.m */,
-				046F0B7A1DE2AB8B00D50D5C /* WaitAllMoneyCell.h */,
-				046F0B7B1DE2AB8B00D50D5C /* WaitAllMoneyCell.m */,
-				046F0B7C1DE2AB8B00D50D5C /* WaitAssessCell.h */,
-				046F0B7D1DE2AB8B00D50D5C /* WaitAssessCell.m */,
-				046F0B7E1DE2AB8B00D50D5C /* WaitBackMoneyCell.h */,
-				046F0B7F1DE2AB8B00D50D5C /* WaitBackMoneyCell.m */,
-				046F0B801DE2AB8B00D50D5C /* WaitConsignessCell.h */,
-				046F0B811DE2AB8B00D50D5C /* WaitConsignessCell.m */,
-				046F0B821DE2AB8B00D50D5C /* WaitConsignmentCell.h */,
-				046F0B831DE2AB8B00D50D5C /* WaitConsignmentCell.m */,
-				046F0B841DE2AB8B00D50D5C /* WaitFontMoneyCell.h */,
-				046F0B851DE2AB8B00D50D5C /* WaitFontMoneyCell.m */,
-				044C8D7D1E025391004BCA52 /* BuyerCloseOrderCell.h */,
-				044C8D7E1E025391004BCA52 /* BuyerCloseOrderCell.m */,
 			);
 			path = OrdersCell;
 			sourceTree = "<group>";
@@ -3777,8 +3776,6 @@
 				043CBB571DF90C1D0096C9CE /* UIView+FontSize.m */,
 				61EF1DB51DFD17D40049FBBB /* NSAttributedString+DogOldPrice.h */,
 				61EF1DB61DFD17D40049FBBB /* NSAttributedString+DogOldPrice.m */,
-				044E86D91E0FEA4300FD89A2 /* FMDBUser.h */,
-				044E86DA1E0FEA4300FD89A2 /* FMDBUser.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -4711,7 +4708,6 @@
 			files = (
 				046BE8E41DE4524100BC32E9 /* NotificationMessageCell.xib in Resources */,
 				044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */,
-				046D115C1E1F3BB80037E111 /* Images.xcassets in Resources */,
 				046F0BFF1DE2EB1900D50D5C /* ManagePictureaCell.xib in Resources */,
 				04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */,
 				045D11BA1DF05C0E008623E5 /* PayingViewController.xib in Resources */,
@@ -5204,6 +5200,7 @@
 				04CE13FB1DDD4D8B00EB8777 /* SellerBaseViewController.m in Sources */,
 				046BF01D1DE4696600BC32E9 /* EaseEmotionManager.m in Sources */,
 				0479B6451DCB046C00CB288A /* BuyRuleAlertView.m in Sources */,
+				045800051E27287500371CC2 /* PushOrderMesageModel.m in Sources */,
 				046D0B821E1B7E5A0037E111 /* BuySuccessVc.m in Sources */,
 				04DAC9971DD21A9A0089236D /* PromptView.m in Sources */,
 				0479B5F51DCADC7B00CB288A /* TalkingViewController.m in Sources */,
@@ -5241,7 +5238,6 @@
 				619395301DF828BD00EBC23B /* ChosePayStyleView.m in Sources */,
 				046F0B9C1DE2AB8B00D50D5C /* NicknameView.m in Sources */,
 				040891FA1DFEB91F006DF570 /* PaySuccessViewController.m in Sources */,
-				044E86DB1E0FEA4300FD89A2 /* FMDBUser.m in Sources */,
 				0479B63A1DCADC7B00CB288A /* BaseViewController.m in Sources */,
 				04DAC9951DD21A9A0089236D /* MyMessageView.m in Sources */,
 				04A31F831DED4F4900BE175A /* AddUpdataImagesView.m in Sources */,

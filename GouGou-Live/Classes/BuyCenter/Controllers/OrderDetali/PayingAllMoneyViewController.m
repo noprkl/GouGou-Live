@@ -47,13 +47,12 @@
 #pragma mark - 网络请求
 - (void)getAllMoneyRequest {
     
-    NSDictionary * dict = @{@"id":@([_detailModel.ID intValue])};
-    DLog(@"%@",dict);
-    DLog(@"%@",[UserInfos sharedUser].ID);
+    NSDictionary * dict = @{@"id":_orderID};
+
+    [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
-        
-        DLog(@"%@",successJson[@"Message"]);
-        DLog(@"%@",successJson[@"data"]);
+        [self hideHud];
+        DLog(@"%@",successJson);
         // 详情状态
         self.orderInfo = [OrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         self.orderStateView.stateMessage = @"待付全款";
@@ -89,29 +88,31 @@
         
         // 全款
         self.payMonyView.totalMoney = self.orderInfo.price;
-        
+
+        self.orderNumberView.buyUserId = self.orderInfo.orderId;
+
         if (![self.orderInfo.createTime isEqualToString:@"0"]) {
             self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
         }else{
-            self.orderNumberView.createTimes = @"未付";
+            self.orderNumberView.createTimes = @"***";
         }
         
         if (![self.orderInfo.depositTime isEqualToString:@"0"]) {
             self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
         }else{
-            self.orderNumberView.depositTimes = @"未付";
+            self.orderNumberView.depositTimes = @"***";
         }
         
         if (![self.orderInfo.balanceTime isEqualToString:@"0"]) {
             self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
         }else{
-            self.orderNumberView.balanceTimes = @"未付";
+            self.orderNumberView.balanceTimes = @"***";
         }
         
         if (![self.orderInfo.deliveryTime isEqualToString:@"0"]) {
             self.orderNumberView.deliveryTimes = [NSString stringFromDateString:self.orderInfo.deliveryTime];
         }else{
-            self.orderNumberView.deliveryTimes = @"未付";
+            self.orderNumberView.deliveryTimes = @"***";
         }
     } error:^(NSError *error) {
         DLog(@"%@",error);
@@ -309,17 +310,22 @@
             
             if ([button.titleLabel.text isEqual:@"取消订单"]) {
                 
-                [weakself clickCancleOrder:weakself.detailModel];
+                [weakself clickCancleOrder:weakself.orderInfo.ID endOptioal:^{
+                    [weakself.navigationController popViewControllerAnimated:YES];
+
+                }];
                 
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:weakself.detailModel.saleUserId conversationType:(EMConversationTypeChat)];
-                viewController.title = weakself.detailModel.saleUserId;
-                 viewController.chatID = weakself.detailModel.saleUserId;
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:weakself.orderInfo.saleUserId conversationType:(EMConversationTypeChat)];
+                 viewController.chatID = weakself.orderInfo.saleUserId;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [weakself.navigationController pushViewController:viewController animated:YES];
             } else if ([button.titleLabel.text isEqual:@"支付全款"]) {
                 
-                [weakself payMoneyWithOrderID:weakself.detailModel.ID payStyle:button.titleLabel.text];
+                [weakself payMoneyWithOrderID:weakself.orderInfo.ID payStyle:button.titleLabel.text endOptioal:^{
+                    [weakself.navigationController popViewControllerAnimated:YES];
+
+                }];
             }
         };
     }

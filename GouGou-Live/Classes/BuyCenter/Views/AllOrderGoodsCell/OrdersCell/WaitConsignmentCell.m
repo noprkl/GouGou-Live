@@ -46,11 +46,11 @@
 
     // 直接赋值
     // 昵称
-    if (centerModel.merchantImg1.length != 0) {
-        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.merchantImg1];
+    if (centerModel.userImgUrl.length != 0) {
+        NSString *urlString1 = [IMAGE_HOST stringByAppendingString:centerModel.userImgUrl];
         [self.nickView.sellerIamge sd_setImageWithURL:[NSURL URLWithString:urlString1] placeholderImage:[UIImage imageNamed:@"主播头像"]];
     }
-    self.nickView.nickName.text = centerModel.merchantName;
+    self.nickView.nickName.text = centerModel.userName;
     self.nickView.stateLabe.text = @"待发货";
     
     // 狗狗详情
@@ -68,10 +68,10 @@
    
     // 付款状况
     // 总价价格
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [centerModel.price floatValue] + [centerModel.traficMoney floatValue]];
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [centerModel.productRealBalance floatValue] + [centerModel.productRealDeposit floatValue] + [centerModel.productRealPrice floatValue] + [centerModel.traficFee floatValue]];
 
     // 运费
-    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficMoney];
+    self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)",centerModel.traficFee];
     // 付款状况
     // 实付款
     if (centerModel.productRealPrice.length != 0) {// 全款支付
@@ -80,7 +80,7 @@
         self.costView.fontMoney.text = @"";
         
         // 实付
-        self.costView.remainderMoneylabel.text = @"已付全款";
+        self.costView.remainderMoneylabel.text = @"已付全款:";
         if (centerModel.productRealPrice.length != 0) {
             self.costView.remainderMoeny.text = centerModel.productRealPrice;
         }else{
@@ -92,7 +92,7 @@
             //尾款
             if (centerModel.productRealBalance.length != 0) {
                 // 定金
-                self.costView.fontMoneyLabel.text = @"已付定金";
+                self.costView.fontMoneyLabel.text = @"已付定金:";
                 if (centerModel.productRealDeposit.length != 0) {
                     self.costView.fontMoney.text = centerModel.productRealDeposit;
                 }else{
@@ -101,7 +101,7 @@
                 
                 
                 // 实付
-                self.costView.remainderMoneylabel.text = @"已付尾款";
+                self.costView.remainderMoneylabel.text = @"已付尾款:";
                 self.costView.remainderMoeny.text = centerModel.productRealBalance.length !=0 ? centerModel.productRealBalance:@"0";
             }else{
                 //尾款
@@ -111,7 +111,7 @@
                     self.costView.fontMoney.text = @"";
                     
                     // 实付
-                    self.costView.remainderMoneylabel.text = @"已付定金";
+                    self.costView.remainderMoneylabel.text = @"已付定金:";
                     self.costView.remainderMoeny.text = centerModel.productRealDeposit.length != 0 ? centerModel.productRealDeposit:@"0";
                 }
             }

@@ -1,14 +1,16 @@
 //
-//  SellerChangePriceAlertView.m
+//  SellerChangeShipCostView.m
 //  GouGou-Live
 //
 //  Created by ma c on 16/11/18.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
-#define kHeight 177
+#define kHeight 225
+
 #import "SellerChangePriceAlertView.h"
 
-@interface SellerChangePriceAlertView ()<UITextFieldDelegate>
+@interface SellerChangePriceAlertView ()
+<UITextFieldDelegate>
 /** 蒙版 */
 @property (strong, nonatomic) UIControl *overLayer;
 
@@ -19,17 +21,27 @@
 @property(nonatomic, strong) UIView *line0; /**< 线0 */
 
 @property(nonatomic, strong) UIView *backView1; /**< 背景1 */
-@property(nonatomic, strong) UILabel *firstMoney; /**< 初始运费 */
-@property(nonatomic, strong) UILabel *firstMoneyNumber; /**< 初始运费款数 */
+@property(nonatomic, strong) UILabel *finalMoney; /**< 应付尾款 */
+@property(nonatomic, strong) UILabel *finalMoneyNumber; /**< 应付尾款 */
 @property(nonatomic, strong) UIView *line1; /**< 线1 */
 
 @property(nonatomic, strong) UIView *backView2; /**< 背景 */
-@property(nonatomic, strong) UILabel *changefirstMoney; /**< 修改运费 */
-@property(nonatomic, strong) UIView *changeTextView; /**< 修改运费文本框背景 */
-@property(nonatomic, strong) UITextField *changeTextField; /**< 修改运费文本框 */
-@property(nonatomic, strong) UILabel *changedMoney; /**< 改变的运费 */
+@property(nonatomic, strong) UILabel *changeFinalMoney; /**< 修改尾款 */
+@property(nonatomic, strong) UIView *changeTextView; /**< 修改尾款文本框背景 */
+@property(nonatomic, strong) UITextField *changeTextField; /**< 修改尾款文本框 */
+@property(nonatomic, strong) UILabel *changedMoney; /**< 改变的钱数 */
+@property(nonatomic, strong) UIView *line2; /**< 线 */
+
+@property(nonatomic, strong) UIView *backView3; /**< 背景 */
+@property(nonatomic, strong) UILabel *googsPrice; /**< 商品价格 */
+@property(nonatomic, strong) UILabel *googsPriceNumber; /**< 新商品价格 */
+@property(nonatomic, strong) UILabel *googsOldPriceNumber; /**< 老商品价格 */
 
 @property(nonatomic, strong) UIButton *commitBtn; /**< 确认按钮 */
+
+@property(nonatomic, assign) BOOL isHaveDian; /**< 小数点 */
+
+@property(nonatomic, assign) BOOL isFirstZero; /**< 首位为0 */
 
 @end
 @implementation SellerChangePriceAlertView
@@ -48,15 +60,21 @@
         [self addSubview:self.line0];
         
         [self addSubview:self.backView1];
-        [self.backView1 addSubview:self.firstMoney];
-        [self.backView1 addSubview:self.firstMoneyNumber];
+        [self.backView1 addSubview:self.finalMoney];
+        [self.backView1 addSubview:self.finalMoneyNumber];
         [self addSubview:self.line1];
         
         [self addSubview:self.backView2];
-        [self.backView2 addSubview:self.changefirstMoney];
+        [self.backView2 addSubview:self.changeFinalMoney];
         [self.backView2 addSubview:self.changeTextView];
         [self.changeTextView addSubview:self.changeTextField];
-        [self addSubview:self.changedMoney];
+        [self.backView2 addSubview:self.changedMoney];
+        [self addSubview:self.line2];
+        
+        [self addSubview:self.backView3];
+        [self.backView3 addSubview:self.googsPrice];
+        [self.backView3 addSubview:self.googsPriceNumber];
+        [self.backView3 addSubview:self.googsOldPriceNumber];
         
         [self addSubview:self.commitBtn];
     }
@@ -66,6 +84,31 @@
     _orderID = orderID;
     self.orderCodeNumber.text = orderID;
 }
+- (void)setRealMoney:(NSString *)realMoney {
+    _realMoney = realMoney;
+    self.finalMoneyNumber.text = realMoney;
+}
+- (void)setRealMoneyNote:(NSString *)realMoneyNote {
+    _realMoneyNote = realMoneyNote;
+    self.finalMoney.text = [NSString stringWithFormat:@"%@:", realMoneyNote];
+}
+- (void)setChangeStyle:(NSString *)changeStyle {
+    _changeStyle = changeStyle;
+    self.changeFinalMoney.text = [NSString stringWithFormat:@"%@:", changeStyle];;
+}
+- (void)setPrice:(NSString *)price {
+    _price = price;
+    self.googsPriceNumber.text = [NSString stringWithFormat:@"%@", price];
+}
+- (void)setOldPrice:(NSString *)oldPrice {
+    _oldPrice = oldPrice;
+    self.googsOldPriceNumber.attributedText = [NSAttributedString getCenterLineWithString:oldPrice];
+}
+- (void)setPlaceHolder:(NSString *)placeHolder {
+    _placeHolder = placeHolder;
+    self.changeTextField.placeholder = [NSString stringWithFormat:@"￥%@", placeHolder];
+}
+
 // 约束
 - (void)setUP {
     // 订单
@@ -92,13 +135,13 @@
         make.left.width.equalTo(self);
         make.height.equalTo(44);
     }];
-    [self.firstMoney makeConstraints:^(MASConstraintMaker *make) {
+    [self.finalMoney makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backView1.centerY);
         make.left.equalTo(self.left).offset(10);
     }];
-    [self.firstMoneyNumber makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.firstMoney.centerY);
-        make.left.equalTo(self.firstMoney.right).offset(10);
+    [self.finalMoneyNumber makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.finalMoney.centerY);
+        make.left.equalTo(self.finalMoney.right).offset(10);
     }];
     [self.line1 makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backView1.bottom);
@@ -111,27 +154,53 @@
         make.left.width.equalTo(self);
         make.height.equalTo(44);
     }];
-    [self.changefirstMoney makeConstraints:^(MASConstraintMaker *make) {
+    [self.changeFinalMoney makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backView2.centerY);
         make.left.equalTo(self.left).offset(10);
     }];
     [self.changeTextView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backView2.centerY);
-        make.left.equalTo(self.changefirstMoney.right).offset(10);
+        make.left.equalTo(self.changeFinalMoney.right).offset(10);
         make.size.equalTo(CGSizeMake(124, 33));
     }];
     [self.changeTextField makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.backView2.centerY);
-        make.left.equalTo(self.left).offset(9);
+        make.centerY.equalTo(self.changeTextView.centerY);
+        make.left.equalTo(self.changeTextView.left).offset(9);
         make.right.equalTo(self.changeTextView.right).offset(-9);
+        make.height.equalTo(33);
     }];
+    
     [self.changedMoney makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backView2.centerY);
         make.left.equalTo(self.changeTextField.right).offset(10);
     }];
     
-    [self.commitBtn makeConstraints:^(MASConstraintMaker *make) {
+    [self.line2 makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backView2.bottom);
+        make.left.width.equalTo(self);
+        make.height.equalTo(1);
+    }];
+    // 商品价格
+    [self.backView3 makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.line2.bottom);
+        make.left.width.equalTo(self);
+        make.height.equalTo(44);
+    }];
+    [self.googsPrice makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backView3.centerY);
+        make.left.equalTo(self.left).offset(10);
+    }];
+    [self.googsPriceNumber makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backView3.centerY);
+        make.left.equalTo(self.googsPrice.right).offset(10);
+    }];
+    [self.googsOldPriceNumber makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backView3.centerY);
+        make.left.equalTo(self.googsPriceNumber.right).offset(10);
+    }];
+    
+    [self.commitBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.backView3.bottom);
         make.left.right.equalTo(self);
         make.height.equalTo(44);
     }];
@@ -177,23 +246,23 @@
     }
     return _backView1;
 }
-- (UILabel *)firstMoney {
-    if (!_firstMoney) {
-        _firstMoney = [[UILabel alloc] init];
-        _firstMoney.text =@"初始运费：";
-        _firstMoney.textColor = [UIColor colorWithHexString:@"#000000"];
-        _firstMoney.font = [UIFont systemFontOfSize:16];
+- (UILabel *)finalMoney {
+    if (!_finalMoney) {
+        _finalMoney = [[UILabel alloc] init];
+        _finalMoney.text =@"应付尾款：";
+        _finalMoney.textColor = [UIColor colorWithHexString:@"#000000"];
+        _finalMoney.font = [UIFont systemFontOfSize:16];
     }
-    return _firstMoney;
+    return _finalMoney;
 }
-- (UILabel *)firstMoneyNumber {
-    if (!_firstMoneyNumber) {
-        _firstMoneyNumber = [[UILabel alloc] init];
-        _firstMoneyNumber.text =@"¥ 950";
-        _firstMoneyNumber.textColor = [UIColor colorWithHexString:@"#333333"];
-        _firstMoneyNumber.font = [UIFont systemFontOfSize:14];
+- (UILabel *)finalMoneyNumber {
+    if (!_finalMoneyNumber) {
+        _finalMoneyNumber = [[UILabel alloc] init];
+        _finalMoneyNumber.text =@"¥ 950";
+        _finalMoneyNumber.textColor = [UIColor colorWithHexString:@"#333333"];
+        _finalMoneyNumber.font = [UIFont systemFontOfSize:14];
     }
-    return _firstMoneyNumber;
+    return _finalMoneyNumber;
 }
 - (UIView *)line1 {
     if (!_line1) {
@@ -209,19 +278,20 @@
     }
     return _backView2;
 }
-- (UILabel *)changefirstMoney {
-    if (!_changefirstMoney) {
-        _changefirstMoney = [[UILabel alloc] init];
-        _changefirstMoney.text =@"修改运费：";
-        _changefirstMoney.textColor = [UIColor colorWithHexString:@"#000000"];
-        _changefirstMoney.font = [UIFont systemFontOfSize:16];
+- (UILabel *)changeFinalMoney {
+    if (!_changeFinalMoney) {
+        _changeFinalMoney = [[UILabel alloc] init];
+        _changeFinalMoney.text =@"修改尾款：";
+        _changeFinalMoney.textColor = [UIColor colorWithHexString:@"#000000"];
+        _changeFinalMoney.font = [UIFont systemFontOfSize:16];
     }
-    return _changefirstMoney;
+    return _changeFinalMoney;
 }
 - (UIView *)changeTextView {
     if (!_changeTextView) {
         _changeTextView = [[UIView alloc] init];
         _changeTextView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+        
         _changeTextView.layer.cornerRadius = 9;
         _changeTextView.layer.masksToBounds = YES;
     }
@@ -233,7 +303,6 @@
         _changeTextField.placeholder = @"¥ 950";
         _changeTextField.delegate = self;
         [_changeTextField addTarget:self action:@selector(changeTextFieldEditing:) forControlEvents:(UIControlEventEditingChanged)];
-
     }
     return _changeTextField;
 }
@@ -245,6 +314,45 @@
         _changedMoney.font = [UIFont systemFontOfSize:14];
     }
     return _changedMoney;
+}
+- (UIView *)line2 {
+    if (!_line2) {
+        _line2 = [[UIView alloc] init];
+        _line2.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _line2;
+}
+- (UIView *)backView3 {
+    if (!_backView3) {
+        _backView3 = [[UIView alloc] init];
+        _backView3.backgroundColor = [UIColor whiteColor];
+    }
+    return _backView3;
+}
+- (UILabel *)googsPrice {
+    if (!_googsPrice) {
+        _googsPrice = [[UILabel alloc] init];
+        _googsPrice.text =@"商品价格：";
+        _googsPrice.textColor = [UIColor colorWithHexString:@"#000000"];
+        _googsPrice.font = [UIFont systemFontOfSize:16];
+    }
+    return _googsPrice;
+}
+- (UILabel *)googsPriceNumber {
+    if (!_googsPriceNumber) {
+        _googsPriceNumber = [[UILabel alloc] init];
+        _googsPriceNumber.text =@"¥ 1300";
+        _googsPriceNumber.textColor = [UIColor colorWithHexString:@"#333333"];
+        _googsPriceNumber.font = [UIFont systemFontOfSize:14];
+    }
+    return _googsPriceNumber;
+}
+- (UILabel *)googsOldPriceNumber {
+    if (!_googsOldPriceNumber) {
+        _googsOldPriceNumber = [[UILabel alloc] init];
+        _googsOldPriceNumber.attributedText = [self getAttributeWithString:@"¥ 1400"];
+    }
+    return _googsOldPriceNumber;
 }
 - (UIButton *)commitBtn {
     if (!_commitBtn) {
@@ -275,15 +383,14 @@
     DLog(@"%@--%ld--%f", textField.text, textField.text.length, newMoney);
     
     // 计算改变的钱数
-    self.changedMoney.text = [NSString stringWithFormat:@"¥ %@", [@(950 - newMoney) stringValue]];
-    
-    
+    self.changedMoney.text = [NSString stringWithFormat:@"¥ %.0lf", [self.price floatValue] - newMoney];
 }
+
 - (void)clickCommitBtnAction {
     
     
     if (_commitBlock) {
-        
+        [self dismiss];
         _commitBlock(self.changeTextField.text);
     }
 }
@@ -305,15 +412,88 @@
     return YES;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    CGFloat oldPrice = 950;
-    CGFloat nowPrice = [textField.text floatValue];
-    // 判断不能输入
-    if (nowPrice > (oldPrice * 10) || nowPrice < (oldPrice * (-1))) {
-        return NO;
+
+    if (textField == self.changeTextField) {
+        
+        if ([textField.text rangeOfString:@"."].location==NSNotFound) {
+            _isHaveDian = NO;
+        }
+        if ([textField.text rangeOfString:@"0"].location==NSNotFound) {
+            _isFirstZero = NO;
+        }
+        
+        if ([string length]>0)
+            {
+            unichar single=[string characterAtIndex:0];//当前输入的字符
+            if ((single >='0' && single<='9') || single=='.')//数据格式正确
+                {
+                
+                if([textField.text length]==0){
+                    if(single == '.'){
+                        //首字母不能为小数点
+                        return NO;
+                    }
+                    if (single == '0') {
+                        _isFirstZero = YES;
+                        return YES;
+                    }
+                }
+                
+                if (single=='.'){
+                    if(!_isHaveDian)//text中还没有小数点
+                        {
+                        _isHaveDian=YES;
+                        return YES;
+                        }else{
+                            return NO;
+                        }
+                }else if(single=='0'){
+                    if ((_isFirstZero&&_isHaveDian)||(!_isFirstZero&&_isHaveDian)) {
+                        //首位有0有.（0.01）或首位没0有.（10200.00）可输入两位数的0
+                        if([textField.text isEqualToString:@"0.0"]){
+                            return NO;
+                        }
+                        NSRange ran=[textField.text rangeOfString:@"."];
+                        int tt=(int)(range.location-ran.location);
+                        if (tt <= 2){
+                            return YES;
+                        }else{
+                            return NO;
+                        }
+                    }else if (_isFirstZero&&!_isHaveDian){
+                        //首位有0没.不能再输入0
+                        return NO;
+                    }else{
+                        return YES;
+                    }
+                }else{
+                    if (_isHaveDian){
+                        //存在小数点，保留两位小数
+                        NSRange ran=[textField.text rangeOfString:@"."];
+                        int tt= (int)(range.location-ran.location);
+                        if (tt <= 2){
+                            return YES;
+                        }else{
+                            return NO;
+                        }
+                    }else if(_isFirstZero&&!_isHaveDian){
+                        //首位有0没点
+                        return NO;
+                    }else{
+                        return YES;
+                    }
+                }
+                }else{
+                    //输入的数据格式不正确
+                    return NO;
+                }
+            }else{
+                return YES;
+            }
     }
-    
     return YES;
 }
+
 #pragma mark
 #pragma mark - 蒙版弹出效果
 - (UIControl *)overLayer {

@@ -118,10 +118,13 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     
     DLog(@"%@",_watchCount);
-
-    
+    // 进入后竖屏
     if (_isLandscape) {//横屏
         [self forceOrientationLandscapeRight];
+        [self willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientationLandscapeRight) duration:0.5];
+    }else{
+        [self forceOrientation:(UIInterfaceOrientationPortrait)];
+        [self willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientationPortrait) duration:0.5];
     }
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -368,12 +371,12 @@
     }];
     [self.playbackBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.topView.centerY).offset(10);
-        make.left.equalTo(self.topView.left).offset(10);
-        make.size.equalTo(CGSizeMake(20, 20));
+        make.left.equalTo(self.topView.left);
+        make.size.equalTo(CGSizeMake(40, 34));
     }];
     [self.liveTitleLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.topView.centerY).offset(10);
-        make.left.equalTo(self.playbackBtn.right).offset(10);
+        make.left.equalTo(self.playbackBtn.right);
         make.right.equalTo(self.topView.right).offset(-20);
     }];
     [self.downView remakeConstraints:^(MASConstraintMaker *make) {
@@ -382,7 +385,8 @@
     }];
     [self.playBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
-        make.left.equalTo(self.downView.left).offset(20);
+        make.left.equalTo(self.downView.left);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
     [self.beginTimeLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
@@ -400,7 +404,8 @@
     }];
     [self.playscreenBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
-        make.right.equalTo(self.downView.right).offset(-10);
+        make.right.equalTo(self.downView.right);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
     [self.endTimeLabel remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.downView.centerY);
@@ -415,6 +420,7 @@
     if (!_playscreenBtn) {
         _playscreenBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_playscreenBtn setImage:[UIImage imageNamed:@"缩小"] forState:(UIControlStateNormal)];
+        [_playBtn setContentMode:(UIViewContentModeCenter)];
         [_playscreenBtn addTarget:self action:@selector(clickScreenButtonAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _playscreenBtn;
@@ -463,7 +469,8 @@
         _playBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_playBtn setImage:[UIImage imageNamed:@"播放"] forState:(UIControlStateNormal)];
         [_playBtn setImage:[UIImage imageNamed:@"暂停"] forState:(UIControlStateSelected)];
-        
+        [_playBtn setContentMode:(UIViewContentModeCenter)];
+
         [_playBtn addTarget:self action:@selector(clickPlayOrPauseAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _playBtn;
@@ -677,10 +684,21 @@
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     
+    
     // 每个子控制器的宽高
     CGFloat width = self.view.frame.size.width;
     // 偏移量 - x
     CGFloat offset = scrollView.contentOffset.x;
+
+    // 限制位置
+    if (offset < 0.5 * width) {
+        offset = 0;
+    }else if (offset >= 0.5 * width && offset < 1.5 * width){
+        offset = width;
+    }else if (offset >= 1.5 * width ){
+        offset = 2 * width;
+    }
+    
     // 获取视图的索引
     NSInteger index = offset / width;
     //根据索引返回vc的引用

@@ -76,6 +76,10 @@
     _transformNumber = transformNumber;
     self.numLabel.text = transformNumber;
 }
+- (void)setTransformStyle:(NSString *)transformStyle {
+    _transformStyle = transformStyle;
+    self.expressNameLabe.text = transformStyle;
+}
 #pragma markc
 #pragma mark - 懒加载
 - (UILabel *)logisticInfoLabel {

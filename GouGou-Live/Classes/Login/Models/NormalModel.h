@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSString *conent; /**< 内容 */
 
+@property (nonatomic, strong) NSString *url; /**< 地址 */
+
 @end

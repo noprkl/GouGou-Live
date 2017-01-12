@@ -20,7 +20,7 @@
 @property (copy, nonatomic) NSString *productRealBalance; /**< 商品实付尾款 */
 @property (copy, nonatomic) NSString *traficRealFee; /**< 商品实付运费 */
 
-@property (copy, nonatomic) NSString *userNickName; /**< 用户昵称 */
+@property (copy, nonatomic) NSString *userName; /**< 用户昵称 */
 @property (copy, nonatomic) NSString *userImgUrl; /**< 用户头像 */
 @property (copy, nonatomic) NSString *buyUserId; /**< 用户id */
 
@@ -34,4 +34,7 @@
 @property (copy, nonatomic) NSString *price;  /**< 现价 */
 @property (copy, nonatomic) NSString *comment;  /**< 评价 */
 @property (copy, nonatomic) NSString *photoPath;  /**< 图片数组 */
+
+@property (nonatomic, strong) NSString *transportation; /**< 快递方式 */
+@property (nonatomic, strong) NSString *waybillNumber; /**< 快递方式 */
 @end

@@ -17,5 +17,5 @@ typedef void(^ClickSellerLogisticsCopyBtnBlock)();
 @property(nonatomic, strong) ClickSellerLogisticsCopyBtnBlock copyBlock; /**< 点击编辑回调 */
 
 @property (nonatomic, strong) NSString *orderCode; /**< 订单编号 */
-
+@property (nonatomic, strong) NSString *orderStyle; /**< 运货方式 */
 @end

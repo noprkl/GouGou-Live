@@ -53,7 +53,7 @@
 - (void)setModel:(SellerProtectModel *)model {
     _model = model;
     
-    self.nickView.nickName.text = model.userNickName;
+    self.nickView.nickName.text = model.userName;
     self.nickView.dateLabel.text = @"";
     if ([model.status intValue] == 1) {
         self.nickView.stateMessage = @"维权中";
@@ -72,10 +72,17 @@
     self.dogCardView.dogAgeLabel.text = model.ageName;
     self.dogCardView.dogSizeLabel.text = model.sizeName;
     self.dogCardView.dogColorLabel.text = model.colorName;
-    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
+    self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", model.priceOld]];
     self.dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", model.price];
-    
-    self.logisticsView.transformNumber = model.ID;
+
+    // 物流信息
+    if (model.transportation.length == 0) {
+        self.logisticsView.transformNumber = @"";
+        self.logisticsView.transformStyle = @"未发货";
+    }else{
+        self.logisticsView.transformNumber = model.waybillNumber;
+        self.logisticsView.transformStyle = model.transportation;
+    }
     
     self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [model.productRealBalance floatValue] + [model.productRealDeposit floatValue] + [model.productRealPrice floatValue] + [model.traficRealFee floatValue]];
     self.costView.freightMoney = model.traficRealFee;

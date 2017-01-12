@@ -26,7 +26,7 @@
 @implementation DogDetailViewController
 - (void)getGoodsDetail {
     NSDictionary *dict = @{
-                           @"id":@([_model.ID integerValue])
+                           @"id":_model.ID
                            };
     DLog(@"%@", dict);
     [self getRequestWithPath:API_Product_limit params:dict success:^(id successJson) {
@@ -35,12 +35,11 @@
             self.dogInfo = [DogDetailModel mj_objectWithKeyValues:successJson[@"data"]];
             NSMutableArray *imsArr = [NSMutableArray arrayWithArray:[self.dogInfo.pathBig componentsSeparatedByString:@","]];
 //            [imsArr removeObjectAtIndex:0];
-            if (imsArr.count == 4) {
+            if (imsArr.count == 5) {//第一张可能是重复的，在后边判断干掉了
                 self.dogDetailView.contentSize = CGSizeMake(0, 650);
             }else{
                 self.dogDetailView.contentSize = CGSizeMake(0, 0);
             }
-            [self.view addSubview:self.dogDetailView];
             self.dogDetailView.dogInfo = self.dogInfo;
 
             DLog(@"%@", self.dogInfo);
@@ -98,17 +97,22 @@
 
     self.edgesForExtendedLayout = 0;
     [self.view addSubview:self.bottomView];
-    
+    [self.view addSubview:self.dogDetailView];
+
     [self.bottomView makeConstraints:^(MASConstraintMaker *make) {
         make.left.width.bottom.equalTo(self.view);
         make.height.equalTo(50);
+    }];
+    [self.dogDetailView makeConstraints:^(MASConstraintMaker *make) {
+        make.left.width.top.equalTo(self.view);
+        make.bottom.equalTo(self.bottomView.top);
     }];
 }
 #pragma mark
 #pragma mark - 懒加载
 - (SellerDogDetailView *)dogDetailView {
     if (!_dogDetailView) {
-        _dogDetailView = [[SellerDogDetailView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 50)];
+        _dogDetailView = [[SellerDogDetailView alloc] initWithFrame:CGRectZero];
         _dogDetailView.backgroundColor = [UIColor whiteColor];
         _dogDetailView.contentSize = CGSizeMake(0, 1000);
         _dogDetailView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);

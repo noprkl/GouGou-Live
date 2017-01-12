@@ -41,13 +41,13 @@
     [super layoutSubviews];
     [self.backBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY).offset(10);
-        make.left.equalTo(self.left).offset(10);
-        make.size.equalTo(CGSizeMake(20, 20));
+        make.left.equalTo(self.left);
+        make.size.equalTo(CGSizeMake(34, 34));
     }];
     
     [self.livingImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
-        make.left.equalTo(self.backBtn.right).offset(10);
+        make.left.equalTo(self.backBtn.right);
     }];
     
     [self.watchCount makeConstraints:^(MASConstraintMaker *make) {
@@ -58,13 +58,13 @@
     }];
     [self.faceOrBack makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
-        make.right.equalTo(self.right).offset(-10);
-        make.size.equalTo(CGSizeMake(20, 20));
+        make.right.equalTo(self.right).offset(0);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
     [self.shareBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
-        make.right.equalTo(self.faceOrBack.left).offset(-10);
-        make.size.equalTo(CGSizeMake(20, 20));
+        make.right.equalTo(self.faceOrBack.left).offset(0);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

@@ -30,12 +30,13 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self.backBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
+        make.centerY.equalTo(self.centerY).offset(10);
         make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
     [self.livingImageView remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.backBtn.centerY);
-        make.left.equalTo(self.backBtn.right).offset(10);
+        make.left.equalTo(self.backBtn.right);
     }];
     
     [self.watchCount remakeConstraints:^(MASConstraintMaker *make) {
@@ -46,17 +47,20 @@
     }];
     
     [self.collectBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
-        make.right.equalTo(self.right).offset(-10);
-        make.size.equalTo(CGSizeMake(22, 22));
+        make.centerY.equalTo(self.centerY).offset(10);
+        make.right.equalTo(self.right);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
     [self.shareBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
-        make.right.equalTo(self.collectBtn.left).offset(-10);
+        make.centerY.equalTo(self.centerY).offset(10);
+        make.right.equalTo(self.collectBtn.left);
+        make.size.equalTo(CGSizeMake(44, 44));
+
     }];
     [self.reportBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.centerY);
+        make.centerY.equalTo(self.centerY).offset(10);
         make.right.equalTo(self.shareBtn.left).offset(-10);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -92,6 +96,7 @@
     if (!_backBtn) {
         _backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_backBtn setImage:[UIImage imageNamed:@"返回-拷贝"] forState:(UIControlStateNormal)];
+        [_backBtn setContentMode:(UIViewContentModeCenter)];
         [_backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _backBtn;
@@ -118,6 +123,7 @@
         _shareBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_shareBtn setImage:[UIImage imageNamed:@"分享"] forState:(UIControlStateNormal)];
         [_shareBtn setImage:[UIImage imageNamed:@"分享-拷贝"] forState:(UIControlStateSelected)];
+        [_shareBtn setContentMode:(UIViewContentModeCenter)];
         [_shareBtn addTarget:self action:@selector(clickShareBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _shareBtn;
@@ -127,6 +133,8 @@
         _reportBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_reportBtn setImage:[UIImage imageNamed:@"举报"] forState:(UIControlStateNormal)];
          [_reportBtn setImage:[UIImage imageNamed:@"举报-拷贝"] forState:(UIControlStateSelected)];
+        [_reportBtn setContentMode:(UIViewContentModeCenter)];
+
         [_reportBtn addTarget:self action:@selector(clickReportBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _reportBtn;
@@ -137,6 +145,8 @@
         _collectBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_collectBtn setImage:[UIImage imageNamed:@"喜欢"] forState:(UIControlStateNormal)];
         [_collectBtn setImage:[UIImage imageNamed:@"喜欢点击"] forState:(UIControlStateSelected)];
+        [_collectBtn setContentMode:(UIViewContentModeCenter)];
+
         [_collectBtn addTarget:self action:@selector(clickcollectBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _collectBtn;

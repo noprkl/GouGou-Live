@@ -27,6 +27,10 @@
 @property(nonatomic, strong) UILabel *googsPriceNumber; /**< 新商品价格 */
 @property(nonatomic, strong) UILabel *googsOldPriceNumber; /**< 商品老价格 */
 
+@property(nonatomic, assign) BOOL isHaveDian; /**< 小数点 */
+
+@property(nonatomic, assign) BOOL isFirstZero; /**< 首位为0 */
+
 @end
 @implementation SellerChangePayView
 
@@ -79,9 +83,9 @@
     }];
     [self.changeTextField makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.editBackView.centerY);
-        make.left.equalTo(self.left).offset(9);
-        make.right.equalTo(self.right).offset(-9);
-        make.height.equalTo(33);
+        make.left.equalTo(self.editBackView.left).offset(0);
+        make.right.equalTo(self.editBackView.right).offset(0);
+        make.height.equalTo(25);
     }];
 
     [self.line1 makeConstraints:^(MASConstraintMaker *make) {
@@ -109,6 +113,30 @@
         make.centerY.equalTo(self.backView2.centerY);
         make.left.equalTo(self.googsPriceNumber.right).offset(10);
     }];
+}
+- (void)setRealMoney:(NSString *)realMoney {
+    _realMoney = realMoney;
+    self.realPayNumber.text = realMoney;
+}
+- (void)setRealMoneyNote:(NSString *)realMoneyNote {
+    _realMoneyNote = realMoneyNote;
+    self.realPay.text = [NSString stringWithFormat:@"%@:", realMoneyNote];
+}
+- (void)setChangeStyle:(NSString *)changeStyle {
+    _changeStyle = changeStyle;
+    self.changeMoney.text = [NSString stringWithFormat:@"%@:", changeStyle];;
+}
+- (void)setPrice:(NSString *)price {
+    _price = price;
+    self.googsPriceNumber.text = [NSString stringWithFormat:@"%@", price];
+}
+- (void)setOldPrice:(NSString *)oldPrice {
+    _oldPrice = oldPrice;
+    self.googsOldPriceNumber.attributedText = [NSAttributedString getCenterLineWithString:oldPrice];
+}
+- (void)setPlaceHolder:(NSString *)placeHolder {
+    _placeHolder = placeHolder;
+    self.changeTextField.placeholder = [NSString stringWithFormat:@"￥%@", placeHolder];
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -154,10 +182,9 @@
 - (UITextField *)changeTextField {
     if (!_changeTextField) {
         _changeTextField = [[UITextField alloc] init];
-
+        _changeTextField.font = [UIFont systemFontOfSize:14];
         _changeTextField.delegate = self;
         [_changeTextField addTarget:self action:@selector(changeTextFieldEditing:) forControlEvents:(UIControlEventTouchDown)];
-        
     }
     return _changeTextField;
 }
@@ -201,11 +228,12 @@
     }
     return _googsOldPriceNumber;
 }
+
 #pragma mark
 #pragma mark - Action
 - (void)changeTextFieldEditing:(UITextField *)textField {
     if (_editBlock) {
-        _editBlock();
+        _editBlock(textField.text);
     }
 }
 - (NSAttributedString *)getAttributeWithString:(NSString *)string {
@@ -217,5 +245,91 @@
     NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:string attributes:dict];
     return attribut;
 }
-
+#pragma mark
+#pragma mark - 代理
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.changeTextField) {
+        
+        if ([textField.text rangeOfString:@"."].location==NSNotFound) {
+            _isHaveDian = NO;
+        }
+        if ([textField.text rangeOfString:@"0"].location==NSNotFound) {
+            _isFirstZero = NO;
+        }
+        
+        if ([string length]>0)
+            {
+            unichar single=[string characterAtIndex:0];//当前输入的字符
+            if ((single >='0' && single<='9') || single=='.')//数据格式正确
+                {
+                
+                if([textField.text length]==0){
+                    if(single == '.'){
+                        //首字母不能为小数点
+                        return NO;
+                    }
+                    if (single == '0') {
+                        _isFirstZero = YES;
+                        return YES;
+                    }
+                }
+                
+                if (single=='.'){
+                    if(!_isHaveDian)//text中还没有小数点
+                        {
+                        _isHaveDian=YES;
+                        return YES;
+                        }else{
+                            return NO;
+                        }
+                }else if(single=='0'){
+                    if ((_isFirstZero&&_isHaveDian)||(!_isFirstZero&&_isHaveDian)) {
+                        //首位有0有.（0.01）或首位没0有.（10200.00）可输入两位数的0
+                        if([textField.text isEqualToString:@"0.0"]){
+                            return NO;
+                        }
+                        NSRange ran=[textField.text rangeOfString:@"."];
+                        int tt=(int)(range.location-ran.location);
+                        if (tt <= 2){
+                            return YES;
+                        }else{
+                            return NO;
+                        }
+                    }else if (_isFirstZero&&!_isHaveDian){
+                        //首位有0没.不能再输入0
+                        return NO;
+                    }else{
+                        return YES;
+                    }
+                }else{
+                    if (_isHaveDian){
+                        //存在小数点，保留两位小数
+                        NSRange ran=[textField.text rangeOfString:@"."];
+                        int tt= (int)(range.location-ran.location);
+                        if (tt <= 2){
+                            return YES;
+                        }else{
+                            return NO;
+                        }
+                    }else if(_isFirstZero&&!_isHaveDian){
+                        //首位有0没点
+                        return NO;
+                    }else{
+                        return YES;
+                    }
+                }
+                }else{
+                    //输入的数据格式不正确
+                    return NO;
+                }
+            }else{
+                return YES;
+            }
+    }
+    return YES;
+}
 @end

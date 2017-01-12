@@ -29,7 +29,7 @@
 #define ServicePhone @"010-0928928"
 // 短信
 #define SMSPhone @"13810214551"
-// 分享地址
+// 分享内容
 #define ShareAdress @"http://gougou.itnuc.com/h5/share.html"
 
 // 关注文件名(本地)

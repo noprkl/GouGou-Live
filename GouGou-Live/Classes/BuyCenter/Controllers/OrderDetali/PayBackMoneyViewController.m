@@ -56,10 +56,10 @@
 #pragma mark - 网络请求
 - (void)getBackMoneyRequest {
 
-    NSDictionary * dict = @{@"id":@([_detailModel.ID intValue])};
-    
+    NSDictionary * dict = @{@"id":_orderID};
+        [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
-       
+        [self hideHud];
         DLog(@"%@",successJson[@"Message"]);
         DLog(@"%@",successJson[@"data"]);
         // 订单状态
@@ -100,22 +100,23 @@
         self.detailPayView.realMoney = self.orderInfo.productRealDeposit;
         self.detailPayView.balance = self.orderInfo.productRealBalance;
         // 订单编号
+        self.orderNumberView.buyUserId = self.orderInfo.orderId;
         if (![self.orderInfo.createTime isEqualToString:@"0"]) {
             self.orderNumberView.createTimes = [NSString stringFromDateString:self.orderInfo.createTime];
         }else{
-            self.orderNumberView.createTimes = @"未付";
+            self.orderNumberView.createTimes = @"***";
         }
         
         if (![self.orderInfo.depositTime isEqualToString:@"0"]) {
             self.orderNumberView.depositTimes = [NSString stringFromDateString:self.orderInfo.depositTime];
         }else{
-            self.orderNumberView.depositTimes = @"未付";
+            self.orderNumberView.depositTimes = @"***";
         }
         
         if (![self.orderInfo.balanceTime isEqualToString:@"0"]) {
             self.orderNumberView.balanceTimes = [NSString stringFromDateString:self.orderInfo.balanceTime];
         }else{
-            self.orderNumberView.balanceTimes = @"未付";
+            self.orderNumberView.balanceTimes = @"***";
         }
         
         if (![self.orderInfo.deliveryTime isEqualToString:@"0"]) {
@@ -321,21 +322,24 @@
         
             if ([button.titleLabel.text isEqual:@"申请维权"]) {
                
-                [weakself clickApplyProtectPower:weakself.detailModel.ID];
+                [weakself clickApplyProtectPower:weakself.orderInfo.ID];
         
             } else if ([button.titleLabel.text isEqual:@"不想买了"]) {
             
-                [weakself clickNotBuy:weakself.detailModel];
+                [weakself clickNotBuy:weakself.orderInfo.ID endOptioal:^{
+                    [weakself.navigationController popViewControllerAnimated:YES];
+                }];
             } else if ([button.titleLabel.text isEqual:@"联系卖家"]) {
-                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:weakself.orderInfo.buyUserId conversationType:(EMConversationTypeChat)];
-                viewController.title = weakself.orderInfo.buyUserId;
-                 viewController.chatID = weakself.orderInfo.buyUserId;
+                SingleChatViewController *viewController = [[SingleChatViewController alloc] initWithConversationChatter:weakself.orderInfo.saleUserId conversationType:(EMConversationTypeChat)];
+                 viewController.chatID = weakself.orderInfo.saleUserId;
                 viewController.hidesBottomBarWhenPushed = YES;
                 [weakself.navigationController pushViewController:viewController animated:YES];
                 
             } else if ([button.titleLabel.text isEqual:@"支付尾款"]) {
                 
-                [weakself payMoneyWithOrderID:weakself.detailModel.ID payStyle:button.titleLabel.text];
+                [weakself payMoneyWithOrderID:weakself.orderInfo.ID payStyle:button.titleLabel.text endOptioal:^{
+                    [weakself.navigationController popViewControllerAnimated:YES];
+                }];
             }
 
         };

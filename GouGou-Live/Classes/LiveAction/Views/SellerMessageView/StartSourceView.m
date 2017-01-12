@@ -16,7 +16,10 @@
 
 - (void)setStartCount:(NSInteger)startCount {
     _startCount = startCount;
-    
+    NSArray *arr = self.subviews;
+    for (UIView *view in arr) {
+        [view removeFromSuperview];
+    }
     UIImage *yellowImage = [UIImage imageNamed:@"星星黄"];
     UIImage *whiteImage = [UIImage imageNamed:@"星星白"];
     CGFloat WH = yellowImage.size.width;

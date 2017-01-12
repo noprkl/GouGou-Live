@@ -51,8 +51,8 @@
         make.left.equalTo(self.left).offset(40);
         make.height.equalTo(50);
     }];
-    
 }
+
 #pragma mark
 #pragma mark - 懒加载
 - (UIImageView *)iconImage {
@@ -87,7 +87,7 @@
         [_reRequest setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
         _reRequest.layer.cornerRadius = 5;
         _reRequest.layer.masksToBounds = YES;
-        _reRequest.titleLabel.font = [UIFont systemFontOfSize:14];
+        _reRequest.titleLabel.font = [UIFont systemFontOfSize:16];
         _reRequest.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         [_reRequest addTarget:self action:@selector(ClickRequestAction:) forControlEvents:(UIControlEventTouchDown)];
     }

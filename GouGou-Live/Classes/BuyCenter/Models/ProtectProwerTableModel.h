@@ -15,7 +15,10 @@
 /** 商家图片 */
 @property (copy,nonatomic) NSString *userImgUrl;
 /** 商家名称 */
-@property (copy,nonatomic) NSString *merchantName;
+@property (copy,nonatomic) NSString *userName;
+
+@property (nonatomic, strong) NSString *saleUserId; /**< 卖家id */
+
 /** 订单状态 */
 @property (copy,nonatomic) NSString *status;
 
@@ -46,5 +49,8 @@
 @property (copy,nonatomic) NSString *traficRealFee;
 
 @property (copy, nonatomic) NSString *closeTime; /**< 维权关闭时间 */
+
+@property (nonatomic, strong) NSString *transportation; /**< 快递方式 */
+@property (nonatomic, strong) NSString *waybillNumber; /**< 快递方式 */
 
 @end

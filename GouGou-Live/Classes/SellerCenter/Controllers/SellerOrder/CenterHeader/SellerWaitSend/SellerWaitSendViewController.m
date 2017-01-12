@@ -29,7 +29,7 @@ static NSString *cellid = @"SellerWaitSendCell";
 #pragma mark - 网络请求
 // 请求待发货的订单
 - (void)getRequestWaitSendOrder {
-    NSDictionary *dict = @{//[[UserInfos sharedUser].ID integerValue]
+    NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(2),
                            @"page":@(1),
@@ -39,7 +39,7 @@ static NSString *cellid = @"SellerWaitSendCell";
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self hideHud];
         [self.tableView reloadData];
     } error:^(NSError *error) {
@@ -153,9 +153,11 @@ static NSString *cellid = @"SellerWaitSendCell";
         [self.navigationController pushViewController:viewController animated:YES];
     }else if ([title isEqualToString:@"发货"]){
         
-            __block  SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
+            SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
 
             sendView.orderID = orderModel.ID;
+            __weak typeof(sendView) weakSend = sendView;
+
             sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
                 NSDictionary *dict = @{
                                        @"user_id":[UserInfos sharedUser].ID,
@@ -163,15 +165,17 @@ static NSString *cellid = @"SellerWaitSendCell";
                                        @"waybill_number":shipOrder, // 运单号
                                        @"transportation":shipStyle
                                        };
+                DLog(@"%@", dict);
                 [self getRequestWithPath:API_Delivery params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
                     [self showAlert:successJson[@"message"]];
-                    if ([successJson[@"code"] intValue] == 1) {
-                        sendView.successNote.text = @"发货成功";
-                        sendView = nil;
-                        [sendView dismiss];
+                    weakSend.successNote.hidden = NO;
+                    if ([successJson[@"message"] isEqualToString:@"成功"]) {
+                        weakSend.successNote.text = @"订单发货成功";
+                        [weakSend dismiss];
+                        [self getRequestWaitSendOrder];
                     }else{
-                        sendView.successNote.text = @"发货失败";
+                        weakSend.successNote.text = @"订单发货失败";
                     }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);

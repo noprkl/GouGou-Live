@@ -67,36 +67,7 @@
 @end
 
 @implementation MediaStreamingVc
-- (void)getRequestShowingDog {
-    NSDictionary *dict = @{
-                           @"live_id":_liveID
-                           };
-    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        if (successJson[@"data"]) {
-            NSArray *dogArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-            self.showDogView.dataArr = dogArr;
-            LiveListDogInfoModel *showingModel = dogArr[0];
-            if (showingModel.pathSmall != NULL) {
-                NSURL *url = [NSURL URLWithString:[IMAGE_HOST stringByAppendingString:showingModel.pathSmall]];
-                NSData *data = [NSData dataWithContentsOfURL:url];
-                UIImage *image = [UIImage imageWithData:data];
-                [self.showingBtn setImage:image forState:(UIControlStateNormal)];
-            }
-            self.showingPrice.text = showingModel.price;
-            [self.showDogView reloadData];
-            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 %ld", dogArr.count];
-        }else{
-            self.showDogView.hidden = YES;
-            self.showingBtn.hidden = YES;
-            self.showingPrice.hidden = YES;
-            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 0"];
-            self.endsoldCountLabel.text = [NSString stringWithFormat:@"出售 0"];
-        }
-    } error:^(NSError *error) {
-        
-    }];
-}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
@@ -138,23 +109,13 @@
         [invocation invoke];
     }
 
-    // 保存视频
-    NSDictionary *dict =@{
-                          @"live_id":_liveID,
-                          @"user_id":[UserInfos sharedUser].ID
-                          };
-    [self getRequestWithPath:API_save params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
   // 离开聊天室
     [[EMClient sharedClient].roomManager leaveChatroom:_chatRoomID completion:^(EMChatroom *aChatroom, EMError *aError) {
         DLog(@"%@", aError);
     }];
-    self.timer = nil;
+    // 释放、停止定时器
     [self.timer invalidate];
-    
+    self.timer = nil;
 }
 // 切换横竖屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -184,9 +145,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
-//    [self streamingVideo];
     // 分享
-    DLog(@"%ld", self.shareType);
+
     if (self.shareType == 10) {
         
     }else if (self.shareType == 0){
@@ -240,7 +200,7 @@
     // 自动重连
     _session.autoReconnectEnable = YES;
     [self.session startStreamingWithPushURL:[NSURL URLWithString:_streamPublish] feedback:^(PLStreamStartStateFeedback feedback) {
-        DLog(@"%lu", feedback);
+        DLog(@"%ld", feedback);
         if (feedback == 0) { // 开始推流
            
         }
@@ -253,9 +213,9 @@
     self.session.delegate = self;
     [self initUI];
     // 开始请求
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(getRequestWatchCount) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getRequestWatchCount) userInfo:nil repeats:YES];
 }
+// 观看人数
 - (void)getRequestWatchCount {
     NSDictionary *dict = @{
                            @"live_id":_liveID
@@ -270,6 +230,59 @@
             [self.watchCount setTitle:@"0" forState:(UIControlStateNormal)];
             self.topView.watchPeople = @"0";
             self.endwatchLabel.text = [NSString stringWithFormat:@"观看人数 0"];
+        }
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+    // 直播状态
+    [self getRequestLiveState];
+}
+// 出售的狗
+- (void)getRequestShowingDog {
+    NSDictionary *dict = @{
+                           @"live_id":_liveID
+                           };
+    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if (successJson[@"data"]) {
+            NSArray *dogArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+            self.showDogView.dataArr = dogArr;
+            LiveListDogInfoModel *showingModel = dogArr[0];
+            if (showingModel.pathSmall != NULL) {
+                NSURL *url = [NSURL URLWithString:[IMAGE_HOST stringByAppendingString:showingModel.pathSmall]];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                UIImage *image = [UIImage imageWithData:data];
+                [self.showingBtn setImage:image forState:(UIControlStateNormal)];
+            }
+            self.showingPrice.text = showingModel.price;
+            [self.showDogView reloadData];
+            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 %ld", dogArr.count];
+        }else{
+            self.showDogView.hidden = YES;
+            self.showingBtn.hidden = YES;
+            self.showingPrice.hidden = YES;
+            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 0"];
+            self.endsoldCountLabel.text = [NSString stringWithFormat:@"出售 0"];
+        }
+    } error:^(NSError *error) {
+        
+    }];
+}
+// 直播状态(直播被禁 )
+- (void)getRequestLiveState{
+    NSDictionary *dict = @{
+                           @"live_id":_liveID
+                           };
+    [self getRequestWithPath:API_Live_status params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        if ([successJson[@"code"] integerValue] == 2) {
+            // 被禁止原因
+            self.endliveLabel.text = successJson[@"data"][@"con"];
+            self.endView.hidden = NO;
+            // 结束推流
+            [self.session stopStreaming];
+            // 销毁
+//            [self.session destroy];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -308,7 +321,6 @@
             DLog(@"%@", error);
         }];
     }
-    
 }
 //开始推流时，会每间隔 3s 调用该回调方法来反馈该 3s 内的流状态，包括视频帧率、音频帧率、音视频总码率
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status {
@@ -353,7 +365,7 @@
     }];
     [self.livingImageView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.left).offset(10);
-        make.top.equalTo(self.view.top).offset(10);
+        make.top.equalTo(self.view.top).offset(20);
     }];
     [self.watchCount remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.livingImageView.centerY);
@@ -382,7 +394,7 @@
     }];
     [self.showDogView remakeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.right);
-        make.top.equalTo(self.view.top).offset(44);
+        make.top.equalTo(self.topView.bottom).offset(0);
 //        make.bottom.equalTo(self.sendMessageView.top);
           make.bottom.equalTo(self.view.bottom);
         make.width.equalTo(250);
@@ -547,6 +559,19 @@
         _showDogView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _showDogView.cellBlock = ^(LiveListDogInfoModel *model){
+            // 修改正在展播的狗
+            NSDictionary *showDict = @{
+                                       @"live_id":weakSelf.liveID,
+                                       @"id":model.ID,
+                                       @"user_id":[UserInfos sharedUser].ID
+                                       };
+            DLog(@"%@", showDict);
+            [weakSelf getRequestWithPath:API_Live_product_list_weight params:showDict success:^(id successJson) {
+                DLog(@"%@", successJson);
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+            
             if (model.pathSmall != NULL) {
                 NSURL *url = [NSURL URLWithString:[IMAGE_HOST stringByAppendingString:model.pathSmall]];
                 NSData *data = [NSData dataWithContentsOfURL:url];
@@ -794,6 +819,16 @@
     return _endbackbutton;
 }
 - (void)clickEndBackAction {
+    // 保存视频
+    NSDictionary *dict =@{
+                          @"live_id":_liveID,
+                          @"user_id":[UserInfos sharedUser].ID
+                          };
+    [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+    } error:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 /** 添加结束的view */

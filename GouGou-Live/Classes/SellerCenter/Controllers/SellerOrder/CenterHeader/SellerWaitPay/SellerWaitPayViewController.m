@@ -37,7 +37,7 @@ static NSString *cellid = @"SellerWaitPayCell";
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self hideHud];
         [self.tableView reloadData];
     } error:^(NSError *error) {
@@ -112,24 +112,28 @@ static NSString *cellid = @"SellerWaitPayCell";
     cell.model = model;
     if ([model.status isEqualToString:@"1"]) {
         cell.orderState = @"待付款";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
+        NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
+        cell.costMessage = @[finalMoney, depositMoney];
 
     }else if ([model.status isEqualToString:@"2"]) {
         cell.orderState = @"待付定金";
         cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
-        cell.costMessage = @[allMoney];
-    }else if ([model.status isEqualToString:@"3"]) {
-        cell.orderState = @"待付尾款";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
-        cell.costMessage = @[finalMoney];
-    }else if ([model.status isEqualToString:@"5"]) {
-        cell.orderState = @"待付全款";
-        cell.btnTitles = @[@"联系买家"];
+
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
         cell.costMessage = @[finalMoney, depositMoney];
+    }else if ([model.status isEqualToString:@"3"]) {
+        cell.orderState = @"待付尾款";
+        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productDeposit];
+        NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
+        cell.costMessage = @[depositMoney, finalMoney];
+    }else if ([model.status isEqualToString:@"5"]) {
+        cell.orderState = @"待付全款";
+        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
+        cell.costMessage = @[allMoney];
     }
     
     [self.btnTitles addObject:cell.btnTitles];

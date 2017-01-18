@@ -168,7 +168,6 @@
                 if ([self.detailAddressTextfiled.text isEqualToString:@""]) {
                     [self showAlert:@"详细地址不能为空"];
                 }else{
-                    NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
                     NSDictionary *dict = @{
                                            @"id":@(_adressModel.ID ),
                                            @"merchant_name":self.userNameTextfiled.text,
@@ -176,7 +175,7 @@
                                            @"merchant_province":_adressModel.merchantProvince,
                                            @"merchant_city":_adressModel.merchantCity,
                                            @"merchant_district":_adressModel.merchantDistrict,
-                                           @"merchant_address":adress,
+                                           @"merchant_address":self.detailAddressTextfiled.text,
                                            @"is_default":@(_adressModel.isDefault),
                                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                            @"street":self.roadTextField.text,

@@ -42,11 +42,13 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
     NSDictionary *dict = @{
                            @"id":@([_orderID intValue])
                            };
-    
+    [self showHudInView:self.view hint:@"加载中"];
+
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.orderInfo = [SellerOrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         [self.tableView reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -176,9 +178,9 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         }else if ([self.orderInfo.status isEqualToString:@"8"]) {
             state = @"待收货";
         }else if ([self.orderInfo.status isEqualToString:@"9"]) {
-            state = @"已评价";
-        }else if ([self.orderInfo.status isEqualToString:@"10"]) {
             state = @"待评价";
+        }else if ([self.orderInfo.status isEqualToString:@"10"]) {
+            state = @"已评价";
         }else if ([self.orderInfo.status isEqualToString:@"20"]) {
             state = @"订单取消";
         }
@@ -201,7 +203,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
 
             SellerLogisticsInfoView *logisticsView = [[SellerLogisticsInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 88)];
             logisticsView.transformNumber = self.orderInfo.waybillNumber;
-            logisticsView.transformNumber = self.orderInfo.transportation;
+            logisticsView.transformStyle = self.orderInfo.transportation;
         
             [cell.contentView addSubview:logisticsView];
             return cell;
@@ -254,7 +256,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
         // 商品总价
         morePriceView.allPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficFee floatValue]];
         // 优惠价格
-        morePriceView.favorablePriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficFee floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
+        morePriceView.favorablePriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.productPrice floatValue] + [self.orderInfo.traficFee floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
         
         morePriceView.realPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.productRealBalance floatValue] + [self.orderInfo.productRealDeposit floatValue] + [self.orderInfo.traficRealFee floatValue] + [self.orderInfo.productRealPrice floatValue]];
         // 运费

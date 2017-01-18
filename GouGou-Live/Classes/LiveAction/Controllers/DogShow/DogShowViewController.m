@@ -39,6 +39,17 @@
 static NSString *cellid = @"DogShowCellid";
 
 @implementation DogShowViewController
+- (void)getRequestDogInfos {
+    NSDictionary *dict = @{@"live_id":_liveid};
+    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        self.dataArr = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        
+    }];
+
+}
 #pragma mark
 #pragma mark - 生命周期
 - (void)loadView {
@@ -53,6 +64,8 @@ static NSString *cellid = @"DogShowCellid";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    [self getRequestDogInfos];
     self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -69,11 +82,11 @@ static NSString *cellid = @"DogShowCellid";
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
 }
-- (void)setDogInfos:(NSArray *)dogInfos {
-    _dogInfos = dogInfos;
-    self.dataArr = dogInfos;
-    [self.tableView reloadData];
-}
+//- (void)setDogInfos:(NSArray *)dogInfos {
+//    _dogInfos = dogInfos;
+//    self.dataArr = dogInfos;
+//    [self.tableView reloadData];
+//}
 #pragma mark
 #pragma mark - 懒加载
 - (NSArray *)dataArr {
@@ -109,7 +122,6 @@ static NSString *cellid = @"DogShowCellid";
         ShareBtnModel *model5 = [[ShareBtnModel alloc] initWithTitle:@"QQ" image:[UIImage imageNamed:@"QQ-(1)"]];
         
         _shareAlertBtns = @[model1, model2, model3, model4, model5];
-        
     }
     return _shareAlertBtns;
 }
@@ -199,24 +211,37 @@ static NSString *cellid = @"DogShowCellid";
             }];
         }
     };
-    cell.bookBlock = ^ (NSString *bookStr){
+    cell.bookBlock = ^ (){
         if ([UserInfos getUser]) {
-            if ([bookStr isEqualToString:@"已售"]) {
-                [self showAlert:@"狗狗已经被售出了"];
-            }else if ([bookStr isEqualToString:@"订购"]){
-                __block BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
-                NSDictionary *dict2 = @{@"id":@(2)};
-                [self showHint:@"加载中.."];
-                [self getRequestWithPath:API_Help params:dict2 success:^(id successJson) {
-                    rulesAlert.ruleContets = successJson[@"data"];
-                    [rulesAlert show];
-                    [self hideHud];
+            if ([[UserInfos sharedUser].ID isEqualToString:_liverID]) {
+                [self showAlert:@"您不能购买自己发布的商品"];
+            }else{
+                // 判断商品状态
+                NSDictionary *dict = @{
+                                       @"id":model.ID
+                                       };
+                [self getRequestWithPath:API_Order_status_new params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                    if ([successJson[@"code"] integerValue] == 1) { // 可以买
+                        __block BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
+                        NSDictionary *dict2 = @{@"id":@(2)};
+                        [self showHint:@"加载中.."];
+                        [self getRequestWithPath:API_Help params:dict2 success:^(id successJson) {
+                            rulesAlert.ruleContets = successJson[@"data"];
+                            [rulesAlert show];
+                            [self hideHud];
+                        } error:^(NSError *error) {
+                            DLog(@"%@", error);
+                        }];
+                        rulesAlert.sureBlock = ^(){
+                            [self pushToDogBookVC:model];
+                        };
+                    }else if ([successJson[@"code"] integerValue] == 2){ // 已被订购
+                        [self showAlert:@"狗狗已经被订购"];
+                    }
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
-                rulesAlert.sureBlock = ^(){
-                    [self pushToDogBookVC:model];
-                };
             }
         }else {
             [self showAlert:@"请登录"];
@@ -230,7 +255,10 @@ static NSString *cellid = @"DogShowCellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
    
     LiveListDogInfoModel *model = self.dataArr[indexPath.row];
-    NSArray *imgsArr = [model.dataPhoto componentsSeparatedByString:@"|"];
+    NSMutableArray *imgsArr = [NSMutableArray arrayWithArray:[model.dataPhoto componentsSeparatedByString:@"|"]];
+    if (imgsArr.count > 1) {
+        [imgsArr removeObjectAtIndex:0];
+    }
     DogImageView *dogimageView = [[DogImageView alloc] init];
     CGFloat height = [dogimageView getCellHeightWithImages:imgsArr];
     return 278 + height;
@@ -240,10 +268,10 @@ static NSString *cellid = @"DogShowCellid";
     DogBookViewController *dogBookVC = [[DogBookViewController alloc] init];
     dogBookVC.hidesBottomBarWhenPushed = YES;
     dogBookVC.model = model;
-    dogBookVC.liverID = _liverID;
+    dogBookVC.liverID = _liveid;
     dogBookVC.liverIcon = _liverIcon;
     dogBookVC.liverName = _liverName;
-
+    dogBookVC.userId = _liverID;
     [self.navigationController pushViewController:dogBookVC animated:YES];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {

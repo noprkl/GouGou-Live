@@ -64,6 +64,7 @@
     self.phoneTextField.text = self.adressModel.userTel;
     self.areaChooseTextfiled.text = adress;
     self.detailAddressTextfiled.text = self.adressModel.userAddress;
+   
     if (self.adressModel.street.length != 0) {
         self.roadTextField.text = self.adressModel.street;
     }
@@ -164,22 +165,14 @@
             [self showAlert:@"手机号输入有误，请重新输入"];
             self.phoneTextField.text = @"";
         
-//        if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
-//        [self showAlert:@"地址不能为空"];
         }else{
             
             if ([self.areaChooseTextfiled.text isEqualToString:@""]) {
                 [self showAlert:@"地址不能为空"];
-//            if ([self.phoneTextField.text isEqualToString:@""]) {
-//                [self showAlert:@"手机号不能为空"];
-//            }else if (![NSString valiMobile:self.phoneTextField.text]){
-//                [self showAlert:@"手机号输入有误，请重新输入"];
-//                self.phoneTextField.text = @"";
             }else{
                 if ([self.detailAddressTextfiled.text isEqualToString:@""]) {
                     [self showAlert:@"详细地址不能为空"];
                 }else{
-                    NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
                     NSDictionary *dict = @{
                                            @"user_id":[UserInfos sharedUser].ID,
                                            @"id":@(_adressModel.ID ),
@@ -189,7 +182,7 @@
                                            @"user_province":_adressModel.userProvince,
                                            @"user_city":_adressModel.userCity,
                                            @"user_district":_adressModel.userDistrict,
-                                           @"user_address":adress,
+                                           @"user_address":self.detailAddressTextfiled.text,
                                            @"street":self.roadTextField.text,
                                            @"code":self.postalcodeTextfiled.text
                                            };
@@ -313,8 +306,7 @@
                 DLog(@"%@", error);
             }];
         };
-        
-        
+
         choose.areaBlock = ^(NSString *province,NSString *city,NSString *district){
             NSString *cityAdress;
             if (district.length == 0) {

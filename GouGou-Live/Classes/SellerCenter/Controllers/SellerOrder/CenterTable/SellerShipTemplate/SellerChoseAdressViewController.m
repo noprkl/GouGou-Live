@@ -39,17 +39,14 @@ static NSString *cellid = @"ChoseShopAdressCell";
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID integerValue])
                            };
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Seller_address params:dict success:^(id successJson) {
-        [self showAlert:successJson[@"message"]];
         DLog(@"1%@", successJson);
-        if (successJson[@"code"]) {
-            // 数据解析
-            self.dataArr = [[SellerAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
-            DLog(@"11%@", self.dataArr);
-            // 刷新
-            [self.tableView reloadData];
-        }
-        
+        // 数据解析
+        self.dataArr = [[SellerAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
+        // 刷新
+        [self.tableView reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

@@ -118,21 +118,23 @@ static NSString *cellid = @"SellerWaitPayCell";
 
     }else if ([model.status isEqualToString:@"2"]) {
         cell.orderState = @"待付定金";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-
+//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.btnTitles = @[@"联系买家", @"修改运费"];// 修改价格功能暂时注掉
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
         cell.costMessage = @[finalMoney, depositMoney];
     }else if ([model.status isEqualToString:@"3"]) {
         cell.orderState = @"待付尾款";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.btnTitles = @[@"联系买家", @"修改运费"];// 修改价格功能暂时注掉
         NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productDeposit];
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         cell.costMessage = @[depositMoney, finalMoney];
     }else if ([model.status isEqualToString:@"5"]) {
         cell.orderState = @"待付全款";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
+//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.btnTitles = @[@"联系买家", @"修改运费"];// 修改价格功能暂时注掉
+        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.productPrice];
         cell.costMessage = @[allMoney];
     }
     
@@ -184,6 +186,5 @@ static NSString *cellid = @"SellerWaitPayCell";
         changeVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeVC animated:YES];
     }
-    
 }
 @end

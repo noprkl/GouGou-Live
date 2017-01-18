@@ -289,6 +289,7 @@
 		046D0B821E1B7E5A0037E111 /* BuySuccessVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D0B811E1B7E5A0037E111 /* BuySuccessVc.m */; };
 		046D11571E1DE8000037E111 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 046D11561E1DE8000037E111 /* MessageUI.framework */; };
 		046D115A1E1E86D40037E111 /* CertificateVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D11591E1E86D40037E111 /* CertificateVc.m */; };
+		046D4F641E2874D800EF2DCC /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 046D4F631E2874D800EF2DCC /* WXApiManager.m */; };
 		046F0B121DE28B2300D50D5C /* CreateLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */; };
 		046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */; };
 		046F0B961DE2AB8B00D50D5C /* PowerOrderStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F0B4C1DE2AB8A00D50D5C /* PowerOrderStateView.m */; };
@@ -1130,6 +1131,8 @@
 		046D11561E1DE8000037E111 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		046D11581E1E86D40037E111 /* CertificateVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateVc.h; sourceTree = "<group>"; };
 		046D11591E1E86D40037E111 /* CertificateVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateVc.m; sourceTree = "<group>"; };
+		046D4F621E2874D800EF2DCC /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
+		046D4F631E2874D800EF2DCC /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		046F0B0F1DE28B2300D50D5C /* CreateLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLiveViewController.h; sourceTree = "<group>"; };
 		046F0B101DE28B2300D50D5C /* CreateLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLiveViewController.m; sourceTree = "<group>"; };
 		046F0B111DE28B2300D50D5C /* CreateLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLiveViewController.xib; sourceTree = "<group>"; };
@@ -3724,6 +3727,8 @@
 				0479B5BF1DCADC7B00CB288A /* Info.plist */,
 				0479B5BD1DCADC7B00CB288A /* AppDelegate.h */,
 				0479B5BE1DCADC7B00CB288A /* AppDelegate.m */,
+				046D4F621E2874D800EF2DCC /* WXApiManager.h */,
+				046D4F631E2874D800EF2DCC /* WXApiManager.m */,
 				0479B5C01DCADC7B00CB288A /* main.m */,
 				0479B5C21DCADC7B00CB288A /* ViewController.h */,
 				0479B5C31DCADC7B00CB288A /* ViewController.m */,
@@ -5215,6 +5220,7 @@
 				0467957C1E07E34A0076F517 /* CreateLiveViewController+ThirdShare.m in Sources */,
 				0479B6071DCADC7B00CB288A /* SurePsdSuccessViewController.m in Sources */,
 				04EA2AB51DDDAE5C0023D9A8 /* SellerOrderDetailProtectPowerViewController.m in Sources */,
+				046D4F641E2874D800EF2DCC /* WXApiManager.m in Sources */,
 				040892001DFEB91F006DF570 /* PayingAllMoneyViewController.m in Sources */,
 				046BDE291DE3EBB500BC32E9 /* AppDelegate+ThirdFrameDelegate.m in Sources */,
 				04486AB61DD012C400BC6D15 /* UIView+Toast.m in Sources */,
@@ -5392,8 +5398,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5422,8 +5428,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

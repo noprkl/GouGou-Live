@@ -283,9 +283,10 @@
         // 提示隐藏判断
         self.shipOrderNote.hidden = self.shipOrderTextField.text.length > 0 ? YES:NO;
         self.shipStyleNote.hidden = self.shipStyleTextField.text.length > 0 ? YES:NO;
-
-        _commitBlock(self.shipStyleTextField.text, self.shipOrderTextField.text);
         
+        if (self.shipOrderTextField.text.length != 0 && self.shipStyleTextField.text.length != 0) {
+        _commitBlock(self.shipStyleTextField.text, self.shipOrderTextField.text);
+        }
     }
 }
 

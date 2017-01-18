@@ -38,16 +38,17 @@
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID
                            };
-    [self showHudInView:self.view hint:@"加载中"];
+    [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Fan_live params:dict success:^(id successJson) {
         [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
         DLog(@"%@", successJson);
         [self.tableView.dataPlist removeAllObjects];
         [self.tableView.dogInfos removeAllObjects];
         if ([successJson[@"code"] isEqualToString:@"0"]) {
-            [self hideHud];
             self.noneView.hidden = NO;
             self.tableView.hidden = YES;
+            [self.tableView reloadData];
+            [self hideHud];
         }else{
             self.noneView.hidden = YES;
             self.tableView.hidden = NO;

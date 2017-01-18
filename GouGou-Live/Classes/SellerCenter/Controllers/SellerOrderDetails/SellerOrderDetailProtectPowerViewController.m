@@ -43,11 +43,13 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
     NSDictionary * dict = @{@"id":_orderID
                             };
     DLog(@"%@", dict);
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Activist_limit params:dict success:^(id successJson) {
         DLog(@"%@",successJson);        
         NSArray *arr = [SellerProtectDetailModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
         self.orderInfo = [arr lastObject];
         [self.tableView reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -142,15 +144,14 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         NSString *state = @"";
         if ([self.orderInfo.status integerValue] == 3) {
             state = @"待付尾款";
-            NSString *date = [NSString stringFromDateString:self.orderInfo.deposittime];
+            NSString *date = [NSString stringFromDateString:self.orderInfo.depositTime];
             state = [NSString stringWithFormat:@"买家于%@付定金,未付尾款", date];
             
         }else if ([self.orderInfo.status integerValue] == 7) {
             state = @"待发货";
             NSString *date;
-            if ([self.orderInfo.balancetime integerValue] > 0) {
-                date = [NSString stringFromDateString:self.orderInfo.balancetime];
-
+            if ([self.orderInfo.balanceTime integerValue] > 0) {
+                date = [NSString stringFromDateString:self.orderInfo.balanceTime];
             }else{
                 if ( [self.orderInfo.fullTime integerValue] > 0){
                     date = [NSString stringFromDateString:self.orderInfo.fullTime];
@@ -160,7 +161,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             
         }else if ([self.orderInfo.status integerValue] == 8) {
             
-            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
+            NSString *date = [NSString stringFromDateString:self.orderInfo.deliveryTime];
             state = [NSString stringWithFormat:@"卖家于%@发货,未收货", date];
         }else if ([self.orderInfo.status integerValue] == 9) {
             state = @"待评价";
@@ -169,8 +170,11 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
             
         }else if ([self.orderInfo.status integerValue] == 10) {
             state = @"已评价"; // 评价时间
-            NSString *date = [NSString stringFromDateString:self.orderInfo.deliverytime];
+            NSString *date = [NSString stringFromDateString:self.orderInfo.deliveryTime];
             state = [NSString stringWithFormat:@"卖家于%@评价,订单已完成", date];
+        }else{
+            NSString *date = [NSString stringFromDateString:self.orderInfo.closeTime];
+            state = [NSString stringWithFormat:@"交易关闭%@", date];
         }
             stateView.noteStr = state;
             [cell.contentView addSubview:stateView];
@@ -263,7 +267,7 @@ static NSString *cellid = @"SellerOrderDetailProtectPowerCell";
         // 商品总价
         morePriceView.allPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficRealFee floatValue]];
         // 优惠价格
-        morePriceView.favorablePriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficFee floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
+        morePriceView.favorablePriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.productPrice floatValue] + [self.orderInfo.traficFee floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
         
         morePriceView.realPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.productRealBalance floatValue] + [self.orderInfo.productRealDeposit floatValue] + [self.orderInfo.traficRealFee floatValue] + [self.orderInfo.productRealPrice floatValue]];
         // 运费

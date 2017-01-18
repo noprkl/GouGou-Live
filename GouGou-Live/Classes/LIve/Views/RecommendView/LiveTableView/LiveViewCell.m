@@ -82,7 +82,8 @@
     for (UIView *subview in subArr) {
         [subview removeFromSuperview];
     }
-    
+    self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+ 
     _dogInfos = dogInfos;
     if (_dogInfos.count == 0) {
         self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);

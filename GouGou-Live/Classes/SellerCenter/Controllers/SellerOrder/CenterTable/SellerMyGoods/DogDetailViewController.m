@@ -29,6 +29,8 @@
                            @"id":_model.ID
                            };
     DLog(@"%@", dict);
+    [self showHudInView:self.view hint:@"加载中"];
+
     [self getRequestWithPath:API_Product_limit params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (successJson) {
@@ -43,6 +45,7 @@
             self.dogDetailView.dogInfo = self.dogInfo;
 
             DLog(@"%@", self.dogInfo);
+            [self hideHud];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);

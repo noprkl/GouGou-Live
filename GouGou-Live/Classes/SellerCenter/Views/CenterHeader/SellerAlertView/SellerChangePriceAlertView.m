@@ -383,7 +383,7 @@
     DLog(@"%@--%ld--%f", textField.text, textField.text.length, newMoney);
     
     // 计算改变的钱数
-    self.changedMoney.text = [NSString stringWithFormat:@"¥ %.0lf", [self.price floatValue] - newMoney];
+    self.changedMoney.text = [NSString stringWithFormat:@"¥ %.2lf", [self.price floatValue] - newMoney];
 }
 
 - (void)clickCommitBtnAction {
@@ -519,7 +519,7 @@
 #pragma mark - 设置当前view的frame
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - kHeight - 260, SCREEN_WIDTH, kHeight);
+    rect = CGRectMake(0, SCREEN_HEIGHT - kHeight - 280, SCREEN_WIDTH, kHeight);
     self.frame = rect;
     
     // 约束

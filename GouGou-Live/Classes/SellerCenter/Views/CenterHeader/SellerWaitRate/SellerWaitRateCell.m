@@ -35,6 +35,7 @@
         [self.contentView addSubview:self.logisticsView];
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.functionView];
+//        self.separatorInset
     }
     return self;
 }

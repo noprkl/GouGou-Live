@@ -42,7 +42,6 @@ static NSString * indenifer = @"addressCellID";
         if (successJson[@"code"]) {
             // 数据解析
             self.dataArray = [[MyShopAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
-            DLog(@"11%@", self.dataArray);
             // 刷新
             [self.tableview reloadData];
         }

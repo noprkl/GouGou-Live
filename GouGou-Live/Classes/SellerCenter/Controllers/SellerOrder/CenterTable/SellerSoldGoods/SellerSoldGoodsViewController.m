@@ -48,10 +48,14 @@ static NSString *closeCell = @"SellerCloseCell";
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
+    [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        [self.tableView reloadData];
+        if (successJson) {
+            self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.tableView reloadData];
+        }
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -155,8 +159,9 @@ static NSString *closeCell = @"SellerCloseCell";
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
         cell.model = model;
         cell.orderState = @"待付定金";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        
+//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.btnTitles = @[@"联系买家", @"修改运费"];
+
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         NSString *depositMoney = [NSString stringWithFormat:@"定金：￥%@", model.productDeposit];
         cell.costMessage = @[finalMoney, depositMoney];
@@ -173,7 +178,8 @@ static NSString *closeCell = @"SellerCloseCell";
         SellerWaitPayCell *cell = [tableView dequeueReusableCellWithIdentifier:waitPayCell];
         cell.model = model;
         cell.orderState = @"待付尾款";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.btnTitles = @[@"联系买家", @"修改运费"];
         NSString *depositMoney = [NSString stringWithFormat:@"已付定金：￥%@", model.productDeposit];
         NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", model.productBalance];
         cell.costMessage = @[depositMoney, finalMoney];
@@ -188,7 +194,7 @@ static NSString *closeCell = @"SellerCloseCell";
         SellerCloseCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
         cell.orderState = @"交易关闭";
         cell.model = model;
-
+        
         return cell;
     }else if ([model.status integerValue] == 5){ // 5：待付全款
         
@@ -196,8 +202,9 @@ static NSString *closeCell = @"SellerCloseCell";
         cell.model = model;
 
         cell.orderState = @"待付全款";
-        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
-        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.price];
+//        cell.btnTitles = @[@"联系买家", @"修改运费", @"修改价格"];
+        cell.btnTitles = @[@"联系买家", @"修改运费"];
+        NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", model.productPrice];
         cell.costMessage = @[allMoney];
 
         [self.btnTitles addObject:cell.btnTitles];

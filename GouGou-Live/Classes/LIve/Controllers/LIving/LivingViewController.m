@@ -2087,7 +2087,7 @@
     dogShowVC.liverName = self.liverName;
     
     dogShowVC.liverID = _liverId;
-    
+    dogShowVC.liveid = _liveID;
     dogShowVC.dogInfos = self.doginfos;
     
     dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);

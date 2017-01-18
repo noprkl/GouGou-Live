@@ -71,13 +71,10 @@ static NSString * closeCell = @"closeCell";
                             @"pageSize":@(10)
                             };
         [self showHudInView:self.view hint:@"加载中.."];
-    [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
+        [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArray = @[];
-        if (successJson[@"data"][@"data"]) {
-            self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-            [self.tableview reloadData];
-        }
+        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+        [self.tableview reloadData];
         [self hideHud];
     } error:^(NSError *error) {
         
@@ -414,10 +411,11 @@ static NSString * closeCell = @"closeCell";
             if ([button.titleLabel.text  isEqual:@"确认收货"]) {
                 
                 NSDictionary *dict = @{
-                                       @"user_id":@([[UserInfos sharedUser].ID  intValue]),
+                                       @"user_id":[UserInfos sharedUser].ID,
                                        @"status":@(9),
                                        @"id":model.ID
                                        };
+                DLog(@"%@", dict);
                 [self getRequestWithPath:API_Up_status params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
                     [self showAlert:successJson[@"message"]];

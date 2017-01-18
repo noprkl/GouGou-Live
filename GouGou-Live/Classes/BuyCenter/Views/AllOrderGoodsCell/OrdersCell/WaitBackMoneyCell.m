@@ -108,7 +108,7 @@
     self.costView.fontMoney.text = centerModel.productDeposit;
     self.costView.remainderMoneylabel.text = @"待付尾款:";
     self.costView.remainderMoeny.text = centerModel.productBalance;
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [centerModel.price floatValue] + [centerModel.traficFee floatValue]];
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [centerModel.productPrice floatValue] + [centerModel.traficFee floatValue]];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficFee];
     
 }

@@ -9,11 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "LiveListDogInfoModel.h"
 
-typedef void(^ClickCellBlock)(LiveListDogInfoModel *model);
+@protocol LiveListDogInfoModelDelegate <NSObject>
+@required;
+- (void)clickShowingDog:(LiveListDogInfoModel *)model;
+
+@end
+
 @interface LinvingShowDogView : UITableView
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 狗狗数据 */
 
-@property (nonatomic, strong) ClickCellBlock cellBlock; /**< 点击cell */
+@property (nonatomic, assign) id<LiveListDogInfoModelDelegate> showDelegate; /**< 点击代理 */
 
 @end

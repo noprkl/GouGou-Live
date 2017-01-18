@@ -30,14 +30,6 @@ static NSString *cellid = @"SellerShipTemplate";
 @implementation SellerShipTemplateView
 #pragma mark
 #pragma mark - TableView 代理
-
-//- (NSArray *)dataPlist {
-//    if (!_dataPlist) {
-//        _dataPlist = [NSArray array];
-//        _dataPlist = @[@"运费模板一", @"运费模板二", @"运费模板三"];
-//    }
-//    return _dataPlist;
-//}
 - (void)setDetailPlist:(NSArray *)detailPlist {
     _detailPlist = detailPlist;
 //    self.dataPlist = detailPlist;
@@ -57,13 +49,6 @@ static NSString *cellid = @"SellerShipTemplate";
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    NSArray *arr = self.lastCell.contentView.subviews;
-//    for (UIView *view in arr) {
-//        if ([view isKindOfClass:[UILabel class]]) {
-//            [view removeFromSuperview];
-//        }
-//    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];
 
@@ -151,7 +136,13 @@ static NSString *cellid = @"SellerShipTemplate";
         
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
         button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 49);
-        [button setTitle:@"确认" forState:(UIControlStateNormal)];
+        NSString *title;
+        if (self.detailPlist.count == 0) {
+            title = @"您未添加运费模板";
+        }else{
+            title = @"确认";
+        }
+        [button setTitle:title forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor colorWithHexString:@"#000000"] forState:(UIControlStateNormal)];
         
         [button setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
@@ -223,6 +214,7 @@ static NSString *cellid = @"SellerShipTemplate";
     
     //根据overlayer设置alertView的中心点
     CGRect rect = self.frame;
+    CGFloat height = 0;
     rect = CGRectMake(0, SCREEN_HEIGHT - ((self.detailPlist.count +1)* 44), SCREEN_WIDTH, ((self.detailPlist.count +1)* 44));
     self.frame = rect;
     //渐入动画

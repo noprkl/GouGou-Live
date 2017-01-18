@@ -85,7 +85,7 @@
         self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
         // 商品总价
-        self.goodsPriceView.totalsMoney = self.orderInfo.price;
+        self.goodsPriceView.totalsMoney = self.orderInfo.productPrice;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         self.goodsPriceView.cutMoney = @"0";
         // 待付定金

@@ -72,7 +72,7 @@
 #define MYDEBUG 1
 
 #ifdef MYDEBUG
-#define DLog(s,...) NSLog(@"[在%@中第%d行] %@", [[NSString 			stringWithFormat:@"%s", __FILE__] lastPathComponent] ,__LINE__, [NSString stringWithFormat:(s),##__VA_ARGS__])
+#define DLog(s,...) NSLog(@"[在%@中第%d行%s] %@", [[NSString 			stringWithFormat:@"%s", __FILE__] lastPathComponent] ,__LINE__, __FUNCTION__, [NSString stringWithFormat:(s),##__VA_ARGS__])
 #else
 #define MyLog(s,...)
 #endif

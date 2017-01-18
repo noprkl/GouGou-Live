@@ -46,7 +46,7 @@ static NSString * reuseIdentifier = @"headerID";
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.view hint:@"加载中"];
+    [self showHudInView:self.collection hint:@"加载中"];
     [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
        
@@ -58,6 +58,7 @@ static NSString * reuseIdentifier = @"headerID";
         if (liveArr.count == 0) {
             [self hideHud];
             [self showAlert:@"没有数据"];
+            [self.collection reloadData];
         }else{
             /** 直播信息 */
             NSMutableArray *liveMutableArr = [NSMutableArray array];

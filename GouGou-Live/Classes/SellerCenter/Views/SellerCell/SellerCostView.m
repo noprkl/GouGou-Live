@@ -25,6 +25,9 @@
 ///** 尾款 */
 //@property (strong,nonatomic) UILabel *remainderMoeny;
 
+@property (nonatomic, strong) UILabel *firstCostLabel; /**< 第一个付款情况 */
+@property (nonatomic, strong) UILabel *secondCostLabel; /**< 第二个付款情况 */
+
 @property(nonatomic, strong) UIView *line; /**< 线 */
 
 @end
@@ -43,18 +46,61 @@
 //        [self addSubview:self.fontMoney];
 //        [self addSubview:self.remainderMoneylabel];
 //        [self addSubview:self.remainderMoeny];
+        [self addSubview:self.firstCostLabel];
+        [self addSubview:self.secondCostLabel];
+        
         [self addSubview:self.line];
     }
     return self;
 }
 -(void)setMoneyMessage:(NSString *)moneyMessage {
-    
     _moneyMessage = moneyMessage;
     self.totalMoney.text = moneyMessage;
 }
 - (void)setMessages:(NSArray *)messages {
     _messages = messages;
-    
+    DLog(@"%@", messages);
+//    for (NSInteger i = 0; i < self.messages.count; i++) {
+//        NSString *costMessage = self.messages[self.messages.count - 1 - i];
+//    }
+    if (self.messages.count == 0) {
+        self.firstCostLabel.text = @" ";
+        self.secondCostLabel.text = @" ";
+    }
+    if (self.messages.count == 1) {
+        self.firstCostLabel.text = self.messages[0];
+        self.secondCostLabel.text = @" ";
+    }
+    if (self.messages.count == 2) {
+        self.firstCostLabel.text = self.messages[0];
+        self.secondCostLabel.text = self.messages[1];
+    }
+
+//    CGFloat W = 0;
+//    CGFloat H = 44;
+//    CGFloat y = 0;
+//    
+//    // 间隔
+//    CGFloat offset = kDogImageWidth / 2;
+//    
+//    for (NSInteger i = 0; i < self.messages.count; i++) {
+//        
+//        NSString *labelStr = self.messages[self.messages.count - 1 - i];
+//        
+//        UILabel * label = [[UILabel alloc] init];
+//        NSDictionary *dict = @{
+//                               NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],
+//                               NSFontAttributeName:[UIFont systemFontOfSize:14]
+//                               };
+//        label.attributedText = [[NSAttributedString alloc] initWithString:labelStr attributes:dict];
+//        
+//        CGFloat labelW = [labelStr boundingRectWithSize:CGSizeMake(MAXFLOAT, H) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dict context:nil].size.width;
+//        
+//        W += labelW + offset;
+//        
+//        label.frame  = CGRectMake(SCREEN_WIDTH - W , y, labelW, H);
+//        [self addSubview:label];
+//    }
 }
 - (void)setFreightMoney:(NSString *)freightMoney {
     _freightMoney = freightMoney;
@@ -83,39 +129,21 @@
     }];
     
     [_freightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(weakself.left).offset(10);
         make.top.equalTo(weakself.totalLabel.bottom).offset(5);
-        
     }];
     
-    
-    CGFloat W = 0;
-    CGFloat H = 44;
-    CGFloat y = 0;
-    
-    // 间隔
-    CGFloat offset = kDogImageWidth / 2;
-    
-    for (NSInteger i = 0; i < self.messages.count; i++) {
-        
-        NSString *labelStr = self.messages[self.messages.count - 1 - i];
-        
-        UILabel * label = [[UILabel alloc] init];
-        NSDictionary *dict = @{
-                               NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],
-                               NSFontAttributeName:[UIFont systemFontOfSize:14]
-                               };
-        label.attributedText = [[NSAttributedString alloc] initWithString:labelStr attributes:dict];
-
-        CGFloat labelW = [labelStr boundingRectWithSize:CGSizeMake(MAXFLOAT, H) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dict context:nil].size.width;
-
-        W += labelW + offset;
-        
-        label.frame  = CGRectMake(SCREEN_WIDTH - W , y, labelW, H);
-        [self addSubview:label];
-    }
-
+    [_firstCostLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.right).offset(-10);
+        make.height.equalTo(44);
+        make.centerY.equalTo(self.centerY);
+    }];
+    [_secondCostLabel makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.firstCostLabel.left).offset(-5);
+        make.height.equalTo(44);
+        make.centerY.equalTo(self.centerY);
+    }];
+   
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(weakself.bottom);
         make.left.right.equalTo(weakself);
@@ -157,7 +185,22 @@
     }
     return _freightLabel;
 }
-
+- (UILabel *)firstCostLabel {
+    if (!_firstCostLabel) {
+        _firstCostLabel = [[UILabel alloc] init];
+        _firstCostLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        _firstCostLabel.font = [UIFont systemFontOfSize:14];
+    }
+    return _firstCostLabel;
+}
+- (UILabel *)secondCostLabel {
+    if (!_secondCostLabel) {
+        _secondCostLabel = [[UILabel alloc] init];
+        _secondCostLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        _secondCostLabel.font = [UIFont systemFontOfSize:14];
+    }
+    return _secondCostLabel;
+}
 //-(UILabel *)fontMoneyLabel {
 //    
 //    if (!_fontMoneyLabel) {

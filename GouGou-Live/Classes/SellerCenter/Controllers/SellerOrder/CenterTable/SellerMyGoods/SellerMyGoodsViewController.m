@@ -55,11 +55,14 @@ static NSString *cellid = @"SellerMyGoodsCell";
                            @"pageSize":@(10),
                            @"type":@(0)
                            };
+    [self showHudInView:self.view hint:@"加载中"];
+
     [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (successJson) {
             self.dataArr = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
             [self.tableView reloadData];
+            [self hideHud];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -92,10 +95,13 @@ static NSString *cellid = @"SellerMyGoodsCell";
                            @"pageSize":@(10),
                            @"type":@(state)
                            };
+    [self showHudInView:self.view hint:@"加载中"];
+
     [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.dataArr = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.tableView reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -110,18 +116,17 @@ static NSString *cellid = @"SellerMyGoodsCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    if (self.lastBtn) {
-        [self getRequestSellerDog];
-    }else{
-        [self GetRequestStateGoods:self.lastBtn];
-    }
 }
 - (void)initUI{
     _isMove = NO;
     _isSelect = NO;
     [self.view addSubview:self.headerView];
     [self.view addSubview:self.tableView];
-    self.lastBtn = 5;
+//    if (self.lastBtn == 5) {
+        [self getRequestSellerDog];
+//    }else{
+//        [self GetRequestStateGoods:self.lastBtn];
+//    }
     // 添加两个按钮
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.barBtnView];
     self.navigationItem.rightBarButtonItem = item;

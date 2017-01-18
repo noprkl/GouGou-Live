@@ -88,7 +88,7 @@
         self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
         
-        self.goodsPriceView.totalsMoney = self.orderInfo.price;
+        self.goodsPriceView.totalsMoney = self.orderInfo.productPrice;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%.2lf",[self.orderInfo.productDeposit floatValue] + [self.orderInfo.productBalance floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
 
@@ -369,10 +369,7 @@
                             };
     
     [self getRequestWithPath:API_Order_Delete params:dict success:^(id successJson) {
-        
-        DLog(@"%@",successJson[@"code"]);
-        DLog(@"%@",successJson[@"message"]);
-        
+        [self showAlert:successJson[@"message"]];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];

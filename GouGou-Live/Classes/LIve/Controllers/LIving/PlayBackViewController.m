@@ -133,20 +133,24 @@
    
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-    // 取消横屏
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.isLandscape = NO;
-    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-    if (orientation == UIInterfaceOrientationLandscapeRight) {
-        [self forceOrientation:UIInterfaceOrientationPortrait];
-    }
+//    // 取消横屏
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    appDelegate.isLandscape = NO;
+//    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+//    if (orientation == UIInterfaceOrientationLandscapeRight) {
+//        [self forceOrientation:UIInterfaceOrientationPortrait];
+//    }
+    // 暂停播放
     [self pause];
     // 删除会话
-    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
-        
-    }];
+//    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+//        
+//    }];
 }
-
+//- (void)viewDidDisappear:(BOOL)animated {
+//    [super viewDidDisappear:animated];
+//    [self removeObserveAndNOtification];
+//}
 #pragma mark
 #pragma mark - 回放
 // 回放
@@ -157,6 +161,7 @@
         DLog(@"%@", successJson);
         NSDictionary *playInfo= [successJson[@"data"] firstObject];
         self.playBackURL = [playInfo objectForKey:@"live"];
+        DLog(@"%@", self.playBackURL);
         [self updatePlayerWithURL:[NSURL URLWithString:self.playBackURL]];
         [self play];
     } error:^(NSError *error) {
@@ -185,10 +190,15 @@
 - (void)ClickBackButtonAction:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
     // 取消横屏
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isLandscape = NO;
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (orientation == UIInterfaceOrientationLandscapeRight) {
         [self forceOrientation:UIInterfaceOrientationPortrait];
     }
+    [self pause];
+    [self removeObserveAndNOtification];
+//    self.playBackPlayer
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
         [UIView animateWithDuration:0.3 animations:^{
@@ -231,9 +241,14 @@
 - (void)addObserverAndNotification {
     [self.playerItem addObserver:self forKeyPath:@"status" options:(NSKeyValueObservingOptionNew) context:nil]; // 观察status属性， 一共有三种属性
     [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil]; // 观察缓冲进度
-    [self addNotification]; // 添加通知
+    // 播放完成通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 }
-
+- (void)playbackFinished:(NSNotification *)notification {
+    DLog(@"视频播放完成通知");
+    _playerItem = [notification object];
+    isFinish = YES;
+}
 // 观察播放进度
 - (void)monitoringPlayback:(AVPlayerItem *)item {
     __weak typeof(self)WeakSelf = self;
@@ -254,18 +269,6 @@
 - (void)updateVideoSlider:(float)currentTime {
     self.progressSlider.value = currentTime;
     self.beginTimeLabel.text = [NSString convertTime:currentTime];
-}
-
-#pragma mark 添加通知
-- (void)addNotification {
-    // 播放完成通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-}
-
-- (void)playbackFinished:(NSNotification *)notification {
-    DLog(@"视频播放完成通知");
-    _playerItem = [notification object];
-    isFinish = YES;
 }
 
 #pragma mark KVO - status
@@ -321,6 +324,7 @@
 #pragma mark - 播放 暂停
 - (void)play {
     _isPlaying = YES;
+    self.playBtn.selected = NO;
     if (isFinish) {
         // 是否无限循环
         [_playerItem seekToTime:kCMTimeZero]; // 跳转到初始
@@ -331,6 +335,7 @@
 
 - (void)pause {
     _isPlaying = NO;
+    self.playBtn.selected = YES;
     [self.playBackPlayer pause];
     DLog(@"暂停");
 }
@@ -528,16 +533,17 @@
 
 #pragma mark
 #pragma mark - ---
-- (void)dealloc {
-    [self removeObserveAndNOtification];
-    [_playBackPlayer removeTimeObserver:_playTimeObserver]; // 移除playTimeObserver
-}
+//- (void)dealloc {
+//    [self removeObserveAndNOtification];
+//    [_playBackPlayer removeTimeObserver:_playTimeObserver];
+//}
 - (void)removeObserveAndNOtification {
     [_playBackPlayer replaceCurrentItemWithPlayerItem:nil];
     [_playerItem removeObserver:self forKeyPath:@"status"];
     [_playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
     [_playBackPlayer removeTimeObserver:_playTimeObserver];
-    
+    // 播放完毕的通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     _playTimeObserver = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -647,6 +653,7 @@
     dogShowVC.liverIcon = self.liverIcon;
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
+    dogShowVC.liveid = _liveID;
     dogShowVC.dogInfos = self.doginfos;
     dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     [self.baseScrollView addSubview:dogShowVC.view];
@@ -814,5 +821,4 @@
         self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 245);
     }
 }
-
 @end

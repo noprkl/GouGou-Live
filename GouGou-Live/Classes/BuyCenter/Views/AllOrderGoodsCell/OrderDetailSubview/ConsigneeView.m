@@ -74,8 +74,9 @@
     __weak typeof(self) weakself = self;
     
     [_locationImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weakself.centerY);
-        make.left.equalTo(weakself.left).offset(10);
+        make.centerY.equalTo(self.centerY);
+        make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(10, 10));
     }];
     
     [_consignee mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -99,23 +100,22 @@
     
     [_acquiesceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.consignee.left);
-        make.top.equalTo(weakself.consignee.bottom).offset(20);
-        
+       make.left.equalTo(weakself.consignee.left);
+        make.top.equalTo(weakself.consignee.bottom).offset(15);
+        make.width.equalTo(30);
     }];
     
     [_addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(weakself.acquiesceLabel.right).offset(10);
+        make.left.equalTo(weakself.acquiesceLabel.right).offset(0);
         make.centerY.equalTo(weakself.acquiesceLabel.centerY);
-        
+        make.width.equalTo(30);
     }];
     
     [_detailAddress mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.left.equalTo(weakself.addressLabel.right).offset(10);
         make.centerY.equalTo(weakself.acquiesceLabel.centerY);
-        
+        make.right.equalTo(-10);
     }];
 }
 #pragma mark
@@ -194,7 +194,8 @@
         _detailAddress.text = @"北京市朝阳区将台道";
         _detailAddress.textColor = [UIColor colorWithHexString:@"#666666"];
         _detailAddress.font = [UIFont systemFontOfSize:14];
-        
+        _detailAddress.textAlignment = NSTextAlignmentCenter;
+        _detailAddress.numberOfLines = 0;
     }
     return _detailAddress;
 }

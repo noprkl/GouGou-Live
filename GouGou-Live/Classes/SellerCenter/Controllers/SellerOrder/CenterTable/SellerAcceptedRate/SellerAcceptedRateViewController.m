@@ -33,15 +33,15 @@ static NSString *cellid = @"SellerAcceptRateCell";
                            @"page":@(1),
                            @"pageSize":@(5)
                            };
+    [self showHudInView:self.view hint:@"加载中"];
+    
     [self getRequestWithPath:API_My_order_comment params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        if ([successJson[@"message"] isEqualToString:@"请求成功"]) {
-              self.dataArr = [SellerAccepeRateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-            [UserInfos sharedUser].commentCount = self.dataArr.count;
-            [self.tableView reloadData];
-
-        }
-            } error:^(NSError *error) {
+        self.dataArr = [SellerAccepeRateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        [UserInfos sharedUser].commentCount = self.dataArr.count;
+        [self.tableView reloadData];
+        [self hideHud];
+    } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }

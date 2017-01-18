@@ -105,8 +105,8 @@
 //    self.costView.fontMoney.text = @"";
     self.costView.remainderMoneylabel.text = @"待付全款:";
 //    self.costView.fontMoney.text = centerModel.productDeposit;
-    self.costView.remainderMoeny.text = centerModel.price;
-    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [centerModel.price floatValue] + [centerModel.traficFee floatValue]];
+    self.costView.remainderMoeny.text = centerModel.productPrice;
+    self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [centerModel.productPrice floatValue] + [centerModel.traficFee floatValue]];
     self.costView.freightMoney.text = [NSString stringWithFormat:@"￥%@)", centerModel.traficFee];
 }
 #pragma mark

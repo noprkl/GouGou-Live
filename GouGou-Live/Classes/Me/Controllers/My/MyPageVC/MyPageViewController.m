@@ -289,7 +289,7 @@ static NSString *cellid4 = @"cellid4";
 #pragma mark  上传个人签名
                             
                             NSDictionary *dict = @{
-                                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                                   @"user_id":[UserInfos sharedUser].ID,
                                                    @"user_motto":signaue
                                                    };
                             [self postRequestWithPath:API_Signature params:dict success:^(id successJson) {
@@ -301,6 +301,7 @@ static NSString *cellid4 = @"cellid4";
                                     // 修改本地存储
                                     [UserInfos sharedUser].usermotto = signaue;
                                     [UserInfos setUser];
+                                    [self.tableView reloadData];
                                 }
                             } error:^(NSError *error) {
                                 DLog(@"%@", error);

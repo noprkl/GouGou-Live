@@ -156,7 +156,6 @@
                     [self showAlert:@"详细地址不能为空"];
                 }else{
                     btn.enabled = NO;
-                    NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
 
                     NSDictionary *dict = @{
                                            @"user_id":[UserInfos sharedUser].ID,
@@ -166,7 +165,7 @@
                                            @"user_province":self.provice,
                                            @"user_city":self.city,
                                            @"user_district":self.district,
-                                           @"user_address":adress,
+                                           @"user_address":self.detailAddressTextfiled.text,
                                            @"street":self.roadTextField.text,
                                            @"code":self.postalcodeTextfiled.text
                                            };
@@ -174,7 +173,6 @@
                     [self postRequestWithPath:API_Add_address params:dict success:^(id successJson) {
 //                        [self showAlert:successJson[@"message"]];
                         if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-                            
                             [self.navigationController popViewControllerAnimated:YES];
                         }else{
                             btn.enabled = YES;

@@ -51,7 +51,8 @@
 #pragma mark - 网络请求
 - (void)getSureConsigneeRequest {
     NSDictionary * dict = @{@"id":_orderID};
-        [self showHudInView:self.view hint:@"加载中.."];
+    
+    [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         [self hideHud];
         DLog(@"%@",successJson[@"Message"]);
@@ -85,7 +86,7 @@
         self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
         // 商品总价
-        self.goodsPriceView.totalsMoney = self.orderInfo.price;
+        self.goodsPriceView.totalsMoney = self.orderInfo.productPrice;
        // 运费
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         // 优惠

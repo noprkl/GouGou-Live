@@ -504,7 +504,7 @@
 - (void)clickBookBtnAction:(UIButton *)btn {
     
     if (_bookBlock) {
-        _bookBlock([btn currentTitle]);
+        _bookBlock();
     }
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 }

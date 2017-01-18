@@ -446,7 +446,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
 - (UILabel *)pictureCountLabel {
     if (!_pictureCountLabel) {
         _pictureCountLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _pictureCountLabel.text = [NSString stringWithFormat:@"%@%@",@"   ",@"请上传1-3张展示上家实力的图片"];
+        _pictureCountLabel.text = [NSString stringWithFormat:@"%@%@",@"   ",@"请上传1-3张展示商家实力的图片"];
         _pictureCountLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         _pictureCountLabel.font = [UIFont systemFontOfSize:12];
         _pictureCountLabel.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];

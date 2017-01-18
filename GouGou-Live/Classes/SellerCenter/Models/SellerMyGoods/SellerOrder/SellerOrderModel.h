@@ -27,9 +27,10 @@
 @property (nonatomic, strong) NSString *name; /**< 名字 */
 @property (nonatomic, strong) NSString *pathSmall; /**< 缩略图 */
 @property (nonatomic, strong) NSString *price; /**< 价格 */
-@property (nonatomic, strong) NSString *productRealPrice; /**< 实付款 */
-
 @property (nonatomic, strong) NSString *priceOld; /**< 老价格 */
+
+@property (nonatomic, strong) NSString *productRealPrice; /**< 实付款 */
+@property (nonatomic, strong) NSString *productPrice; /**< 总价 */
 @property (nonatomic, strong) NSString *productDeposit; /**< 定金 */
 @property (nonatomic, strong) NSString *productRealDeposit; /**< 实付定金 */
 
@@ -39,5 +40,7 @@
 
 @property (nonatomic, strong) NSString *transportation; /**< 快递方式 */
 @property (nonatomic, strong) NSString *waybillNumber; /**< 快递方式 */
+
+@property (nonatomic, strong) NSString *orderId; /**< 订单编号 */
 
 @end

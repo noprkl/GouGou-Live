@@ -11,7 +11,7 @@
 
 typedef void(^ClidkShareBtnBlock)();
 typedef void(^ClidkLikeBtnBlock)();
-typedef void(^ClidkBookBtnBlock)(NSString *book);
+typedef void(^ClidkBookBtnBlock)();
 
 @interface DogShowMessageCell : UITableViewCell
 

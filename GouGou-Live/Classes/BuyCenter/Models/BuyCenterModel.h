@@ -30,17 +30,18 @@
 
 @property (copy,nonatomic) NSString *colorName;/**< 狗狗颜色 */
 
+@property (copy,nonatomic) NSString *priceOld;/**< 原价 */
+@property (copy,nonatomic) NSString *price;/**< 现价 */
 @property (nonatomic, strong) NSString *saleUserId; /**< 卖家id */
 
-
-@property (copy,nonatomic) NSString *priceOld;/**< 原价 */
-
-@property (copy,nonatomic) NSString *price;/**< 现价 */
 @property (copy,nonatomic) NSString *productDeposit;/**< 商品定金 */
 @property (copy,nonatomic) NSString *productBalance;/** 商品尾款 */
 
 @property (copy,nonatomic) NSString *productRealDeposit;/**< 实付定金 */
 @property (copy,nonatomic) NSString *productRealBalance;/** 实付尾款 */
+
+/** 商品总价 */
+@property (copy,nonatomic) NSString *productPrice;
 @property (copy,nonatomic) NSString *productRealPrice;/** 实付金额 */
 
 @property (nonatomic, strong) NSString *comment; /**< 补充 */

@@ -184,7 +184,7 @@
         _changeTextField = [[UITextField alloc] init];
         _changeTextField.font = [UIFont systemFontOfSize:14];
         _changeTextField.delegate = self;
-        [_changeTextField addTarget:self action:@selector(changeTextFieldEditing:) forControlEvents:(UIControlEventTouchDown)];
+        [_changeTextField addTarget:self action:@selector(changeTextFieldEditing:) forControlEvents:(UIControlEventEditingChanged)];
     }
     return _changeTextField;
 }

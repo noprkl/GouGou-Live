@@ -40,12 +40,15 @@
 @implementation SellerOrderDetailAdressViewController
 
 - (void)getRequestOrderDetail {
-    NSDictionary * dict = @{@"id":@([_orderID intValue])};
+    NSDictionary * dict = @{@"id":_orderID};
     DLog(@"%@", dict);
+    [self showHudInView:self.view hint:@"加载中"];
+
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.orderInfo = [SellerOrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         [self.tableView reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -161,9 +164,9 @@
         }else if ([self.orderInfo.status isEqualToString:@"8"]) {
             state = @"待收货";
         }else if ([self.orderInfo.status isEqualToString:@"9"]) {
-            state = @"已评价";
-        }else if ([self.orderInfo.status isEqualToString:@"10"]) {
             state = @"待评价";
+        }else if ([self.orderInfo.status isEqualToString:@"10"]) {
+            state = @"已评价";
         }else if ([self.orderInfo.status isEqualToString:@"20"]) {
             state = @"订单取消";
         }
@@ -221,8 +224,6 @@
         dogCardView.dogColorLabel.text = self.orderInfo.colorName;
         dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:[NSString stringWithFormat:@"￥%@", self.orderInfo.priceOld]];
         dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.orderInfo.price];
-        
-        
         [cell.contentView addSubview:dogCardView];
         return cell;
 
@@ -238,10 +239,13 @@
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
         SellerOrderDetailPriceView *priceView = [[SellerOrderDetailPriceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
         // 商品总价
-        priceView.allPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficFee floatValue]];
+        priceView.allPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.productPrice floatValue] + [self.orderInfo.traficFee floatValue]];
         // 优惠价格
-        priceView.favorablePriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficFee floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
-        
+        if ([self.orderInfo.status isEqualToString:@"7"]) {
+            priceView.favorablePriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.price floatValue] + [self.orderInfo.traficFee floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
+        }else{
+            priceView.favorablePriceCount.text = @"0.00";
+        }
         priceView.realPriceCount.text = [NSString stringWithFormat:@"%.2lf", [self.orderInfo.productRealBalance floatValue] + [self.orderInfo.productRealDeposit floatValue] + [self.orderInfo.traficRealFee floatValue] + [self.orderInfo.productRealPrice floatValue]];
         priceView.templatePriceCount.text = self.orderInfo.traficRealFee.length != 0 ?self.orderInfo.traficRealFee:@"0";
         [cell.contentView addSubview:priceView];
@@ -391,7 +395,6 @@
             }];
         };
         [sendView show];
-
         
     }else if ([title isEqualToString:@"查看评价"]){
         

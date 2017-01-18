@@ -7,6 +7,8 @@
 //
 
 #define ImgCount 6
+#define kMaxLength 8
+#define kNoteLength 40
 
 #import "ChageGoodsMessageVc.h"
 #import "AddUpdataImagesView.h" // 添加狗狗图片
@@ -46,6 +48,7 @@
 
 @property(nonatomic, strong) UILabel *ageLabel; /**< 年龄 */
 @property(nonatomic, assign) NSInteger age; /**< 年龄 */
+@property(nonatomic, strong) DogCategoryModel *ageModel; /**< 年龄 */
 @property(nonatomic, strong) UILabel *sizeLabel; /**< 体型 */
 @property(nonatomic, strong) DogCategoryModel *sizeModel; /**< 体型 */
 @property(nonatomic, strong) UILabel *colorLabel; /**< 颜色 */
@@ -92,6 +95,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
         make.left.top.right.equalTo(self.view);
         make.bottom.equalTo(self.sureBtn.top);
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editDogName:) name:@"UITextFieldTextDidChangeNotification" object:self.nameText];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,7 +112,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
     self.nameText.text = model.name;
 
     self.age = model.age.time;
-    self.ageLabel.attributedText = [self getCellTextWith:[NSString getAgeFormInt:model.age.time]];
+    self.ageModel = model.age;
+    self.ageLabel.attributedText = [self getCellTextWith:model.age.name];
     
     self.sizeModel = _model.size;
     self.sizeLabel.attributedText = [self getCellTextWith:_model.size.name];
@@ -275,12 +281,12 @@ static NSString *cellid = @"SellerCreateDogMessage";
                                                 if (self.photoUrl.count == self.photoArr.count) {
                                                     NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
                                                     NSDictionary *dict = @{
-                                                                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                                                           @"id":@([_model.ID integerValue]),
+                                                                           @"user_id":[UserInfos sharedUser].ID,
+                                                                           @"id":_model.ID,
                                                                            @"name":self.nameText.text,
-                                                                           @"color_id":@([self.colorModel.ID integerValue]),
-                                                                           @"kind_id":@([self.typeModel.ID integerValue]),
-                                                                           @"size_id":@([self.sizeModel.ID integerValue]),
+                                                                           @"color_id":self.colorModel.ID,
+                                                                           @"kind_id":self.typeModel.ID,
+                                                                           @"size_id":self.sizeModel.ID,
                                                                            @"age_id":@(self.age),
                                                                            @"price_old":_model.price,
                                                                            @"price":self.priceText.text,
@@ -377,8 +383,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
             
             self.ageLabel = ageLabel;
             [cell.contentView addSubview:ageLabel];
-            if (self.age != 0) {
-                ageLabel.attributedText = [self getCellTextWith:[NSString getAgeFormInt:self.age]];
+            if ([[self.ageModel name] length] != 0) {
+                ageLabel.attributedText = [self getCellTextWith:_model.age.name];
             }
         }
             break;
@@ -506,6 +512,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
         case 9:
         {
             cell.textLabel.attributedText = [self getCellTextWith:@"运费"];
+            cell.textLabel.font = [UIFont systemFontOfSize:14];
+
             cell.detailTextLabel.text = @"模板-运费";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
             if (self.shipCost.length != 0) {
@@ -587,8 +595,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             } error:^(NSError *error) {
                 DLog(@"%@", error);
             }];
-            
-            
+        
             //            __weak typeof(sizeView) weakView = sizeView;
             sizeView.bottomBlock = ^(DogCategoryModel *size){
                 DLog(@"%@", size);
@@ -757,10 +764,15 @@ static NSString *cellid = @"SellerCreateDogMessage";
     }else{
         self.deposit.text = [NSString stringWithFormat:@"%0.2lf", [textField.text floatValue] / 10];
     }
+
 }
 - (void)noteTextEditAction:(UITextField *)textField {
+    if (textField.text.length >= 40) {
+    self.countLabel.text = @"40/40";
+    }else{
+        self.countLabel.text = [NSString stringWithFormat:@"%ld/40", textField.text.length];
+    }
     
-    self.countLabel.text = [NSString stringWithFormat:@"%ld/40", textField.text.length];
 }
 #pragma mark
 #pragma mark - UItextField代理
@@ -857,6 +869,60 @@ static NSString *cellid = @"SellerCreateDogMessage";
     }
     return YES;
 }
+- (void)editDogName:(NSNotification *)notification {
+    UITextField *textField = (UITextField *)notification.object;
+    if (textField == self.nameText) {
+        NSString *toBeString = textField.text;
+        NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage]; // 键盘输入模式
+        if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+            UITextRange *selectedRange = [textField markedTextRange];
+            //获取高亮部分
+            UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+            // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+            if (!position) {
+                if (toBeString.length > kMaxLength) {
+                    textField.text = [toBeString substringToIndex:kMaxLength];
+                }
+            }
+            // 有高亮选择的字符串，则暂不对文字进行统计和限制
+            else{
+                
+            }
+        }
+        // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        else{
+            if (toBeString.length > kMaxLength) {
+                textField.text = [toBeString substringToIndex:kMaxLength];
+            }  
+        }
+
+    }
+    if (textField == self.noteText) {
+        NSString *toBeString = textField.text;
+        NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage]; // 键盘输入模式
+        if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+            UITextRange *selectedRange = [textField markedTextRange];
+            //获取高亮部分
+            UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+            // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+            if (!position) {
+                if (toBeString.length > kNoteLength) {
+                    textField.text = [toBeString substringToIndex:kNoteLength];
+                }
+            }
+            // 有高亮选择的字符串，则暂不对文字进行统计和限制
+            else{
+                
+            }
+        }
+        // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        else{
+            if (toBeString.length > kNoteLength) {
+                textField.text = [toBeString substringToIndex:kNoteLength];
+            }
+        }
+    }
+}
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.nameText) {
         self.noneNameBtn.hidden = YES;
@@ -918,5 +984,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
     // 释放通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DogImpress" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DogType" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UITextFieldTextDidChangeNotification" object:nil];
+
 }
 @end

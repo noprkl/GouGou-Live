@@ -339,7 +339,7 @@
 #pragma mark - 设置当前view的frame
     
     CGRect rect = self.frame;
-    rect = CGRectMake(0, SCREEN_HEIGHT - kHeight - 260, SCREEN_WIDTH, kHeight);
+    rect = CGRectMake(0, SCREEN_HEIGHT - kHeight - 280, SCREEN_WIDTH, kHeight);
     self.frame = rect;
     
     // 约束

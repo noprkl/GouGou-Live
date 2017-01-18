@@ -28,7 +28,7 @@
 /** 转盘 */
 @property (strong, nonatomic) UIPickerView *agePicker;
 /** 价格数据源 */
-@property (strong, nonatomic) NSArray *ageData;
+@property (strong, nonatomic) NSArray *priceData;
 
 #pragma mark pickerView的值
 /** 最小 */
@@ -47,10 +47,10 @@ static NSString *cellid = @"SizeFilterCellID";
 @implementation DogPriceFilter
 - (void)setDataPlist:(NSArray *)dataPlist {
     _dataPlist = dataPlist;
-    self.ageData = dataPlist;
+    self.priceData = dataPlist;
     [self.agePicker reloadAllComponents];
-    self.minModel = self.ageData[0];
-    self.maxModel = self.ageData[0];
+    self.minModel = self.dataPlist[0];
+    self.maxModel = self.dataPlist[0];
 }
 
 #pragma mark
@@ -75,7 +75,7 @@ static NSString *cellid = @"SizeFilterCellID";
     //        return prov.cities.count;
     //    }
     
-    return self.ageData.count;
+    return self.priceData.count;
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     
@@ -86,12 +86,8 @@ static NSString *cellid = @"SizeFilterCellID";
     
     DogCategoryModel *model = self.dataPlist[row];
     if (component == 0) {
-        
-        //        self.minString = self.dataPlist[row];
         return model.name;
     } else {
-        
-        //        self.maxString = self.dataPlist[row];
 #pragma mark - 级联菜单越界问题
         
         return model.name;
@@ -100,35 +96,26 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
-    self.currentminIndex = [pickerView selectedRowInComponent:0];
-    self.currentmaxIndex = [pickerView selectedRowInComponent:1];
     DLog(@"component--%ld", component);
     switch (component) {
         case 0:
             if (row > self.currentmaxIndex) {
-//                DLog(@"%ld--%ld", row, component);
-                self.currentmaxIndex = row;
-                self.currentminIndex = [pickerView selectedRowInComponent:1];
                 [pickerView selectRow:row inComponent:1 animated:YES];
             }
             break;
         case 1:
             if (row < self.currentminIndex) {
-//                DLog(@"%ld--%ld", row, component);
-                self.currentminIndex = [pickerView selectedRowInComponent:1];
-                self.currentmaxIndex = [pickerView selectedRowInComponent:1];;
-                [pickerView selectRow:row inComponent:1 animated:YES];
+                [pickerView selectRow:row inComponent:0 animated:YES];
             }
             break;
         default:
             break;
     }
-    if (component == 0) {
-        self.minModel = self.dataPlist[self.currentminIndex];
-    }
-     if (component == 1){
-        self.maxModel = self.dataPlist[self.currentmaxIndex];
-    }
+    self.currentminIndex = [pickerView selectedRowInComponent:0];
+    self.currentmaxIndex = [pickerView selectedRowInComponent:1];
+
+    self.minModel = self.dataPlist[self.currentminIndex];
+    self.maxModel = self.dataPlist[self.currentmaxIndex];
 }
 
 #pragma mark
@@ -184,11 +171,11 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 #pragma mark
 #pragma mark - 懒加载
-- (NSArray *)ageData {
-    if (!_ageData) {
-        _ageData = [NSArray array];
+- (NSArray *)priceData {
+    if (!_priceData) {
+        _priceData = [NSArray array];
     }
-    return _ageData;
+    return _priceData;
 }
 - (UIPickerView *)agePicker {
     if (!_agePicker) {

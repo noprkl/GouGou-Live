@@ -160,7 +160,7 @@
         // 付款状况
         self.costView.fontMoney.text = self.detailModel.productDeposit;
         self.costView.remainderMoeny.text = self.detailModel.productBalance;
-        self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [self.detailModel.price floatValue] + [self.detailModel.traficFee floatValue]];
+        self.costView.moneyMessage = [NSString stringWithFormat:@"%.2lf", [self.detailModel.productPrice floatValue] + [self.detailModel.traficFee floatValue]];
         self.costView.freightMoney.text = self.detailModel.traficRealFee;
         self.sureApplyRefundView.realMoney = [NSString stringWithFormat:@"%.2lf", [self.detailModel.productRealDeposit floatValue] + [self.detailModel.productRealBalance floatValue] + [self.detailModel.productRealPrice floatValue]];
         

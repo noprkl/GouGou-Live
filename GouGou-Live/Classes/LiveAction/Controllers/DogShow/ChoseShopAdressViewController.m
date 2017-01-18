@@ -34,14 +34,11 @@ static NSString *cellid = @"ChoseShopAdressCell";
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID
                            };
-    
     [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self showAlert:successJson[@"message"]];
         if (successJson[@"code"]) {
             // 数据解析
             self.dataArr = [[MyShopAdressModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] mutableCopy];
-          
             // 刷新
             [self.tableView reloadData];
         }

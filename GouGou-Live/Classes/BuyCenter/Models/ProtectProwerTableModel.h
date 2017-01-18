@@ -39,6 +39,8 @@
 /** 现价 */
 @property (copy,nonatomic) NSString *price;
 
+/** 商品总价 */
+@property (copy,nonatomic) NSString *productPrice;
 /** 商品实际价格 */
 @property (copy,nonatomic) NSString *productRealPrice;
 /** 实付实收定金 */

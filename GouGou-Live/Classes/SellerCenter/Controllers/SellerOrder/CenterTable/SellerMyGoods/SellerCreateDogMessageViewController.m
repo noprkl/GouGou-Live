@@ -6,6 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 #define ImgCount 6
+#define kMaxLength 8
+#define kNoteLength 40
 
 #import "SellerCreateDogMessageViewController.h"
 #import "AddUpdataImagesView.h" // 添加狗狗图片
@@ -33,6 +35,8 @@
 @property(nonatomic, strong) UIButton *noneNameBtn; /**< 未起名按钮 */
 
 @property(nonatomic, strong) UITextField *priceText; /**< 一口价 */
+
+@property (nonatomic, assign) CGFloat price; /**< 价格 */
 
 @property(nonatomic, strong) UILabel *deposit; /**< 定价 */
 
@@ -86,7 +90,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
         make.left.top.right.equalTo(self.view);
         make.bottom.equalTo(self.sureBtn.top);
     }];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editingDogName:) name:@"UITextFieldTextDidChangeNotification" object:self.nameText];
+    self.price = 0;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -184,7 +189,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
                 if (self.colorModel.name.length == 0) {
                     [self showAlert:@"请选择狗狗颜色"];
                 }else {
-                    if (![NSString validateNumber:self.priceText.text]) {
+                    if (self.price == 0) {
                         [self showAlert:@"请输入狗狗价格"];
                     }else {
                         
@@ -194,69 +199,74 @@ static NSString *cellid = @"SellerCreateDogMessage";
                             if (self.photoArr.count == 0) {
                                 [self showAlert:@"请添加狗狗图片"];
                             }else {
-                                if (self.shipModel.name.length == 0) {
-                                    [self showAlert:@"请选择运费模板"];
+                                if ([self.noteText.text isEqualToString:@"补充"] || self
+                                    .noteText.text.length == 0) {
+                                    [self showAlert:@"请输入补充内容"];
                                 }else{
-                                    //                                self.sureBtn.enabled = NO;
-                                    
-                                    // 印象id字符串
-                                    NSMutableArray *impresArr = [NSMutableArray array];
-                                    for (NSInteger i = 0; i < self.impressModels.count; i ++) {
-                                        DogCategoryModel *model = self.impressModels[i];
-                                        [impresArr addObject:model.ID];
-                                    }
-                                    NSString *idStr = [impresArr componentsJoinedByString:@"|"];
-                                    // 图片地址
-                                    [self.photoUrl removeAllObjects];
-                                    for (NSInteger i = 0; i < self.photoArr.count; i ++) {
-                                        NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
-                                        NSDictionary *dict = @{
-                                                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                                                               @"img":base64
-                                                               };
+                                    if (self.shipModel.name.length == 0) {
+                                        [self showAlert:@"请选择运费模板"];
+                                    }else{
+                                        //                                self.sureBtn.enabled = NO;
                                         
-                                        [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
-                                            if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
-                                                
-                                                [self.photoUrl addObject:successJson[@"data"]];
-                                                // 提交商品
-                                                if (self.photoUrl.count == self.photoArr.count) {
-                                                    NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
-                                                    NSDictionary *dict = @{
-                                                                           @"create_user":@([[UserInfos sharedUser].ID integerValue]),
-                                                                           @"name":self.nameText.text,
-                                                                           @"color_id":@([self.colorModel.ID integerValue]),
-                                                                           @"kind_id":@([self.typeModel.ID integerValue]),
-                                                                           @"size_id":@([self.sizeModel.ID integerValue]),
-                                                                           @"age_time":@(self.age),
-                                                                           @"age_name":self.ageLabel.text,
-                                                                           @"price_old":self.priceText.text,
-                                                                           @"price":self.priceText.text,
-                                                                           @"deposit":self.deposit.text,
-                                                                           @"comment":self.noteText.text,
-                                                                           @"impresssion_id":idStr,
-                                                                           @"path_big":imgStr,
-                                                                           @"trafic_template":@(self.shipModel.ID)                                                                           };
-                                                    DLog(@"%@",dict);
-                                                    [self postRequestWithPath:API_Add_product params:dict success:^(id successJson) {
-                                                        DLog(@"%@", successJson);
-                                                        [self showAlert:successJson[@"message"]];
-                                                        DLog(@"%@", self.photoArr);
-                                                        if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-                                                            [self.navigationController popViewControllerAnimated:YES];
-                                                        }else if ([successJson[@"message"] isEqualToString:@"参数不能为空"]){
-                                                            //                                                        self.sureBtn.enabled = YES;
-                                                        }
-                                                    } error:^(NSError *error) {
-                                                        DLog(@"%@", error);
-                                                    }];
-                                                }
-                                            }
+                                        // 印象id字符串
+                                        NSMutableArray *impresArr = [NSMutableArray array];
+                                        for (NSInteger i = 0; i < self.impressModels.count; i ++) {
+                                            DogCategoryModel *model = self.impressModels[i];
+                                            [impresArr addObject:model.ID];
+                                        }
+                                        NSString *idStr = [impresArr componentsJoinedByString:@"|"];
+                                        // 图片地址
+                                        [self.photoUrl removeAllObjects];
+                                        for (NSInteger i = 0; i < self.photoArr.count; i ++) {
+                                            NSString *base64 = [NSString imageBase64WithDataURL:self.photoArr[i] withSize:CGSizeMake(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2)];
+                                            NSDictionary *dict = @{
+                                                                   @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                                   @"img":base64
+                                                                   };
                                             
-                                            DLog(@"%@", successJson);
-                                        } error:^(NSError *error) {
-                                            DLog(@"%@", error);
-                                        }];
+                                            [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+                                                if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
+                                                    
+                                                    [self.photoUrl addObject:successJson[@"data"]];
+                                                    // 提交商品
+                                                    if (self.photoUrl.count == self.photoArr.count) {
+                                                        NSString *imgStr = [self.photoUrl componentsJoinedByString:@"|"];
+                                                        NSDictionary *dict = @{
+                                                                               @"create_user":[UserInfos sharedUser].ID,
+                                                                               @"name":self.nameText.text,
+                                                                               @"color_id":self.colorModel.ID,
+                                                                               @"kind_id":self.typeModel.ID,
+                                                                               @"size_id":self.sizeModel.ID,
+                                                                               @"age_time":@(self.age),
+                                                                               @"age_name":self.ageLabel.text,
+                                                                               @"price_old":self.priceText.text,
+                                                                               @"price":self.priceText.text,
+                                                                               @"deposit":self.deposit.text,
+                                                                               @"comment":self.noteText.text,
+                                                                               @"impresssion_id":idStr,
+                                                                               @"path_big":imgStr,
+                                                                               @"trafic_template":@(self.shipModel.ID)                                                                           };
+                                                        DLog(@"%@",dict);
+                                                        [self postRequestWithPath:API_Add_product params:dict success:^(id successJson) {
+                                                            DLog(@"%@", successJson);
+                                                            [self showAlert:successJson[@"message"]];
+                                                            DLog(@"%@", self.photoArr);
+                                                            if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                                                                [self.navigationController popViewControllerAnimated:YES];
+                                                            }else if ([successJson[@"message"] isEqualToString:@"参数不能为空"]){
+                                                                //                                                        self.sureBtn.enabled = YES;
+                                                            }
+                                                        } error:^(NSError *error) {
+                                                            DLog(@"%@", error);
+                                                        }];
+                                                    }
+                                                }
+                                                
+                                                DLog(@"%@", successJson);
+                                            } error:^(NSError *error) {
+                                                DLog(@"%@", error);
+                                            }];
+                                        }
                                     }
                                 }
                             }
@@ -304,7 +314,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
             nameText.font = [UIFont systemFontOfSize:14];
             nameText.delegate = self;
             self.nameText = nameText;
-        [nameText addTarget:self action:@selector(editDogName:) forControlEvents:(UIControlEventEditingChanged)];
             [cell.contentView addSubview:nameText];
         }
             break;
@@ -399,7 +408,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             // 补充
             cell.textLabel.text = @"";
             cell.accessoryType = UITableViewCellAccessoryNone;
-            UITextField *noteText = [[UITextField alloc] initWithFrame:CGRectMake(13, 0, 300, 44)];
+            UITextField *noteText = [[UITextField alloc] initWithFrame:CGRectMake(13, 0, SCREEN_WIDTH - 40 - 15, 44)];
             
             noteText.attributedPlaceholder = [self getAttributeWith:self.dataArr[8]];
             noteText.font = [UIFont systemFontOfSize:14];
@@ -422,6 +431,8 @@ static NSString *cellid = @"SellerCreateDogMessage";
         case 9:
         {
             cell.textLabel.text = @"运费模板";
+            cell.textLabel.font = [UIFont systemFontOfSize:14];
+
             cell.detailTextLabel.text = @"模板-运费";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
         
@@ -645,10 +656,18 @@ static NSString *cellid = @"SellerCreateDogMessage";
     }else{
         self.deposit.text = [NSString stringWithFormat:@"%0.2lf", [textField.text floatValue] / 10];
     }
+    if (textField.text.length == 0) {
+        self.price = 0;
+    }else{
+        self.price = [textField.text floatValue];
+    }
 }
 - (void)noteTextEditAction:(UITextField *)textField {
-
-    self.countLabel.text = [NSString stringWithFormat:@"%ld/40", textField.text.length];
+    if (textField.text.length >= 40) {
+        self.countLabel.text = @"40/40";
+    }else{
+        self.countLabel.text = [NSString stringWithFormat:@"%lu/40", textField.text.length];
+    }
 }
 #pragma mark
 #pragma mark - UItextField代理
@@ -777,6 +796,60 @@ static NSString *cellid = @"SellerCreateDogMessage";
     
     return YES;
 }
+- (void)editingDogName:(NSNotification *)notification {
+    UITextField *textField = (UITextField *)notification.object;
+    if (textField == self.nameText){
+        NSString *toBeString = textField.text;
+        NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage]; // 键盘输入模式
+        if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+            UITextRange *selectedRange = [textField markedTextRange];
+            //获取高亮部分
+            UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+            // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+            if (!position) {
+                if (toBeString.length > kMaxLength) {
+                    textField.text = [toBeString substringToIndex:kMaxLength];
+                }
+            }
+            // 有高亮选择的字符串，则暂不对文字进行统计和限制
+            else{
+                
+            }
+        }
+        // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        else{
+            if (toBeString.length > kMaxLength) {
+                textField.text = [toBeString substringToIndex:kMaxLength];
+            }
+        }
+    }
+    if (textField == self.noteText){
+        NSString *toBeString = textField.text;
+        NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage]; // 键盘输入模式
+        if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+            UITextRange *selectedRange = [textField markedTextRange];
+            //获取高亮部分
+            UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+            // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+            if (!position) {
+                if (toBeString.length > kNoteLength) {
+                    textField.text = [toBeString substringToIndex:kNoteLength];
+                }
+            }
+            // 有高亮选择的字符串，则暂不对文字进行统计和限制
+            else{
+                
+            }
+        }
+        // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        else{
+            if (toBeString.length > kNoteLength) {
+                textField.text = [toBeString substringToIndex:kNoteLength];
+            }
+        }
+    }
+   
+}
 - (NSAttributedString *)getAttributeWith:(NSString *)string{
     NSAttributedString *attribut = [[NSAttributedString alloc] initWithString:string attributes:@{
                                                                                                   NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#000000"],
@@ -792,13 +865,6 @@ static NSString *cellid = @"SellerCreateDogMessage";
     return attribute;
 }
 
-- (void)editDogName:(UITextField *)textField {
-    if (textField == self.nameText) {
-        if (textField.text.length > 8) {
-            textField.text = [textField.text substringWithRange:NSMakeRange(0, 4)];
-        }
-    }
-}
 - (void)dealloc {
     // 释放通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DogImpress" object:nil];

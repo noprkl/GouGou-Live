@@ -41,7 +41,7 @@
     NSDictionary *dict = @{
                            @"impression":@([_dogType.ID intValue])
                            };
-    [self showHudInView:self.view hint:@"正在加载"];
+    [self showHudInView:self.liveTableView hint:@"正在加载"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
@@ -50,6 +50,7 @@
             [self hideHud];
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
+            [self.liveTableView reloadData];
         }else{
             self.noneView.hidden = YES;
             self.liveTableView.hidden = NO;
@@ -110,7 +111,7 @@
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.view hint:@"正在加载"];
+    [self showHudInView:self.liveTableView hint:@"正在加载"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
@@ -119,6 +120,7 @@
              [self hideHud];
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
+             [self.liveTableView reloadData];
         }else{
             self.noneView.hidden = YES;
             self.liveTableView.hidden = NO;
@@ -180,7 +182,7 @@
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.view hint:@"正在加载"];
+    [self showHudInView:self.liveTableView hint:@"正在加载"];
     [self getRequestWithPath:API_Live_list_new_im params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.liveTableView.dataPlist removeAllObjects];
@@ -189,6 +191,7 @@
          if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
+             [self.liveTableView reloadData];
         }else{
             self.noneView.hidden = YES;
             self.liveTableView.hidden = NO;
@@ -258,6 +261,7 @@
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
             [self hideHud];
+             [self.liveTableView reloadData];
         }else{
             self.noneView.hidden = YES;
             self.liveTableView.hidden = NO;

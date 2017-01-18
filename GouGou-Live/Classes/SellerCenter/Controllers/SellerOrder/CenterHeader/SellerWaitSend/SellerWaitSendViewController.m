@@ -155,7 +155,7 @@ static NSString *cellid = @"SellerWaitSendCell";
         
             SellerSendAlertView *sendView = [[SellerSendAlertView alloc] init];
 
-            sendView.orderID = orderModel.ID;
+            sendView.orderID = orderModel.orderId;
             __weak typeof(sendView) weakSend = sendView;
 
             sendView.commitBlock = ^(NSString *shipStyle, NSString *shipOrder){
@@ -173,10 +173,10 @@ static NSString *cellid = @"SellerWaitSendCell";
                     if ([successJson[@"message"] isEqualToString:@"成功"]) {
                         weakSend.successNote.text = @"订单发货成功";
                         [weakSend dismiss];
-                        [self getRequestWaitSendOrder];
                     }else{
                         weakSend.successNote.text = @"订单发货失败";
                     }
+                    [self getRequestWaitSendOrder];
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];

@@ -44,13 +44,14 @@ static NSString *cellid = @"SellerAcceptRateCell";
 @implementation SellerChangeViewController
 - (void)getRequestOrderDetail {
     NSDictionary *dict = @{
-                           @"id":@([_orderID intValue])
+                           @"id":_orderID
                            };
-    
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.orderInfo = [SellerOrderDetailModel mj_objectWithKeyValues:successJson[@"data"]];
         [self.tableView reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -88,26 +89,6 @@ static NSString *cellid = @"SellerAcceptRateCell";
     [self focusKeyboardShow];
 }
 
-// 网络请求
-- (void)codePayPsdRequest {
-    // 判断是哪一种修改 运费还是价格
-    if ([self.changeStyle isEqualToString:@"修改运费"]) {
-        SellerChangeShipCostView *costView = [[SellerChangeShipCostView alloc] init];
-        costView.commitBlock = ^(NSString *newCost){
-            DLog(@"%@", newCost);
-            self.nowCost = newCost;
-        };
-        [costView show];
-        
-    }else if ([self.changeStyle isEqualToString:@"修改价格"]){
-        SellerChangePriceAlertView *priceView = [[SellerChangePriceAlertView alloc] init];
-        priceView.commitBlock = ^(NSString *newPrice){
-            DLog(@"%@", newPrice);
-            self.nowCost = newPrice;
-        };
-        [priceView show];
-    }
-}
 #pragma mark
 #pragma mark - 懒加载
 - (NSArray *)dataArr {
@@ -194,13 +175,12 @@ static NSString *cellid = @"SellerAcceptRateCell";
         dogCardView.nowPriceLabel.text = [NSString stringWithFormat:@"￥%@", self.orderInfo.price];
 
             [cell.contentView addSubview:dogCardView];
-
         }
             break;
         case 2:
         {
             SellerCostView *costView = [[SellerCostView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-            costView.moneyMessage = self.orderInfo.price;
+            costView.moneyMessage = self.orderInfo.productPrice;
             costView.freightMoney = self.orderInfo.traficFee;
         if ([self.orderInfo.status isEqualToString:@"2"]) {
             
@@ -211,7 +191,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
             NSString *finalMoney = [NSString stringWithFormat:@"尾款：￥%@", self.orderInfo.productBalance];
             costView.messages = @[finalMoney];
         }else if ([self.orderInfo.status isEqualToString:@"5"]) {
-            NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", self.orderInfo.price];
+            NSString *allMoney = [NSString stringWithFormat:@"全款：￥%@", self.orderInfo.productPrice];
             costView.messages = @[allMoney];
         }
 
@@ -239,24 +219,24 @@ static NSString *cellid = @"SellerAcceptRateCell";
         {
             SellerChangePayView *changePay = [[SellerChangePayView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 125)];
         if ([self.orderInfo.status isEqualToString:@"2"]) {// 定金
-            changePay.realMoney = self.orderInfo.price;
-            changePay.realMoneyNote = @"实付金额";
-            changePay.changeStyle = @"修改金额";
-            changePay.price = self.orderInfo.price;
+            changePay.realMoney = self.orderInfo.productDeposit;
+            changePay.realMoneyNote = @"实付定金";
+            changePay.changeStyle = @"修改定金";
+            changePay.price = self.orderInfo.productDeposit;
             changePay.oldPrice = self.orderInfo.priceOld;
-            changePay.placeHolder = self.orderInfo.price;
+            changePay.placeHolder = self.orderInfo.productDeposit;
         }else if ([self.orderInfo.status isEqualToString:@"3"]) {//尾款
             changePay.realMoney = self.orderInfo.productBalance;
-            changePay.placeHolder = self.orderInfo.price;
-            changePay.price = self.orderInfo.price;
+            changePay.placeHolder = self.orderInfo.productBalance;
+            changePay.price = self.orderInfo.productPrice;
             changePay.oldPrice = self.orderInfo.priceOld;
         }else if ([self.orderInfo.status isEqualToString:@"5"]) {// 全款
-            changePay.realMoney = self.orderInfo.price;
+            changePay.realMoney = self.orderInfo.productPrice;
             changePay.realMoneyNote = @"实付金额";
             changePay.changeStyle = @"修改金额";
-            changePay.price = self.orderInfo.price;
+            changePay.price = self.orderInfo.productPrice;
             changePay.oldPrice = self.orderInfo.priceOld;
-            changePay.placeHolder = self.orderInfo.price;
+            changePay.placeHolder = self.orderInfo.productPrice;
         }
 
         changePay.editBlock = ^(NSString *cost){
@@ -296,7 +276,7 @@ static NSString *cellid = @"SellerAcceptRateCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
+
 }
 // 输入密码
 - (void)showAlertView {
@@ -362,8 +342,8 @@ static NSString *cellid = @"SellerAcceptRateCell";
         
         if ([self.orderInfo.status isEqualToString:@"2"]) {// 定金
             priceView.realMoney = self.orderInfo.price;
-            priceView.realMoneyNote = @"实付金额";
-            priceView.changeStyle = @"修改金额";
+            priceView.realMoneyNote = @"实付定金";
+            priceView.changeStyle = @"修改定金";
             priceView.price = self.orderInfo.price;
             priceView.oldPrice = self.orderInfo.priceOld;
             priceView.placeHolder = self.orderInfo.price;
@@ -402,16 +382,30 @@ static NSString *cellid = @"SellerAcceptRateCell";
        
     }else if ([self.changeStyle isEqualToString:@"修改价格"]){
         // 请求
+//        * @param  string  $id    订单id
+//        * @param  string  $user_id 用户ID
+//        * @param  string  $price 价格
+//        * @param  string  $type 类型 1 定金 2 尾款 3 全款
+        NSInteger type = 0;
+        if ([self.orderInfo.status isEqualToString:@"2"]) {// 定金
+            type = 1;
+        }else if ([self.orderInfo.status isEqualToString:@"3"]) {//尾款
+            type = 2;
+        }else if ([self.orderInfo.status isEqualToString:@"5"]) {// 全款
+            type = 3;
+        }
+        
         NSDictionary *dict = @{
                                @"id":_orderID,
                                @"user_id":[UserInfos sharedUser].ID,
-                               @"price":self.nowCost
+                               @"price":self.nowCost,
+                               @"type":@(type)
                                };
+        DLog(@"%@", dict);
         [self getRequestWithPath:API_Order_up params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
             [self getRequestOrderDetail];
-            
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];

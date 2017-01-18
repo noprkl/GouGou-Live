@@ -94,7 +94,7 @@
                 <outlet property="shopOwner" destination="jup-yT-Rl4" id="KCm-dh-7is"/>
                 <outlet property="shopPhone" destination="sKV-Us-vYh" id="7cg-iY-z8Q"/>
             </connections>
-            <point key="canvasLocation" x="-84" y="186.5"/>
+            <point key="canvasLocation" x="-416" y="250.5"/>
         </tableViewCell>
     </objects>
     <resources>

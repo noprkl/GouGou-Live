@@ -60,10 +60,10 @@
 
 @property (nonatomic, strong) NSString *money; /**< 赔偿金额 */
 @property (nonatomic, strong) NSString *closeTime; /**< 关闭时间 */
-@property (nonatomic, strong) NSString *createtime; /**< 创建时间 */
-@property (nonatomic, strong) NSString *deliverytime; /**< 发货时间 */
-@property (nonatomic, strong) NSString *deposittime; /**< 定金支付时间 */
-@property (nonatomic, strong) NSString *balancetime; /**< 尾款支付时间 */
+@property (nonatomic, strong) NSString *createTime; /**< 创建时间 */
+@property (nonatomic, strong) NSString *deliveryTime; /**< 发货时间 */
+@property (nonatomic, strong) NSString *depositTime; /**< 定金支付时间 */
+@property (nonatomic, strong) NSString *balanceTime; /**< 尾款支付时间 */
 @property (nonatomic, strong) NSString *fullTime; /**< 全款时间 */
 @property (nonatomic, strong) NSString *confirmTime; /**< 收货时间 */
 

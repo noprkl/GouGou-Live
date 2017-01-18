@@ -24,10 +24,12 @@ static NSString *cellid = @"SellerMyLiveCell";
 @implementation SellerMyLiveViewController
 - (void)getRequestMyLiveList {
     NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Seller_live params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.tableView reloadData];
+        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

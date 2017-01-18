@@ -51,7 +51,6 @@ static NSString *cellid = @"AddDogColorAlert";
 - (void)clickSureBtnAction {
     if (_colorBlock) {
         _colorBlock(self.colorString);
-        
         [self fadeOut];
     }}
 - (void)clickCancelBtnAction {

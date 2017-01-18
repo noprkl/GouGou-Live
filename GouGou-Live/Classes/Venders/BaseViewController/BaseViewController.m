@@ -68,27 +68,32 @@
 }
 
 // 显示
-- (void)showHudInView:(UIView *)view hint:(NSString *)hint {
-//    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
-//    DLog(@"%@", NSStringFromCGRect(view.frame));
+//- (void)showHudInView:(UIView *)view hint:(NSString *)hint {
+////    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
+////    DLog(@"%@", NSStringFromCGRect(view.frame));
+////    
+////    hud.labelText = hint;
+////    [view addSubview:hud];
+////    [hud show:YES];
+////    self.hud = hud;
 //    
-//    hud.labelText = hint;
-//    [view addSubview:hud];
-//    [hud show:YES];
-//    self.hud = hud;
-    
-    
-    HUDView *hudView = [[HUDView alloc] init];
-    self.hudView = hudView;
-    hudView.alertStr = hint;
-    [hudView show];
-}
+//    
+//    HUDView *hudView = [[HUDView alloc] init];
+//    self.hudView = hudView;
+//    hudView.alertStr = hint;
+//    [hudView show];
+//    // 20自动消失
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self hideHud];
+//    });
+//    
+//}
 // 隐藏
-- (void)hideHud {
+//- (void)hideHud {
 //    [self.hud hide:YES];
 //    [self.hud removeFromSuperview];
-    [self.hudView dismiss];
-}
+//    [self.hudView dismiss];
+//}
 //- (MBProgressHUD *)hud {
 //    if (!_hud) {
 //        _hud = [[MBProgressHUD alloc] initWithView:self.view];

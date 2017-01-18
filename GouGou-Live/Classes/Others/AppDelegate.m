@@ -9,7 +9,10 @@
 #import "AppDelegate.h"
 #import "BaseTabBarController.h"
 #import "AppDelegate+ThirdFrameDelegate.h" //
+
 #import "WXApi.h"
+#import "WXApiManager.h"
+
 #import <AlipaySDK/AlipaySDK.h>
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import <PLPlayerKit/PLPlayerEnv.h>
@@ -35,8 +38,6 @@
     
     [self.window makeKeyAndVisible];
 
-    // 休眠3秒
-    [NSThread sleepForTimeInterval:3];
     
     // 设置友盟SDk
     [AppDelegate setUMengSDK];
@@ -47,7 +48,10 @@
     // 七牛云
     [PLStreamingEnv initEnv];
     [PLPlayerEnv initEnv];
-    
+
+    // 休眠3秒
+    [NSThread sleepForTimeInterval:3];
+
     return YES;
 }
 
@@ -62,19 +66,18 @@
             [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
                 DLog(@"result = %@",resultDic);
             }];
-        }else{ // 微信
-            
-            return [WXApi handleOpenURL:url delegate:self];
         }
+        return result;
+    }else{
+        return [WXApi handleOpenURL:url delegate:self];
     }
-    return result;
+
 }
 // NOTE: 9.0以后使用新API接口
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
     if (!result) {
-        
         // 支付宝
         if ([url.host isEqualToString:@"safepay"]) {
             //跳转支付宝钱包进行支付，处理支付结果
@@ -82,11 +85,11 @@
                 DLog(@"result = %@",resultDic);
             }];
             return YES;
-        }else{
-            return [WXApi handleOpenURL:url delegate:self];
         }
+        return result;
+    }else{
+        return [WXApi handleOpenURL:url delegate:self];
     }
-    return result;
 }
 //被废弃的方法. 但是在低版本中会用到.建议写上
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
@@ -94,24 +97,11 @@
     return [WXApi handleOpenURL:url delegate:self];
 }
 
-- (BOOL)applicationOpenURL:(NSURL *)url
-{
-    if([[url absoluteString] rangeOfString:@"wxbef5a0656069e8e2://pay"].location == 0) //你的微信开发者appid
-        return [WXApi handleOpenURL:url delegate:self];
-    else
-        return [[UMSocialManager defaultManager] handleOpenURL:url];
-}
-
 // APP进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [AppDelegate setEaseMobEnterBackground:application];
 }
-
-//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-//    
-//    return [UMSocials]
-//}
 // APP将要从后台返回
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
@@ -135,18 +125,17 @@
 - (void)onResp:(BaseResp *)resp
 {
     NSString * strMsg = [NSString stringWithFormat:@"errorCode: %d",resp.errCode];
-    NSLog(@"strMsg: %@",strMsg);
+    DLog(@"strMsg: %@",strMsg);
     
     NSString * errStr = [NSString stringWithFormat:@"errStr: %@",resp.errStr];
-    NSLog(@"errStr: %@",errStr);
+    DLog(@"errStr: %@",errStr);
     
     
     NSString * strTitle;
     //判断是微信消息的回调 --> 是支付回调回来的还是消息回调回来的.
-    if ([resp isKindOfClass:[SendMessageToWXResp class]])
-        {
+    if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
         strTitle = [NSString stringWithFormat:@"发送媒体消息的结果"];
-        }
+    }
     
     NSString * wxPayResult;
     //判断是否是微信支付回调 (注意是PayResp 而不是PayReq)
@@ -160,7 +149,7 @@
                 case WXSuccess:
                 {
                 strMsg = @"支付结果:";
-                NSLog(@"支付成功: %d",resp.errCode);
+                DLog(@"支付成功: %d",resp.errCode);
                 wxPayResult = @"success";
                 break;
                 }

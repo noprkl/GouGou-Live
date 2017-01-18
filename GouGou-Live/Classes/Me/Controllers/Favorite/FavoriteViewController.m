@@ -40,10 +40,10 @@
     [self showHudInView:self.view hint:@"刷新..."];
     [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self hideHud];
         [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
         self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
         [self.favoriteDogTable reloadData];
-        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -56,10 +56,10 @@
     [self showHudInView:self.view hint:@"刷新..."];
     [self getRequestWithPath:API_User_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+        [self hideHud];
         [self.favotiteLiveTable setContentOffset:CGPointMake(0, 0) animated:YES];
         self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         [self.favotiteLiveTable reloadData];
-        [self hideHud];
     } error:^(NSError *error) {
         DLog(@"%@",error);
         
@@ -70,8 +70,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // 请求狗狗数据
-    [self GetRequestFavoriteDog];
-    // 请求直播列表
     [self GetRequestFavoriteLive];
     self.navigationController.navigationBarHidden = NO;
 }
@@ -240,9 +238,7 @@
             _favoriteDogTable.frame = tableRect2;
         }];
         [self GetRequestFavoriteDog];
-    
     }
-
 }
 
 

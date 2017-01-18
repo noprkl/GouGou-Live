@@ -14,4 +14,6 @@ typedef void(^ClickRequestBlock)(NSString *text);
 
 @property (nonatomic, strong) ClickRequestBlock requestBlock; /**< 重新加载 */
 
+@property (nonatomic, assign) BOOL hidBtn; /**< 按钮隐藏 */
+
 @end

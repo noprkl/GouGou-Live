@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavBarItem];
+    self.title = @"支付成功";
     [self.view addSubview:self.imageView];
     [self.view addSubview:self.noteLabel];
     [self.view addSubview:self.backBtn];
@@ -37,6 +38,8 @@
     [self.backBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.centerX);
         make.top.equalTo(self.noteLabel.bottom).offset(20);
+        make.left.equalTo(self.view.left).offset(50);
+        make.height.equalTo(30);
     }];
 }
 - (void)backAction {
@@ -52,7 +55,7 @@
 - (UILabel *)noteLabel {
     if (!_noteLabel) {
         _noteLabel = [[UILabel alloc] init];
-        _noteLabel.text = @"支付成功";
+        _noteLabel.text = @"您的订单已经支付成功";
         _noteLabel.font = [UIFont systemFontOfSize:14];
         _noteLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         _noteLabel.textAlignment = NSTextAlignmentCenter;
@@ -64,7 +67,8 @@
         _backBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_backBtn setTitle:@"返回" forState:(UIControlStateNormal)];
         _backBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        _backBtn.titleLabel.tintColor = [UIColor colorWithHexString:@"#99cc33"];
+        _backBtn.titleLabel.tintColor = [UIColor colorWithHexString:@"#ffffff"];
+        _backBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
         [_backBtn addTarget:self action:@selector(backAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _backBtn;

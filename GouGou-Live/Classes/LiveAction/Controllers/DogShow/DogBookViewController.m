@@ -75,7 +75,6 @@
                                    @"address_id":@(_defaultModel.ID)
                                    };
             DLog(@"%@", dict);
-
             [self postRequestWithPath:API_Order params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [self showAlert:successJson[@"message"]];
@@ -320,7 +319,7 @@
                                };
         
         [self getRequestWithPath:API_Address params:dict success:^(id successJson) {
-            [self showAlert:successJson[@"message"]];
+
             if (successJson[@"code"]) {
                 // 数据解析
                 NSArray *adressArr = [NSArray array];

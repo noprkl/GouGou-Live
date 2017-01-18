@@ -55,7 +55,7 @@
 - (void)getBackMoneyRequest {
     
     NSDictionary * dict = @{@"id":_orderID};
-        [self showHudInView:self.view hint:@"加载中.."];
+    [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
         [self hideHud];
         DLog(@"%@",successJson);
@@ -89,7 +89,7 @@
         self.dogCardView.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:self.orderInfo.priceOld];
         self.dogCardView.nowPriceLabel.text = self.orderInfo.price;
         // 商品总价
-        self.goodsPriceView.totalsMoney = self.orderInfo.price;
+        self.goodsPriceView.totalsMoney = self.orderInfo.productPrice;
         self.goodsPriceView.traficFee  = self.orderInfo.traficFee;
         self.goodsPriceView.cutMoney = [NSString stringWithFormat:@"%.2lf",[self.orderInfo.productDeposit floatValue] + [self.orderInfo.productBalance floatValue] - [self.orderInfo.traficRealFee floatValue] - [self.orderInfo.productRealDeposit floatValue] - [self.orderInfo.productRealBalance floatValue]- [self.orderInfo.productRealPrice floatValue]];
         
@@ -410,7 +410,7 @@
                                 };
         
         [self getRequestWithPath:API_Order_Delete params:dict success:^(id successJson) {
-            
+            [self showAlert:successJson[@"messgae"]];
             DLog(@"%@",successJson);
             [self.navigationController popViewControllerAnimated:YES];
         } error:^(NSError *error) {

@@ -84,6 +84,7 @@
     [self.markImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
         make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(10, 10));
     }];
     
     [self.ownerLabel makeConstraints:^(MASConstraintMaker *make) {
@@ -101,11 +102,13 @@
     [self.adressLabel makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.markImageView.bottom);
         make.left.equalTo(self.markImageView.right).offset(5);
+        make.width.equalTo(60);
     }];
     [self.adressDesclabel makeConstraints:^(MASConstraintMaker *make) {
+       make.top.equalTo(self.markImageView.bottom).offset(3);
         make.left.equalTo(self.adressLabel.right);
         make.centerY.equalTo(self.adressLabel.centerY);
-        make.width.equalTo(200);
+        make.right.equalTo(self.right).offset(-40);
     }];
     [self.smallImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
@@ -138,7 +141,7 @@
         _adressLabel.text = @"地址：";
         _adressLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _adressLabel.font = [UIFont systemFontOfSize:13];
-
+        _adressLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _adressLabel;
 }

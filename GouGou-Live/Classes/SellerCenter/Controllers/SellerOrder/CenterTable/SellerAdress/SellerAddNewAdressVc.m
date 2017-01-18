@@ -156,8 +156,6 @@
                     [self showAlert:@"详细地址不能为空"];
                 }else{
                     
-                    NSString *adress = [NSString stringWithFormat:@"%@%@", self.roadTextField.text, self.detailAddressTextfiled.text];
-                    
                     NSDictionary *dict = @{
                                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                            @"merchant_name":self.userNameTextfiled.text,
@@ -165,7 +163,7 @@
                                            @"merchant_province":self.provice,
                                            @"merchant_city":self.city,
                                            @"merchant_district":self.district,
-                                           @"merchant_address":adress,
+                                           @"merchant_address":self.detailAddressTextfiled.text,
                                            @"is_default":@(0),
                                            @"street":self.roadTextField.text,
                                            @"code":self.postalcodeTextfiled.text
@@ -187,40 +185,6 @@
         }
     }
 }
-
-// 测试
-//- (void)saveAddAdress {
-//    NSDictionary *dict = @{
-//                           @"user_id":@(11),
-//                           @"user_name":@"哈哈哈",
-//                           @"user_tel":@(1479375185),
-//                           @"is_default":@(0),
-//                           @"user_province":@"北京市",
-//                           @"user_city":@"北京",
-//                           @"user_district":@"海淀",
-//                           @"user_address":@"五道口"
-//                           };
-////    [self getRequestWithPath:API_Add_address params:dict success:^(id successJson) {
-////        [self showAlert:successJson[@"message"]];
-////        DLog(@"%@", successJson);
-////    } error:^(NSError *error) {
-////        DLog(@"%@", error);
-////    }];
-//    [self postRequestWithPath:API_Add_address params:dict success:^(id successJson) {
-//        [self showAlert:successJson[@"message"]];
-//        if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-//
-//            // 暂停2秒
-//            [NSThread sleepForTimeInterval:2];
-//
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//        DLog(@"%@", successJson);
-//    } error:^(NSError *error) {
-//        DLog(@"%@", error);
-//    }];
-//
-//}
 
 #pragma mark
 #pragma mark - TextFiled代理

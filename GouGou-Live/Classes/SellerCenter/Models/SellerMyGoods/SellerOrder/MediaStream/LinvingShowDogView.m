@@ -27,14 +27,13 @@ static NSString *cellid = @"LivingShowDogCell";
 }
 - (NSArray *)dataPlist {
     if (!_dataPlist) {
-        
         _dataPlist = [NSArray array];
     }
     return _dataPlist;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
-{
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style {
+    
     self = [super initWithFrame:frame style:style];
     if (self) {
         
@@ -44,7 +43,6 @@ static NSString *cellid = @"LivingShowDogCell";
         self.showsVerticalScrollIndicator = NO;
         self.showsHorizontalScrollIndicator = NO;
         self.tableFooterView = [[UIView alloc] init];
-        
         [self registerClass:[LivingShowDogCell class] forCellReuseIdentifier:cellid];
     }
     return self;
@@ -65,9 +63,8 @@ static NSString *cellid = @"LivingShowDogCell";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LiveListDogInfoModel *model = self.dataPlist[indexPath.row];
-    
-    if (_cellBlock) {
-        _cellBlock(model);
+    if ([self.showDelegate respondsToSelector:@selector(clickShowingDog:)]) {
+        [self.showDelegate clickShowingDog:model];
     }
 }
 #pragma mark 高度
@@ -97,7 +94,7 @@ static NSString *cellid = @"LivingShowDogCell";
         UIImage *image = [UIImage imageNamed:@"返回fan"];
         [backBtn setImage:image forState:(UIControlStateNormal)];
         backBtn.frame = CGRectMake(0, 0, 43, 43);
-        [backBtn addTarget:self action:@selector(clickBackBtnAction) forControlEvents:(UIControlEventTouchDown)];
+        [backBtn addTarget:self action:@selector(clickHidBtnAction) forControlEvents:(UIControlEventTouchDown)];
         [backBtn setContentMode:(UIViewContentModeCenter)];
         [view addSubview:backBtn];
         // 线
@@ -111,7 +108,7 @@ static NSString *cellid = @"LivingShowDogCell";
     return nil;
     
 }
-- (void)clickBackBtnAction {
+- (void)clickHidBtnAction {
 
     self.hidden = YES;
 }

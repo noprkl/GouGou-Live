@@ -183,7 +183,6 @@
     
     // 添加控制器视图到contentScrollView上
     [scrollView addSubview:childVC.view];
-    
 }
 // 减速结束时调用 加载子控制器view的方法
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

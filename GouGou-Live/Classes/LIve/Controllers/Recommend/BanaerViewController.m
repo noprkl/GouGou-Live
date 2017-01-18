@@ -23,7 +23,6 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_banaerURL]];
     [self.webView loadRequest:request];
     self.title = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    DLog(@"%@", [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"]);
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

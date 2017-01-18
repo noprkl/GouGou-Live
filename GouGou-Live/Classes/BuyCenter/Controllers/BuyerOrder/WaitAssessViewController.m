@@ -189,7 +189,8 @@ static NSString * waitsAssessCell = @"waitsAssessCell";
         
         DLog(@"%@",successJson[@"code"]);
         DLog(@"%@",successJson[@"message"]);
-        
+        [self showAlert:successJson[@"message"]];
+
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];

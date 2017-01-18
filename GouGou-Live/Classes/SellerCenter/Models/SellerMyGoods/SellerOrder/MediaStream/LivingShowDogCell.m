@@ -35,8 +35,7 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
         [self.contentView addSubview:self.dogImageView];
         [self.contentView addSubview:self.dogNameLabel];

@@ -66,7 +66,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
     // ([[UserInfos sharedUser].ID integerValue])
     if ([UserInfos getUser]) {
         NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
-        
         [self getRequestWithPath:API_System_msg params:dict success:^(id successJson) {
             self.systemMessageArr = @[];
             DLog(@"%@", successJson);

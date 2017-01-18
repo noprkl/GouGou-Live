@@ -40,13 +40,14 @@ static NSString *cellid = @"SystemNotificationCell";
     // ([[UserInfos sharedUser].ID integerValue])
     if ([UserInfos getUser]) {
         NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID};
-        
+        [self showHudInView:self.view hint:@"加载中"];
         [self getRequestWithPath:API_System_msg params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             if ([successJson[@"code"] isEqualToString:@"1"]) {
                 self.dataArr = [SystemPushMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                 [self.tableView reloadData];
             }
+            [self hideHud];
         } error:^(NSError *error) {
             DLog(@"%@", error);
         }];
@@ -146,6 +147,7 @@ static NSString *cellid = @"SystemNotificationCell";
         // 判断当前用户是卖家还是买家
         NSDictionary * dict = @{@"id":messageModel.productId};
         // 请求订单
+        [self showHudInView:self.view hint:@"加载中.."];
         [self getRequestWithPath:API_Order_limit params:dict success:^(id successJson) {
             
             DLog(@"%@", successJson);
@@ -173,7 +175,7 @@ static NSString *cellid = @"SystemNotificationCell";
                 }else if ([orderInfo.status isEqualToString:@"4"]) {
                     
                     //        state = @"";
-                    
+                    [self showAlert:@"交易已经关闭"];
                 }else if ([orderInfo.status isEqualToString:@"5"]) {
                     
                     //        state = @"待付全款";
@@ -218,6 +220,7 @@ static NSString *cellid = @"SystemNotificationCell";
                     Vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:Vc animated:YES];
                 }else if ([orderInfo.status isEqualToString:@"20"]) {
+                    [self showAlert:@"交易已经关闭"];
                 }
             
             }else if ([messageModel.state integerValue] == 1){// 当前用户是卖家
@@ -251,7 +254,7 @@ static NSString *cellid = @"SystemNotificationCell";
                     [self.navigationController pushViewController:adressVC animated:YES];
                     
                 }else if ([orderInfo.status integerValue] == 4){ // 4：放弃订金，交易结束
-                    
+                    [self showAlert:@"交易已经关闭"];
                 }else if ([orderInfo.status integerValue] == 5){ // 5：待付全款
                     SellerOrderDetailAdressViewController *adressVC = [[SellerOrderDetailAdressViewController alloc] init];
                     adressVC.hidesBottomBarWhenPushed = YES;
@@ -298,12 +301,12 @@ static NSString *cellid = @"SystemNotificationCell";
                     
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 }else if ([orderInfo.status integerValue] == 20){ //   20：订单取消
-                    
+                    [self showAlert:@"订单已经取消"];
                 }else if ([orderInfo.status integerValue] == 21){ // 21：交易关闭
-                    
+                    [self showAlert:@"交易已经关闭"];
                 }
             }
-            
+            [self hideHud];
         } error:^(NSError *error) {
             DLog(@"%@",error);
         }];

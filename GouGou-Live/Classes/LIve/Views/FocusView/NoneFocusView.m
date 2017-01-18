@@ -52,7 +52,10 @@
         make.height.equalTo(50);
     }];
 }
-
+- (void)setHidBtn:(BOOL)hidBtn {
+    _hidBtn = hidBtn;
+    self.reRequest.hidden = hidBtn;
+}
 #pragma mark
 #pragma mark - 懒加载
 - (UIImageView *)iconImage {

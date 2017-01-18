@@ -139,13 +139,17 @@
     }
     return _line;
 }
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-    [textField becomeFirstResponder];
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [textView becomeFirstResponder];
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    
+- (void)textViewDidEndEditing:(UITextView *)textView {
+
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([textView.text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+    }
     return YES;
 }
 @end

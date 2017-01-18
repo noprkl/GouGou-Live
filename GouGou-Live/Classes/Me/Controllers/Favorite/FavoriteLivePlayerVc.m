@@ -105,6 +105,7 @@
     self.navigationController.navigationBarHidden = NO;
 
     [self pause];
+    [self removeObserveAndNOtification];
 }
 // 切换横竖屏
 - (void)forceOrientation: (UIInterfaceOrientation)orientation {
@@ -495,16 +496,17 @@
     }
     return _playAlert;
 }
-- (void)dealloc {
-    [self removeObserveAndNOtification];
-    [_player removeTimeObserver:_playTimeObserver]; // 移除playTimeObserver
-}
+//- (void)dealloc {
+//    [self removeObserveAndNOtification];
+//    [_player removeTimeObserver:_playTimeObserver]; // 移除playTimeObserver
+//}
 
 - (void)removeObserveAndNOtification {
     [_player replaceCurrentItemWithPlayerItem:nil];
     [_playerItem removeObserver:self forKeyPath:@"status"];
     [_playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
     [_player removeTimeObserver:_playTimeObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     _playTimeObserver = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

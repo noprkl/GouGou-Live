@@ -254,7 +254,7 @@
 #define API_Delivery @"api/OrderService/delivery"
 /** 订单详情 */
 #define API_Order_limit @"api/OrderService/order_limit"
-/** 订单修改价格 */
+/** 订单修改价格 type 类型 1 定金 2 尾款 3 全款*/
 #define API_Order_up @"api/OrderService/order_up"
 /** 订单评价卖家 */
 #define API_My_order_comment @"api/OrderService/my_order_comment"
@@ -320,5 +320,7 @@
 #define API_Live_status @"api/ProductService/live_status"
 /** 直播正在展播的狗 */
 #define API_Live_product_list_weight @"api/ProductService/Live_product_list_weight"
+/** 订单状态 */
+#define API_Order_status_new @"api/OrderService/order_status_new"
 
 @end

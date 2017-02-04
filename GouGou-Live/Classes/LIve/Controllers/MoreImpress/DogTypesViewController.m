@@ -41,7 +41,7 @@
     NSDictionary *dict = @{
                            @"impression":@([_dogType.ID intValue])
                            };
-    [self showHudInView:self.liveTableView hint:@"正在加载"];
+    [self showHudInView:self.view hint:@"正在加载"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
@@ -260,8 +260,9 @@
          if ([successJson[@"code"] integerValue] == 0) {
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
-            [self hideHud];
              [self.liveTableView reloadData];
+             [self hideHud];
+
         }else{
             self.noneView.hidden = YES;
             self.liveTableView.hidden = NO;
@@ -337,6 +338,14 @@
     }];
     
 }
+- (void)setNavBarItem {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回-拷贝"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBackBtnAction)];
+}
+- (void)leftBackBtnAction {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)addViews {
 
     __weak typeof(self) weakself = self;

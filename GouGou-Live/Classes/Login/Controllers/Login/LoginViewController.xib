@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1912" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -164,15 +164,8 @@
                         <action selector="clickQQLogin:" destination="-1" eventType="touchUpInside" id="bcI-1N-Hwp"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4O-0F-EfR">
-                    <rect key="frame" x="33" y="499" width="40" height="40"/>
-                    <state key="normal" image="微信"/>
-                    <connections>
-                        <action selector="clickWXLogin:" destination="-1" eventType="touchUpInside" id="8MA-yy-8Yn"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ELa-M3-Gcs">
-                    <rect key="frame" x="303" y="499" width="40" height="40"/>
+                    <rect key="frame" x="300" y="499" width="40" height="40"/>
                     <state key="normal" image="微博"/>
                     <connections>
                         <action selector="clickSinaLogin:" destination="-1" eventType="touchUpInside" id="Vaq-sy-jwU"/>
@@ -211,11 +204,17 @@
                         <action selector="clickBackAction:" destination="-1" eventType="touchUpInside" id="ClO-QN-j4W"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4O-0F-EfR">
+                    <rect key="frame" x="40" y="499" width="40" height="40"/>
+                    <state key="normal" image="微信"/>
+                    <connections>
+                        <action selector="clickWXLogin:" destination="-1" eventType="touchUpInside" id="8MA-yy-8Yn"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="b8F-VD-yKl" firstAttribute="top" secondItem="SqU-3G-7Jr" secondAttribute="bottom" constant="15" id="05R-mL-2FZ"/>
-                <constraint firstItem="vuV-Di-3er" firstAttribute="leading" secondItem="e4O-0F-EfR" secondAttribute="trailing" constant="95" id="0AR-Jj-yva"/>
                 <constraint firstItem="vvh-Fs-c0B" firstAttribute="leading" secondItem="b8F-VD-yKl" secondAttribute="leading" id="0G3-1Z-BP4"/>
                 <constraint firstItem="dPE-qx-UCk" firstAttribute="top" secondItem="vvh-Fs-c0B" secondAttribute="bottom" constant="20" id="0XE-3X-4RX"/>
                 <constraint firstItem="dfn-Ev-5pa" firstAttribute="leading" secondItem="M5X-vC-qpp" secondAttribute="trailing" constant="15" id="36W-vb-VpI"/>
@@ -247,7 +246,6 @@
                 <constraint firstItem="vuV-Di-3er" firstAttribute="top" secondItem="dfn-Ev-5pa" secondAttribute="bottom" constant="22" id="O9r-1M-9QF"/>
                 <constraint firstItem="J3X-tC-0RL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="PcQ-ru-uQu"/>
                 <constraint firstItem="0gv-tY-4bL" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Qhu-5t-L7t"/>
-                <constraint firstItem="ELa-M3-Gcs" firstAttribute="leading" secondItem="vuV-Di-3er" secondAttribute="trailing" constant="95" id="QpJ-D1-JDg"/>
                 <constraint firstItem="rGZ-wX-Mpa" firstAttribute="centerY" secondItem="A16-Qo-a1Y" secondAttribute="centerY" id="Rsc-sB-HD8"/>
                 <constraint firstItem="A16-Qo-a1Y" firstAttribute="leading" secondItem="N3H-yV-FRL" secondAttribute="leading" id="Ute-sH-ipY"/>
                 <constraint firstItem="N3H-yV-FRL" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Vl5-dy-aHS"/>
@@ -271,8 +269,10 @@
                 <constraint firstItem="SqU-3G-7Jr" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="20" id="tD9-wU-o6F"/>
                 <constraint firstItem="N4B-Rh-ahO" firstAttribute="centerY" secondItem="oWi-ZL-jok" secondAttribute="centerY" id="tDG-UN-HjZ"/>
                 <constraint firstItem="dfn-Ev-5pa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tuG-5Z-cy7"/>
+                <constraint firstItem="ELa-M3-Gcs" firstAttribute="trailing" secondItem="wbu-hk-lut" secondAttribute="trailing" constant="-15" id="u1l-h6-8gb"/>
                 <constraint firstItem="qPf-dS-w6l" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="vJT-Ql-UJL"/>
                 <constraint firstItem="dfn-Ev-5pa" firstAttribute="top" secondItem="N3H-yV-FRL" secondAttribute="bottom" constant="70" id="xea-Zi-LXe"/>
+                <constraint firstItem="e4O-0F-EfR" firstAttribute="leading" secondItem="M5X-vC-qpp" secondAttribute="leading" constant="20" id="yTv-UW-bK1"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <variation key="default">

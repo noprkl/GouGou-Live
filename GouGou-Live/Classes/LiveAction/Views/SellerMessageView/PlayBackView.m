@@ -71,7 +71,7 @@ static NSString *cellid = @"Cellid";
 
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
 
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 44)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 40)];
     label.text = @"回放";
     label.font = [UIFont systemFontOfSize:16];
     label.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];

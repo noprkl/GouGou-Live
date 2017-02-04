@@ -4685,6 +4685,7 @@
 					0467ACE31DBDEF2200562CC4 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 7PDLABN8WZ;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -5398,8 +5399,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				DEVELOPMENT_TEAM = 7PDLABN8WZ;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5419,6 +5421,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -5428,8 +5431,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: rui zhang (7PDLABN8WZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: rui zhang (SEF7MMRT9H)";
+				DEVELOPMENT_TEAM = 7PDLABN8WZ;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5449,6 +5453,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuaxing.GouGouLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

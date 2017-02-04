@@ -178,7 +178,9 @@ static NSString *cellid = @"SellerNoInputcell";
         UIImage *image = [UIImage imageNamed:@"删除"];
         [deleBtn setImage:image forState:(UIControlStateNormal)];
         [deleBtn addTarget:self action:@selector(deleAllHistorydata) forControlEvents:(UIControlEventTouchDown)];
-        deleBtn.frame = CGRectMake(SCREEN_WIDTH - 10 - image.size.width , (50 - image.size.height) / 2, image.size.width, image.size.height);
+        [deleBtn setContentMode:(UIViewContentModeCenter)];
+        deleBtn.frame = CGRectMake(SCREEN_WIDTH - 50, 0, 50, 50);
+        [deleBtn setContentEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
         [view addSubview:deleBtn];
         
         return view;

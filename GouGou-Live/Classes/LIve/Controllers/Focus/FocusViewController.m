@@ -38,7 +38,7 @@
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID
                            };
-    [self showHudInView:self.tableView hint:@"加载中"];
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Fan_live params:dict success:^(id successJson) {
         [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
         DLog(@"%@", successJson);
@@ -76,10 +76,11 @@
                     }
                     [liveMutableArr addObject:model];
                     if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                        [self hideHud];
                         self.tableView.dogInfos = dogInfos;
                         self.tableView.dataPlist = liveMutableArr;
                         [self.tableView reloadData];
+                        [self hideHud];
+
                         //                    [self hideHud];
                     }
                 } error:^(NSError *error) {
@@ -96,7 +97,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self getRequestLiveList];
     // 上拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getRequestLiveList];
@@ -119,6 +119,8 @@
     if ([UserInfos getUser]) {
         self.noneView.hidden = YES;
         self.tableView.hidden = NO;
+        [self getRequestLiveList];
+
     }else{
         self.noneView.hidden = NO;
         self.tableView.hidden = YES;

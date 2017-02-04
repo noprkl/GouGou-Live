@@ -274,6 +274,8 @@ static NSString *cellid = @"RecommentCellid";
             weakSelf.noneView.hidden = YES;
             weakSelf.tableView.hidden = YES;
             weakSelf.noinputView.hidden = NO;
+            weakSelf.titleInputView.text = @"";
+            [weakSelf editSearchAction:weakSelf.titleInputView];
         };
     }
     return _noneView;

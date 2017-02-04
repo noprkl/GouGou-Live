@@ -441,6 +441,9 @@ static NSString *cellid = @"cellid";
                     WXprommt = nil;
                     [WXprommt dismiss];
                 };
+            WXprommt.cancelBlock = ^(){
+                swit.on = !swit.on;
+            };
     }else {
         
         __block DeletePrommtView *WXprommt = [[DeletePrommtView alloc] init];

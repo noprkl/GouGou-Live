@@ -14,6 +14,7 @@
 #import "FavoriteLivePlayerVc.h"
 #import "PlayBackModel.h"
 #import "FavoriteDogDetailVc.h"
+#import "NoneDateView.h"
 
 @interface FavoriteViewController ()
 /** 两个button View */
@@ -24,6 +25,8 @@
 @property (strong,nonatomic) MyFavoriteTableView *favoriteDogTable;
 /** 底部scrollView */
 //@property (strong,nonatomic) UIScrollView *scrollView;
+@property (nonatomic, strong) NoneDateView *noneLiveDateView; /**< 没有直播数据 */
+@property (nonatomic, strong) NoneDateView *noneDogDateView; /**< 没有狗狗数据 */
 
 @end
 
@@ -41,9 +44,17 @@
     [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self hideHud];
+
         [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
-        self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-        [self.favoriteDogTable reloadData];
+        self.noneDogDateView.hidden = YES;
+
+        if (successJson[@"data"][@"data"]) {
+            self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            [self.favoriteDogTable reloadData];
+        }else {
+            self.noneDogDateView.hidden = NO;
+        }
+        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -58,8 +69,15 @@
         DLog(@"%@", successJson);
         [self hideHud];
         [self.favotiteLiveTable setContentOffset:CGPointMake(0, 0) animated:YES];
-        self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        [self.favotiteLiveTable reloadData];
+        self.noneDogDateView.hidden = YES;
+        
+        if (successJson[@"data"][@"data"]) {
+            self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.favotiteLiveTable reloadData];
+        }else{
+            self.noneLiveDateView.hidden = NO;
+        }
+        
     } error:^(NSError *error) {
         DLog(@"%@",error);
         
@@ -103,10 +121,15 @@
     [self.view addSubview:self.towBtnView];
     [self.view addSubview:self.favotiteLiveTable];
     [self.view addSubview:self.favoriteDogTable];
+    
+    [self.favotiteLiveTable addSubview:self.noneLiveDateView];
+    [self.favoriteDogTable addSubview:self.noneDogDateView];
+    
+    self.noneLiveDateView.frame = self.favotiteLiveTable.bounds;
+    self.noneDogDateView.frame = self.favoriteDogTable.bounds;
     __weak typeof(self) weakself = self;
     
     [_towBtnView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.left.right.equalTo(weakself.view);
         make.height.equalTo(44);
     }];
@@ -131,6 +154,7 @@
     if (!_favotiteLiveTable) {
         _favotiteLiveTable = [[MyFavoriteTableView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, SCREEN_HEIGHT - 44 - 64) style:UITableViewStylePlain];
         _favotiteLiveTable.isLive = YES;
+        _favotiteLiveTable.tableFooterView = [[UIView alloc] init];
         __weak typeof(self) weakSelf = self;
         _favotiteLiveTable.deleLiveBlock = ^(NSString *liveID){
             NSDictionary *dict = @{//删除直播
@@ -241,7 +265,23 @@
     }
 }
 
-
+- (NoneDateView *)noneLiveDateView {
+    if (!_noneLiveDateView) {
+        _noneLiveDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneLiveDateView.noteStr = @"没有喜欢的直播！";
+        _noneLiveDateView.hidden = YES;
+        _noneLiveDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneLiveDateView;
+}- (NoneDateView *)noneDogDateView {
+    if (!_noneDogDateView) {
+        _noneDogDateView = [[NoneDateView alloc] initWithFrame:self.view.bounds];
+        _noneDogDateView.noteStr = @"没有喜欢的狗狗！";
+        _noneDogDateView.hidden = YES;
+        _noneDogDateView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+    }
+    return _noneDogDateView;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

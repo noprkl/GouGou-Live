@@ -114,7 +114,6 @@
                                    };
             // 请求之前删掉上一次的信息
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
-                [self showAlert:successJson[@"message"]];
                 DLog(@"%@", successJson);
                 if ([successJson[@"message"] isEqualToString:@"成功"]) {
                     [self saveUserWithID:successJson[@"data"][@"id"]

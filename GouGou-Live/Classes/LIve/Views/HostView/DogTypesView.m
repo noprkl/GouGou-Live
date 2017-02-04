@@ -96,18 +96,32 @@
         [self addSubview:btn];
     }
 }
-
+//  颜色转换为背景图片
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
 - (void)clickBtnAction:(UIButton *)button {
     [button setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
 
     MoreImpressionModel *model = self.impressionArr[button.tag - 30];
     if (_btnBlock) {
-
         _btnBlock(model);
     }
 }
 - (void)btnHighlightColor:(UIButton *)btn {
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#99cc33"]];
+
+    [btn addTarget:self action:@selector(clickBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 

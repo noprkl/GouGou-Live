@@ -175,8 +175,7 @@
         _playBackPlayer = [AVPlayer playerWithPlayerItem:_playerItem];
         _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_playBackPlayer];
         _isSliding = NO;
-        DLog(@"%@", NSStringFromCGRect(self.playerView.frame));
-        _playerLayer.frame = self.playerView.bounds;
+        _playerLayer.frame = self.playerView.frame;
         [self.playerView.layer addSublayer:_playerLayer];
     }
     return _playBackPlayer;
@@ -368,7 +367,7 @@
     [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.top.equalTo(self.view.top);
-        make.height.equalTo(245);
+        make.height.equalTo(220);
     }];
     [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.playerView);
@@ -483,7 +482,7 @@
 - (PlayerBackDownView *)downView {
     if (!_downView) {
         _downView = [[PlayerBackDownView alloc] init];
-        _downView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
+        _downView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
     }
     return _downView;
 }
@@ -508,7 +507,7 @@
 - (PlayerBackTopView *)topView {
     if (!_topView) {
         _topView = [[PlayerBackTopView alloc] init];
-        _topView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
+        _topView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];;
         
     }
     return _topView;
@@ -516,7 +515,7 @@
 - (UIView *)playerView {
     if (!_playerView) {
         _playerView = [[UIView alloc] init];
-        _playerView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+        _playerView.backgroundColor = [UIColor colorWithHexString:@"#000000"];
     }
     return _playerView;
 }

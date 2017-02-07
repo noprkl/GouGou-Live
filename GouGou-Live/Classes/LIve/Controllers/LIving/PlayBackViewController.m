@@ -6,6 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
+#define VcMinY 265
+
 #import "PlayBackViewController.h"
 // 播放器
 #import "PlayerBackTopView.h"
@@ -197,7 +199,6 @@
     }
     [self pause];
     [self removeObserveAndNOtification];
-//    self.playBackPlayer
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
         [UIView animateWithDuration:0.3 animations:^{
@@ -620,7 +621,7 @@
     [self.view addSubview:self.baseScrollView];
     
     [self.centerView remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.top).offset(245);
+        make.top.equalTo(self.view.top).offset(220);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 45));
     }];
     
@@ -642,7 +643,7 @@
 //    TalkingViewController *talkVc = [[TalkingViewController alloc] init];
 //    talkVc.roomID = _chatRoomID;
 ////    self.talkingVc = talkVc;
-//    talkVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+//    talkVc.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - VcMinY);
 //    [self.baseScrollView addSubview:talkVc.view];
 //    [self addChildViewController:talkVc];
 //    [self.childVCS addObject:talkVc];
@@ -654,7 +655,7 @@
     dogShowVC.liverID = _liverId;
     dogShowVC.liveid = _liveID;
     dogShowVC.dogInfos = self.doginfos;
-    dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - VcMinY);
     [self.baseScrollView addSubview:dogShowVC.view];
     [self.childVCS addObject:dogShowVC];
     [self addChildViewController:dogShowVC];
@@ -666,7 +667,7 @@
     ServiceViewController *serviceVC = [[ServiceViewController alloc] initWithConversationChatter:_liverId conversationType:(EMConversationTypeChat)];
     serviceVC.liverImgUrl = _liverIcon;
     serviceVC.liverName = _liverName;
-    serviceVC.view.frame = CGRectMake(SCREEN_WIDTH * 1, 0, SCREEN_WIDTH , SCREEN_HEIGHT - 290);
+    serviceVC.view.frame = CGRectMake(SCREEN_WIDTH * 1, 0, SCREEN_WIDTH , SCREEN_HEIGHT - VcMinY);
     self.serviceVc = serviceVC;
     [self.baseScrollView addSubview:serviceVC.view];
     [self.childVCS addObject:serviceVC];
@@ -677,7 +678,7 @@
     sellerShowVC.liverIcon = _liverIcon;
     sellerShowVC.liverName = _liverName;
     sellerShowVC.authorId = _liverId;
-    sellerShowVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
+    sellerShowVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - VcMinY);
     [self.baseScrollView addSubview:sellerShowVC.view];
     [self.childVCS addObject:sellerShowVC];
     [self addChildViewController:sellerShowVC];
@@ -730,7 +731,7 @@
 }
 - (UIScrollView *)baseScrollView {
     if (!_baseScrollView) {
-        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 290, SCREEN_WIDTH, SCREEN_HEIGHT - 290)];
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, VcMinY, SCREEN_WIDTH, SCREEN_HEIGHT - VcMinY)];
         _baseScrollView.scrollEnabled = NO;
         _baseScrollView.pagingEnabled = YES;
         _baseScrollView.showsVerticalScrollIndicator = NO;
@@ -817,7 +818,7 @@
         self.baseScrollView.hidden = NO;
         self.centerView.hidden = NO;
         [self makePlayLeacsecBackConstraints];
-        self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 245);
+        self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 220);
     }
 }
 @end

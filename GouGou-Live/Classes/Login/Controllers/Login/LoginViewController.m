@@ -115,6 +115,7 @@
             // 请求之前删掉上一次的信息
             [self getRequestWithPath:API_Login params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
+                
                 if ([successJson[@"message"] isEqualToString:@"成功"]) {
                     [self saveUserWithID:successJson[@"data"][@"id"]
                                 user_pwd:successJson[@"data"][@"user_pwd"]
@@ -154,6 +155,8 @@
                     });
                     
                     [self.navigationController popToRootViewControllerAnimated:YES];
+                }else{
+                    [self showAlert:successJson[@"message"]];
                 }
             } error:^(NSError *error) {
                 DLog(@"%@", error);

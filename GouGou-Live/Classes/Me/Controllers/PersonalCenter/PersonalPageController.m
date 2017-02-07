@@ -21,7 +21,7 @@
 
 #import "MyAlbumsModel.h" // 相册model
 #import "FocusAndFansModel.h"
-#import "PicturesViewController.h" // 照片列表
+#import "PersonalPicturesVc.h" // 照片列表
 #import "PersonalMessageModel.h"
 
 @interface PersonalPageController ()<UITableViewDelegate, UITableViewDataSource>
@@ -132,7 +132,6 @@ static NSString *cellid4 = @"cellid4";
             }else{
                 self.pleasureCount = count / 10;
             }
-            DLog(@"%ld", self.pleasureCount);
         }else {
                 self.pleasureCount = 5;
         }
@@ -373,8 +372,9 @@ static NSString *cellid4 = @"cellid4";
                 
                 __weak typeof(self) weakSelf = self;
                 picture.pictureBlock = ^(MyAlbumsModel *model){
-                    PicturesViewController *pictureVC = [[PicturesViewController alloc] init];
+                    PersonalPicturesVc *pictureVC = [[PersonalPicturesVc alloc] init];
                     pictureVC.model = model;
+                    pictureVC.userId = [@(self.personalID) stringValue];
                     pictureVC.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:pictureVC animated:YES];
                 };

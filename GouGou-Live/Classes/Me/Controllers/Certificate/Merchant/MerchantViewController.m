@@ -242,7 +242,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
                 }else{
                     
                         for (NSInteger i = 0; i < self.photoView.dataArr.count; i ++) {
-                            UIImage *image = self.photoView.dataArr[0];
+                            UIImage *image = self.photoView.dataArr[i];
                             NSString *base64 = [NSString imageBase64WithDataURL:image withSize:CGSizeMake(image.size.width, image.size.height)];
                             NSDictionary *dict = @{
                                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
@@ -264,6 +264,7 @@ static NSString * MedrchantCell = @"MedrchantCell";
                                                                 @"invite_id":phoneNumText
                                                                 };
                                         DLog(@"%@", dict2);
+
                                         [self postRequestWithPath:API_MerchantAuth params:dict2 success:^(id successJson) {
                                             [self showAlert:successJson[@"message"]];
                                             if ([successJson[@"message"] isEqualToString:@"信息提交成功"]) { //0：失败 1：成功 2：邀请电话不存在 3: 个人信息未实名  4:已提交，审核中 请勿重复提交

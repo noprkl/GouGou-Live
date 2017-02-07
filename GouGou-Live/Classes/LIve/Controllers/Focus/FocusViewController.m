@@ -97,6 +97,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([UserInfos getUser]) {
+        [self getRequestLiveList];
+    }
     // 上拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getRequestLiveList];
@@ -119,8 +122,6 @@
     if ([UserInfos getUser]) {
         self.noneView.hidden = YES;
         self.tableView.hidden = NO;
-        [self getRequestLiveList];
-
     }else{
         self.noneView.hidden = NO;
         self.tableView.hidden = YES;

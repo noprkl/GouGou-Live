@@ -114,8 +114,10 @@
     
     [self.descLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left).offset(10);
-        make.top.equalTo(self.dogImageView.bottom).offset(15);
+        make.top.equalTo(self.dogImageView.bottom).offset(10);
+        make.right.equalTo(self.right).offset(-10);
     }];
+    
     [self.markView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.descLabel.centerY);
         make.left.equalTo(self.descLabel.right).offset(10);
@@ -299,6 +301,7 @@
         _descLabel.text = @"狗狗描述";
         _descLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _descLabel.font = [UIFont systemFontOfSize:12];
+        _descLabel.numberOfLines = 0;
     }
     return _descLabel;
 }

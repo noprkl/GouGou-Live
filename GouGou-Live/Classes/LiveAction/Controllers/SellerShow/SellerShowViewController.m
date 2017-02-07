@@ -12,10 +12,10 @@
 #import "PlayBackModel.h"
 #import "MyPagePictureView.h" // 相册
 
-#import "PicturesViewController.h"
 #import "FavoriteLivePlayerVc.h"
 #import "FocusAndFansModel.h"
 #import "PersonalMessageModel.h"
+#import "PersonalPicturesVc.h"
 
 @interface SellerShowViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -122,7 +122,6 @@ static NSString *cellid3 = @"MyPageViewController3";
             }else{
                 self.pleasureCount = count / 10;
             }
-            DLog(@"%ld", self.pleasureCount);
 
         }else{
             self.pleasureCount = 5;
@@ -375,10 +374,12 @@ static NSString *cellid3 = @"MyPageViewController3";
             __weak typeof(self) weakSelf = self;
             
             picture.pictureBlock = ^(MyAlbumsModel *model){
-                PicturesViewController *pictureVC = [[PicturesViewController alloc] init];
+                PersonalPicturesVc *pictureVC = [[PersonalPicturesVc alloc] init];
                 pictureVC.model = model;
+                pictureVC.userId = self.authorId;
                 pictureVC.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:pictureVC animated:YES];
+
             };
             return cell3;
         }

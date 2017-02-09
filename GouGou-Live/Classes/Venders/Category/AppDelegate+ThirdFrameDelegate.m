@@ -8,6 +8,8 @@
 
 #import "AppDelegate+ThirdFrameDelegate.h"
 #import <UMSocialCore/UMSocialCore.h>
+#import <UMMobClick/MobClick.h>
+
 #import "EMSDK.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
@@ -73,6 +75,16 @@
     
     //设置新浪的appKey和appSecret
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"2247552123"  appSecret:@"b8dbc8631b270432bade30f503ebf4c1" redirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    
+    // 设置友盟统计
+    UMConfigInstance.appKey = @"58330b17717c194faf00069c";
+    UMConfigInstance.channelId = @"App Store";
+    UMConfigInstance.ePolicy=SEND_INTERVAL;
+    [MobClick startWithConfigure:UMConfigInstance];
+    // 设置版本标识，方便修改
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
     
     // 微信支付
    BOOL flag = [WXApi registerApp:@"wxbef5a0656069e8e2" withDescription:@"爪行宠物直播"];

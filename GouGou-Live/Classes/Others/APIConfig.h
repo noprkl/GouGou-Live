@@ -206,7 +206,7 @@
 #define API_Up_product @"api/ProductService/up_product"
 /** 商品图片上传 */
 #define API_UploadImg @"api/ProductService/UploadImg"
-/** 商品展示列表 */
+/** 商品展示 */
 #define API_Product @"api/ProductService/Product"
 /** 卖家商品－列表 */
 #define API_Commodity @"api/ProductService/Commodity"

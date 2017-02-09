@@ -16,6 +16,7 @@
 #import "SellerCreateDogMessageViewController.h" // 新建狗狗
 
 #import "SellerDeleDDetailView.h" //删除弹窗
+#import "SellerDogOnSailAlertView.h"// 上/下架的弹窗
 #import "SellerMyGoodsModel.h"
 
 @interface SellerMyGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -327,7 +328,26 @@ static NSString *cellid = @"SellerMyGoodsCell";
         DLog(@"%@",weakSelf.selectedData);
     };
     
-
+    // 上下架按钮
+    cell.onSailBlock = ^(NSString *title){
+        DLog(@"%@", title);
+        if ([title isEqualToString:@"上架"]) {
+            SellerDogOnSailAlertView *onSailView = [[SellerDogOnSailAlertView alloc] init];
+            onSailView.message = @"上架宝贝可以保证为可售";
+            [onSailView show];
+            onSailView.sureBlock = ^(UIButton *btn){
+                DLog(@"上架");
+            };
+        }else if ([title isEqualToString:@"下架"]){
+            SellerDogOnSailAlertView *offSailView = [[SellerDogOnSailAlertView alloc] init];
+            offSailView.message = @"下架宝贝将不会使其正常出售";
+            [offSailView show];
+            offSailView.sureBlock = ^(UIButton *btn){
+                DLog(@"下架");
+            };
+        }
+        
+    };
 
     return cell;
 }

@@ -6,7 +6,9 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#define VcMinY 265
+#define PlayMaxY 220
+
+#define VcMinY PlayMaxY + 45
 
 #import "PlayBackViewController.h"
 // 播放器
@@ -368,7 +370,7 @@
     [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.top.equalTo(self.view.top);
-        make.height.equalTo(220);
+        make.height.equalTo(PlayMaxY);
     }];
     [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.playerView);
@@ -621,7 +623,7 @@
     [self.view addSubview:self.baseScrollView];
     
     [self.centerView remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.top).offset(220);
+        make.top.equalTo(self.view.top).offset(PlayMaxY);
         make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 45));
     }];
     
@@ -818,7 +820,7 @@
         self.baseScrollView.hidden = NO;
         self.centerView.hidden = NO;
         [self makePlayLeacsecBackConstraints];
-        self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 220);
+        self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, PlayMaxY);
     }
 }
 @end

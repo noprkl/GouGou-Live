@@ -63,12 +63,12 @@
     }];
     [self.kindLabel makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.dogNameLabel.bottom);
-        make.left.equalTo(self.dogNameLabel.right).offset(10);
+        make.left.equalTo(self.dogNameLabel.right).offset(8);
     }];
     
     [self.dogKindLabel makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.dogNameLabel.bottom);
-        make.left.equalTo(self.kindLabel.right).offset(10);
+        make.left.equalTo(self.kindLabel.right).offset(8);
     }];
     
     [self.dogAgeLabel makeConstraints:^(MASConstraintMaker *make) {

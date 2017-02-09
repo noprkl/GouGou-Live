@@ -10,12 +10,14 @@
 #import "SellerMyGoodsModel.h"
 
 typedef void(^ClickSelectBtnBlock)(UIButton *btn);
-
+typedef void (^ClickOnSailButtonBlock)(NSString *title);
 @interface SellerMyGoodsCell : SellerBaseCell
 
 @property(nonatomic, strong) SellerMyGoodsModel *model; /**< 我的狗狗模型 */
 
 @property(nonatomic, strong) ClickSelectBtnBlock selectBlock; /**< 多选按钮 */
+
+@property (nonatomic, strong) ClickOnSailButtonBlock onSailBlock; /**< 上/下架回调 */
 
 @property(nonatomic, assign) BOOL isMove; /**< cell是否移动 */
 

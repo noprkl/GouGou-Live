@@ -28,7 +28,10 @@
 @property (strong, nonatomic)  UILabel *nowPriceLabel;/**< 狗狗价格*/
 @property (strong, nonatomic)  UILabel *oldPriceLabel;/**< 狗狗老价格*/
 
-@property (strong, nonatomic)  UILabel *stateLabel;/**< 狗狗当前个数*/
+@property (strong, nonatomic)  UILabel *stateLabel;/**< 商品当前状态*/
+
+@property (nonatomic, strong) UIButton *onSailBtn; /**< 上/下架按钮 */
+
 @end
 
 @implementation SellerMyGoodsCell
@@ -48,6 +51,7 @@
         [self.contentView addSubview:self.nowPriceLabel];
         [self.contentView addSubview:self.oldPriceLabel];
         [self.contentView addSubview:self.stateLabel];
+        [self.contentView addSubview:self.onSailBtn];
     }
     return self;
 }
@@ -110,8 +114,14 @@
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
     [self.stateLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.oldPriceLabel.centerY);
+        make.top.equalTo(self.top).offset(15);
         make.right.equalTo(self.right).offset(-10);
+    }];
+    
+    [self.onSailBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.bottom).offset(-10);
+        make.right.equalTo(self.right).offset(-10);
+        make.size.equalTo(CGSizeMake(60, 25));
     }];
     
 }
@@ -157,10 +167,16 @@
         state = @"审核未通过";
     }else if ([model.status isEqualToString:@"3"]) {
         state = @"待售";
+        [self.onSailBtn setTitle:@"下架" forState:(UIControlStateNormal)];
+        self.onSailBtn.hidden = NO;
     }else if ([model.status isEqualToString:@"4"]) {
         state = @"已预订";
+        [self.onSailBtn setTitle:@"上架" forState:(UIControlStateNormal)];
+        self.onSailBtn.hidden = NO;
     }else if ([model.status isEqualToString:@"5"]) {
         state = @"已售";
+        [self.onSailBtn setTitle:@"上架" forState:(UIControlStateNormal)];
+        self.onSailBtn.hidden = NO;
     }
     self.stateLabel.text = state;
 }
@@ -279,11 +295,43 @@
     if (!_stateLabel) {
         _stateLabel = [[UILabel alloc] init];
         
-        _stateLabel.text = @"等待中";
+        _stateLabel.text = @"新建商品";
         _stateLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _stateLabel.font = [UIFont systemFontOfSize:12];
     }
     return _stateLabel;
+}
+- (UIButton *)onSailBtn {
+    if (!_onSailBtn) {
+        _onSailBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [_onSailBtn setTitle:@"下架" forState:(UIControlStateNormal)];
+        [_onSailBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+        _onSailBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _onSailBtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
+        _onSailBtn.layer.cornerRadius = 5;
+        _onSailBtn.layer.masksToBounds = YES;
+        _onSailBtn.layer.borderColor = [UIColor colorWithHexString:@"#666666"].CGColor;
+        _onSailBtn.layer.borderWidth = 1;
+        
+        [_onSailBtn addTarget:self action:@selector(clickOnSailBtnDown:) forControlEvents:(UIControlEventTouchDown)];
+        
+    }
+    return _onSailBtn;
+}
+- (void)clickOnSailBtnDown:(UIButton *)btn {
+    _onSailBtn.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
+    _onSailBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
+    [_onSailBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
+    [btn addTarget:self action:@selector(clickOnSailBtnUpInsaid:) forControlEvents:(UIControlEventTouchUpInside)];
+}
+- (void)clickOnSailBtnUpInsaid:(UIButton *)btn {
+    _onSailBtn.layer.borderColor = [UIColor colorWithHexString:@"#666666"].CGColor;
+    _onSailBtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    [_onSailBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+    if (_onSailBlock) {
+        _onSailBlock([btn currentTitle]);
+    }
 }
 
 @end

@@ -163,8 +163,10 @@
     NSString *state = @"";
     if ([model.status isEqualToString:@"1"]) {// 1：新建商品 2：审核未通过  3：上线 4：下线5：售完
         state = @"审核中";
+        self.onSailBtn.hidden = YES;
     }else if ([model.status isEqualToString:@"2"]) {
         state = @"审核未通过";
+        self.onSailBtn.hidden = YES;
     }else if ([model.status isEqualToString:@"3"]) {
         state = @"待售";
         [self.onSailBtn setTitle:@"下架" forState:(UIControlStateNormal)];
@@ -306,6 +308,7 @@
         _onSailBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
         [_onSailBtn setTitle:@"下架" forState:(UIControlStateNormal)];
         [_onSailBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+
         _onSailBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         _onSailBtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
         
@@ -323,14 +326,12 @@
     _onSailBtn.layer.borderColor = [UIColor colorWithHexString:@"#99cc33"].CGColor;
     _onSailBtn.backgroundColor = [UIColor colorWithHexString:@"#99cc33"];
     [_onSailBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:(UIControlStateNormal)];
-    [btn addTarget:self action:@selector(clickOnSailBtnUpInsaid:) forControlEvents:(UIControlEventTouchUpInside)];
+
+    [self clickOnSailBtnUpInsaid:btn];
 }
 - (void)clickOnSailBtnUpInsaid:(UIButton *)btn {
-    _onSailBtn.layer.borderColor = [UIColor colorWithHexString:@"#666666"].CGColor;
-    _onSailBtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    [_onSailBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
     if (_onSailBlock) {
-        _onSailBlock([btn currentTitle]);
+        _onSailBlock(btn);
     }
 }
 

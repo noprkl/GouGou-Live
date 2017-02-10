@@ -10,7 +10,7 @@
 #import "SellerMyGoodsModel.h"
 
 typedef void(^ClickSelectBtnBlock)(UIButton *btn);
-typedef void (^ClickOnSailButtonBlock)(NSString *title);
+typedef void (^ClickOnSailButtonBlock)(UIButton *btn);
 @interface SellerMyGoodsCell : SellerBaseCell
 
 @property(nonatomic, strong) SellerMyGoodsModel *model; /**< 我的狗狗模型 */

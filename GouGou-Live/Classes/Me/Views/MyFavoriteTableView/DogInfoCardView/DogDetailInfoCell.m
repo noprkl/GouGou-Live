@@ -64,8 +64,8 @@
     self.dogAgeLabel.text = model.ageName;
     self.dogSizeLabel.text = model.sizeName;
     self.dogColorLabel.text = model.colorName;
-    self.oldPriceLabel.text = model.priceOld;
     self.nowPriceLabel.text = model.price;
+    self.oldPriceLabel.attributedText = [NSAttributedString getCenterLineWithString:model.priceOld];
 }
 - (void)layoutSubviews {
     [super layoutSubviews];

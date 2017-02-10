@@ -166,17 +166,18 @@
 
 // 点击确定按钮
 - (void)cilckSureDeleteButton:(UIButton *)button {
-    
     if (_sureBlock) {
         [self dismiss];
-        _sureBlock(button);
+        _sureBlock();
     }
     
 }
 // 点击取消按钮
 - (void)clickCnacleButton {
-    
-    [self fadeOut];
+    if (_cancelBlock) {
+        [self fadeOut];
+        _cancelBlock();
+    }
 }
 
 - (void)show

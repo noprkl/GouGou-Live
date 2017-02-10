@@ -33,7 +33,7 @@ static NSString * watchCell = @"watchCellID";
     [self showHudInView:self.view hint:@"加载..."];
     [self getRequestWithPath:API_List_view_history params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        if (successJson[@"data"]) {
+        if (successJson[@"data"][@"data"]) {
             self.tableview.hidden = NO;
             self.noneDateView.hidden = YES;
             self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
@@ -63,7 +63,7 @@ static NSString * watchCell = @"watchCellID";
 - (void)initUI {
 
     [self.view addSubview:self.tableview];
-    [self.view addSubview:self.noneDateView];
+    [self.tableview addSubview:self.noneDateView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     self.title = @"观看历史";
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{

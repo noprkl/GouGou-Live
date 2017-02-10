@@ -48,7 +48,7 @@
         [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
         self.noneDogDateView.hidden = YES;
 
-        if (successJson[@"data"][@"data"]) {
+        if (successJson[@"data"][@"info"]) {
             self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
             [self.favoriteDogTable reloadData];
         }else {

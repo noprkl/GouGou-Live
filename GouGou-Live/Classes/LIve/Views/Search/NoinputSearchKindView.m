@@ -85,6 +85,7 @@ static NSString *cellid = @"SearchLiveKindBtnView";
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"SellerHotSearch"];
         cell.backgroundView = [[UIView alloc] init];
         cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         SearchLiveKindBtnView *hotView = [[SearchLiveKindBtnView alloc] init];
         hotView.datalist = self.hotDataArr;

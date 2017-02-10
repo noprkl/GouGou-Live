@@ -70,7 +70,6 @@ static NSString * dogCell = @"dogCellID";
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DLog(@"%ld", indexPath.row);
     
     if (_isLive) {
         PlayBackModel *model = self.favoriteLiveArray[indexPath.row];

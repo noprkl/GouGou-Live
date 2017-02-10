@@ -41,21 +41,21 @@
 - (void)creatDogMarksWithMark:(NSArray *)marks {
     CGFloat w = 0;
     CGFloat h = 22;
-    CGFloat magrin = 10;
-    
+    CGFloat magrin = 5;
+    CGFloat X = 0;
     for (NSInteger i = 0; i < marks.count; i ++) {
         
         UILabel *label = [[UILabel alloc] init];
         NSDictionary *attrs = @{
                                 NSFontAttributeName : [UIFont systemFontOfSize:12],
                                 NSForegroundColorAttributeName : [UIColor colorWithHexString:@"#ffffff"]
-                                
                                 };
         label.text = marks[i];
         CGSize size=[label.text sizeWithAttributes:attrs];
-        w = size.width + 5;
-        
-        label.frame = CGRectMake(i * (w + magrin), 0, w, h);
+        X += w + magrin;
+        w = size.width + magrin;
+
+        label.frame = CGRectMake(X, 0, w, h);
         label.font = [UIFont systemFontOfSize:12];
         label.textColor = [UIColor colorWithHexString:@"#ffffff"];
         label.backgroundColor = [UIColor colorWithHexString:@"#ffa11a"];

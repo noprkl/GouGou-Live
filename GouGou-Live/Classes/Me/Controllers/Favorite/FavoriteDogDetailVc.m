@@ -38,9 +38,7 @@
             }
             [self.view addSubview:self.dogDetailView];
             self.dogDetailView.dogInfo = self.dogInfo;
-            
-            DLog(@"%@", self.dogInfo);
-        }
+            }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];

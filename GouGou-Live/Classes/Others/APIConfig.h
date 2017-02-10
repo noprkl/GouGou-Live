@@ -212,6 +212,9 @@
 #define API_Commodity @"api/ProductService/Commodity"
 /** 商品删除 */
 #define API_Del_Commodity @"api/ProductService/del_Commodity"
+/** 商品状态修改 */
+#define API_Product_up @"api/ProductService/product_up"
+
 
 #pragma mark
 #pragma mark - 订单

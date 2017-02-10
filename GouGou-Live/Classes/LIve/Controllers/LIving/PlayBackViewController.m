@@ -658,7 +658,7 @@
     dogShowVC.liveid = _liveID;
     dogShowVC.dogInfos = self.doginfos;
     dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - VcMinY);
-    [self.baseScrollView addSubview:dogShowVC.view];
+    [self.baseScrollView addSubview:dogShowVC .view];
     [self.childVCS addObject:dogShowVC];
     [self addChildViewController:dogShowVC];
     

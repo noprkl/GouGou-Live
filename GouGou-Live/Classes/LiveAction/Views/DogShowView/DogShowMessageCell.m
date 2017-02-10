@@ -230,9 +230,9 @@
     self.promulgateTimeLabel.text = [NSString stringFromDateString:model.createTime];
    
     NSMutableArray *imgArr = [NSMutableArray arrayWithArray:[model.dataPhoto componentsSeparatedByString:@"|"]];
-    if (imgArr.count > 1) {
-        [imgArr removeObjectAtIndex:0];
-    }
+//    if (imgArr.count > 1) {
+//        [imgArr removeObjectAtIndex:0];
+//    }
     
 
     CGFloat height = [self.dogImageView getCellHeightWithImages:imgArr];

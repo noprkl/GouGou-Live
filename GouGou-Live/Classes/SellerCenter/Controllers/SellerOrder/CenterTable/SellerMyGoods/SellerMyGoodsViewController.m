@@ -108,6 +108,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
     }];
     
 }
+
 #pragma mark
 #pragma mark - 生命周期
 - (void)viewDidLoad {
@@ -329,22 +330,61 @@ static NSString *cellid = @"SellerMyGoodsCell";
     };
     
     // 上下架按钮
-    cell.onSailBlock = ^(NSString *title){
-        DLog(@"%@", title);
-        if ([title isEqualToString:@"上架"]) {
+    cell.onSailBlock = ^(UIButton *onSailbtn){
+        DLog(@"%@", [onSailbtn currentTitle]);
+        
+        NSString *title = [onSailbtn currentTitle];
+        if ([title isEqualToString:@"上架"]) { // 改成待售
             SellerDogOnSailAlertView *onSailView = [[SellerDogOnSailAlertView alloc] init];
             onSailView.message = @"上架宝贝可以保证为可售";
             [onSailView show];
             onSailView.sureBlock = ^(UIButton *btn){
-                DLog(@"上架");
+                onSailbtn.layer.borderColor = [UIColor colorWithHexString:@"#666666"].CGColor;
+                onSailbtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+                [onSailbtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+
+                NSDictionary *onDict = @{
+                                         @"id":index.ID,
+                                         @"state":@3
+                                         };
+                [self getRequestWithPath:API_Product_up params:onDict success:^(id successJson) {
+//                    [self showAlert:successJson[@"message"]];
+                    [self GetRequestStateGoods:self.lastBtn];
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
             };
-        }else if ([title isEqualToString:@"下架"]){
+            onSailView.cancelBlock = ^(){
+                onSailbtn.layer.borderColor = [UIColor colorWithHexString:@"#666666"].CGColor;
+                onSailbtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+                [onSailbtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+            };
+        }else if ([title isEqualToString:@"下架"]){ // 改成已售
             SellerDogOnSailAlertView *offSailView = [[SellerDogOnSailAlertView alloc] init];
             offSailView.message = @"下架宝贝将不会使其正常出售";
             [offSailView show];
             offSailView.sureBlock = ^(UIButton *btn){
-                DLog(@"下架");
+                onSailbtn.layer.borderColor = [UIColor colorWithHexString:@"#666666"].CGColor;
+                onSailbtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+                [onSailbtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+
+                NSDictionary *offDict = @{
+                                         @"id":index.ID,
+                                         @"state":@5
+                                         };
+                [self getRequestWithPath:API_Product_up params:offDict success:^(id successJson) {
+//                    [self showAlert:successJson[@"message"]];
+                    [self GetRequestStateGoods:self.lastBtn];
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
             };
+            offSailView.cancelBlock = ^(){
+                onSailbtn.layer.borderColor = [UIColor colorWithHexString:@"#666666"].CGColor;
+                onSailbtn.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+                [onSailbtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:(UIControlStateNormal)];
+            };
+
         }
         
     };

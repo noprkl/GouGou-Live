@@ -89,7 +89,7 @@
         
         [btn addTarget:self action:@selector(btnHighlightColor:) forControlEvents:(UIControlEventTouchDown)];
         
-        [btn addTarget:self action:@selector(clickBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [btn addTarget:self action:@selector(clickBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         
         btn.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.buttonsArray addObject:btn];

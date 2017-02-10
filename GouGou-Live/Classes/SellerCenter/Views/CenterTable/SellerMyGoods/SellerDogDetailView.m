@@ -104,15 +104,14 @@
     self.dogKindLabel.text = dogInfo.kind.name;
     self.dogNameLabel.text = dogInfo.name;
     self.dogSizeLabel.text = dogInfo.size.name;
-    self.dogPriceLaebl.text = dogInfo.price;
-    
+    self.dogPriceLaebl.text = [NSString stringWithFormat:@"￥%@", dogInfo.price];
     self.descLabel.text = dogInfo.comment;
     self.promulgateTimeLabel.text = [NSString stringWithFormat:@"%@ 发布", [NSString stringFromDateString:dogInfo.createTime]];
     
     NSMutableArray *imsArr = [NSMutableArray arrayWithArray:[self.dogInfo.pathBig componentsSeparatedByString:@","]];
-    if (imsArr.count > 1) {
-        [imsArr removeObjectAtIndex:0];
-    }
+//    if (imsArr.count > 1) {
+//        [imsArr removeObjectAtIndex:0];
+//    }
 
     CGFloat height = [_dogImageView getCellHeightWithImages:imsArr];
     _dogImageView.frame = CGRectMake(0, 34, SCREEN_WIDTH, height);
@@ -124,7 +123,6 @@
     for (DogCategoryModel *impress in impressModels) {
         [impressArr addObject:impress.name];
     }
-    
     [self.markView creatDogMarksWithMark:impressArr];
     
     NSString *state = @"";
@@ -204,7 +202,7 @@
     }];
     [self.dogPriceLaebl makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.dogAgeLaebl.centerY);
-        make.right.equalTo(self.right).offset(-10);
+        make.right.equalTo(self.line1.right).offset(-10);
     }];
     [self.line2 makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left);

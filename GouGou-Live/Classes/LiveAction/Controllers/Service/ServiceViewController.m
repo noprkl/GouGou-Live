@@ -11,6 +11,9 @@
 //#import <HyphenateLite_CN/EMSDK.h>
 #import <TZImagePickerController.h>
 
+// 表情
+#define EMOJI_CODE_TO_SYMBOL(x) ((((0x808080F0 | (x & 0x3F000) >> 4) | (x & 0xFC0) << 10) | (x & 0x1C0000) << 18) | (x & 0x3F) << 24);
+
 @interface ServiceViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate>
 
 @property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
@@ -56,7 +59,13 @@
     self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
 
     [self initUI];
+    // 如果已经登录，登录环信
+    if ([UserInfos getUser]) {
+        [self loginHuanXin];
+    }
+    
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
@@ -84,7 +93,18 @@
     
     [self focusKeyboardShow];
 }
-
+- (void)loginHuanXin {
+    // 环信登录
+    BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
+    if (!isAutoLogin) {
+        EMError *error = [[EMClient sharedClient] loginWithUsername:[UserInfos sharedUser].ID password:@"gougoulive"];
+        if (!error) {
+            NSLog(@"登陆成功");
+        } else {
+            NSLog(@"登陆失败");
+        }
+    }
+}
 #pragma mark
 #pragma mark - 懒加载
 - (TalkingView *)talkView {
@@ -95,7 +115,11 @@
         __weak typeof(self) weakSelf = self;
         
         _talkView.sendBlock = ^(NSString *message){
-            [weakSelf sendTextMessage:message];
+            if ([UserInfos getUser]) {
+                [weakSelf sendTextMessage:message];
+            }else{
+                [weakSelf showHint:@"您还未登录"];
+            }
         };
         _talkView.emojiBlock = ^(){
             
@@ -160,6 +184,19 @@
         return alertLabel;
     }
     return nil;
+}
+
+// 表情
+- (NSArray *)defaultEmoticons {
+    NSMutableArray *array = [NSMutableArray new];
+    for (int i=0x1F600; i<=0x1F64F; i++) {
+        if (i < 0x1F641 || i > 0x1F644) {
+            int sym = EMOJI_CODE_TO_SYMBOL(i);
+            NSString *emoT = [[NSString alloc] initWithBytes:&sym length:sizeof(sym) encoding:NSUTF8StringEncoding];
+            [array addObject:emoT];
+        }
+    }
+    return array;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

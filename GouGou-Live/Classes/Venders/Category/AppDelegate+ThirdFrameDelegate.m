@@ -19,7 +19,11 @@
 // 环信
 + (void)setEaseMobSDK:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions {
     EMOptions *options = [EMOptions optionsWithAppkey:@"1161161023178138#gougoulive"];
+#if DEBUG
     options.apnsCertName = @"zhuaxingLive";
+#else
+    options.apnsCertName = @"ZhuaxingLiveline";
+#endif
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     
     // 环信登录

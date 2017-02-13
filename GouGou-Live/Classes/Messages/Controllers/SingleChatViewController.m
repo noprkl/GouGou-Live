@@ -16,13 +16,13 @@
 
 #import "PersonalPageController.h" // 个人主页
 #import "PersonalMessageModel.h"
-@interface SingleChatViewController ()<EaseMessageViewControllerDelegate, TZImagePickerControllerDelegate, EMContactManagerDelegate>
+@interface SingleChatViewController ()<EaseMessageViewControllerDelegate, TZImagePickerControllerDelegate, EMContactManagerDelegate, EaseMessageViewControllerDataSource>
 
 @property(nonatomic, strong) MessageInputView *talkView; /**< 输入框 */
 
 @property(nonatomic, strong) MessageMeumView *menuView; /**< 菜单 */
 
-@property (nonatomic, strong) PersonalMessageModel *personalModel; /**< 个人信息 */
+//@property (nonatomic, strong) PersonalMessageModel *personalModel; /**< 个人信息 */
 
 @end
 
@@ -34,12 +34,12 @@
     [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/personal" params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-        self.personalModel = [arr lastObject];
-        if (self.personalModel.userName != NULL) {
-            self.title = self.personalModel.userName;
-        }else{
-            self.title = _chatID;
-        }
+//        self.personalModel = [arr lastObject];
+//        if (self.personalModel.userName != NULL) {
+//            self.title = self.personalModel.userName;
+//        }else{
+//            self.title = _chatID;
+//        }
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -62,11 +62,12 @@
         }
          model.nickname = [UserInfos sharedUser].usernickname;//用户昵称
     }else{
-        if (self.personalModel.userImgUrl != NULL) {
-            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.personalModel.userImgUrl];
+        if (self.iconUrl) {
+            NSString *urlString = [IMAGE_HOST stringByAppendingString:self.iconUrl];
             model.avatarURLPath = urlString;//头像网络地址
+            DLog(@"%@", urlString);
         }
-        model.nickname = self.personalModel.userName;//用户昵称
+        model.nickname = self.nameStr;//用户昵称
     }
     
     return model;
@@ -81,9 +82,8 @@
     [[EaseBaseMessageCell appearance] setRecvBubbleBackgroundImage:[[UIImage imageNamed:@"chat_receiver_bg"] stretchableImageWithLeftCapWidth:30 topCapHeight:30]];//设置接收气泡
     
     [[EaseBaseMessageCell appearance] setAvatarSize:44.f];//设置头像大小
-//    [[EaseBaseMessageCell appearance] setAvatarCornerRadius:20.f];//设置头像圆角
-    
-    
+
+    self.dataSource = self;
     // 隐藏输入框 自定义输入框
     self.chatToolbar.hidden = YES;
     [self.view addSubview:self.talkView];
@@ -101,7 +101,7 @@
     [self.tableView.mj_header beginRefreshing];
     
     // 用户名
-    [self getrequestPersonalMessage];
+//    [self getrequestPersonalMessage];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

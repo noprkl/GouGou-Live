@@ -12,4 +12,9 @@
 
 @property (nonatomic, strong) NSString *chatID; /**< 聊天ID */
 
+
+@property (nonatomic, strong) NSString *iconUrl; /**< 头像 */
+
+@property (nonatomic, strong) NSString *nameStr; /**< 名字 */
+
 @end

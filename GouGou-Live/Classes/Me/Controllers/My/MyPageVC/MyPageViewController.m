@@ -401,7 +401,7 @@ static NSString *cellid4 = @"cellid4";
                 if (self.dogCardArr.count == 0) {
                     playbackViewHeight = 88;;
                 }else{
-                    playbackViewHeight = self.dogCardArr.count * 135 + 44;
+                    playbackViewHeight = self.dogCardArr.count * PlayBackHeight + 44;
                 }
                 
                 PlayBackView *playbackView = [[PlayBackView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, playbackViewHeight) style:(UITableViewStylePlain)];
@@ -514,7 +514,7 @@ static NSString *cellid4 = @"cellid4";
             if (self.dogCardArr.count == 0) {
                 playbackViewHeight = 88;;
             }else{
-                playbackViewHeight = self.dogCardArr.count * 135 + 44;
+                playbackViewHeight = self.dogCardArr.count * PlayBackHeight + 44;
             }
             return playbackViewHeight;
         }

@@ -119,7 +119,7 @@ static NSString *cellid2 = @"NotificationMessageCell";
                            };
     DLog(@"%@", dict);
         [self getRequestWithPath:API_Personal params:dict success:^(id successJson) {
-//            DLog(@"%@", successJson);
+            DLog(@"%@", successJson);
             if ([successJson[@"code"] isEqualToString:@"1"]) {
                 NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                 PersonalMessageModel *model = [arr lastObject];
@@ -400,6 +400,8 @@ static NSString *cellid2 = @"NotificationMessageCell";
             if (model.userName.length != 0) {
                 singleVC.title = model.userName;
                 singleVC.iconUrl = model.userImgUrl;
+                singleVC.nameStr = model.userName;
+
             }else if ([conversation.conversationId isEqualToString:@"admin"]){
                 singleVC.title = @"环信后台";
                 singleVC.nameStr = @"环信后台";

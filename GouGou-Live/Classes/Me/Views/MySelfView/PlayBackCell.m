@@ -65,7 +65,7 @@
     [super layoutSubviews];
     [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self);
-        make.height.equalTo(125);
+        make.height.equalTo(PlayBackHeight - 10);
     }];
     [self.watchCount makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.top).offset(10);

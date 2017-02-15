@@ -84,6 +84,7 @@
     [[EaseBaseMessageCell appearance] setAvatarSize:44.f];//设置头像大小
 
     self.dataSource = self;
+    self.title = self.nameStr;
     // 隐藏输入框 自定义输入框
     self.chatToolbar.hidden = YES;
     [self.view addSubview:self.talkView];

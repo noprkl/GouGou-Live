@@ -135,7 +135,6 @@
 @property (strong, nonatomic) LivingCenterView *centerView;
 
 
-
 /** 按钮名字 */
 
 @property (strong, nonatomic) NSArray *childTitles;
@@ -177,10 +176,6 @@
 @property(nonatomic, strong) LiveListStreamModel *stream; /**< 流对象信息 */
 
 @property(nonatomic, strong) LiveListRespModel *resp; /**< 播放信息 */
-
-#pragma mark
-
-#pragma mark - 回放
 
 // 播放状态
 
@@ -2158,9 +2153,10 @@
     
 }
 
+#pragma mark
+#pragma mark - scrollview代理
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    
-    
     
     // 每个子控制器的宽高
     
@@ -2178,7 +2174,8 @@
     }else if (offset >= 1.5 * width ){
         offset = 2 * width;
     }
-    
+    self.scrollPoint = CGPointMake(offset, 0);
+
     // 获取视图的索引
     
     NSInteger index = offset / width;
@@ -2206,11 +2203,6 @@
     //    [self.talkingVc.textField resignFirstResponder];
     
     [self.serviceVc.textField resignFirstResponder];
-    
-    
-    
-    self.scrollPoint = scrollView.contentOffset;
-    
 }
 
 // 减速结束时调用 加载子控制器view的方法
@@ -2451,8 +2443,9 @@
         // 取消横屏
         _screenBtn.selected = NO;
         self.baseScrollView.hidden = NO;
+        [self.baseScrollView setContentOffset:self.scrollPoint];
         self.centerView.hidden = NO;
-        
+
         //        self.talkingVc.chatToolbar.hidden = YES;
         [self removeKeyboardFocus];
         [self makeLiveSubviewConstraint];

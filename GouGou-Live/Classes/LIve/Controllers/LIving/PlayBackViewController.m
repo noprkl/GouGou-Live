@@ -707,7 +707,9 @@
     }else if (offset >= 1.5 * width ){
         offset = 2 * width;
     }
-    
+    self.scrollPoint = CGPointMake(offset, 0);
+    DLog(@"%@", NSStringFromCGPoint(self.scrollPoint));
+
     // 获取视图的索引
     NSInteger index = offset / width;
     //根据索引返回vc的引用
@@ -722,8 +724,7 @@
     // 如果屏幕转动，让输入框隐藏
 //    [self.talkingVc.textField resignFirstResponder];
     [self.serviceVc.textField resignFirstResponder];
-
-    self.scrollPoint = scrollView.contentOffset;
+    
 }
 // 减速结束时调用 加载子控制器view的方法
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -818,6 +819,9 @@
         DLog(@"进入竖屏");
         _playerLayer.frame = self.playerView.bounds;
         self.baseScrollView.hidden = NO;
+        DLog(@"%@", NSStringFromCGPoint(self.scrollPoint));
+        
+        [self.baseScrollView setContentOffset:self.scrollPoint];
         self.centerView.hidden = NO;
         [self makePlayLeacsecBackConstraints];
         self.playerLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, PlayMaxY);

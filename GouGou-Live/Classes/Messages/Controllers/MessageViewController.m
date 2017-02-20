@@ -131,7 +131,6 @@ static NSString *cellid2 = @"NotificationMessageCell";
 
             if (self.arrConversionDict.count == self.arrConversion.count) {
                 [self.tableView reloadData];
-                [self.tableView.mj_header endRefreshing];
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);
@@ -170,6 +169,8 @@ static NSString *cellid2 = @"NotificationMessageCell";
                 [self getConversationIconsWithId:conversation.conversationId];
             }
         }
+        
+        [self.tableView.mj_header endRefreshing];
     }];
     // 进入立即刷新
 //    [self.tableView.mj_header beginRefreshing];

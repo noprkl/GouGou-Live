@@ -238,8 +238,9 @@
                         DLog(@"%@", successJson);
                         if ([successJson[@"code"] integerValue] == 0) {// 未绑定过
                             RegisteViewController *registeVc = [[RegisteViewController alloc] init];
-                            registeVc.type = 1;
+                            registeVc.type = 2;
                             registeVc.name = authresponse.uid;
+                            registeVc.nickName = userinfo.name;
                             [self.navigationController pushViewController:registeVc animated:YES];
                         }else{// 已经绑定过
                             NSArray *infos = successJson[@"data"];
@@ -309,6 +310,8 @@
                             RegisteViewController *registeVc = [[RegisteViewController alloc] init];
                             registeVc.type = 1;
                             registeVc.name = authresponse.uid;
+                            registeVc.nickName = userinfo.name;
+
                             [self.navigationController pushViewController:registeVc animated:YES];
                         }else{// 已经绑定过
                             NSArray *infos = successJson[@"data"];

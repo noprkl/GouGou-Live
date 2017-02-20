@@ -92,7 +92,8 @@ static NSString *cellid = @"PicturesCell";
         
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.barBtnView];
     self.navigationItem.rightBarButtonItem = item;
-    
+
+    [self.view addSubview:self.collectionView];
     [self.view addSubview:self.bottomView];
     [self.view addSubview:self.noneDateView];
     [self.bottomView makeConstraints:^(MASConstraintMaker *make) {
@@ -101,7 +102,6 @@ static NSString *cellid = @"PicturesCell";
     }];
     _isSelect = NO;
     _isHid = YES;
-    [self.view addSubview:self.collectionView];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -131,7 +131,7 @@ static NSString *cellid = @"PicturesCell";
         UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc] init];
         
         flowlayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-        CGFloat W = (SCREEN_WIDTH - 40) / 3;
+        CGFloat W = (SCREEN_WIDTH - 44) / 3;
         flowlayout.itemSize = CGSizeMake(W, W);
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) collectionViewLayout:flowlayout];
@@ -188,20 +188,19 @@ static NSString *cellid = @"PicturesCell";
             
             [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
                 if (flag) {
-                    
-                        NSString *base64 = [NSString imageBase64WithDataURL:photos[0] withSize:CGSizeMake(SCREEN_WIDTH / 3, SCREEN_WIDTH / 3)];
+                        UIImage *image = photos[0];
+                        CGSize size = CGSizeMake(image.size.width, image.size.height);
+                        NSString *base64 = [NSString imageBase64WithDataURL:image];
                         NSDictionary *dict = @{
-                                               @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                               @"user_id":[UserInfos sharedUser].ID,
                                                @"img":base64
                                                };
                     
-                    
                     [weakSelf postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
                         if ([successJson[@"message"] isEqualToString:@"上传成功"]) {
-                            CGSize size = CGSizeMake(200, 300);
                             // 请求
                             NSDictionary *dict2 = @{
-                                                    @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+                                                    @"user_id":[UserInfos sharedUser].ID ,
                                                     @"id":weakSelf.model.ID,
                                                     @"path_small":weakSelf.model.pathSmall,
                                                     @"path_big":successJson[@"data"],

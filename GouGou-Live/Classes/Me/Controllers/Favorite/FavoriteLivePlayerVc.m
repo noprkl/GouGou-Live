@@ -232,7 +232,10 @@
     DLog(@"视频播放完成通知");
     _playerItem = [notification object];
     _isFinish = YES;
+    _isPlaying = NO;
     self.playBtn.selected = YES;
+    self.progressSlider.value = self.progressSlider.maximumValue;
+
 }
 
 #pragma mark-
@@ -291,6 +294,7 @@
 #pragma mark 播放 暂停
 - (void)play {
     _isPlaying = YES;
+    self.playBtn.selected = NO;
     if (_isFinish) {
         [_playerItem seekToTime:kCMTimeZero]; // 跳转到初始
     }
@@ -300,6 +304,7 @@
 
 - (void)pause {
     _isPlaying = NO;
+    self.playBtn.selected = YES;
     [self.player pause];
     DLog(@"暂停");
 }
@@ -335,19 +340,19 @@
 }
 - (void)makeConstraints {
     [self.playerView remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
     [self.topView remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.playerView);
-        make.height.equalTo(34);
+        make.height.equalTo(54);
     }];
     [self.backBtn remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY);
-        make.left.equalTo(self.topView.left).offset(10);
-        make.size.equalTo(CGSizeMake(34, 34));
+        make.centerY.equalTo(self.topView.centerY).offset(10);
+        make.left.equalTo(self.topView.left).offset(0);
+        make.size.equalTo(CGSizeMake(44, 44));
     }];
     [self.liveTitleLabel remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.topView.centerY).offset(0);
+        make.centerY.equalTo(self.topView.centerY).offset(10);
         make.left.equalTo(self.topView.left).offset(40);
         make.right.equalTo(self.topView.right).offset(-20);
     }];
@@ -474,8 +479,7 @@
 - (PlayerBackTopView *)topView {
     if (!_topView) {
         _topView = [[PlayerBackTopView alloc] init];
-        _topView.backgroundColor = [UIColor colorWithHexString:@"#999999"];
-        
+        _topView.backgroundColor = [[UIColor colorWithHexString:@"#999999"] colorWithAlphaComponent:0.4];
     }
     return _topView;
 }
@@ -517,7 +521,7 @@
 }
 // 1. 设置样式
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleDefault; // 黑的
+    return UIStatusBarStyleLightContent; // 白的
 }
 // 2. 横屏时显示 statusBar
 - (BOOL)prefersStatusBarHidden {

@@ -118,4 +118,9 @@
     }
     return _liveBtn;
 }
+- (void)ClickLiveBtnAction {
+    if (_liveBlock) {
+        _liveBlock();
+    }
+}
 @end

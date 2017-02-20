@@ -275,6 +275,9 @@
     
     self.hidesBottomBarWhenPushed = YES;
     self.stateTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getRequestLiveStatus) userInfo:nil repeats:YES];
+    // 进入后竖屏
+    [self.baseScrollView setContentOffset:self.scrollPoint];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -288,7 +291,8 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     
     // 取消横屏
-    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.isLandscape = NO;
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     
     if (orientation == UIInterfaceOrientationLandscapeRight) {
@@ -302,9 +306,9 @@
     [self.livePlayer pause];
     // 删除会话
     
-    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
-        
-    }];
+//    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+//        
+//    }];
 //    [self.stateTimer invalidate];
 //    self.stateTimer = nil;
 
@@ -590,11 +594,8 @@
     
     
     [self.livePlayerView remakeConstraints:^(MASConstraintMaker *make) {
-        
         make.top.left.right.equalTo(self.view);
-        
         make.height.equalTo(245);
-        
     }];
     
     [self.livePlayer.playerView remakeConstraints:^(MASConstraintMaker *make) {
@@ -692,7 +693,6 @@
 - (void)makeliveLancseConstraint {
     
     [self.livePlayerView remakeConstraints:^(MASConstraintMaker *make) {
-        
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
         
     }];
@@ -1946,7 +1946,8 @@
         [invocation invoke];
         
     }
-    
+    _isLandscape = NO;
+
 }
 
 // 竖屏转横屏
@@ -1976,7 +1977,8 @@
     }
     
     [UIViewController attemptRotationToDeviceOrientation];
-    
+    _isLandscape = YES;
+
 }
 
 // 1. 设置样式
@@ -1984,7 +1986,6 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
     
     return UIStatusBarStyleLightContent; // 白色的
-    
 }
 
 // 2. 横屏时显示 statusBar
@@ -2423,27 +2424,28 @@
 
 // 代理方法监听屏幕方向
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
-    
-    
     if (toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
         
         DLog(@"进入横屏");
-        _screenBtn.selected = YES;
-        
+        _screenBtn.selected = YES;        
         //            self.talkingVc.chatToolbar.hidden = NO;
-        [self makeliveLancseConstraint];
-        self.baseScrollView.hidden = YES;
-        self.centerView.hidden = YES;
-        [self focusKeyboardShow];
-        
+        if (_isLandscape) {
+            [self makeliveLancseConstraint];
+            DLog(@"横屏UI");
+            _isLandscape = YES;
+            self.baseScrollView.hidden = YES;
+            self.centerView.hidden = YES;
+            [self focusKeyboardShow];
+        }
     }else {
         
         DLog(@"进入竖屏");
         // 取消横屏
+        _isLandscape = NO;
+        DLog(@"%@", NSStringFromCGPoint(self.scrollPoint));
+
         _screenBtn.selected = NO;
         self.baseScrollView.hidden = NO;
-        [self.baseScrollView setContentOffset:self.scrollPoint];
         self.centerView.hidden = NO;
 
         //        self.talkingVc.chatToolbar.hidden = YES;
@@ -2606,7 +2608,7 @@
         
     }];
     
-    [self.endliveLabel makeConstraints:^(MASConstraintMaker *make) {
+    [self.endliveLabel remakeConstraints:^(MASConstraintMaker *make) {
         
         make.centerX.equalTo(self.endView.centerX);
         
@@ -2614,7 +2616,7 @@
         
     }];
     
-    [self.endshowCountlabel makeConstraints:^(MASConstraintMaker *make) {
+    [self.endshowCountlabel remakeConstraints:^(MASConstraintMaker *make) {
         
         make.right.equalTo(self.endView.centerX).offset(-10);
         
@@ -2622,7 +2624,7 @@
         
     }];
     
-    [self.endsoldCountLabel makeConstraints:^(MASConstraintMaker *make) {
+    [self.endsoldCountLabel remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.endView.centerX).offset(10);
         
@@ -2630,7 +2632,7 @@
         
     }];
     
-    [self.endwatchLabel makeConstraints:^(MASConstraintMaker *make) {
+    [self.endwatchLabel remakeConstraints:^(MASConstraintMaker *make) {
         
         make.centerX.equalTo(self.endView.centerX);
         make.top.equalTo(self.endshowCountlabel.bottom).offset(10);
@@ -2638,7 +2640,7 @@
 
     self.endbackbutton.layer.masksToBounds = YES;
     self.endbackbutton.layer.cornerRadius = 10;
-    [self.endbackbutton makeConstraints:^(MASConstraintMaker *make) {
+    [self.endbackbutton remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.endView.centerX);
         make.top.equalTo(self.endwatchLabel.bottom).offset(10);
         make.width.equalTo(SCREEN_WIDTH / 3);

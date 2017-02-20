@@ -9,7 +9,15 @@
 #import "BaseModel.h"
 
 @interface PayMentmodel : BaseModel
-@property (copy, nonatomic) NSString *payMent; /**< 支付方式 */
-@property (copy, nonatomic) NSString *type; /**< 订单类型 */
 
+@property (nonatomic, strong) NSString *ID; /**< 流水号 */
+
+@property (nonatomic, strong) NSString *orderId; /**< 订单id */
+
+@property (copy, nonatomic) NSString *payMethod; /**< 支付方式 */
+@property (copy, nonatomic) NSString *type; /**< 订单类型 */
+@property (nonatomic, strong) NSString *assetChangeTime; /**< 交易时间 */
+@property (nonatomic, strong) NSString *assetChange; /**< 收入 */
+@property (nonatomic, strong) NSString *nowAsset; /**< 余额 */
+@property (nonatomic, strong) NSString *assetChangeType; /**< 交易类型 */
 @end

@@ -68,16 +68,6 @@ static NSString *cellid = @"SizeFilterCellID";
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     
-    //    if (component == 0) {
-    //        return self.dataArr.count;
-    //    } else if (component == 1){
-    //        //获取选中的省
-    //        NSInteger index = [pickerView selectedRowInComponent:0];
-    //        //获取省会
-    //        Province *prov = self.dataArr[index];
-    //        return prov.cities.count;
-    //    }
-    
     return self.ageData.count;
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -151,10 +141,12 @@ static NSString *cellid = @"SizeFilterCellID";
     [self.cancelBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.titleLabel.centerY);
         make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
     [self.sureBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.titleLabel.centerY);
         make.right.equalTo(self.right).offset(-10);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
     
     [self.minLabel makeConstraints:^(MASConstraintMaker *make) {

@@ -24,8 +24,7 @@ static NSString * detailTextCell = @"detailTextCellID";
 @property (strong,nonatomic) NSString *payMentStr;
 
 /** 模型 */
-@property (strong,nonatomic) PayMentmodel *model;
-
+@property (strong,nonatomic) PayMentmodel *payMenmodel;
 
 @end
 
@@ -34,15 +33,14 @@ static NSString * detailTextCell = @"detailTextCellID";
 - (void)getRequest {
     
     NSDictionary *dict =@{
-                          @"id":@(1),
-//                          @"pay_ment":@(1),
-//                          @"type":@(1)
+                          @"id":_paymentId,
                           };
     
-    [self getRequestWithPath:@"/api/UserService/getUserAssertlimit/id/1" params:dict success:^(id successJson) {
-        
-        
-        DLog(@"%@",successJson);
+    [self getRequestWithPath:API_GetUserAssertlimit params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+        NSArray *arr = [PayMentmodel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+        self.payMenmodel = arr[0];
+        [self.tableView reloadData];
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -67,7 +65,7 @@ static NSString * detailTextCell = @"detailTextCellID";
 - (NSArray *)dataArray {
 
     if (!_dataArray) {
-        _dataArray = @[@"流水号:",@"类型:",@"收入:",@"支付方式:",@"订单号:",@"时间:",@"余额:"];
+        _dataArray = @[@"流水号:",@"类型:",@"收支:",@"支付方式:",@"订单号:",@"时间:",@"余额:"];
     }
     return _dataArray;
 }
@@ -112,12 +110,61 @@ static NSString * detailTextCell = @"detailTextCellID";
     cell.textLabel.text = self.dataArray[indexPath.row];
     cell.textLabel.font =[UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor colorWithHexString:@"#000000"];
-    cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"#000000"];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     
+    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(cell.textLabel.frame) + 10, CGRectGetMinY(cell.textLabel.frame), 200, CGRectGetMaxY(cell.textLabel.frame) - CGRectGetMinY(cell.textLabel.frame))];
+    contentLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+    contentLabel.font =[UIFont systemFontOfSize:16];
+
+    switch (indexPath.row) {
+        case 0: // 流水号
+            contentLabel.text = self.payMenmodel.ID;
+            break;
+        case 1: // 交易类型
+        {
+            if ([self.payMenmodel.assetChangeType isEqualToString:@"-1"]) {
+                contentLabel.text = @"转出，下单扣除";
+            }else if ([self.payMenmodel.assetChangeType isEqualToString:@"-2"]) {
+                contentLabel.text = @"转出，提现";
+            }else if ([self.payMenmodel.assetChangeType isEqualToString:@"1"]) {
+                contentLabel.text = @"转入，维权";
+            }else if ([self.payMenmodel.assetChangeType isEqualToString:@"2"]) {
+                contentLabel.text = @"转入，后台充值";
+            }else if ([self.payMenmodel.assetChangeType isEqualToString:@"3"]) {
+                contentLabel.text = @"转入，取消订单，获得系统退款";
+            }else if ([self.payMenmodel.assetChangeType isEqualToString:@"4"]) {
+                contentLabel.text = @"转入，订单收益";
+            }
+        }
+            break;
+        case 2: // 收入
+            contentLabel.text = self.payMenmodel.assetChange;
+            break;
+        case 3: // 支付方式
+        {
+            if ([self.payMenmodel.payMethod isEqualToString:@"1"]) {
+                contentLabel.text = @"微信支付";
+            }else if ([self.payMenmodel.payMethod isEqualToString:@"2"]) {
+                contentLabel.text = @"支付宝支付";
+            }else if ([self.payMenmodel.payMethod isEqualToString:@"3"]||[self.payMenmodel.payMethod isEqualToString:@"0"]) {
+                contentLabel.text = @"钱包支付";
+            }
+        }
+            break;
+        case 4: // 订单号
+            contentLabel.text = self.payMenmodel.orderId;
+            break;
+        case 5: // 时间
+            contentLabel.text = [NSString stringFromDateString:self.payMenmodel.assetChangeTime];
+            break;
+        case 6: // 余额
+            contentLabel.text = self.payMenmodel.nowAsset;
+            break;
+        default:
+            break;
+    }
     
-    
+    [cell.contentView addSubview:contentLabel];
     
     return cell;
 }

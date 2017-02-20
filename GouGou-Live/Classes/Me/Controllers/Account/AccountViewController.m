@@ -191,6 +191,12 @@
     UIViewController *VC = [[NSClassFromString(controllerName) alloc] init];
     VC.hidesBottomBarWhenPushed = YES;
     VC.title = cellText;
+    if ([cellText isEqualToString:@"结算"]) {
+        if ([UserInfos sharedUser].userAsset.length == 0) {
+            [self showAlert:@"账户余额不足"];
+            return;
+        }
+    }
     [self.navigationController pushViewController:VC animated:YES];
 
 }

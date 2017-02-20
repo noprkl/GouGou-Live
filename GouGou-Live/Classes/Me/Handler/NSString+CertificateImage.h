@@ -12,4 +12,7 @@
 
 /** 图片转base64 */
 + (NSString *)imageBase64WithDataURL:(UIImage *)image  withSize:(CGSize)newSize;
+/** 图片转base64--原图大小 */
++ (NSString *)imageBase64WithDataURL:(UIImage *)image;
+
 @end

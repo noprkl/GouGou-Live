@@ -42,7 +42,7 @@
 
 /** 直播列表 */
 @property (nonatomic, strong) NSMutableArray *liveListArray;
-@property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗信息 */
+@property (nonatomic, strong) NSMutableDictionary *dogInfos; /**< 狗狗信息 */
 
 @property(nonatomic, strong) UILabel *noneLiveLabel; /**< 没有直播 */
 
@@ -54,7 +54,11 @@
 static NSString *cellid = @"RecommentCellid";
 
 @implementation RecommendViewController
-
+- (void)loadView {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    view.backgroundColor = [UIColor whiteColor];
+    self.view = view;
+}
 #pragma mark
 #pragma mark - 网络请求
 - (void)getRequestLiveList {
@@ -63,9 +67,11 @@ static NSString *cellid = @"RecommentCellid";
                            @"page":@(_page),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.tableView hint:@"加载中"];
+    DLog(@"%@", dict);
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Live_new_list params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
+//        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
         if (_page == 1) {// 下拉
             if (!successJson[@"data"][@"data"]) { // 如果没有数据
                 [self.liveListArray removeAllObjects];
@@ -75,84 +81,59 @@ static NSString *cellid = @"RecommentCellid";
             }else {
                 /** 所有信息 */
                 NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-                /** 直播信息 */
-                NSMutableArray *liveMutableArr = [NSMutableArray array];
-                /** 狗狗信息 */
-                NSMutableArray *dogInfos = [NSMutableArray array];
-                // 高度
-                // 请求狗狗信息
-                for (NSInteger i = 0; i < liveArr.count; i ++) {
-                    
-                    LiveViewCellModel *model = liveArr[i];
-                    NSDictionary *dict = @{
-                                           @"live_id":model.liveId
-                                           };
-                    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                        DLog(@"%@", successJson);
-                        if (successJson[@"data"]) {
-                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                        }else{
-                            [dogInfos addObject:@[]];
-                        }
-                        
-                        [liveMutableArr addObject:model];
-                        if (dogInfos.count == liveArr.count && liveMutableArr.count == liveArr.count) {
-                            [self hideHud];
-                            self.dogInfos = dogInfos;
-                            self.liveListArray = liveMutableArr;
-                            [self.tableView reloadData];
-                        }
-                    } error:^(NSError *error) {
-                        DLog(@"%@", error);
-                    }];
-                }
+                self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                [self loadProductInfo];
             }
-          
         }else{            // 上拉
             NSArray *dataarr = successJson[@"data"][@"data"];
-            if (dataarr) { // 如果为0刷新
-                [self.tableView reloadData];
-            }
-            [self hideHud];
-            /** 所有信息 */
-            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
-            /** 直播信息 */
-            NSMutableArray *liveMutableArr = [NSMutableArray array];
-            /** 狗狗信息 */
-            NSMutableArray *dogInfos = [NSMutableArray array];
-            
-            // 请求狗狗信息
-            for (NSInteger i = 0; i < liveArr.count; i ++) {
-                
-                LiveViewCellModel *model = liveArr[i];
-                NSDictionary *dict = @{
-                                       @"live_id":model.liveId
-                                       };
-                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                    DLog(@"%@", successJson);
-                    if (successJson[@"data"]) {
-                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                    }else{
-                        [dogInfos addObject:@[]];
+            [self.tableView.mj_footer endRefreshingWithCompletionBlock:^{
+                [self.tableView.mj_footer endRefreshing];
+                if (dataarr.count == 0) {
+                    [self showAlert:@"没有更多了"];
+                    [self hideHud];
+                    self.page = self.page - 1;
+                    return ;
+                }else{
+                    NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
+                    self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                    [self loadProductInfo];
+                    if (dataarr.count < 10) {
+                        [self showAlert:@"没有更多了"];
+                        self.page = self.page - 1;
+                        return ;
                     }
-                    
-                    [liveMutableArr addObject:model];
-                    if (dogInfos.count == liveArr.count && liveMutableArr.count == liveArr.count) {
-                        [self hideHud];
-                        [self.dogInfos addObjectsFromArray:dogInfos];
-                        [self.liveListArray addObjectsFromArray:liveMutableArr];
-                        NSIndexSet *index = [NSIndexSet indexSetWithIndex:1];
-                        [self.tableView reloadSections:index withRowAnimation:(UITableViewRowAnimationNone)];
-                    }
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
-            }
+                }
+            }];
         }
 
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
+}
+- (void)loadProductInfo {
+    [self.dogInfos removeAllObjects];
+    for (NSInteger i = 0; i < self.liveListArray.count; i ++) {
+        
+        LiveViewCellModel *model = self.liveListArray[i];
+        NSDictionary *dict = @{
+                               @"live_id":model.liveId
+                               };
+        [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+            DLog(@"第几个%ld", i);
+            DLog(@"%@", successJson);
+            if (successJson[@"data"]) {
+              
+                NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                [_dogInfos setObject:dogs forKey:model.liveId];
+            }
+            if (i == self.liveListArray.count - 1) {
+                [self hideHud];
+                [self.tableView reloadData];
+            }
+        }error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 - (void)getRequestBanner {
     [self getRequestWithPath:API_Banner params:nil success:^(id successJson) {
@@ -164,8 +145,9 @@ static NSString *cellid = @"RecommentCellid";
             [bannerArr addObject:model.img];
         }
         self.urlArray = bannerArr;
-        NSIndexSet *index = [NSIndexSet indexSetWithIndex:0];
-        [self.tableView reloadSections:index withRowAnimation:(UITableViewRowAnimationNone)];
+        [self.tableView reloadData];
+//        NSIndexSet *index = [NSIndexSet indexSetWithIndex:0];
+//        [self.tableView reloadSections:index withRowAnimation:(UITableViewRowAnimationNone)];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -177,46 +159,38 @@ static NSString *cellid = @"RecommentCellid";
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self.liveListArray removeAllObjects];
-        [self.dogInfos removeAllObjects];
-        if (successJson[@"data"][@"num"] == 0) {
-            [self showAlert:@"暂无数据"];
-            [self hideHud];
-            [self.tableView reloadData];
-        }else{
-            /** 所有信息 */
-            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-            /** 直播信息 */
-            NSMutableArray *liveMutableArr = [NSMutableArray array];
-            /** 狗狗信息 */
-            NSMutableArray *dogInfos = [NSMutableArray array];
-            // 请求狗狗信息
-            for (NSInteger i = 0; i < liveArr.count; i ++) {
-                
-                LiveViewCellModel *model = liveArr[i];
-                NSDictionary *dict = @{
-                                       @"live_id":model.liveId
-                                       };
-                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                    //                DLog(@"%@", successJson);
-                    if (successJson[@"data"]) {
-                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                    }else{
-                        [dogInfos addObject:@[]];
-                    }
-                    
-                    [liveMutableArr addObject:model];
-                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                        
-                        self.dogInfos = dogInfos;
-                        self.liveListArray = liveMutableArr;
-                        [self.tableView reloadData];
-                        [self hideHud];
-                    }
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
+        if (_page == 1) {// 下拉
+            if (!successJson[@"data"][@"data"]) { // 如果没有数据
+                [self.liveListArray removeAllObjects];
+                [self.dogInfos removeAllObjects];
+                [self hideHud];
+                [self.tableView reloadData];
+            }else {
+                /** 所有信息 */
+                NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                [self loadProductInfo];
             }
+        }else{            // 上拉
+            NSArray *dataarr = successJson[@"data"][@"data"];
+            [self.tableView.mj_footer endRefreshingWithCompletionBlock:^{
+                [self.tableView.mj_footer endRefreshing];
+                if (dataarr.count == 0) {
+                    [self showAlert:@"没有更多了"];
+                    [self hideHud];
+                    self.page = self.page - 1;
+                    return ;
+                }else{
+                    NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
+                    self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                    [self loadProductInfo];
+                    if (dataarr.count < 10) {
+                        [self showAlert:@"没有更多了"];
+                        self.page = self.page - 1;
+                        return ;
+                    }
+                }
+            }];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -233,46 +207,38 @@ static NSString *cellid = @"RecommentCellid";
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self.liveListArray removeAllObjects];
-        [self.dogInfos removeAllObjects];
-        if (!successJson[@"data"][@"data"]) {
-            [self hideHud];
-            [self.tableView reloadData];
-        }else{
-            /** 所有信息 */
-            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-            /** 直播信息 */
-            NSMutableArray *liveMutableArr = [NSMutableArray array];
-            /** 狗狗信息 */
-            NSMutableArray *dogInfos = [NSMutableArray array];
-            // 请求狗狗信息
-            for (NSInteger i = 0; i < liveArr.count; i ++) {
-                
-                LiveViewCellModel *model = liveArr[i];
-                NSDictionary *dict = @{
-                                       @"live_id":model.liveId
-                                       };
-                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                    //                DLog(@"%@", successJson);
-                    if (successJson[@"data"]) {
-                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                    }else{
-                        [dogInfos addObject:@[]];
-                    }
-                    
-                    [liveMutableArr addObject:model];
-                    
-                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                        
-                        self.dogInfos = dogInfos;
-                        self.liveListArray = liveMutableArr;
-                        [self.tableView reloadData];
-                        [self hideHud];
-                    }
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
+        if (_page == 1) {// 下拉
+            if (!successJson[@"data"][@"data"]) { // 如果没有数据
+                [self.liveListArray removeAllObjects];
+                [self.dogInfos removeAllObjects];
+                [self hideHud];
+                [self.tableView reloadData];
+            }else {
+                /** 所有信息 */
+                NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                [self loadProductInfo];
             }
+        }else{            // 上拉
+            NSArray *dataarr = successJson[@"data"][@"data"];
+            [self.tableView.mj_footer endRefreshingWithCompletionBlock:^{
+                [self.tableView.mj_footer endRefreshing];
+                if (dataarr.count == 0) {
+                    [self showAlert:@"没有更多了"];
+                    [self hideHud];
+                    self.page = self.page - 1;
+                    return ;
+                }else{
+                    NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
+                    self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                    [self loadProductInfo];
+                    if (dataarr.count < 10) {
+                        [self showAlert:@"没有更多了"];
+                        self.page = self.page - 1;
+                        return ;
+                    }
+                }
+            }];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -289,48 +255,38 @@ static NSString *cellid = @"RecommentCellid";
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Live_list_new_im params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self.liveListArray removeAllObjects];
-        [self.dogInfos removeAllObjects];
-        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        if (!successJson[@"data"][@"num"] == 0) {
-            [self hideHud];
-            [self.tableView reloadData];
-            [self showAlert:@"暂无数据"];
-        }else{
-            /** 所有信息 */
-            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-            /** 直播信息 */
-            NSMutableArray *liveMutableArr = [NSMutableArray array];
-            /** 狗狗信息 */
-            NSMutableArray *dogInfos = [NSMutableArray array];
-            // 请求狗狗信息
-            for (NSInteger i = 0; i < liveArr.count; i ++) {
-                
-                LiveViewCellModel *model = liveArr[i];
-                NSDictionary *dict = @{
-                                       @"live_id":model.liveId
-                                       };
-                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                    //                DLog(@"%@", successJson);
-                    if (successJson[@"data"]) {
-                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                    }else{
-                        [dogInfos addObject:@[]];
-                    }
-                    
-                    [liveMutableArr addObject:model];
-                    
-                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                        
-                        self.dogInfos = dogInfos;
-                        self.liveListArray = liveMutableArr;
-                        [self.tableView reloadData];
-                        [self hideHud];
-                    }
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
+        if (_page == 1) {// 下拉
+            if (!successJson[@"data"][@"data"]) { // 如果没有数据
+                [self.liveListArray removeAllObjects];
+                [self.dogInfos removeAllObjects];
+                [self hideHud];
+                [self.tableView reloadData];
+            }else {
+                /** 所有信息 */
+                NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                [self loadProductInfo];
             }
+        }else{            // 上拉
+            NSArray *dataarr = successJson[@"data"][@"data"];
+            [self.tableView.mj_footer endRefreshingWithCompletionBlock:^{
+                [self.tableView.mj_footer endRefreshing];
+                if (dataarr.count == 0) {
+                    [self showAlert:@"没有更多了"];
+                    [self hideHud];
+                    self.page = self.page - 1;
+                    return ;
+                }else{
+                    NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
+                    self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+                    [self loadProductInfo];
+                    if (dataarr.count < 10) {
+                        [self showAlert:@"没有更多了"];
+                        self.page = self.page - 1;
+                        return ;
+                    }
+                }
+            }];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -371,8 +327,8 @@ static NSString *cellid = @"RecommentCellid";
     }];
     self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
         _page ++;
-        [self.tableView.mj_footer endRefreshing];
         [self getRequestLiveList];
+//        [self.tableView.mj_footer endRefreshing];
     }];
 }
 
@@ -398,14 +354,20 @@ static NSString *cellid = @"RecommentCellid";
     return _banaerArray;
 }
 
-- (NSMutableArray *)dogInfos {
+- (NSMutableDictionary *)dogInfos {
     if (!_dogInfos) {
-        _dogInfos = [NSMutableArray array];
+        _dogInfos = [NSMutableDictionary dictionary];
     }
     return _dogInfos;
 }
+- (NSMutableArray *)liveListArray {
+    if (!_liveListArray) {
+        _liveListArray = [NSMutableArray array];
+    }
+    return _liveListArray;
+}
 - (void)pushToLivingVc:(LiveViewCellModel *)model products:(NSArray *)dogInfos {
-    DLog(@"%@", model);
+    DLog(@"%@", model.status);
     if ([model.status isEqualToString:@"1"]) {
         LivingViewController *livingVC = [[LivingViewController alloc] init];
         livingVC.liveID = model.liveId;
@@ -539,11 +501,10 @@ static NSString *cellid = @"RecommentCellid";
         LiveViewCellModel *model = self.liveListArray[indexPath.row];
         cell.liveCellModel = model;
         //    cell.dogInfos = self.dogInfos[indexPath.row];
-        if (self.dogInfos.count != 0) {
-            NSArray *arr = self.dogInfos[indexPath.row];
+        if (model.pNum != 0) {
+            NSArray *arr = [self.dogInfos valueForKey:model.liveId];
             cell.dogInfos = arr;
-            cell.cardBlcok = ^(UIControl *control){
-            };
+            cell.cardBlcok = ^(UIControl *control){};
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -551,11 +512,13 @@ static NSString *cellid = @"RecommentCellid";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (self.dogInfos.count != 0) {
-    }
-    NSArray *arr = self.dogInfos[indexPath.row];
+  
     LiveViewCellModel *model = self.liveListArray[indexPath.row];
+    //    cell.dogInfos = self.dogInfos[indexPath.row];
+    NSArray *arr = [NSArray array];
+    if (model.pNum != 0) {
+        arr = [self.dogInfos valueForKey:model.liveId];
+    }
 
     [self pushToLivingVc:model products:arr];
 }
@@ -563,13 +526,9 @@ static NSString *cellid = @"RecommentCellid";
     if (indexPath.section == 0) {
         return 110;
     }else{
-        if (self.dogInfos.count != 0) {
-            NSArray *arr = self.dogInfos[indexPath.row];
-            if (arr.count == 0){
-                return 250;
-            }else{
-                return 357;
-            }
+        LiveViewCellModel *model = self.liveListArray[indexPath.row];
+        if (model.pNum != 0) {
+            return 355;
         }else{
             return 250;
         }
@@ -664,5 +623,79 @@ static NSString *cellid = @"RecommentCellid";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)test1 {
+    
+    //                /** 直播信息 */
+    //                NSMutableArray *liveMutableArr = [NSMutableArray arrayWithCapacity:10];
+    //                /** 狗狗信息 */
+    ////                NSMutableArray *dogInfos = [NSMutableArray arrayWithCapacity:10];
+    //                // 高度
+    //                // 请求狗狗信息
+    //                for (NSInteger i = 0; i < liveArr.count; i ++) {
+    //
+    //                    LiveViewCellModel *model = liveArr[i];
+    //                    NSDictionary *dict = @{
+    //                                           @"live_id":model.liveId
+    //                                           };
+    //                    [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+    //                        DLog(@"%@", successJson);
+    //                        if (successJson[@"data"]) {
+    //                            NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+    //                            DLog(@"%@", dogs);
+    //                            [_dogInfos setObject:dogs forKey:model.liveId];
+    ////                            [_dogInfos insertObject:dogs atIndex:i];
+    ////                            [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+    //                        }
+    //                        [liveMutableArr insertObject:model atIndex:i];
+    //
+    ////                        [liveMutableArr addObject:model];
+    //                        if (liveMutableArr.count == liveArr.count) {
+    //                            [self hideHud];
+    ////                            self.dogInfos = dogInfos;
+    //                            self.liveListArray = liveMutableArr;
+    //                            [self.tableView reloadData];
+    //                        }
+    //                    } error:^(NSError *error) {
+    //                        DLog(@"%@", error);
+    //                    }];
+    //                }
+}
+- (void)test2 {
+    //            /** 直播信息 */
+    //            NSMutableArray *liveMutableArr = [NSMutableArray arrayWithCapacity:10];
+    //            /** 狗狗信息 */
+    ////            NSMutableArray *dogInfos = [NSMutableArray arrayWithCapacity:10];
+    //
+    //            // 请求狗狗信息
+    //            for (NSInteger i = 0; i < liveArr.count; i ++) {
+    //
+    //                LiveViewCellModel *model = liveArr[i];
+    //                NSDictionary *dict = @{
+    //                                       @"live_id":model.liveId
+    //                                       };
+    //                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+    //                    DLog(@"%@", successJson);
+    //                    if (successJson[@"data"]) {
+    ////                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
+    ////                        [dogInfos insertObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]] atIndex:i];
+    //                        NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+    //                        DLog(@"%@", dogs);
+    //                        [_dogInfos setObject:dogs forKey:model.liveId];
+    //
+    //                    }
+    ////                    [liveMutableArr addObject:model];
+    //                    [liveMutableArr insertObject:model atIndex:i];
+    //                    if (liveMutableArr.count == liveArr.count) {
+    //                        [self hideHud];
+    ////                        [self.dogInfos addObjectsFromArray:dogInfos];
+    //                        [self.liveListArray addObjectsFromArray:liveMutableArr];
+    //                        NSIndexSet *index = [NSIndexSet indexSetWithIndex:1];
+    //                        [self.tableView reloadSections:index withRowAnimation:(UITableViewRowAnimationNone)];
+    //                    }
+    //                } error:^(NSError *error) {
+    //                    DLog(@"%@", error);
+    //                }];
+    //            }
 
+}
 @end

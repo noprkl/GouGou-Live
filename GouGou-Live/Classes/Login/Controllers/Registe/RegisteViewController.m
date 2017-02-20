@@ -26,6 +26,7 @@
     [super viewDidLoad];
     [self initUI];
     [self setNavBarItem];
+    DLog(@"%ld--%@--%@", _type, _name, _nickName);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

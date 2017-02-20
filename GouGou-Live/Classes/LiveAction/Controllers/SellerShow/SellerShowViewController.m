@@ -134,8 +134,9 @@ static NSString *cellid3 = @"MyPageViewController3";
 // 回放
 - (void)getRequestMyLive {
     NSDictionary *dict = @{@"user_id":_authorId};
+    DLog(@"主播id%@", dict);
     [self getRequestWithPath:API_Seller_live params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
+        DLog(@"请求的回放%@", successJson);
         [self.dogCardArr removeAllObjects];
         NSArray *playBackarr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
         if (playBackarr.count < 2) {

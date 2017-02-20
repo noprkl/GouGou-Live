@@ -85,9 +85,9 @@
     self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
  
     _dogInfos = dogInfos;
-    if (_dogInfos.count == 0) {
+    if (self.liveCellModel.pNum == 0) {
         self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
-    }if (_dogInfos.count == 1) {
+    }if (self.liveCellModel.pNum == 1) {
         DogCardView *cardView = [[DogCardView alloc] init];
         cardView.dogInfo = dogInfos[0];
         cardView.message = [NSString stringWithFormat:@"1"];

@@ -82,6 +82,8 @@
 #define API_RetriveMoney @"api/UserService/retriveMoney"
 /** 用户提现纪录 */
 #define API_GetRetriveRecord @"api/UserService/getRetriveRecord"
+/** 用户提现详情 */
+#define API_GetUserAssertlimit @"/api/UserService/getUserAssertlimit"
 
 #pragma mark - 支付宝
 /** 用户支付密码添加接口 */
@@ -288,7 +290,7 @@
 /** 直播播放界面信息 */
 #define API_Live_product_list @"api/ProductService/Live_product_list"
 
-/** 直播列表3 */
+/** 直播列表 */
 #define API_Live_new_list @"api/ProductService/Live_new_list"
 /** 直播商品 */
 #define API_Live_list_product @"api/ProductService/Live_list_product"

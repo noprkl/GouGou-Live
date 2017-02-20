@@ -25,6 +25,9 @@ static NSString * identifer = @"DogPictureCellID";
 static NSString * reuseIdentifier = @"headerID";
 
 @interface HostViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+{
+    int page;
+}
 /** 正在直播的狗 */
 @property (strong,nonatomic) UICollectionView *collection;
 /** 顶部headerView */
@@ -33,71 +36,94 @@ static NSString * reuseIdentifier = @"headerID";
 /** 数据源 */
 @property (strong,nonatomic) NSMutableArray *dataArray;
 
-@property (nonatomic, strong) NSMutableArray *dogInfos; /**< 狗狗数据 */
+@property (nonatomic, strong) NSMutableDictionary *dogInfos; /**< 狗狗数据 */
 
 @property(nonatomic, strong) NoneNetWorkingView *noneNetView; /**< 无网 */
 
 @end
 
 @implementation HostViewController
+- (void)loadView {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    view.backgroundColor = [UIColor whiteColor];
+    self.view = view;
+}
 // 请求卡片
 - (void)getRequestHostLive{
     NSDictionary *dict = @{
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.collection hint:@"加载中"];
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
        
-        [self.collection setContentOffset:CGPointMake(0, 0) animated:YES];
-        [self.dataArray removeAllObjects];
-        [self.dogInfos removeAllObjects];
-        /** 所有信息 */
-        NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        if (liveArr.count == 0) {
-            [self hideHud];
-            [self showAlert:@"没有数据"];
-            [self.collection reloadData];
-        }else{
-            /** 直播信息 */
-            NSMutableArray *liveMutableArr = [NSMutableArray array];
-            /** 狗狗信息数组 */
-            NSMutableArray *dogInfos = [NSMutableArray array];
-            // 请求狗狗信息
-            for (NSInteger i = 0; i < liveArr.count; i ++) {
-                
-                HostLiveModel *model = liveArr[i];
-                NSDictionary *dict = @{
-                                       @"live_id":model.liveId
-                                       };
-                DLog(@"%@",dict);
-                
-                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                    //                DLog(@"%@", successJson);
-                    if (successJson[@"data"]) {
-                        [dogInfos addObject:[LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]]];
-                    }else{
-                        [dogInfos addObject:@[]];
-                    }
-                    
-                    [liveMutableArr addObject:model];
-                    if (dogInfos.count == liveArr.count&&liveMutableArr.count == liveArr.count) {
-                        [self hideHud];
-                        self.dogInfos = dogInfos;
-                        self.dataArray = liveMutableArr;
-                        [self.collection reloadData];
-                    }
-                } error:^(NSError *error) {
-                    DLog(@"%@", error);
-                }];
+        [self.collection setContentOffset:CGPointMake(0, 0) animated:NO];
+        if (page == 1) {// 下拉
+            if (!successJson[@"data"][@"data"]) { // 如果没有数据
+                [self.dataArray removeAllObjects];
+                [self.dogInfos removeAllObjects];
+                [self hideHud];
+                [self.collection reloadData];
+            }else {
+                /** 所有信息 */
+                NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                self.dataArray = [NSMutableArray arrayWithArray:liveArr];
+                [self loadProductInfo];
             }
+        }else{            // 上拉
+            NSArray *dataarr = successJson[@"data"][@"data"];
+            [self.collection.mj_footer endRefreshingWithCompletionBlock:^{
+                [self.collection.mj_footer endRefreshing];
+                if (dataarr.count == 0) {
+                    [self showAlert:@"没有更多了"];
+                    [self hideHud];
+                    page = page - 1;
+                    return ;
+                }else{
+                    NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:dataarr];
+                    self.dataArray = [NSMutableArray arrayWithArray:liveArr];
+                    [self loadProductInfo];
+                    if (dataarr.count < 10) {
+                        [self showAlert:@"没有更多了"];
+                        page = page - 1;
+                        return ;
+                    }
+                }
+            }];
         }
+
         //        [self.collection reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
+- (void)loadProductInfo {
+    [self.dogInfos removeAllObjects];
+    for (NSInteger i = 0; i < self.dataArray.count; i ++) {
+        
+        HostLiveModel *model = self.dataArray[i];
+        NSDictionary *dict = @{
+                               @"live_id":model.liveId
+                               };
+        [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+            DLog(@"第几个%ld", i);
+            DLog(@"%@", successJson);
+            if (successJson[@"data"]) {
+                
+                NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                [_dogInfos setObject:dogs forKey:model.liveId];
+            }
+            if (i == self.dataArray.count - 1) {
+                [self hideHud];
+                [self.collection reloadData];
+            }
+        }error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
+}
+
 // 印象
 - (void)getRequestImpresion{
     NSDictionary *dict = @{
@@ -136,13 +162,18 @@ static NSString * reuseIdentifier = @"headerID";
     self.view.backgroundColor = [UIColor colorWithHexString:@"e0e0e0"];
     self.edgesForExtendedLayout = 0;
     [self addCollectionview];
-    
+    page = 1;
     [self getRequestHostLive];
     [self getRequestImpresion];
     
     self.collection.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        page = 1;
         [self getRequestHostLive];
         [self.collection.mj_header endRefreshing];
+    }];
+    self.collection.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getRequestHostLive];
     }];
 }
 
@@ -186,12 +217,14 @@ static NSString * reuseIdentifier = @"headerID";
             if ([model.name isEqualToString:@"更多印象"]) {
 
                 MoreImpressViewController *moreImprsVc = [[MoreImpressViewController alloc] init];
+                moreImprsVc.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:moreImprsVc animated:YES];
             }else{
 
                 DogTypesViewController *dogType = [[DogTypesViewController alloc] init];
                 dogType.dogType = model;
                 dogType.title = model.name;
+                dogType.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:dogType animated:YES];
             }
         };
@@ -214,9 +247,9 @@ static NSString * reuseIdentifier = @"headerID";
     }
     return _dataArray;
 }
-- (NSMutableArray *)dogInfos {
+- (NSMutableDictionary *)dogInfos {
     if (!_dogInfos) {
-        _dogInfos = [NSMutableArray array];
+        _dogInfos = [NSMutableDictionary dictionary];
     }
     return _dogInfos;
 }
@@ -269,9 +302,11 @@ static NSString * reuseIdentifier = @"headerID";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *dogArr = self.dogInfos[indexPath.row];
+
     HostLiveModel *model = self.dataArray[indexPath.row];
             DLog(@"%@", model);
+    NSArray *dogArr = [self.dogInfos valueForKey:model.liveId];
+    
         if ([model.status isEqualToString:@"1"]) {
             LivingViewController *livingVC = [[LivingViewController alloc] init];
             livingVC.liveID = model.liveId;
@@ -297,11 +332,9 @@ static NSString * reuseIdentifier = @"headerID";
             livingVC.chatRoomID = model.chatroom;
             livingVC.state = model.status;
             livingVC.isLandscape = NO;
-
             livingVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:livingVC animated:YES];
         }
-
 }
 
 

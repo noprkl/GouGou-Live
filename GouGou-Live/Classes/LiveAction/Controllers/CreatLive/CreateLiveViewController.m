@@ -198,7 +198,8 @@
     [self.beginLiveBtn remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.QQShareBtn.bottom).offset(15);
         make.centerX.equalTo(self.view.centerX);
-        make.size.equalTo(CGSizeMake(310, 44));
+        make.height.equalTo(44);
+        make.left.equalTo(30);
     }];
 }
 #pragma mark

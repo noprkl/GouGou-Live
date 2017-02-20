@@ -406,7 +406,9 @@
                 VC.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:VC animated:YES];
             };
-            
+            unLoginView.liveBlock = ^{
+                [weakSelf showAlert:@"请登录"];
+            };
             return unLoginView;
         }
     }

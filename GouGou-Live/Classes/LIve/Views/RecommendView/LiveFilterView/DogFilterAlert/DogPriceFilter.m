@@ -147,10 +147,12 @@ static NSString *cellid = @"SizeFilterCellID";
     [self.cancelBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.titleLabel.centerY);
         make.left.equalTo(self.left).offset(10);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
     [self.sureBtn makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.titleLabel.centerY);
         make.right.equalTo(self.right).offset(-10);
+        make.size.equalTo(CGSizeMake(40, 40));
     }];
     
     [self.minLabel makeConstraints:^(MASConstraintMaker *make) {

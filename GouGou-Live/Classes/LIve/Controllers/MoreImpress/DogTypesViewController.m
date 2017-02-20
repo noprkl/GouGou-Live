@@ -43,6 +43,8 @@
                            };
     [self showHudInView:self.view hint:@"正在加载"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
+
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
         [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -106,17 +108,17 @@
 
 - (void)getRequestFilterLiveListWithSize:(DogCategoryModel *)size {
     NSDictionary *dict = @{
-                           @"im_id":@([_dogType.ID intValue]),
-                           @"size":@([size.ID intValue]),
+                           @"im_id":_dogType.ID,
+                           @"size":size.ID,
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.liveTableView hint:@"正在加载"];
+    [self showHudInView:self.view hint:@"正在加载"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
         [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-         if ([successJson[@"code"] integerValue] == 0) {
+        if ([successJson[@"data"][@"num"] isEqualToString:@"0"]) {
              [self hideHud];
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
@@ -176,19 +178,20 @@
 - (void)getRequestFilterLiveListWithMinAge:(DogCategoryModel *)minAge MaxAge:(DogCategoryModel *)maxAge  {
     NSDictionary *dict = @{
                            //                           @"size":@([size.ID intValue])
-                           @"im_id":@([_dogType.ID intValue]),
+                           @"im_id":_dogType.ID,
                            @"start_age":@(minAge.time),
                            @"end_age":@(maxAge.time),
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
-    [self showHudInView:self.liveTableView hint:@"正在加载"];
+    [self showHudInView:self.view hint:@"正在加载"];
     [self getRequestWithPath:API_Live_list_new_im params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
         [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-         if ([successJson[@"code"] integerValue] == 0) {
+         if ([successJson[@"data"][@"num"] isEqualToString:@"0"]) {
+             [self hideHud];
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
              [self.liveTableView reloadData];
@@ -247,17 +250,18 @@
 - (void)getRequestFilterLiveListWithMinPrice:(DogCategoryModel *)minPrice MaxPrice:(DogCategoryModel *)maxPrice  {
     NSDictionary *dict = @{
                            //                           @"size":@([size.ID intValue])
-                           @"im_id":@([_dogType.ID intValue]),
+                           @"im_id":_dogType.ID,
                            @"start_price":@(minPrice.time),
                            @"end_price":@(maxPrice.time),
                            @"page":@(1),
                            @"pageSize":@(10)
                            };
+    [self showHudInView:self.view hint:@"正在加载"];
     [self getRequestWithPath:API_Live_list_new_im params:dict success:^(id successJson) {
         [self.liveTableView.dataPlist removeAllObjects];
         [self.liveTableView.dogInfos removeAllObjects];
         [self.bottomScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-         if ([successJson[@"code"] integerValue] == 0) {
+        if ([successJson[@"data"][@"num"] isEqualToString:@"0"]) {
             self.noneView.hidden = NO;
             self.liveTableView.hidden = YES;
              [self.liveTableView reloadData];

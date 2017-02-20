@@ -13,20 +13,19 @@
 #import "PaymentDetailsController.h"
 
 @interface DetailCountViewController ()<UITableViewDataSource, UITableViewDelegate>
-
+{
+    int page;
+}
 @property(nonatomic, strong) DetailCountTopView *centerView; /**< headerView */
 
 @property(nonatomic, strong) UITableView *tableView; /**< tableView */
 
 @property(nonatomic, strong) NSArray *dataArr; /**< 总数据源 */
-@property(nonatomic, strong) NSArray *allcomeArr; /**< 全部 */
-@property(nonatomic, strong) NSMutableArray *incomeArr; /**< 收入 */
-@property(nonatomic, strong) NSMutableArray *outComeArr; /**< 支出 */
-@property(nonatomic, strong) NSMutableArray *payingArr; /**< 支付中 */
+//@property(nonatomic, strong) NSArray *allcomeArr; /**< 全部 */
 @property(nonatomic, strong) NSString *allCount; /**< 总收入 */
 @property(nonatomic, strong) UILabel *headerLabel; /**< 头部内容 */
 
-@property (nonatomic, strong) UIButton *lastBtn; /**< 点击按钮 */
+@property (nonatomic, assign) NSInteger lastIndex; /**< 点击按钮 */
 
 @property (nonatomic, strong) NSString *income; /**< 收支 */
 
@@ -38,7 +37,7 @@ static NSString *cellid = @"cellid";
 - (void)getReauestAssetDetail {
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID,
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10),
                            @"type":@(0)
                            };
@@ -46,10 +45,14 @@ static NSString *cellid = @"cellid";
         DLog(@"%@", successJson);
         
         self.dataArr = [UserAssetModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-        self.allcomeArr = self.dataArr ;
-//        NSString *income = successJson[@"data"][@"income"];
+        if (page > 1) {
+            if (self.dataArr.count < 10) {
+                [self showAlert:@"没有更多数据"];
+            }
+            page = page - 1;
+        }
         if (successJson[@"data"][@"income"]==nil) {
-            self.income=@"";
+            self.income = @"0.00";
         }else {
             self.income = [NSString stringWithFormat:@"收支：%@", successJson[@"data"][@"income"]];
             }
@@ -66,7 +69,8 @@ static NSString *cellid = @"cellid";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    
+    page = 1;
+    self.lastIndex = 0;
     [self setNavBarItem];
 }
 - (void)initUI {
@@ -74,7 +78,6 @@ static NSString *cellid = @"cellid";
     [self.view addSubview:self.tableView];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     self.title = @"收支明细";
-    
     self.edgesForExtendedLayout = 0;
     
     [self.centerView makeConstraints:^(MASConstraintMaker *make) {
@@ -88,16 +91,34 @@ static NSString *cellid = @"cellid";
     }];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        if ([[self.lastBtn currentTitle] isEqualToString:@"全部"] || [[self.lastBtn currentTitle] isEqualToString:@"全部"]) {
+        page = 1;
+        if (self.lastIndex == 0) {
             [self getReauestAssetDetail];
-        }else if ([[self.lastBtn currentTitle] isEqualToString:@"收入"]){
+        }else if (self.lastIndex == 1) {
+            
             [self postGetAccountDetail:1];
-        }else if ([[self.lastBtn currentTitle] isEqualToString:@"支出"]){
+        }else if (self.lastIndex == 2) {
+            
             [self postGetAccountDetail:2];
-        }else if ([[self.lastBtn currentTitle] isEqualToString:@"交易中"]){
+        }else if (self.lastIndex == 3) {
+            
             [self postGetAccountDetail:3];
         }
         [self.tableView.mj_header endRefreshing];
+    }];
+    
+    self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+        page ++;
+        if (self.lastIndex == 0) {
+            [self getReauestAssetDetail];
+        }else if (self.lastIndex == 1) {
+            [self postGetAccountDetail:1];
+        }else if (self.lastIndex == 2) {
+            [self postGetAccountDetail:2];
+        }else if (self.lastIndex == 3) {
+            [self postGetAccountDetail:3];
+        }
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 - (UITableView *)tableView {
@@ -118,30 +139,6 @@ static NSString *cellid = @"cellid";
         _dataArr = [NSArray array];
     }
     return _dataArr;
-}
-- (NSArray *)allcomeArr {
-    if (!_allcomeArr) {
-        _allcomeArr = [NSArray array];
-    }
-    return _allcomeArr;
-}
-- (NSMutableArray *)payingArr {
-    if (!_payingArr) {
-        _payingArr = [NSMutableArray array];
-    }
-    return _payingArr;
-}
-- (NSMutableArray *)incomeArr {
-    if (!_incomeArr) {
-        _incomeArr = [NSMutableArray array];
-    }
-    return _incomeArr;
-}
-- (NSArray *)outComeArr {
-    if (!_outComeArr) {
-        _outComeArr = [NSMutableArray array];
-    }
-    return _outComeArr;
 }
 // 一共有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -179,10 +176,10 @@ static NSString *cellid = @"cellid";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
+    UserAssetModel *model = self.dataArr[indexPath.row];
     PaymentDetailsController * paymentVC = [[PaymentDetailsController alloc] init];
     paymentVC.title = @"收支详情";
-     
+    paymentVC.paymentId = model.ID;
     [self.navigationController pushViewController:paymentVC animated:YES];
 }
 //每一行的高度
@@ -197,23 +194,27 @@ static NSString *cellid = @"cellid";
         
         __weak typeof(self) weakSelf = self;
         _centerView.talkBlock = ^(UIButton *btn){
-            weakSelf.lastBtn = btn;
+            page = 1;
+            weakSelf.lastIndex = 0;
             [weakSelf getReauestAssetDetail];
             return YES;
         };
         _centerView.dogBlock = ^(UIButton *btn){
-            weakSelf.lastBtn = btn;
+            page = 1;
+            weakSelf.lastIndex = 1;
             [weakSelf postGetAccountDetail:1];
             
             return YES;
         };
         _centerView.serviceBlock = ^(UIButton *btn){
-            weakSelf.lastBtn = btn;
+            page = 1;
+            weakSelf.lastIndex = 2;
             [weakSelf postGetAccountDetail:2];
             return YES;
         };
         _centerView.sellerBlock = ^(UIButton *btn){
-            weakSelf.lastBtn = btn;
+            page = 1;
+            weakSelf.lastIndex = 3;
             [weakSelf postGetAccountDetail:3];
             return YES;
         };
@@ -224,18 +225,23 @@ static NSString *cellid = @"cellid";
     
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID,
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10),
                            @"type":@(type)
                            };
+    DLog(@"%@", dict);
     [self getRequestWithPath:API_GetUserAssertDetai params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        if ([successJson[@"code"] intValue] == 1) {
             self.dataArr = [UserAssetModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-            self.allcomeArr = self.dataArr ;
+
+        if (page > 1) {
+            if (self.dataArr.count < 10) {
+                [self showAlert:@"没有更多数据"];
+            }
+            page = page - 1;
         }
         if (successJson[@"data"][@"income"]==nil) {
-            self.income=@"收支";
+            self.income=@"暂无收入";
         }else {
             self.income = [NSString stringWithFormat:@"收支：%@", successJson[@"data"][@"income"]];
         }

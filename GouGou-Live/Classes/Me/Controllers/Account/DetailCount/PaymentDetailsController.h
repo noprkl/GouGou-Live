@@ -9,8 +9,7 @@
 #import "BaseViewController.h"
 
 @interface PaymentDetailsController : BaseViewController
-@property (copy, nonatomic) NSString *payment; /**< 支付方式  */
-@property (copy, nonatomic) NSString *balance; /**< 余额 */
-@property (copy, nonatomic) NSString *type; /**< 交易类型 */
-@property (copy, nonatomic) NSString *payTime; /**< 交易时间 */
+
+@property (nonatomic, strong) NSString *paymentId; /**< 提现id */
+
 @end

@@ -210,6 +210,7 @@
 }
 - (void)clickPlayOrPauseAction:(UIButton *)sender {
     sender.selected = !sender.selected;
+   
     if (_isPlaying) {
         [self pause];
     } else {
@@ -250,6 +251,9 @@
     DLog(@"视频播放完成通知");
     _playerItem = [notification object];
     isFinish = YES;
+    _isPlaying = NO;
+    self.playBtn.selected = YES;
+    self.progressSlider.value = self.progressSlider.maximumValue;
 }
 // 观察播放进度
 - (void)monitoringPlayback:(AVPlayerItem *)item {
@@ -604,7 +608,7 @@
 }
 // 1. 设置样式
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent; // 白色的
+    return UIStatusBarStyleLightContent; // 黑色的
 }
 // 2. 横屏时显示 statusBar
 - (BOOL)prefersStatusBarHidden {

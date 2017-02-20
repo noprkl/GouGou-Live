@@ -172,11 +172,9 @@ static NSString * closeCell = @"closeCell";
     }else if ([model.status integerValue] == 9) {
         
         return 345;
-        
     }else if ([model.status integerValue] == 10) {
         
         return 345;
-        
     }
     return 255;
 }
@@ -532,7 +530,7 @@ static NSString * closeCell = @"closeCell";
         return cell;
         
     }
-        if ([model.status integerValue] == 20){ //   20：订单取消
+        if ([model.status integerValue] == 20 || [model.status integerValue] == 4){ //   20：订单取消
             
             BuyerCloseOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:closeCell];
             cell.model = model;
@@ -584,7 +582,8 @@ static NSString * closeCell = @"closeCell";
     }else if ([model.status isEqualToString:@"4"]) {
         
 //        state = @"";
-        
+        [self showAlert:@"订单已关闭"];
+
     }else if ([model.status isEqualToString:@"5"]) {
         
 //        state = @"待付全款";

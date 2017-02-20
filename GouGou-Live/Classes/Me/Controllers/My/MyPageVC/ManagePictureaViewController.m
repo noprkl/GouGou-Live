@@ -102,7 +102,7 @@ static NSString *cellid = @"ManagePictureaCell";
    
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.barBtnView];
     self.navigationItem.rightBarButtonItem = item;
-    
+    [self.view addSubview:self.collectionView];
     [self.view addSubview:self.bottomView];
     [self.view addSubview:self.noneDateView];
     [self.bottomView makeConstraints:^(MASConstraintMaker *make) {
@@ -111,12 +111,9 @@ static NSString *cellid = @"ManagePictureaCell";
     }];
     _isSelect = NO;
     _isHid = YES;
-    [self.view addSubview:self.collectionView];
 }
 - (void)choseAddPicture:(UIButton *)btn {
     btn.selected = !btn.selected;
-//    self.selectbtn.hidden = btn.selected;
-    
 }
 
 #pragma mark
@@ -139,7 +136,7 @@ static NSString *cellid = @"ManagePictureaCell";
         UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc] init];
         
         flowlayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-        CGFloat W = (SCREEN_WIDTH - 35) / 2;
+        CGFloat W = (SCREEN_WIDTH - 36) / 2;
         flowlayout.itemSize = CGSizeMake(W, W + 35);
 
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0,  0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) collectionViewLayout:flowlayout];
@@ -268,7 +265,6 @@ static NSString *cellid = @"ManagePictureaCell";
             //否则添加cell到
             [self.selectData addObject:model];
         }
-    
     };
 
     // 添加长按手势 修改相册名字

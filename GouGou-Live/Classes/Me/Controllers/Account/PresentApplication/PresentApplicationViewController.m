@@ -60,6 +60,7 @@
                                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                                            @"amount":@([moneyNumString integerValue])
                                            };
+                    DLog(@"%@", dict);
                     [self getRequestWithPath:API_RetriveMoney params:dict success:^(id successJson) {
                         DLog(@"%@", successJson);
                         // 如果请求正确 跳转

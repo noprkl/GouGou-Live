@@ -38,6 +38,8 @@
         type = @"转入，后台充值";
     }else if ([model.assetChangeType isEqualToString:@"3"]){ //转入，取消订单，获得系统退款
         type = @"转入，取消订单，获得系统退款";
+    }else if ([model.assetChangeType isEqualToString:@"4"]){ //转入，取消订单，获得系统退款
+        type = @"转入，订单收益";
     }
     self.stateLabel.text = type;
     self.incomeLabel.text = model.assetChange;

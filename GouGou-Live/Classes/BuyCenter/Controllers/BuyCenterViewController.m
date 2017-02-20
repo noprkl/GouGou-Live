@@ -353,14 +353,12 @@
 - (void)getNobuyRequest:(NSString *)orderID endOptioal:(EndOptionalBlock)endOptional {
 
     NSDictionary *dict = @{
-                           @"id":orderID,
-                           @"user_id":@([[UserInfos sharedUser].ID intValue])
+                           @"id":orderID
                            };
-
+    DLog(@"%@", dict);
     [self getRequestWithPath:API_Order_Nobuy params:dict success:^(id successJson) {
         
-        DLog(@"%@",successJson[@"code"]);
-        DLog(@"%@",successJson[@"message"]);
+        DLog(@"%@",successJson);
         // 回调
         endOptional();
     } error:^(NSError *error) {

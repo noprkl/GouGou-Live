@@ -140,6 +140,7 @@ static NSString *cellid = @"cellid";
     DogTypesViewController *dogType = [[DogTypesViewController alloc] init];
     dogType.dogType = model;
     dogType.title = model.name;
+    dogType.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:dogType animated:YES];
 
 }

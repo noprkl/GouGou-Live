@@ -23,7 +23,8 @@
     NSString *pwd = [NSString md5WithString:self.psdTextField.text];
     DLog(@"%@", pwd);
     NSDictionary *dict = [NSDictionary dictionary];
-    
+    DLog(@"%ld--%@--%@", _type, _name, _nickName);
+
     if (_type && _name.length != 0 && _nickName.length != 0) {// 第三方注册
         dict = @{
                  @"user_tel":self.telNumber,

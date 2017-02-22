@@ -9,6 +9,10 @@
 #import "DogCardView.h"
 
 @interface DogCardView ()
+
+
+@property (nonatomic, strong) UIImageView *backImgView; /**< 背景 */
+
 @property (strong, nonatomic)  UIImageView *dogImageView;/**< 狗狗图片*/
 @property (strong, nonatomic)  UILabel *dogNameLabel;/**< 狗狗名字 */
 @property(nonatomic, strong) UILabel *kindLabel; /**< 品种 */
@@ -33,7 +37,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        [self addSubview:self.backImgView];
         [self addSubview:self.dogImageView];
         [self addSubview:self.dogNameLabel];
         [self addSubview:self.kindLabel];
@@ -50,15 +54,17 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+    [self.backImgView makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
     [self.dogImageView makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.centerY);
-        make.left.equalTo(self.left);
-        make.top.equalTo(self.top);
-        make.size.equalTo(CGSizeMake(93, 93));
+        make.left.equalTo(self.backImgView.left).offset(10);
+//        make.top.equalTo(self.backImgView.top).offset(10);
+        make.size.equalTo(CGSizeMake(90, 90));
     }];
     [self.dogNameLabel makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.top).offset(5);
+        make.top.equalTo(self.backImgView.top).offset(10);
         make.left.equalTo(self.dogImageView.right).offset(10);
     }];
     [self.kindLabel makeConstraints:^(MASConstraintMaker *make) {
@@ -93,17 +99,23 @@
     }];
     [self.currentIndexLabel makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.oldPriceLabel.centerY);
-        make.right.equalTo(self.right).offset(-10);
+        make.right.equalTo(self.backImgView.right).offset(-20);
     }];
 }
 #pragma mark
 #pragma mark - 懒加载
+- (UIImageView *)backImgView {
+    if (!_backImgView) {
+        _backImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"狗狗卡牌背景"]];
+    }
+    return _backImgView;
+}
 - (UIImageView *)dogImageView {
     if (!_dogImageView) {
         _dogImageView = [[UIImageView alloc] init];
 
-        _dogImageView.layer.cornerRadius = 5;
-        _dogImageView.layer.masksToBounds = YES;
+//        _dogImageView.layer.cornerRadius = 5;
+//        _dogImageView.layer.masksToBounds = YES;
     }
     return _dogImageView;
 }
@@ -222,5 +234,9 @@
 - (void)setMessage:(NSString *)message {
     _message = message;
     self.currentIndexLabel.text = message;
+}
+- (void)setImageName:(NSString *)imageName {
+    _imageName = imageName;
+    self.backImgView.image = [UIImage imageNamed:imageName];
 }
 @end

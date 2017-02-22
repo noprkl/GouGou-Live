@@ -80,6 +80,7 @@
         make.left.equalTo(weakself.hudView.left).offset(5);
         make.centerY.equalTo(weakself.hudView.centerY);
         make.height.equalTo(weakself.hudView.height);
+        make.right.equalTo(weakself.hudView.right).offset(-45);
     }];
     
     [_salesvolumeLable mas_makeConstraints:^(MASConstraintMaker *make) {

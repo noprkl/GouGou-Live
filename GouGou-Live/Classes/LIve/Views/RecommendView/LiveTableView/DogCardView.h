@@ -13,6 +13,8 @@
 
 @property(nonatomic, strong) NSString *message; /**< 右下的信息 */
 
+@property (nonatomic, strong) NSString *imageName; /**< 背景图片 */
+
 @property (nonatomic, strong) LiveListDogInfoModel *dogInfo; /**< 狗狗信息 */
 
 @end

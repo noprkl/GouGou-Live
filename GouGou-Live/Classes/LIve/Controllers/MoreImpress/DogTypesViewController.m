@@ -17,7 +17,7 @@
 #import "LivingViewController.h"
 #import "DogTypesView.h"
 #import "MoreImpressViewController.h"
-#import "NoneFocusView.h"
+#import "NonoDogTypesView.h"
 #import "PlayBackViewController.h"
 
 @interface DogTypesViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -34,7 +34,7 @@
 //@property (strong,nonatomic) DogTypesView *typesView;
 
 /** 没搜到直播 */
-@property (strong, nonatomic) NoneFocusView *noneView;
+@property (strong, nonatomic) NonoDogTypesView *noneView;
 
 @property (nonatomic, strong) UITableView *tableView; /**< 表格 */
 @property (nonatomic, strong) NSMutableArray *liveListArray;
@@ -419,13 +419,13 @@ static NSString *cellid = @"RecommentCellid";
 //    return _liveTableView;
 //}
    
-- (NoneFocusView *)noneView {
+- (NonoDogTypesView *)noneView {
     if (!_noneView) {
-        _noneView = [[NoneFocusView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH, SCREEN_HEIGHT - 154)];
+        _noneView = [[NonoDogTypesView alloc] initWithFrame:CGRectMake(0, 154, SCREEN_WIDTH, SCREEN_HEIGHT - 154)];
         _noneView.hidden = YES;
         _noneView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
         __weak typeof(self) weakSelf = self;
-        _noneView.requestBlock = ^(NSString *text){
+        _noneView.requestBlock = ^(){
             weakSelf.noneView.hidden = YES;
             [weakSelf getRequestImpressionLiveList];
         };
@@ -490,10 +490,11 @@ static NSString *cellid = @"RecommentCellid";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     LiveViewCellModel *model = self.liveListArray[indexPath.row];
     if (model.pNum != 0) {
-        return 355;
+        return 365;
     }else{
         return 250;
     }
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0;

@@ -541,7 +541,7 @@ static NSString *cellid = @"RecommentCellid";
     }else{
         LiveViewCellModel *model = self.liveListArray[indexPath.row];
         if (model.pNum != 0) {
-            return 355;
+            return 365;
         }else{
             return 250;
         }

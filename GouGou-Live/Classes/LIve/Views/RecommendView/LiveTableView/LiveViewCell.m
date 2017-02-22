@@ -29,9 +29,8 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
     if (self) {
-        self.dogCardScrollView.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+        self.dogCardScrollView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     }
     return self;
 }
@@ -73,7 +72,7 @@
     if ([liveCellModel.status isEqualToString:@"1"]) {
         self.liveStateIcon.image = [UIImage imageNamed:@"直播中"];
     }else if ([liveCellModel.status isEqualToString:@"3"]){
-        self.liveStateIcon.image = [UIImage imageNamed:@"直播结束"];
+        self.liveStateIcon.image = [UIImage imageNamed:@"回放"];
     }
     
 }
@@ -82,40 +81,40 @@
     for (UIView *subview in subArr) {
         [subview removeFromSuperview];
     }
-    self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+    self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.01);
     [self.dogCardScrollView setContentOffset:CGPointMake(0, 0)];
     
     _dogInfos = dogInfos;
     if (self.liveCellModel.pNum == 0) {
-        self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+        self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.01);
     }if (self.liveCellModel.pNum == 1) {
         DogCardView *cardView = [[DogCardView alloc] init];
         cardView.dogInfo = dogInfos[0];
         cardView.message = [NSString stringWithFormat:@"1"];
+        cardView.imageName = @"一个的长度";
         cardView.backgroundColor = [UIColor whiteColor];
-        cardView.frame = CGRectMake(10, 10, SCREEN_WIDTH - 2 * 10, 93);
+        cardView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 108);
         self.dogCardScrollView.contentSize = CGSizeMake(0, 0);
 
         cardView.tag = 0 + 50;
-        //            cardView.layer.cornerRadius = 5;
-        //            cardView.layer.masksToBounds = YES;
         [cardView addTarget:self action:@selector(clickCardViewAction:) forControlEvents:(UIControlEventTouchDown)];
         [self.dogCardScrollView addSubview:cardView];
     } else {
         NSInteger count = dogInfos.count;
 
         CGFloat w = 300;
-        CGFloat h = 93;
+        CGFloat h = 108;
         CGFloat x = 0;
-        CGFloat y = 10;
+        CGFloat y = 0;
         
-        self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 20), 0);
+        self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 0), 0);
         for (NSInteger i = 0; i < count; i ++) {
-            x = i * (w + 20) + 10;
+            x = i * (w + 0);
             
             DogCardView *cardView = [[DogCardView alloc] init];
             cardView.dogInfo = dogInfos[i];
             cardView.message = [NSString stringWithFormat:@"%ld/%ld", i + 1, count];
+            cardView.imageName = @"狗狗卡牌背景";
             cardView.backgroundColor = [UIColor whiteColor];
             
             cardView.frame = CGRectMake(x, y, w, h);

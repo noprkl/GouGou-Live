@@ -542,6 +542,7 @@
 		04EDC4BC1DFAE250009C972D /* LivingShowDogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDC4BB1DFAE250009C972D /* LivingShowDogCell.m */; };
 		04F936DA1E067BCD0016EFF1 /* MoreImpressionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F936D91E067BCD0016EFF1 /* MoreImpressionModel.m */; };
 		04FE7AB81DF11960004E08E9 /* ProtectProwerTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE7AB71DF11960004E08E9 /* ProtectProwerTableModel.m */; };
+		41080B011E5D63A700D79E00 /* NonoDogTypesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41080B001E5D63A700D79E00 /* NonoDogTypesView.m */; };
 		417A01871E4C1E2E001264E1 /* SellerDogOnSailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 417A01861E4C1E2E001264E1 /* SellerDogOnSailAlertView.m */; };
 		4184AD681E569DB500BD1595 /* AccountPresentDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4184AD661E569DB500BD1595 /* AccountPresentDetailCell.m */; };
 		4184AD691E569DB500BD1595 /* AccountPresentDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4184AD671E569DB500BD1595 /* AccountPresentDetailCell.xib */; };
@@ -1617,6 +1618,8 @@
 		04FE7AB71DF11960004E08E9 /* ProtectProwerTableModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectProwerTableModel.m; sourceTree = "<group>"; };
 		085E23E0D1F490B4BD95B4F8 /* libPods-GouGou-Live.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GouGou-Live.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
+		41080AFF1E5D63A700D79E00 /* NonoDogTypesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonoDogTypesView.h; sourceTree = "<group>"; };
+		41080B001E5D63A700D79E00 /* NonoDogTypesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NonoDogTypesView.m; sourceTree = "<group>"; };
 		417A01851E4C1E2E001264E1 /* SellerDogOnSailAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDogOnSailAlertView.h; sourceTree = "<group>"; };
 		417A01861E4C1E2E001264E1 /* SellerDogOnSailAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDogOnSailAlertView.m; sourceTree = "<group>"; };
 		4184AD651E569DB500BD1595 /* AccountPresentDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountPresentDetailCell.h; sourceTree = "<group>"; };
@@ -3156,6 +3159,8 @@
 				0479B4EE1DCADC7B00CB288A /* DogPictureCollectionViewCell.m */,
 				0479B4EF1DCADC7B00CB288A /* DogTypesView.h */,
 				0479B4F01DCADC7B00CB288A /* DogTypesView.m */,
+				41080AFF1E5D63A700D79E00 /* NonoDogTypesView.h */,
+				41080B001E5D63A700D79E00 /* NonoDogTypesView.m */,
 				0479B4F11DCADC7B00CB288A /* MoreImpressView */,
 			);
 			path = HostView;
@@ -4899,6 +4904,7 @@
 				044C8D801E025391004BCA52 /* BuyerCloseOrderCell.m in Sources */,
 				0479B5ED1DCADC7B00CB288A /* LiveViewCell.m in Sources */,
 				04592EE41DF199390095C8EE /* DogCategoryModel.m in Sources */,
+				41080B011E5D63A700D79E00 /* NonoDogTypesView.m in Sources */,
 				04592EB41DF10D9F0095C8EE /* NickNameModel.m in Sources */,
 				04A5F6141E12A00400353B9A /* MediaStreamingVc.m in Sources */,
 				04B161BE1DE7227300DABC77 /* MyShopAdressModel.m in Sources */,

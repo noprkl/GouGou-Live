@@ -31,6 +31,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.dogCardScrollView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        self.layer.cornerRadius = 10;
+        self.layer.masksToBounds = YES;
     }
     return self;
 }
@@ -90,7 +92,7 @@
     }if (self.liveCellModel.pNum == 1) {
         DogCardView *cardView = [[DogCardView alloc] init];
         cardView.dogInfo = dogInfos[0];
-        cardView.message = [NSString stringWithFormat:@"1"];
+        cardView.message = [NSString stringWithFormat:@"1/1"];
         cardView.imageName = @"一个的长度";
         cardView.backgroundColor = [UIColor whiteColor];
         cardView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 108);

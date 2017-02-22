@@ -101,11 +101,17 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [AppDelegate setEaseMobEnterBackground:application];
+    // 监听是否进入前台
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ISEnterForeground" object:@"NO"];
 }
 // APP将要从后台返回
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [AppDelegate setEaseMobEnterForeground:application];
+    
+    // 监听是否进入前台
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ISEnterForeground" object:@"YES"];
+    
 }
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     if (_isLandscape) {

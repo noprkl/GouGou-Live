@@ -194,7 +194,7 @@
 - (UILabel *)oldPriceLabel {
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
-        
+        _oldPriceLabel.hidden = YES;
         _oldPriceLabel.text = @"¥ 2400";
         _oldPriceLabel.textColor = [UIColor colorWithHexString:@"#999999"];
         _oldPriceLabel.font = [UIFont systemFontOfSize:12];

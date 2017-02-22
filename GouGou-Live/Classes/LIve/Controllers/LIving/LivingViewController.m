@@ -57,7 +57,7 @@
 
 // 回放
 {
-    BOOL _isSliding; // 是否正在滑动
+    BOOL _isPlaying; // 是否正在播放
     NSTimer *_timer;
     id _playTimeObserver; // 观察者
 }
@@ -249,8 +249,17 @@
             DLog(@"%@", error);
         }];
     }
+    
+    // 后台监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationISEnterForeground:) name:@"ISEnterForeground" object:nil];
 }
-
+- (void)notificationISEnterForeground:(NSNotification *)notification {
+    if ([notification.object isEqualToString:@"YES"]) { // 进入前台
+        [self.livePlayer resume];
+    }else if ([notification.object isEqualToString:@"NO"]) { // 进入后台
+        [self.livePlayer pause];
+    }
+}
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
@@ -276,8 +285,9 @@
     self.hidesBottomBarWhenPushed = YES;
     self.stateTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getRequestLiveStatus) userInfo:nil repeats:YES];
     // 进入后竖屏
-    [self.baseScrollView setContentOffset:self.scrollPoint];
-
+    if (_isPlaying == YES) {
+        [self.livePlayer resume];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -304,6 +314,7 @@
     // 停止播放
     
     [self.livePlayer pause];
+    _isPlaying = YES;
     // 删除会话
     
 //    [[EMClient sharedClient].chatManager deleteConversation:_chatRoomID isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
@@ -452,9 +463,11 @@
     
     if (error) {
         self.endView.hidden = NO;
+        _isPlaying = NO;
     }else{
         self.notePlayer.hidden = YES;
         self.endView.hidden = YES;
+        _isPlaying = YES;
     }
     
     DLog(@"%@", error);
@@ -475,6 +488,7 @@
             // 被禁止原因
             self.endliveLabel.text = successJson[@"data"][@"con"];
             self.endView.hidden = NO;
+            _isPlaying = NO;
             // 结束推流
             [self.stateTimer invalidate];
             self.stateTimer = nil;
@@ -514,8 +528,6 @@
     // 播放
     
     [self.livePlayer play];
-    
-    
     
     // 竖屏
     
@@ -1167,7 +1179,7 @@
         NSURL *url = [NSURL URLWithString:self.stream.rtmp];
         
         _livePlayer = [[PLPlayer alloc] initWithURL:url option:playerOption];
-        
+        _isPlaying = YES;
         _livePlayer.delegate = self;
         
         //    [self.livePlayerView addSubview:self.livePlayer.playerView];
@@ -1882,13 +1894,14 @@
         _showingImg.layer.masksToBounds = YES;
         
         _showingImg.hidden = YES;
-        
     }
     
     return _showingImg;
     
 }
-
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ISEnterForeground" object:nil];
+}
 - (void)didReceiveMemoryWarning {
     
     [super didReceiveMemoryWarning];
@@ -2425,12 +2438,14 @@
 // 代理方法监听屏幕方向
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (toInterfaceOrientation==UIInterfaceOrientationLandscapeRight) {
-        
         DLog(@"进入横屏");
         _screenBtn.selected = YES;        
         //            self.talkingVc.chatToolbar.hidden = NO;
-        if (_isLandscape) {
+
+        if (!_isLandscape) {
             [self makeliveLancseConstraint];
+            [self.baseScrollView setContentOffset:self.scrollPoint];
+
             DLog(@"横屏UI");
             _isLandscape = YES;
             self.baseScrollView.hidden = YES;

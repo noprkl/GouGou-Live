@@ -155,7 +155,14 @@
     NSInteger yearIndex = age / 12;
     NSString *mouth = mouthArr[mouthIndex];
     NSString *year = yearArr[yearIndex];
-    NSString *ageText = [NSString stringWithFormat:@"%@%@",year, mouth];
+    NSString *ageText;
+    if (age < 12) {
+        ageText = [NSString stringWithFormat:@"%@", mouth];
+    }else if (age == 12){
+        ageText = @"1岁";
+    }else{
+        ageText = [NSString stringWithFormat:@"%@%@", year, mouth];
+    }
     return ageText;
 }
 

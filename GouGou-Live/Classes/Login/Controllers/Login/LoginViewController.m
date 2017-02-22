@@ -198,6 +198,9 @@
     [UserInfos sharedUser].userPsd = user_pwd;
     [UserInfos sharedUser].usertel = user_tel;
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"登陆成功" object:@"SUCCESS"];
+    
+    
     [UserInfos setUser];
 }
 

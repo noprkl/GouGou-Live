@@ -225,7 +225,7 @@ static NSString *cellid = @"DogShowCellid";
                     if ([successJson[@"code"] integerValue] == 1) { // 可以买
                         __block BuyRuleAlertView *rulesAlert = [[BuyRuleAlertView alloc] init];
                         NSDictionary *dict2 = @{@"id":@(2)};
-                        [self showHint:@"加载中.."];
+                        [self showHudInView:self.view hint:@"加载中.."];
                         [self getRequestWithPath:API_Help params:dict2 success:^(id successJson) {
                             rulesAlert.ruleContets = successJson[@"data"];
                             [rulesAlert show];
@@ -246,6 +246,7 @@ static NSString *cellid = @"DogShowCellid";
         }else {
             [self showAlert:@"请登录"];
         }
+    
     };
     return cell;
 }
@@ -256,9 +257,6 @@ static NSString *cellid = @"DogShowCellid";
    
     LiveListDogInfoModel *model = self.dataArr[indexPath.row];
     NSMutableArray *imgsArr = [NSMutableArray arrayWithArray:[model.dataPhoto componentsSeparatedByString:@"|"]];
-    if (imgsArr.count > 1) {
-        [imgsArr removeObjectAtIndex:0];
-    }
     DogImageView *dogimageView = [[DogImageView alloc] init];
     CGFloat height = [dogimageView getCellHeightWithImages:imgsArr];
     return 278 + height;

@@ -83,7 +83,8 @@
         [subview removeFromSuperview];
     }
     self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
- 
+    [self.dogCardScrollView setContentOffset:CGPointMake(0, 0)];
+    
     _dogInfos = dogInfos;
     if (self.liveCellModel.pNum == 0) {
         self.dogCardScrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
@@ -93,7 +94,8 @@
         cardView.message = [NSString stringWithFormat:@"1"];
         cardView.backgroundColor = [UIColor whiteColor];
         cardView.frame = CGRectMake(10, 10, SCREEN_WIDTH - 2 * 10, 93);
-        
+        self.dogCardScrollView.contentSize = CGSizeMake(0, 0);
+
         cardView.tag = 0 + 50;
         //            cardView.layer.cornerRadius = 5;
         //            cardView.layer.masksToBounds = YES;
@@ -106,8 +108,8 @@
         CGFloat h = 93;
         CGFloat x = 0;
         CGFloat y = 10;
+        
         self.dogCardScrollView.contentSize = CGSizeMake(count * (300 + 20), 0);
-
         for (NSInteger i = 0; i < count; i ++) {
             x = i * (w + 20) + 10;
             

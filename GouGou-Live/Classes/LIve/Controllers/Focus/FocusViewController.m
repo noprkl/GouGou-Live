@@ -126,8 +126,15 @@
         self.noneView.hidden = NO;
         self.tableView.hidden = YES;
     }
+    
+    // 监听如果是登录成功的，就刷新表格
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFocusData:) name:@"登陆成功" object:nil];
 }
-
+- (void)reloadFocusData:(NSNotification *)notification {
+    if ([notification.object isEqualToString:@"SUCCESS"]) {
+        [self getRequestLiveList];
+    }
+}
 #pragma mark
 #pragma mark - 懒加载
 - (NoneFocusView *)noneView {

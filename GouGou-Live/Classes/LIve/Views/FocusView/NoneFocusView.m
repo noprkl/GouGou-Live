@@ -71,7 +71,7 @@
         _warnLabel.font = [UIFont systemFontOfSize:15];
 
         if ([UserInfos getUser]) {
-            _warnLabel.text = @"没有正在直播的主播";
+            _warnLabel.text = @"没有关注正在直播的主播";
         }else{
             _warnLabel.text = @"请先登录";
 

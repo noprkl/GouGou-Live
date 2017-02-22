@@ -39,6 +39,11 @@
 static NSString *cellid = @"RecommentCellid";
 
 @implementation SearchViewController
+- (void)loadView {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    view.backgroundColor = [UIColor whiteColor];
+    self.view = view;
+}
 // 热搜请求
 - (void)getRequestHotLive {
     
@@ -59,20 +64,22 @@ static NSString *cellid = @"RecommentCellid";
     NSDictionary *dict = @{
                            @"kind":kind
                            };
+    [self.tableView.dataPlist removeAllObjects];
+    [self.tableView.dogInfos removeAllObjects];
+    [self.tableView reloadData];
+    self.tableView.hidden = NO;
+    [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Live_kind params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if ([successJson[@"data"] count] == 0) {
-            
             self.noinputView.hidden = YES;
             self.tableView.hidden = YES;
             self.noneView.hidden = NO;
+            [self hideHud];
         }else{
-            [self.tableView.dataPlist removeAllObjects];
-            [self.tableView.dogInfos removeAllObjects];
             if (successJson[@"data"][@"num"] == 0) { // 如果为0刷新
                 [self.tableView reloadData];
             }
-            self.tableView.hidden = NO;
             
             //        [self showHudInView:self.view hint:@"刷新中"];
             /** 所有信息 */
@@ -201,7 +208,7 @@ static NSString *cellid = @"RecommentCellid";
 }
 - (LiveTableView *)tableView {
     if (!_tableView) {
-        _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT) style:(UITableViewStylePlain)];
+        _tableView = [[LiveTableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT - 64) style:(UITableViewStylePlain)];
         
         _tableView.bounces = NO;
         

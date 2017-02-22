@@ -100,9 +100,15 @@ static NSString * reuseIdentifier = @"headerID";
 }
 - (void)loadProductInfo {
     [self.dogInfos removeAllObjects];
+    NSInteger pnum = 0;// 加限制，防止数据不够就刷新
+
     for (NSInteger i = 0; i < self.dataArray.count; i ++) {
         
         HostLiveModel *model = self.dataArray[i];
+        if (model.pNum != 0) {
+            pnum ++;
+        }
+
         NSDictionary *dict = @{
                                @"live_id":model.liveId
                                };
@@ -114,7 +120,7 @@ static NSString * reuseIdentifier = @"headerID";
                 NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                 [_dogInfos setObject:dogs forKey:model.liveId];
             }
-            if (i == self.dataArray.count - 1) {
+            if (_dogInfos.count == pnum) {
                 [self hideHud];
                 [self.collection reloadData];
             }

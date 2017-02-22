@@ -33,8 +33,12 @@
     }
     
     self.userNameLabel.text = model.userNickName;
-    self.userSignLabel.text = model.userMotto;
-
+    
+    if (model.userMotto.length != 0) {
+        self.userSignLabel.text = model.userMotto;
+    }else{
+        self.userSignLabel.text = @"暂无简介..";
+    }
 }
 - (void)setFanModel:(FanModel *)fanModel {
     _fanModel = fanModel;
@@ -46,7 +50,12 @@
     }
     
     self.userNameLabel.text = fanModel.userNickName;
-    self.userSignLabel.text = fanModel.userMotto;
+    
+    if (fanModel.userMotto.length != 0) {
+        self.userSignLabel.text = fanModel.userMotto;
+    }else{
+        self.userSignLabel.text = @"暂无简介..";
+    }
     // 判断model的id是否在列表中，如果是就选中，没有就选不中
     if ([fanModel.state integerValue] == 1) {
         self.selectBtn.selected = YES;

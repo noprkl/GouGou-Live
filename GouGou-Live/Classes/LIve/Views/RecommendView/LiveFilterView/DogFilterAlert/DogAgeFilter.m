@@ -106,7 +106,6 @@ static NSString *cellid = @"SizeFilterCellID";
     }
     self.currentminIndex = [pickerView selectedRowInComponent:0];
     self.currentmaxIndex = [pickerView selectedRowInComponent:1];
-    DLog(@"%ld--%ld", self.currentminIndex, self.currentmaxIndex);
 
     self.minModel = self.dataPlist[self.currentminIndex];
     self.maxModel = self.dataPlist[self.currentmaxIndex];

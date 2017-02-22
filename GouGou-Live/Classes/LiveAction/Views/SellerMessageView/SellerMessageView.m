@@ -101,7 +101,11 @@
 }
 - (void)setDescCommnet:(NSString *)descCommnet {
     _descCommnet = descCommnet;
-    self.briefContentLabel.text = descCommnet;
+    if (descCommnet.length != 0) {
+        self.briefContentLabel.text = descCommnet;
+    }else{
+        self.briefContentLabel.text = @"暂无简介";
+    }
 }
 - (void)setUserName:(NSString *)userName {
     _userName = userName;

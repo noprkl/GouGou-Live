@@ -112,23 +112,30 @@ static NSString *cellid = @"RecommentCellid";
 }
 - (void)loadProductInfo {
     [self.dogInfos removeAllObjects];
+    NSInteger pnum = 0;// 加限制，防止数据不够就刷新
     for (NSInteger i = 0; i < self.liveListArray.count; i ++) {
         
         LiveViewCellModel *model = self.liveListArray[i];
+        if (model.pNum != 0) {
+            pnum ++;
+        }
         NSDictionary *dict = @{
                                @"live_id":model.liveId
                                };
         [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+            DLog(@"%@", dict);
             DLog(@"第几个%ld", i);
             DLog(@"%@", successJson);
             if (successJson[@"data"]) {
               
                 NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-                [_dogInfos setObject:dogs forKey:model.liveId];
+//                [_dogInfos setObject:dogs forKey:model.liveId];
+                [_dogInfos setValue:dogs forKey:model.liveId];
             }
-            if (i == self.liveListArray.count - 1) {
-                [self hideHud];
+            if (pnum == _dogInfos.count) {
+                DLog(@"%@", _dogInfos);
                 [self.tableView reloadData];
+                [self hideHud];
             }
         }error:^(NSError *error) {
             DLog(@"%@", error);
@@ -156,6 +163,7 @@ static NSString *cellid = @"RecommentCellid";
     NSDictionary *dict = @{
                            @"size":@([size.ID intValue])
                            };
+        [self.tableView setContentOffset:CGPointMake(0, 0)];
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -204,6 +212,7 @@ static NSString *cellid = @"RecommentCellid";
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
+        [self.tableView setContentOffset:CGPointMake(0, 0)];
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -252,6 +261,7 @@ static NSString *cellid = @"RecommentCellid";
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
+    [self.tableView setContentOffset:CGPointMake(0, 0)];
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Live_list_new_im params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
@@ -501,9 +511,12 @@ static NSString *cellid = @"RecommentCellid";
         LiveViewCellModel *model = self.liveListArray[indexPath.row];
         cell.liveCellModel = model;
         //    cell.dogInfos = self.dogInfos[indexPath.row];
-        if (model.pNum != 0) {
+        if (model.pNum > 0) {
             NSArray *arr = [self.dogInfos valueForKey:model.liveId];
             cell.dogInfos = arr;
+            DLog(@"%@", model.liveId);
+            DLog(@"%@", arr);
+            
             cell.cardBlcok = ^(UIControl *control){};
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -578,7 +591,7 @@ static NSString *cellid = @"RecommentCellid";
                                    @"type":@(1)
                                    };
             [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
+//                DLog(@"%@", successJson);
                 ageView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -599,7 +612,7 @@ static NSString *cellid = @"RecommentCellid";
                                    @"type":@(8)
                                    };
             [weakSelf getRequestWithPath:API_Category params:dict success:^(id successJson) {
-                DLog(@"%@", successJson);
+//                DLog(@"%@", successJson);
                 priceView.dataPlist = [DogCategoryModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
             } error:^(NSError *error) {
                 DLog(@"%@", error);

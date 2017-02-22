@@ -66,7 +66,7 @@
         _warnLabel = [[UILabel alloc] init];
         _warnLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _warnLabel.font = [UIFont systemFontOfSize:15];
-        _warnLabel.text = @"该用户没有进行直播";
+        _warnLabel.text = @"没有搜到该品种的直播";
     }
     return _warnLabel;
 }

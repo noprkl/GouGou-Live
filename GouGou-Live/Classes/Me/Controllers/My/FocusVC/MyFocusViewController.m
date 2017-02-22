@@ -31,6 +31,7 @@ static NSString *cellid = @"MyFocusCell";
     NSDictionary *dict = @{@"user_id":[UserInfos sharedUser].ID
                            };
     [self getRequestWithPath:API_Fan_Information params:dict success:^(id successJson) {
+        DLog(@"%@", successJson);
         if ([successJson[@"code"] isEqualToString:@"0"]) {
             self.noneDateView.hidden = NO;
             self.tableView.hidden = YES;
@@ -116,7 +117,6 @@ static NSString *cellid = @"MyFocusCell";
 #pragma mark - 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
-//    return 15;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MyFocusTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellid];

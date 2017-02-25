@@ -124,7 +124,6 @@ static NSString *cellid = @"RecommentCellid";
                                };
         [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
             DLog(@"%@", dict);
-            DLog(@"第几个%ld", i);
             DLog(@"%@", successJson);
             if (successJson[@"data"]) {
               

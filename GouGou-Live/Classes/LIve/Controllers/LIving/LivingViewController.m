@@ -200,7 +200,7 @@
 @property (nonatomic, strong) UILabel *endsoldCountLabel; /**< 结束出售数 */
 
 @property (nonatomic, strong) NSTimer *stateTimer; /**< 直播状态倒计时 */
-
+@property (nonatomic, assign) BOOL ishaveDog; /**< 是否有狗 */
 @end
 
 @implementation LivingViewController
@@ -216,7 +216,7 @@
     // 子视图
     
     [self makeSubVcConstraint];
-    
+    _ishaveDog = NO;
     [self getRequestLiveMessage];
     
     // 添加观看观看历史
@@ -356,7 +356,7 @@
         // 设置直播展示的狗
         
         if (self.rootModel.info.count > 0) {
-            
+            _ishaveDog = YES;//有狗
             [self.livePlayer.playerView addSubview:self.showingImg];
             
             [self.livePlayer.playerView addSubview:self.showingPrice];
@@ -514,6 +514,24 @@
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
+    
+    // 直播的狗
+    if (_ishaveDog) {
+        [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
+            DLog(@"直播的狗直播的狗%@", successJson);
+            if (successJson[@"data"]) {
+                NSArray *dogs = [ShowIngDogModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+                ShowIngDogModel *showDogModel = dogs[0];
+                if (showDogModel.pathSmall != NULL) {
+                    NSString *imgStr = [IMAGE_HOST stringByAppendingString:showDogModel.pathSmall];
+                    [self.showingImg sd_setImageWithURL:[NSURL URLWithString:imgStr] placeholderImage:[UIImage imageNamed:@"组-7"]];
+                }
+                self.showingPrice.text = showDogModel.price;
+            }
+        }error:^(NSError *error) {
+            DLog(@"%@", error);
+        }];
+    }
 }
 
 

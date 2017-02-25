@@ -296,48 +296,59 @@
     // 正常断开推流
     if (state == PLStreamStateDisconnected) {
         // 保存视频
-        NSDictionary *dict =@{
-                              @"live_id":_liveID,
-                              @"user_id":[UserInfos sharedUser].ID
-                              };
-        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
+        self.endView.hidden = NO;
+//        NSDictionary *dict =@{
+//                              @"live_id":_liveID,
+//                              @"user_id":[UserInfos sharedUser].ID
+//                              };
+//        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//        } error:^(NSError *error) {
+//            DLog(@"%@", error);
+//        }];
+    }
+    if (state == PLStreamStateConnecting || state == PLStreamStateConnected || state == PLStreamStateDisconnecting || state == PLStreamStateAutoReconnecting) {
+        self.endView.hidden = YES;
     }
 }
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didDisconnectWithError:(NSError *)error {
     // 非正常断开的情况
     // 重连
-    if (session.streamState == PLStreamStateError || session.streamState == PLStreamStateDisconnecting) {
+    if (session.streamState == PLStreamStateError || session.streamState == PLStreamStateDisconnected) {
         // 保存视频
-        NSDictionary *dict =@{
-                              @"live_id":_liveID,
-                              @"user_id":[UserInfos sharedUser].ID
-                              };
-        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
+        self.endView.hidden = NO;
+//        NSDictionary *dict =@{
+//                              @"live_id":_liveID,
+//                              @"user_id":[UserInfos sharedUser].ID
+//                              };
+//        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//        } error:^(NSError *error) {
+//            DLog(@"%@", error);
+//        }];
     }
-    
+    if (session.streamState == PLStreamStateConnecting || session.streamState == PLStreamStateConnected || session.streamState == PLStreamStateDisconnecting || session.streamState == PLStreamStateAutoReconnecting) {
+        self.endView.hidden = YES;
+    }
 }
 //开始推流时，会每间隔 3s 调用该回调方法来反馈该 3s 内的流状态，包括视频帧率、音频帧率、音视频总码率
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status {
     // 出错状态 或者已经断开状态 保存视频
     if (session.streamState == PLStreamStateError || session.streamState == PLStreamStateDisconnected) {
         // 保存视频
-        NSDictionary *dict =@{
-                              @"live_id":_liveID,
-                              @"user_id":[UserInfos sharedUser].ID
-                              };
-        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
-            DLog(@"%@", successJson);
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
+//        NSDictionary *dict =@{
+//                              @"live_id":_liveID,
+//                              @"user_id":[UserInfos sharedUser].ID
+//                              };
+//        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//        } error:^(NSError *error) {
+//            DLog(@"%@", error);
+//        }];
+        self.endView.hidden = NO;
+    }
+    if (session.streamState == PLStreamStateConnecting || session.streamState == PLStreamStateConnected || session.streamState == PLStreamStateDisconnecting || session.streamState == PLStreamStateAutoReconnecting) {
+        self.endView.hidden = YES;
     }
 }
 // 设置Ui

@@ -115,11 +115,16 @@
         __weak typeof(self) weakSelf = self;
         
         _talkView.sendBlock = ^(NSString *message){
-            if ([UserInfos getUser]) {
-                [weakSelf sendTextMessage:message];
+            if (message.length != 0) {
+                if ([UserInfos getUser]) {
+                    [weakSelf sendTextMessage:message];
+                }else{
+                    [weakSelf showHint:@"您还未登录"];
+                }
             }else{
-                [weakSelf showHint:@"您还未登录"];
+                [weakSelf showHint:@"空消息"];
             }
+            
         };
         _talkView.emojiBlock = ^(){
             

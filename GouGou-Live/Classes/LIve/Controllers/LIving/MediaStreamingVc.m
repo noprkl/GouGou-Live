@@ -473,6 +473,7 @@
         _topView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _topView.backBlcok = ^(){
+            [weakSelf.session stopStreaming];
             weakSelf.endView.hidden = NO;
         };
         _topView.shareBlcok = ^(UIButton *btn){

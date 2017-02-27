@@ -64,7 +64,6 @@
     [vc.tabBarItem setSelectedImage:selectIcon];
     
     [self addChildViewController:nav];
-    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -91,7 +91,7 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     //设置文本
-    messageObject.text = [NSString stringWithFormat:@"\n狗狗直播，狗狗直播，狗狗直播\n%@", liveUrl];
+    messageObject.text = [NSString stringWithFormat:@"\n狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Qzone messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {

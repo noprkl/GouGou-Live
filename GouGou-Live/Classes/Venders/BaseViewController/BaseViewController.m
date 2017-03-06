@@ -107,8 +107,14 @@
 - (void)QQShare {
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    //设置文本
-    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
+    
+    //创建网页内容对象
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"狗狗直播" descr:@"发现身边的那个它" thumImage:[UIImage imageNamed:@"shareIcon"]];
+    //设置网页地址
+    shareObject.webpageUrl = ShareAdress;
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_QQ messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -124,7 +130,16 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     //设置文本
-    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
+    messageObject.text = [NSString stringWithFormat:@"狗狗直播，发现身边的那个它\n%@", ShareAdress];
+    
+    //创建图片内容对象
+    UMShareImageObject *shareObject = [[UMShareImageObject alloc] init];
+    //如果有缩略图，则设置缩略图
+    shareObject.thumbImage = [UIImage imageNamed:@"shareIcon"];
+    [shareObject setShareImage:@"http://images.itnuc.com/product/ce331707a0c56ca8a2bd64df7b37b237.jpeg"];
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Sina messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -139,8 +154,14 @@
 - (void)WChatShare {
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    //设置文本
-    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
+    
+    //创建网页内容对象
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"狗狗直播" descr:@"发现身边的那个它" thumImage:[UIImage imageNamed:@"shareIcon"]];
+    //设置网页地址
+    shareObject.webpageUrl = ShareAdress;
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatSession messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -155,8 +176,14 @@
 - (void)WechatTimeShare {
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    //设置文本
-    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
+    
+    //创建网页内容对象
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"狗狗直播" descr:@"发现身边的那个它" thumImage:[UIImage imageNamed:@"shareIcon"]];
+    //设置网页地址
+    shareObject.webpageUrl = ShareAdress;
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_WechatTimeLine messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -169,10 +196,17 @@
 }
 /** QQ空间分享 */
 - (void)TencentShare {
+    
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    //设置文本
-    messageObject.text = [NSString stringWithFormat:@"狗狗直播，狗狗直播，狗狗直播\n%@", ShareAdress];
+    
+    //创建网页内容对象
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"狗狗直播" descr:@"发现身边的那个它" thumImage:[UIImage imageNamed:@"shareIcon"]];
+    //设置网页地址
+    shareObject.webpageUrl = ShareAdress;
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Qzone messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {

@@ -6,7 +6,8 @@
 //  Copyright © 2016年 LXq. All rights reserved.
 //
 
-#define PlayMaxY 220
+
+#define PlayMaxY 185 //220
 
 #define VcMinY PlayMaxY + 45
 

@@ -486,7 +486,20 @@ static NSString *cellid4 = @"cellid4";
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 10;
+    switch (section) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        return 10;
+            break;
+        case 4:
+            return 0;
+            break;
+        default:
+            break;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

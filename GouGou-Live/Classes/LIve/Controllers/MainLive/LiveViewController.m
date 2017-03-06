@@ -13,6 +13,7 @@
 #import "WXApi.h"
 #import "LoginViewController.h"
 #import "ProtecePowerPromptView.h"
+#import "NSString+CertificateImage.h"
 
 @interface LiveViewController ()<UIScrollViewDelegate>
 
@@ -114,8 +115,18 @@
     searchVC.hidesBottomBarWhenPushed = YES;
 //
     [self.navigationController pushViewController:searchVC animated:YES];
-
-
+//    UIImage *image = [UIImage imageNamed:@"logo－512"];
+//    NSString *base64 = [NSString imageBase64WithDataURL:image];
+//    NSDictionary *dict = @{
+//                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
+//                           @"img":base64
+//                           };
+//    [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//    } error:^(NSError *error) {
+//        
+//    }];
+    
 }
 
 #pragma mark - 添加子控制器

@@ -259,7 +259,7 @@ static NSString *cellid = @"DogShowCellid";
     NSMutableArray *imgsArr = [NSMutableArray arrayWithArray:[model.dataPhoto componentsSeparatedByString:@"|"]];
     DogImageView *dogimageView = [[DogImageView alloc] init];
     CGFloat height = [dogimageView getCellHeightWithImages:imgsArr];
-    return 278 + height;
+    return 290 + height;
 }
 - (void)pushToDogBookVC:(LiveListDogInfoModel *)model {
    
@@ -283,7 +283,7 @@ static NSString *cellid = @"DogShowCellid";
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 250;
+    return 260;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

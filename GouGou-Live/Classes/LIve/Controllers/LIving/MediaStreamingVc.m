@@ -129,6 +129,18 @@
         [invocation invoke];
     }
 }
+// 切竖屏
+- (void)forwardInvocationPortrait {
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val = UIInterfaceOrientationPortrait;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+}
 // 切横屏
 - (void)forwardInvocationLandscapeRight {
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
@@ -147,11 +159,20 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // 分享
 
-    if (self.shareType == 10) {
+    if (self.shareType == 0){
+        //创建分享消息对象
+        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+        //设置文本
+        messageObject.text = [NSString stringWithFormat:@"狗狗直播，发现身边的那个它\n%@", ShareAdress];
         
-    }else if (self.shareType == 0){
-        [CreateLiveViewController SinaShare:self.streamRtmp success:^{
-            [self forwardInvocationLandscapeRight];
+        //调用分享接口
+        [[UMSocialManager defaultManager] shareToPlatform:UMSocialPlatformType_Sina messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+            if (error) {
+                DLog(@"************新浪分享 fail with error %@*********",error);
+            }else{
+                DLog(@"response data is %@",data);
+//               [self forwardInvocationLandscapeRight];
+            }
         }];
     }else if (self.shareType == 1){
         [CreateLiveViewController WChatShare:self.streamRtmp success:^{

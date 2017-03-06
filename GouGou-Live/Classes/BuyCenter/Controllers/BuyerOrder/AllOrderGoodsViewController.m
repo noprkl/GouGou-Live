@@ -184,7 +184,7 @@ static NSString * closeCell = @"closeCell";
     if (rootCell == nil) {
         rootCell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"cellid"];
     }
-    
+
     BuyCenterModel * model = self.dataArray[indexPath.row];
     DLog(@"%ld", [model.status integerValue]);
     if ([model.status integerValue] == 1) {

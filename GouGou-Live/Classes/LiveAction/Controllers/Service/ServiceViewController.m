@@ -122,9 +122,8 @@
                     [weakSelf showHint:@"您还未登录"];
                 }
             }else{
-                [weakSelf showHint:@"空消息"];
+                [weakSelf showHint:@"请输入消息内容"];
             }
-            
         };
         _talkView.emojiBlock = ^(){
             

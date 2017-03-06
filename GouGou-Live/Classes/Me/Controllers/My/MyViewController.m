@@ -29,6 +29,8 @@
 /** 数据源 */
 @property (strong, nonatomic) NSArray  *dataSource;
 
+@property (nonatomic, strong) NSArray *iconsArr; /**< 图片数据 */
+
 /** 控制器名字 */
 @property (strong, nonatomic) NSArray *controllerNames;
 
@@ -174,10 +176,17 @@
     }];
 
     if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
+        _iconsArr = @[@[@"账户icon", @"我的订单icon", @"收货地址icon", @"商家中心icon"], @[@"喜欢icon", @"观看直播icon"], @[@"实名认证icon", @"认证icon"], @[@"设置icon"]];
+    }else{
+        _iconsArr = @[@[@"账户icon", @"我的订单icon", @"收货地址icon"], @[@"喜欢icon", @"观看直播icon"], @[@"实名认证icon", @"认证icon"], @[@"设置icon"]];
+    }
+    
+    if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
         _dataSource = @[@[@"账户", @"我的订单", @"收货地址", @"卖家中心"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
     }else{
         _dataSource = @[@[@"账户", @"我的订单", @"收货地址"], @[@"我的喜欢", @"观看历史"], @[@"实名认证", @"商家认证"], @[@"设置"]];
     }
+    
     //[UserInfos getUser] &&
     if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
         _controllerNames =  @[@[@"AccountViewController", @"OrderGoodsViewController", @"ShopAddressViewController", @"SellerCenterViewController"], @[@"FavoriteViewController", @"WatchHistoryViewController"], @[@"CertificateVc", @"MerchantViewController"],@[@"SettingViewController"]];
@@ -221,7 +230,12 @@
     }
     return _dataSource;
 }
-
+- (NSArray *)iconsArr {
+    if (!_iconsArr) {
+        _iconsArr = [NSArray array];
+    }
+    return _iconsArr;
+}
 - (NSArray *)controllerNames {
 
     if (!_controllerNames) {
@@ -244,9 +258,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         //判断登录与否
-        
         if ([UserInfos getUser]) {
-          return 240;
+          return 270;
         }else{
         return 150;
         }
@@ -267,6 +280,8 @@
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
     cell.detailTextLabel.text = @"";
+    
+    cell.imageView.image = [UIImage imageNamed:self.iconsArr[indexPath.section][indexPath.row]];
     if ([UserInfos getUser]) { // 如果已经登录
         
         if ([cellText isEqualToString:@"账户"]) {
@@ -347,7 +362,7 @@
     if (section == 0) {
         if ([UserInfos getUser]) {//判断登录与否
         
-            MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 240)];
+            MyMessageView *messageView = [[MyMessageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 270)];
             messageView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
                     __weak typeof(self) weakSelf = self;
             messageView.editBlock = ^(){

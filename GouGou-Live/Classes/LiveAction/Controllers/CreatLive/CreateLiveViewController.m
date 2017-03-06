@@ -302,6 +302,8 @@
 }
 // 开始直播
 - (void)ClickBeginLiveBtnAction:(UIButton *)btn{
+    [self.editNameText resignFirstResponder];
+    
     if (self.editNameText.text.length == 0) {
         [self showAlert:@"请输入房间名"];
     }else{

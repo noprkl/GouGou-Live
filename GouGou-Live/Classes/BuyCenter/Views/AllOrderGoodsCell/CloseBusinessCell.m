@@ -49,6 +49,8 @@
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.lineview4];
         //        [self.contentView addSubview:self.functionBtn];
+        self.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0);
+
     }
     return self;
 }

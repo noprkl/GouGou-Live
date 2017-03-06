@@ -96,7 +96,7 @@
     
     [_dogImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.top).offset(44);
-        make.left.equalTo(weakself.left);
+        make.left.right.equalTo(weakself);
         make.height.equalTo(175);
     }];
     

@@ -463,6 +463,7 @@ static NSString *cellid = @"SellerCreateDogMessage";
             ageView.ageBlock = ^(NSInteger age){
                 self.ageLabel.attributedText = [self getCellTextWith:[NSString getAgeFormInt:age]];
                 self.age = age;
+                DLog(@"%@", [NSString getAgeFormInt:age]);
                 DLog(@"%ld", age);
             };
         }

@@ -15,7 +15,7 @@
 
 @property(nonatomic, strong) FilteButton *loginBtn; /**< 登录 */
 
-@property(nonatomic, strong) UIView *line; /**< 线 */
+//@property(nonatomic, strong) UIView *line; /**< 线 */
 
 @property(nonatomic, strong) UIButton *liveBtn; /**< 直播按钮 */
 
@@ -29,7 +29,7 @@
     if (self) {
         [self addSubview:self.iconViewBtn];
         [self addSubview:self.loginBtn];
-        [self addSubview:self.line];
+//        [self addSubview:self.line];
         [self addSubview:self.liveBtn];
         [self addSubview:self.line2];
     }
@@ -50,21 +50,23 @@
         make.left.equalTo(self.iconViewBtn.right).offset(10);
         make.size.equalTo(CGSizeMake(100, 50));
     }];
-    [self.line makeConstraints:^(MASConstraintMaker *make) {
+//    [self.line makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(self);
+//        make.top.equalTo(self.iconViewBtn.bottom).offset(5);
+//        make.height.equalTo(10);
+//    }];
+    [self.line2 makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
-        make.top.equalTo(self.iconViewBtn.bottom).offset(5);
+        make.bottom.equalTo(self.bottom);
         make.height.equalTo(10);
     }];
     [self.liveBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.line.bottom);
-        make.left.right.equalTo(self);
-        make.height.equalTo(44);
+        make.bottom.equalTo(self.line2.top).offset(-5);
+        make.centerX.equalTo(self.centerX);
+        make.width.equalTo(220);
+        make.height.equalTo(50);
     }];
-    [self.line2 makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
-        make.top.equalTo(self.liveBtn.bottom);
-        make.height.equalTo(10);
-    }];
+ 
 }
 #pragma mark
 #pragma mark - Action
@@ -94,13 +96,13 @@
     }
     return _loginBtn;
 }
-- (UIView *)line {
-    if (!_line) {
-        _line = [[UIView alloc] init];
-        _line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    }
-    return _line;
-}
+//- (UIView *)line {
+//    if (!_line) {
+//        _line = [[UIView alloc] init];
+//        _line.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+//    }
+//    return _line;
+//}
 - (UIView *)line2 {
     if (!_line2) {
         _line2 = [[UIView alloc] init];
@@ -111,9 +113,13 @@
 - (UIButton *)liveBtn {
     if (!_liveBtn) {
         _liveBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [_liveBtn setTintColor:[UIColor colorWithHexString:@"#333333"]];
+        [_liveBtn setTintColor:[UIColor colorWithHexString:@"#ffffff"]];
+        [_liveBtn setBackgroundImage:[UIImage imageNamed:@"直播背景icon"] forState:UIControlStateNormal];
         _liveBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [_liveBtn setTitle:@"商家认证后才能直播" forState:(UIControlStateNormal)];
+        
+        [_liveBtn setTitleEdgeInsets:(UIEdgeInsetsMake(-7, 0, 0, 0))];
+        
         [_liveBtn addTarget:self action:@selector(ClickLiveBtnAction) forControlEvents:(UIControlEventTouchDown)];
     }
     return _liveBtn;

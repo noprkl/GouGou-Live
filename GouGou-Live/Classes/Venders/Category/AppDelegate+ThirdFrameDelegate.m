@@ -17,13 +17,16 @@
 @implementation AppDelegate (ThirdFrameDelegate)
 
 // 环信
+//
 + (void)setEaseMobSDK:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions {
     EMOptions *options = [EMOptions optionsWithAppkey:@"1161161023178138#gougoulive"];
 #if DEBUG
-    options.apnsCertName = @"zhuaxingLive";
+    NSString *apnsCertName = @"zhuaxingLive";
 #else
-    options.apnsCertName = @"ZhuaxingLiveline";
+    NSString *apnsCertName = @"ZhuaxingLiveline";
 #endif
+    options.apnsCertName = apnsCertName;
+
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     
     // 环信登录
@@ -40,7 +43,7 @@
     [[EaseSDKHelper shareHelper] hyphenateApplication:application
                         didFinishLaunchingWithOptions:launchOptions
                                                appkey:@"1161161023178138#gougoulive"
-                                         apnsCertName:@"zhuaxingLive"
+                                         apnsCertName:apnsCertName
                                           otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
 }
 /** 进入后台 */
@@ -52,7 +55,6 @@
 + (void)setEaseMobEnterForeground:(UIApplication *)application{
     [[EMClient sharedClient] applicationWillEnterForeground:application];
 }
-
 
 /** 友盟 */
 + (void)setUMengSDK {

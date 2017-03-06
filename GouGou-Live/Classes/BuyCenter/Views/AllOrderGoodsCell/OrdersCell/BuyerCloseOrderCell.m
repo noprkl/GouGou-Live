@@ -36,6 +36,9 @@
         [self.contentView addSubview:self.costView];
          [self.contentView addSubview:self.deleOrder];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+//        self.separatorInset = UIEdgeInsetsMake(0, 20, 0, 0);
+
     }
     return self;
 }

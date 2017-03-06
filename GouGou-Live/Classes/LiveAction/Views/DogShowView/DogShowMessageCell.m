@@ -142,7 +142,7 @@
     
     [self.dogAgeLaebl makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.left).offset(10);
-        make.top.equalTo(self.dogNameLabel.bottom).offset(5);
+        make.top.equalTo(self.dogNameLabel.bottom).offset(10);
     }];
     [self.dogSizeLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.dogAgeLaebl.right).offset(10);
@@ -158,7 +158,7 @@
     }];
     [self.line2 makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
-        make.top.equalTo(self.line1.bottom).offset(53);
+        make.top.equalTo(self.line1.bottom).offset(65);
         make.height.equalTo(1);
     }];
     [self.transMoneyLabel makeConstraints:^(MASConstraintMaker *make) {

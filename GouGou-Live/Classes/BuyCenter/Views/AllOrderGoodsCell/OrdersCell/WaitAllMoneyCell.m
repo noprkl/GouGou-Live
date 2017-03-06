@@ -40,7 +40,8 @@
         [self.contentView addSubview:self.dogCardView];
         [self.contentView addSubview:self.costView];
         [self.contentView addSubview:self.lineview2];
-        self.selectionStyle = UITableViewCellSelectionStyleNone;        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0);
     }
     return self;
 }

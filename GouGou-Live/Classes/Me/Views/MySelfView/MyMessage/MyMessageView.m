@@ -38,7 +38,7 @@
 @property(nonatomic, strong) UIImageView *myPageImage; /**< 我的主页图片 */
 @property(nonatomic, strong) UILabel *myPageLabel; /**< 我的主页 */
 
-@property(nonatomic, strong) UIView *line1; /**< 线1 */
+//@property(nonatomic, strong) UIView *line1; /**< 线1 */
 
 @property(nonatomic, strong) UIButton *liveBtn; /**< 直播按钮 */
 
@@ -70,7 +70,7 @@
         [self.myPageBtn addSubview:self.myPageImage];
         [self.myPageBtn addSubview:self.myPageLabel];
         
-        [self addSubview:self.line1];
+//        [self addSubview:self.line1];
         [self addSubview:self.liveBtn];
         [self addSubview:self.line2];
     }
@@ -175,21 +175,24 @@
         make.top.equalTo(self.myPageImage.bottom).offset(10);
     }];
     
-    [self.line1 makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.foucusBtn.bottom);
-        make.left.width.equalTo(self);
-        make.height.equalTo(1);
-    }];
-    [self.liveBtn makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.line1.bottom);
-        make.left.width.equalTo(self);
-        make.height.equalTo(44);
-    }];
+//    [self.line1 makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.foucusBtn.bottom);
+//        make.left.width.equalTo(self);
+//        make.height.equalTo(1);
+//    }];
     [self.line2 makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.liveBtn.bottom);
+        make.bottom.equalTo(self.bottom);
         make.left.width.equalTo(self);
         make.height.equalTo(10);
     }];
+    
+    [self.liveBtn makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.line2.top).offset(-5);
+        make.centerX.equalTo(self.centerX);
+        make.width.equalTo(220);
+        make.height.equalTo(50);
+    }];
+
     
     if ([UserInfos sharedUser].userimgurl.length > 0) {
         NSString *urlString = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
@@ -364,17 +367,18 @@
     }
     return _myPageLabel;
 }
-- (UIView *)line1 {
-    if (!_line1) {
-        _line1 = [[UIView alloc] init];
-        _line1.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
-    }
-    return _line1;
-}
+//- (UIView *)line1 {
+//    if (!_line1) {
+//        _line1 = [[UIView alloc] init];
+//        _line1.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
+//    }
+//    return _line1;
+//}
 - (UIButton *)liveBtn {
     if (!_liveBtn) {
         _liveBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        [_liveBtn setTintColor:[UIColor colorWithHexString:@"#333333"]];
+        [_liveBtn setTintColor:[UIColor colorWithHexString:@"#ffffff"]];
+        [_liveBtn setBackgroundImage:[UIImage imageNamed:@"直播背景icon"] forState:UIControlStateNormal];
         _liveBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         NSString *title = @"";
         if ([[UserInfos sharedUser].ismerchant isEqualToString:@"2"]) {
@@ -383,6 +387,8 @@
             
         }
         [_liveBtn setTitle:@"商家认证后才能直播" forState:(UIControlStateNormal)];
+        [_liveBtn setTitleEdgeInsets:(UIEdgeInsetsMake(-7, 0, 0, 0))];
+
         [_liveBtn addTarget:self action:@selector(ClickLiveBtnAction:) forControlEvents:(UIControlEventTouchDown)];
     }
     return _liveBtn;

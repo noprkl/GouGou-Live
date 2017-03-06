@@ -5,6 +5,7 @@
 //  Created by ma c on 16/10/29.
 //  Copyright © 2016年 LXq. All rights reserved.
 //
+#define EmojiHeight 240
 
 #import "ServiceViewController.h"
 #import "TalkingView.h"
@@ -90,7 +91,7 @@
     self.dataSource = self;
    
     // 添加键盘
-    _emojiView = [[TSEmojiView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 270)];
+    _emojiView = [[TSEmojiView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, EmojiHeight)];
     _emojiView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
     _emojiView.delegate = self;
     [self.view addSubview:_emojiView];
@@ -128,12 +129,11 @@
                 [weakSelf.talkView.messageTextField resignFirstResponder];
                 if ([UserInfos getUser]) {
                     [weakSelf sendTextMessage:message];
-                    CGFloat height = 270;
                     [weakSelf.emojiView remakeConstraints:^(MASConstraintMaker *make) {
                         make.left.right.equalTo(weakSelf.view);
                         make.top.equalTo(weakSelf.view.bottom);
                         make.width.equalTo(SCREEN_WIDTH);
-                        make.height.equalTo(height);
+                        make.height.equalTo(EmojiHeight);
                     }];
                     [weakSelf.talkView remakeConstraints:^(MASConstraintMaker *make) {
                         make.left.bottom.right.equalTo(weakSelf.view);
@@ -153,22 +153,21 @@
         };
         _talkView.emojiBlock = ^(){
             [weakSelf.talkView.messageTextField resignFirstResponder];
-            CGFloat height = 260;
             [weakSelf.emojiView remakeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.equalTo(weakSelf.view);
                 make.bottom.equalTo(weakSelf.view.bottom);
                 make.width.equalTo(SCREEN_WIDTH);
-                make.height.equalTo(height);
+                make.height.equalTo(EmojiHeight);
             }];
             [weakSelf.talkView remakeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.equalTo(weakSelf.view);
-                make.bottom.equalTo(weakSelf.view.bottom).offset(-height);
+                make.bottom.equalTo(weakSelf.view.bottom).offset(-EmojiHeight);
                 make.height.equalTo(44);
             }];
             
             [weakSelf.tableView remakeConstraints:^(MASConstraintMaker *make) {
                 make.top.left.right.equalTo(weakSelf.view);
-                make.bottom.equalTo(weakSelf.view.bottom).offset(-height-44);
+                make.bottom.equalTo(weakSelf.view.bottom).offset(-EmojiHeight-44);
             }];
 
         };

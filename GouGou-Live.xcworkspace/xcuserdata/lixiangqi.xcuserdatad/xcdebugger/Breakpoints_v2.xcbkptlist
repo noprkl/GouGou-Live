@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-            timestampString = "510492255.852501"
+            timestampString = "510493325.188258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "-keyboardWasShown:"
             landmarkType = "5">
             <Locations>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-            timestampString = "510492255.852501"
+            timestampString = "510493325.188258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
             landmarkName = "-keyboardWillBeHidden:"
             landmarkType = "5">
             <Locations>

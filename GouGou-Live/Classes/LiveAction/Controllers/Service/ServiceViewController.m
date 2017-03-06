@@ -10,13 +10,16 @@
 #import "TalkingView.h"
 //#import <HyphenateLite_CN/EMSDK.h>
 #import <TZImagePickerController.h>
+#import "TSEmojiView.h"
 
 // 表情
 #define EMOJI_CODE_TO_SYMBOL(x) ((((0x808080F0 | (x & 0x3F000) >> 4) | (x & 0xFC0) << 10) | (x & 0x1C0000) << 18) | (x & 0x3F) << 24);
 
-@interface ServiceViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate, EaseMessageViewControllerDataSource>
+@interface ServiceViewController ()<UITextFieldDelegate, EaseMessageViewControllerDelegate, EaseMessageViewControllerDataSource, TSEmojiViewDelegate>
 
 @property(nonatomic, strong) TalkingView *talkView; /**< 聊天输入框 */
+
+@property (nonatomic, strong) TSEmojiView *emojiView; /**< 表情键盘 */
 
 @end
 
@@ -85,7 +88,13 @@
     [[EaseBaseMessageCell appearance] setAvatarSize:44.f];//设置头像大小
     //    [[EaseBaseMessageCell appearance] setAvatarCornerRadius:20.f];//设置头像圆角
     self.dataSource = self;
-    
+   
+    // 添加键盘
+    _emojiView = [[TSEmojiView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 270)];
+    _emojiView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+    _emojiView.delegate = self;
+    [self.view addSubview:_emojiView];
+
     // 隐藏输入框 自定义输入框
     self.chatToolbar.hidden = YES;
 }
@@ -116,8 +125,25 @@
         
         _talkView.sendBlock = ^(NSString *message){
             if (message.length != 0) {
+                [weakSelf.talkView.messageTextField resignFirstResponder];
                 if ([UserInfos getUser]) {
                     [weakSelf sendTextMessage:message];
+                    CGFloat height = 270;
+                    [weakSelf.emojiView remakeConstraints:^(MASConstraintMaker *make) {
+                        make.left.right.equalTo(weakSelf.view);
+                        make.top.equalTo(weakSelf.view.bottom);
+                        make.width.equalTo(SCREEN_WIDTH);
+                        make.height.equalTo(height);
+                    }];
+                    [weakSelf.talkView remakeConstraints:^(MASConstraintMaker *make) {
+                        make.left.bottom.right.equalTo(weakSelf.view);
+                        make.height.equalTo(44);
+                    }];
+                    [weakSelf.tableView remakeConstraints:^(MASConstraintMaker *make) {
+                        make.left.top.right.equalTo(weakSelf.view);
+                        make.bottom.equalTo(weakSelf.view).offset(-44);
+                    }];
+
                 }else{
                     [weakSelf showHint:@"您还未登录"];
                 }
@@ -126,13 +152,36 @@
             }
         };
         _talkView.emojiBlock = ^(){
+            [weakSelf.talkView.messageTextField resignFirstResponder];
+            CGFloat height = 260;
+            [weakSelf.emojiView remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(weakSelf.view);
+                make.bottom.equalTo(weakSelf.view.bottom);
+                make.width.equalTo(SCREEN_WIDTH);
+                make.height.equalTo(height);
+            }];
+            [weakSelf.talkView remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(weakSelf.view);
+                make.bottom.equalTo(weakSelf.view.bottom).offset(-height);
+                make.height.equalTo(44);
+            }];
             
+            [weakSelf.tableView remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.left.right.equalTo(weakSelf.view);
+                make.bottom.equalTo(weakSelf.view.bottom).offset(-height-44);
+            }];
+
         };
         _talkView.textFieldBlock = ^(UITextField *textField){
             weakSelf.textField = textField;
         };
     }
     return _talkView;
+}
+- (void)didTouchEmojiView:(TSEmojiView*)emojiView touchedEmoji:(NSString*)str
+{
+    
+    self.talkView.messageTextField.text = [NSString stringWithFormat:@"%@%@", self.talkView.messageTextField.text, str];
 }
 #pragma mark
 #pragma mark - 监听键盘

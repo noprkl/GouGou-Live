@@ -16,7 +16,6 @@
 
 @property(nonatomic, strong) UILabel *line; /**< 绿色的线 */
 
-@property(nonatomic, strong) UITextView *messageTextField; /**< 信息输入 */
 
 @end
 
@@ -71,7 +70,6 @@
 
 - (void)clickSendMesBtnAction {
     if (_sendBlock) {
-        [self.messageTextField resignFirstResponder];
         _sendBlock(self.messageTextField.text);
         self.messageTextField.text = @"";
         [self.messageTextField resignFirstResponder];

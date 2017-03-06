@@ -16,13 +16,17 @@
 
 #import "PersonalPageController.h" // 个人主页
 #import "PersonalMessageModel.h"
-@interface SingleChatViewController ()<EaseMessageViewControllerDelegate, TZImagePickerControllerDelegate, EMContactManagerDelegate, EaseMessageViewControllerDataSource>
+#import "TSEmojiView.h"
+
+@interface SingleChatViewController ()<EaseMessageViewControllerDelegate, TZImagePickerControllerDelegate, EMContactManagerDelegate, EaseMessageViewControllerDataSource, TSEmojiViewDelegate>
 
 @property(nonatomic, strong) MessageInputView *talkView; /**< 输入框 */
 
 @property(nonatomic, strong) MessageMeumView *menuView; /**< 菜单 */
 
 //@property (nonatomic, strong) PersonalMessageModel *personalModel; /**< 个人信息 */
+
+@property (nonatomic, strong) TSEmojiView *emojiView; /**< 表情键盘 */
 
 @end
 
@@ -65,7 +69,6 @@
         if (self.iconUrl) {
             NSString *urlString = [IMAGE_HOST stringByAppendingString:self.iconUrl];
             model.avatarURLPath = urlString;//头像网络地址
-            DLog(@"%@", urlString);
         }
         model.nickname = self.nameStr;//用户昵称
     }
@@ -92,6 +95,13 @@
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(44);
     }];
+    
+    // 添加键盘
+    _emojiView = [[TSEmojiView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 270)];
+    _emojiView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f0"];
+    _emojiView.delegate = self;
+    [self.view addSubview:_emojiView];
+    
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 重新获取数据
@@ -101,8 +111,6 @@
     // 进入立即刷新
     [self.tableView.mj_header beginRefreshing];
     
-    // 用户名
-//    [self getrequestPersonalMessage];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -142,15 +150,55 @@
             
         };
         _talkView.sendBlock = ^(NSString *message){
+           
             if (message.length != 0) {
                 [weakSelf sendTextMessage:message];
+                CGFloat height = 270;
+                [weakSelf.emojiView remakeConstraints:^(MASConstraintMaker *make) {
+                    make.left.right.equalTo(weakSelf.view);
+                    make.top.equalTo(weakSelf.view.bottom);
+                    make.width.equalTo(SCREEN_WIDTH);
+                    make.height.equalTo(height);
+                }];
+                [weakSelf.talkView remakeConstraints:^(MASConstraintMaker *make) {
+                    make.left.bottom.right.equalTo(weakSelf.view);
+                    make.height.equalTo(44);
+                }];
+                [weakSelf.tableView remakeConstraints:^(MASConstraintMaker *make) {
+                    make.left.top.right.equalTo(weakSelf.view);
+                    make.bottom.equalTo(weakSelf.view).offset(-44);
+                }];
             }
         };
-        _talkView.emojiBlock = ^(){
         
+        _talkView.emojiBlock = ^(){
+            [weakSelf.talkView.messageTextField resignFirstResponder];
+            CGFloat height = 260;
+            [weakSelf.emojiView remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(weakSelf.view);
+                make.bottom.equalTo(weakSelf.view.bottom);
+                make.width.equalTo(SCREEN_WIDTH);
+                make.height.equalTo(height);
+            }];
+            [weakSelf.talkView remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(weakSelf.view);
+                make.bottom.equalTo(weakSelf.view.bottom).offset(-height);
+                make.height.equalTo(44);
+            }];
+            
+            [weakSelf.tableView remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.left.right.equalTo(weakSelf.view);
+                make.bottom.equalTo(weakSelf.view.bottom).offset(-height-44);
+            }];
         };
     }
     return _talkView;
+}
+
+- (void)didTouchEmojiView:(TSEmojiView*)emojiView touchedEmoji:(NSString*)str
+{
+    
+    self.talkView.messageTextField.text = [NSString stringWithFormat:@"%@%@", self.talkView.messageTextField.text, str];
 }
 
 #pragma mark
@@ -180,6 +228,7 @@
             make.left.right.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
+        
     }];
 }
 
@@ -190,6 +239,15 @@
             make.left.right.equalTo(self.view);
             make.size.equalTo(CGSizeMake(SCREEN_WIDTH, 44));
         }];
+        
+        CGFloat height = 270;
+        [self.emojiView remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(self.view.bottom);
+            make.width.equalTo(SCREEN_WIDTH);
+            make.height.equalTo(height);
+        }];
+
     }];
 }
 

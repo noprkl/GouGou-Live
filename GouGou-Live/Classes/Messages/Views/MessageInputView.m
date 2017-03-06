@@ -8,7 +8,7 @@
 
 #import "MessageInputView.h"
 
-@interface MessageInputView ()<UITextFieldDelegate>
+@interface MessageInputView ()<UITextViewDelegate>
 
 @property(nonatomic, strong) UIButton *cameraBtn; /**< 相机 */
 
@@ -18,7 +18,6 @@
 
 @property(nonatomic, strong) UILabel *line; /**< 绿色的线 */
 
-@property(nonatomic, strong) UITextField *messageTextField; /**< 信息输入 */
 
 @end
 
@@ -94,12 +93,11 @@
 }
 #pragma mark
 #pragma mark - 懒加载
-- (UITextField *)messageTextField {
+- (UITextView *)messageTextField {
     
     if (!_messageTextField) {
-        _messageTextField = [[UITextField alloc] init];
+        _messageTextField = [[UITextView alloc] init];
         
-        _messageTextField.borderStyle = UITextBorderStyleNone;
         _messageTextField.delegate = self;
     }
     return _messageTextField;
@@ -149,12 +147,14 @@
     }
     return _line;
 }
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [textView becomeFirstResponder];
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([textView.text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+    }
     return YES;
 }
-
 
 @end

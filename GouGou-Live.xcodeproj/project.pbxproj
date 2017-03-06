@@ -543,6 +543,37 @@
 		04F936DA1E067BCD0016EFF1 /* MoreImpressionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F936D91E067BCD0016EFF1 /* MoreImpressionModel.m */; };
 		04FE7AB81DF11960004E08E9 /* ProtectProwerTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FE7AB71DF11960004E08E9 /* ProtectProwerTableModel.m */; };
 		41080B011E5D63A700D79E00 /* NonoDogTypesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41080B001E5D63A700D79E00 /* NonoDogTypesView.m */; };
+		416CDE781E6D5D780036151C /* emo_001@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE581E6D5D780036151C /* emo_001@2x.png */; };
+		416CDE791E6D5D780036151C /* emo_002@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE591E6D5D780036151C /* emo_002@2x.png */; };
+		416CDE7A1E6D5D780036151C /* emo_003@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE5A1E6D5D780036151C /* emo_003@2x.png */; };
+		416CDE7B1E6D5D780036151C /* emo_004@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE5B1E6D5D780036151C /* emo_004@2x.png */; };
+		416CDE7C1E6D5D780036151C /* emo_005@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE5C1E6D5D780036151C /* emo_005@2x.png */; };
+		416CDE7D1E6D5D780036151C /* emo_006@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE5D1E6D5D780036151C /* emo_006@2x.png */; };
+		416CDE7E1E6D5D780036151C /* emo_007@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE5E1E6D5D780036151C /* emo_007@2x.png */; };
+		416CDE7F1E6D5D780036151C /* emo_008@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE5F1E6D5D780036151C /* emo_008@2x.png */; };
+		416CDE801E6D5D780036151C /* emo_009@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE601E6D5D780036151C /* emo_009@2x.png */; };
+		416CDE811E6D5D780036151C /* emo_010@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE611E6D5D780036151C /* emo_010@2x.png */; };
+		416CDE821E6D5D780036151C /* emo_011@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE621E6D5D780036151C /* emo_011@2x.png */; };
+		416CDE831E6D5D780036151C /* emo_012@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE631E6D5D780036151C /* emo_012@2x.png */; };
+		416CDE841E6D5D780036151C /* emo_013@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE641E6D5D780036151C /* emo_013@2x.png */; };
+		416CDE851E6D5D780036151C /* emo_014@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE651E6D5D780036151C /* emo_014@2x.png */; };
+		416CDE861E6D5D780036151C /* emo_015@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE661E6D5D780036151C /* emo_015@2x.png */; };
+		416CDE871E6D5D780036151C /* emo_016@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE671E6D5D780036151C /* emo_016@2x.png */; };
+		416CDE881E6D5D780036151C /* emo_017@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE681E6D5D780036151C /* emo_017@2x.png */; };
+		416CDE891E6D5D780036151C /* emo_018@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE691E6D5D780036151C /* emo_018@2x.png */; };
+		416CDE8A1E6D5D780036151C /* emo_019@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE6A1E6D5D780036151C /* emo_019@2x.png */; };
+		416CDE8B1E6D5D780036151C /* emo_020@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE6B1E6D5D780036151C /* emo_020@2x.png */; };
+		416CDE8C1E6D5D780036151C /* emo_021@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE6C1E6D5D780036151C /* emo_021@2x.png */; };
+		416CDE8D1E6D5D780036151C /* emo_022@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE6D1E6D5D780036151C /* emo_022@2x.png */; };
+		416CDE8E1E6D5D780036151C /* emo_023@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE6E1E6D5D780036151C /* emo_023@2x.png */; };
+		416CDE8F1E6D5D780036151C /* emo_024@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE6F1E6D5D780036151C /* emo_024@2x.png */; };
+		416CDE901E6D5D780036151C /* emo_025@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE701E6D5D780036151C /* emo_025@2x.png */; };
+		416CDE911E6D5D780036151C /* emo_026@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE711E6D5D780036151C /* emo_026@2x.png */; };
+		416CDE921E6D5D780036151C /* emo_027@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE721E6D5D780036151C /* emo_027@2x.png */; };
+		416CDE931E6D5D780036151C /* emo_028@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE731E6D5D780036151C /* emo_028@2x.png */; };
+		416CDE941E6D5D780036151C /* emoji_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE741E6D5D780036151C /* emoji_touch.png */; };
+		416CDE951E6D5D780036151C /* emoji_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 416CDE751E6D5D780036151C /* emoji_touch@2x.png */; };
+		416CDE961E6D5D780036151C /* TSEmojiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 416CDE771E6D5D780036151C /* TSEmojiView.m */; };
 		417A01871E4C1E2E001264E1 /* SellerDogOnSailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 417A01861E4C1E2E001264E1 /* SellerDogOnSailAlertView.m */; };
 		4184AD681E569DB500BD1595 /* AccountPresentDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4184AD661E569DB500BD1595 /* AccountPresentDetailCell.m */; };
 		4184AD691E569DB500BD1595 /* AccountPresentDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4184AD671E569DB500BD1595 /* AccountPresentDetailCell.xib */; };
@@ -1620,6 +1651,38 @@
 		1EE120EBFEB5A1FE8CA3E58A /* Pods-GouGou-Live.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GouGou-Live.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GouGou-Live/Pods-GouGou-Live.debug.xcconfig"; sourceTree = "<group>"; };
 		41080AFF1E5D63A700D79E00 /* NonoDogTypesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonoDogTypesView.h; sourceTree = "<group>"; };
 		41080B001E5D63A700D79E00 /* NonoDogTypesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NonoDogTypesView.m; sourceTree = "<group>"; };
+		416CDE581E6D5D780036151C /* emo_001@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_001@2x.png"; sourceTree = "<group>"; };
+		416CDE591E6D5D780036151C /* emo_002@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_002@2x.png"; sourceTree = "<group>"; };
+		416CDE5A1E6D5D780036151C /* emo_003@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_003@2x.png"; sourceTree = "<group>"; };
+		416CDE5B1E6D5D780036151C /* emo_004@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_004@2x.png"; sourceTree = "<group>"; };
+		416CDE5C1E6D5D780036151C /* emo_005@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_005@2x.png"; sourceTree = "<group>"; };
+		416CDE5D1E6D5D780036151C /* emo_006@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_006@2x.png"; sourceTree = "<group>"; };
+		416CDE5E1E6D5D780036151C /* emo_007@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_007@2x.png"; sourceTree = "<group>"; };
+		416CDE5F1E6D5D780036151C /* emo_008@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_008@2x.png"; sourceTree = "<group>"; };
+		416CDE601E6D5D780036151C /* emo_009@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_009@2x.png"; sourceTree = "<group>"; };
+		416CDE611E6D5D780036151C /* emo_010@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_010@2x.png"; sourceTree = "<group>"; };
+		416CDE621E6D5D780036151C /* emo_011@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_011@2x.png"; sourceTree = "<group>"; };
+		416CDE631E6D5D780036151C /* emo_012@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_012@2x.png"; sourceTree = "<group>"; };
+		416CDE641E6D5D780036151C /* emo_013@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_013@2x.png"; sourceTree = "<group>"; };
+		416CDE651E6D5D780036151C /* emo_014@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_014@2x.png"; sourceTree = "<group>"; };
+		416CDE661E6D5D780036151C /* emo_015@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_015@2x.png"; sourceTree = "<group>"; };
+		416CDE671E6D5D780036151C /* emo_016@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_016@2x.png"; sourceTree = "<group>"; };
+		416CDE681E6D5D780036151C /* emo_017@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_017@2x.png"; sourceTree = "<group>"; };
+		416CDE691E6D5D780036151C /* emo_018@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_018@2x.png"; sourceTree = "<group>"; };
+		416CDE6A1E6D5D780036151C /* emo_019@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_019@2x.png"; sourceTree = "<group>"; };
+		416CDE6B1E6D5D780036151C /* emo_020@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_020@2x.png"; sourceTree = "<group>"; };
+		416CDE6C1E6D5D780036151C /* emo_021@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_021@2x.png"; sourceTree = "<group>"; };
+		416CDE6D1E6D5D780036151C /* emo_022@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_022@2x.png"; sourceTree = "<group>"; };
+		416CDE6E1E6D5D780036151C /* emo_023@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_023@2x.png"; sourceTree = "<group>"; };
+		416CDE6F1E6D5D780036151C /* emo_024@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_024@2x.png"; sourceTree = "<group>"; };
+		416CDE701E6D5D780036151C /* emo_025@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_025@2x.png"; sourceTree = "<group>"; };
+		416CDE711E6D5D780036151C /* emo_026@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_026@2x.png"; sourceTree = "<group>"; };
+		416CDE721E6D5D780036151C /* emo_027@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_027@2x.png"; sourceTree = "<group>"; };
+		416CDE731E6D5D780036151C /* emo_028@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emo_028@2x.png"; sourceTree = "<group>"; };
+		416CDE741E6D5D780036151C /* emoji_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emoji_touch.png; sourceTree = "<group>"; };
+		416CDE751E6D5D780036151C /* emoji_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoji_touch@2x.png"; sourceTree = "<group>"; };
+		416CDE761E6D5D780036151C /* TSEmojiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSEmojiView.h; sourceTree = "<group>"; };
+		416CDE771E6D5D780036151C /* TSEmojiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSEmojiView.m; sourceTree = "<group>"; };
 		417A01851E4C1E2E001264E1 /* SellerDogOnSailAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SellerDogOnSailAlertView.h; sourceTree = "<group>"; };
 		417A01861E4C1E2E001264E1 /* SellerDogOnSailAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SellerDogOnSailAlertView.m; sourceTree = "<group>"; };
 		4184AD651E569DB500BD1595 /* AccountPresentDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountPresentDetailCell.h; sourceTree = "<group>"; };
@@ -2191,6 +2254,7 @@
 		046BE8DA1DE4524100BC32E9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				416CDE561E6D5D780036151C /* Sources */,
 				046BF0521DE54C4C00BC32E9 /* MessageInputView.h */,
 				046BF0531DE54C4C00BC32E9 /* MessageInputView.m */,
 				046BF0551DE5507E00BC32E9 /* MessageMeumView.h */,
@@ -4605,6 +4669,53 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		416CDE561E6D5D780036151C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				416CDE571E6D5D780036151C /* img */,
+				416CDE761E6D5D780036151C /* TSEmojiView.h */,
+				416CDE771E6D5D780036151C /* TSEmojiView.m */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		416CDE571E6D5D780036151C /* img */ = {
+			isa = PBXGroup;
+			children = (
+				416CDE581E6D5D780036151C /* emo_001@2x.png */,
+				416CDE591E6D5D780036151C /* emo_002@2x.png */,
+				416CDE5A1E6D5D780036151C /* emo_003@2x.png */,
+				416CDE5B1E6D5D780036151C /* emo_004@2x.png */,
+				416CDE5C1E6D5D780036151C /* emo_005@2x.png */,
+				416CDE5D1E6D5D780036151C /* emo_006@2x.png */,
+				416CDE5E1E6D5D780036151C /* emo_007@2x.png */,
+				416CDE5F1E6D5D780036151C /* emo_008@2x.png */,
+				416CDE601E6D5D780036151C /* emo_009@2x.png */,
+				416CDE611E6D5D780036151C /* emo_010@2x.png */,
+				416CDE621E6D5D780036151C /* emo_011@2x.png */,
+				416CDE631E6D5D780036151C /* emo_012@2x.png */,
+				416CDE641E6D5D780036151C /* emo_013@2x.png */,
+				416CDE651E6D5D780036151C /* emo_014@2x.png */,
+				416CDE661E6D5D780036151C /* emo_015@2x.png */,
+				416CDE671E6D5D780036151C /* emo_016@2x.png */,
+				416CDE681E6D5D780036151C /* emo_017@2x.png */,
+				416CDE691E6D5D780036151C /* emo_018@2x.png */,
+				416CDE6A1E6D5D780036151C /* emo_019@2x.png */,
+				416CDE6B1E6D5D780036151C /* emo_020@2x.png */,
+				416CDE6C1E6D5D780036151C /* emo_021@2x.png */,
+				416CDE6D1E6D5D780036151C /* emo_022@2x.png */,
+				416CDE6E1E6D5D780036151C /* emo_023@2x.png */,
+				416CDE6F1E6D5D780036151C /* emo_024@2x.png */,
+				416CDE701E6D5D780036151C /* emo_025@2x.png */,
+				416CDE711E6D5D780036151C /* emo_026@2x.png */,
+				416CDE721E6D5D780036151C /* emo_027@2x.png */,
+				416CDE731E6D5D780036151C /* emo_028@2x.png */,
+				416CDE741E6D5D780036151C /* emoji_touch.png */,
+				416CDE751E6D5D780036151C /* emoji_touch@2x.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
 		5808904410711070CD5EE9BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4740,35 +4851,62 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				416CDE851E6D5D780036151C /* emo_014@2x.png in Resources */,
+				416CDE7C1E6D5D780036151C /* emo_005@2x.png in Resources */,
 				046BE8E41DE4524100BC32E9 /* NotificationMessageCell.xib in Resources */,
+				416CDE881E6D5D780036151C /* emo_017@2x.png in Resources */,
 				044C82EE1DCC411A00B62575 /* ChoseShopAdressCell.xib in Resources */,
 				046F0BFF1DE2EB1900D50D5C /* ManagePictureaCell.xib in Resources */,
 				04E7773A1DEC33C2007B5146 /* SystemNotificationCell.xib in Resources */,
 				045D11BA1DF05C0E008623E5 /* PayingViewController.xib in Resources */,
+				416CDE921E6D5D780036151C /* emo_027@2x.png in Resources */,
+				416CDE8C1E6D5D780036151C /* emo_021@2x.png in Resources */,
 				046BF00D1DE4696600BC32E9 /* MWPhotoBrowser.bundle in Resources */,
 				04DAC9941DD21A9A0089236D /* MyFocusTableCell.xib in Resources */,
 				0412FE011DFD368F00E84438 /* AddShowDogImgCell.xib in Resources */,
+				416CDE821E6D5D780036151C /* emo_011@2x.png in Resources */,
+				416CDE7F1E6D5D780036151C /* emo_008@2x.png in Resources */,
+				416CDE8B1E6D5D780036151C /* emo_020@2x.png in Resources */,
 				0479B61E1DCADC7B00CB288A /* AboutUsViewController.xib in Resources */,
+				416CDE8E1E6D5D780036151C /* emo_023@2x.png in Resources */,
 				0479B6041DCADC7B00CB288A /* LoginViewController.xib in Resources */,
 				0479B6061DCADC7B00CB288A /* RegisteViewController.xib in Resources */,
 				04592ED41DF1674A0095C8EE /* SureForgetPayViewController.xib in Resources */,
 				0479B6111DCADC7B00CB288A /* PresentWaitingViewController.xib in Resources */,
 				046F0B131DE28B2300D50D5C /* CreateLiveViewController.xib in Resources */,
 				04DAC98F1DD21A9A0089236D /* DetailCountViewCell.xib in Resources */,
+				416CDE831E6D5D780036151C /* emo_012@2x.png in Resources */,
 				04A31F851DED4F4900BE175A /* AddUpdataImagesCell.xib in Resources */,
+				416CDE781E6D5D780036151C /* emo_001@2x.png in Resources */,
 				0479B6081DCADC7B00CB288A /* SurePsdSuccessViewController.xib in Resources */,
+				416CDE811E6D5D780036151C /* emo_010@2x.png in Resources */,
+				416CDE931E6D5D780036151C /* emo_028@2x.png in Resources */,
+				416CDE871E6D5D780036151C /* emo_016@2x.png in Resources */,
+				416CDE791E6D5D780036151C /* emo_002@2x.png in Resources */,
 				045D11C01DF05C0E008623E5 /* SetPaypsdViewController.xib in Resources */,
 				045D11BE1DF05C0E008623E5 /* SetPayPsdSuccessViewController.xib in Resources */,
 				0467ACF71DBDEF2200562CC4 /* LaunchScreen.storyboard in Resources */,
 				0479B6261DCADC7B00CB288A /* SettingViewController.xib in Resources */,
 				0467ACF41DBDEF2200562CC4 /* Assets.xcassets in Resources */,
 				0479B5D91DCADC7B00CB288A /* LiveViewController.xib in Resources */,
+				416CDE7D1E6D5D780036151C /* emo_006@2x.png in Resources */,
+				416CDE801E6D5D780036151C /* emo_009@2x.png in Resources */,
+				416CDE951E6D5D780036151C /* emoji_touch@2x.png in Resources */,
+				416CDE861E6D5D780036151C /* emo_015@2x.png in Resources */,
+				416CDE891E6D5D780036151C /* emo_018@2x.png in Resources */,
 				04B161C31DE7E5BE00DABC77 /* AddNewAdressVc.xib in Resources */,
+				416CDE841E6D5D780036151C /* emo_013@2x.png in Resources */,
+				416CDE7A1E6D5D780036151C /* emo_003@2x.png in Resources */,
+				416CDE911E6D5D780036151C /* emo_026@2x.png in Resources */,
 				045D11B81DF05C0E008623E5 /* AddPayingSuccessViewController.xib in Resources */,
 				045FE3251DCC8C66001B95B1 /* EditNewAddressViewController.xib in Resources */,
 				046BF0621DE5997D00BC32E9 /* MessageListCell.xib in Resources */,
 				4184AD691E569DB500BD1595 /* AccountPresentDetailCell.xib in Resources */,
 				046F0C0C1DE33B2000D50D5C /* PicturesCell.xib in Resources */,
+				416CDE8A1E6D5D780036151C /* emo_019@2x.png in Resources */,
+				416CDE8F1E6D5D780036151C /* emo_024@2x.png in Resources */,
+				416CDE901E6D5D780036151C /* emo_025@2x.png in Resources */,
+				416CDE7B1E6D5D780036151C /* emo_004@2x.png in Resources */,
 				0479B61A1DCADC7B00CB288A /* MyViewController.xib in Resources */,
 				045C5CBA1DF53E50000B8509 /* AlipaySDK.bundle in Resources */,
 				0479B5EE1DCADC7B00CB288A /* LiveViewCell.xib in Resources */,
@@ -4779,15 +4917,18 @@
 				0479B6021DCADC7B00CB288A /* ForgetPsdViewController.xib in Resources */,
 				0479B6351DCADC7B00CB288A /* Info.plist in Resources */,
 				045D11BC1DF05C0E008623E5 /* SetPayingPsdViewController.xib in Resources */,
+				416CDE8D1E6D5D780036151C /* emo_022@2x.png in Resources */,
 				04592ECA1DF166F90095C8EE /* ForgetPayPsdViewController.xib in Resources */,
 				047AD6281DD5E2090025290E /* SurePsdViewController.xib in Resources */,
 				0479B6001DCADC7B00CB288A /* CodeLoginViewController.xib in Resources */,
 				04592EFA1DF2F2090095C8EE /* SellerAddNewAdressVc.xib in Resources */,
 				0452A2021DE1A8BB007C1E4F /* SellerDoInputCell.xib in Resources */,
+				416CDE7E1E6D5D780036151C /* emo_007@2x.png in Resources */,
 				046BF03B1DE4696600BC32E9 /* EaseUIResource.bundle in Resources */,
 				0479B60F1DCADC7B00CB288A /* PresentApplicationViewController.xib in Resources */,
 				0479B6201DCADC7B00CB288A /* MessagePushViewController.xib in Resources */,
 				0479B61C1DCADC7B00CB288A /* OrderGoodsViewController.xib in Resources */,
+				416CDE941E6D5D780036151C /* emoji_touch.png in Resources */,
 				04592EF51DF2F1970095C8EE /* SellerEditAdressVc.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5230,6 +5371,7 @@
 				0479B5F31DCADC7B00CB288A /* SellerShowViewController.m in Sources */,
 				04CE13D01DDC488100EB8777 /* SellerWaitAcceptViewController.m in Sources */,
 				046BEFC91DE4696600BC32E9 /* EMCDDeviceManager+Microphone.m in Sources */,
+				416CDE961E6D5D780036151C /* TSEmojiView.m in Sources */,
 				046F0BAA1DE2AB8B00D50D5C /* ProtectingPowerCell.m in Sources */,
 				0479B6051DCADC7B00CB288A /* RegisteViewController.m in Sources */,
 				04E332241E0C0F0800693957 /* NormalModel.m in Sources */,

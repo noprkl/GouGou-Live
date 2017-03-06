@@ -17,4 +17,6 @@ typedef void(^ClickTextFieldBlock)();
 @property(nonatomic, strong) ClickSendBtnBlock sendBlock; /**< 点击发送回调 */
 @property(nonatomic, strong) ClickTextFieldBlock textFieldBlock; /**< 文本框回调 */
 
+@property(nonatomic, strong) UITextView *messageTextField; /**< 信息输入 */
+
 @end

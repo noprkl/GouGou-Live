@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GouGou-Live/Classes/BuyCenter/Views/AllOrderGoodsCell/OrdersCell/BuyerCloseOrderCell.m"
-            timestampString = "510287088.063895"
+            filePath = "GouGou-Live/Classes/LIve/Controllers/LIving/PlayBackViewController.m"
+            timestampString = "510547312.348424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "-initWithStyle:reuseIdentifier:"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,44 +25,28 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GouGou-Live/Classes/Messages/Views/Face/FaceView.m"
-            timestampString = "510487381.462249"
+            filePath = "GouGou-Live/Classes/LIve/Controllers/LIving/PlayBackViewController.m"
+            timestampString = "510547313.019672"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "-touchFace:"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GouGou-Live/Classes/Messages/Views/Face/FaceView.m"
-            timestampString = "510487430.75469"
+            filePath = "GouGou-Live/Classes/Messages/Views/Sources/TSEmojiView.m"
+            timestampString = "510547510.346531"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "-touchesEnded:withEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GouGou-Live/Classes/Messages/Views/Face/FaceView.m"
-            timestampString = "510487435.210426"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
             landmarkName = "-touchesBegan:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
@@ -73,46 +57,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-            timestampString = "510493325.188258"
+            filePath = "GouGou-Live/Classes/LIve/Controllers/Recommend/RecommendViewController.m"
+            timestampString = "510823750.638413"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
-            landmarkName = "-keyboardWasShown:"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
+            landmarkName = "-initUI"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__45-[SingleChatViewController keyboardWasShown:]_block_invoke"
-                  moduleName = "GouGou-Live"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lixiangqi/Desktop/Work/%E7%8B%97%E7%8B%97%E7%9B%B4%E6%92%AD/GouGou-Live/GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-                  timestampString = "510491333.207725"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "218"
-                  endingLineNumber = "218"
-                  offsetFromSymbolStart = "23">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__45-[SingleChatViewController keyboardWasShown:]_block_invoke_2"
-                  moduleName = "GouGou-Live"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lixiangqi/Desktop/Work/%E7%8B%97%E7%8B%97%E7%9B%B4%E6%92%AD/GouGou-Live/GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-                  timestampString = "510491333.207947"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "218"
-                  endingLineNumber = "218"
-                  offsetFromSymbolStart = "39">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -121,46 +73,88 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-            timestampString = "510493325.188258"
+            filePath = "GouGou-Live/Classes/LIve/Controllers/Recommend/RecommendViewController.m"
+            timestampString = "510823750.638413"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "-keyboardWillBeHidden:"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
+            landmarkName = "-initUI"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__49-[SingleChatViewController keyboardWillBeHidden:]_block_invoke"
-                  moduleName = "GouGou-Live"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lixiangqi/Desktop/Work/%E7%8B%97%E7%8B%97%E7%9B%B4%E6%92%AD/GouGou-Live/GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-                  timestampString = "510491810.086823"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "245"
-                  endingLineNumber = "245"
-                  offsetFromSymbolStart = "26">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__49-[SingleChatViewController keyboardWillBeHidden:]_block_invoke_2"
-                  moduleName = "GouGou-Live"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lixiangqi/Desktop/Work/%E7%8B%97%E7%8B%97%E7%9B%B4%E6%92%AD/GouGou-Live/GouGou-Live/Classes/Messages/Controllers/SingleChatViewController.m"
-                  timestampString = "510491810.086995"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "245"
-                  endingLineNumber = "245"
-                  offsetFromSymbolStart = "39">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GouGou-Live/Classes/LIve/Controllers/Recommend/RecommendViewController.m"
+            timestampString = "510664239.677973"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "-getRequestLiveList"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GouGou-Live/Classes/SellerCenter/Controllers/SellerOrder/CenterHeader/SellerWaitSend/SellerWaitSendViewController.m"
+            timestampString = "510736621.136298"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "@interface SellerWaitSendViewController()"
+            landmarkType = "2">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GouGou-Live/Classes/BuyCenter/Controllers/BuyerOrder/WaitPayingViewController.m"
+            timestampString = "510738979.35255"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "-getPayStateOrderRequest"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GouGou-Live/Classes/BuyCenter/Controllers/BuyerOrder/WaitPayingViewController.m"
+            timestampString = "510738979.35255"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "-getPayStateOrderRequest"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -143,8 +143,8 @@
                         nil];
         
         //点击Layer
-        _emojiPadLayer = [TSEmojiViewLayer layer];
-        [self.layer addSublayer:_emojiPadLayer];
+//        _emojiPadLayer = [TSEmojiViewLayer layer];
+//        [self.layer addSublayer:_emojiPadLayer];
         //背景透明
         [self setBackgroundColor:[UIColor clearColor]];
     }
@@ -188,28 +188,39 @@
     if(index < _emojiArray.count) {
         _touchedIndex = index;
         
-        if (_emojiPadLayer.opacity != 1.0) {
-            _emojiPadLayer.opacity = 1.0;
-        }
+//        if (_emojiPadLayer.opacity != 1.0) {
+//            _emojiPadLayer.opacity = 1.0;
+//        }
+//        
+//        float originX = (self.bounds.size.width / TSEMOJIVIEW_COLUMNS) * (index % TSEMOJIVIEW_COLUMNS) + ((self.bounds.size.width / TSEMOJIVIEW_COLUMNS) - TSEMOJI_SIZE ) / 2;
+//        float originY = (index / TSEMOJIVIEW_COLUMNS) * (self.bounds.size.width / TSEMOJIVIEW_COLUMNS) + ((self.bounds.size.width / TSEMOJIVIEW_COLUMNS) - TSEMOJI_SIZE ) / 2;
         
-        float originX = (self.bounds.size.width / TSEMOJIVIEW_COLUMNS) * (index % TSEMOJIVIEW_COLUMNS) + ((self.bounds.size.width / TSEMOJIVIEW_COLUMNS) - TSEMOJI_SIZE ) / 2;
-        float originY = (index / TSEMOJIVIEW_COLUMNS) * (self.bounds.size.width / TSEMOJIVIEW_COLUMNS) + ((self.bounds.size.width / TSEMOJIVIEW_COLUMNS) - TSEMOJI_SIZE ) / 2;
-        
-        [_emojiPadLayer setEmoji:[_emojiArray objectAtIndex:index]];
-        [_emojiPadLayer setFrame:CGRectMake(originX - (TSEMOJIVIEW_KEYTOP_WIDTH - TSEMOJI_SIZE) / 2, originY - (TSEMOJIVIEW_KEYTOP_HEIGHT - TSEMOJI_SIZE), TSEMOJIVIEW_KEYTOP_WIDTH, TSEMOJIVIEW_KEYTOP_HEIGHT)];
-        [_emojiPadLayer setNeedsDisplay];
+//        [_emojiPadLayer setEmoji:[_emojiArray objectAtIndex:index]];
+//        [_emojiPadLayer setFrame:CGRectMake(originX - (TSEMOJIVIEW_KEYTOP_WIDTH - TSEMOJI_SIZE) / 2, originY - (TSEMOJIVIEW_KEYTOP_HEIGHT - TSEMOJI_SIZE), TSEMOJIVIEW_KEYTOP_WIDTH, TSEMOJIVIEW_KEYTOP_HEIGHT)];
+//        [_emojiPadLayer setNeedsDisplay];
     }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+//    NSUInteger index = [self indexWithEvent:event];
+//    if(index < _emojiArray.count) {
+//        [CATransaction begin];
+//        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+//        [self updateWithIndex:index];
+//        [CATransaction commit];
+//    }
     NSUInteger index = [self indexWithEvent:event];
-    if(index < _emojiArray.count) {
-        [CATransaction begin];
-        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-        [self updateWithIndex:index];
-        [CATransaction commit];
+
+    if (self.delegate && _touchedIndex >= 0) {
+        if ([self.delegate respondsToSelector:@selector(didTouchEmojiView:touchedEmoji:)]) {
+            [self.delegate didTouchEmojiView:self touchedEmoji:[_symbolArray objectAtIndex:_touchedIndex]];
+        }
     }
+    [self updateWithIndex:index];
+//    _emojiPadLayer.opacity = 0.0;
+//    [self setNeedsDisplay];
+//    [_emojiPadLayer setNeedsDisplay];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event

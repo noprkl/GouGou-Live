@@ -16,8 +16,10 @@
 #import "SellerEditShipTemplateVc.h"
 
 @interface SellerShipTemplateViewController ()<UITableViewDelegate, UITableViewDataSource>
-
-@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+{
+    int page;
+}
+@property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 
@@ -36,24 +38,40 @@ static NSString *cellid = @"SellerShipTemplateCell";
 - (void)getRequestShipTemplate {
     NSDictionary *dict = @{
                     @"user_id":[UserInfos sharedUser].ID,
-                    @"page":@1,
+                    @"page":@(page),
                     @"pageSize":@10
                     };
     [self showHudInView:self.view hint:@"加载中"];
 
     [self getRequestWithPath:API_List_freight params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        if (self.dataArr.count == 0) {
-            self.noneTemplateLabel.hidden = NO;
-            self.tableView.hidden = YES;
+        if (page == 1) {
+            [self.tableView.mj_footer resetNoMoreData];
+            self.dataArr = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            if (self.dataArr.count == 0) {
+                self.noneTemplateLabel.hidden = NO;
+                self.tableView.hidden = YES;
+            }else{
+                self.noneTemplateLabel.hidden = YES;
+                self.tableView.hidden = NO;
+            }
+            [self.tableView reloadData];
+            [self hideHud];
+
         }else{
-            self.noneTemplateLabel.hidden = YES;
-            self.tableView.hidden = NO;
+            NSArray *array = [SellerShipTemplateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.dataArr addObjectsFromArray:array];
+            [self.tableView reloadData];
+            [self hideHud];
+
+            if (array.count < 10) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
         }
-        [self.tableView reloadData];
-        [self hideHud];
-    } error:^(NSError *error) {
+        } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
 }
@@ -79,6 +97,7 @@ static NSString *cellid = @"SellerShipTemplateCell";
     [self getRequestWithPath:API_Del_freight params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         // 重新请求
+        page = 1;
         [self getRequestShipTemplate];
     } error:^(NSError *error) {
         
@@ -94,6 +113,7 @@ static NSString *cellid = @"SellerShipTemplateCell";
     [super viewWillAppear:animated];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"添加"] style:(UIBarButtonItemStylePlain) target:self action:@selector(addShipTemplate)];
+    page = 1;
     [self getRequestShipTemplate];
     // 判断是否有运费模板
     //
@@ -107,9 +127,15 @@ static NSString *cellid = @"SellerShipTemplateCell";
 - (void)initUI{
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        page = 1;
         [self getRequestShipTemplate];
         [self.tableView.mj_header endRefreshing];
     }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getRequestShipTemplate];
+    }];
+    
 }
 - (void)addShipTemplate {
     SellerAddShipTemplateViewController *addTemplateVC = [[SellerAddShipTemplateViewController alloc] init];

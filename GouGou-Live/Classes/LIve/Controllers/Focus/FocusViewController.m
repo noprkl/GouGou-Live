@@ -187,7 +187,6 @@
         livingVC.liverId = model.ID;
         livingVC.liverIcon = model.userImgUrl;
         livingVC.liverName = model.merchantName;
-        livingVC.doginfos = dogInfos;
         livingVC.watchCount = model.viewNum;
         livingVC.chatRoomID = model.chatroom;
         livingVC.state = model.status;
@@ -201,7 +200,6 @@
         livingVC.liverId = model.ID;
         livingVC.liverIcon = model.userImgUrl;
         livingVC.liverName = model.merchantName;
-        livingVC.doginfos = dogInfos;
         livingVC.watchCount = model.viewNum;
         livingVC.chatRoomID = model.chatroom;
         livingVC.isLandscape = NO;

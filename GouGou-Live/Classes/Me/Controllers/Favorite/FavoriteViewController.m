@@ -17,6 +17,9 @@
 #import "NoneDateView.h"
 
 @interface FavoriteViewController ()
+{
+    int page;
+}
 /** 两个button View */
 @property (strong,nonatomic) TowButtonView *towBtnView;
 /** 喜欢的直播 */
@@ -37,22 +40,34 @@
 - (void)GetRequestFavoriteDog{
     NSDictionary *dict = @{
                            @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10)
                            };
     [self showHudInView:self.view hint:@"刷新..."];
     [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         [self hideHud];
-
-        [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
-        self.noneDogDateView.hidden = YES;
-
-        if (successJson[@"data"][@"info"]) {
-            self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+        if (page == 1) {
+            [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
+            self.noneDogDateView.hidden = YES;
+            [self.favoriteDogTable.mj_footer resetNoMoreData];
+            if (successJson[@"data"][@"info"]) {
+                self.favoriteDogTable.favoriteDogArray = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+                [self.favoriteDogTable reloadData];
+            }else {
+                self.noneDogDateView.hidden = NO;
+            }
+        }else{
+            NSArray *array = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            
+            [self.favoriteDogTable.favoriteDogArray addObjectsFromArray:array];
             [self.favoriteDogTable reloadData];
-        }else {
-            self.noneDogDateView.hidden = NO;
+            if (array.count < 10) {
+                [self.favoriteDogTable.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.favoriteDogTable.mj_footer endRefreshing];
+            }
         }
         
     } error:^(NSError *error) {
@@ -67,17 +82,31 @@
     [self showHudInView:self.view hint:@"刷新..."];
     [self getRequestWithPath:API_User_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self hideHud];
-        [self.favotiteLiveTable setContentOffset:CGPointMake(0, 0) animated:YES];
-        self.noneDogDateView.hidden = YES;
         
-        if (successJson[@"data"][@"data"]) {
-            self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-            [self.favotiteLiveTable reloadData];
+        if (page == 1) {
+            [self hideHud];
+            [self.favotiteLiveTable setContentOffset:CGPointMake(0, 0) animated:YES];
+            self.noneDogDateView.hidden = YES;
+            
+            if (successJson[@"data"][@"data"]) {
+                self.favotiteLiveTable.favoriteLiveArray = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                [self.favotiteLiveTable reloadData];
+            }else{
+                self.noneLiveDateView.hidden = NO;
+            }
         }else{
-            self.noneLiveDateView.hidden = NO;
+            NSArray *array = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            
+            [self.favotiteLiveTable.favoriteDogArray addObjectsFromArray:array];
+            [self.favotiteLiveTable reloadData];
+            if (array.count < 10) {
+                [self.favotiteLiveTable.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.favotiteLiveTable.mj_footer endRefreshing];
+            }
         }
-        
+
     } error:^(NSError *error) {
         DLog(@"%@",error);
         
@@ -88,6 +117,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // 请求狗狗数据
+    page = 1;
     [self GetRequestFavoriteLive];
     self.navigationController.navigationBarHidden = NO;
 }
@@ -103,15 +133,26 @@
     [self setNavBarItem];
     
     self.favotiteLiveTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        page = 1;
         [self GetRequestFavoriteLive];
         // 取消下拉刷新
         [self.favotiteLiveTable.mj_header endRefreshing];
     }];
+    self.favotiteLiveTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self GetRequestFavoriteLive];
+    }];
+    
     self.favoriteDogTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 请求数据
+        page = 1;
         [self GetRequestFavoriteDog];
         // 取消下拉刷新
         [self.favoriteDogTable.mj_header endRefreshing];
+    }];
+    self.favoriteDogTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self GetRequestFavoriteDog];
     }];
 }
 #pragma mark
@@ -166,6 +207,7 @@
             [weakSelf getRequestWithPath:API_My_add_like params:dict success:^(id successJson) {
                 DLog(@"%@", successJson);
                 [weakSelf showAlert:successJson[@"message"]];
+                page = 1;
                 [weakSelf GetRequestFavoriteLive];
             } error:^(NSError *error) {
                 DLog(@"%@", error);
@@ -206,6 +248,7 @@
                 DLog(@"%@", successJson);
                 [weakSelf showAlert:successJson[@"message"]];
                 if (successJson) {
+                    page = 1;
                     [weakSelf GetRequestFavoriteDog];
                 }
             } error:^(NSError *error) {
@@ -243,6 +286,7 @@
             _favoriteDogTable.frame = tableRect2;
             
         }];
+        page =1;
         [self GetRequestFavoriteLive];
     }else {
         
@@ -261,6 +305,7 @@
             tableRect2.origin.x = 0;
             _favoriteDogTable.frame = tableRect2;
         }];
+        page =1;
         [self GetRequestFavoriteDog];
     }
 }

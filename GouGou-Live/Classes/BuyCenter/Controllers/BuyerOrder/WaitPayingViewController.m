@@ -34,10 +34,13 @@ static NSString * waitFontCell = @"waitFontCellID";
 static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 
 @interface WaitPayingViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    int page;
+}
 /** tableView */
 @property (strong,nonatomic) UITableView *tableview;
 /** 数据 */
-@property (strong,nonatomic) NSArray *dataArray;
+@property (strong,nonatomic) NSMutableArray *dataArray;
 
 @end
 
@@ -48,16 +51,34 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
     NSDictionary * dict = @{
                             @"user_id":[UserInfos sharedUser].ID,
                             @"status":@(1),
-                            @"page":@(1),
+                            @"page":@(page),
                             @"pageSize":@(10)
                             };
     [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_List_order params:dict success:^(id successJson) {
         DLog(@"%@",successJson);
-        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        DLog(@"%@",self.dataArray);
-        [self.tableview reloadData];
-        [self hideHud];
+//        self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+//        DLog(@"%@",self.dataArray);
+//        [self.tableview reloadData];
+//        [self hideHud];
+        if (page == 1) {
+            [self.tableview.mj_footer resetNoMoreData];
+            self.dataArray = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self hideHud];
+            [self.tableview reloadData];
+        }else{
+            NSArray *array = [BuyCenterModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.dataArray addObjectsFromArray:array];
+            [self hideHud];
+            [self.tableview reloadData];
+            if (array.count < 10) {
+                [self.tableview.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableview.mj_footer endRefreshing];
+            }
+        }
+
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -67,13 +88,18 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    page = 1;
     [self getPayStateOrderRequest];
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+     page = 1;
         [self getPayStateOrderRequest];
         [self.tableview.mj_header endRefreshing];
     }];
-    
+    self.tableview.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getPayStateOrderRequest];
+    }];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -90,10 +116,10 @@ static NSString * waitAllMoneyCell = @"waitAllMoneyCellID";
 }
 #pragma mark
 #pragma mark - 初始化
-- (NSArray *)dataArray {
+- (NSMutableArray *)dataArray {
     
     if (!_dataArray) {
-        _dataArray = [NSArray array];
+        _dataArray = [NSMutableArray array];
     }
     return _dataArray;
 }

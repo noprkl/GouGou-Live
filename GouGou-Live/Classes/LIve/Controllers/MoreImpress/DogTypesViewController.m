@@ -197,6 +197,7 @@ static NSString *cellid = @"RecommentCellid";
             }
             if (_dogInfos.count == pnum) {
                 [self hideHud];
+                
                 [self.tableView reloadData];
             }
         }error:^(NSError *error) {
@@ -584,7 +585,6 @@ static NSString *cellid = @"RecommentCellid";
         livingVC.liverId = model.ID;
         livingVC.liverIcon = model.userImgUrl;
         livingVC.liverName = model.merchantName;
-        livingVC.doginfos = dogInfos;
         livingVC.watchCount = model.viewNum;
         livingVC.chatRoomID = model.chatroom;
         livingVC.state = model.status;
@@ -598,7 +598,6 @@ static NSString *cellid = @"RecommentCellid";
         livingVC.liverId = model.ID;
         livingVC.liverIcon = model.userImgUrl;
         livingVC.liverName = model.merchantName;
-        livingVC.doginfos = dogInfos;
         livingVC.watchCount = model.viewNum;
         livingVC.chatRoomID = model.chatroom;
         livingVC.isLandscape = NO;

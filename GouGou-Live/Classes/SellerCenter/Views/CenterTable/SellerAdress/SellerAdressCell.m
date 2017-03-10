@@ -113,7 +113,7 @@
     [_addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakself.relationLabel.bottom).offset(10);
         make.left.equalTo(weakself.left).offset(10);
-        make.size.equalTo(CGSizeMake(30, 15));
+        make.size.equalTo(CGSizeMake(40, 15));
     }];
     
     [_detailAddress mas_makeConstraints:^(MASConstraintMaker *make) {

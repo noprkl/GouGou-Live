@@ -743,24 +743,13 @@
     
     //    self.sendMessageView.hidden = NO;
     
-    if (self.doginfos.count != 0) {
-        
+    if (_ishaveDog) {
         self.showingImg.hidden = NO;
-        
-    }else{
-        
-        self.showingImg.hidden = NO;
-        
-    }
-    
-    if (self.doginfos.count != 0) {
-        
         self.showingPrice.hidden = NO;
-        
+
     }else{
-        
-        self.showingPrice.hidden = NO;
-        
+        self.showingImg.hidden = YES;
+        self.showingPrice.hidden = YES;
     }
     
     self.watchLabel.hidden = NO;
@@ -2115,7 +2104,6 @@
     
     dogShowVC.liverID = _liverId;
     dogShowVC.liveid = _liveID;
-    dogShowVC.dogInfos = self.doginfos;
     
     dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 290);
     

@@ -23,10 +23,13 @@ static NSString * protectSuccessCell = @"protectSuccessCell";
 static NSString * protectFailedCell = @"protectFailedCell";
 
 @interface ProtectPowerViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    int page;
+}
 /** tableView */
 @property (strong,nonatomic) UITableView *tableview;
 /** 数据 */
-@property (strong,nonatomic) NSArray *dataArray;
+@property (strong,nonatomic) NSMutableArray *dataArray;
 
 @end
 
@@ -35,15 +38,33 @@ static NSString * protectFailedCell = @"protectFailedCell";
 - (void)getProtectPowerRequest {
 
     NSDictionary * dict = @{@"user_id":[UserInfos sharedUser].ID,
-                            @"page":@(1),
+                            @"page":@(page),
                             @"pageSize":@(10)
                             };
     [self showHudInView:self.view hint:@"加载中.."];
     [self getRequestWithPath:API_Activist params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        [self.tableview reloadData];
-        [self hideHud];
+//        self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+//        [self.tableview reloadData];
+//        [self hideHud];
+        if (page == 1) {
+            [self.tableview.mj_footer resetNoMoreData];
+            self.dataArray = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self hideHud];
+            [self.tableview reloadData];
+        }else{
+            NSArray *array = [ProtectProwerTableModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.dataArray addObjectsFromArray:array];
+            [self hideHud];
+            [self.tableview reloadData];
+            if (array.count < 10) {
+                [self.tableview.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableview.mj_footer endRefreshing];
+            }
+        }
+
     } error:^(NSError *error) {
         DLog(@"%@",error);
     }];
@@ -52,11 +73,17 @@ static NSString * protectFailedCell = @"protectFailedCell";
 - (void)viewWillAppear:(BOOL)animated {
 
     [super viewWillAppear:animated];
+    page = 1;
     [self getProtectPowerRequest];
     // 上下拉刷新
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        page = 1;
         [self getProtectPowerRequest];
         [self.tableview.mj_header endRefreshing];
+    }];
+    self.tableview.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getProtectPowerRequest];
     }];
 }
 
@@ -74,10 +101,10 @@ static NSString * protectFailedCell = @"protectFailedCell";
 }
 #pragma mark
 #pragma mark - 初始化
-- (NSArray *)dataArray {
+- (NSMutableArray *)dataArray {
     
     if (!_dataArray) {
-        _dataArray = [NSArray array];
+        _dataArray = [NSMutableArray array];
     }
     return _dataArray;
 }

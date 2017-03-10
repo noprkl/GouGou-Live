@@ -12,8 +12,10 @@
 #import "SellerAccepeRateModel.h"
 #import "DogImageView.h"
 @interface SellerAcceptedRateViewController ()<UITableViewDelegate, UITableViewDataSource>
-
-@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+{
+    int page;
+}
+@property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 @property(nonatomic, strong) SellerAcceptRateHeaderView *headerView; /**< 头部View */
@@ -30,17 +32,37 @@ static NSString *cellid = @"SellerAcceptRateCell";
 - (void)getRequestComment {
     NSDictionary *dict = @{ // [[UserInfos sharedUser].ID integerValue]
                            @"user_id":[UserInfos sharedUser].ID,
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(5)
                            };
     [self showHudInView:self.view hint:@"加载中"];
     
     [self getRequestWithPath:API_My_order_comment params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerAccepeRateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+//        self.dataArr = [SellerAccepeRateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+//        [UserInfos sharedUser].commentCount = self.dataArr.count;
+//        [self.tableView reloadData];
+//        [self hideHud];
+        if (page == 1) {
+            [self.tableView.mj_footer resetNoMoreData];
+            self.dataArr = [SellerAccepeRateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            [self hideHud];
+            [self.tableView reloadData];
+            
+        }else{
+            NSArray *array = [SellerAccepeRateModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            [self.dataArr addObjectsFromArray:array];
+            [self hideHud];
+            [self.tableView reloadData];
+            if (array.count < 5) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+        }
         [UserInfos sharedUser].commentCount = self.dataArr.count;
-        [self.tableView reloadData];
-        [self hideHud];
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -78,13 +100,19 @@ static NSString *cellid = @"SellerAcceptRateCell";
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    page = 1;
     [self getRequestComment];
     [self getUserPleasure];
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        page = 1;
         [self getRequestComment];
         [self getUserPleasure];
         [self.tableView.mj_header endRefreshing];
+    }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getRequestComment];
     }];
 }
 - (void)initUI{
@@ -92,9 +120,9 @@ static NSString *cellid = @"SellerAcceptRateCell";
 }
 #pragma mark
 #pragma mark - 懒加载
-- (NSArray *)dataArr {
+- (NSMutableArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = [NSArray array];
+        _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }

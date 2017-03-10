@@ -93,6 +93,7 @@
         
 //        [_messageTextField addTarget:self action:@selector(textFieldEditAction:) forControlEvents:(UIControlEventAllEvents)];
         _messageTextField.delegate = self;
+        
     }
     return _messageTextField;
 }

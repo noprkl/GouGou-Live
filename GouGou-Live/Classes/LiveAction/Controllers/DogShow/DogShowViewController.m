@@ -82,11 +82,7 @@ static NSString *cellid = @"DogShowCellid";
         make.edges.equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
 }
-//- (void)setDogInfos:(NSArray *)dogInfos {
-//    _dogInfos = dogInfos;
-//    self.dataArr = dogInfos;
-//    [self.tableView reloadData];
-//}
+
 #pragma mark
 #pragma mark - 懒加载
 - (NSArray *)dataArr {

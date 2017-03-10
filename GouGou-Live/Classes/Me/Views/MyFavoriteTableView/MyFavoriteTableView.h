@@ -19,9 +19,9 @@ typedef void(^ClickFavoriteLiveBlock)(NSString *liveID);
 /** 是否为直播 */
 @property (assign,nonatomic) BOOL isLive;
 /** 存放喜欢的直播*/
-@property (strong,nonatomic) NSArray *favoriteLiveArray;
+@property (strong,nonatomic) NSMutableArray *favoriteLiveArray;
 /** 存放喜欢的狗狗 */
-@property (strong,nonatomic) NSArray *favoriteDogArray;
+@property (strong,nonatomic) NSMutableArray *favoriteDogArray;
 
 @property(nonatomic, strong) DeleteFavoritDogBlock deleDogBlock; /**< 删除block */
 @property(nonatomic, strong) DeleteFavoriteLiveBlock deleLiveBlock; /**< 删除block */

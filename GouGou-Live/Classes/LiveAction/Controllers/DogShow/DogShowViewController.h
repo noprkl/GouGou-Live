@@ -13,7 +13,6 @@
 @property (nonatomic, strong) NSString *liverID; /**< 主播id */
 @property (nonatomic, strong) NSString *liverIcon; /**< 主播头像 */
 @property (nonatomic, strong) NSString *liverName; /**< 主播名字 */
-@property (nonatomic, strong) NSArray *dogInfos; /**< 商品详情信息 */
 
 @property (nonatomic, strong) NSString *liveid; /**< 直播id */
 

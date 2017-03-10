@@ -29,7 +29,9 @@
 #import "TalkingViewController.h"
 
 @interface RecommendViewController ()<UIScrollViewDelegate, SDCycleScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
-
+{
+    NSIndexPath *indexpaht;
+}
 /** 底部scrollview */
 @property (strong, nonatomic) UIScrollView *baseScrollView;
 
@@ -65,14 +67,15 @@ static NSString *cellid = @"RecommentCellid";
 
     NSDictionary *dict = @{
                            @"page":@(_page),
-                           @"pageSize":@(10)
+                           @"pageSize":@(10*_page)
                            };
     DLog(@"%@", dict);
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_Live_new_list params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-//        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
         if (_page == 1) {// 下拉
+            [self.tableView.mj_footer resetNoMoreData];
+            indexpaht = [NSIndexPath indexPathForRow:0 inSection:1];
             if (!successJson[@"data"][@"data"]) { // 如果没有数据
                 [self.liveListArray removeAllObjects];
                 [self.dogInfos removeAllObjects];
@@ -86,24 +89,17 @@ static NSString *cellid = @"RecommentCellid";
             }
         }else{            // 上拉
             NSArray *dataarr = successJson[@"data"][@"data"];
-            [self.tableView.mj_footer endRefreshingWithCompletionBlock:^{
+            indexpaht = [NSIndexPath indexPathForRow:self.liveListArray.count-1 inSection:1];
+            NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
+            self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
+            [self loadProductInfo];
+
+            if (dataarr.count <= _page * 10) {
+                self.page = self.page - 1;
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
                 [self.tableView.mj_footer endRefreshing];
-                if (dataarr.count == 0) {
-                    [self showAlert:@"没有更多了"];
-                    [self hideHud];
-                    self.page = self.page - 1;
-                    return ;
-                }else{
-                    NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
-                    self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
-                    [self loadProductInfo];
-                    if (dataarr.count < 10) {
-                        [self showAlert:@"没有更多了"];
-                        self.page = self.page - 1;
-                        return ;
-                    }
-                }
-            }];
+            }
         }
 
     } error:^(NSError *error) {
@@ -123,16 +119,14 @@ static NSString *cellid = @"RecommentCellid";
                                @"live_id":model.liveId
                                };
         [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-            DLog(@"%@", dict);
-            DLog(@"%@", successJson);
+           
             if (successJson[@"data"]) {
               
                 NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-//                [_dogInfos setObject:dogs forKey:model.liveId];
                 [_dogInfos setValue:dogs forKey:model.liveId];
             }
             if (pnum == _dogInfos.count) {
-                DLog(@"%@", _dogInfos);
+              
                 [self.tableView reloadData];
                 [self hideHud];
             }
@@ -152,8 +146,6 @@ static NSString *cellid = @"RecommentCellid";
         }
         self.urlArray = bannerArr;
         [self.tableView reloadData];
-//        NSIndexSet *index = [NSIndexSet indexSetWithIndex:0];
-//        [self.tableView reloadSections:index withRowAnimation:(UITableViewRowAnimationNone)];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -162,11 +154,12 @@ static NSString *cellid = @"RecommentCellid";
     NSDictionary *dict = @{
                            @"size":@([size.ID intValue])
                            };
-        [self.tableView setContentOffset:CGPointMake(0, 0)];
+    [self.tableView setContentOffset:CGPointMake(0, 0)];
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_Live_retrieve params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (_page == 1) {// 下拉
+            [self.tableView.mj_footer resetNoMoreData];
             if (!successJson[@"data"][@"data"]) { // 如果没有数据
                 [self.liveListArray removeAllObjects];
                 [self.dogInfos removeAllObjects];
@@ -192,9 +185,8 @@ static NSString *cellid = @"RecommentCellid";
                     self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
                     [self loadProductInfo];
                     if (dataarr.count < 10) {
-                        [self showAlert:@"没有更多了"];
                         self.page = self.page - 1;
-                        return ;
+                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
                     }
                 }
             }];
@@ -207,7 +199,7 @@ static NSString *cellid = @"RecommentCellid";
     NSDictionary *dict = @{
                            @"t":@(minAge.time),
                            @"e":@(maxAge.time),
-                           @"page":@(1),
+                           @"page":@(_page),
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
@@ -216,6 +208,7 @@ static NSString *cellid = @"RecommentCellid";
     [self getRequestWithPath:API_Age_screening params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (_page == 1) {// 下拉
+            [self.tableView.mj_footer resetNoMoreData];
             if (!successJson[@"data"][@"data"]) { // 如果没有数据
                 [self.liveListArray removeAllObjects];
                 [self.dogInfos removeAllObjects];
@@ -230,20 +223,16 @@ static NSString *cellid = @"RecommentCellid";
         }else{            // 上拉
             NSArray *dataarr = successJson[@"data"][@"data"];
             [self.tableView.mj_footer endRefreshingWithCompletionBlock:^{
-                [self.tableView.mj_footer endRefreshing];
                 if (dataarr.count == 0) {
-                    [self showAlert:@"没有更多了"];
-                    [self hideHud];
+                        [self.tableView.mj_footer endRefreshingWithNoMoreData];                    [self hideHud];
                     self.page = self.page - 1;
-                    return ;
                 }else{
                     NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
                     self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
                     [self loadProductInfo];
                     if (dataarr.count < 10) {
-                        [self showAlert:@"没有更多了"];
+                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
                         self.page = self.page - 1;
-                        return ;
                     }
                 }
             }];
@@ -256,7 +245,7 @@ static NSString *cellid = @"RecommentCellid";
     NSDictionary *dict = @{
                            @"start_price":minPrice.name,
                            @"end_price":maxPrice.name,
-                           @"page":@(1),
+                           @"page":@(_page),
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
@@ -265,6 +254,7 @@ static NSString *cellid = @"RecommentCellid";
     [self getRequestWithPath:API_Live_list_new_im params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (_page == 1) {// 下拉
+            [self.tableView.mj_footer resetNoMoreData];
             if (!successJson[@"data"][@"data"]) { // 如果没有数据
                 [self.liveListArray removeAllObjects];
                 [self.dogInfos removeAllObjects];
@@ -283,16 +273,15 @@ static NSString *cellid = @"RecommentCellid";
                 if (dataarr.count == 0) {
                     [self showAlert:@"没有更多了"];
                     [self hideHud];
-                    self.page = self.page - 1;
+//                    self.page = self.page - 1;
                     return ;
                 }else{
                     NSArray *liveArr = [LiveViewCellModel mj_objectArrayWithKeyValuesArray:dataarr];
                     self.liveListArray = [NSMutableArray arrayWithArray:liveArr];
                     [self loadProductInfo];
                     if (dataarr.count < 10) {
-                        [self showAlert:@"没有更多了"];
                         self.page = self.page - 1;
-                        return ;
+                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
                     }
                 }
             }];
@@ -334,8 +323,9 @@ static NSString *cellid = @"RecommentCellid";
         [self getRequestBanner];
         [self.tableView.mj_header endRefreshing];
     }];
-    self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
-        _page ++;
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _page += 1;
         [self getRequestLiveList];
 //        [self.tableView.mj_footer endRefreshing];
     }];
@@ -383,7 +373,6 @@ static NSString *cellid = @"RecommentCellid";
         livingVC.liverId = model.ID;
         livingVC.liverIcon = model.userImgUrl;
         livingVC.liverName = model.merchantName;
-        livingVC.doginfos = dogInfos;
         livingVC.watchCount = model.viewNum;
         livingVC.chatRoomID = model.chatroom;
         livingVC.state = model.status;
@@ -397,7 +386,6 @@ static NSString *cellid = @"RecommentCellid";
         livingVC.liverId = model.ID;
         livingVC.liverIcon = model.userImgUrl;
         livingVC.liverName = model.merchantName;
-        livingVC.doginfos = dogInfos;
         livingVC.watchCount = model.viewNum;
         livingVC.chatRoomID = model.chatroom;
         livingVC.isLandscape = NO;
@@ -434,25 +422,6 @@ static NSString *cellid = @"RecommentCellid";
             livingVC.chatRoomID = model.chatroom;
             livingVC.isLandscape = NO;
             livingVC.hidesBottomBarWhenPushed = YES;
-            if ([model.pNum integerValue] > 0) {
-                NSDictionary *dict = @{
-                                       @"live_id":model.liveId
-                                       };
-                [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-                    if (successJson[@"data"]) {
-                        NSArray *doginfos = [LiveListDogInfoModel   mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-                        livingVC.doginfos = doginfos;
-                        [self.navigationController pushViewController:livingVC animated:YES];
-                    }
-                } error:^(NSError *error) {
-                    
-                }];
-
-            }else{
-                livingVC.doginfos = @[];
-                [self.navigationController pushViewController:livingVC animated:YES];
-            }
-            
         }
     }
     DLog(@"%@", model.url);
@@ -513,8 +482,6 @@ static NSString *cellid = @"RecommentCellid";
         if (model.pNum > 0) {
             NSArray *arr = [self.dogInfos valueForKey:model.liveId];
             cell.dogInfos = arr;
-            DLog(@"%@", model.liveId);
-            DLog(@"%@", arr);
             
             cell.cardBlcok = ^(UIControl *control){};
         }

@@ -14,10 +14,13 @@
 
 static NSString * watchCell = @"watchCellID";
 @interface WatchHistoryViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    int page;
+}
 /** tableview */
 @property (strong,nonatomic) UITableView *tableview;
 
-@property (nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+@property (nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 
 @property (nonatomic, strong) NoneDateView *noneDateView; /**< 没有数据 */
 
@@ -27,22 +30,38 @@ static NSString * watchCell = @"watchCellID";
 - (void)getRequestWatchHiostory {
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID,
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10)
                            };
     [self showHudInView:self.view hint:@"加载..."];
     [self getRequestWithPath:API_List_view_history params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        if (successJson[@"data"][@"data"]) {
-            self.tableview.hidden = NO;
-            self.noneDateView.hidden = YES;
-            self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-            [self.tableview reloadData];
+        if (page == 1) {
+            if (successJson[@"data"][@"data"]) {
+                [self.tableview.mj_footer resetNoMoreData];
+                self.tableview.hidden = NO;
+                self.noneDateView.hidden = YES;
+                self.dataArr = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+                [self.tableview reloadData];
+            }else{
+                self.tableview.hidden = YES;
+                self.noneDateView.hidden = NO;
+            }
+            [self hideHud];
         }else{
-            self.tableview.hidden = YES;
-            self.noneDateView.hidden = NO;
+            NSArray *array = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.dataArr addObjectsFromArray:array];
+            [self.tableview reloadData];
+            [self hideHud];
+
+            if (array.count < 10) {
+                [self.tableview.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableview.mj_footer endRefreshing];
+            }
         }
-        [self hideHud];
+        
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -58,6 +77,7 @@ static NSString * watchCell = @"watchCellID";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    page = 1;
     [self getRequestWatchHiostory];
 }
 - (void)initUI {
@@ -67,13 +87,18 @@ static NSString * watchCell = @"watchCellID";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     self.title = @"观看历史";
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        page = 1;
         [self getRequestWatchHiostory];
         [self.tableview.mj_header endRefreshing];
     }];
+    self.tableview.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getRequestWatchHiostory];
+    }];
 }
-- (NSArray *)dataArr {
+- (NSMutableArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = [NSArray array];
+        _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }
@@ -133,6 +158,7 @@ static NSString * watchCell = @"watchCellID";
         [self getRequestWithPath:API_Del_view_history params:dict success:^(id successJson) {
             DLog(@"%@", successJson);
             [self showAlert:successJson[@"message"]];
+            page = 1;
             [self getRequestWatchHiostory];
         } error:^(NSError *error) {
             DLog(@"%@", error);

@@ -20,7 +20,9 @@
 #import "SellerMyGoodsModel.h"
 
 @interface SellerMyGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
-
+{
+    int page;
+}
 @property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
@@ -50,6 +52,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
 #pragma mark - 网络请求
 // 全部商品
 - (void)getRequestSellerDog {
+    
     NSDictionary *dict = @{ //
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
                            @"page":@(1),
@@ -61,9 +64,10 @@ static NSString *cellid = @"SellerMyGoodsCell";
     [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
         if (successJson) {
+            [self.tableView.mj_footer resetNoMoreData];
             self.dataArr = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-            [self.tableView reloadData];
             [self hideHud];
+            [self.tableView reloadData];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);
@@ -92,17 +96,31 @@ static NSString *cellid = @"SellerMyGoodsCell";
 - (void)GetRequestStateGoods:(NSInteger)state {
     NSDictionary *dict = @{ //
                            @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10),
                            @"type":@(state)
                            };
     [self showHudInView:self.view hint:@"加载中"];
-
     [self getRequestWithPath:API_Commodity params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
-        [self.tableView reloadData];
-        [self hideHud];
+        if (page == 1) {
+            [self.tableView.mj_footer resetNoMoreData];
+            self.dataArr = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            [self.tableView reloadData];
+            [self hideHud];
+        }else{
+            NSArray *array = [SellerMyGoodsModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
+            [self.dataArr addObjectsFromArray:array];
+            [self.tableView reloadData];
+            [self hideHud];
+            if (array.count < 10) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+        }
+      
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -114,6 +132,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
+//    [self getRequestSellerDog];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -122,6 +141,7 @@ static NSString *cellid = @"SellerMyGoodsCell";
 - (void)initUI{
     _isMove = NO;
     _isSelect = NO;
+    _lastBtn = 0;
     [self.view addSubview:self.headerView];
     [self.view addSubview:self.tableView];
 //    if (self.lastBtn == 5) {
@@ -142,10 +162,15 @@ static NSString *cellid = @"SellerMyGoodsCell";
     // 上下拉刷新
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
-        [self getRequestSellerDog];
+        page = 1;
+        [self GetRequestStateGoods:_lastBtn];
         
         [self.tableView.mj_header endRefreshing];
+    }];
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self GetRequestStateGoods:_lastBtn];
     }];
 }
 
@@ -187,18 +212,22 @@ static NSString *cellid = @"SellerMyGoodsCell";
 
         _headerView.allBlock = ^(){ //0 所有 1审核中/审核未通过  2 售完 3 待售
             weakSelf.lastBtn = 0;
+            page = 1;
             [weakSelf GetRequestStateGoods:0];
         };
         _headerView.waitSellBlock = ^(){
             weakSelf.lastBtn = 3;
+            page = 1;
             [weakSelf GetRequestStateGoods:3];
         };
         _headerView.soldBlock = ^(){
             weakSelf.lastBtn = 2;
+            page = 1;
             [weakSelf GetRequestStateGoods:2];
         };
         _headerView.reviewBlock = ^(){
             weakSelf.lastBtn = 1;
+            page = 1;
             [weakSelf GetRequestStateGoods:1];
         };
     }

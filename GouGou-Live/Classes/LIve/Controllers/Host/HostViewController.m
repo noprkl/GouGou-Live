@@ -27,6 +27,7 @@ static NSString * reuseIdentifier = @"headerID";
 @interface HostViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     int page;
+    NSIndexPath *indexpaht;
 }
 /** 正在直播的狗 */
 @property (strong,nonatomic) UICollectionView *collection;
@@ -58,8 +59,10 @@ static NSString * reuseIdentifier = @"headerID";
     [self getRequestWithPath:API_Look_like params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
        
-        [self.collection setContentOffset:CGPointMake(0, 0) animated:NO];
+//        [self.collection setContentOffset:CGPointMake(0, 0) animated:NO];
         if (page == 1) {// 下拉
+            indexpaht = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.collection.mj_footer resetNoMoreData];
             if (!successJson[@"data"][@"data"]) { // 如果没有数据
                 [self.dataArray removeAllObjects];
                 [self.dogInfos removeAllObjects];
@@ -69,31 +72,29 @@ static NSString * reuseIdentifier = @"headerID";
                 /** 所有信息 */
                 NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
                 self.dataArray = [NSMutableArray arrayWithArray:liveArr];
-                [self loadProductInfo];
+//                [self loadProductInfo];
+                [self.collection reloadData];
+                [self hideHud];
             }
-        }else{            // 上拉
+        }else{   // 上拉
             NSArray *dataarr = successJson[@"data"][@"data"];
-            [self.collection.mj_footer endRefreshingWithCompletionBlock:^{
+            indexpaht = [NSIndexPath indexPathForRow:self.dataArray.count inSection:0];
+            NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:dataarr];
+            self.dataArray = [NSMutableArray arrayWithArray:liveArr];
+//            [self loadProductInfo];
+            [self.collection reloadData];
+            [self.collection scrollToItemAtIndexPath:indexpaht atScrollPosition:(UICollectionViewScrollPositionTop) animated:YES];
+
+            [self hideHud];
+            if (dataarr.count < page *10) {
+               
+                [self.collection.mj_footer endRefreshingWithNoMoreData];
+                page = page - 1;
+            }else{
                 [self.collection.mj_footer endRefreshing];
-                if (dataarr.count == 0) {
-                    [self showAlert:@"没有更多了"];
-                    [self hideHud];
-                    page = page - 1;
-                    return ;
-                }else{
-                    NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:dataarr];
-                    self.dataArray = [NSMutableArray arrayWithArray:liveArr];
-                    [self loadProductInfo];
-                    if (dataarr.count < 10) {
-                        [self showAlert:@"没有更多了"];
-                        page = page - 1;
-                        return ;
-                    }
-                }
-            }];
+            }
         }
 
-        //        [self.collection reloadData];
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -113,16 +114,15 @@ static NSString * reuseIdentifier = @"headerID";
                                @"live_id":model.liveId
                                };
         [self getRequestWithPath:API_Live_list_product params:dict success:^(id successJson) {
-            DLog(@"第几个%ld", i);
-            DLog(@"%@", successJson);
             if (successJson[@"data"]) {
                 
                 NSArray *dogs = [LiveListDogInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
                 [_dogInfos setObject:dogs forKey:model.liveId];
             }
             if (_dogInfos.count == pnum) {
-                [self hideHud];
                 [self.collection reloadData];
+                [self.collection scrollToItemAtIndexPath:indexpaht atScrollPosition:(UICollectionViewScrollPositionBottom) animated:YES];
+                [self hideHud];
             }
         }error:^(NSError *error) {
             DLog(@"%@", error);
@@ -177,7 +177,7 @@ static NSString * reuseIdentifier = @"headerID";
         [self getRequestHostLive];
         [self.collection.mj_header endRefreshing];
     }];
-    self.collection.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+    self.collection.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         page ++;
         [self getRequestHostLive];
     }];
@@ -311,15 +311,12 @@ static NSString * reuseIdentifier = @"headerID";
 
     HostLiveModel *model = self.dataArray[indexPath.row];
             DLog(@"%@", model);
-    NSArray *dogArr = [self.dogInfos valueForKey:model.liveId];
-    
         if ([model.status isEqualToString:@"1"]) {
             LivingViewController *livingVC = [[LivingViewController alloc] init];
             livingVC.liveID = model.liveId;
             livingVC.liverId = model.userId;
             livingVC.liverIcon = model.userImgUrl;
             livingVC.liverName = model.userNickName;
-            livingVC.doginfos = dogArr;
             livingVC.watchCount = model.viewNum;
             livingVC.chatRoomID = model.chatroom;
             livingVC.state = model.status;
@@ -333,7 +330,6 @@ static NSString * reuseIdentifier = @"headerID";
             livingVC.liverId = model.userId;
             livingVC.liverIcon = model.userImgUrl;
             livingVC.liverName = model.userNickName;
-            livingVC.doginfos = dogArr;
             livingVC.watchCount = model.viewNum;
             livingVC.chatRoomID = model.chatroom;
             livingVC.state = model.status;

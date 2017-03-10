@@ -32,14 +32,14 @@ static NSString * dogCell = @"dogCellID";
     return self;
 }
 
-- (void)setFavoriteLiveArray:(NSArray *)favoriteLiveArray {
+- (void)setFavoriteLiveArray:(NSMutableArray *)favoriteLiveArray {
 
     _favoriteLiveArray = favoriteLiveArray;
     
     [self reloadData];
 }
 
-- (void)setFavoriteDogArray:(NSArray *)favoriteDogArray {
+- (void)setFavoriteDogArray:(NSMutableArray *)favoriteDogArray {
 
     _favoriteDogArray = favoriteDogArray;
     

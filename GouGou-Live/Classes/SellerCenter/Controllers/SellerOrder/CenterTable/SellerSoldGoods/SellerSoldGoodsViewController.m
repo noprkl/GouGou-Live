@@ -19,8 +19,10 @@
 #import "SellerSendAlertView.h"
 
 @interface SellerSoldGoodsViewController ()<UITableViewDelegate, UITableViewDataSource>
-
-@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+{
+    int page;
+}
+@property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 @property(nonatomic, strong) NSMutableArray *cellStates; /**< cell数组 */
 
@@ -44,18 +46,35 @@ static NSString *closeCell = @"SellerCloseCell";
     NSDictionary *dict = @{
                            @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(0),
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10)
                            };
     DLog(@"%@", dict);
     [self showHudInView:self.tableView hint:@"加载中"];
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        if (successJson) {
+//        if (successJson) {
+//            self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+//            [self.tableView reloadData];
+//        }
+//        [self hideHud];
+        if (page == 1) {
             self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self hideHud];
             [self.tableView reloadData];
+        }else{
+            NSArray *array = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.dataArr addObjectsFromArray:array];
+            [self hideHud];
+            [self.tableView reloadData];
+            if (array.count < 10) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
         }
-        [self hideHud];
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -65,14 +84,20 @@ static NSString *closeCell = @"SellerCloseCell";
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    page = 1;
+
     [self getRequestAllOrder];
 
     // 上下拉刷新
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
+        page = 1;
         [self getRequestAllOrder];
         
         [self.tableView.mj_header endRefreshing];
+    }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getRequestAllOrder];
     }];
 }
 - (void)viewDidLoad {
@@ -84,9 +109,9 @@ static NSString *closeCell = @"SellerCloseCell";
 }
 #pragma mark
 #pragma mark - 懒加载
-- (NSArray *)dataArr {
+- (NSMutableArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = [NSArray array];
+        _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }

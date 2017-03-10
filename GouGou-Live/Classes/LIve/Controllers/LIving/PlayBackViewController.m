@@ -7,10 +7,6 @@
 //
 
 
-#define PlayMaxY 185 //220
-
-#define VcMinY PlayMaxY + 45
-
 #import "PlayBackViewController.h"
 // 播放器
 #import "PlayerBackTopView.h"
@@ -26,6 +22,7 @@
 #import "SellerShowViewController.h"
 
 #import "AppDelegate.h"
+#import <sys/utsname.h>
 
 @interface PlayBackViewController ()<UIScrollViewDelegate>
 // 回放
@@ -34,6 +31,8 @@
     NSTimer *_timer;
     id _playTimeObserver; // 观察者
     BOOL isFinish; // 播放完毕
+    CGFloat PlayMaxY;
+    CGFloat VcMinY;
 }
 #pragma mark
 #pragma mark - 回放
@@ -84,6 +83,15 @@
 @implementation PlayBackViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+        // 比6，2大 5以上
+    if (SCREEN_WIDTH > 320){
+        PlayMaxY = 220; //220
+    }else{
+        PlayMaxY = 185; //220
+    }
+    VcMinY = PlayMaxY + 45;
+
     [self getRequestPlayBackURL];
     [self playbackInitUI];
     
@@ -115,6 +123,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    
     
     self.navigationController.navigationBarHidden = YES;
     // 请求直播
@@ -661,7 +671,6 @@
     dogShowVC.liverName = self.liverName;
     dogShowVC.liverID = _liverId;
     dogShowVC.liveid = _liveID;
-    dogShowVC.dogInfos = self.doginfos;
     dogShowVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - VcMinY);
     [self.baseScrollView addSubview:dogShowVC .view];
     [self.childVCS addObject:dogShowVC];

@@ -76,8 +76,10 @@
 - (void)clickSendMesBtnAction {
     if (_sendBlock) {
         _sendBlock(self.messageTextField.text);
-        self.messageTextField.text = @"";
-        [self.messageTextField resignFirstResponder];
+        if (self.messageTextField.text.length != 0) {
+            self.messageTextField.text = @"";
+            [self.messageTextField resignFirstResponder];
+        }
     }
 }
 

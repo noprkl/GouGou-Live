@@ -11,8 +11,10 @@
 #import "SellerSendAlertView.h"
 
 @interface SellerWaitAcceptViewController ()<UITableViewDelegate, UITableViewDataSource>
-
-@property(nonatomic, strong) NSArray *dataArr; /**< 数据源 */
+{
+    int page;
+}
+@property(nonatomic, strong) NSMutableArray *dataArr; /**< 数据源 */
 
 @property(nonatomic, strong) UITableView *tableView; /**< TableView */
 @property(nonatomic, strong) NSMutableArray *btnTitles; /**< 按钮数组 */
@@ -31,15 +33,33 @@ static NSString *cellid = @"SellerWaitAcceptCell";
     NSDictionary *dict = @{// [[UserInfos sharedUser].ID integerValue]
                            @"user_id":[UserInfos sharedUser].ID,
                            @"status":@(3),
-                           @"page":@(1),
+                           @"page":@(page),
                            @"pageSize":@(10)
                            };
     [self showHudInView:self.view hint:@"加载中"];
     [self getRequestWithPath:API_My_order params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
-        [self.tableView reloadData];
-        [self hideHud];
+//        self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+//        [self.tableView reloadData];
+//        [self hideHud];
+        if (page == 1) {
+            [self.tableView.mj_footer resetNoMoreData];
+            self.dataArr = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self hideHud];
+            [self.tableView reloadData];
+        }else{
+            NSArray *array = [SellerOrderModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
+            [self.dataArr addObjectsFromArray:array];
+            [self hideHud];
+            [self.tableView reloadData];
+            if (array.count < 10) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                page -= 1;
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+        }
+
     } error:^(NSError *error) {
         DLog(@"%@", error);
     }];
@@ -49,15 +69,22 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 #pragma mark - 生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    page = 1;
+
     [self getRequestWaitAcceptOrder];
     // 上下拉刷新
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
+        page = 1;
         [self getRequestWaitAcceptOrder];
         
         [self.tableView.mj_header endRefreshing];
     }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        page ++;
+        [self getRequestWaitAcceptOrder];
+    }];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,9 +93,9 @@ static NSString *cellid = @"SellerWaitAcceptCell";
 - (void)initUI{
     [self.view addSubview:self.tableView];
 }
-- (NSArray *)dataArr {
+- (NSMutableArray *)dataArr {
     if (!_dataArr) {
-        _dataArr = [NSArray array];
+        _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }

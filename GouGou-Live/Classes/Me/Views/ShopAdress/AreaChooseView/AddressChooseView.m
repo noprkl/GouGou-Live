@@ -293,44 +293,6 @@
         [self.areaHUD removeFromSuperview];
     }];
 }
-- (void)test {
-    //    if (component == 0) {
-    //        [pickerView reloadComponent:1];
-    //        [pickerView reloadComponent:2];
-    //    }else if (component == 1){
-    //        [pickerView reloadComponent:2];
-    //    }
-    //    NSInteger provinceIndex = [self.areaPicker selectedRowInComponent:0];
-    //    MyShopProvinceModel *provinceModel = self.provinceDataArr[provinceIndex];
-    //    self.province = provinceModel.name;
-    //    if (_firstBlock) {
-    //        // 获得第二行数据
-    //        self.cityDataArr = _firstBlock(provinceModel);
-    //        // 刷新
-    //        [self.areaPicker selectRow:0 inComponent:1 animated:YES];
-    //        if (_secondBlock) {
-    //            // 获得第三行数据
-    //            self.desticDataArr = _secondBlock(self.cityDataArr[0]);
-    //
-    //            [self.areaPicker selectRow:0 inComponent:2 animated:YES];
-    //        }
-    //    }
-    //    // 列号为1
-    //    NSInteger cityIndex = [self.areaPicker selectedRowInComponent:1];
-    //    MyShopProvinceModel *cityModel = self.cityDataArr[cityIndex];
-    //    if (_secondBlock) {
-    //        // 获得第三行数据
-    //        self.desticDataArr = _secondBlock(cityModel);
-    //        // 刷新
-    //
-    //        [self.areaPicker selectRow:0 inComponent:2 animated:YES];
-    //    }
-    //    self.city = cityModel.name;
-    //
-    //    //第2列
-    //    NSInteger desticIndex = [self.areaPicker selectedRowInComponent:2];
-    //    MyShopProvinceModel *model = self.desticDataArr[desticIndex];
-    //    self.province = model.name;
-}
+
 
 @end

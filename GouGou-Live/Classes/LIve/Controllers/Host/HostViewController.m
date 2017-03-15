@@ -72,7 +72,6 @@ static NSString * reuseIdentifier = @"headerID";
                 /** 所有信息 */
                 NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
                 self.dataArray = [NSMutableArray arrayWithArray:liveArr];
-//                [self loadProductInfo];
                 [self.collection reloadData];
                 [self hideHud];
             }
@@ -81,7 +80,6 @@ static NSString * reuseIdentifier = @"headerID";
             indexpaht = [NSIndexPath indexPathForRow:self.dataArray.count inSection:0];
             NSArray *liveArr = [HostLiveModel mj_objectArrayWithKeyValuesArray:dataarr];
             self.dataArray = [NSMutableArray arrayWithArray:liveArr];
-//            [self loadProductInfo];
             [self.collection reloadData];
             [self.collection scrollToItemAtIndexPath:indexpaht atScrollPosition:(UICollectionViewScrollPositionTop) animated:YES];
 

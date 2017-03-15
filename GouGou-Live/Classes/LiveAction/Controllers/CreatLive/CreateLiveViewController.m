@@ -138,7 +138,6 @@
     self.editNameText.delegate = self;
     
     [self makeConstraint];
-
 }
 // 约束
 - (void)makeConstraint {

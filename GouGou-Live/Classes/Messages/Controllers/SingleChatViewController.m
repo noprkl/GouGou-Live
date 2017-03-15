@@ -33,23 +33,23 @@
 @end
 
 @implementation SingleChatViewController
-- (void)getrequestPersonalMessage {
-    NSDictionary *dict = @{
-                           @"id":@([_chatID intValue])
-                           };
-    [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/personal" params:dict success:^(id successJson) {
-        DLog(@"%@", successJson);
-        NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
-//        self.personalModel = [arr lastObject];
-//        if (self.personalModel.userName != NULL) {
-//            self.title = self.personalModel.userName;
-//        }else{
-//            self.title = _chatID;
-//        }
-    } error:^(NSError *error) {
-        DLog(@"%@", error);
-    }];
-}
+//- (void)getrequestPersonalMessage {
+//    NSDictionary *dict = @{
+//                           @"id":@([_chatID intValue])
+//                           };
+//    [HTTPTool getRequestWithPath:@"http://gougou.itnuc.com/api/UserService/personal" params:dict success:^(id successJson) {
+//        DLog(@"%@", successJson);
+//        NSArray *arr = [PersonalMessageModel mj_objectArrayWithKeyValuesArray:successJson[@"data"]];
+////        self.personalModel = [arr lastObject];
+////        if (self.personalModel.userName != NULL) {
+////            self.title = self.personalModel.userName;
+////        }else{
+////            self.title = _chatID;
+////        }
+//    } error:^(NSError *error) {
+//        DLog(@"%@", error);
+//    }];
+//}
 //#pragma mark
 //#pragma mark - 自定义cell
 // 头像

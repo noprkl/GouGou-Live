@@ -343,7 +343,7 @@ static NSString *cellid = @"SellerOrderDetailLogisticsInfo";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DLog(@"%ld", indexPath.row);
+    DLog(@"%ld", (long)indexPath.row);
 }
 #pragma mark
 #pragma mark - 点击按钮Action

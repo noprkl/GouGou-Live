@@ -138,14 +138,14 @@
         return NO;
         
     }else if (textField == self.codeTextField){
+        // 不用限制判断验证码
+//        BOOL flag = [NSString validateNumber:string];
+//        if (range.location <= 5 && flag) {
         
-        BOOL flag = [NSString validateNumber:string];
-        if (range.location <= 5 && flag) {
-            
             return YES;
-        }
-        
-        return NO;
+//        }
+//        
+//        return NO;
     }else{
         
         return NO;

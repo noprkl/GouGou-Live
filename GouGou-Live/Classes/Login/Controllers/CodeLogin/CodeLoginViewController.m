@@ -268,14 +268,14 @@
         return NO;
         
     }else if (textField == self.psdNumber){
+        // 不用限制判断验证码
+//        BOOL flag = [NSString validateNumber:string];
+//        if (flag) {
         
-        BOOL flag = [NSString validateNumber:string];
-        if (range.location <= 5 && flag) {
-           
             return YES;
-        }
-
-        return NO;
+//        }
+//
+//        return NO;
     }else{
         
         return NO;

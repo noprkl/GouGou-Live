@@ -334,7 +334,7 @@
                                    };
         
         DLog(@"%@", liveDict);
-        
+        [self showHudInView:self.view hint:@"创建中.."];
         [self postRequestWithPath:API_Live_product params:liveDict success:^(id successJson) {
             DLog(@"%@", successJson);
             if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
@@ -365,6 +365,10 @@
                 streamVc.streamRtmp = streamModel.rtmp;
                 streamVc.shareType = self.shareType;
                 [self.navigationController pushViewController:streamVc animated:YES];
+                [self hideHud];
+            }else{
+                [self showAlert:@"创建失败"];
+                [self hideHud];
             }
         } error:^(NSError *error) {
             DLog(@"%@", error);

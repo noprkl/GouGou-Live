@@ -44,6 +44,7 @@
     self.certificateLabel.font = [UIFont systemFontOfSize:12];
     self.anchorNameLabel.font = [UIFont systemFontOfSize:14];
     self.roomMessageLabel.font = [UIFont systemFontOfSize:12];
+    self.watchCountLabel.font = [UIFont systemFontOfSize:14];
 }
 - (void)clickCardViewAction:(UIControl *)control {
     if (_cardBlcok) {
@@ -68,9 +69,14 @@
         [self.anchorIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
     }
     self.anchorNameLabel.text = liveCellModel.merchantName;
-    if (liveCellModel.snapshot.length != 0) {
-        [self.roomImageView sd_setImageWithURL:[NSURL URLWithString:liveCellModel.snapshot] placeholderImage:[UIImage imageNamed:@"直播图"]];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:liveCellModel.snapshot]];
+
+    if (data) {
+        self.roomImageView.image = [UIImage imageWithData:data];
+    }else{
+        self.roomImageView.image = [UIImage imageNamed:@"直播图"];
     }
+    
     if ([liveCellModel.status isEqualToString:@"1"]) {
         self.liveStateIcon.image = [UIImage imageNamed:@"直播中"];
     }else if ([liveCellModel.status isEqualToString:@"3"]){

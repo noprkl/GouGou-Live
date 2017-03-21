@@ -285,10 +285,15 @@
 
 #pragma mark - 直播
 
-/** 添加直播接口 */
+/** 创建直播接口 */
 #define API_Live_product @"api/ProductService/Live_product"
 /** 直播播放界面信息 */
 #define API_Live_product_list @"api/ProductService/Live_product_list"
+// 直播是否创建成功
+#define API_livestatus_status @"api/ProductService/livestatus_status"
+// 直播截图
+#define API_snapshot_test @"api/ProductService/snapshot_test"
+
 
 /** 直播列表 */
 #define API_Live_new_list @"api/ProductService/Live_new_list"
@@ -323,6 +328,7 @@
 #define API_live_view @"api/OrderService/live_view"
 /** 直播状态查询 */
 #define API_Live_status @"api/ProductService/live_status"
+
 /** 直播正在展播的狗 */
 #define API_Live_product_list_weight @"api/ProductService/Live_product_list_weight"
 /** 订单状态 */

@@ -221,9 +221,28 @@
     // 自动重连
     _session.autoReconnectEnable = YES;
     [self.session startStreamingWithPushURL:[NSURL URLWithString:_streamPublish] feedback:^(PLStreamStartStateFeedback feedback) {
-        DLog(@"%ld", feedback);
+        DLog(@"%ld", (unsigned long)feedback);
+        
+        NSDictionary *dict = @{@"live_id":_liveID};
+        // 请求直播是否创建成功
+        [self getRequestWithPath:API_livestatus_status params:dict success:^(id successJson) {
+            NSLog(@"%@",successJson);
+            if ([successJson[@"code"] integerValue] == 1) {// 创建成功
+                [self getRequestWithPath:API_snapshot_test params:dict success:^(id successJson) {
+                    DLog(@"%@", successJson);
+                } error:^(NSError *error) {
+                    DLog(@"%@", error);
+                }];
+            }else{
+                // 结束推流
+                self.endliveLabel.text = @"直播创建失败";
+                [self.session stopStreaming];
+                self.endView.hidden = NO;
+            }
+        } error:^(NSError *error) {
+            NSLog(@"%@",error);
+        }];
         if (feedback == 0) { // 开始推流
-           
         }
     }];
     
@@ -278,7 +297,7 @@
             }
             self.showingPrice.text = showingModel.price;
             [self.showDogView reloadData];
-            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 %ld", dogArr.count];
+            self.endshowCountlabel.text = [NSString stringWithFormat:@"展播 %ld", (long)dogArr.count];
         }else{
             self.showDogView.hidden = YES;
             self.showingBtn.hidden = YES;
@@ -304,7 +323,7 @@
             // 结束推流
             [self.session stopStreaming];
             // 销毁
-//            [self.session destroy];
+            // [self.session destroy];
         }
     } error:^(NSError *error) {
         DLog(@"%@", error);

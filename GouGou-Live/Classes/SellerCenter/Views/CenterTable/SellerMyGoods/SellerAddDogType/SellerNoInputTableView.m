@@ -130,7 +130,7 @@ static NSString *cellid = @"SellerNoInputcell";
     }
 }
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    DLog(@"%ld", indexPath.row);
+    DLog(@"%ld", (long)indexPath.row);
     NSString *history = self.historyDataArr[indexPath.row];
     
     [self.historyDataArr removeObject:history];

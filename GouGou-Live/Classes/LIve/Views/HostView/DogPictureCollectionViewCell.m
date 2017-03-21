@@ -49,12 +49,18 @@
 - (void)setModel:(HostLiveModel *)model {
     
     _model = model;
-    if (model.snapshot != NULL) {
-        [self.liveDogPicture sd_setImageWithURL:[NSURL URLWithString:model.snapshot] placeholderImage:[UIImage imageNamed:@"品种"]];
+
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:model.snapshot]];
+
+    if (data) {
+        self.liveDogPicture.image = [UIImage imageWithData:data];
+    }else{
+        self.liveDogPicture.image = [UIImage imageNamed:@"直播图"];
     }
+    
     self.titlelable.text = model.userNickName;
     self.degistLable.text = model.name;
-    self.salesvolumeLable.text = [NSString stringWithFormat:@"在售%ld/%ld", model.num, model.pNum];
+    self.salesvolumeLable.text = [NSString stringWithFormat:@"在售%ld/%ld", (long)model.num, model.pNum];
     self.personNumLable.text = model.viewNum;
 }
 #pragma mark

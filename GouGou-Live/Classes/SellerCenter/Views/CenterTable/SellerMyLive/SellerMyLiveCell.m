@@ -140,12 +140,17 @@
 }
 - (void)setModel:(PlayBackModel *)model {
     _model = model;
-    if (model.userImgUrl != NULL) {
-        NSString *imgUrl = [IMAGE_HOST stringByAppendingString:model.userImgUrl];
+    if ([UserInfos sharedUser].userimgurl != NULL) {
+        NSString *imgUrl = [IMAGE_HOST stringByAppendingString:[UserInfos sharedUser].userimgurl];
         [self.photoImage sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"主播头像"]];
+    }else{
+        self.photoImage.image = [UIImage imageNamed:@"主播头像"];
     }
-    if (model.snapshot != NULL) {
-        [self.dogImage sd_setImageWithURL:[NSURL URLWithString:model.snapshot] placeholderImage:[UIImage imageNamed:@"直播图"]];
+    if (model.cover != NULL) {
+        NSString *imgUrl = [IMAGE_HOST stringByAppendingString:model.cover];
+        [self.dogImage sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"直播图"]];
+    }else{
+        self.dogImage.image = [UIImage imageNamed:@"直播图"];
     }
     self.businessName.text = model.merchantName;
     self.descLabel.text = model.name;

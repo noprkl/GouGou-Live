@@ -75,6 +75,7 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle"
   install_resource "TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle"
   install_resource "UMengUShare/UShareSDK/SocialLibraries/QQ/TencentOpenApi_IOS_Bundle.bundle"
   install_resource "UMengUShare/UShareSDK/SocialLibraries/Sina/WeiboSDK.bundle"
@@ -82,6 +83,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle"
   install_resource "TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle"
   install_resource "UMengUShare/UShareSDK/SocialLibraries/QQ/TencentOpenApi_IOS_Bundle.bundle"
   install_resource "UMengUShare/UShareSDK/SocialLibraries/Sina/WeiboSDK.bundle"

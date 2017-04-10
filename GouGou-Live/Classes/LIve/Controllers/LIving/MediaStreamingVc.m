@@ -27,6 +27,7 @@
 #import "CreateLiveViewController+ThirdShare.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AppDelegate.h"
+
 @interface MediaStreamingVc ()<PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate, LiveListDogInfoModelDelegate>
 
 @property (nonatomic, strong) PLMediaStreamingSession *session;
@@ -63,6 +64,8 @@
 @property (nonatomic, strong) UILabel *endwatchLabel; /**< 结束观看人数 */
 @property (nonatomic, strong) UILabel *endshowCountlabel; /**< 结束展播数 */
 @property (nonatomic, strong) UILabel *endsoldCountLabel; /**< 结束出售数 */
+
+@property (nonatomic, strong) UILabel *WLANSpeed; /**< 网速 */
 
 @end
 
@@ -153,6 +156,7 @@
         [invocation invoke];
     }
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -199,21 +203,22 @@
 - (void)streamingVideo {
  
     // 设置视频采集的参数
-    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
-    // 采集画面是后置摄像头 左横屏
-    videoCaptureConfiguration.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
-    // 采集时画面 默认640
-    videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset640x480;
+    
+    PLVideoCaptureConfiguration *videoCaptureConfiguration = [[PLVideoCaptureConfiguration alloc]initWithVideoFrameRate:24 sessionPreset:AVCaptureSessionPresetMedium previewMirrorFrontFacing:YES previewMirrorRearFacing:NO streamMirrorFrontFacing:NO streamMirrorRearFacing:NO cameraPosition:AVCaptureDevicePositionBack videoOrientation:AVCaptureVideoOrientationLandscapeRight];
+
+    
     // 设置采集音频参数
     PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
     // 采集时声道 默认1
     audioCaptureConfiguration.channelsPerFrame = 5;
     
     // 设置视频推流参数
-    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
-    videoStreamingConfiguration.videoSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = [[PLVideoStreamingConfiguration alloc] initWithVideoSize:CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT) expectedSourceVideoFrameRate:24 videoMaxKeyframeInterval:72 averageVideoBitRate:768 * 1024 videoProfileLevel:AVVideoProfileLevelH264HighAutoLevel];
+
     PLStream *stream = _stream;
-    DLog(@"%@", stream);
+    DLog(@"推流地址%@", stream);
+
     // 设置音频推流参数
     PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
     
@@ -221,15 +226,20 @@
     // 自动重连
     _session.autoReconnectEnable = YES;
     [self.session startStreamingWithPushURL:[NSURL URLWithString:_streamPublish] feedback:^(PLStreamStartStateFeedback feedback) {
-        DLog(@"%ld", (unsigned long)feedback);
+        DLog(@"直播状态--%ld", (unsigned long)feedback);
         
         NSDictionary *dict = @{@"live_id":_liveID};
         // 请求直播是否创建成功
         [self getRequestWithPath:API_livestatus_status params:dict success:^(id successJson) {
-            NSLog(@"%@",successJson);
+            DLog(@"%@", successJson);
             if ([successJson[@"code"] integerValue] == 1) {// 创建成功
                 [self getRequestWithPath:API_snapshot_test params:dict success:^(id successJson) {
                     DLog(@"%@", successJson);
+                    // 开始请求
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getRequestWatchCount) userInfo:nil repeats:YES];
+                    });
+                    
                 } error:^(NSError *error) {
                     DLog(@"%@", error);
                 }];
@@ -252,8 +262,6 @@
     }];
     self.session.delegate = self;
     [self initUI];
-    // 开始请求
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getRequestWatchCount) userInfo:nil repeats:YES];
 }
 // 观看人数
 - (void)getRequestWatchCount {
@@ -309,16 +317,18 @@
         
     }];
 }
-// 直播状态(直播被禁 )
+// 直播状态 (直播被禁)
 - (void)getRequestLiveState{
     NSDictionary *dict = @{
                            @"live_id":_liveID
                            };
     [self getRequestWithPath:API_Live_status params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        if ([successJson[@"code"] integerValue] == 0) {// 被关闭
+        
+        if ([successJson[@"code"] integerValue] != 1) {// 被关闭
             // 被禁止原因
-            self.endliveLabel.text = successJson[@"data"][@"con"];
+            NSString *str = [NSString stringWithFormat:@"直播被禁：%@", successJson[@"data"][@"con"]];
+            self.endliveLabel.text = str;
             self.endView.hidden = NO;
             // 结束推流
             [self.session stopStreaming];
@@ -333,62 +343,107 @@
 #pragma mark - 推流代理
 // 正常断开、连接
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStateDidChange:(PLStreamState)state {
-    // 正常断开推流
-    if (state == PLStreamStateDisconnected) {
+    if (state == PLStreamStateConnecting) {
         // 保存视频
-        self.endView.hidden = NO;
-//        NSDictionary *dict =@{
-//                              @"live_id":_liveID,
-//                              @"user_id":[UserInfos sharedUser].ID
-//                              };
-//        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
-//            DLog(@"%@", successJson);
-//        } error:^(NSError *error) {
-//            DLog(@"%@", error);
-//        }];
-    }
-    if (state == PLStreamStateConnecting || state == PLStreamStateConnected || state == PLStreamStateDisconnecting || state == PLStreamStateAutoReconnecting) {
+        self.endliveLabel.text = @"断开-连接中状态";
         self.endView.hidden = YES;
+    }
+    if (state == PLStreamStateConnected) {
+        self.endliveLabel.text = @"断开-已连接状态";
+        self.endView.hidden = YES;
+    }
+    if (state == PLStreamStateDisconnecting) {
+        self.endliveLabel.text = @"断开-断开连接中状态";
+        self.endView.hidden = NO;
+    }
+    if (state == PLStreamStateDisconnected) {
+        self.endliveLabel.text = @"断开-已断开连接状态";
+        self.endView.hidden = NO;
+    }
+    if (state == PLStreamStateAutoReconnecting) {
+        self.endliveLabel.text = @"断开-正在等待自动重连状态";
+        self.endView.hidden = NO;
+    }
+    if (state == PLStreamStateError) {
+        self.endliveLabel.text = @"断开-错误状态";
+        self.endView.hidden = NO;
     }
 }
+
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didDisconnectWithError:(NSError *)error {
     // 非正常断开的情况
+    /*
+     /// PLStreamStateUnknow 未知状态，只会作为 init 的初始状态
+     PLStreamStateUnknow = 0,
+     /// PLStreamStateConnecting 连接中状态
+     PLStreamStateConnecting,
+     /// PLStreamStateConnected 已连接状态
+     PLStreamStateConnected,
+     /// PLStreamStateDisconnecting 断开连接中状态
+     PLStreamStateDisconnecting,
+     /// PLStreamStateDisconnected 已断开连接状态
+     PLStreamStateDisconnected,
+     /// PLStreamStateAutoReconnecting 正在等待自动重连状态
+     PLStreamStateAutoReconnecting,
+     /// PLStreamStateError 错误状态
+     PLStreamStateError
+     */
     // 重连
-    if (session.streamState == PLStreamStateError || session.streamState == PLStreamStateDisconnected) {
+    if (session.streamState == PLStreamStateConnecting) {
         // 保存视频
-        self.endView.hidden = NO;
-//        NSDictionary *dict =@{
-//                              @"live_id":_liveID,
-//                              @"user_id":[UserInfos sharedUser].ID
-//                              };
-//        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
-//            DLog(@"%@", successJson);
-//        } error:^(NSError *error) {
-//            DLog(@"%@", error);
-//        }];
-    }
-    if (session.streamState == PLStreamStateConnecting || session.streamState == PLStreamStateConnected || session.streamState == PLStreamStateDisconnecting || session.streamState == PLStreamStateAutoReconnecting) {
+        self.endliveLabel.text = @"出错了连接中状态";
         self.endView.hidden = YES;
+    }
+    if (session.streamState == PLStreamStateConnected) {
+        self.endliveLabel.text = @"出错了已连接状态";
+        self.endView.hidden = YES;
+    }
+    if (session.streamState == PLStreamStateDisconnecting) {
+        self.endliveLabel.text = @"出错了断开连接中状态";
+        self.endView.hidden = NO;
+    }
+    if (session.streamState == PLStreamStateDisconnected) {
+        self.endliveLabel.text = @"出错了已断开连接状态";
+        self.endView.hidden = NO;
+    }
+    if (session.streamState == PLStreamStateAutoReconnecting) {
+        self.endliveLabel.text = @"出错了正在等待自动重连状态";
+        self.endView.hidden = NO;
+    }
+    if (session.streamState == PLStreamStateError) {
+        self.endliveLabel.text = @"出错了错误状态";
+        self.endView.hidden = NO;
     }
 }
 //开始推流时，会每间隔 3s 调用该回调方法来反馈该 3s 内的流状态，包括视频帧率、音频帧率、音视频总码率
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status {
-    // 出错状态 或者已经断开状态 保存视频
-    if (session.streamState == PLStreamStateError || session.streamState == PLStreamStateDisconnected) {
+    self.WLANSpeed.text = [NSString stringWithFormat:@"码率：%.2lfk", status.totalBitrate / 1024];
+    
+    if (session.streamState == PLStreamStateConnecting) {
         // 保存视频
-//        NSDictionary *dict =@{
-//                              @"live_id":_liveID,
-//                              @"user_id":[UserInfos sharedUser].ID
-//                              };
-//        [self getRequestWithPath:API_save params:dict success:^(id successJson) {
-//            DLog(@"%@", successJson);
-//        } error:^(NSError *error) {
-//            DLog(@"%@", error);
-//        }];
+        self.endliveLabel.text = @"推流中连接中状态";
+        self.endView.hidden = YES;
+    }
+    if (session.streamState == PLStreamStateConnected) {
+        self.endliveLabel.text = @"推流中已连接状态";
+        self.endView.hidden = YES;
+    }
+    if (session.streamState == PLStreamStateDisconnecting) {
+        self.endliveLabel.text = @"推流中断开连接中状态";
         self.endView.hidden = NO;
     }
-    if (session.streamState == PLStreamStateConnecting || session.streamState == PLStreamStateConnected || session.streamState == PLStreamStateDisconnecting || session.streamState == PLStreamStateAutoReconnecting) {
-        self.endView.hidden = YES;
+    if (session.streamState == PLStreamStateDisconnected) {
+        self.endliveLabel.text = @"推流中已断开连接状态";
+        self.endView.hidden = NO;
+    }
+    
+    if (session.streamState == PLStreamStateAutoReconnecting) {
+        self.endliveLabel.text = @"推流中正在等待自动重连状态";
+        self.endView.hidden = NO;
+    }
+    if (session.streamState == PLStreamStateError) {
+        self.endliveLabel.text = @"推流中错误状态";
+        self.endView.hidden = NO;
     }
 }
 // 设置Ui
@@ -407,6 +462,15 @@
 //    [self.session.previewView addSubview:self.sendMessageView];
 //    [self.session.previewView addSubview:self.danmuBtn];
 
+    [self.view addSubview:self.WLANSpeed];
+    [self.view insertSubview:self.WLANSpeed atIndex:10000];
+
+    [self.WLANSpeed remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.top).offset(40);
+        make.centerX.equalTo(self.view.centerX);
+        make.height.equalTo(30);
+    }];
+    
     [self makeConstraint];
     [self focusKeyboardShow];
     [self addEndView];
@@ -514,6 +578,7 @@
         __weak typeof(self) weakSelf = self;
         _topView.backBlcok = ^(){
             [weakSelf.session stopStreaming];
+            weakSelf.endliveLabel.text = @"结束直播";
             weakSelf.endView.hidden = NO;
         };
         _topView.shareBlcok = ^(UIButton *btn){
@@ -616,6 +681,16 @@
         _showDogView.showDelegate = self;
     }
     return _showDogView;
+}
+- (UILabel *)WLANSpeed {
+    if (!_WLANSpeed) {
+        _WLANSpeed = [[UILabel alloc] init];
+        _WLANSpeed.backgroundColor = [UIColor redColor];
+        _WLANSpeed.textColor = [UIColor whiteColor];
+        _WLANSpeed.textAlignment = NSTextAlignmentRight;
+        _WLANSpeed.hidden = YES;
+    }
+    return _WLANSpeed;
 }
 #pragma mark
 #pragma mark - 代理
@@ -926,4 +1001,5 @@
         make.width.equalTo(200);
     }];
 }
+
 @end

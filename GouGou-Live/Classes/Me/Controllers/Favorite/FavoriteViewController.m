@@ -46,8 +46,8 @@
     [self showHudInView:self.view hint:@"刷新..."];
     [self getRequestWithPath:API_My_like_product params:dict success:^(id successJson) {
         DLog(@"%@", successJson);
-        [self hideHud];
         if (page == 1) {
+            
             [self.favoriteDogTable setContentOffset:CGPointMake(0, 0) animated:YES];
             self.noneDogDateView.hidden = YES;
             [self.favoriteDogTable.mj_footer resetNoMoreData];
@@ -57,6 +57,8 @@
             }else {
                 self.noneDogDateView.hidden = NO;
             }
+            [self hideHud];
+
         }else{
             NSArray *array = [DogDetailInfoModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"info"]];
             
@@ -68,6 +70,7 @@
             }else{
                 [self.favoriteDogTable.mj_footer endRefreshing];
             }
+            [self hideHud];
         }
         
     } error:^(NSError *error) {
@@ -84,7 +87,6 @@
         DLog(@"%@", successJson);
         
         if (page == 1) {
-            [self hideHud];
             [self.favotiteLiveTable setContentOffset:CGPointMake(0, 0) animated:YES];
             self.noneDogDateView.hidden = YES;
             
@@ -94,6 +96,8 @@
             }else{
                 self.noneLiveDateView.hidden = NO;
             }
+            [self hideHud];
+
         }else{
             NSArray *array = [PlayBackModel mj_objectArrayWithKeyValuesArray:successJson[@"data"][@"data"]];
             
@@ -105,6 +109,7 @@
             }else{
                 [self.favotiteLiveTable.mj_footer endRefreshing];
             }
+            [self hideHud];
         }
 
     } error:^(NSError *error) {

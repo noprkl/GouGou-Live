@@ -89,7 +89,6 @@ static NSString *cellid = @"SellerMyLiveCell";
     PlayBackModel *model = self.dataArr[indexPath.row];
     playBackVc.liveID = model.liveId;
     [self.navigationController pushViewController:playBackVc animated:YES];
-    DLog(@"%d", indexPath.row);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

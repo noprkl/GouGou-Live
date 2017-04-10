@@ -30,4 +30,6 @@
 
 @property (nonatomic, strong) NSString *status; /**< 直播状态 */
 
+@property (nonatomic, strong) NSString *cover; /**< 直播封面 */
+
 @end

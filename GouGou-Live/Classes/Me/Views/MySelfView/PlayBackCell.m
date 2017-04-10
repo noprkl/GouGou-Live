@@ -51,8 +51,11 @@
 
 - (void)setDogCardModel:(PlayBackModel *)dogCardModel {
     _dogCardModel = dogCardModel;
-    if (dogCardModel.snapshot != NULL) {
-        [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:dogCardModel.snapshot] placeholderImage:[UIImage imageNamed:@"banner"]];
+    if (dogCardModel.cover != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:dogCardModel.cover];
+        [self.dogImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"banner"]];
+    }else{
+        self.dogImageView.image = [UIImage imageNamed:@"banner"];
     }
     [self.watchCount setTitle:dogCardModel.viewNum forState:(UIControlStateNormal)];
     

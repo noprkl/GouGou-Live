@@ -20,5 +20,5 @@
 @property (nonatomic, strong) NSString *viewNum; /**< 观看人数 */
 @property (nonatomic, strong) NSString *createTime; /**< 直播时间 */
 @property (nonatomic, assign) NSInteger num; /**< 剩余的数量 */
-
+@property (nonatomic, strong) NSString *cover; /**< 直播封面 */
 @end

@@ -26,7 +26,11 @@
 #import "CreateLiveViewController+ThirdShare.h"
 #import "TalkingViewController.h"
 
-@interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate, CLLocationManagerDelegate>
+#import "NSString+CertificateImage.h"
+#import <TZImageManager.h>
+#import <RSKImageCropper/RSKImageCropper.h>
+
+@interface CreateLiveViewController ()<UITextFieldDelegate,PLMediaStreamingSessionDelegate, PLRTCStreamingSessionDelegate, CLLocationManagerDelegate, RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource>
 {
     CGFloat W;//图片view高度
 }
@@ -42,6 +46,14 @@
 @property(nonatomic, assign) BOOL isFirstUpdate; /**< 是否第一时间更新 */
 
 @property(nonatomic, strong) AddShowDogImgView *photoView; /**< 上传图片 */
+
+
+
+@property (weak, nonatomic) IBOutlet UIButton *addImgbtn;
+
+@property (nonatomic, strong) UIButton *addLiveImgBtn; /**< 添加直播图片 */
+@property (nonatomic, strong) UIImage *liveImg; /**< 直播图片 */
+
 
 @property (strong, nonatomic) UIView *lineView; /**< 横线 */
 
@@ -134,7 +146,8 @@
     [self.view addSubview:self.WXShareBtn];
     [self.view addSubview:self.friendShareBtn];
     [self.view addSubview:self.beginLiveBtn];
-
+    [self.view addSubview:self.addLiveImgBtn];
+    
     self.editNameText.delegate = self;
     
     [self makeConstraint];
@@ -148,12 +161,13 @@
         }else{
             W = (SCREEN_WIDTH - (kMaxImgCount + 1) * 10) / kMaxImgCount;
         }
+        
         CGFloat row = self.photoView.dataArr.count / kMaxImgCount;
         W = (row + 1) * (W + 10) + 10;
         [self.photoView remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.sellORBtn.bottom).offset(10);
             make.left.right.equalTo(self.view);
-            make.height.equalTo(W + 20);
+            make.height.equalTo(W);
         }];
         
     }else{
@@ -164,8 +178,22 @@
         }];
     }
     
+    if (self.addImgbtn.selected) {
+        [self.addLiveImgBtn remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.photoView.bottom).offset(10);
+            make.centerX.equalTo(self.view.centerX);
+            make.size.equalTo(CGSizeMake(175, 90));
+        }];
+    }else {
+        [self.addLiveImgBtn remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.photoView.bottom).offset(1);
+            make.centerX.equalTo(self.view.centerX);
+            make.height.equalTo(1);
+        }];
+    }
+    
     [self.lineView remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.photoView.bottom).offset(10);
+        make.top.equalTo(self.addLiveImgBtn.bottom).offset(10);
         make.centerX.equalTo(self.view.centerX);
         make.size.equalTo(CGSizeMake(225, 1));
     }];
@@ -248,7 +276,8 @@
                 [self showAlert:@"GPS定位失败"];
             }
         } else {
-            [self showAlert:@"网络错误,请检查网络"];
+
+            [self showAlert:@"网络错误,无法定位,请检查网络"];
         }
     }];
     
@@ -305,75 +334,99 @@
     
     if (self.editNameText.text.length == 0) {
         [self showAlert:@"请输入房间名"];
-    }else{
-        // 商品id
-        NSString *idStr = @"";
-        if (self.photoUrl.count != 0) {
-            NSMutableArray *idMutableArr = [NSMutableArray array];
-            
-            for (SellerMyGoodsModel *model in self.photoUrl) {
-                [idMutableArr addObject:model.ID];
-            }
-            idStr = [idMutableArr componentsJoinedByString:@"|"];
-        }
+        return;
         
-        // 时间戳+卖家id MD5
-        NSDate *date = [NSDate date];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"YYYYMMddHHmmss";
-        NSString *liveId = [NSString md5WithString:[NSString stringWithFormat:@"%@%@",[formatter stringFromDate:date], [UserInfos sharedUser].ID]];
-        
-        NSInteger count = self.photoUrl.count;
-        NSDictionary *liveDict = @{
-                                   @"product_id":idStr,
-                                   @"live_id":liveId,
-                                   @"p_num":@(count),
-                                   @"user_id":@([[UserInfos sharedUser].ID intValue]),
-                                   @"area":self.cityLabel.text,
-                                   @"name":self.editNameText.text
-                                   };
-        
-        DLog(@"%@", liveDict);
-        [self showHudInView:self.view hint:@"创建中.."];
-        [self postRequestWithPath:API_Live_product params:liveDict success:^(id successJson) {
-            DLog(@"%@", successJson);
-            if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
-                LiveRootStreamModel *rootModel = [LiveRootStreamModel mj_objectWithKeyValues:successJson[@"data"][@"live"]];
-                LiveListRespModel *respModel = [LiveListRespModel mj_objectWithKeyValues:rootModel.resp];
-                LiveListStreamModel *streamModel = [LiveListStreamModel mj_objectWithKeyValues:rootModel.steam];
-                DLog(@"%@---%@", respModel, streamModel);
-                // 流对象属性
-                DLog(@"%@", streamModel.publish);
-                // 创建流对象
-                PLStream *stream = [PLStream streamWithJSON:nil];
-                stream.streamID = liveId;
-                stream.title = self.editNameText.text;
-                stream.hubName = respModel.hub;
-                stream.disabled = respModel.disabledTill;
-                stream.profiles = @[];
-                [stream.hosts setValue:streamModel.publish forKey:@"publish"];
-                [stream.hosts setValue:streamModel.rtmp forKey:@"rtmp"];
-                // 跳转到直播页
-                MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
-                
-                streamVc.stream = stream;
-                streamVc.streamPublish = streamModel.publish;
-                streamVc.liveID = liveId;
-                NSString *chatRoom = successJson[@"data"][@"chatroom"][@"data"][@"id"];
-                streamVc.chatRoomID = chatRoom;
-                streamVc.hidesBottomBarWhenPushed = YES;
-                streamVc.streamRtmp = streamModel.rtmp;
-                streamVc.shareType = self.shareType;
-                [self.navigationController pushViewController:streamVc animated:YES];
-                [self hideHud];
-            }else{
-                [self showAlert:@"创建失败"];
-                [self hideHud];
-            }
-        } error:^(NSError *error) {
-            DLog(@"%@", error);
-        }];
     }
+    if (!self.liveImg) {
+        [self showAlert:@"请添加直播封面"];
+        return;
+    }
+    
+    // 正面
+    NSString *livImg = [NSString imageBase64WithDataURL:self.liveImg];
+    NSDictionary *dict = @{
+                               @"user_id":[UserInfos sharedUser].ID,
+                               @"img":livImg
+                               };
+    [self postRequestWithPath:API_UploadImg_cover params:dict success:^(id successJson) {
+        if ([successJson[@"code"] integerValue] == 1) {
+            NSString *imgStr = successJson[@"data"];
+            // 商品id
+            NSString *idStr = @"";
+            if (self.photoUrl.count != 0) {
+                NSMutableArray *idMutableArr = [NSMutableArray array];
+                for (SellerMyGoodsModel *model in self.photoUrl) {
+                    [idMutableArr addObject:model.ID];
+                }
+                idStr = [idMutableArr componentsJoinedByString:@"|"];
+            }
+            
+            // 时间戳+卖家id MD5
+            NSDate *date = [NSDate date];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            formatter.dateFormat = @"YYYYMMddHHmmss";
+            NSString *liveId = [NSString md5WithString:[NSString stringWithFormat:@"%@%@",[formatter stringFromDate:date], [UserInfos sharedUser].ID]];
+            
+            NSInteger count = self.photoUrl.count;
+            NSDictionary *liveDict = @{
+                                       @"product_id":idStr,
+                                       @"live_id":liveId,
+                                       @"p_num":@(count),
+                                       @"user_id":@([[UserInfos sharedUser].ID intValue]),
+                                       @"area":self.cityLabel.text,
+                                       @"name":self.editNameText.text,
+                                       @"cover":imgStr
+                                       };
+            
+            DLog(@"%@", liveDict);
+            [self showHudInView:self.view hint:@"创建中.."];
+            [self postRequestWithPath:API_Live_product params:liveDict success:^(id successJson) {
+                DLog(@"%@", successJson);
+                if ([successJson[@"message"] isEqualToString:@"添加成功"]) {
+                    LiveRootStreamModel *rootModel = [LiveRootStreamModel mj_objectWithKeyValues:successJson[@"data"][@"live"]];
+                    LiveListRespModel *respModel = [LiveListRespModel mj_objectWithKeyValues:rootModel.resp];
+                    LiveListStreamModel *streamModel = [LiveListStreamModel mj_objectWithKeyValues:rootModel.steam];
+                    DLog(@"%@---%@", respModel, streamModel);
+                    // 流对象属性
+                    DLog(@"%@", streamModel.publish);
+                    // 创建流对象
+                    PLStream *stream = [PLStream streamWithJSON:nil];
+                    stream.streamID = liveId;
+                    stream.title = self.editNameText.text;
+                    stream.hubName = respModel.hub;
+                    stream.disabled = respModel.disabledTill;
+                    stream.profiles = @[];
+                    [stream.hosts setValue:streamModel.publish forKey:@"publish"];
+                    [stream.hosts setValue:streamModel.rtmp forKey:@"rtmp"];
+                    // 跳转到直播页
+                    MediaStreamingVc *streamVc = [[MediaStreamingVc alloc] init];
+                    
+                    streamVc.stream = stream;
+                    streamVc.streamPublish = streamModel.publish;
+                    streamVc.liveID = liveId;
+                    NSString *chatRoom = successJson[@"data"][@"chatroom"][@"data"][@"id"];
+                    streamVc.chatRoomID = chatRoom;
+                    streamVc.hidesBottomBarWhenPushed = YES;
+                    streamVc.streamRtmp = streamModel.rtmp;
+                    streamVc.shareType = self.shareType;
+                    [self.navigationController pushViewController:streamVc animated:YES];
+                    [self hideHud];
+                }else{
+                    [self showAlert:@"创建失败"];
+                    [self hideHud];
+                }
+            } error:^(NSError *error) {
+                DLog(@"%@", error);
+            }];
+        }else{
+            [self showAlert:@"图片上传失败"];
+        }
+    } error:^(NSError *error) {
+        [self showAlert:@"图片上传失败"];
+        DLog(@"%@", error);
+    }];
+
+  
 }
 #pragma mark
 #pragma mark - 懒加载
@@ -411,6 +464,16 @@
         
     }
     return _photoView;
+}
+- (UIButton *)addLiveImgBtn {
+    if (!_addLiveImgBtn) {
+        _addLiveImgBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [_addLiveImgBtn setBackgroundImage:[UIImage imageNamed:@"添加直播封面"] forState:(UIControlStateNormal)];
+        
+        _addLiveImgBtn.hidden = YES;
+        [_addLiveImgBtn addTarget:self action:@selector(addLiveImgAction) forControlEvents:(UIControlEventTouchDown)];
+    }
+    return _addLiveImgBtn;
 }
 - (UIView *)lineView {
     if (!_lineView) {
@@ -540,6 +603,110 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddLiveShowDog" object:nil];
 }
+
+- (IBAction)clickAddImgAction:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    self.addLiveImgBtn.hidden = !self.addLiveImgBtn.hidden;
+    [self makeConstraint];
+}
+
+- (void)addLiveImgAction {
+    
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+    
+    imagePickerVc.sortAscendingByModificationDate = NO;
+    imagePickerVc.isSelectOriginalPhoto = YES;
+    imagePickerVc.allowPickingOriginalPhoto = NO;
+    imagePickerVc.timeout = 60;
+    imagePickerVc.maxImagesCount = 1;
+
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL flag) {
+        if (flag) {
+            [[TZImageManager manager] getOriginalPhotoWithAsset:[assets lastObject] completion:^(UIImage *photo, NSDictionary *info) {
+                
+                RSKImageCropViewController *imageCropVC = [[RSKImageCropViewController alloc] initWithImage:photo cropMode:RSKImageCropModeCustom];
+                imageCropVC.delegate = self;
+                imageCropVC.dataSource=self;
+                [self.navigationController pushViewController:imageCropVC animated:YES];
+                
+            }];
+        }else{
+            DLog(@"出错了");
+        }
+    }];
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+
+}
+- (CGRect)imageCropViewControllerCustomMaskRect:(RSKImageCropViewController *)controller {
+    CGSize maskSize;
+    if ([controller isPortraitInterfaceOrientation]) {
+        maskSize = CGSizeMake(350, 180);
+    } else {
+        maskSize = CGSizeMake(350, 180);
+    }
+    
+    CGFloat viewWidth = CGRectGetWidth(controller.view.frame);
+    CGFloat viewHeight = CGRectGetHeight(controller.view.frame);
+    
+    CGRect maskRect = CGRectMake((viewWidth - maskSize.width) * 0.5f,
+                                 (viewHeight - maskSize.height) * 0.5f,
+                                 maskSize.width,
+                                 maskSize.height);
+    
+    return maskRect;
+}
+// Returns a custom path for the mask.
+- (UIBezierPath *)imageCropViewControllerCustomMaskPath:(RSKImageCropViewController *)controller
+{
+    CGRect rect = controller.maskRect;
+    CGPoint point1 = CGPointMake(CGRectGetMinX(rect), CGRectGetMaxY(rect));
+    CGPoint point2 = CGPointMake(CGRectGetMaxX(rect), CGRectGetMaxY(rect));
+    CGPoint point3 = CGPointMake(CGRectGetMaxX(rect), CGRectGetMinY(rect));
+    CGPoint point4 = CGPointMake(CGRectGetMinX(rect), CGRectGetMinY(rect));
+
+    UIBezierPath *triangle = [UIBezierPath bezierPath];
+    [triangle moveToPoint:point1];
+    [triangle addLineToPoint:point2];
+    [triangle addLineToPoint:point3];
+    [triangle addLineToPoint:point4];
+    [triangle closePath];
+    
+    return triangle;
+}
+
+// Returns a custom rect in which the image can be moved.
+- (CGRect)imageCropViewControllerCustomMovementRect:(RSKImageCropViewController *)controller
+{
+    // If the image is not rotated, then the movement rect coincides with the mask rect.
+    return controller.maskRect;
+}
+- (void)imageCropViewControllerDidCancelCrop:(RSKImageCropViewController *)controller
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+// The original image has been cropped.
+- (void)imageCropViewController:(RSKImageCropViewController *)controller
+                   didCropImage:(UIImage *)croppedImage
+                  usingCropRect:(CGRect)cropRect
+{
+    
+    [self.addLiveImgBtn setBackgroundImage:croppedImage forState:(UIControlStateNormal)];
+    self.liveImg = croppedImage;
+
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+// The original image has been cropped. Additionally provides a rotation angle used to produce image.
+//- (void)imageCropViewController:(RSKImageCropViewController *)controller
+//                   didCropImage:(UIImage *)croppedImage
+//                  usingCropRect:(CGRect)cropRect
+//                  rotationAngle:(CGFloat)rotationAngle
+//{
+//    [self.addLiveImgBtn setBackgroundImage:croppedImage forState:(UIControlStateNormal)];
+//    self.liveImg = croppedImage;
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
+
 /*
 #pragma mark - Navigation
 

@@ -294,6 +294,9 @@
 // 直播截图
 #define API_snapshot_test @"api/ProductService/snapshot_test"
 
+// 直播封面
+#define API_UploadImg_cover @"api/ProductService/UploadImg_cover"
+
 
 /** 直播列表 */
 #define API_Live_new_list @"api/ProductService/Live_new_list"
@@ -333,5 +336,8 @@
 #define API_Live_product_list_weight @"api/ProductService/Live_product_list_weight"
 /** 订单状态 */
 #define API_Order_status_new @"api/OrderService/order_status_new"
+
+// 直播截图
+#define Api_UploadImg_test @"api/ProductService/UploadImg_test"
 
 @end

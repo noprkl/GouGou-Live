@@ -50,10 +50,9 @@
     
     _model = model;
 
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:model.snapshot]];
-
-    if (data) {
-        self.liveDogPicture.image = [UIImage imageWithData:data];
+    if (model.cover != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:model.cover];
+        [self.liveDogPicture sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"直播图"]];
     }else{
         self.liveDogPicture.image = [UIImage imageNamed:@"直播图"];
     }

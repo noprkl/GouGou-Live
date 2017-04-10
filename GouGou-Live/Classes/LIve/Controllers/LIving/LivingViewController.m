@@ -288,6 +288,8 @@
     if (_isPlaying == YES) {
         [self.livePlayer resume];
     }
+    
+    [self.baseScrollView setContentOffset:self.scrollPoint];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -484,7 +486,7 @@
     [self getRequestWithPath:API_Live_status params:dict success:^(id successJson) {
         
         DLog(@"%@", successJson);
-        if ([successJson[@"code"] integerValue] == 2) {
+        if ([successJson[@"code"] integerValue] != 1) {
             // 被禁止原因
             self.endliveLabel.text = successJson[@"data"][@"con"];
             self.endView.hidden = NO;
@@ -2448,9 +2450,9 @@
         _screenBtn.selected = YES;        
         //            self.talkingVc.chatToolbar.hidden = NO;
 
-        if (!_isLandscape) {
+        if (_isLandscape) {
             [self makeliveLancseConstraint];
-            [self.baseScrollView setContentOffset:self.scrollPoint];
+//            [self.baseScrollView setContentOffset:self.scrollPoint];
 
             DLog(@"横屏UI");
             _isLandscape = YES;
@@ -2464,6 +2466,7 @@
         // 取消横屏
         _isLandscape = NO;
         DLog(@"%@", NSStringFromCGPoint(self.scrollPoint));
+//        [self.baseScrollView setContentOffset:self.scrollPoint];
 
         _screenBtn.selected = NO;
         self.baseScrollView.hidden = NO;

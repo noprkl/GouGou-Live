@@ -47,6 +47,7 @@ PODS:
     - HappyDNS (~> 0.3.10)
     - pili-ffmpeg (~> 3.1.0)
     - pili-librtmp (~> 1.0.5)
+  - RSKImageCropper (1.5.2)
   - SDCycleScrollView (1.65):
     - SDWebImage (~> 3.7)
   - SDWebImage (3.7.6):
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - MJRefresh (~> 3.1.12)
   - PLMediaStreamingKit
   - PLPlayerKit
+  - RSKImageCropper
   - SDCycleScrollView (~> 1.65)
   - SDWebImage (~> 3.7.0)
   - TZImagePickerController
@@ -92,12 +94,13 @@ SPEC CHECKSUMS:
   pili-librtmp: 65a6e10f7c314bd1f407ba24bd074c57cba79d0c
   PLMediaStreamingKit: 18730450543338ad7a8b0352ba5c893ab5ec5a18
   PLPlayerKit: 1473253ee2d7863d8a78dbb3b965161245c51ad5
+  RSKImageCropper: 27d0e7efa800b509720163c3561fe08a04853780
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   TZImagePickerController: cbfd57ba947263759b860f74132dd1bc33125afc
   UMengAnalytics: 40585031b7eb085534c68a951b394731e7166257
   UMengUShare: 418c2eaf7d8ba939916111d622bf5ea86c86285a
 
-PODFILE CHECKSUM: 9a46a91db91d7c22b4aae46cd0aa017456227fa3
+PODFILE CHECKSUM: abacc87d45772f80cc6abe58ec593eebe145f925
 
 COCOAPODS: 1.1.1

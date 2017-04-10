@@ -140,7 +140,6 @@ static NSString * dogShowCell = @"dogShowCellID";
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 // 点击全选
 - (void)clickAllSelectButtonAction:(UIButton *)btn {

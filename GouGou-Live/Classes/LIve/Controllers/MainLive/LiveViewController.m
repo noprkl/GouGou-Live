@@ -110,23 +110,25 @@
 - (void)LeftBarAction {
     
     SearchViewController *searchVC = [[SearchViewController alloc] init];
-    
-//    UISearchController *searchC = [[UISearchController alloc] initWithSearchResultsController:searchVC];
     searchVC.hidesBottomBarWhenPushed = YES;
-//
     [self.navigationController pushViewController:searchVC animated:YES];
-//    UIImage *image = [UIImage imageNamed:@"logo－512"];
-//    NSString *base64 = [NSString imageBase64WithDataURL:image];
-//    NSDictionary *dict = @{
-//                           @"user_id":@([[UserInfos sharedUser].ID integerValue]),
-//                           @"img":base64
-//                           };
-//    [self postRequestWithPath:API_UploadImg params:dict success:^(id successJson) {
-//        DLog(@"%@", successJson);
-//    } error:^(NSError *error) {
-//        
-//    }];
     
+    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img.mp.itc.cn/upload/20170326/7bcac329e7604ad99b3d1ba12462e0c8_th.jpeg"]];
+//        UIImage *image = [UIImage imageWithData:data];
+//        
+//        NSString *base64 = [NSString imageBase64WithDataURL:image];
+//        NSDictionary *dict = @{
+//                               @"img":base64
+//                               };
+//        [self postRequestWithPath:Api_UploadImg_test params:dict success:^(id successJson) {
+//            DLog(@"%@", successJson);
+//        } error:^(NSError *error) {
+//            
+//        }];
+//
+//    });
 }
 
 #pragma mark - 添加子控制器

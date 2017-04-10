@@ -51,6 +51,7 @@
         _cardBlcok(control);
     }
 }
+
 - (void)setLiveCellModel:(LiveViewCellModel *)liveCellModel {
     
     _liveCellModel = liveCellModel;
@@ -60,6 +61,7 @@
     }else{
         self.anchorCityLabel.text = @"";
     }
+    
     self.layer.cornerRadius = 5;
     self.layer.masksToBounds = YES;
     self.watchCountLabel.text = liveCellModel.viewNum;
@@ -69,10 +71,10 @@
         [self.anchorIconView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"组-7"]];
     }
     self.anchorNameLabel.text = liveCellModel.merchantName;
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:liveCellModel.snapshot]];
-
-    if (data) {
-        self.roomImageView.image = [UIImage imageWithData:data];
+    
+    if (liveCellModel.cover != NULL) {
+        NSString *urlString = [IMAGE_HOST stringByAppendingString:liveCellModel.cover];
+        [self.roomImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"直播图"]];
     }else{
         self.roomImageView.image = [UIImage imageNamed:@"直播图"];
     }

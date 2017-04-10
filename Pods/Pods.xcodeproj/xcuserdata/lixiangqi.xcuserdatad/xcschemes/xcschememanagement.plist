@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>RSKImageCropper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDCycleScrollView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,17 +77,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>08BD449D88F656CBEE5BD271CC32DFE0</key>
+		<key>2051BBC003BE8B3A371BE0823BAF2BD9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>14917FC7C313BF47CBE746496C2755F0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1DCE856F869E1A470A990DCF18FB1E33</key>
+		<key>3AE5418C3B693914B794ED1D83751A6F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -93,16 +93,6 @@
 			<true/>
 		</dict>
 		<key>5D2AE1D5758A7676AAB7C977C86F1EAA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>648AF6DEE3ABAAE55D5258778766BC9D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>780BAFDC93ED0B608B35A6DBD2255EFF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,7 +112,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A260E43619FD4C5BAD984C94AB1A86B3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A316B54C67E947D23CECD230FA5BFAEF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AEE2F78DE15815817814350B417ACAE9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BCBB67D467D1A55D8C1823F4E1F87A56</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C9A98BECA9B5402E92521D4009D71E06</key>
 		<dict>
 			<key>primary</key>
 			<true/>
